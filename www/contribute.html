@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - Contributors How To</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+<meta value="Danny Angus" name="author" />
+<meta value="danny@thought.co.uk" name="email" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="Introduction">
+<strong>Introduction</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+       <p>
+           <b>Anyone can contribute</b>
+<br />
+           That's right, we always want to hear from people with contributions to the code, 
+           the documentation, the website, and bug reports.<br /> 
+           The rest of this document outlines the way to go about these to maximum effect.<br />
+       </p>
+       <p>
+           If you are new to this you may be interested in some of these resources.<br />
+           <a href="http://jakarta.apache.org/site/guides.html">A good, full, summary of links to guidelines</a>
+<br />
+           Subscribe to the relevant mailing lists (link on the left).<br />
+           <a href="http://jakarta.apache.org/site/contributing.html">Craig R. McClanahan's advice how to get involved</a>
+<br />
+           <a href="http://jakarta.apache.org/site/guidelines.html">How Jakarta projects run</a>
+<br />
+       </p>
+       
+       </div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Code Patches">
+<strong>Code Patches</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+        <p>
+            Patches should be submitted to the developers mailing list.<br />
+            <b>Always</b> use diff -u to generate patches, so we can apply them using 'patch'.<br />
+        Make sure you are patching the latest cvs (the HEAD).
+        (You might want to try 'cvs diff -u -w -b -rHEAD' against the checked out module where
+        you have implemented the patch.<br />
+            <br />Make sure the patch only contains what is intended, your checkout could be outdated.<br />
+            Make your patch from the jakarta-james directory and make sure it conforms
+            to the code standards, otherwise it may be ignored. It is OK to make a single patch covering several
+            files, but please only one issue at a time.<br />
+            Prefix the mail subject with [PATCH]<br />
+            Briefly outline the reason for your patch,
+            the solution your patch implements, why a patch is
+            needed and why your code will solve the problem. Note any bug numbers your patch addresses.<br />
+            Submit the patch as an attachment to the mail, this
+        mail should preferably be in either BASE64 or QuotedPrintable format, to prevent line wrapping.<br />
+            </p>
+
+        <p>
+            The reason for these rules is so that commiters can easily see what you are trying to achieve,
+            it is their resonsibility to manage the code and review submissions, 
+            if you make it easy for them to see what you are doing your patch is more likely to 
+            be commited quickly (or at all).<br />
+        </p>
+        </div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Adding New Code">
+<strong>Adding New Code</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+        <p>
+            Like the principles for patch submission, mark your mail [PATCH] and ensure 
+            your submission conforms to the code standards. Provide a Brief outline of 
+            your intentions, as above, so that your code can be reviewed easily, and a 
+            note of any relevant bug numbers.<br />
+            New files must contain a reference to the Apache licence, copy the header from an existing file.<br />
+            It also helps if you send your files in an archive (tar, zip) which preserves directories, make it from the jakarta-james directory so we can un-tar your files into the right place.
+        </p>
+        </div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Reporting and Fixing Bugs">
+<strong>Reporting and Fixing Bugs</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+        <p>
+            Many improvements come as a direct result of bug 
+            reports, and contributed fixes, often by the same person. It is sometimes said that Apache 
+            projects evolve because users become so fed-up waiting for bugs to be addressed that they 
+            fix them themselves. :)<br />
+            If you report a bug, <a href="http://issues.apache.org/jira">here</a> we'd appreciate it if you could send a mail to the users or developers 
+            mailing lists, so that we can discuss it with you, bugzilla isn't a great way for mediating 
+            communication.<br />
+            If you want to fix a bug, please contribute your changes according to the guidelines above, 
+            in the Code Patches section. It is much simpler to deal with submissions if they all come 
+            through the same channel. If you still really want to attach patches to bug submissions, please do send us a mail tagged [PATCH] too, so that we notice your patch.
+        </p>
+        </div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Documentation">
+<strong>Documentation</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+        <p>
+            While we are glad to accept contributions to documentation 
+            from anyone, in almost any format, because its much better than none, please consider these 
+            guidelines to help us to assimilate your contribution.<br />
+            To edit an existing document try to edit the xml version in src/xdocs (check it out from cvs) 
+            and if you can, submit a patch as for Code Patches.<br />
+            If you want to contribute new files please try to use the simple xml format we use.<br />
+            If this means nothing to you please try to contribute HTML or plain text documents without 
+            any styling, so that we can get at the words and easily convert them into our xml format.<br />
+            If all this seems like unnecessary nonsense, send us whatever you like, we'd still be
+             happy to receive good documentation.
+         </p>
+         </div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

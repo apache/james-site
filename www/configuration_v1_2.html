@@ -1,0 +1,1296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!-- Content Stylesheet for Site -->
+
+        
+<!-- start the processing -->
+    <!-- ====================================================================== -->
+    <!-- Main Page Section -->
+    <!-- ====================================================================== -->
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+
+                                                    <meta name="author" value="Serge Knystautas">
+            <meta name="email" value="sergek@lokitech.com">
+            
+            <title>The Jakarta James Site - Configuration for James 1.2.1</title>
+        </head>
+
+        <body bgcolor="#ffffff" text="#000000" link="#525D76">        
+            <table border="0" width="100%" cellspacing="0">
+                <!-- TOP IMAGE -->
+                <tr>
+                    <td align="left">
+<a href="http://jakarta.apache.org"><img src="http://jakarta.apache.org/images/jakarta-logo.gif" border="0"/></a>
+</td>
+<td align="right">
+<a href="http://jakarta.apache.org/james/"><img src="./images/james-logo.jpg" alt="JAMES - Java Apache Mail Enterprise Server" border="0"/></a>
+</td>
+                </tr>
+            </table>
+            <table border="0" width="100%" cellspacing="4">
+                <tr><td colspan="2">
+                    <hr noshade="" size="1"/>
+                </td></tr>
+                
+                <tr>
+                    <!-- LEFT SIDE NAVIGATION -->
+                    <td valign="top" nowrap="true">
+                                <p><strong>James</strong></p>
+        <ul>
+                    <li>    <a href="./index.html">Overview</a>
+</li>
+                    <li>    <a href="./install.html">Install</a>
+</li>
+                    <li>    <a href="./configuration_v1_2.html">Configuration</a>
+</li>
+                    <li>    <a href="./architecture_v1_2.html">Architecture</a>
+</li>
+                    <li>    <a href="./code-standards.html">Coding Standards</a>
+</li>
+                    <li>    <a href="./license.html">License</a>
+</li>
+                    <li>    <a href="./todo.html">TODO</a>
+</li>
+                </ul>
+            <p><strong>Download</strong></p>
+        <ul>
+                    <li>    <a href="http://jakarta.apache.org/site/binindex.html">Binaries</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/sourceindex.html">Source Code</a>
+</li>
+                </ul>
+            <p><strong>Guides</strong></p>
+        <ul>
+                    <li>    <a href="./mailet/index.html">Mailet API</a>
+</li>
+                    <li>    <a href="./usingLDAP_v1_2.html">Using LDAP</a>
+</li>
+                    <li>    <a href="./usingTown.html">Using RDBMS</a>
+</li>
+                    <li>    <a href="./usingTLS_v1_2.html">Using TLS</a>
+</li>
+                    <li>    <a href="./listservs.html">List Servers</a>
+</li>
+                    <li>    <a href="./matchers.html">Bundled Matchers</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/james/rfclist">Useful RFCs {web}</a>
+</li>
+                </ul>
+            <p><strong>Get Involved {web}</strong></p>
+        <ul>
+                    <li>    <a href="http://jakarta.apache.org/site/getinvolved.html">Overview</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/cvsindex.html">CVS Repositories</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/mail.html">Mailing Lists</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/bugs.html">Bug Database</a>
+</li>
+                </ul>
+            <p><strong>Jakarta Essentials {web}</strong></p>
+        <ul>
+                    <li>    <a href="http://jakarta.apache.org/index.html">Front Page</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/news.html">News & Status</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/mission.html">Mission</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/guidelines.html">Guidelines Notes</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/site/faqs.html">FAQs</a>
+</li>
+                </ul>
+            <p><strong>Related Projects {web}</strong></p>
+        <ul>
+                    <li>    <a href="http://jakarta.apache.org/ant/index.html">Ant</a>
+</li>
+                    <li>    <a href="http://jakarta.apache.org/avalon/index.html">Avalon</a>
+</li>
+                </ul>
+                        </td>
+                    <td align="left" valign="top">
+                                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#525D76">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Configuration"><strong>Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+<blockquote>
+        <p>This document explains the JAMES.conf.xml file for James 1.2.1
+          <br>JAMES 1.2.1 is currently based on an older version of Avalon,
+          specifically the <code>avalon-james-1-1b1</code> branch in CVS.
+          </br>
+        </p>
+</blockquote>
+</p>
+                            </blockquote>
+        </p>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#525D76">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="James Server Configuration"><strong>James Server Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                        <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="James Configuration"><strong>James Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+        These tag elements control the JAMES spooling and identification
+        settings.
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 postmaster 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Postmaster@localhost 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Is the source of error replies and the email users will mail to for any problem.  You
+            should change this to an address that can receive incoming messages.
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 helloName
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 attribute autodetect=TRUE and value of 'myMailServer'  
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The name by which James will identify itself in SMTP and POP3
+	     greetings. If autodetect is TRUE James will attempt to detect
+            automatically the name, failing which it will use 'localhost'. If
+	    autodetect is not TRUE, James will use the specified name or 
+	    'localhost' if none is specified. Look in jamesinfo.log for
+	     lines like "[...] Local host is: [servername] and [...] Hello Name is: [machine name]"
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 servernames/servername
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 attribute autodetect=TRUE and last value of 'localhost'
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 A list of host names James will consider as local. Any user [user]@[servername]
+            will be considered to be local. If autodetect is TRUE James will attempt to detect
+            automatically the name and use any names specified. Look in jamesinfo.log for a line like "[...] Handling mail for:: [domain/host]"
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 spoolRepository 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 file://../var/mail/spool/ 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is the path where incoming messages are stored before beeing processed. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 inboxRepository 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 file://../var/mail/localinbox/ 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is the root for local users inbox. Each user will have a personal folder
+            [inboxRepository]/[user] 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 spoolmanagerthreads 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 1 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is the number of thread that work polling mails from the spool and take care
+            of processing them. 
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="SMTP Server Configuration"><strong>SMTP Server Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+      These tag elements affect the SMTP listener (for incoming messages). 
+   </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 port 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 25 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The port we are listening to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 bind 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Specific IP addresses that you wish to bind this service to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 smtphandler 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Parent for all SMTPHandler configuations. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 connectiontimeout 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 120000 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 If nothing is received from an open connection for more than {timeout] mills
+            the connection is closed. 
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="POP3 Server Configuration"><strong>POP3 Server Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       These tag elements affect the POP3 server (for message retrieval)
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 port 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 110 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The port we are listening to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 bind 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Specific IP addresses that you wish to bind this service to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 useTLS 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 false 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Whether you wish to require/use TLS (SSL) on this port. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 pop3handler 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Parent for all POP3Handler configuations. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 connectiontimeout 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 120000 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 If nothing is received from an open connection for more than {timeout] mills
+            the connection is closed. 
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Users Manager Configuration"><strong>Users Manager Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       These tag elements affect the configuration of the list of local users.
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 repository 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 file://../var/users/ 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The path where local mail account informations are stored. 
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Remote Manager Configuration"><strong>Remote Manager Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       These tag elements affect the remote manager, a telnet based utility
+       to manage the User Manager.
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 port 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 4555 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The port we are listening to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 bind 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Specific IP addresses that you wish to bind this service to. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 useTLS 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 false 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Whether you wish to require/use TLS (SSL) on this port. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 administrator_accounts 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 The parent of &lt;account&gt; 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 account 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 login="root" password="root" 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 A list of root account to administer JAMES. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 connectiontimeout 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 120000 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 If nothing is received from an open connection for more than {timeout] mills
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Transport Configuration"><strong>Transport Configuration</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       These tag elements affect SMTP remote delivery, specifically, DNS
+       lookup functionality.
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                &lt;name&gt;
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                default value
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                meaning
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 dnsServer/servers/server 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 N.A. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is a list of DNS to resolve external address. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 authoritative 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 false 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Whether to require authoritative (non-cached) DNS records. Should always be false
+            unless you understand the implications. 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 repository 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 file://../var/mail/delayed/ 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is a temp repository path shared with the name of "TMP_REPOSITORY".
+            It is used by the RemoteDelivery Mailet to store mail for futher delivery.
+            (Note: this is not very elegant and will probally change soon) 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 mailets 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 rootpath="org.apache.james.transport.mailets." 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 This is the parent node for all mailet configurations. The rootpath specify
+            where mailet repository is. (Note: need to plug more than one repository) 
+            </font>
+</td>
+            </tr>
+            </table>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                            </blockquote>
+        </p>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#525D76">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="The Mailet processor pipeline"><strong>The Mailet processor pipeline</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+     This is James sitemap. It defines how each incoming mail will be
+     processed. Incoming mails begins their process at the first mailet in the
+     pipe. Each step is described by a &lt;servet&gt; tag with some attributes:
+         &lt;mailet match="[matchClass]=[matchParameters]"
+                    class="[mailetClass]"&gt;.
+     The Match class split the mail into two: one with all recipients matching
+     conditions and the other with all recipient not matching. All information
+     in the mail except recipients cloned so bot matching and not matching are
+     identical (again except recipients). The matching mail will be passed to
+     the specified mailet for processing. After processing both mails, the
+     untoched not matching and the processed matching, goes to next step in
+     pipe. Some mailet will not return anything after process. The Null mailet
+     for example will simply destroy any incoming mail or the RemoteDelivery
+     since after delivery the mail needs no more processing.
+  </p>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Matches"><strong>Matches</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       The Match interface defines how match class should work. Their work is
+       to split a Vector of recipients into two: the ones matching a specified
+       condition and all others. Condition may or may not be present. You can
+       make one simple boolean operation merging two matches into one or you
+       can write your own class implementing the Match interface.
+       Currently implemented match:
+    </p>
+                                                <table>
+                        <tr>
+                        <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                class name
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                parameter
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                action
+            </font>
+</td>
+                                <td bgcolor="#039acc" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                example
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 All 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 none 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="All" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 HostIs 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of hosts names 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipient belonging to one of the specified hosts 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="HostIs=myHost.mydom.org,yourHost" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 RecipientIs 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of recipients 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients defined in condition. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="RecipientIs=root@localhost,admin@localhost" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 UserIs 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of accounts 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients defined in condition regardless of host. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="UserIs=root,admin" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 HostIsLocal 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 none 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 check recipients's hosts against the list of host names set in configuration for localhost
+            (see &lt;servername&gt;). 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="HostIsLocal" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 RecipientIsLocal 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 none 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match recipient which host is local (see HostIsLocal) and that are recognized by the
+            Users Manager to be local accounts. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="RecipientIsLocal" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 SenderIs 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of address. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients if sender is in the condition string, else match none. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="SenderIs=badBay@badhost" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 RelayLimit 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 Maximum number of hops. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients if the message has more than the specified number of SMTP hops.
+            Important to prevent race conditions in SMTP delivery.
+            
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="RelayLimit=30" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 SubjectIs 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of address. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients if the subject is equal to the condition string, else match none. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="SubjectIs=REMOVE" 
+            </font>
+</td>
+            </tr>
+                                <tr>
+                        <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 SubjectStartsWith 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 comma separated list of address. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match all recipients if the subject starts with the condition string, else match none. 
+            </font>
+</td>
+                                <td bgcolor="#a0ddf0" colspan="" rowspan="" valign="top" align="left">
+    <font color="#000000" size="-1" face="arial,helvetica,sanserif">
+                 match="SubjectStartsWith: [ADV]" 
+            </font>
+</td>
+            </tr>
+            </table>
+                                                <p>
+       Some examples:
+       <br>
+         - &lt;mailet match="RecipientIsLocal"
+                     class="LocalDelivery"&gt;
+       </br>
+       <br>
+        - &lt;mailet match="UserIs=root &amp; HostIsLocal"
+                     class="Forward"&gt;
+       </br>
+       <br>
+        - &lt;mailet match="SenderIs=badBoy@myhost,badGirl@yourhost"
+                     class="Null"&gt;
+       </br>
+    </p>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                                    <table border="0" cellspacing="0" cellpadding="2" width="100%">
+      <tr><td bgcolor="#828DA6">
+        <font color="#ffffff" face="arial,helvetica,sanserif">
+          <a name="Mailet"><strong>Mailet</strong></a>
+        </font>
+      </td></tr>
+      <tr><td><br/></td></tr>
+      <tr><td>
+        <blockquote>
+                                    <p>
+       Mailet are the ones performing a process on a message. They are
+       provided with a Mail object on which thy can perform any kind of task
+       and they reply with another Mail object  containing the response.  Wise
+       use of mailet allow to write any mail based application as http
+       application using mailet. Simple mailet provides basic mail
+       functionality like mail forwarding, mailing list, "I'm on vacation"
+       message, mail logging etc. As simply as these mailet, you can write
+       and deploy your own mailet to perform any kind of task.
+      <br>
+         Here you are some mailet samples with their configuration:
+       </br>
+    </p>
+                                                <b>Null</b>
+                                                <blockquote>
+        Destroy any incoming mail. No configuration needed.
+        <br>
+        &lt;mailet match="SenderIs=badBoy@badhost" class="Null"&gt;
+        &lt;/mailet&gt;
+        </br>
+    </blockquote>
+                                                <b>Identity</b>
+                                                <blockquote>
+         Leave any incoming mail untoched.Sort of debug mailet
+         (not really useful).
+         No configuration needed.
+            <br>
+            &lt;mailet match="All" class="Identity"&gt;
+            &lt;/mailet&gt;</br>
+    </blockquote>
+                                                <b>Forward</b>
+                                                <blockquote>
+            Replace the recipient list with recipient specified in
+            configurations.<br>
+            &lt;mailet match="RecipientIs=root@localhost"
+            class="Forward"&gt;</br>
+      <blockquote>
+       <br>
+              &lt;forwardto&gt; green@blue.org &lt;/forwardto&gt;
+       </br>
+       <br>
+              &lt;forwardto&gt; red@yellow.com &lt;/forwardto&gt;
+       </br>
+      </blockquote>
+            &lt;/mailet&gt;
+    </blockquote>
+                                                <b>ToProcessor</b>
+                                                <blockquote>
+      Sends the incoming mail object to a new processor pipeline.
+      <code>root</code> and <code>error</code> are special processors that
+      should always be defined.
+      <br>
+        &lt;mailet match="RecipientIsLocal" class="ToProcessor"&gt;
+      </br>
+      <blockquote>
+              &lt;processor&gt; localdelivery &lt;/processor&gt;
+      </blockquote>
+          &lt;/mailet&gt;
+    </blockquote>
+                                                <b>ServerTime</b>
+                                                <blockquote>
+      Replies to the sender with a short message with the current time.
+      No configuration needed.
+      <br>
+        &lt;mailet match="RecipientIs=time@localhost" class="ServerTime"&gt;
+      </br>
+      &lt;/mailet&gt;
+    </blockquote>
+                                                <b>ToRepository</b>
+                                                <blockquote>
+      Stores mails in the specified MailRepository. Useful for mail logging
+      etc.  If the passThrough is false the mail will be destroyed, if true
+      it will be returned untouched to the pipe.
+      <br>
+        &lt;mailet match="RecipientIs=root@localhost"
+                   class="ToRepository"&gt;
+      </br>
+      <blockquote>
+        <br>
+          &lt;repositoryPath&gt; file://../var/mail/logAdmin
+                &lt;/repositoryPath&gt;
+        </br>
+        <br>
+          &lt;passThrough&gt; true &lt;/passThrough&gt; (default false)
+        </br>
+      </blockquote>
+            &lt;/mailet&gt;
+    </blockquote>
+                                                <b>LocalDelivery</b>
+                                                <blockquote>
+      Store mail in the local inbox, one folder for each user.
+      <br>
+        &lt;mailet match="RecipientIsLocal" class="LocalDelivery"&gt;
+      </br>
+        &lt;/mailet&gt;
+    </blockquote>
+                                                <b>RemoteDelivery</b>
+                                                <blockquote>
+        Realy mails to remote hosts. "delayTime" is the time in mills the
+        mailet will wait
+        before retrying sending a mail which fail at first time.
+        "maxRetries" is the number of
+        retries before sending back to sender the mail.
+        <br>
+          &lt;mailet match="!RecipientIsLocal" class="RemoteDelivery"&gt;
+        </br>
+      <blockquote>
+        <br>
+            &lt;delayTime&gt; 21600000 &lt;/delayTime&gt;
+        </br>
+        <br>
+            &lt;maxRetries&gt; 5 &lt;/maxRetries&gt; 
+        </br>
+      </blockquote>
+            &lt;/mailet&gt;
+    </blockquote>
+                            </blockquote>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                            </blockquote>
+        </p>
+      </td></tr>
+      <tr><td><br/></td></tr>
+    </table>
+                                        </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr><td colspan="2">
+                    <hr noshade="" size="1"/>
+                </td></tr>
+                <tr><td colspan="2">
+                    <div align="center"><font color="#525D76" size="-1"><em>
+                    Copyright &#169; 1999-2001, Apache Software Foundation
+                    </em></font></div>
+                </td></tr>
+            </table>
+        </body>
+    </html>
+<!-- end the processing -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+

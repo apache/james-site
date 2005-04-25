@@ -1,0 +1,64 @@
+This file contains PGP/GnuPG keys of various developers.  Please
+don't use them for email unless you have to.  Their main purpose
+is code signing.
+
+Users: Always test available signatures, e.g.,
+
+$ pgpk -a KEYS
+$ pgpv james-2.1.tar.gz.asc
+or,
+$ pgp -ka KEYS
+$ pgp james-2.1.tar.gz.asc
+or,
+$ gpg --import KEYS
+$ gpg --verify james-2.1.tar.gz.asc
+
+Developers: 
+
+$ pgp -kxa <your name> and append it to this file.
+$ (pgpk -ll <your name> && pgpk -xa <your name>) >> this file.
+$ (gpg --list-sigs <your name> && gpg --armor --export <your name>) >> this file.
+
+pub  1024D/E4136392 2003-01-02 Noel J. Bergman <noel@apache.org>
+sig        E4136392 2003-01-02  Noel J. Bergman <noel@apache.org>
+sig        C9725F3B 2003-10-31  Dion Gillard <dion@multitask.com.au>
+sig        95597B05 2003-11-05  Neil Graham (this key is primarily for signing Xerces-J releases) <neilg@ca.ibm.com>
+sig        6883850D 2003-11-08  Noel J. Bergman <noel@devtech.com>
+sub  2048g/DBEB6149 2003-01-02
+sig        E4136392 2003-01-02  Noel J. Bergman <noel@apache.org>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.0.6 (GNU/Linux)
+Comment: For info see http://www.gnupg.org
+
+mQGiBD4Tu84RBACXw+xeEwRxxZeRU55cQu0nxmn+bRbSyoAprHVFhniJ+rxUA5x6
+2sJTBsbKIC0i8RzxQCUCpNVe7OS/19S9ipdyzHqqyOvH6D/iEc0hvcuGbG1O2QTv
+e4XOwefkNvUNnQLCv49MWDt4EpycueUfqUwlHdpCAjy0H+w+LzVlX0EAWwCgkfEf
+3AT5PpHjvZpfzQu5hwEgkecEAJN/1y3zHSzCcER288k6tFBUwqu2OrQ4AEghUuc2
+UtsZh///yoDESjH7ebyV5T8ceAHam0YjN89Sn62fwV/qkpqnXUgXltNTPZGcGCtP
+Kwb4sFeRBh+7sPmiuAo4G0djMHAnUTuyjS+iOnbVQQsoWBqydkciDI6Q71SZqlAq
+U3qnA/0VSLF22Fx/JDe3Iz8+DQWHizhsywmTonVWGnjcoWW5UcIUAupgZK+R+hYq
+NiMQCS1yy9rPlIsS+EPOrVo3wtsLYawTsgU6B9HWXF3jp4eVVPca+p+KL6hE5/fX
+x2qien/EGCZSTPHkV/tC/f4SK47WcSb8jvixj/pBCOK8y9KZCrQhTm9lbCBKLiBC
+ZXJnbWFuIDxub2VsQGFwYWNoZS5vcmc+iFcEExECABcFAj4Tu84FCwcKAwQDFQMC
+AxYCAQIXgAAKCRABBWa85BNjkm4DAJ4xQZerMGT8s1RQ2b4s/Gbt267y6wCfXRd9
+jEAsPFr2h6NzIQkgzRf/tv2IRgQTEQIABgUCP6K9xQAKCRCAzn5dyXJfO+gFAKCl
+NqdnC7W9IGIcxfUkzRDpoI7aYwCeNdWT1OWtcKVzBz8oRunYE3F7uSeIRgQTEQIA
+BgUCP6g+YQAKCRCL9vl1lVl7BfGAAJ9MyG8Vp7m7mOtHbchV+SgXLhz1JgCgg15+
+CoydDq8/wqZnbMrVMf7JSR6IRgQQEQIABgUCP609iAAKCRCl/zLuaIOFDd4IAKCO
+Ng73KhfZCPm9nwIXkHx0oTSMbQCdHJMDi0qa+2I+QQrTUXHtXrVYh2C5Ag0EPhO8
+ChAIAJhlfFqsHoyGmcEekBQKGkNMbk79JtONoeQ8iSf5CwGCOgkrhRwdbug+gC+B
+0fqBwUS42N1ikEF3565TKzYRqrOV0qIlMp/buh3hvdXE93o/Jzx3D/JCLYQAc8Fl
+BzEIuOARMcp/EbPEukNRY6ROfwVwOxBzErD6iUZTIW1I4mXlYGPsZtAFzhR14RPI
+vkHtkbqdkjvCbRWDnKi+6W5+Kaa1pKYouM7SHhH2pmudIkK+kjELB94g20iVeYhb
+0nsKypnurHNYJXc1Ib1WYXBSLXuqNQgqsWp/TPmwpyIUiZwlaeiN0TbU5GzvFkBU
+QOdC7LgEAzR/3fyI4HwmRg4BaUsAAwUIAIPnya7FYxB7zJDpuZaei3QhN1I4FpkR
+TcO2IvpHI7RXopbi5zdcS84hta31D4LOj28TlCMpgDROhIS1m4DaCQM/phkgS19S
+Ql+9FvfztY4AouLhFxxMXavD8yGHw3jdJ5UsEGAScpkqdVZ+Xck/+zpI1d4LgqMM
+Bn93OIJsAe/Lvgemz1ycBVyOmgK3QsMFYZM62kJ4OyF+RjFTMDbz7TQJ7cS0tzJs
+6yw87W7RPHAIrX781Ng2468Knt0OFz9GRiF7fYyXb3DxRUkPY49deU1KUjKJcC0B
+IEFscJEoi4nG3w7SbLKeS5xfpKowQ11dq4HV7dd1ZD0fOgAZQBijJAyIRgQYEQIA
+BgUCPhO8CgAKCRABBWa85BNjkqv4AKCOUe754DaxXoWxdxd2j/RmG1XBEQCfYP6y
+8FjjfLc9fmiX0oDrdZ4m4ZY=
+=aYsx
+-----END PGP PUBLIC KEY BLOCK-----

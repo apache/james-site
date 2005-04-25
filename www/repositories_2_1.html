@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - Repositories</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="Repositories">
+<strong>Repositories</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+<p>James uses a number of different repositories to both store message data (email, news messages) and 
+user information.  User repositories store user information, including user names, authentication 
+information, and aliases.  Mail repositories store messages that have been delivered locally.  Spool 
+repositories store messages that are still being processed.  Finally, news repositories are used to
+store news messages.</p>
+
+</div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Storage Types">
+<strong>Storage Types</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+<p>Aside from the type of data they store, repositories are distinguished by 
+where they store data.  There are three types of storage - File, Database, and DBFile.</p>
+<div class="subsection">
+<div class="subsection-header">
+<a name="File Repositories">
+<strong>File Repositories</strong>
+</a>
+</div>
+<div class="subsection-body">
+
+<p>File-based repositories store all data in the file system.  In general, these repositories are extremely
+simple to configure, but may compare poorly in terms of performance when compared to other repository
+types.  File repositories are not recommended for large or performance-critical configurations.  In the
+default configuration, all repositories are file repositories.</p>
+
+<p>File repository paths typically begin with the prefix "file".  Paths are relative to the application
+base directory, unless the path begins with a slash.  As an example, assume that James is running in 
+/usr/james/phoenix/apps/james.  Then "file://var/mail/spool/" would refer to the directory /usr/james/phoenix/apps/james/var/mail/spool.  
+And "file:///var/mail/spool/" (note the extra '/') would refer to the directory /var/mail/spool.</p>
+
+<p>All repository types (mail, spool, user, and news) have file-based implementations.  No special configuration is required to enable file-based repositories</p>
+
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="Database (JDBC) Repositories">
+<strong>Database (JDBC) Repositories</strong>
+</a>
+</div>
+<div class="subsection-body">
+
+<p>Database repositories store all data in an administrator-supplied database.  Configuration is somewhat
+more complex, requiring that the administrator adjust the data-connections section.  Detailed directions 
+are included in the sample configuration file.  The administrator will need to know the JDBC driver class,
+the appropriate URL for use with his database, and a valid username/password for the database.</p>
+
+<p>If the administrator wants to configure a database other than MySQL, it will be necessary to add the jar 
+or zip file containing the JDBC driver classes to the lib subdirectory of the installation directory.  This
+will allow Phoenix to properly load the driver when it is initializing the database repository.  The MySQL
+driver is pre-packaged with James.</p>
+
+<p>Database repository paths typically begin with the prefix "db".  The format is "db://&lt;data-source&gt;/&lt;table&gt;" 
+where &lt;data-source&gt; is the name of the data-source defined in the data-connections section.  And &lt;table&gt; is 
+the particular table associated with the repository.</p>
+
+<p>Mail, spool, and user repositories have JDBC-based implementations.</p>
+
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="DBFile Repositories">
+<strong>DBFile Repositories</strong>
+</a>
+</div>
+<div class="subsection-body">
+
+<p>This is a special repository type used only for mail repositories.  DBFile repositories store the body of
+a mail message in the file system, while headers are stored in the database.  This allows the administrator 
+to minimize the size of data stored in the database, while conserving most of the performance of the 
+database repository.</p>
+
+<p>Only mail repositories have dbfile-based implementations.</p>
+</div>
+</div>
+
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

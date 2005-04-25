@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - James 2.1 - Mailet API</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="Mailet API">
+<strong>Mailet API</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+<p>The Mailet API is a simple API used to build mail processing applications.  James is a Mailet 
+container, allowing administrators to deploy Mailets (both custom and pre-made) to carry out a 
+variety of complex mail processing tasks.  In the default configuration James uses Mailets to carry 
+out a number of tasks that are carried out deep in the source code of other mail servers (i.e. list 
+processing, remote and local delivery).</p>
+<p>
+As it stands today, the Mailet API defines interfaces for both Matchers and Mailets.</p>
+<p>Matchers, as their name would suggest, match mail messages against certain conditions.  They 
+return some subset (possibly the entire set) of the original recipients of the message if there 
+is a match.  An inherent part of the Matcher contract is that a Matcher should not induce any changes
+in a message under evaluation.</p>
+<p>Mailets are responsible for actually processing the message.  They may alter the message in any fashion,
+or pass the message to an external API or component.  This can include delivering a message to its destination 
+repository or SMTP server.</p>
+<p>The Mailet API is currently in its second revision.  Although, the Mailet API is expected to undergo substantial changes in the near future, it is our aim that existing Mailets that abided purely by the prior Mailet API interfaces will continue to run with the revised specification.</p>
+<p>The Javadoc for the Mailet API can be found <a href="mailet/index.html">here</a>.</p>
+<p>James bundles a number of Matchers and Mailets in its distribution.  Descriptions of provided matchers 
+can be found <a href="provided_matchers_2_1.html">here</a>, while descriptions of provided mailets can be found 
+<a href="provided_mailets_2_1.html">here</a>.</p>
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

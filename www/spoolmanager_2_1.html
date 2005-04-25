@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - James 2.1 - The SpoolManager, Matchers, and Mailets</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="The SpoolManager, Matchers, and Mailets">
+<strong>The SpoolManager, Matchers, and Mailets</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+<p>James separates the services that deliver mail to James (i.e. SMTP, FetchPOP) 
+from the engine that processes mail after it is received by James.  The 
+SpoolManager component is James' mail processing engine.  James' SpoolManager component 
+is a Mailet container.  It is these mailets and matchers that actually carry out mail processing.</p>
+
+<p>Core to the SpoolManager operation are Matchers and Mailets.  A Matcher is a 
+simple object that checks whether a mail message matches a particular condition. 
+A mailet is another type object that processes an email message in some way.  Some 
+typical tasks appropriate for a mailet would be adding a header, delivering the message 
+to a local repository, or handling remote delivery.  Both the Matcher and Mailet APIs are 
+public, allowing James users to write their own custom matchers and mailets.  James 
+comes with a large set of pre-built matchers and mailets.</p>
+
+<p>Matchers and mailets are used in pairs.  At each stage in processing a message is checked 
+against a matcher.  The matcher will attempt to match the mail message.  The match is not simply
+a yes or no issue.  Instead, the match method returns a collection of matched recipients.  If the 
+this collection of matched recipients is empty, the mailet is not invoked.  If the collection of
+matched recipients is the entire set of original recipients, the mail is then processed by the 
+associated mailet.  Finally, if the matcher only matches a proper subset of the original recipients,
+the original mail is duplicated.  The recipients for one message are set to the matched recipients,
+and that message is processed by the mailet.  The recipients for the other mail are set to the
+non-matching recipients, and that message is not processed by the mailet.</p>
+
+<p>More on matchers and mailets can be found <a href="mailet_api_2_1.html">here</a>.</p>
+
+<p>One level up from the matchers and mailets are the processors.  Each processor 
+is a list of matcher/mailet pairs.  During mail processing, mail messages will be 
+processed by each pair, in order.  In most cases, the message will be processed by 
+all the pairs in the processor.  However, it is possible for a mailet to change the 
+state of the mail message so it is immediately directed to another processor, and no 
+additional processing occurs in the current processor.  Typically this occurs when the mailet wants to prevent 
+future processing of this message (i.e. the mail message has been delivered locally, 
+and hence requires no further processing) or when the mail message has been identified
+as a candidate for special processing (i.e. the message is spam and thus should be 
+routed to the spam processor).  Because of this redirection, the processors in the 
+SpoolManager form a tree.  The root processor, which must be present, is the root of
+this tree.</p>
+
+<p>The SpoolManager continually checks for mail in the spool repository.  When
+mail is first found in the repository, it is delivered to the root processor.  
+Mail can be placed on this spool from a number of sources (SMTP, FetchPOP, a 
+custom component).  This spool repository is also used for storage of mail that is
+being redirected from one processor to another.  Mail messages are driven through 
+the processor tree until they reach the end of a processor or are marked completed 
+by a mailet.</p>
+
+<p>More on configuration of the SpoolManager can be found <a href="spoolmanager_configuration_2_1.html">here</a>.</p>
+
+<p>Much of the power of James lies in the SpoolManager component.  Custom matchers and 
+mailets can be easily developed to address an administrator's particular needs.  The 
+processor tree can easily be configured to sort, filter, and deliver mail based on any 
+number of criteria.  Mail administrators new to James should spend some time learning how 
+to configure the SpoolManager to meet their needs.</p>
+
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

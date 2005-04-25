@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - James 2.1 - Adding Users</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="Creating User Accounts">
+<strong>Creating User Accounts</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+<p>User accounts are shared across services.  A common user repository is shared across James 
+services.  That is, once you've created a POP3 mail account and set a password, that same 
+account is available for authenticated SMTP and NNTP.</p>
+<div class="subsection">
+<div class="subsection-header">
+<a name="Before You Add Accounts">
+<strong>Before You Add Accounts</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>In James, user accounts are created throught the RemoteManager.  So, after installation is complete, the first step to adding users 
+is to configure the RemoteManager.  More information on RemoteManager configuration can be found 
+<a href="remotemanager_configuration_2_1.html">here</a>.  You will need to have configured at least one administrator account and 
+ensured that the RemoteManager is enabled.</p>
+<p>Also, you need to make sure that your user repository configuration is correct before adding any users.  If 
+you change your user repository type (i.e. file to database) or the configuration of your user repository 
+(i.e. the file or database URL) after you have added users, you may lose your user data.  Please change these 
+values with care.</p>
+<p>After you've done this, restart James to ensure that any changes you've made in the configuration are incorporated into 
+the running system.  You are now ready to create user accounts.</p>
+</div>
+</div>
+<p>Once James is up and listening, adding a user is simple:</p>
+1.  Telnet to the host and port on which the RemoteManager is listening.  For command-line telnet clients 
+this is generally done by typing "telnet &lt;host&gt; &lt;pass&gt;" where &lt;host&gt; is the James 
+hostname and &lt;port&gt; is the RemoteManager port specified in the James config.xml.<br />
+<br />
+2.  You will be prompted for your administrator userid and password.  Enter the values you specified 
+in the James config.xml.<br />
+<br />
+3.  After logging in, type "adduser &lt;user&gt; &lt;password&gt;" where &lt;user&gt; is the user name 
+and &lt;password&gt; is the password of the account you wish to create.  Please note that the user name 
+should NOT be a complete email address.  Rather, all email addresses of the form &lt;user&gt;@&lt;domain&gt; 
+(where &lt;domain&gt; is any of the values specified in the &lt;servernames&gt; block) will be delivered to 
+this account by default.  Mailet configuration can change this default behavior.<br />
+<br />
+4.  Repeat step 3 for all user accounts you wish to create.
+<p>That's it.  Your user accounts are now created and can be used by all James services.</p>
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

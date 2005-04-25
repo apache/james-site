@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - Using LDAP</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
+<meta value="Charles Benett" name="author" />
+<meta value="charles@benett1.demon.co.uk" name="email" />
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James 2.X</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="James 1.2 - Using an LDAP Directory as a Users Repository">
+<strong>James 1.2 - Using an LDAP Directory as a Users Repository</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+  <p>
+    This document explains how to enable JAMES to use an LDAP directory as a
+    Users Repository.
+  </p>
+</div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Summary">
+<strong>Summary</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+  <p>
+    We have tried to make the LDAP implementation of UsersRepository as
+    flexible a possible, recognising that each installation will have a unique
+    directory schema.
+    <br>We assume that all users that a James Mailserver will handle fall
+      within one single-rooted tree. The root of this tree, ie the lowest node
+      in the directory which is an ancestor for all users served by this
+      mailserver and the mailserver, is called the LDAPRoot. (See diagram)
+    </br>
+    <br>It is entirely possible that an organization may have more than one
+      mail server. Consequently, the fact that a user is in the Directory does
+      not imply that this mailserver should handle mail for them.
+    </br>
+    <br>This implementation of UsersRepository creates one node (object) for
+      each set of mail users. The set called 'LocalUsers' is the set of users
+      whose mail is handled by this server. Other sets include any mail-lists
+      handled by the server. Each member of a set is recorded as an attribute
+      of these objects. These nodes are child nodes of the mailserver.
+    </br>
+    <br>The mailserver will accept mail for local delivery if the user part of
+      the email address matches a member of LocalUsers and if the domain/host
+      part of the email address matches the first servername .
+      (Set servernames autodetect to false and enter the domain served as the
+      first servername, e.g. apache.org).
+    </br>
+    <br>For POP3 authentication, the mailserver first finds the user entry in
+      the directory, underLDAPRoot, whose attribute, specified as
+      MailAttribute in conf, matches user@domain. The mailserver authenticates
+      the POP3 user if it can bind to the directory as that user entry with
+      the offered password.
+    </br>
+    <br>
+      This implementation does not set passwords in the directory. Use a dummy
+      password when invoking adduser in RemoteManger.
+    </br>
+    <br>
+      If ManageGroupAttribute is set to TRUE (as it is by default), then the
+      RemoteManger will add/remove the full DN of the email group to/from the
+      user entry. This facilty allows users to ask the directory what is my
+      mailserver and what email lists am I subscribed to?
+    </br>
+
+  </p>
+
+  <table cellspacing="0" cellpadding="0" class="detail-table">
+<tbody>
+    <tr class="detail-table-row">
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content">Root of Directory
+        <br>Example: dc=org</br>
+        <br>May not be referenced in conf.xml</br>
+        <br>|</br>
+        <br>|</br>
+      </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+    </tr>
+    <tr class="detail-table-row">
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content" colspan="3">-------------------------------------------------------------------------------------------------</td>
+<td class="separator-col" />
+
+    </tr>
+    <tr class="detail-table-row">
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content">|
+        <br>Subtree not served by James</br>
+        <br> e.g.: dc=w3c, dc=org</br>
+       </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content">|
+        <br>Subtree served by James</br>
+        <br> e.g.: dc=apache, dc=org </br>
+        <br>"LDAPRoot"</br>
+        <br>|</br>
+      </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content">|
+        <br>Subtree not served by James</br>
+        <br> e.g.: dc=xml, dc=org</br>
+      </td>
+<td class="separator-col" />
+    </tr>
+    <tr class="detail-table-row">
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content">
+        <table cellspacing="0" cellpadding="0" class="detail-table">
+<tbody>
+          <tr class="detail-table-row">
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content" colspan="4">----------------------------------------------------</td>
+<td class="separator-col" />
+          </tr>
+          <tr class="detail-table-row">
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content">|
+              <br>This mailserver </br>
+              <br>cn=mailserver.apache.org</br>
+              <br>|</br>
+              <br>---------------</br>
+            </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content">|
+              <br>A user </br>
+              <br>cn=King Arthur</br>
+              <br> memberOfGroup=</br>
+              <br>cn=LocalUsers etc</br>
+            </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content">|
+              <br>A user </br>
+              <br>cn=Morgan LeFay </br>
+            </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content">|
+             <br>Another mailserver </br>
+             <br>cn=oldmail.apache.org</br>
+            </td>
+<td class="separator-col" />
+          </tr>
+          <tr class="detail-table-row">
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content">
+              <table cellspacing="0" cellpadding="0" class="detail-table">
+<tbody>
+            <tr class="detail-table-row">
+<td class="separator-col" />
+              <td align="left" valign="top" class="detail-table-content"> |
+                <br>LocalUsers</br>
+                <br>member=Arthur</br>
+              </td>
+<td class="separator-col" />
+              <td align="left" valign="top" class="detail-table-content"> |
+                    <br>list-james</br>
+                    <br>member=Arthur</br>
+                  </td>
+<td class="separator-col" />
+            </tr>
+          </tbody>
+</table>
+            </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+            <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+          </tr>
+        </tbody>
+</table>
+      </td>
+<td class="separator-col" />
+      <td align="left" valign="top" class="detail-table-content"> </td>
+<td class="separator-col" />
+    </tr>
+  </tbody>
+</table>
+</div>
+</p>
+</div>
+<div class="section">
+<div class="section-header">
+<a name="Installation">
+<strong>Installation</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+
+  <p>
+    Six entries in JAMES.conf.xml must be set for this to work: 
+    <ul>
+      <li>change usersManager - type to ldap.</li>
+      <li>Set the ldapServer element to point to the correct host and port</li>
+      <li>Set LDAPRoot and ThsServerRDN.</li>
+      <li>Set the direcory FDN and password that should be used to write to the directory.</li>
+      <li>Unless all your users have email addresses of the form, name@the-machine-running-James, set servernames-autodetect to false and apecify the your email domain as the first servername.</li>
+    </ul>
+  </p>
+ 
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade="" />
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2005, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
