@@ -108,6 +108,126 @@
 </div>
 <div class="section">
 <div class="section-header">
+<a name="Version 2.3.0a1">
+<strong>Version 2.3.0a1</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+<p>Released 15 February 2006</p>
+<p>James 2.3.0a1 is "storage" compatible with 2.2.0 (It uses the same files/db formats of James 2.2.0). Configuration should be updated following <a href="http://wiki.apache.org/james/JamesV2">this instructions</a>. Mailets developed against 2.2.0 are not binary compatible with 2.3.0 but rebuilding mailets in 2.3.0a1 should be an easy task: just replace "Component"s with "Service"s and replace "MailStore" with "Store" and rebuild. Below are some highlights of features and changes already available:</p>
+<li>Phoenix container upgraded to the latest trunk: better classpath management for mailets</li>
+<li>Derby support: also made it the default storage engine</li>
+<li>JavaMail 1.3.2 (not JavaMail 1.3.3 because of known bugs with Base64 encoding)</li>
+<li>Upgraded dependencies to the latest known stable releases (dnsjava, excalibur components, cornerstone, etc.)</li>
+<li>Removed FetchPop</li>
+<li>Command pattern for SMTPServer configuration (make it easier for developers to customize fastfile)</li>
+<li>Increased components granularity/flexibility: many top level components have been refactored to be more modular (look at the new assembly.xml)</li>
+<li>SMTP server now supports 8BITMIME, ENHANCEDSTATUSCODES, PIPELINING</li>
+<li>Introduced a few experimental S/MIME and Bayesian matcher/mailets</li>
+<li>Fixed more than 40 bugs against 2.2.0</li>
+<li>And much more!</li>
+<p>Details</p>
+
+<h2>Bug</h2>
+<ul>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-138'>JAMES-138</a>] - Don't keep all mailboxes in-memory forever</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-152'>JAMES-152</a>] - When a Received header is invalid mail may be created with a null remote address and host name</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-154'>JAMES-154</a>] - fetchmail config. files not copied to .sar</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-237'>JAMES-237</a>] - J2 1.5'enum' is a keyword</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-250'>JAMES-250</a>] - fail to start if installed under a "bin" directory</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-264'>JAMES-264</a>] - mail list loop caused by using Return-Path</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-286'>JAMES-286</a>] - Exceeding maximum value with MAIL SIZE causes NullPointerException</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-295'>JAMES-295</a>] - Missing sqlDefs wont be detected</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-296'>JAMES-296</a>] - James does not handle Source Routing</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-300'>JAMES-300</a>] - Fetchmail can't fetch mails</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-305'>JAMES-305</a>] - AttachmentFileNameIs never matches if the message is S/MIME signed</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-306'>JAMES-306</a>] - AttachmentFileNameIs may throw  UnsupportedEncodingException</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-311'>JAMES-311</a>] - Nntp very picky with clients</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-312'>JAMES-312</a>] - AttachmentFileNameIs matcher may throw an Exception examining a multipart/alternative message</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-316'>JAMES-316</a>] - java.lang.ArrayIndexOutOfBoundsException from RemoteDelivery</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-317'>JAMES-317</a>] - FromProcessor doesn't delete, throws ClassCastException</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-318'>JAMES-318</a>] - java.lang.NullPointerException when host is unknown</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-320'>JAMES-320</a>] - Some messages cause POP3 output stream to freeze on RETR.</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-323'>JAMES-323</a>] - using toUppercase, toLowerCase, equalsIgnoreCase without specifying the locale is a bug</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-328'>JAMES-328</a>] - TOP <msg> 0 does not return a terminator on error</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-329'>JAMES-329</a>] - DefaultUsersJdbcRepository readUserFromResultSet incorrect</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-337'>JAMES-337</a>] - Exception when FromRepository tries to delete a message</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-343'>JAMES-343</a>] - James does not compile using Sun JDK 5.0</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-356'>JAMES-356</a>] - MimeMessageWrapper does not handle multiline headers</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-359'>JAMES-359</a>] - remote address from Received header is not handled</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-361'>JAMES-361</a>] - DSNBounce often report the dsn Status 5.5.0 incorrectly</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-372'>JAMES-372</a>] - Inboxes deleted during OutOfMemoryError</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-378'>JAMES-378</a>] - DSNBounce creates not rfc1894 compliant notifications</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-379'>JAMES-379</a>] - MailImpl.duplicate() should also clone attributes and not only the container HashMap</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-380'>JAMES-380</a>] - ESMTP Compliance fix</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-383'>JAMES-383</a>] - new posts hanging</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-387'>JAMES-387</a>] - Exception in BayesianAnalysis</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-396'>JAMES-396</a>] - Wrong column order (IMHO) in primary key definition for SpoolRepositories.</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-413'>JAMES-413</a>] - James does not resolve CNAME DNS registrations</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-417'>JAMES-417</a>] - ClassCastException handling the recipients after a DSNBounce</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-418'>JAMES-418</a>] - Loader uses wrong method to obtain class loader/doesn't set context class loader</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-419'>JAMES-419</a>] - NPE during 8bit conversion of non-mime messages</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-420'>JAMES-420</a>] - Sometimes messages are delayed or stalled in the spool</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-421'>JAMES-421</a>] - MailImpls sharing MimeMessages / LinearProcessor not cloning it after a partial match.</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-428'>JAMES-428</a>] - Deadlock in ServerConnection</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-430'>JAMES-430</a>] - MailImpl#writeContentTo leaks thread</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-431'>JAMES-431</a>] - Line ending and CRLF.CRLF issues in POP3 and SMTP</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-435'>JAMES-435</a>] - James Service Wrapper displays wrong James version</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-436'>JAMES-436</a>] - James trunk cannot be built with jdk1.4</li>
+</ul>
+    
+<h2>New Feature</h2>
+<ul>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-257'>JAMES-257</a>] - S/MIME Matchers/Mailets</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-258'>JAMES-258</a>] - Add Bayesian Filtering</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-381'>JAMES-381</a>] - Configurable RBL support</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-390'>JAMES-390</a>] - Add derby support</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-423'>JAMES-423</a>] - Give the remote manager a service promt</li>
+</ul>
+    
+<h2>Improvement</h2>
+<ul>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-52'>JAMES-52</a>] - 8bitmime capabilities missing</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-270'>JAMES-270</a>] - Add MailAttributes to indicate when default values have been applied</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-303'>JAMES-303</a>] - AttachmentFileNameIs matcher should be able to analyze zip file attachments</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-321'>JAMES-321</a>] - Comments on configuri</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-333'>JAMES-333</a>] - Build Broken in HEAD revision</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-338'>JAMES-338</a>] - Upgrade to JavaMail 1.3.2</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-357'>JAMES-357</a>] - DSNBounce should be configured by default</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-360'>JAMES-360</a>] - Support for Additional "received for" headers: e.g. X-Envelope-To</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-363'>JAMES-363</a>] - Move PostmasterAlias from code to james-confix.xml</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-369'>JAMES-369</a>] - Always announce AUTH capability to clients</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-375'>JAMES-375</a>] - RFC 1854 - Command Pipelining support</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-377'>JAMES-377</a>] - rfc2034 ENHANCEDSTATUSCODES compliance</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-388'>JAMES-388</a>] - Upgrade to dnsjava 2.0.0</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-389'>JAMES-389</a>] - Invert "precompilation" logic for jdbc3</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-395'>JAMES-395</a>] - Support latest hsqldb in sqlResources.</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-398'>JAMES-398</a>] - Add SMIME mailets for signature verification and message decrypt</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-399'>JAMES-399</a>] - Update bouncycastle to 129 and remove jdk13 compatibility</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-407'>JAMES-407</a>] - James inprotocol handling framework</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-410'>JAMES-410</a>] - Re-enable EHLO support in RemoteDelivery</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-411'>JAMES-411</a>] - update Mailet's Mail to support most of the current james mailets</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-412'>JAMES-412</a>] - Increase James component granularity / flexibility</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-414'>JAMES-414</a>] - Add more flexibility to LocalDelivery</li>
+</ul>
+            
+<h2>Task</h2>
+<ul>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-149'>JAMES-149</a>] - Add soft-fail to unresolved received from domains</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-190'>JAMES-190</a>] - Apache license 2.0</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-391'>JAMES-391</a>] - Move "candidates" libraries to the official lib / remove unused libraries</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-392'>JAMES-392</a>] - Resolve deprecation use from MailetAPI for the next release</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-393'>JAMES-393</a>] - Use Derby and db providers by default instead of file repositories.</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-394'>JAMES-394</a>] - Remove OLD mm.mysql driver (not compatible with newer MySQL db)</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-400'>JAMES-400</a>] - Move previous SMIME matcher/mailets to the new "smime" subpackages</li>
+<li>[<a href='http://issues.apache.org/jira/browse/JAMES-406'>JAMES-406</a>] - Investigate about libraries upgradability (cornerstone/excalibur/avalon/phoenix)</li>
+</ul>
+
+</div>
+</p>
+</div>
+<div class="section-header">
 <a name="Version 2.2.0">
 <strong>Version 2.2.0</strong>
 </a>
