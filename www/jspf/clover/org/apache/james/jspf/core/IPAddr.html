@@ -1,0 +1,2094 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Maven Clover report</title>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../style.css" TITLE="Style">
+</head>
+<body>
+<TABLE cellspacing="0" cellpadding="2"><TBODY>
+    <!-- C:\ Lab\ VOID\ projects\ james-jspf\ src\ main\ java\ org\ apache\ james\ jspf\ core\ IPAddr.java -->
+  <TR>
+    <TD colspan="6" class="reportHeader">
+    <TABLE width="100%"><TR>
+    <TD valign="top" class="titleText">Clover coverage report -   Maven Clover report <DIV class="timestamp"><b>Coverage timestamp:</b>&nbsp;Fri Jul 14 2006 11:00:43 CEST</DIV>
+            <DIV class="navBar"><a href="../../../../../pkgs-summary.html"><b>Overview</b></a>&nbsp;&nbsp;&nbsp;<a href="pkg-summary.html"><b>Package</b></a>&nbsp;&nbsp;&nbsp;<font class="navBarCurrent">File</font></DIV>
+    
+<DIV class="navBarLink">
+&nbsp;&nbsp;&nbsp;
+    <A HREF="../../../../../index.html" TARGET="_top">FRAMES</A>&nbsp;&nbsp;
+<A HREF="IPAddr.html" TARGET="_top">NO FRAMES</A>&nbsp;&nbsp;
+    </DIV>
+
+</TD>
+         <td class="headerStats" valign="top" width="40%" align="right">
+        <table align="right">
+         <tr>
+           <td nowrap><b>file stats:</b></td>
+           <td align="right"><b>LOC:</b></td>
+           <td align="right">465</td>
+           <td width="10%">&nbsp;</td>
+           <td align="right"><b>Methods:</b></td>
+           <td align="right">26</td>
+         </tr>
+         <tr>
+           <td></td>
+           <td align="right"><b>NCLOC:</b></td>
+           <td align="right">230</td>
+           <td width="10%">&nbsp;</td>
+           <td align="right"><b>Classes:</b></td>
+           <td align="right">1</td>
+         </tr>
+      </table>
+     </td>
+    </TR></TABLE>
+   </TD>
+  </TR>
+
+<TR><TD class="hbreak" colspan="6">&nbsp;</TD></TR>
+  <TR>
+    <TD class="graphHeaderLeft"><b>&nbsp;Source file</b></TD>
+    <TD class="graphHeader">Conditionals</TD>
+    <TD class="graphHeader">Statements</TD>
+    <TD class="graphHeader">Methods</TD>
+    <TD class="graphHeader" align="left" colspan="2"><B>TOTAL</B></TD>
+  </TR>   
+  <TR>
+    <TD class="graphItem">
+               IPAddr.java
+        </TD>
+   
+    <TD class="graphPercent" align="center">73.2%</TD>
+    <TD class="graphPercent" align="center">73.9%</TD>
+    <TD class="graphPercent" align="center">73.1%</TD>
+    <TD class="graphBarLeft" align="center"><B>73.6%</B></TD>
+    <TD class="graphBar">
+            <TABLE class="barGraph" cellspacing="0">
+        <TBODY>
+          <TR>
+                   <TD class="covered"><img alt="coverage" src="../../../../../img/trans.gif"
+                   width="147" height="12"></TD>
+            <TD class="uncovered"><img alt="coverage" src="../../../../../img/trans.gif"
+                   width="53" height="12"></TD>
+          </TR>
+    </TBODY>
+      </TABLE>
+          </TD>
+  </TR> 
+</TBODY></TABLE><TABLE cellspacing="0" cellpadding="0" class="srcView"><TBODY>
+<TR><TD align="right" class="lineCount">
+&nbsp;1</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">/***********************************************************************</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;2</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Copyright (c) 2006 The Apache Software Foundation.             *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;3</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * All rights reserved.                                                *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;4</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * ------------------------------------------------------------------- *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;5</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License"); you *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;6</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * may not use this file except in compliance with the License. You    *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;7</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * may obtain a copy of the License at:                                *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;8</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *                                                                     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;9</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0                      *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;10</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *                                                                     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;11</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Unless required by applicable law or agreed to in writing, software *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;12</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,   *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;13</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;14</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * implied.  See the License for the specific language governing       *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;15</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * permissions and limitations under the License.                      *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;16</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> ***********************************************************************/</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;17</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;18</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">package</span> org.apache.james.jspf.core;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;19</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;20</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.net.UnknownHostException;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;21</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.util.ArrayList;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;22</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;23</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> org.apache.james.jspf.exceptions.PermErrorException;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;24</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> org.apache.james.jspf.util.Inet6Util;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;25</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> org.xbill.DNS.Address;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;26</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+<A name="IPAddr">&nbsp;27</A></TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">public</span> <span class="keyword">class</span> IPAddr {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;28</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;29</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">// Default IP4</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;30</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;31</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> MASK8 = 255;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;32</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;33</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> MASK16 = 65535;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;34</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;35</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">int</span>[] address = <span class="keyword">new</span> <span class="keyword">int</span>[4];</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;36</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;37</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">int</span>[] mask = <span class="keyword">new</span> <span class="keyword">int</span>[4];</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;38</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;39</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">int</span> maskLength = 32;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;40</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;41</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">int</span> ipLength = 4;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;42</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;43</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">int</span> ipRun = 4;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;44</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;45</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> String ipJoiner = <span class="string">"."</span>;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;46</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;47</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">// Allow factory creates only</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;48</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 48: method entered 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 48: method entered 721 times.">    <span class="keyword">private</span> IPAddr() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;49</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;50</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;51</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;52</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;53</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get ArrayList with ipAddresses for the given host and netmask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;54</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;55</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> host</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;56</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The hostname or ip we want to retrieve the ipaddresses for</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;57</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;58</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The netmask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;59</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> ipAddresses An Arraylist which contains all ipAddresses</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;60</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;61</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             on error</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;62</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;63</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 63: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 63: method not entered.">    <span class="keyword">public</span> <span class="keyword">static</span> ArrayList getAddresses(String host, <span class="keyword">int</span> mask)</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;64</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="keyword">throws</span> PermErrorException {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;65</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;66</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 66: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 66: statement not executed.">        ArrayList addressList = <span class="keyword">new</span> ArrayList();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;67</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;68</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 68: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 68: statement not executed.">        <span class="keyword">if</span> (host != <span class="keyword">null</span>) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;69</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 69: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 69: statement not executed.">            addressList.add(getAddress(host, mask));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;70</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;71</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;72</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 72: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 72: statement not executed.">        <span class="keyword">return</span> addressList;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;73</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;74</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;75</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;76</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get ipAddress for the given String and netmask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;77</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;78</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> netAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;79</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The ipAddress given as String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;80</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> maskLength</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;81</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The netmask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;82</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> IpAddress AAn Arraylist which contains all ipAddresses</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;83</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;84</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             on error</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;85</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;86</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 86: method entered 719 times.">&nbsp;719</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 86: method entered 719 times.">    <span class="keyword">public</span> <span class="keyword">static</span> IPAddr getAddress(String netAddress, <span class="keyword">int</span> maskLength)</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;87</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="keyword">throws</span> PermErrorException {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;88</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 88: statement executed 719 times.">&nbsp;719</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 88: statement executed 719 times.">        IPAddr returnAddress = <span class="keyword">new</span> IPAddr();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;89</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 89: statement executed 719 times.">&nbsp;719</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 89: statement executed 719 times.">        returnAddress.stringToInternal(netAddress);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;90</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 90: statement executed 719 times.">&nbsp;719</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 90: statement executed 719 times.">        returnAddress.setMask(maskLength);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;91</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 91: statement executed 719 times.">&nbsp;719</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 91: statement executed 719 times.">        <span class="keyword">return</span> returnAddress;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;92</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;93</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;94</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;95</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;96</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@see</span> #getAddress(String, int)</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;97</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;98</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 98: method entered 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 98: method entered 2 times.">    <span class="keyword">public</span> <span class="keyword">static</span> IPAddr getAddress(String netAddress)</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;99</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="keyword">throws</span> PermErrorException {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;100</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 100: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 100: statement executed 2 times.">        IPAddr returnAddress = <span class="keyword">new</span> IPAddr();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;101</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 101: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 101: statement executed 2 times.">        returnAddress.stringToInternal(netAddress);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;102</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 102: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 102: statement executed 2 times.">        returnAddress.setMask(returnAddress.maskLength);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;103</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 103: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 103: statement executed 2 times.">        <span class="keyword">return</span> returnAddress;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;104</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;105</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;106</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;107</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Check if a the Object is instance of this class</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;108</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;109</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;110</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The object to check</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;111</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> true or false</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;112</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;113</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 113: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 113: method not entered.">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isIPAddr(String data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;114</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 114: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 114: statement not executed.">        <span class="keyword">if</span> (data <span class="keyword">instanceof</span> String) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;115</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 115: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 115: statement not executed.">            <span class="keyword">try</span> {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;116</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 116: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 116: statement not executed.">                getAddress((String) data);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;117</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 117: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 117: statement not executed.">                <span class="keyword">return</span> <span class="keyword">true</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;118</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            } <span class="keyword">catch</span> (Exception e) {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;119</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 119: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 119: statement not executed.">                <span class="keyword">return</span> <span class="keyword">false</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;120</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;121</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;122</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 122: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 122: statement not executed.">            <span class="keyword">return</span> <span class="keyword">false</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;123</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;124</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;125</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;126</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;127</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Set default values for ipv6</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;128</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;129</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;130</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 130: method entered 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 130: method entered 14 times.">    <span class="keyword">private</span> <span class="keyword">void</span> setIP6Defaults() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;131</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 131: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 131: statement executed 14 times.">        ipLength = 16;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;132</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 132: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 132: statement executed 14 times.">        ipJoiner = <span class="string">":"</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;133</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 133: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 133: statement executed 14 times.">        address = <span class="keyword">new</span> <span class="keyword">int</span>[8];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;134</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 134: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 134: statement executed 14 times.">        mask = <span class="keyword">new</span> <span class="keyword">int</span>[8];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;135</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 135: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 135: statement executed 14 times.">        ipRun = 8;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;136</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;137</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;138</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;139</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * create series of 16 bit masks for each ip block</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;140</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;141</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> maskLength</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;142</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The netmask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;143</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;144</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 144: method entered 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 144: method entered 721 times.">    <span class="keyword">public</span> <span class="keyword">void</span> setMask(<span class="keyword">int</span> maskLength) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;145</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 145: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 145: statement executed 721 times.">        <span class="keyword">int</span> startMask;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;146</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 146: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 146: statement executed 721 times.">        <span class="keyword">int</span> shift;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;147</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 147: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 147: statement executed 721 times.">        <span class="keyword">int</span> maskSize;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;148</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;149</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 149: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 149: statement executed 721 times.">        <span class="keyword">this</span>.maskLength = maskLength;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;150</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 150: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 150: statement executed 721 times.">        <span class="keyword">if</span> (ipLength == 4) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;151</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 151: expression evaluated to true 0 times, false 707 times.">&nbsp;707</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 151: expression evaluated to true 0 times, false 707 times.">            <span class="keyword">if</span> (!((maskLength &gt; -1) &amp;&amp; (maskLength &lt; 33))) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;152</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 152: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 152: statement not executed.">                maskLength = 32;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;153</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;154</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 154: statement executed 707 times.">&nbsp;707</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 154: statement executed 707 times.">            maskSize = 8;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;155</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 155: statement executed 707 times.">&nbsp;707</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 155: statement executed 707 times.">            startMask = (maskLength - 1) / maskSize;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;156</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;157</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 157: expression evaluated to true 0 times, false 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 157: expression evaluated to true 0 times, false 14 times.">            <span class="keyword">if</span> (!((maskLength &gt; -1) &amp;&amp; (maskLength &lt; 129))) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;158</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 158: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 158: statement not executed.">                maskLength = 128;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;159</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;160</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 160: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 160: statement executed 14 times.">            maskSize = 16;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;161</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 161: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 161: statement executed 14 times.">            startMask = (maskLength - 1) / maskSize;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;162</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;163</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;164</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 164: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 164: statement executed 721 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;165</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// full mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;166</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 166: statement executed 2940 times.">&nbsp;2940</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 166: statement executed 2940 times.">            <span class="keyword">if</span> (i &lt; startMask) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;167</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 167: statement executed 2174 times.">&nbsp;2174</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 167: statement executed 2174 times.">                mask[i] = MASK16;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;168</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                <span class="comment">// variable mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;169</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 169: statement executed 766 times.">&nbsp;766</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 169: statement executed 766 times.">            } <span class="keyword">else</span> <span class="keyword">if</span> (i == startMask) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;170</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 170: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 170: statement executed 721 times.">                shift = ((i + 1) * maskSize) - maskLength;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;171</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 171: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 171: statement executed 721 times.">                mask[i] = (MASK16 &lt;&lt; shift) &amp; MASK16;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;172</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                <span class="comment">// no mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;173</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;174</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 174: statement executed 45 times.">&nbsp;45</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 174: statement executed 45 times.">                mask[i] = 0;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;175</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;176</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;177</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;178</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;179</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;180</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Strip the last char of a string when it ends with a dot</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;181</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;182</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;183</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The String where the dot should removed</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;184</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> modified The Given String with last char stripped</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;185</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;186</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 186: method entered 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 186: method entered 721 times.">    <span class="keyword">public</span> <span class="keyword">static</span> String stripDot(String data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;187</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;188</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 188: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 188: statement executed 721 times.">        data = data.trim();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;189</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;190</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 190: expression evaluated to true 0 times, false 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 190: expression evaluated to true 0 times, false 721 times.">        <span class="keyword">if</span> (data.endsWith(<span class="string">"."</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;191</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 191: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 191: statement not executed.">            <span class="keyword">return</span> data.substring(0, data.length() - 1);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;192</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;193</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 193: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 193: statement executed 721 times.">            <span class="keyword">return</span> data;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;194</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;195</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;196</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;197</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;198</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;199</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Convert ipAddress to a byte Array which represent the ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;200</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;201</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> netAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;202</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The ipAddress we should convert</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;203</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;204</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             on error</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;205</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;206</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 206: method entered 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 206: method entered 721 times.">    <span class="keyword">private</span> <span class="keyword">void</span> stringToInternal(String netAddress) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;207</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 207: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 207: statement executed 721 times.">        netAddress = stripDot(netAddress);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;208</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;209</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 209: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 209: statement executed 721 times.">        <span class="keyword">byte</span>[] bytes = Inet6Util.createByteArrayFromIPAddressString(netAddress);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;210</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;211</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 211: statement executed 721 times.">&nbsp;721</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 211: statement executed 721 times.">        <span class="keyword">if</span> (bytes.length == 4) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;212</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 212: statement executed 707 times.">&nbsp;707</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 212: statement executed 707 times.">            <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; bytes.length; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;213</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 213: statement executed 2828 times.">&nbsp;2828</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 213: statement executed 2828 times.">                address[i] = bytes[i];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;214</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;215</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 215: expression evaluated to true 14 times, false 0 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 215: expression evaluated to true 14 times, false 0 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (bytes.length == 16) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;216</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 216: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 216: statement executed 14 times.">            setIP6Defaults();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;217</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 217: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 217: statement executed 14 times.">            <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; bytes.length / 2; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;218</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 218: statement executed 112 times.">&nbsp;112</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 218: statement executed 112 times.">                address[i] = unsigned(bytes[i * 2]) * 256</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;219</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                        + unsigned(bytes[i * 2 + 1]);</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;220</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;221</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;222</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 222: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 222: statement not executed.">            <span class="keyword">throw</span> <span class="keyword">new</span> PermErrorException(<span class="string">"Not a valid address: "</span> + netAddress);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;223</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;224</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;225</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;226</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;227</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Return the Hexdecimal representation of the given long value</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;228</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;229</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data The value to retrieve the Hexdecimal for</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;230</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> The Hexdecimal representation of the given value</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;231</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;232</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 232: method entered 80 times.">&nbsp;80</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 232: method entered 80 times.">    <span class="keyword">private</span> String getHex(<span class="keyword">long</span> data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;233</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 233: statement executed 80 times.">&nbsp;80</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 233: statement executed 80 times.">        StringBuffer fullHex = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;234</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 234: statement executed 80 times.">&nbsp;80</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 234: statement executed 80 times.">        fullHex.append(<span class="string">"0000"</span> + Long.toHexString(data).toUpperCase());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;235</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 235: statement executed 80 times.">&nbsp;80</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 235: statement executed 80 times.">        fullHex = fullHex.delete(0, fullHex.length() - 4);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;236</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 236: statement executed 80 times.">&nbsp;80</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 236: statement executed 80 times.">        <span class="keyword">return</span> fullHex.toString();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;237</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;238</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;239</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;240</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@see</span> #getInAddress(String)</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;241</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;242</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 242: method entered 17 times.">&nbsp;17</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 242: method entered 17 times.">    <span class="keyword">public</span> String getIPAddress() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;243</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 243: statement executed 17 times.">&nbsp;17</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 243: statement executed 17 times.">        <span class="keyword">return</span> getIPAddress(address);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;244</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;245</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;246</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;247</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get ip Address from given int Array</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;248</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;249</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> addressData</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;250</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The int Array</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;251</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> ipAddress The ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;252</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;253</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 253: method entered 933 times.">&nbsp;933</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 253: method entered 933 times.">    <span class="keyword">private</span> String getIPAddress(<span class="keyword">int</span>[] addressData) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;254</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 254: statement executed 933 times.">&nbsp;933</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 254: statement executed 933 times.">        StringBuffer createAddress = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;255</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 255: statement executed 933 times.">&nbsp;933</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 255: statement executed 933 times.">        <span class="keyword">int</span>[] workingAddress;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;256</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;257</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// convert internal address to 8 bit</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;258</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 258: statement executed 933 times.">&nbsp;933</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 258: statement executed 933 times.">        <span class="keyword">if</span> (ipLength == 4) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;259</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 259: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 259: statement executed 925 times.">            workingAddress = get8BitAddress(addressData);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;260</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// create IP string</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;261</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 261: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 261: statement executed 925 times.">            createAddress.append(workingAddress[0]);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;262</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 262: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 262: statement executed 925 times.">            <span class="keyword">for</span> (<span class="keyword">int</span> i = 1; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;263</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 263: statement executed 2775 times.">&nbsp;2775</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 263: statement executed 2775 times.">                createAddress.append(ipJoiner + workingAddress[i]);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;264</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;265</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// leave internal address as 16 bit</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;266</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;267</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 267: statement executed 8 times.">&nbsp;8</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 267: statement executed 8 times.">            workingAddress = addressData;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;268</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// create IP string</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;269</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 269: statement executed 8 times.">&nbsp;8</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 269: statement executed 8 times.">            createAddress.append(getHex(workingAddress[0]));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;270</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 270: statement executed 8 times.">&nbsp;8</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 270: statement executed 8 times.">            <span class="keyword">for</span> (<span class="keyword">int</span> i = 1; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;271</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 271: statement executed 56 times.">&nbsp;56</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 271: statement executed 56 times.">                createAddress.append(ipJoiner + getHex(workingAddress[i]));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;272</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;273</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;274</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;275</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 275: statement executed 933 times.">&nbsp;933</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 275: statement executed 933 times.">        <span class="keyword">return</span> createAddress.toString();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;276</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;277</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;278</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;279</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;280</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@see</span> #getIPAddress(int[])</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;281</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;282</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 282: method entered 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 282: method entered 916 times.">    <span class="keyword">public</span> String getMaskedIPAddress() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;283</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 283: statement executed 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 283: statement executed 916 times.">        <span class="keyword">return</span> getIPAddress(maskedAddress(address, mask));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;284</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;285</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;286</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;287</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get the maskAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;288</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;289</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> The maskAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;290</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;291</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 291: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 291: method not entered.">    <span class="keyword">public</span> String getMaskAddress() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;292</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 292: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 292: statement not executed.">        <span class="keyword">if</span> (ipLength == 4) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;293</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 293: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 293: statement not executed.">            <span class="keyword">return</span> getIPAddress(get8BitAddress(mask));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;294</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;295</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 295: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 295: statement not executed.">            <span class="keyword">return</span> getIPAddress(mask);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;296</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;297</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;298</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    </SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;299</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;300</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Return the NibbleFormat of the IPAddr</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;301</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;302</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> ipAddress The ipAddress in nibbleFormat </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;303</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;304</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 304: method entered 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 304: method entered 2 times.">    <span class="keyword">public</span> String getNibbleFormat() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;305</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 305: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 305: statement executed 2 times.">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;306</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 306: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 306: statement executed 2 times.">        <span class="keyword">int</span>[] ip = address;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;307</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 307: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 307: statement executed 2 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ip.length; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;308</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 308: statement executed 16 times.">&nbsp;16</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 308: statement executed 16 times.">            String hex = getHex(ip[i]);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;309</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 309: statement executed 16 times.">&nbsp;16</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 309: statement executed 16 times.">            <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j &lt; hex.length(); j++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;310</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 310: statement executed 64 times.">&nbsp;64</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 310: statement executed 64 times.">                sb.append(hex.charAt(j));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;311</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 311: statement executed 64 times.">&nbsp;64</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 311: statement executed 64 times.">                <span class="keyword">if</span> (i != ip.length -1 || j != hex.length() -1) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;312</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 312: statement executed 62 times.">&nbsp;62</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 312: statement executed 62 times.">                    sb.append(<span class="string">"."</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;313</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;314</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;315</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;316</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 316: statement executed 2 times.">&nbsp;2</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 316: statement executed 2 times.">        <span class="keyword">return</span> sb.toString();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;317</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;318</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;319</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;320</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get reverse ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;321</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;322</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> reverse ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;323</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;324</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 324: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 324: method not entered.">    <span class="keyword">public</span> String getReverseIP() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;325</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 325: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 325: statement not executed.">        <span class="keyword">return</span> getIPAddress(reverseIP(address));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;326</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;327</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;328</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;329</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Converts 16 bit representation to 8 bit for IP4</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;330</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;331</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> addressData</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;332</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The given int Array</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;333</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> converted String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;334</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;335</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 335: method entered 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 335: method entered 925 times.">    <span class="keyword">private</span> <span class="keyword">int</span>[] get8BitAddress(<span class="keyword">int</span>[] addressData) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;336</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 336: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 336: statement executed 925 times.">        <span class="keyword">int</span>[] convertAddress = <span class="keyword">new</span> <span class="keyword">int</span>[4];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;337</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 337: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 337: statement executed 925 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;338</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 338: statement executed 3700 times.">&nbsp;3700</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 338: statement executed 3700 times.">            convertAddress[i] = addressData[i] &amp; MASK8;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;339</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;340</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 340: statement executed 925 times.">&nbsp;925</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 340: statement executed 925 times.">        <span class="keyword">return</span> convertAddress;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;341</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;342</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;343</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;344</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Create a masked address given an address and mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;345</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;346</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> addressData</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;347</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The int Array represent the ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;348</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> maskData</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;349</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The int array represent the mask</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;350</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> maskedAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;351</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;352</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 352: method entered 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 352: method entered 916 times.">    <span class="keyword">private</span> <span class="keyword">int</span>[] maskedAddress(<span class="keyword">int</span>[] addressData, <span class="keyword">int</span>[] maskData) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;353</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 353: statement executed 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 353: statement executed 916 times.">        <span class="keyword">int</span>[] maskedAddress = <span class="keyword">new</span> <span class="keyword">int</span>[ipLength];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;354</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;355</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 355: statement executed 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 355: statement executed 916 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;356</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 356: statement executed 3696 times.">&nbsp;3696</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 356: statement executed 3696 times.">            maskedAddress[i] = addressData[i] &amp; maskData[i];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;357</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;358</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 358: statement executed 916 times.">&nbsp;916</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 358: statement executed 916 times.">        <span class="keyword">return</span> maskedAddress;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;359</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;360</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;361</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;362</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Reverses internal address</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;363</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;364</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> addressData</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;365</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The int array represent the ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;366</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> reverseIP</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;367</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;368</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 368: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 368: method not entered.">    <span class="keyword">private</span> <span class="keyword">int</span>[] reverseIP(<span class="keyword">int</span>[] addressData) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;369</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 369: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 369: statement not executed.">        <span class="keyword">int</span>[] reverseIP = <span class="keyword">new</span> <span class="keyword">int</span>[ipLength];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;370</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 370: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 370: statement not executed.">        <span class="keyword">int</span> temp;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;371</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 371: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 371: statement not executed.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ipRun; i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;372</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 372: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 372: statement not executed.">            temp = addressData[i];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;373</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 373: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 373: statement not executed.">            reverseIP[i] = addressData[(ipRun - 1) - i];</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;374</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 374: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 374: statement not executed.">            reverseIP[(ipRun - 1) - i] = temp;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;375</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;376</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 376: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 376: statement not executed.">        <span class="keyword">return</span> reverseIP;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;377</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;378</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;379</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;380</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get mask length</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;381</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;382</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> maskLength</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;383</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;384</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 384: method entered 20 times.">&nbsp;20</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 384: method entered 20 times.">    <span class="keyword">public</span> <span class="keyword">int</span> getMaskLength() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;385</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 385: statement executed 20 times.">&nbsp;20</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 385: statement executed 20 times.">        <span class="keyword">return</span> maskLength;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;386</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;387</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;388</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    </SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;389</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 389: method entered 17 times.">&nbsp;17</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 389: method entered 17 times.">    <span class="keyword">public</span> String toString() {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;390</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 390: statement executed 17 times.">&nbsp;17</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 390: statement executed 17 times.">        <span class="keyword">return</span> getIPAddress();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;391</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;392</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;393</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 393: method entered 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 393: method entered 224 times.">    <span class="keyword">private</span> <span class="keyword">int</span> unsigned(<span class="keyword">byte</span> data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;394</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 394: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 394: statement executed 224 times.">        <span class="keyword">return</span> data &gt;= 0 ? data : 256 + data;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;395</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;396</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;397</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;398</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * This method return the InAddress for the given ip.</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;399</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;400</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> ipAddress -</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;401</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            ipAddress that should be processed</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;402</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> the inAddress (in-addr or ip6)</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;403</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;404</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             if the ipAddress is not valid (rfc conform)</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;405</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;406</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 406: method entered 181 times.">&nbsp;181</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 406: method entered 181 times.">    <span class="keyword">public</span> <span class="keyword">static</span> String getInAddress(String ipAddress)</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;407</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="keyword">throws</span> PermErrorException {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;408</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 408: expression evaluated to true 0 times, false 181 times.">&nbsp;181</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 408: expression evaluated to true 0 times, false 181 times.">        <span class="keyword">if</span> (ipAddress == <span class="keyword">null</span>) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;409</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 409: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 409: statement not executed.">            <span class="keyword">throw</span> <span class="keyword">new</span> PermErrorException(</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;410</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                    <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;411</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 411: statement executed 181 times.">&nbsp;181</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 411: statement executed 181 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (Inet6Util.isValidIPV4Address(ipAddress)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;412</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 412: statement executed 150 times.">&nbsp;150</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 412: statement executed 150 times.">            <span class="keyword">return</span> <span class="string">"in-addr"</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;413</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 413: statement executed 31 times.">&nbsp;31</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 413: statement executed 31 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (Inet6Util.isValidIP6Address(ipAddress)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;414</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 414: statement executed 18 times.">&nbsp;18</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 414: statement executed 18 times.">            <span class="keyword">return</span> <span class="string">"ip6"</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;415</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;416</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 416: statement executed 13 times.">&nbsp;13</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 416: statement executed 13 times.">            <span class="keyword">throw</span> <span class="keyword">new</span> PermErrorException(</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;417</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                    <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;418</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;419</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;420</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;421</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;422</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Check if the given IP is valid. Works with ipv4 and ip6</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;423</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;424</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> ip</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;425</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The ipaddress to check</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;426</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> true or false</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;427</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;428</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 428: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 428: method not entered.">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isValidIP(String ip) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;429</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 429: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 429: statement not executed.">        <span class="keyword">return</span> ip != <span class="keyword">null</span></A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;430</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                &amp;&amp; (Inet6Util.isValidIPV4Address(ip) || Inet6Util</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;431</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                        .isValidIP6Address(ip));</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;432</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;433</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    </SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;434</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;435</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Return if the given ipAddress is ipv6</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;436</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;437</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> ip The ipAddress</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;438</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> true or false</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;439</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;440</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 440: method entered 75 times.">&nbsp;75</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 440: method entered 75 times.">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isIPV6(String ip) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;441</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 441: statement executed 75 times.">&nbsp;75</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 441: statement executed 75 times.">        <span class="keyword">return</span> Inet6Util.isValidIP6Address(ip);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;442</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;443</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;444</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;445</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * This method try to covnert an ip address to an easy readable ip. See</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;446</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html for</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;447</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * the format it returns. For ipv4 it make no convertion</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;448</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;449</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> ip</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;450</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The ip which should be tried to convert</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;451</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> ip The converted ip</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;452</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;453</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 453: method not entered.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 453: method not entered.">    <span class="keyword">public</span> <span class="keyword">static</span> String getReadableIP(String ip) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;454</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;455</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Convert the ip if its an ipv6 ip. For ipv4 no conversion is needed</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;456</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 456: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 456: statement not executed.">        <span class="keyword">if</span> (Inet6Util.isValidIP6Address(ip)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;457</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 457: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 457: statement not executed.">            <span class="keyword">try</span> {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;458</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 458: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 458: statement not executed.">                <span class="keyword">return</span> Address.getByName(ip).getHostAddress();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;459</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            } <span class="keyword">catch</span> (UnknownHostException e) {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;460</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                <span class="comment">// ignore this</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;461</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;462</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;463</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 463: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 463: statement not executed.">        <span class="keyword">return</span> ip;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;464</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;465</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">}</SPAN></TD></TR></TBODY></TABLE>
+<TABLE width="100%"><TR><TD class="hbreak" colspan="6">&nbsp;</TD></TR>
+<TR><TD class="footer" colspan="6">
+<table>
+<tr>
+ <td><a target="_new" href="http://www.cenqua.com/clover?5Jn"><img alt="Clover" src="../../../../../img/logo.gif" border="0"></a></td><td nowrap><i>Report generated by </i><a target="_new" href="http://www.cenqua.com/clover?5Jn">Clover Code Coverage v1.3.12</a><i><BR>Fri Jul 14 2006 11:00:47 CEST</i>.</td>
+<td>&nbsp;</td><td style="BORDER-LEFT: #9c9c9c 1px solid;">&nbsp;</td><td>30 day Evaluation Version distributed via the Maven Jar Repository. Clover is not free. You have 30 days to evaluate it. After this, please visit http://www.cenqua.com to obtain a licensed version of Clover</td>
+</tr>
+</table>
+</td>
+</tr></TABLE>

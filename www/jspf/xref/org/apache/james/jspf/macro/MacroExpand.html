@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>MacroExpand xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../../../../../apidocs/org/apache/james/jspf/macro/MacroExpand.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em>/**<em>**********************************************************************</em></em>
+<a name="2" href="#2">2</a>   <em> * Copyright (c) 2006 The Apache Software Foundation.             *</em>
+<a name="3" href="#3">3</a>   <em> * All rights reserved.                                                *</em>
+<a name="4" href="#4">4</a>   <em> * ------------------------------------------------------------------- *</em>
+<a name="5" href="#5">5</a>   <em> * Licensed under the Apache License, Version 2.0 (the "License"); you *</em>
+<a name="6" href="#6">6</a>   <em> * may not use this file except in compliance with the License. You    *</em>
+<a name="7" href="#7">7</a>   <em> * may obtain a copy of the License at:                                *</em>
+<a name="8" href="#8">8</a>   <em> *                                                                     *</em>
+<a name="9" href="#9">9</a>   <em> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                      *</em>
+<a name="10" href="#10">10</a>  <em> *                                                                     *</em>
+<a name="11" href="#11">11</a>  <em> * Unless required by applicable law or agreed to in writing, software *</em>
+<a name="12" href="#12">12</a>  <em> * distributed under the License is distributed on an "AS IS" BASIS,   *</em>
+<a name="13" href="#13">13</a>  <em> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</em>
+<a name="14" href="#14">14</a>  <em> * implied.  See the License for the specific language governing       *</em>
+<a name="15" href="#15">15</a>  <em> * permissions and limitations under the License.                      *</em>
+<a name="16" href="#16">16</a>  <em> ***********************************************************************/</em>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  <strong>package</strong> org.apache.james.jspf.macro;
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <em>/**<em>*</em></em>
+<a name="21" href="#21">21</a>  <em> * This Class is used to convert all macros which can used in SPF-Records to the</em>
+<a name="22" href="#22">22</a>  <em> * right values!</em>
+<a name="23" href="#23">23</a>  <em> * </em>
+<a name="24" href="#24">24</a>  <em> */</em>
+<a name="25" href="#25">25</a>  
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.log4j.Logger;
+<a name="28" href="#28">28</a>  
+<a name="29" href="#29">29</a>  <strong>import</strong> java.io.UnsupportedEncodingException;
+<a name="30" href="#30">30</a>  <strong>import</strong> java.net.URLEncoder;
+<a name="31" href="#31">31</a>  <strong>import</strong> java.util.ArrayList;
+<a name="32" href="#32">32</a>  <strong>import</strong> java.util.regex.Matcher;
+<a name="33" href="#33">33</a>  <strong>import</strong> java.util.regex.Pattern;
+<a name="34" href="#34">34</a>  
+<a name="35" href="#35">35</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../../org/apache/james/jspf/macro/MacroExpand.html">MacroExpand</a> {
+<a name="36" href="#36">36</a>  
+<a name="37" href="#37">37</a>      <strong>public</strong> <strong>static</strong> <strong>final</strong> String MACRO_REGEX = <span class="string">"&#47;&#47;%&#47;&#47;{[lsoditpvhcrLSODITPVHCR]&#47;&#47;d*r?[&#47;&#47;.&#47;&#47;-&#47;&#47;+,/_&#47;&#47;=]*&#47;&#47;}"</span>;
+<a name="38" href="#38">38</a>  
+<a name="39" href="#39">39</a>      <strong>private</strong> <a href="../../../../../org/apache/james/jspf/macro/MacroData.html">MacroData</a> spfData;
+<a name="40" href="#40">40</a>  
+<a name="41" href="#41">41</a>      <strong>private</strong> Pattern inputPattern;
+<a name="42" href="#42">42</a>  
+<a name="43" href="#43">43</a>      <strong>private</strong> Matcher inputMatcher;
+<a name="44" href="#44">44</a>  
+<a name="45" href="#45">45</a>      <strong>private</strong> Pattern cellPattern;
+<a name="46" href="#46">46</a>  
+<a name="47" href="#47">47</a>      <strong>private</strong> Matcher cellMatcher;
+<a name="48" href="#48">48</a>  
+<a name="49" href="#49">49</a>      <strong>private</strong> <strong>boolean</strong> isExplanation = false;
+<a name="50" href="#50">50</a>  
+<a name="51" href="#51">51</a>      <strong>private</strong> <strong>static</strong> Logger log = Logger.getLogger(MacroExpand.<strong>class</strong>);
+<a name="52" href="#52">52</a>  
+<a name="53" href="#53">53</a>      <strong>public</strong> <a href="../../../../../org/apache/james/jspf/macro/MacroExpand.html">MacroExpand</a>(<a href="../../../../../org/apache/james/jspf/macro/MacroData.html">MacroData</a> spfData) {
+<a name="54" href="#54">54</a>          <strong>this</strong>.spfData = spfData;
+<a name="55" href="#55">55</a>          inputPattern = Pattern.compile(MACRO_REGEX);
+<a name="56" href="#56">56</a>      }
+<a name="57" href="#57">57</a>  
+<a name="58" href="#58">58</a>      <em>/**<em>*</em></em>
+<a name="59" href="#59">59</a>  <em>     * This method expand the given a explanation</em>
+<a name="60" href="#60">60</a>  <em>     * </em>
+<a name="61" href="#61">61</a>  <em>     * @param input</em>
+<a name="62" href="#62">62</a>  <em>     *            The explanation which should be expanded</em>
+<a name="63" href="#63">63</a>  <em>     * @return expanded The expanded explanation</em>
+<a name="64" href="#64">64</a>  <em>     * @throws PermErrorException</em>
+<a name="65" href="#65">65</a>  <em>     *             Get thrown if invalid macros are used</em>
+<a name="66" href="#66">66</a>  <em>     */</em>
+<a name="67" href="#67">67</a>      <strong>public</strong> String expandExplanation(String input) throws PermErrorException {
+<a name="68" href="#68">68</a>  
+<a name="69" href="#69">69</a>          log.debug(<span class="string">"Start do expand explanation: "</span> + input);
+<a name="70" href="#70">70</a>  
+<a name="71" href="#71">71</a>          isExplanation = <strong>true</strong>;
+<a name="72" href="#72">72</a>          <strong>return</strong> expand(input);
+<a name="73" href="#73">73</a>      }
+<a name="74" href="#74">74</a>  
+<a name="75" href="#75">75</a>      <em>/**<em>*</em></em>
+<a name="76" href="#76">76</a>  <em>     * This method expand the given domain. So all known macros get replaced</em>
+<a name="77" href="#77">77</a>  <em>     * </em>
+<a name="78" href="#78">78</a>  <em>     * @param input</em>
+<a name="79" href="#79">79</a>  <em>     *            The domain which should be expand</em>
+<a name="80" href="#80">80</a>  <em>     * @return expanded The domain with replaced macros</em>
+<a name="81" href="#81">81</a>  <em>     * @throws PermErrorException</em>
+<a name="82" href="#82">82</a>  <em>     *             This get thrown if invalid macros are used</em>
+<a name="83" href="#83">83</a>  <em>     */</em>
+<a name="84" href="#84">84</a>      <strong>public</strong> String expandDomain(String input) throws PermErrorException {
+<a name="85" href="#85">85</a>  
+<a name="86" href="#86">86</a>          log.debug(<span class="string">"Start expand domain: "</span> + input);
+<a name="87" href="#87">87</a>  
+<a name="88" href="#88">88</a>          isExplanation = false;
+<a name="89" href="#89">89</a>          String domainName = expand(input);
+<a name="90" href="#90">90</a>          <em class="comment">// reduce to less than 255 characters, deleting subdomains from left</em>
+<a name="91" href="#91">91</a>          <strong>int</strong> split = 0;
+<a name="92" href="#92">92</a>          <strong>while</strong> (domainName.length() > 255 &amp;&amp; split > -1) {
+<a name="93" href="#93">93</a>              split = domainName.indexOf(<span class="string">"."</span>);
+<a name="94" href="#94">94</a>              domainName = domainName.substring(split + 1);
+<a name="95" href="#95">95</a>          }
+<a name="96" href="#96">96</a>          <strong>return</strong> domainName;
+<a name="97" href="#97">97</a>      }
+<a name="98" href="#98">98</a>  
+<a name="99" href="#99">99</a>      <em>/**<em>*</em></em>
+<a name="100" href="#100">100</a> <em>     * Expand the given String</em>
+<a name="101" href="#101">101</a> <em>     * </em>
+<a name="102" href="#102">102</a> <em>     * @param input</em>
+<a name="103" href="#103">103</a> <em>     *            The inputString which should get expanded</em>
+<a name="104" href="#104">104</a> <em>     * @return expanded The expanded given String</em>
+<a name="105" href="#105">105</a> <em>     * @throws PermErrorException</em>
+<a name="106" href="#106">106</a> <em>     *             This get thrown if invalid macros are used</em>
+<a name="107" href="#107">107</a> <em>     */</em>
+<a name="108" href="#108">108</a>     <strong>private</strong> String expand(String input) throws PermErrorException {
+<a name="109" href="#109">109</a> 
+<a name="110" href="#110">110</a>         input = replaceLiterals(input);
+<a name="111" href="#111">111</a> 
+<a name="112" href="#112">112</a>         StringBuffer decodedValue = <strong>new</strong> StringBuffer();
+<a name="113" href="#113">113</a>         inputMatcher = inputPattern.matcher(input);
+<a name="114" href="#114">114</a>         String macroCell;
+<a name="115" href="#115">115</a> 
+<a name="116" href="#116">116</a>         <strong>while</strong> (inputMatcher.find()) {
+<a name="117" href="#117">117</a>             macroCell = input.substring(inputMatcher.start() + 2, inputMatcher
+<a name="118" href="#118">118</a>                     .end() - 1);
+<a name="119" href="#119">119</a>             inputMatcher
+<a name="120" href="#120">120</a>                     .appendReplacement(decodedValue, replaceCell(macroCell));
+<a name="121" href="#121">121</a>         }
+<a name="122" href="#122">122</a>         inputMatcher.appendTail(decodedValue);
+<a name="123" href="#123">123</a> 
+<a name="124" href="#124">124</a>         <strong>return</strong> decodedValue.toString();
+<a name="125" href="#125">125</a>     }
+<a name="126" href="#126">126</a> 
+<a name="127" href="#127">127</a>     <em>/**<em>*</em></em>
+<a name="128" href="#128">128</a> <em>     * Replace the macros in given String</em>
+<a name="129" href="#129">129</a> <em>     * </em>
+<a name="130" href="#130">130</a> <em>     * @param replaceValue</em>
+<a name="131" href="#131">131</a> <em>     *            The String in which known macros should get replaced</em>
+<a name="132" href="#132">132</a> <em>     * @return returnData The String with replaced macros</em>
+<a name="133" href="#133">133</a> <em>     * @throws PermErrorException</em>
+<a name="134" href="#134">134</a> <em>     *             Get thrown if an error in processing happen</em>
+<a name="135" href="#135">135</a> <em>     */</em>
+<a name="136" href="#136">136</a>     <strong>private</strong> String replaceCell(String replaceValue) throws PermErrorException {
+<a name="137" href="#137">137</a> 
+<a name="138" href="#138">138</a>         String variable = <span class="string">""</span>;
+<a name="139" href="#139">139</a>         String domainNumber = <span class="string">""</span>;
+<a name="140" href="#140">140</a>         <strong>boolean</strong> isReversed = false;
+<a name="141" href="#141">141</a>         String delimeters = <span class="string">"."</span>;
+<a name="142" href="#142">142</a> 
+<a name="143" href="#143">143</a>         <strong>if</strong> (isExplanation) {
+<a name="144" href="#144">144</a>             <em class="comment">// Find command</em>
+<a name="145" href="#145">145</a>             cellPattern = Pattern.compile(<span class="string">"[ctCT]"</span>);
+<a name="146" href="#146">146</a>             cellMatcher = cellPattern.matcher(replaceValue);
+<a name="147" href="#147">147</a>             <strong>while</strong> (cellMatcher.find()) {
+<a name="148" href="#148">148</a>                 <strong>if</strong> (cellMatcher.group().toUpperCase().equals(
+<a name="149" href="#149">149</a>                         cellMatcher.group())) {
+<a name="150" href="#150">150</a>                     variable = encodeURL(matchMacro(cellMatcher.group()));
+<a name="151" href="#151">151</a>                 } <strong>else</strong> {
+<a name="152" href="#152">152</a>                     variable = matchMacro(cellMatcher.group());
+<a name="153" href="#153">153</a>                 }
+<a name="154" href="#154">154</a>             }
+<a name="155" href="#155">155</a>         }
+<a name="156" href="#156">156</a>         <em class="comment">// Get only command character so that 'r' command and 'r' modifier don't</em>
+<a name="157" href="#157">157</a>         <em class="comment">// clash</em>
+<a name="158" href="#158">158</a>         String commandCharacter = replaceValue.substring(0, 1);
+<a name="159" href="#159">159</a>         <em class="comment">// Find command</em>
+<a name="160" href="#160">160</a>         cellPattern = Pattern.compile(<span class="string">"[lsodipvhrLSODIPVHR]"</span>);
+<a name="161" href="#161">161</a>         cellMatcher = cellPattern.matcher(commandCharacter);
+<a name="162" href="#162">162</a>         <strong>while</strong> (cellMatcher.find()) {
+<a name="163" href="#163">163</a>             <strong>if</strong> (cellMatcher.group().toUpperCase().equals(cellMatcher.group())) {
+<a name="164" href="#164">164</a>                 variable = encodeURL(matchMacro(cellMatcher.group()));
+<a name="165" href="#165">165</a>             } <strong>else</strong> {
+<a name="166" href="#166">166</a>                 variable = matchMacro(cellMatcher.group());
+<a name="167" href="#167">167</a>             }
+<a name="168" href="#168">168</a>         }
+<a name="169" href="#169">169</a>         <em class="comment">// Remove Macro code so that r macro code does not clash with r the</em>
+<a name="170" href="#170">170</a>         <em class="comment">// reverse modifier</em>
+<a name="171" href="#171">171</a>         replaceValue = replaceValue.substring(1);
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>         <em class="comment">// Find number of domains to use</em>
+<a name="174" href="#174">174</a>         cellPattern = Pattern.compile(<span class="string">"&#47;&#47;d+"</span>);
+<a name="175" href="#175">175</a>         cellMatcher = cellPattern.matcher(replaceValue);
+<a name="176" href="#176">176</a>         <strong>while</strong> (cellMatcher.find()) {
+<a name="177" href="#177">177</a>             domainNumber = cellMatcher.group();
+<a name="178" href="#178">178</a>             <strong>if</strong> (Integer.parseInt(domainNumber) == 0) {
+<a name="179" href="#179">179</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(
+<a name="180" href="#180">180</a>                         <span class="string">"Digit transformer must be non-zero"</span>);
+<a name="181" href="#181">181</a>             }
+<a name="182" href="#182">182</a>         }
+<a name="183" href="#183">183</a>         <em class="comment">// find if reversed</em>
+<a name="184" href="#184">184</a>         cellPattern = Pattern.compile(<span class="string">"r"</span>);
+<a name="185" href="#185">185</a>         cellMatcher = cellPattern.matcher(replaceValue);
+<a name="186" href="#186">186</a>         <strong>while</strong> (cellMatcher.find()) {
+<a name="187" href="#187">187</a>             isReversed = <strong>true</strong>;
+<a name="188" href="#188">188</a>         }
+<a name="189" href="#189">189</a> 
+<a name="190" href="#190">190</a>         <em class="comment">// find delimeters</em>
+<a name="191" href="#191">191</a>         cellPattern = Pattern.compile(<span class="string">"[&#47;&#47;.&#47;&#47;-&#47;&#47;+&#47;&#47;,&#47;&#47;/&#47;&#47;_&#47;&#47;=]+"</span>);
+<a name="192" href="#192">192</a>         cellMatcher = cellPattern.matcher(replaceValue);
+<a name="193" href="#193">193</a>         <strong>while</strong> (cellMatcher.find()) {
+<a name="194" href="#194">194</a>             delimeters = cellMatcher.group();
+<a name="195" href="#195">195</a>         }
+<a name="196" href="#196">196</a> 
+<a name="197" href="#197">197</a>         <em class="comment">// Reverse domains as necessary</em>
+<a name="198" href="#198">198</a>         ArrayList data = split(variable, delimeters);
+<a name="199" href="#199">199</a>         <strong>if</strong> (isReversed) {
+<a name="200" href="#200">200</a>             data = reverse(data);
+<a name="201" href="#201">201</a>         }
+<a name="202" href="#202">202</a> 
+<a name="203" href="#203">203</a>         <em class="comment">// Truncate domain name to number of sub sections</em>
+<a name="204" href="#204">204</a>         String returnData;
+<a name="205" href="#205">205</a>         <strong>if</strong> (!domainNumber.equals(<span class="string">""</span>)) {
+<a name="206" href="#206">206</a>             returnData = subset(data, Integer.parseInt(domainNumber));
+<a name="207" href="#207">207</a>         } <strong>else</strong> {
+<a name="208" href="#208">208</a>             returnData = subset(data);
+<a name="209" href="#209">209</a>         }
+<a name="210" href="#210">210</a> 
+<a name="211" href="#211">211</a>         <strong>return</strong> <strong>return</strong>Data;
+<a name="212" href="#212">212</a> 
+<a name="213" href="#213">213</a>     }
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>     <em>/**<em>*</em></em>
+<a name="216" href="#216">216</a> <em>     * Get the value for the given macro like descripted in the RFC</em>
+<a name="217" href="#217">217</a> <em>     * </em>
+<a name="218" href="#218">218</a> <em>     * @param macro</em>
+<a name="219" href="#219">219</a> <em>     *            The macro we want to get the value for</em>
+<a name="220" href="#220">220</a> <em>     * @return rValue The value for the given macro</em>
+<a name="221" href="#221">221</a> <em>     * @throws PermErrorException</em>
+<a name="222" href="#222">222</a> <em>     *             Get thrown if the given variable is an unknown macro</em>
+<a name="223" href="#223">223</a> <em>     * </em>
+<a name="224" href="#224">224</a> <em>     */</em>
+<a name="225" href="#225">225</a>     <strong>private</strong> String matchMacro(String macro) throws PermErrorException {
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>         String rValue = <strong>null</strong>;
+<a name="228" href="#228">228</a> 
+<a name="229" href="#229">229</a>         String variable = macro.toLowerCase();
+<a name="230" href="#230">230</a>         <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"i"</span>)) {
+<a name="231" href="#231">231</a>             rValue = spfData.getMacroIpAddress();
+<a name="232" href="#232">232</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"s"</span>)) {
+<a name="233" href="#233">233</a>             rValue = spfData.getMailFrom();
+<a name="234" href="#234">234</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"h"</span>)) {
+<a name="235" href="#235">235</a>             rValue = spfData.getHostName();
+<a name="236" href="#236">236</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"l"</span>)) {
+<a name="237" href="#237">237</a>             rValue = spfData.getCurrentSenderPart();
+<a name="238" href="#238">238</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"d"</span>)) {
+<a name="239" href="#239">239</a>             rValue = spfData.getCurrentDomain();
+<a name="240" href="#240">240</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"v"</span>)) {
+<a name="241" href="#241">241</a>             rValue = spfData.getInAddress();
+<a name="242" href="#242">242</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"t"</span>)) {
+<a name="243" href="#243">243</a>             rValue = Long.toString(spfData.getTimeStamp());
+<a name="244" href="#244">244</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"c"</span>)) {
+<a name="245" href="#245">245</a>             rValue = spfData.getReadableIP();
+<a name="246" href="#246">246</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"p"</span>)) {
+<a name="247" href="#247">247</a>             rValue = spfData.getClientDomain();
+<a name="248" href="#248">248</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"o"</span>)) {
+<a name="249" href="#249">249</a>             rValue = spfData.getSenderDomain();
+<a name="250" href="#250">250</a>         } <strong>else</strong> <strong>if</strong> (variable.equalsIgnoreCase(<span class="string">"r"</span>)) {
+<a name="251" href="#251">251</a>             rValue = spfData.getReceivingDomain();
+<a name="252" href="#252">252</a>         }
+<a name="253" href="#253">253</a> 
+<a name="254" href="#254">254</a>         <strong>if</strong> (rValue == <strong>null</strong>) {
+<a name="255" href="#255">255</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Unknown command : "</span> + variable);
+<a name="256" href="#256">256</a> 
+<a name="257" href="#257">257</a>         } <strong>else</strong> {
+<a name="258" href="#258">258</a> 
+<a name="259" href="#259">259</a>             log.debug(<span class="string">"Used macro: "</span> + macro + <span class="string">" replaced with: "</span> + rValue);
+<a name="260" href="#260">260</a> 
+<a name="261" href="#261">261</a>             <strong>return</strong> rValue;
+<a name="262" href="#262">262</a>         }
+<a name="263" href="#263">263</a>     }
+<a name="264" href="#264">264</a> 
+<a name="265" href="#265">265</a>     <em>/**<em>*</em></em>
+<a name="266" href="#266">266</a> <em>     * Create an ArrayList by the given String. The String get splitted by given</em>
+<a name="267" href="#267">267</a> <em>     * delimeters and one entry in the Array will be made for each splited</em>
+<a name="268" href="#268">268</a> <em>     * String</em>
+<a name="269" href="#269">269</a> <em>     * </em>
+<a name="270" href="#270">270</a> <em>     * @param data</em>
+<a name="271" href="#271">271</a> <em>     *            The String we want to put in the Array</em>
+<a name="272" href="#272">272</a> <em>     * @param delimeters</em>
+<a name="273" href="#273">273</a> <em>     *            The delimeter we want to use to split the String</em>
+<a name="274" href="#274">274</a> <em>     * @return ArrayList which contains the String parts</em>
+<a name="275" href="#275">275</a> <em>     */</em>
+<a name="276" href="#276">276</a>     <strong>private</strong> ArrayList split(String data, String delimeters) {
+<a name="277" href="#277">277</a> 
+<a name="278" href="#278">278</a>         String currentChar;
+<a name="279" href="#279">279</a>         StringBuffer element = <strong>new</strong> StringBuffer();
+<a name="280" href="#280">280</a>         ArrayList splitParts = <strong>new</strong> ArrayList();
+<a name="281" href="#281">281</a> 
+<a name="282" href="#282">282</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; data.length(); i++) {
+<a name="283" href="#283">283</a>             currentChar = data.substring(i, i + 1);
+<a name="284" href="#284">284</a>             <strong>if</strong> (delimeters.indexOf(currentChar) > -1) {
+<a name="285" href="#285">285</a>                 splitParts.add(element.toString());
+<a name="286" href="#286">286</a>                 element.setLength(0);
+<a name="287" href="#287">287</a>             } <strong>else</strong> {
+<a name="288" href="#288">288</a>                 element.append(currentChar);
+<a name="289" href="#289">289</a>             }
+<a name="290" href="#290">290</a>         }
+<a name="291" href="#291">291</a>         splitParts.add(element.toString());
+<a name="292" href="#292">292</a>         <strong>return</strong> splitParts;
+<a name="293" href="#293">293</a>     }
+<a name="294" href="#294">294</a> 
+<a name="295" href="#295">295</a>     <em>/**<em>*</em></em>
+<a name="296" href="#296">296</a> <em>     * Reverse an ArrayList</em>
+<a name="297" href="#297">297</a> <em>     * </em>
+<a name="298" href="#298">298</a> <em>     * @param data</em>
+<a name="299" href="#299">299</a> <em>     *            The ArrayList we want to get reversed</em>
+<a name="300" href="#300">300</a> <em>     * @return reversed The reversed given ArrayList</em>
+<a name="301" href="#301">301</a> <em>     */</em>
+<a name="302" href="#302">302</a>     <strong>private</strong> ArrayList reverse(ArrayList data) {
+<a name="303" href="#303">303</a> 
+<a name="304" href="#304">304</a>         ArrayList reversed = <strong>new</strong> ArrayList();
+<a name="305" href="#305">305</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; data.size(); i++) {
+<a name="306" href="#306">306</a>             reversed.add(0, data.get(i));
+<a name="307" href="#307">307</a>         }
+<a name="308" href="#308">308</a>         <strong>return</strong> reversed;
+<a name="309" href="#309">309</a>     }
+<a name="310" href="#310">310</a> 
+<a name="311" href="#311">311</a>     <em>/**<em>*</em></em>
+<a name="312" href="#312">312</a> <em>     * @see #subset(ArrayList, int)</em>
+<a name="313" href="#313">313</a> <em>     */</em>
+<a name="314" href="#314">314</a>     <strong>private</strong> String subset(ArrayList data) {
+<a name="315" href="#315">315</a>         <strong>return</strong> subset(data, data.size());
+<a name="316" href="#316">316</a>     }
+<a name="317" href="#317">317</a> 
+<a name="318" href="#318">318</a>     <em>/**<em>*</em></em>
+<a name="319" href="#319">319</a> <em>     * Convert a ArrayList to a String which holds the entries seperated by dots</em>
+<a name="320" href="#320">320</a> <em>     * </em>
+<a name="321" href="#321">321</a> <em>     * @param data The ArrayList which should be converted</em>
+<a name="322" href="#322">322</a> <em>     * @param length The ArrayLength</em>
+<a name="323" href="#323">323</a> <em>     * @return A String which holds all entries seperated by dots</em>
+<a name="324" href="#324">324</a> <em>     */</em>
+<a name="325" href="#325">325</a>     <strong>private</strong> String subset(ArrayList data, <strong>int</strong> length) {
+<a name="326" href="#326">326</a> 
+<a name="327" href="#327">327</a>         StringBuffer buildString = <strong>new</strong> StringBuffer();
+<a name="328" href="#328">328</a>         <strong>if</strong> (data.size() &lt; length) {
+<a name="329" href="#329">329</a>             length = data.size();
+<a name="330" href="#330">330</a>         }
+<a name="331" href="#331">331</a>         <strong>int</strong> start = data.size() - length;
+<a name="332" href="#332">332</a>         <strong>for</strong> (<strong>int</strong> i = start; i &lt; data.size(); i++) {
+<a name="333" href="#333">333</a>             <strong>if</strong> (buildString.length() > 0) {
+<a name="334" href="#334">334</a>                 buildString.append(<span class="string">"."</span>);
+<a name="335" href="#335">335</a>             }
+<a name="336" href="#336">336</a>             buildString.append(data.get(i));
+<a name="337" href="#337">337</a>         }
+<a name="338" href="#338">338</a>         <strong>return</strong> buildString.toString();
+<a name="339" href="#339">339</a> 
+<a name="340" href="#340">340</a>     }
+<a name="341" href="#341">341</a> 
+<a name="342" href="#342">342</a>     <em>/**<em>*</em></em>
+<a name="343" href="#343">343</a> <em>     * Replace all literals in the given String</em>
+<a name="344" href="#344">344</a> <em>     * </em>
+<a name="345" href="#345">345</a> <em>     * @param data</em>
+<a name="346" href="#346">346</a> <em>     *            The String we want to replace the literals</em>
+<a name="347" href="#347">347</a> <em>     * @return given The given String with all literales replaced</em>
+<a name="348" href="#348">348</a> <em>     */</em>
+<a name="349" href="#349">349</a>     <strong>private</strong> String replaceLiterals(String data) {
+<a name="350" href="#350">350</a> 
+<a name="351" href="#351">351</a>         log.debug(<span class="string">"Replace literals on String: "</span> + data);
+<a name="352" href="#352">352</a> 
+<a name="353" href="#353">353</a>         data = data.replaceAll(<span class="string">"%%"</span>, <span class="string">"%"</span>);
+<a name="354" href="#354">354</a>         data = data.replaceAll(<span class="string">"%_"</span>, <span class="string">" "</span>);
+<a name="355" href="#355">355</a>         data = data.replaceAll(<span class="string">"%-"</span>, <span class="string">"%20"</span>);
+<a name="356" href="#356">356</a> 
+<a name="357" href="#357">357</a>         log.debug(<span class="string">"Replaced String: "</span> + data);
+<a name="358" href="#358">358</a> 
+<a name="359" href="#359">359</a>         <strong>return</strong> data;
+<a name="360" href="#360">360</a>     }
+<a name="361" href="#361">361</a> 
+<a name="362" href="#362">362</a>     <em>/**<em>*</em></em>
+<a name="363" href="#363">363</a> <em>     * Encode the given URL to UTF-8</em>
+<a name="364" href="#364">364</a> <em>     * </em>
+<a name="365" href="#365">365</a> <em>     * @param data</em>
+<a name="366" href="#366">366</a> <em>     *            url to encode</em>
+<a name="367" href="#367">367</a> <em>     * @return encoded URL</em>
+<a name="368" href="#368">368</a> <em>     */</em>
+<a name="369" href="#369">369</a>     <strong>private</strong> String encodeURL(String data) {
+<a name="370" href="#370">370</a> 
+<a name="371" href="#371">371</a>         <strong>try</strong> {
+<a name="372" href="#372">372</a>             <em class="comment">// TODO URLEncoder method is not RFC2396 compatible, known</em>
+<a name="373" href="#373">373</a>             <em class="comment">// difference</em>
+<a name="374" href="#374">374</a>             <em class="comment">// is Space character gets converted to "+" rather than "%20"</em>
+<a name="375" href="#375">375</a>             <em class="comment">// Is there anything else which is not correct with URLEncoder?</em>
+<a name="376" href="#376">376</a>             <em class="comment">// Couldn't find a RFC2396 encoder</em>
+<a name="377" href="#377">377</a>             data = URLEncoder.encode(data, <span class="string">"UTF-8"</span>);
+<a name="378" href="#378">378</a>         } <strong>catch</strong> (UnsupportedEncodingException e) {
+<a name="379" href="#379">379</a>             <em class="comment">// This shouldn't happen ignore it!</em>
+<a name="380" href="#380">380</a>         }
+<a name="381" href="#381">381</a> 
+<a name="382" href="#382">382</a>         <em class="comment">// workaround for the above descripted problem</em>
+<a name="383" href="#383">383</a>         <strong>return</strong> data.replaceAll(<span class="string">"&#47;&#47;+"</span>, <span class="string">"%20"</span>);
+<a name="384" href="#384">384</a> 
+<a name="385" href="#385">385</a>     }
+<a name="386" href="#386">386</a> 
+<a name="387" href="#387">387</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - James 2.3 - Global Server Configuration</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet"/>
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif"/>
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg"/>
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td>
+<a href="http://apachecon.com">
+<img border="0" alt="ApacheCon Promotion" align="left" src="http://apache.org/images/ac2005us_white_184x80.jpg"/>
+</a>
+</td>
+</tr>
+</table>
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation 2.3B</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_3.html">James</a>
+</li>
+<li>
+<a href="./design_objectives_2_3.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="Global Server Configuration">
+<strong>Global Server Configuration</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+<p>There are a number of global configuration blocks that do not fall into any one 
+component.  They have effects that are global in scope across the server.  Some of 
+these blocks are crucial, while others can be ignored by any but the most sophisticated 
+server administrators.</p>
+<div class="subsection">
+<div class="subsection-header">
+<a name="The James Block">
+<strong>The James Block</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>This configuration block is defined by the <strong>James</strong> tag.  All administrators 
+need to adjust this configuration block upon installation.  It no attributes, but several 
+children, all of which are required.
+<ul>
+<li>
+<strong>postmaster</strong> - the body of this element is the address that the server 
+will consider its postmaster address.  This address will be listed as the sender address 
+of all error messages that originate from James.  Also, all messages addressed to 
+postmaster@&lt;servername&gt;, where &lt;servername&gt; is one of the domain names whose 
+mail is being handled by James, will be redirected to this email address.</li>
+<li>
+<strong>usernames</strong> - this element has no body, but instead has three required 
+boolean attributes.  These are <strong>ignoreCase</strong>, <strong>enabledAliases</strong>, 
+and <strong>enableForwarding</strong>.  The first of these determines whether email user names
+will be treated as case-insensitive or not.  The second attribute configures whether local user
+aliasing will be enabled.  Finally, the value of the third attribute determines whether forwarding 
+to potentially remote users will be enabled.</li>
+<li>
+<strong>servernames</strong> - this element determines exactly which mail domains and IP 
+addresses the server will treat as local.  It has two boolean attributes - 
+<strong>autodetect</strong> and <strong>autodetectIP</strong>.  The first attribute, if true,
+causes the server to attempt to determine its own host name and add that to the list of local
+mail domains.  The second attribute causes the server to attempt to determine its own IP 
+address and add it to the list of local mail domains.  In addition to these attributes, this 
+tag has zero or more <strong>servername</strong> children.</li>
+<ul>
+<li>
+<strong>servername</strong> - a single host name or IP address that should be added to the list of 
+mail domains that the server considers local.</li>
+</ul>
+<li>
+<strong>inboxRepository</strong> - This is a simple container tag which contains a single child element.</li>
+<ul>
+<li>
+<strong>repository</strong> - this defines the mail repository that will be used to store 
+mail delivered locally.  This element has no body.  The required attribute <strong>type</strong> 
+is always set to "MAIL".  The required attribute <strong>repositoryURL</strong> addresses the
+repository as described in <a href="repositories_2_3.html">the repository configuration section</a>.</li>
+</ul>
+</ul>
+</p>
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="The Connectionmanager Block">
+<strong>The Connectionmanager Block</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>
+This block controls general connection management.  There are two elements.
+<ul>
+<li>
+<strong>idle-timeout</strong> - the number of milliseconds that it will take for idle 
+client connections managed by this connection manager to be marked at timed out.  If no 
+value is specified, the value defaults to 5 minutes, 300000 milliseconds.  A value of 0 
+means that client sockets will not timeout.</li>
+<li>
+<strong>max-connections</strong> - The max-connections parameter specifies the default 
+maximum number of client connections that this connection manager will allow per managed 
+server socket.  This value can be overridden by each individual service.  If no value is 
+specified, the value defaults to 30.  A value of 0 means that there is no limit imposed 
+by the connection manager, although resource limitations imposed by other components 
+(i.e. max # of threads) may serve to limit the number of open connections.</li>
+</ul>
+</p>
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="The Objectstorage Block">
+<strong>The Objectstorage Block</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>This block controls the low level file repository to file mapping.  There is no need to modify this.</p>
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="The Socketmanager Block">
+<strong>The Socketmanager Block</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>This block controls the socket types available inside James.  Unless you are intending to enable SSL, it 
+shouldn't be necessary for you to adjust this block.  For modifications to this block that are required to
+enable TLS, see <a href="usingTLS_2_1.html">the using TLS section</a>.</p>
+</div>
+</div>
+<div class="subsection">
+<div class="subsection-header">
+<a name="The Threadmanager Block">
+<strong>The Threadmanager Block</strong>
+</a>
+</div>
+<div class="subsection-body">
+<p>This block controls the thread pools available inside James.  Only expert administators should modify 
+this configuration.</p>
+</div>
+</div>
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade=""/>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2006, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

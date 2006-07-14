@@ -1,0 +1,1774 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Maven Clover report</title>
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../style.css" TITLE="Style">
+</head>
+<body>
+<TABLE cellspacing="0" cellpadding="2"><TBODY>
+    <!-- C:\ Lab\ VOID\ projects\ james-jspf\ src\ main\ java\ org\ apache\ james\ jspf\ macro\ MacroExpand.java -->
+  <TR>
+    <TD colspan="6" class="reportHeader">
+    <TABLE width="100%"><TR>
+    <TD valign="top" class="titleText">Clover coverage report -   Maven Clover report <DIV class="timestamp"><b>Coverage timestamp:</b>&nbsp;Fri Jul 14 2006 11:00:43 CEST</DIV>
+            <DIV class="navBar"><a href="../../../../../pkgs-summary.html"><b>Overview</b></a>&nbsp;&nbsp;&nbsp;<a href="pkg-summary.html"><b>Package</b></a>&nbsp;&nbsp;&nbsp;<font class="navBarCurrent">File</font></DIV>
+    
+<DIV class="navBarLink">
+&nbsp;&nbsp;&nbsp;
+    <A HREF="../../../../../index.html" TARGET="_top">FRAMES</A>&nbsp;&nbsp;
+<A HREF="MacroExpand.html" TARGET="_top">NO FRAMES</A>&nbsp;&nbsp;
+    </DIV>
+
+</TD>
+         <td class="headerStats" valign="top" width="40%" align="right">
+        <table align="right">
+         <tr>
+           <td nowrap><b>file stats:</b></td>
+           <td align="right"><b>LOC:</b></td>
+           <td align="right">387</td>
+           <td width="10%">&nbsp;</td>
+           <td align="right"><b>Methods:</b></td>
+           <td align="right">12</td>
+         </tr>
+         <tr>
+           <td></td>
+           <td align="right"><b>NCLOC:</b></td>
+           <td align="right">198</td>
+           <td width="10%">&nbsp;</td>
+           <td align="right"><b>Classes:</b></td>
+           <td align="right">1</td>
+         </tr>
+      </table>
+     </td>
+    </TR></TABLE>
+   </TD>
+  </TR>
+
+<TR><TD class="hbreak" colspan="6">&nbsp;</TD></TR>
+  <TR>
+    <TD class="graphHeaderLeft"><b>&nbsp;Source file</b></TD>
+    <TD class="graphHeader">Conditionals</TD>
+    <TD class="graphHeader">Statements</TD>
+    <TD class="graphHeader">Methods</TD>
+    <TD class="graphHeader" align="left" colspan="2"><B>TOTAL</B></TD>
+  </TR>   
+  <TR>
+    <TD class="graphItem">
+               MacroExpand.java
+        </TD>
+   
+    <TD class="graphPercent" align="center">80.6%</TD>
+    <TD class="graphPercent" align="center">90.4%</TD>
+    <TD class="graphPercent" align="center">100%</TD>
+    <TD class="graphBarLeft" align="center"><B>87.9%</B></TD>
+    <TD class="graphBar">
+            <TABLE class="barGraph" cellspacing="0">
+        <TBODY>
+          <TR>
+                   <TD class="covered"><img alt="coverage" src="../../../../../img/trans.gif"
+                   width="175" height="12"></TD>
+            <TD class="uncovered"><img alt="coverage" src="../../../../../img/trans.gif"
+                   width="25" height="12"></TD>
+          </TR>
+    </TBODY>
+      </TABLE>
+          </TD>
+  </TR> 
+</TBODY></TABLE><TABLE cellspacing="0" cellpadding="0" class="srcView"><TBODY>
+<TR><TD align="right" class="lineCount">
+&nbsp;1</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">/***********************************************************************</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;2</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Copyright (c) 2006 The Apache Software Foundation.             *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;3</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * All rights reserved.                                                *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;4</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * ------------------------------------------------------------------- *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;5</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License"); you *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;6</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * may not use this file except in compliance with the License. You    *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;7</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * may obtain a copy of the License at:                                *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;8</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *                                                                     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;9</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0                      *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;10</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> *                                                                     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;11</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * Unless required by applicable law or agreed to in writing, software *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;12</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,   *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;13</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;14</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * implied.  See the License for the specific language governing       *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;15</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * permissions and limitations under the License.                      *</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;16</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> ***********************************************************************/</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;17</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;18</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">package</span> org.apache.james.jspf.macro;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;19</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;20</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;21</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * This Class is used to convert all macros which can used in SPF-Records to the</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;22</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * right values!</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;23</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;24</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment"> */</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;25</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;26</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> org.apache.james.jspf.exceptions.PermErrorException;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;27</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> org.apache.log4j.Logger;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;28</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;29</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;30</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.net.URLEncoder;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;31</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.util.ArrayList;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;32</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.util.regex.Matcher;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;33</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">import</span> java.util.regex.Pattern;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;34</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+<A name="MacroExpand">&nbsp;35</A></TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="keyword">public</span> <span class="keyword">class</span> MacroExpand {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;36</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;37</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">public</span> <span class="keyword">static</span> final String MACRO_REGEX = <span class="string">"\\%\\{[lsoditpvhcrLSODITPVHCR]\\d*r?[\\.\\-\\+,/_\\=]*\\}"</span>;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;38</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;39</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> MacroData spfData;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;40</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;41</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> Pattern inputPattern;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;42</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;43</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> Matcher inputMatcher;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;44</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;45</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> Pattern cellPattern;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;46</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;47</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> Matcher cellMatcher;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;48</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;49</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">boolean</span> isExplanation = <span class="keyword">false</span>;</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;50</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;51</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="keyword">private</span> <span class="keyword">static</span> Logger log = Logger.getLogger(MacroExpand.<span class="keyword">class</span>);</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;52</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;53</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 53: method entered 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 53: method entered 224 times.">    <span class="keyword">public</span> MacroExpand(MacroData spfData) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;54</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 54: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 54: statement executed 224 times.">        <span class="keyword">this</span>.spfData = spfData;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;55</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 55: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 55: statement executed 224 times.">        inputPattern = Pattern.compile(MACRO_REGEX);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;56</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;57</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;58</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;59</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * This method expand the given a explanation</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;60</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;61</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> input</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;62</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The explanation which should be expanded</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;63</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> expanded The expanded explanation</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;64</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;65</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             Get thrown if invalid macros are used</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;66</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;67</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 67: method entered 57 times.">&nbsp;57</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 67: method entered 57 times.">    <span class="keyword">public</span> String expandExplanation(String input) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;68</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;69</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 69: statement executed 57 times.">&nbsp;57</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 69: statement executed 57 times.">        log.debug(<span class="string">"Start do expand explanation: "</span> + input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;70</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;71</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 71: statement executed 57 times.">&nbsp;57</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 71: statement executed 57 times.">        isExplanation = <span class="keyword">true</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;72</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 72: statement executed 57 times.">&nbsp;57</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 72: statement executed 57 times.">        <span class="keyword">return</span> expand(input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;73</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;74</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;75</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;76</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * This method expand the given domain. So all known macros get replaced</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;77</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;78</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> input</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;79</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The domain which should be expand</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;80</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> expanded The domain with replaced macros</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;81</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;82</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             This get thrown if invalid macros are used</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;83</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;84</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 84: method entered 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 84: method entered 167 times.">    <span class="keyword">public</span> String expandDomain(String input) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;85</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;86</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 86: statement executed 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 86: statement executed 167 times.">        log.debug(<span class="string">"Start expand domain: "</span> + input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;87</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;88</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 88: statement executed 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 88: statement executed 167 times.">        isExplanation = <span class="keyword">false</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;89</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 89: statement executed 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 89: statement executed 167 times.">        String domainName = expand(input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;90</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// reduce to less than 255 characters, deleting subdomains from left</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;91</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 91: statement executed 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 91: statement executed 167 times.">        <span class="keyword">int</span> split = 0;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;92</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 92: expression evaluated to true 0 times, false 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 92: expression evaluated to true 0 times, false 167 times.">        <span class="keyword">while</span> (domainName.length() &gt; 255 &amp;&amp; split &gt; -1) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;93</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 93: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 93: statement not executed.">            split = domainName.indexOf(<span class="string">"."</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;94</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 94: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 94: statement not executed.">            domainName = domainName.substring(split + 1);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;95</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;96</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 96: statement executed 167 times.">&nbsp;167</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 96: statement executed 167 times.">        <span class="keyword">return</span> domainName;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;97</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;98</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;99</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;100</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Expand the given String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;101</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;102</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> input</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;103</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The inputString which should get expanded</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;104</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> expanded The expanded given String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;105</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;106</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             This get thrown if invalid macros are used</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;107</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;108</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 108: method entered 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 108: method entered 224 times.">    <span class="keyword">private</span> String expand(String input) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;109</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;110</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 110: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 110: statement executed 224 times.">        input = replaceLiterals(input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;111</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;112</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 112: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 112: statement executed 224 times.">        StringBuffer decodedValue = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;113</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 113: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 113: statement executed 224 times.">        inputMatcher = inputPattern.matcher(input);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;114</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 114: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 114: statement executed 224 times.">        String macroCell;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;115</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;116</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 116: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 116: statement executed 224 times.">        <span class="keyword">while</span> (inputMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;117</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 117: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 117: statement executed 207 times.">            macroCell = input.substring(inputMatcher.start() + 2, inputMatcher</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;118</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                    .end() - 1);</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;119</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 119: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 119: statement executed 207 times.">            inputMatcher</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;120</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                    .appendReplacement(decodedValue, replaceCell(macroCell));</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;121</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;122</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 122: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 122: statement executed 224 times.">        inputMatcher.appendTail(decodedValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;123</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;124</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 124: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 124: statement executed 224 times.">        <span class="keyword">return</span> decodedValue.toString();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;125</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;126</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;127</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;128</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Replace the macros in given String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;129</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;130</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> replaceValue</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;131</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The String in which known macros should get replaced</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;132</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> returnData The String with replaced macros</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;133</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;134</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             Get thrown if an error in processing happen</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;135</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;136</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 136: method entered 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 136: method entered 207 times.">    <span class="keyword">private</span> String replaceCell(String replaceValue) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;137</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;138</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 138: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 138: statement executed 207 times.">        String variable = <span class="string">""</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;139</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 139: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 139: statement executed 207 times.">        String domainNumber = <span class="string">""</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;140</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 140: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 140: statement executed 207 times.">        <span class="keyword">boolean</span> isReversed = <span class="keyword">false</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;141</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 141: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 141: statement executed 207 times.">        String delimeters = <span class="string">"."</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;142</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;143</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 143: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 143: statement executed 207 times.">        <span class="keyword">if</span> (isExplanation) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;144</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// Find command</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;145</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 145: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 145: statement executed 108 times.">            cellPattern = Pattern.compile(<span class="string">"[ctCT]"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;146</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 146: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 146: statement executed 108 times.">            cellMatcher = cellPattern.matcher(replaceValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;147</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 147: expression evaluated to true 0 times, false 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 147: expression evaluated to true 0 times, false 108 times.">            <span class="keyword">while</span> (cellMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;148</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 148: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 148: statement not executed.">                <span class="keyword">if</span> (cellMatcher.group().toUpperCase().equals(</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;149</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                        cellMatcher.group())) {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;150</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 150: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 150: statement not executed.">                    variable = encodeURL(matchMacro(cellMatcher.group()));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;151</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;152</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 152: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 152: statement not executed.">                    variable = matchMacro(cellMatcher.group());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;153</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;154</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;155</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;156</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Get only command character so that 'r' command and 'r' modifier don't</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;157</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// clash</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;158</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 158: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 158: statement executed 207 times.">        String commandCharacter = replaceValue.substring(0, 1);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;159</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Find command</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;160</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 160: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 160: statement executed 207 times.">        cellPattern = Pattern.compile(<span class="string">"[lsodipvhrLSODIPVHR]"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;161</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 161: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 161: statement executed 207 times.">        cellMatcher = cellPattern.matcher(commandCharacter);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;162</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 162: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 162: statement executed 207 times.">        <span class="keyword">while</span> (cellMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;163</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 163: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 163: statement executed 207 times.">            <span class="keyword">if</span> (cellMatcher.group().toUpperCase().equals(cellMatcher.group())) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;164</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 164: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 164: statement executed 108 times.">                variable = encodeURL(matchMacro(cellMatcher.group()));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;165</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;166</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 166: statement executed 99 times.">&nbsp;99</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 166: statement executed 99 times.">                variable = matchMacro(cellMatcher.group());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;167</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;168</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;169</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Remove Macro code so that r macro code does not clash with r the</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;170</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// reverse modifier</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;171</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 171: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 171: statement executed 207 times.">        replaceValue = replaceValue.substring(1);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;172</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;173</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Find number of domains to use</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;174</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 174: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 174: statement executed 207 times.">        cellPattern = Pattern.compile(<span class="string">"\\d+"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;175</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 175: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 175: statement executed 207 times.">        cellMatcher = cellPattern.matcher(replaceValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;176</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 176: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 176: statement executed 207 times.">        <span class="keyword">while</span> (cellMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;177</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 177: statement executed 18 times.">&nbsp;18</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 177: statement executed 18 times.">            domainNumber = cellMatcher.group();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;178</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 178: expression evaluated to true 0 times, false 18 times.">&nbsp;18</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 178: expression evaluated to true 0 times, false 18 times.">            <span class="keyword">if</span> (Integer.parseInt(domainNumber) == 0) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;179</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 179: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 179: statement not executed.">                <span class="keyword">throw</span> <span class="keyword">new</span> PermErrorException(</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;180</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">                        <span class="string">"Digit transformer must be non-zero"</span>);</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;181</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;182</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;183</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// find if reversed</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;184</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 184: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 184: statement executed 207 times.">        cellPattern = Pattern.compile(<span class="string">"r"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;185</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 185: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 185: statement executed 207 times.">        cellMatcher = cellPattern.matcher(replaceValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;186</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 186: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 186: statement executed 207 times.">        <span class="keyword">while</span> (cellMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;187</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 187: statement executed 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 187: statement executed 40 times.">            isReversed = <span class="keyword">true</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;188</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;189</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;190</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// find delimeters</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;191</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 191: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 191: statement executed 207 times.">        cellPattern = Pattern.compile(<span class="string">"[\\.\\-\\+\\,\\/\\_\\=]+"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;192</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 192: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 192: statement executed 207 times.">        cellMatcher = cellPattern.matcher(replaceValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;193</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 193: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 193: statement executed 207 times.">        <span class="keyword">while</span> (cellMatcher.find()) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;194</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 194: statement executed 14 times.">&nbsp;14</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 194: statement executed 14 times.">            delimeters = cellMatcher.group();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;195</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;196</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;197</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Reverse domains as necessary</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;198</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 198: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 198: statement executed 207 times.">        ArrayList data = split(variable, delimeters);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;199</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 199: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 199: statement executed 207 times.">        <span class="keyword">if</span> (isReversed) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;200</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 200: statement executed 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 200: statement executed 40 times.">            data = reverse(data);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;201</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;202</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;203</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// Truncate domain name to number of sub sections</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;204</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 204: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 204: statement executed 207 times.">        String returnData;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;205</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 205: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 205: statement executed 207 times.">        <span class="keyword">if</span> (!domainNumber.equals(<span class="string">""</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;206</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 206: statement executed 18 times.">&nbsp;18</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 206: statement executed 18 times.">            returnData = subset(data, Integer.parseInt(domainNumber));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;207</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;208</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 208: statement executed 189 times.">&nbsp;189</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 208: statement executed 189 times.">            returnData = subset(data);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;209</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;210</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;211</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 211: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 211: statement executed 207 times.">        <span class="keyword">return</span> returnData;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;212</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;213</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;214</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;215</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;216</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Get the value for the given macro like descripted in the RFC</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;217</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;218</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> macro</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;219</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The macro we want to get the value for</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;220</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> rValue The value for the given macro</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;221</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@throws</span> PermErrorException</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;222</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *             Get thrown if the given variable is an unknown macro</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;223</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;224</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;225</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 225: method entered 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 225: method entered 207 times.">    <span class="keyword">private</span> String matchMacro(String macro) <span class="keyword">throws</span> PermErrorException {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;226</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;227</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 227: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 227: statement executed 207 times.">        String rValue = <span class="keyword">null</span>;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;228</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;229</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 229: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 229: statement executed 207 times.">        String variable = macro.toLowerCase();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;230</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 230: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 230: statement executed 207 times.">        <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"i"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;231</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 231: statement executed 78 times.">&nbsp;78</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 231: statement executed 78 times.">            rValue = spfData.getMacroIpAddress();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;232</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 232: statement executed 129 times.">&nbsp;129</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 232: statement executed 129 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"s"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;233</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 233: statement executed 55 times.">&nbsp;55</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 233: statement executed 55 times.">            rValue = spfData.getMailFrom();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;234</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 234: expression evaluated to true 0 times, false 74 times.">&nbsp;74</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 234: expression evaluated to true 0 times, false 74 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"h"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;235</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 235: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 235: statement not executed.">            rValue = spfData.getHostName();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;236</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 236: statement executed 74 times.">&nbsp;74</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 236: statement executed 74 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"l"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;237</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 237: statement executed 16 times.">&nbsp;16</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 237: statement executed 16 times.">            rValue = spfData.getCurrentSenderPart();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;238</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 238: statement executed 58 times.">&nbsp;58</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 238: statement executed 58 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"d"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;239</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 239: statement executed 30 times.">&nbsp;30</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 239: statement executed 30 times.">            rValue = spfData.getCurrentDomain();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;240</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 240: statement executed 28 times.">&nbsp;28</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 240: statement executed 28 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"v"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;241</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 241: statement executed 24 times.">&nbsp;24</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 241: statement executed 24 times.">            rValue = spfData.getInAddress();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;242</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 242: expression evaluated to true 0 times, false 4 times.">&nbsp;4</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 242: expression evaluated to true 0 times, false 4 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"t"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;243</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 243: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 243: statement not executed.">            rValue = Long.toString(spfData.getTimeStamp());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;244</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 244: expression evaluated to true 0 times, false 4 times.">&nbsp;4</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 244: expression evaluated to true 0 times, false 4 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"c"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;245</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 245: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 245: statement not executed.">            rValue = spfData.getReadableIP();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;246</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 246: statement executed 4 times.">&nbsp;4</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 246: statement executed 4 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"p"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;247</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 247: statement executed 3 times.">&nbsp;3</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 247: statement executed 3 times.">            rValue = spfData.getClientDomain();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;248</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 248: expression evaluated to true 1 time, false 0 times.">&nbsp;1</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 248: expression evaluated to true 1 time, false 0 times.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"o"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;249</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 249: statement executed 1 time.">&nbsp;1</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 249: statement executed 1 time.">            rValue = spfData.getSenderDomain();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;250</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 250: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 250: statement not executed.">        } <span class="keyword">else</span> <span class="keyword">if</span> (variable.equalsIgnoreCase(<span class="string">"r"</span>)) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;251</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 251: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 251: statement not executed.">            rValue = spfData.getReceivingDomain();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;252</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;253</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;254</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 254: expression evaluated to true 0 times, false 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 254: expression evaluated to true 0 times, false 207 times.">        <span class="keyword">if</span> (rValue == <span class="keyword">null</span>) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;255</TD>
+<TD align="right" class="coverageCountHilight">
+<A title="Line 255: statement not executed.">&nbsp;0</A>
+</TD><TD class="srcCell"><SPAN class="srcLineHilight"><A title="Line 255: statement not executed.">            <span class="keyword">throw</span> <span class="keyword">new</span> PermErrorException(<span class="string">"Unknown command : "</span> + variable);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;256</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;257</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;258</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;259</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 259: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 259: statement executed 207 times.">            log.debug(<span class="string">"Used macro: "</span> + macro + <span class="string">" replaced with: "</span> + rValue);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;260</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;261</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 261: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 261: statement executed 207 times.">            <span class="keyword">return</span> rValue;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;262</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;263</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;264</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;265</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;266</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Create an ArrayList by the given String. The String get splitted by given</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;267</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * delimeters and one entry in the Array will be made for each splited</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;268</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;269</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;270</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;271</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The String we want to put in the Array</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;272</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> delimeters</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;273</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The delimeter we want to use to split the String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;274</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> ArrayList which contains the String parts</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;275</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;276</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 276: method entered 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 276: method entered 207 times.">    <span class="keyword">private</span> ArrayList split(String data, String delimeters) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;277</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;278</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 278: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 278: statement executed 207 times.">        String currentChar;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;279</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 279: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 279: statement executed 207 times.">        StringBuffer element = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;280</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 280: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 280: statement executed 207 times.">        ArrayList splitParts = <span class="keyword">new</span> ArrayList();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;281</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;282</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 282: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 282: statement executed 207 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; data.length(); i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;283</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 283: statement executed 3332 times.">&nbsp;3332</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 283: statement executed 3332 times.">            currentChar = data.substring(i, i + 1);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;284</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 284: statement executed 3332 times.">&nbsp;3332</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 284: statement executed 3332 times.">            <span class="keyword">if</span> (delimeters.indexOf(currentChar) &gt; -1) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;285</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 285: statement executed 545 times.">&nbsp;545</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 285: statement executed 545 times.">                splitParts.add(element.toString());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;286</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 286: statement executed 545 times.">&nbsp;545</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 286: statement executed 545 times.">                element.setLength(0);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;287</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            } <span class="keyword">else</span> {</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;288</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 288: statement executed 2787 times.">&nbsp;2787</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 288: statement executed 2787 times.">                element.append(currentChar);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;289</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;290</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;291</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 291: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 291: statement executed 207 times.">        splitParts.add(element.toString());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;292</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 292: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 292: statement executed 207 times.">        <span class="keyword">return</span> splitParts;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;293</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;294</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;295</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;296</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Reverse an ArrayList</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;297</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;298</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;299</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The ArrayList we want to get reversed</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;300</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> reversed The reversed given ArrayList</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;301</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;302</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 302: method entered 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 302: method entered 40 times.">    <span class="keyword">private</span> ArrayList reverse(ArrayList data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;303</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;304</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 304: statement executed 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 304: statement executed 40 times.">        ArrayList reversed = <span class="keyword">new</span> ArrayList();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;305</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 305: statement executed 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 305: statement executed 40 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; data.size(); i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;306</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 306: statement executed 152 times.">&nbsp;152</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 306: statement executed 152 times.">            reversed.add(0, data.get(i));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;307</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;308</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 308: statement executed 40 times.">&nbsp;40</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 308: statement executed 40 times.">        <span class="keyword">return</span> reversed;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;309</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;310</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;311</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;312</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@see</span> #subset(ArrayList, int)</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;313</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;314</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 314: method entered 189 times.">&nbsp;189</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 314: method entered 189 times.">    <span class="keyword">private</span> String subset(ArrayList data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;315</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 315: statement executed 189 times.">&nbsp;189</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 315: statement executed 189 times.">        <span class="keyword">return</span> subset(data, data.size());</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;316</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;317</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;318</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;319</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Convert a ArrayList to a String which holds the entries seperated by dots</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;320</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;321</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data The ArrayList which should be converted</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;322</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> length The ArrayLength</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;323</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> A String which holds all entries seperated by dots</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;324</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;325</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 325: method entered 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 325: method entered 207 times.">    <span class="keyword">private</span> String subset(ArrayList data, <span class="keyword">int</span> length) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;326</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;327</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 327: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 327: statement executed 207 times.">        StringBuffer buildString = <span class="keyword">new</span> StringBuffer();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;328</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 328: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 328: statement executed 207 times.">        <span class="keyword">if</span> (data.size() &lt; length) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;329</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 329: statement executed 1 time.">&nbsp;1</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 329: statement executed 1 time.">            length = data.size();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;330</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;331</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 331: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 331: statement executed 207 times.">        <span class="keyword">int</span> start = data.size() - length;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;332</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 332: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 332: statement executed 207 times.">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; data.size(); i++) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;333</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 333: statement executed 735 times.">&nbsp;735</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 333: statement executed 735 times.">            <span class="keyword">if</span> (buildString.length() &gt; 0) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;334</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 334: statement executed 528 times.">&nbsp;528</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 334: statement executed 528 times.">                buildString.append(<span class="string">"."</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;335</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;336</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 336: statement executed 735 times.">&nbsp;735</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 336: statement executed 735 times.">            buildString.append(data.get(i));</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;337</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;338</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 338: statement executed 207 times.">&nbsp;207</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 338: statement executed 207 times.">        <span class="keyword">return</span> buildString.toString();</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;339</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;340</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;341</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;342</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;343</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Replace all literals in the given String</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;344</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;345</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;346</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            The String we want to replace the literals</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;347</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> given The given String with all literales replaced</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;348</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;349</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 349: method entered 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 349: method entered 224 times.">    <span class="keyword">private</span> String replaceLiterals(String data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;350</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;351</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 351: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 351: statement executed 224 times.">        log.debug(<span class="string">"Replace literals on String: "</span> + data);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;352</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;353</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 353: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 353: statement executed 224 times.">        data = data.replaceAll(<span class="string">"%%"</span>, <span class="string">"%"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;354</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 354: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 354: statement executed 224 times.">        data = data.replaceAll(<span class="string">"%_"</span>, <span class="string">" "</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;355</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 355: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 355: statement executed 224 times.">        data = data.replaceAll(<span class="string">"%-"</span>, <span class="string">"%20"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;356</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;357</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 357: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 357: statement executed 224 times.">        log.debug(<span class="string">"Replaced String: "</span> + data);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;358</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;359</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 359: statement executed 224 times.">&nbsp;224</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 359: statement executed 224 times.">        <span class="keyword">return</span> data;</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;360</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;361</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;362</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    <span class="comment">/**</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;363</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * Encode the given URL to UTF-8</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;364</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * </span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;365</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@param</span> data</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;366</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     *            url to encode</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;367</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     * <span class="javadoc">@return</span> encoded URL</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;368</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"><span class="comment">     */</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;369</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 369: method entered 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 369: method entered 108 times.">    <span class="keyword">private</span> String encodeURL(String data) {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;370</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;371</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 371: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 371: statement executed 108 times.">        <span class="keyword">try</span> {</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;372</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// TODO URLEncoder method is not RFC2396 compatible, known</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;373</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// difference</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;374</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// is Space character gets converted to "+" rather than "%20"</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;375</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// Is there anything else which is not correct with URLEncoder?</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;376</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// Couldn't find a RFC2396 encoder</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;377</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 377: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 377: statement executed 108 times.">            data = URLEncoder.encode(data, <span class="string">"UTF-8"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;378</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        } <span class="keyword">catch</span> (UnsupportedEncodingException e) {</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;379</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">            <span class="comment">// This shouldn't happen ignore it!</span></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;380</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;381</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;382</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">        <span class="comment">// workaround for the above descripted problem</span></SPAN></TD></TR><TR><TD align="right" class="lineCountHilight">
+&nbsp;383</TD>
+<TD align="right" class="lineCountHilight">
+<A title="Line 383: statement executed 108 times.">&nbsp;108</A>
+</TD><TD class="srcCell"><SPAN class="srcLine"><A title="Line 383: statement executed 108 times.">        <span class="keyword">return</span> data.replaceAll(<span class="string">"\\+"</span>, <span class="string">"%20"</span>);</A>
+</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;384</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;385</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">    }</SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;386</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine"></SPAN></TD></TR><TR><TD align="right" class="lineCount">
+&nbsp;387</TD>
+<TD align="right" class="coverageCount">
+&nbsp;&nbsp;
+</TD><TD class="srcCell"><SPAN class="srcLine">}</SPAN></TD></TR></TBODY></TABLE>
+<TABLE width="100%"><TR><TD class="hbreak" colspan="6">&nbsp;</TD></TR>
+<TR><TD class="footer" colspan="6">
+<table>
+<tr>
+ <td><a target="_new" href="http://www.cenqua.com/clover?5Jn"><img alt="Clover" src="../../../../../img/logo.gif" border="0"></a></td><td nowrap><i>Report generated by </i><a target="_new" href="http://www.cenqua.com/clover?5Jn">Clover Code Coverage v1.3.12</a><i><BR>Fri Jul 14 2006 11:00:47 CEST</i>.</td>
+<td>&nbsp;</td><td style="BORDER-LEFT: #9c9c9c 1px solid;">&nbsp;</td><td>30 day Evaluation Version distributed via the Maven Jar Repository. Clover is not free. You have 30 days to evaluate it. After this, please visit http://www.cenqua.com to obtain a licensed version of Clover</td>
+</tr>
+</table>
+</td>
+</tr></TABLE>

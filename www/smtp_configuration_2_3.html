@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Apache James - Mail and News server - James 2.3 - Configuring the SMTP Service</title>
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet"/>
+</head>
+<body>
+<table cellspacing="0" width="100%" border="0" class="page-header">
+<!--PAGE HEADER-->
+<tr>
+<td colspan="2">
+<!--ASF LOGO-->
+<a href="http://www.apache.org/">
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif"/>
+</a>
+<!--PROJECT LOGO-->
+<a href="http://james.apache.org/">
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg"/>
+</a>
+</td>
+</tr>
+</table>
+<table cellspacing="4" width="100%" border="0">
+<tr>
+<!--LEFT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="left-navbar">
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<tr>
+<td>
+<a href="http://apachecon.com">
+<img border="0" alt="ApacheCon Promotion" align="left" src="http://apache.org/images/ac2005us_white_184x80.jpg"/>
+</a>
+</td>
+</tr>
+</table>
+<navbar name="lhs">
+      <p>
+<strong>James</strong>
+</p>
+<ul>
+<li>
+<a href="./index.html">Overview</a>
+</li>
+<li>
+<a href="./FAQ.html">James FAQ</a>
+</li>
+<li>
+<a href="./mail.html">Mailing Lists</a>
+</li>
+<li>
+<a href="http://wiki.apache.org/james">Wiki</a>
+</li>
+</ul>
+      <p>
+<strong>Downloads</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.apache.org/download.cgi">Releases</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_1.html">James</a>
+</li>
+<li>
+<a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation 2.3B</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_3.html">James</a>
+</li>
+<li>
+<a href="./design_objectives_2_3.html">Design</a>
+</li>
+<li>
+<a href="./javadocs/index.html">James Javadocs</a>
+</li>
+<li>
+<a href="./mailet/index.html">Mailet Javadocs</a>
+</li>
+<li>
+<a href="./rfclist.html">Useful RFCs</a>
+</li>
+</ul>
+    </navbar>
+</td>
+<!--MAIN BODY-->
+<td align="left" valign="top" class="main-body">
+<div class="section">
+<div class="section-header">
+<a name="SMTP Configuration">
+<strong>SMTP Configuration</strong>
+</a>
+</div>
+<p>
+<div class="section-body">
+<p>The SMTP service is controlled by a configuration block in the config.xml.
+The smtpserver tag defines the boundaries of the configuration block.  It encloses 
+all the relevant configuration for the SMTP server.  The behavior of the SMTP service is
+controlled by the attributes and children of this tag.</p>
+
+<p>This tag has an optional boolean attribute - <strong>enabled</strong> - that defines whether the service is active or not.  The value defaults to "true" if
+not present.</p>
+<p>The standard children of the smtpserver tag are:</p>
+<ul>
+<li>
+<strong>port</strong> - This is an optional integer value.  This value is the port on which this SMTP server is configured 
+to listen.If the tag or value is omitted, the value will default to the standard SMTP port, 25.</li>
+<li>
+<strong>bind</strong> - This is an optional value.  If present, this value is a string describing 
+the IP address to which this service should be bound.  If the tag or value is absent then the service 
+will bind to all network interfaces for the machine.</li>
+<li>
+<strong>useTLS</strong> - This is an optional boolean value.  If this value is true, then the "ssl"
+server socket factory is used to generate the server socket for this service.  If it is false, the 
+"plain" server socket factory is used.  In either case this behavior is overridden by the serverSocketType 
+tag which is described under the expert configuration options.</li>
+<li>
+<strong>handler</strong> - This is an artifact preserved for backwards compatibility.  This tag 
+was used to group related parameters.  It should disappear in future versions.</li>
+<ul>
+<li>
+<strong>helloName</strong> - This is a required tag with an optional body that defines the server name 
+used in the initial service greeting.  The tag may have an optional attribute - <strong>autodetect</strong>.  If 
+the autodetect attribute is present and true, the service will use the local hostname
+returned by the Java libraries.  If autodetect is absent or false, the body of the tag will be used.  In
+this case, if no body is present, the value "localhost" will be used.</li>
+<li>
+<strong>connectionTimeout</strong> - This is an optional tag with a non-negative integer body.  </li>
+<li>
+<strong>authRequired</strong> - This is an optional tag with a boolean body.  If true, then the server will 
+require authentication before delivering mail to non-local email addresses.  If this tag is absent, or the value 
+is false then the client will not be prompted for authentication.  Only simple user/password authentication is
+supported at this time.</li>
+<li>
+<strong>verifyIdentity</strong> - This is an optional tag with a boolean body.  This option can only be used 
+if SMTP authentication is required.  If the parameter is set to true then the sender address for the submitted message
+will be verified against the authenticated subject.</li>
+<li>
+<strong>maxmessagesize</strong> - This is an optional tag with a non-negative integer body.  It specifies the maximum 
+size, in kbytes, of any message that will be transmitted by this SMTP server.  It is a service-wide, as opposed to 
+a per user, limit.  If the value is zero then there is no limit.  If the tag isn't specified, the service will
+default to an unlimited message size.</li>
+</ul>
+</ul>
+<p>There are a few additional children of the smtpserver tag that are appropriate for advanced 
+configurations.  These should only be used by expert administrators.  All tags in this group are optional.</p>
+<ul>
+<li>
+<strong>serverSocketFactory</strong> - This is an optional tag with a string body.  If the tag is present, 
+the body must be the name of one of the server socket factories specified in the socket manager block.  Any other 
+value will result in an error.  If present, this tag overrides the useTLS tag.</li>
+<li>
+<strong>threadGroup</strong> - This is an optional tag with a string body.  If the tag is present, 
+the body must be the name of one of the thread groups specified in the thread manager block.  Any other 
+value will result in an error.  This tag is best used to fine tune thread allocation between the services.</li>
+<li>
+<strong>connectionLimit</strong> - The connectionLimit parameter specifies the maximum number of client 
+connections that this service will allow.  If no value is specified, the value defaults to that specified in 
+the connectionmanager block.  A value of 0 means that there is no limit imposed 
+by the service, although resource limitations imposed by other components 
+(i.e. max # of threads) may serve to limit the number of open connections.</li>
+</ul>
+</div>
+</p>
+</div>
+</td>
+<!--RIGHT SIDE NAVIGATION-->
+<td nowrap="true" valign="top" class="right-navbar">
+<navbar name="rhs">
+      <p>
+<strong>Project</strong>
+</p>
+<ul>
+<li>
+<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
+</li>
+<li>
+<a href="http://svn.apache.org/">Source Code</a>
+</li>
+<li>
+<a href="./weare.html">Who We Are</a>
+</li>
+<li>
+<a href="./contribute.html">Contributing</a>
+</li>
+<li>
+<a href="./code-standards.html">Standards</a>
+</li>
+<li>
+<a href="./license.html">License</a>
+</li>
+<li>
+<a href="./changelog.html">Changelog</a>
+</li>
+<li>
+<a href="./todo.html">TODO</a>
+</li>
+</ul>
+      <p>
+<strong>Translated</strong>
+</p>
+<ul>
+<li>
+<a href="http://james.terra-intl.com/">Japanese (web)</a>
+</li>
+</ul>
+      <p>
+<strong>Related Projects</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/index.html">Jakarta</a>
+</li>
+<li>
+<a href="http://ant.apache.org/index.html">Ant</a>
+</li>
+<li>
+<a href="http://avalon.apache.org/index.html">Avalon</a>
+</li>
+</ul>
+      <p>
+<strong>Useful Information</strong>
+</p>
+<ul>
+<li>
+<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+</li>
+<li>
+<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+</li>
+<li>
+<a href="http://apache.org/foundation/faq.html">Apache</a>
+</li>
+</ul>
+    </navbar>
+</td>
+</tr>
+<!--FOOTER SEPARATOR-->
+<tr>
+<td colspan="3">
+<hr size="1" noshade=""/>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="page-footer">
+<em>
+        Copyright © 1999-2006, The Apache Software Foundation
+        </em>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

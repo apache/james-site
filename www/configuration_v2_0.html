@@ -3,9 +3,9 @@
 <html>
 <head>
 <title>Apache James - Mail and News server - Configuration</title>
-<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet" />
-<meta value="Serge Knystautas" name="author" />
-<meta value="sergek@lokitech.com" name="email" />
+<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet"/>
+<meta value="Serge Knystautas" name="author"/>
+<meta value="sergek@lokitech.com" name="email"/>
 </head>
 <body>
 <table cellspacing="0" width="100%" border="0" class="page-header">
@@ -14,11 +14,11 @@
 <td colspan="2">
 <!--ASF LOGO-->
 <a href="http://www.apache.org/">
-<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif" />
+<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif"/>
 </a>
 <!--PROJECT LOGO-->
 <a href="http://james.apache.org/">
-<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg" />
+<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg"/>
 </a>
 </td>
 </tr>
@@ -31,7 +31,7 @@
 <tr>
 <td>
 <a href="http://apachecon.com">
-<img border="0" alt="ApacheCon Promotion" align="left" src="http://apache.org/images/ac2005us_white_184x80.jpg" />
+<img border="0" alt="ApacheCon Promotion" align="left" src="http://apache.org/images/ac2005us_white_184x80.jpg"/>
 </a>
 </td>
 </tr>
@@ -67,10 +67,24 @@
 </p>
 <ul>
 <li>
-<a href="./documentation_2_1.html">James 2.X</a>
+<a href="./documentation_2_1.html">James</a>
 </li>
 <li>
 <a href="./design_objectives.html">Design</a>
+</li>
+<li>
+<a href="./document_archive.html">Document Archive</a>
+</li>
+</ul>
+      <p>
+<strong>Documentation 2.3B</strong>
+</p>
+<ul>
+<li>
+<a href="./documentation_2_3.html">James</a>
+</li>
+<li>
+<a href="./design_objectives_2_3.html">Design</a>
 </li>
 <li>
 <a href="./javadocs/index.html">James Javadocs</a>
@@ -80,9 +94,6 @@
 </li>
 <li>
 <a href="./rfclist.html">Useful RFCs</a>
-</li>
-<li>
-<a href="./document_archive.html">Document Archive</a>
 </li>
 </ul>
     </navbar>
@@ -133,77 +144,77 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> postmaster </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Postmaster@localhost </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Is the source of error replies and the email users will mail to for any problem.  You
             should change this to an address that can receive incoming messages.</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> helloName</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> attribute autodetect=TRUE and value of 'myMailServer'  </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The name by which James will identify itself in SMTP and POP3
             greetings. If autodetect is TRUE James will attempt to detect
             automatically the name, failing which it will use 'localhost'. If
             autodetect is not TRUE, James will use the specified name or
             'localhost' if none is specified. Look in jamesinfo.log for
             lines like "[...] Local host is: [servername] and [...] Hello Name is: [machine name]"</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> servernames/servername</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> attribute autodetect=TRUE and last value of 'localhost'</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> A list of host names James will consider as local. Any user [user]@[servername]
             will be considered to be local. If autodetect is TRUE James will attempt to detect
             automatically the name and use any names specified. Look in jamesinfo.log for a line like "[...] Handling mail for:: [domain/host]"</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> spoolRepository </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> file://var/mail/spool/ </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is the path where incoming messages are stored before beeing processed. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> inboxRepository </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> file://var/mail/localinbox/ </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is the root for local users inbox. Each user will have a personal folder
             [inboxRepository]/[user] </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> spoolmanagerthreads </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 5 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is the number of thread that work polling mails from the spool and take care
             of processing them. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -224,50 +235,50 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> port </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 25 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The port we are listening to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> bind </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Specific IP addresses that you wish to bind this service to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> smtphandler </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Parent for all SMTPHandler configuations. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> connectiontimeout </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 120000 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> If nothing is received from an open connection for more than {timeout] mills
             the connection is closed. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -287,59 +298,59 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> port </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 110 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The port we are listening to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> bind </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Specific IP addresses that you wish to bind this service to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> useTLS </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> false </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Whether you wish to require/use TLS (SSL) on this port. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> pop3handler </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Parent for all POP3Handler configuations. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> connectiontimeout </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 120000 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> If nothing is received from an open connection for more than {timeout] mills
             the connection is closed. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -359,22 +370,22 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> repository </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> file://var/users/ </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The path where local mail account informations are stored. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -395,67 +406,67 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> port </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 4555 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The port we are listening to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> bind </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Specific IP addresses that you wish to bind this service to. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> useTLS </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> false </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Whether you wish to require/use TLS (SSL) on this port. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> administrator_accounts </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> The parent of &lt;account&gt; </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> account </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> login="root" password="root" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> A list of root account to administer JAMES. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> connectiontimeout </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> 120000 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> If nothing is received from an open connection for more than {timeout] mills</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -476,53 +487,53 @@
    <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">&lt;name&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">default value</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">meaning</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> dnsServer/servers/server </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> N.A. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is a list of DNS to resolve external address. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> authoritative </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> false </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Whether to require authoritative (non-cached) DNS records. Should always be false
             unless you understand the implications. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> repository </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> file://var/mail/delayed/ </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is a temp repository path shared with the name of "TMP_REPOSITORY".
             It is used by the RemoteDelivery Mailet to store mail for futher delivery.
             (Note: this is not very elegant and will probally change soon) </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> mailets </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> rootpath="org.apache.james.transport.mailets." </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> This is the parent node for all mailet configurations. The rootpath specify
             where mailet repository is. (Note: need to plug more than one repository) </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -572,222 +583,222 @@
     <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">class name</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">parameter</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">action</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">example</td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> All </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="All" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> HasAttachment </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the message has an attachment (if content type is multipart/mixed). </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="All" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> HostIs </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of hosts names </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients belonging to one of the specified hosts </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="HostIs=myHost.mydom.org,yourHost" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> HostIsLocal </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> check recipients's hosts against the list of host names set in configuration for localhost
             (see &lt;servername&gt;). </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="HostIsLocal" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> InSpammerBlacklist </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> DNS zone with blacklist </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if mail received from an IP address on the blacklist. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="InSpammerBlacklist=blackholes.mail-abuse.org" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> IsSingleRecipient </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match mail if only has 1 recipient. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="IsSingleRecipient" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> NESSpamCheck </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if mail matches various spam detection rules. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="NESSpamCheck" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> RecipientIs </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of recipients </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients defined in condition. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="RecipientIs=root@localhost,admin@localhost" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> RecipientIsLocal </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match recipient which host is local (see HostIsLocal) and that are recognized by the
             Users Manager to be local accounts. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="RecipientIsLocal" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> RelayLimit </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> Maximum number of hops. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the message has more than the specified number of SMTP hops.
             Important to prevent race conditions in SMTP delivery.
             </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="RelayLimit=30" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> RemoteAddrInNetwork </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of network addresses </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the message was received from an IP address that matches the
             comma separated list.  Wildcards are supposed, e.g., 192.168.0.* is a valid option.
             </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="RemoteAddrInNetwork=127.0.0.1,192.168.*" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> RemoteAddrNotInNetwork </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of network addresses </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the message was not received from an IP address that matches
             the comma separated list.  Wildcards are supposed, e.g., 192.168.0.* is a valid option.
             </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="RemoteAddrNotInNetwork=127.0.0.1,192.168.*" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> SenderInFakeDomain </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> none </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match recipients who's domain name portion of their email address is invalid.  Queries
             for A, CNAME, and MX record entries. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="SenderInFakeDomain" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> SenderIs </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of address. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if sender is in the condition string, else match none. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="SenderIs=badBay@badhost" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> SizeGreaterThan </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> number of bytes.  supports 'k' and 'm' suffixes. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if message is larger than the given number of bytes, kilobytes, or megabytes. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="SizeGreaterThan=1m" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> SubjectIs </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of address. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the subject is equal to the condition string, else match none. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="SubjectIs=REMOVE" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> SubjectStartsWith </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of address. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients if the subject starts with the condition string, else match none. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="SubjectStartsWith: [ADV]" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
         <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> UserIs </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> comma separated list of accounts </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match all recipients defined in condition regardless of host. </td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td align="left" valign="top" class="detail-table-content"> match="UserIs=root,admin" </td>
-<td class="separator-col" />
+<td class="separator-col"/>
         </tr>
     </tbody>
 </table>
@@ -934,14 +945,14 @@
   <p>&lt;/mailet&gt; </p>
    
     <b>Redirect</b>
-  <dl>  <dt>A mailet providing configurable redirection services<br />
+  <dl>  <dt>A mailet providing configurable redirection services<br/>
       This mailet can produce listserver, forward and notify behaviour, with the 
-      original message intact, attached, appended or left out altogether.<br />
+      original message intact, attached, appended or left out altogether.<br/>
       This built in functionality is controlled by the configuration as laid out 
       below.</dt>
   </dl>
   <p>However it is also designed to be easily subclassed to make authoring redirection 
-    mailets simple. <br />
+    mailets simple. <br/>
     By extending it and overriding one or more of its methods new behaviour can 
     be quickly created without the author having to address any other issue than 
     the relevant one. For more information see the javadocs</p>
@@ -949,53 +960,53 @@
   <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
   <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">param</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             <td valign="top" class="detail-table-header">desc</td>
-<td class="separator-col" />
+<td class="separator-col"/>
             
         </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;recipients&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">A comma delimited list of email addresses for recipients of this message, 
         it will use the "to" list if not specified. These addresses 
         will only appear in the To: header if no "to" list is supplied.</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;to&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">A comma delimited list of addresses to appear in the To: header, the 
         email will only be delivered to these addresses if they are in the recipients 
         list.<br>
         </br>
         The recipients list will be used if this is not supplied</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;sender&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">A single email address to appear in the From: header <br>
         </br>
         It can include constants "sender" and "postmaster"</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;message&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">A text message to be the body of the email. Can be omitted.</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;inline&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content"> 
         <p>One of the following items:</p>
         <ul>
@@ -1011,12 +1022,12 @@
             body nor headers are appended</li>
         </ul>
       </td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;attachment&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content"> 
         <p>One of the following items:</p>
         <ul>
@@ -1032,123 +1043,123 @@
             to etc by email client software.</li>
         </ul>
       </td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;passThrough&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">TRUE or FALSE, if true the original message continues in the mailet 
         processor after this mailet is finished. False causes the original to 
         be stopped.</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;attachError&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">TRUE or FALSE, if true any error message available to the mailet is 
         appended to the message body (except in the case of inline == unaltered)</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;replyto&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">A single email address to appear in the Rely-To: header, can also be 
         "sender" or "postmaster", this header is not set if 
         this is omited.</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;prefix&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content">An optional subject prefix prepended to the original message subject, 
         for example..<br>
         </br>
         Undeliverable mail:</td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
     <tr class="detail-table-row">
-<td class="separator-col" /> 
+<td class="separator-col"/> 
       <td align="left" valign="top" class="detail-table-content">&lt;static&gt;</td>
-<td class="separator-col" />
+<td class="separator-col"/>
       <td align="left" valign="top" class="detail-table-content"> 
         <p>TRUE or FALSE, if this is true it hints to the mailet that none of 
           the parameters are set dynamically, and therefore they can be set once 
-          in the init method.<br />
+          in the init method.<br/>
           False tells the mailet to call all the "getters" for every 
           mail processed.</p>
-        <p>This defaults to false.<br />
+        <p>This defaults to false.<br/>
           It should be TRUE in all cases, except where one of the getter methods 
           has been overriden to provide dynamic values, such as a listserve which 
           might override getRecipients() to get a list from a users repository.</p>
       </td>
-<td class="separator-col" />
+<td class="separator-col"/>
     </tr>
   </tbody>
 </table>
 <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
   <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
 <td valign="top" class="detail-table-header">
   <p>Example, creates a distribution list:</p>
 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
 </tr>
 <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
 <td align="left" valign="top" class="detail-table-content">
-  <p> &lt;mailet match="RecipientIs=test@localhost" class="Redirect"&gt;<br />
-    &lt;recipients&gt;x@localhost, y@localhost, z@localhost&lt;/recipients&gt;<br />
-    &lt;to&gt;list@localhost&lt;/to&gt;<br />
-    &lt;sender&gt;owner@localhost&lt;/sender&gt;<br />
-    &lt;message&gt;sent on from James&lt;/message&gt;<br />
-    &lt;inline&gt;unaltered&lt;/inline&gt;<br />
-    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br />
-    &lt;replyto&gt;postmaster&lt;/replyto&gt;<br />
-    &lt;prefix&gt;[test mailing]&lt;/prefix&gt;<br />
-    &lt;static&gt;TRUE&lt;/static&gt;<br />
-    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br />
-    &lt;/mailet&gt;<br />
+  <p> &lt;mailet match="RecipientIs=test@localhost" class="Redirect"&gt;<br/>
+    &lt;recipients&gt;x@localhost, y@localhost, z@localhost&lt;/recipients&gt;<br/>
+    &lt;to&gt;list@localhost&lt;/to&gt;<br/>
+    &lt;sender&gt;owner@localhost&lt;/sender&gt;<br/>
+    &lt;message&gt;sent on from James&lt;/message&gt;<br/>
+    &lt;inline&gt;unaltered&lt;/inline&gt;<br/>
+    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br/>
+    &lt;replyto&gt;postmaster&lt;/replyto&gt;<br/>
+    &lt;prefix&gt;[test mailing]&lt;/prefix&gt;<br/>
+    &lt;static&gt;TRUE&lt;/static&gt;<br/>
+    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br/>
+    &lt;/mailet&gt;<br/>
   </p>
 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
 </tr>
 </tbody>
 </table>
 <table cellspacing="0" cellpadding="0" class="detail-table">
 <tbody>
   <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
 <td valign="top" class="detail-table-header">
   
-  <p>and this sends a spam notification to the postmaster <br />with the original message 
+  <p>and this sends a spam notification to the postmaster <br/>with the original message 
     attached as a message, and a subject prefix:</p>
 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
 </tr>
 <tr class="detail-table-row">
-<td class="separator-col" />
+<td class="separator-col"/>
 <td align="left" valign="top" class="detail-table-content">
-  <p> &lt;mailet match="All" class="Redirect"&gt;<br />
-    &lt;recipients&gt;x@localhost&lt;/recipients&gt;<br />
-    &lt;sender&gt;postmaster&lt;/sender&gt;<br />
-    &lt;message&gt;Message marked as spam:<br />
-    &lt;/message&gt;<br />
-    &lt;inline&gt;heads&lt;/inline&gt;<br />
-    &lt;attachment&gt;message&lt;/attachment&gt;<br />
-    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br />
-    &lt;attachError&gt;TRUE&lt;/attachError&gt;<br />
-    &lt;replyto&gt;postmaster&lt;/replyto&gt;<br />
-    &lt;prefix&gt;[spam notification]&lt;/prefix&gt;<br />
-    &lt;static&gt;TRUE&lt;/static&gt;<br />
-    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br />
+  <p> &lt;mailet match="All" class="Redirect"&gt;<br/>
+    &lt;recipients&gt;x@localhost&lt;/recipients&gt;<br/>
+    &lt;sender&gt;postmaster&lt;/sender&gt;<br/>
+    &lt;message&gt;Message marked as spam:<br/>
+    &lt;/message&gt;<br/>
+    &lt;inline&gt;heads&lt;/inline&gt;<br/>
+    &lt;attachment&gt;message&lt;/attachment&gt;<br/>
+    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br/>
+    &lt;attachError&gt;TRUE&lt;/attachError&gt;<br/>
+    &lt;replyto&gt;postmaster&lt;/replyto&gt;<br/>
+    &lt;prefix&gt;[spam notification]&lt;/prefix&gt;<br/>
+    &lt;static&gt;TRUE&lt;/static&gt;<br/>
+    &lt;passThrough&gt;FALSE&lt;/passThrough&gt;<br/>
     &lt;/mailet&gt;</p>
 </td>
-<td class="separator-col" />
+<td class="separator-col"/>
 </tr>
 </tbody>
 </table>
@@ -1232,14 +1243,14 @@
 <!--FOOTER SEPARATOR-->
 <tr>
 <td colspan="3">
-<hr size="1" noshade="" />
+<hr size="1" noshade=""/>
 </td>
 </tr>
 <tr>
 <td colspan="3">
 <div class="page-footer">
 <em>
-        Copyright &copy; 1999-2005, The Apache Software Foundation
+        Copyright © 1999-2006, The Apache Software Foundation
         </em>
 </div>
 </td>
