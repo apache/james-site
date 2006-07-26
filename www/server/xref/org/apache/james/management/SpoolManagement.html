@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>SpoolManagement xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../../../apidocs/org/apache/james/management/SpoolManagement.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em>/**<em>**********************************************************************</em></em>
+<a name="2" href="#2">2</a>   <em> * Copyright (c) 2006 The Apache Software Foundation.             *</em>
+<a name="3" href="#3">3</a>   <em> * All rights reserved.                                                *</em>
+<a name="4" href="#4">4</a>   <em> * ------------------------------------------------------------------- *</em>
+<a name="5" href="#5">5</a>   <em> * Licensed under the Apache License, Version 2.0 (the "License"); you *</em>
+<a name="6" href="#6">6</a>   <em> * may not use this file except in compliance with the License. You    *</em>
+<a name="7" href="#7">7</a>   <em> * may obtain a copy of the License at:                                *</em>
+<a name="8" href="#8">8</a>   <em> *                                                                     *</em>
+<a name="9" href="#9">9</a>   <em> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                      *</em>
+<a name="10" href="#10">10</a>  <em> *                                                                     *</em>
+<a name="11" href="#11">11</a>  <em> * Unless required by applicable law or agreed to in writing, software *</em>
+<a name="12" href="#12">12</a>  <em> * distributed under the License is distributed on an "AS IS" BASIS,   *</em>
+<a name="13" href="#13">13</a>  <em> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</em>
+<a name="14" href="#14">14</a>  <em> * implied.  See the License for the specific language governing       *</em>
+<a name="15" href="#15">15</a>  <em> * permissions and limitations under the License.                      *</em>
+<a name="16" href="#16">16</a>  <em> ***********************************************************************/</em>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  
+<a name="19" href="#19">19</a>  <strong>package</strong> org.apache.james.management;
+<a name="20" href="#20">20</a>  
+<a name="21" href="#21">21</a>  <strong>import</strong> org.apache.avalon.cornerstone.services.store.Store;
+<a name="22" href="#22">22</a>  <strong>import</strong> org.apache.avalon.framework.configuration.DefaultConfiguration;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceException;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceManager;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.avalon.framework.service.Serviceable;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.services.SpoolManagementService;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.services.SpoolRepository;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.mailet.Mail;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.mailet.MailAddress;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.oro.text.regex.Pattern;
+<a name="31" href="#31">31</a>  <strong>import</strong> org.apache.oro.text.regex.Perl5Matcher;
+<a name="32" href="#32">32</a>  
+<a name="33" href="#33">33</a>  <strong>import</strong> javax.mail.MessagingException;
+<a name="34" href="#34">34</a>  <strong>import</strong> javax.mail.Address;
+<a name="35" href="#35">35</a>  <strong>import</strong> javax.mail.internet.MimeMessage;
+<a name="36" href="#36">36</a>  <strong>import</strong> java.util.ArrayList;
+<a name="37" href="#37">37</a>  <strong>import</strong> java.util.Collection;
+<a name="38" href="#38">38</a>  <strong>import</strong> java.util.Date;
+<a name="39" href="#39">39</a>  <strong>import</strong> java.util.Iterator;
+<a name="40" href="#40">40</a>  <strong>import</strong> java.util.List;
+<a name="41" href="#41">41</a>  
+<a name="42" href="#42">42</a>  <em>/**<em>*</em></em>
+<a name="43" href="#43">43</a>  <em> * high-level management of spool contents like list, remove, resend</em>
+<a name="44" href="#44">44</a>  <em> */</em>
+<a name="45" href="#45">45</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/james/management/SpoolManagement.html">SpoolManagement</a> implements Serviceable, SpoolManagementService, <a href="../../../../org/apache/james/management/SpoolManagementMBean.html">SpoolManagementMBean</a> {
+<a name="46" href="#46">46</a>  
+<a name="47" href="#47">47</a>      <strong>private</strong> Store mailStore;
+<a name="48" href="#48">48</a>  
+<a name="49" href="#49">49</a>      <strong>public</strong> <strong>void</strong> setStore(Store mailStore) {
+<a name="50" href="#50">50</a>          <strong>this</strong>.mailStore = mailStore;
+<a name="51" href="#51">51</a>      }
+<a name="52" href="#52">52</a>  
+<a name="53" href="#53">53</a>      <strong>public</strong> <strong>void</strong> service(ServiceManager serviceManager) throws ServiceException {
+<a name="54" href="#54">54</a>          Store mailStore = (Store)serviceManager.lookup(<span class="string">"org.apache.avalon.cornerstone.services.store.Store"</span> );
+<a name="55" href="#55">55</a>          setStore(mailStore);
+<a name="56" href="#56">56</a>      }
+<a name="57" href="#57">57</a>  
+<a name="58" href="#58">58</a>      <em>/**<em>*</em></em>
+<a name="59" href="#59">59</a>  <em>     * Lists all mails from the given repository matching the given filter criteria </em>
+<a name="60" href="#60">60</a>  <em>     * @param spoolRepositoryURL the spool whose item are listed</em>
+<a name="61" href="#61">61</a>  <em>     * @param state if not NULL, only mails with matching state are returned</em>
+<a name="62" href="#62">62</a>  <em>     * @param header if not NULL, only mails with at least one header with a value matching headerValueRegex are returned</em>
+<a name="63" href="#63">63</a>  <em>     * @param headerValueRegex the regular expression the header must match</em>
+<a name="64" href="#64">64</a>  <em>     * @return String array, each line describing one matching mail from the spool </em>
+<a name="65" href="#65">65</a>  <em>     * @throws SpoolManagementException</em>
+<a name="66" href="#66">66</a>  <em>     */</em>
+<a name="67" href="#67">67</a>      <strong>public</strong> String[] listSpoolItems(String spoolRepositoryURL, String state, String header, String headerValueRegex) 
+<a name="68" href="#68">68</a>              throws <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="69" href="#69">69</a>          <strong>return</strong> listSpoolItems(spoolRepositoryURL, <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a>(state, header, headerValueRegex));
+<a name="70" href="#70">70</a>      }
+<a name="71" href="#71">71</a>  
+<a name="72" href="#72">72</a>      <em>/**<em>*</em></em>
+<a name="73" href="#73">73</a>  <em>     * Lists all mails from the given repository matching the given filter criteria </em>
+<a name="74" href="#74">74</a>  <em>     * @param spoolRepositoryURL the spool whose item are listed</em>
+<a name="75" href="#75">75</a>  <em>     * @param filter the criteria against which all mails are matched</em>
+<a name="76" href="#76">76</a>  <em>     * @return String array, each line describing one matching mail from the spool </em>
+<a name="77" href="#77">77</a>  <em>     * @throws SpoolManagementException</em>
+<a name="78" href="#78">78</a>  <em>     */</em>
+<a name="79" href="#79">79</a>      <strong>public</strong> String[] listSpoolItems(String spoolRepositoryURL, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws SpoolManagementException {
+<a name="80" href="#80">80</a>          List spoolItems;
+<a name="81" href="#81">81</a>          <strong>try</strong> {
+<a name="82" href="#82">82</a>              spoolItems = getSpoolItems(spoolRepositoryURL, filter);
+<a name="83" href="#83">83</a>          } <strong>catch</strong> (Exception e) {
+<a name="84" href="#84">84</a>               <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a>(e);
+<a name="85" href="#85">85</a>          }
+<a name="86" href="#86">86</a>          <strong>return</strong> (String[]) spoolItems.toArray(<strong>new</strong> String[]{});
+<a name="87" href="#87">87</a>      }
+<a name="88" href="#88">88</a>  
+<a name="89" href="#89">89</a>      <em>/**<em>*</em></em>
+<a name="90" href="#90">90</a>  <em>     * @param mail</em>
+<a name="91" href="#91">91</a>  <em>     * @param filter</em>
+<a name="92" href="#92">92</a>  <em>     * @return TRUE, if given mail matches all given filter criteria</em>
+<a name="93" href="#93">93</a>  <em>     * @throws SpoolManagementException</em>
+<a name="94" href="#94">94</a>  <em>     */</em>
+<a name="95" href="#95">95</a>      <strong>protected</strong> <strong>boolean</strong> filterMatches(<a href="../../../../org/apache/mailet/Mail.html">Mail</a> mail, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws SpoolManagementException {
+<a name="96" href="#96">96</a>          <strong>if</strong> (filter == <strong>null</strong> || !filter.doFilter()) <strong>return</strong> <strong>true</strong>;
+<a name="97" href="#97">97</a>  
+<a name="98" href="#98">98</a>          <strong>if</strong> (filter.doFilterState() &amp;&amp; !mail.getState().equalsIgnoreCase(filter.getState())) <strong>return</strong> false;
+<a name="99" href="#99">99</a>          
+<a name="100" href="#100">100</a>         <strong>if</strong> (filter.doFilterHeader()) {
+<a name="101" href="#101">101</a> 
+<a name="102" href="#102">102</a>             Perl5Matcher matcher = <strong>new</strong> Perl5Matcher();
+<a name="103" href="#103">103</a>             
+<a name="104" href="#104">104</a>             <em class="comment">// check, if there is a match for every header/regex pair</em>
+<a name="105" href="#105">105</a>             Iterator headers = filter.getHeaders();
+<a name="106" href="#106">106</a>             <strong>while</strong> (headers.hasNext()) {
+<a name="107" href="#107">107</a>                 String header = (String) headers.next();
+<a name="108" href="#108">108</a>                 
+<a name="109" href="#109">109</a>                 String[] headerValues;
+<a name="110" href="#110">110</a>                 <strong>try</strong> {
+<a name="111" href="#111">111</a>                     headerValues = mail.getMessage().getHeader(header);
+<a name="112" href="#112">112</a>                     <strong>if</strong> (headerValues == <strong>null</strong>) {
+<a name="113" href="#113">113</a>                         <em class="comment">// some headers need special retrieval</em>
+<a name="114" href="#114">114</a>                         <strong>if</strong> (header.equalsIgnoreCase(<span class="string">"to"</span>)) {
+<a name="115" href="#115">115</a>                             headerValues = addressesToStrings(mail.getMessage().getRecipients(MimeMessage.RecipientType.TO));
+<a name="116" href="#116">116</a>                         }
+<a name="117" href="#117">117</a>                         <strong>else</strong> <strong>if</strong> (header.equalsIgnoreCase(<span class="string">"cc"</span>)) { 
+<a name="118" href="#118">118</a>                             headerValues = addressesToStrings(mail.getMessage().getRecipients(MimeMessage.RecipientType.CC));
+<a name="119" href="#119">119</a>                         }
+<a name="120" href="#120">120</a>                         <strong>else</strong> <strong>if</strong> (header.equalsIgnoreCase(<span class="string">"bcc"</span>)) { 
+<a name="121" href="#121">121</a>                             headerValues = addressesToStrings(mail.getMessage().getRecipients(MimeMessage.RecipientType.BCC));
+<a name="122" href="#122">122</a>                         }
+<a name="123" href="#123">123</a>                         <strong>else</strong> <strong>if</strong> (header.equalsIgnoreCase(<span class="string">"from"</span>)) { 
+<a name="124" href="#124">124</a>                             headerValues = <strong>new</strong> String[]{mail.getMessage().getSender().toString()};
+<a name="125" href="#125">125</a>                         }
+<a name="126" href="#126">126</a>                     }
+<a name="127" href="#127">127</a>                 } <strong>catch</strong> (MessagingException e) {
+<a name="128" href="#128">128</a>                     <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a>(<span class="string">"could not filter mail by headers"</span>, e);
+<a name="129" href="#129">129</a>                 }
+<a name="130" href="#130">130</a>                 <strong>if</strong> (headerValues == <strong>null</strong>) <strong>return</strong> false; <em class="comment">// no header for this criteria</em>
+<a name="131" href="#131">131</a> 
+<a name="132" href="#132">132</a>                 Pattern pattern = filter.getHeaderValueRegexCompiled(header);
+<a name="133" href="#133">133</a> 
+<a name="134" href="#134">134</a>                 <em class="comment">// the regex must match at least one entry for the header</em>
+<a name="135" href="#135">135</a>                 <strong>boolean</strong> matched = false;
+<a name="136" href="#136">136</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; headerValues.length; i++) {
+<a name="137" href="#137">137</a>                     String headerValue = headerValues[i];
+<a name="138" href="#138">138</a>                     <strong>if</strong> (matcher.matches(headerValue, pattern)) {
+<a name="139" href="#139">139</a>                         matched = <strong>true</strong>;
+<a name="140" href="#140">140</a>                         <strong>break</strong>;
+<a name="141" href="#141">141</a>                     }
+<a name="142" href="#142">142</a>                 }
+<a name="143" href="#143">143</a>                 <strong>if</strong> (!matched) <strong>return</strong> false;
+<a name="144" href="#144">144</a>             }
+<a name="145" href="#145">145</a>         }
+<a name="146" href="#146">146</a>             
+<a name="147" href="#147">147</a>         <strong>return</strong> <strong>true</strong>;
+<a name="148" href="#148">148</a>     }
+<a name="149" href="#149">149</a> 
+<a name="150" href="#150">150</a>     <strong>private</strong> String[] addressesToStrings(Address[] addresses) {
+<a name="151" href="#151">151</a>         <strong>if</strong> (addresses == <strong>null</strong>) <strong>return</strong> <strong>null</strong>;
+<a name="152" href="#152">152</a>         <strong>if</strong> (addresses.length == 0) <strong>return</strong> <strong>new</strong> String[]{};
+<a name="153" href="#153">153</a>         String[] addressStrings = <strong>new</strong> String[addresses.length];
+<a name="154" href="#154">154</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; addresses.length; i++) {
+<a name="155" href="#155">155</a>             addressStrings[i] = addresses[i].toString();
+<a name="156" href="#156">156</a>         }
+<a name="157" href="#157">157</a>         <strong>return</strong> addressStrings;
+<a name="158" href="#158">158</a>     }
+<a name="159" href="#159">159</a> 
+<a name="160" href="#160">160</a>     <em>/**<em>*</em></em>
+<a name="161" href="#161">161</a> <em>     * @param spoolRepositoryURL</em>
+<a name="162" href="#162">162</a> <em>     * @param filter</em>
+<a name="163" href="#163">163</a> <em>     * @return List&lt;Mail> all matching mails from the given spool</em>
+<a name="164" href="#164">164</a> <em>     * @throws SpoolManagementException</em>
+<a name="165" href="#165">165</a> <em>     */</em>
+<a name="166" href="#166">166</a>     <strong>public</strong> List getSpoolItems(String spoolRepositoryURL, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter)
+<a name="167" href="#167">167</a>             throws ServiceException, MessagingException, <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="168" href="#168">168</a>         <a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository = getSpoolRepository(spoolRepositoryURL);
+<a name="169" href="#169">169</a> 
+<a name="170" href="#170">170</a>         List items = <strong>new</strong> ArrayList();
+<a name="171" href="#171">171</a> 
+<a name="172" href="#172">172</a>         <em class="comment">// get an iterator of all keys</em>
+<a name="173" href="#173">173</a>         Iterator spoolR = spoolRepository.list();
+<a name="174" href="#174">174</a>         <strong>while</strong> (spoolR.hasNext()) {
+<a name="175" href="#175">175</a>             String key = spoolR.next().toString();
+<a name="176" href="#176">176</a>             <a href="../../../../org/apache/mailet/Mail.html">Mail</a> m = spoolRepository.retrieve(key);
+<a name="177" href="#177">177</a> 
+<a name="178" href="#178">178</a>             <strong>if</strong> (filterMatches(m, filter)) {
+<a name="179" href="#179">179</a>                 StringBuffer itemInfo = <strong>new</strong> StringBuffer();
+<a name="180" href="#180">180</a>                 itemInfo.append(<span class="string">"key: "</span>).append(key).append(<span class="string">" sender: "</span>).append(m.getSender()).append(<span class="string">" recipient:"</span>);
+<a name="181" href="#181">181</a>                 Collection recipients = m.getRecipients();
+<a name="182" href="#182">182</a>                 <strong>for</strong> (Iterator iterator = recipients.iterator(); iterator.hasNext();) {
+<a name="183" href="#183">183</a>                     <a href="../../../../org/apache/mailet/MailAddress.html">MailAddress</a> mailAddress = (MailAddress) iterator.next();
+<a name="184" href="#184">184</a>                     itemInfo.append(<span class="string">" "</span>).append(mailAddress);
+<a name="185" href="#185">185</a>                 }
+<a name="186" href="#186">186</a>                 items.add(itemInfo.toString());
+<a name="187" href="#187">187</a>             }
+<a name="188" href="#188">188</a>         }
+<a name="189" href="#189">189</a> 
+<a name="190" href="#190">190</a>         <strong>return</strong> items;
+<a name="191" href="#191">191</a>     }
+<a name="192" href="#192">192</a> 
+<a name="193" href="#193">193</a>     <strong>public</strong> <strong>int</strong> removeSpoolItems(String spoolRepositoryURL, String key, String state, String header, String headerValueRegex) 
+<a name="194" href="#194">194</a>             throws <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="195" href="#195">195</a>         <strong>return</strong> removeSpoolItems(spoolRepositoryURL, key, <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a>(state, header, headerValueRegex));
+<a name="196" href="#196">196</a>     }
+<a name="197" href="#197">197</a> 
+<a name="198" href="#198">198</a>     <em>/**<em>*</em></em>
+<a name="199" href="#199">199</a> <em>     * Removes all mails from the given repository matching the filter </em>
+<a name="200" href="#200">200</a> <em>     * @param spoolRepositoryURL the spool whose item are listed</em>
+<a name="201" href="#201">201</a> <em>     * @param key ID of the mail to be removed. if not NULL, all other filters are ignored</em>
+<a name="202" href="#202">202</a> <em>     * @param filter the criteria against which all mails are matched. only applied if key is NULL.</em>
+<a name="203" href="#203">203</a> <em>     * @return number of removed mails</em>
+<a name="204" href="#204">204</a> <em>     * @throws SpoolManagementException</em>
+<a name="205" href="#205">205</a> <em>     */</em>
+<a name="206" href="#206">206</a>     <strong>public</strong> <strong>int</strong> removeSpoolItems(String spoolRepositoryURL, String key, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws SpoolManagementException {
+<a name="207" href="#207">207</a>         <strong>try</strong> {
+<a name="208" href="#208">208</a>             <strong>return</strong> removeSpoolItems(spoolRepositoryURL, key, <strong>null</strong>, filter);
+<a name="209" href="#209">209</a>         } <strong>catch</strong> (Exception e) {
+<a name="210" href="#210">210</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a>(e);
+<a name="211" href="#211">211</a>         }
+<a name="212" href="#212">212</a>     }
+<a name="213" href="#213">213</a> 
+<a name="214" href="#214">214</a>     <em>/**<em>*</em></em>
+<a name="215" href="#215">215</a> <em>     * Removes all mails from the given repository matching the filter </em>
+<a name="216" href="#216">216</a> <em>     * @param spoolRepositoryURL the spool whose item are listed</em>
+<a name="217" href="#217">217</a> <em>     * @param key ID of the mail to be removed. if not NULL, all other filters are ignored</em>
+<a name="218" href="#218">218</a> <em>     * @param lockingFailures is populated with a list of mails which could not be processed because</em>
+<a name="219" href="#219">219</a> <em>     * a lock could not be obtained</em>
+<a name="220" href="#220">220</a> <em>     * @param filter the criteria against which all mails are matched. only applied if key is NULL.</em>
+<a name="221" href="#221">221</a> <em>     * @return number of removed mails</em>
+<a name="222" href="#222">222</a> <em>     */</em>
+<a name="223" href="#223">223</a>     <strong>public</strong> <strong>int</strong> removeSpoolItems(String spoolRepositoryURL, String key, List lockingFailures, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws ServiceException, MessagingException {
+<a name="224" href="#224">224</a>         <strong>int</strong> count = 0;
+<a name="225" href="#225">225</a>         <a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository = getSpoolRepository(spoolRepositoryURL);
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>         <strong>if</strong> (key != <strong>null</strong>) {
+<a name="228" href="#228">228</a>             count = removeMail(spoolRepository, key, count, lockingFailures, <strong>null</strong>);
+<a name="229" href="#229">229</a>         } <strong>else</strong> {
+<a name="230" href="#230">230</a>             Iterator spoolR = spoolRepository.list();
+<a name="231" href="#231">231</a> 
+<a name="232" href="#232">232</a>             <strong>while</strong> (spoolR.hasNext()) {
+<a name="233" href="#233">233</a>                 key = (String)spoolR.next();
+<a name="234" href="#234">234</a>                 count = removeMail(spoolRepository, key, count, lockingFailures, filter);
+<a name="235" href="#235">235</a>             }
+<a name="236" href="#236">236</a>         }
+<a name="237" href="#237">237</a>         <strong>return</strong> count;
+<a name="238" href="#238">238</a>     }
+<a name="239" href="#239">239</a> 
+<a name="240" href="#240">240</a>     <strong>private</strong> <strong>int</strong> removeMail(<a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository, String key, <strong>int</strong> count, List lockingFailures, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws MessagingException {
+<a name="241" href="#241">241</a>         <strong>try</strong> {
+<a name="242" href="#242">242</a>             <strong>if</strong> (removeMail(spoolRepository, key, filter)) count++;
+<a name="243" href="#243">243</a>         } <strong>catch</strong> (IllegalStateException e) {
+<a name="244" href="#244">244</a>             lockingFailures.add(key);
+<a name="245" href="#245">245</a>         } <strong>catch</strong> (SpoolManagementException e) {
+<a name="246" href="#246">246</a>             <strong>return</strong> count;
+<a name="247" href="#247">247</a>         }
+<a name="248" href="#248">248</a>         <strong>return</strong> count;
+<a name="249" href="#249">249</a>     }
+<a name="250" href="#250">250</a> 
+<a name="251" href="#251">251</a>     <strong>public</strong> <strong>int</strong> resendSpoolItems(String spoolRepositoryURL, String key, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) throws SpoolManagementException {
+<a name="252" href="#252">252</a>         <strong>try</strong> {
+<a name="253" href="#253">253</a>             <strong>return</strong> resendSpoolItems(spoolRepositoryURL, key, <strong>null</strong>, filter);
+<a name="254" href="#254">254</a>         } <strong>catch</strong> (Exception e) {
+<a name="255" href="#255">255</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a>(e);
+<a name="256" href="#256">256</a>         }
+<a name="257" href="#257">257</a>     }
+<a name="258" href="#258">258</a> 
+<a name="259" href="#259">259</a>     <em>/**<em>*</em></em>
+<a name="260" href="#260">260</a> <em>     * Tries to resend all mails from the given repository matching the given filter criteria </em>
+<a name="261" href="#261">261</a> <em>     * @param spoolRepositoryURL the spool whose item are about to be resend</em>
+<a name="262" href="#262">262</a> <em>     * @param key ID of the mail to be resend. if not NULL, all other filters are ignored</em>
+<a name="263" href="#263">263</a> <em>     * @param state if not NULL, only mails with matching state are resend</em>
+<a name="264" href="#264">264</a> <em>     * @param header if not NULL, only mails with at least one header with a value matching headerValueRegex are resend</em>
+<a name="265" href="#265">265</a> <em>     * @param headerValueRegex the regular expression the header must match</em>
+<a name="266" href="#266">266</a> <em>     * @return int number of resent mails </em>
+<a name="267" href="#267">267</a> <em>     * @throws SpoolManagementException</em>
+<a name="268" href="#268">268</a> <em>     */</em>
+<a name="269" href="#269">269</a>     <strong>public</strong> <strong>int</strong> resendSpoolItems(String spoolRepositoryURL, String key, String state, String header, String headerValueRegex) throws SpoolManagementException {
+<a name="270" href="#270">270</a>         <strong>return</strong> resendSpoolItems(spoolRepositoryURL, key, <strong>new</strong> <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a>(state, header, headerValueRegex));
+<a name="271" href="#271">271</a>     }
+<a name="272" href="#272">272</a> 
+<a name="273" href="#273">273</a>     <em>/**<em>*</em></em>
+<a name="274" href="#274">274</a> <em>     * Tries to resend all mails from the given repository matching the given filter criteria </em>
+<a name="275" href="#275">275</a> <em>     * @param spoolRepositoryURL the spool whose item are about to be resend</em>
+<a name="276" href="#276">276</a> <em>     * @param key ID of the mail to be resend. if not NULL, all other filters are ignored</em>
+<a name="277" href="#277">277</a> <em>     * @param lockingFailures is populated with a list of mails which could not be processed because</em>
+<a name="278" href="#278">278</a> <em>     * a lock could not be obtained</em>
+<a name="279" href="#279">279</a> <em>     * @param filter the criteria against which all mails are matched. only applied if key is NULL.</em>
+<a name="280" href="#280">280</a> <em>     * @return int number of resent mails </em>
+<a name="281" href="#281">281</a> <em>     * @throws SpoolManagementException</em>
+<a name="282" href="#282">282</a> <em>     */</em>
+<a name="283" href="#283">283</a>     <strong>public</strong> <strong>int</strong> resendSpoolItems(String spoolRepositoryURL, String key, List lockingFailures, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter)
+<a name="284" href="#284">284</a>             throws ServiceException, MessagingException, <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="285" href="#285">285</a>         <strong>int</strong> count = 0;
+<a name="286" href="#286">286</a>         <a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository = getSpoolRepository(spoolRepositoryURL);
+<a name="287" href="#287">287</a> 
+<a name="288" href="#288">288</a>         <em class="comment">// check if an key was given as argument</em>
+<a name="289" href="#289">289</a>         <strong>if</strong> (key != <strong>null</strong>) {
+<a name="290" href="#290">290</a>             <strong>try</strong> {
+<a name="291" href="#291">291</a>                 <strong>if</strong> (resendMail(spoolRepository, key, filter)) count++;
+<a name="292" href="#292">292</a>             } <strong>catch</strong> (IllegalStateException e) {
+<a name="293" href="#293">293</a>                 <strong>if</strong> (lockingFailures != <strong>null</strong>) lockingFailures.add(key);
+<a name="294" href="#294">294</a>             }
+<a name="295" href="#295">295</a>         } <strong>else</strong> {
+<a name="296" href="#296">296</a>             <em class="comment">// get an iterator of all keys</em>
+<a name="297" href="#297">297</a>             Iterator spoolR = spoolRepository.list();
+<a name="298" href="#298">298</a> 
+<a name="299" href="#299">299</a>             <strong>while</strong> (spoolR.hasNext()) {
+<a name="300" href="#300">300</a>                 key = spoolR.next().toString();
+<a name="301" href="#301">301</a>                 <strong>try</strong> {
+<a name="302" href="#302">302</a>                     <strong>if</strong> (resendMail(spoolRepository, key, filter)) count++;
+<a name="303" href="#303">303</a>                 } <strong>catch</strong> (IllegalStateException e) {
+<a name="304" href="#304">304</a>                     <strong>if</strong> (lockingFailures != <strong>null</strong>) lockingFailures.add(key);
+<a name="305" href="#305">305</a>                 }
+<a name="306" href="#306">306</a>             }
+<a name="307" href="#307">307</a>         }
+<a name="308" href="#308">308</a>         <strong>return</strong> count;
+<a name="309" href="#309">309</a>     }
+<a name="310" href="#310">310</a> 
+<a name="311" href="#311">311</a>     <em>/**<em>*</em></em>
+<a name="312" href="#312">312</a> <em>     * Resent the mail that belongs to the given key and spoolRepository </em>
+<a name="313" href="#313">313</a> <em>     * </em>
+<a name="314" href="#314">314</a> <em>     * @param spoolRepository The spoolRepository</em>
+<a name="315" href="#315">315</a> <em>     * @param key The message key</em>
+<a name="316" href="#316">316</a> <em>     * @param filter</em>
+<a name="317" href="#317">317</a> <em>     * @return true or false</em>
+<a name="318" href="#318">318</a> <em>     * @throws MessagingException Get thrown if there happen an error on modify the mail</em>
+<a name="319" href="#319">319</a> <em>     */</em>
+<a name="320" href="#320">320</a>     <strong>private</strong> <strong>boolean</strong> resendMail(<a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository, String key, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter)
+<a name="321" href="#321">321</a>             throws MessagingException, IllegalStateException, <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="322" href="#322">322</a>         <strong>if</strong> (!spoolRepository.lock(key)) <strong>throw</strong> <strong>new</strong> IllegalStateException(<span class="string">"locking failure"</span>);
+<a name="323" href="#323">323</a> 
+<a name="324" href="#324">324</a>         <em class="comment">// get the mail and set the error_message to "0" that will force the spoolmanager to try to deliver it now!</em>
+<a name="325" href="#325">325</a>         <a href="../../../../org/apache/mailet/Mail.html">Mail</a> m = spoolRepository.retrieve(key);
+<a name="326" href="#326">326</a> 
+<a name="327" href="#327">327</a>         <strong>if</strong> (filterMatches(m, filter)) {
+<a name="328" href="#328">328</a> 
+<a name="329" href="#329">329</a>             <em class="comment">// this will force Remotedelivery to try deliver the mail now!</em>
+<a name="330" href="#330">330</a>             m.setLastUpdated(<strong>new</strong> Date(0));
+<a name="331" href="#331">331</a> 
+<a name="332" href="#332">332</a>             <em class="comment">// store changes</em>
+<a name="333" href="#333">333</a>             spoolRepository.store(m);
+<a name="334" href="#334">334</a>             spoolRepository.unlock(key);
+<a name="335" href="#335">335</a> 
+<a name="336" href="#336">336</a>             <strong>synchronized</strong> (spoolRepository) {
+<a name="337" href="#337">337</a>                 spoolRepository.notify();
+<a name="338" href="#338">338</a>             }
+<a name="339" href="#339">339</a>             <strong>return</strong> <strong>true</strong>;
+<a name="340" href="#340">340</a>         } <strong>else</strong> {
+<a name="341" href="#341">341</a>             spoolRepository.unlock(key);
+<a name="342" href="#342">342</a>             <strong>return</strong> false;
+<a name="343" href="#343">343</a>         }
+<a name="344" href="#344">344</a>     }
+<a name="345" href="#345">345</a> 
+<a name="346" href="#346">346</a>     <em>/**<em>*</em></em>
+<a name="347" href="#347">347</a> <em>     * Remove the mail that belongs to the given key and spoolRepository </em>
+<a name="348" href="#348">348</a> <em>     * @param spoolRepository The spoolRepository</em>
+<a name="349" href="#349">349</a> <em>     * @param key The message key</em>
+<a name="350" href="#350">350</a> <em>     * @param filter</em>
+<a name="351" href="#351">351</a> <em>     * @return true or false</em>
+<a name="352" href="#352">352</a> <em>     * @throws MessagingException Get thrown if there happen an error on modify the mail</em>
+<a name="353" href="#353">353</a> <em>     */</em>
+<a name="354" href="#354">354</a>     <strong>private</strong> <strong>boolean</strong> removeMail(<a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spoolRepository, String key, <a href="../../../../org/apache/james/management/SpoolFilter.html">SpoolFilter</a> filter) 
+<a name="355" href="#355">355</a>             throws MessagingException, <a href="../../../../org/apache/james/management/SpoolManagementException.html">SpoolManagementException</a> {
+<a name="356" href="#356">356</a>         <strong>if</strong> (!spoolRepository.lock(key)) <strong>throw</strong> <strong>new</strong> IllegalStateException(<span class="string">"locking failure"</span>);
+<a name="357" href="#357">357</a> 
+<a name="358" href="#358">358</a>         <a href="../../../../org/apache/mailet/Mail.html">Mail</a> m = spoolRepository.retrieve(key);
+<a name="359" href="#359">359</a>         <strong>if</strong> (m == <strong>null</strong>) <strong>throw</strong> <strong>new</strong> SpoolManagementException(<span class="string">"mail not available having key "</span> + key);
+<a name="360" href="#360">360</a>         <strong>if</strong> (!filterMatches(m, filter)) <strong>return</strong> false;
+<a name="361" href="#361">361</a> 
+<a name="362" href="#362">362</a>         spoolRepository.remove(key);
+<a name="363" href="#363">363</a>         <strong>return</strong> <strong>true</strong>;
+<a name="364" href="#364">364</a>     }
+<a name="365" href="#365">365</a> 
+<a name="366" href="#366">366</a>     <em>/**<em>*</em></em>
+<a name="367" href="#367">367</a> <em>     * Retrieve a spoolRepository by the given url</em>
+<a name="368" href="#368">368</a> <em>     * </em>
+<a name="369" href="#369">369</a> <em>     * @param url The spoolRepository url</em>
+<a name="370" href="#370">370</a> <em>     * @return The spoolRepository</em>
+<a name="371" href="#371">371</a> <em>     * @throws ServiceException Get thrown if the spoolRepository can not retrieved</em>
+<a name="372" href="#372">372</a> <em>     */</em>
+<a name="373" href="#373">373</a>     <strong>private</strong> <a href="../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> getSpoolRepository(String url)
+<a name="374" href="#374">374</a>             throws ServiceException {
+<a name="375" href="#375">375</a>         <em class="comment">// Setup all needed data</em>
+<a name="376" href="#376">376</a>         DefaultConfiguration spoolConf = <strong>new</strong> DefaultConfiguration(<span class="string">"spool"</span>,
+<a name="377" href="#377">377</a>                 <span class="string">"generated:RemoteManager.java"</span>);
+<a name="378" href="#378">378</a>         spoolConf.setAttribute(<span class="string">"destinationURL"</span>, url);
+<a name="379" href="#379">379</a>         spoolConf.setAttribute(<span class="string">"type"</span>, <span class="string">"SPOOL"</span>);
+<a name="380" href="#380">380</a> 
+<a name="381" href="#381">381</a>         <strong>return</strong> (SpoolRepository) mailStore.select(spoolConf);
+<a name="382" href="#382">382</a>     }
+<a name="383" href="#383">383</a> 
+<a name="384" href="#384">384</a> 
+<a name="385" href="#385">385</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

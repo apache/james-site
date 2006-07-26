@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  Using TLS</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="
+  Charles Benett" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 07/26/2006
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="">Server</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="FAQ.html">James FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="mail.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+          </ul>
+          <h5>Documentation</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_1.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="document_archive.html">Document Archive</a>
+        </li>
+          </ul>
+          <h5>Documentation 2.3B</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_3.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives_2_3.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="apidocs/index.html">James Javadocs</a>
+        </li>
+              
+    <li class="none">
+              <a href="rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+              
+    <li class="none">
+              <a href="todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+
+<a name="James 1.2.1 - Using TLS"></a><div class="section"><h2>James 1.2.1 - Using TLS</h2>
+
+  <p>
+    This document explains how to enable JAMES 1.2.1 to use Transport Layer
+    Security (TLS) (ie SSL).
+  </p>
+</div>
+
+<a name="Obtain JSSE"></a><div class="section"><h2>Obtain JSSE</h2>
+
+  <p>
+    Obtain JSSE source from java.sun.com. Follow their installation directions.
+    We assume that you install JSSE as a standard extension, with a static
+    provider definition. (See notes with JSSE distribution)
+  </p>
+  <p>
+    Note that the US export restrictions still apply to JSSE
+    (at version 1.0.2), so while both the international and domestic versions
+    offer the same level of crypto, the international version does not take
+    alternative providers.
+  </p>
+
+</div>
+
+<a name="Enable TLS"></a><div class="section"><h2>Enable TLS</h2>
+
+  <p>
+    Using JAMES with TLS. You need to do three things over and above the
+    normal operation of James: 
+    <ul>
+      <li>In Avalon.conf.xml, uncomment the TLS listener defintion.</li>
+      <li>In JAMES.conf.xml, uncomment the &lt;useTLS&gt;TRUE&lt;/useTLS&gt; element
+        for the service you want to use TLS. It is currently available for
+        remote manager and POP3. (If using POP3 over TLS, it is probably best
+        to change port to 995, which is the IANA designated POP3S port).</li>
+      <li> Ensure that avalonTestKeys is in the conf directory. You may need
+        to manually extract this from the Avalon.jar (with: jar xvf Avalon.jar
+        conf/avalonTestKeys). Note that this is a self-signed certificate for
+        test purposes only. You can specify a different server certificate in
+        the Avalon.conf.xml file.</li>
+    </ul>
+  
+  
+    Start James
+  
+</div>
+
+<a name="Verify TLS-enabled JAMES"></a><div class="section"><h2>Verify TLS-enabled JAMES</h2>
+  
+    (Positive Test) Use an SSL client to open a socket to the appropriate port.
+    I used openssl from www.openssl.org to test this.
+    E.g. openssl s_client -connect localhost:4555. You should see the normal
+    remote manager or POP3 server greeting and have normal  operation. 
+    <br>
+      - If, using openssl s_client, you get a connection refused/ error no
+      111, just try again. This probably means you got to the port before it
+      was ready.
+    </br>
+ 
+  <p>
+   (Negative Test) telnet to port 4555 (ie without SSL). This should hang the
+   telnet client. It should also lock port 4555 until the connection times out,
+   I think.
+  </p>
+</div>
+
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2006
+    
+          Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

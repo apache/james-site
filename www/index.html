@@ -1,192 +1,253 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
 <html>
-<head>
-<title>Apache James - Mail and News server - Overview</title>
-<LINK TITLE="Style" HREF="stylesheet.css" TYPE="text/css" REL="stylesheet"/>
-<meta value="James Project Web Team" name="author"/>
-<meta value="site-dev@james.apache.org" name="email"/>
-</head>
-<body>
-<table cellspacing="0" width="100%" border="0" class="page-header">
-<!--PAGE HEADER-->
-<tr>
-<td colspan="2">
-<!--ASF LOGO-->
-<a href="http://www.apache.org/">
-<img border="0" alt="The ASF" align="left" src="http://www.apache.org/images/asf_logo_wide.gif"/>
-</a>
-<!--PROJECT LOGO-->
-<a href="http://james.apache.org/">
-<img border="0" alt="James - Java Apache Mail Enterprise Server" align="right" src="http://james.apache.org//images/james-logo.jpg"/>
-</a>
-</td>
-</tr>
-</table>
-<table cellspacing="4" width="100%" border="0">
-<tr>
-<!--LEFT SIDE NAVIGATION-->
-<td nowrap="true" valign="top" class="left-navbar">
-<table cellpadding="0" cellspacing="0" width="100%" border="0">
-<tr>
-<td>
-<a href="http://apachecon.com">
-<img border="0" alt="ApacheCon Promotion" align="left" src="http://www.apache.org/ads/ApacheCon/234x60-2006-us.gif"/>
-</a>
-</td>
-</tr>
-</table>
-<navbar name="lhs">
-      <p>
-<strong>James</strong>
-</p>
-<ul>
-<li>
-<a href="./index.html">Overview</a>
-</li>
-<li>
-<a href="./FAQ.html">James FAQ</a>
-</li>
-<li>
-<a href="./mail.html">Mailing Lists</a>
-</li>
-<li>
-<a href="http://wiki.apache.org/james">Wiki</a>
-</li>
-</ul>
-      <p>
-<strong>Downloads</strong>
-</p>
-<ul>
-<li>
-<a href="http://james.apache.org/download.cgi">Releases</a>
-</li>
-</ul>
-      <p>
-<strong>Documentation</strong>
-</p>
-<ul>
-<li>
-<a href="./documentation_2_1.html">James</a>
-</li>
-<li>
-<a href="./design_objectives.html">Design</a>
-</li>
-<li>
-<a href="./document_archive.html">Document Archive</a>
-</li>
-</ul>
-      <p>
-<strong>Documentation 2.3B</strong>
-</p>
-<ul>
-<li>
-<a href="./documentation_2_3.html">James</a>
-</li>
-<li>
-<a href="./design_objectives_2_3.html">Design</a>
-</li>
-<li>
-<a href="./javadocs/index.html">James Javadocs</a>
-</li>
-<li>
-<a href="./mailet/index.html">Mailet Javadocs</a>
-</li>
-<li>
-<a href="./rfclist.html">Useful RFCs</a>
-</li>
-</ul>
-    </navbar>
-</td>
-<!--MAIN BODY-->
-<td align="left" valign="top" class="main-body">
-<div class="section">
-<div class="section-header">
-<a name="What is it?">
-<strong>What is it?</strong>
-</a>
-</div>
-<p>
-<div class="section-body">
-      <p>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure <b>Java SMTP and POP3 Mail server and NNTP News server</b>.  We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols. </p>
-      <p>James is also a <i>mail application platform</i>.  We have developed a Java API to let you write Java code to process emails that we call the mailet API.  A <b>mailet</b> can generate an automatic reply, update a database, prevent spam, build a message archive, or whatever you can imagine.  A <b>matcher</b> determines whether your mailet should process an email in the server.  The James project hosts the Mailet API, and James provides an implementation of this mail application platform API.</p>
-      <p>James is based upon the Apache Avalon application framework, formerly a product of the Apache Avalon project (see "news" below).</p>
-      <p>James requires Java 1.4 (For further information you may want to search the web, our <a href="http://www.mail-archive.com/server-dev@james.apache.org/">dev</a> and <a href="http://www.mail-archive.com/server-user@james.apache.org/">user</a> mail archives or our <a href="http://wiki.apache.org/james">wiki</a>).</p>
-    </div>
-</p>
-</div>
-<div class="section">
-<div class="section-header">
-<a name="news">
-<strong>news</strong>
-</a>
-</div>
-<p>
-<div class="section-body">
-    <div class="subsection">
-<div class="subsection-header">
-<a name="2006">
-<strong>2006</strong>
-</a>
-</div>
-<div class="subsection-body">
-     <h3>James 2.3.0 on the way</h3>
-     <p>After a long time of development we released the first betas of James 2.3.0. If nothing goes wrong the final will be out soon</p>
-    </div>
-</div>
-    <div class="subsection">
-<div class="subsection-header">
-<a name="2005">
-<strong>2005</strong>
-</a>
-</div>
-<div class="subsection-body">
-     <h3>James PMC react to the closure of Apache Avalon.</h3>
-      <p>James PMC would like to reassure all of our users that James is alive and well. All of the James team have kept abreast of the Avalon developments culminating in the closure of the Avalon project and dispersal of its codebase. We are are keen to stress that this has little impact on our ability to support and develop James in both the short and long terms.<br/>Over the coming months we will be finalising and publishing a road map for James which will address all of the specific concerns raised by Avalon's closure, but rest assured James' future is safe, and we have enthusiasm and plans aplenty.<br/> In the meantime we would like to extend our best wishes to all our friends from Avalon, here's luck with your future projects guys!<br/> If you are at all concerned please subscribe to the server-user mailing list and raise your points there. - 05/Jan/2005</p>
-
-      <h3>James source has moved to "Subversion"</h3>
-      <p>Subversion is a version control system like CVS, but it has advantages over CVS for Apache Software Foundation (ASF) projects.<br/> In common with all other ASF projects we have reviewed our use of CVS and migrated our code to Subversion.<br/>
-Have a look at this <a href="FAQ.html#17">FAQ</a> for further details. - 05/Jan/2005</p>
-      <p/>
+  <head>
+    <title>James Project - 
+    Overview</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="
+    James Project Web Team" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="images/james-project-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
       </div>
-</div>
-      <div class="subsection">
-<div class="subsection-header">
-<a name="2004">
-<strong>2004</strong>
-</a>
-</div>
-<div class="subsection-body">
-
-      <h3>James v2.2.0</h3>
-      <p>
-<a href="#releases">James v2.2.0</a> is released.</p>
-      <h3>James featured on IBM developerWorks</h3>
-      <p>
-Claude Duguay has written two excellent articles on <a href="http://james.apache.org/">James</a> for
-<a href="http://www.ibm.com/developerworks/">IBM Developer works</a>
-        <br/>
-[<a href="http://www-106.ibm.com/developerworks/java/library/j-james1.html">article1</a>]
-An introduction to Apache's James enterprise e-mail server.<br/>
-[<a href="http://www-106.ibm.com/developerworks/java/library/j-james2.html">article2</a>]
-Build e-mail based applications with Matchers and Mailets.
-</p>
-</div>
-</div>
     </div>
-</p>
-</div>
-<div class="section">
-<div class="section-header">
-<a name="releases">
-<strong>releases</strong>
-</a>
-</div>
-<p>
-<div class="section-body">
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 07/26/2006
+                      </div>
+            <div class="xright">      <a href="">JAMES Project</a>
+          |
+          <a href="http://james.apache.org/server/index.html">Server</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Products</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/server/index.html">Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/postage/index.html">Postage</a>
+        </li>
+          </ul>
+          <h5>About</h5>
+        <ul>
+              
+    <li class="none">
+              <strong>Overview</strong>
+        </li>
+              
+    <li class="none">
+              <a href="mail.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="weare.html">Who We Are</a>
+        </li>
+              
+    <li class="none">
+              <a href="contribute.html">Contributing</a>
+        </li>
+              
+    <li class="none">
+              <a href="code-standards.html">Standards</a>
+        </li>
+              
+    <li class="none">
+              <a href="license.html">License</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="download.html">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+          <h5>Translated</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.terra-intl.com/">Japanese (web)</a>
+        </li>
+          </ul>
+          <h5>Related Projects</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://jakarta.apache.org/commons/index.html">Jakarta Commons</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://ant.apache.org/index.html">Ant</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://maven.apache.org/index.html">Maven2</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://avalon.apache.org/index.html">Avalon</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.dnsjava.org/index.html">DNSJava</a>
+        </li>
+          </ul>
+          <h5>Useful Information</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/faq.html">Apache</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+  
+  
+    <a name="What is it?"></a><div class="section"><h2>What is it?</h2>
+      <p>The Apache James Project delivers a rich set of open source solutions, written in Java, related to internet mail and news.</p>
+      <p>James is organized into subprojects with James Server and the Mailet API as their core.</p> 
+      <p>Apache James is a project of The Apache Software Foundation (ASF) which encourages a collaborative, consensus-based development process under an open software license.</p>
+      <p>The ASF maintains other Java projects which may also be of interest. These are detailed on the ASF Projects page.</p>
+      <p>We recommended that users of James products subscribe to the James users mailing list.</p>
+    </div>
+    <a name="news"></a><div class="section"><h2>news</h2>
+    <div id="apacheconspacer">
+    <div id="apacheconbox">
+    <a href="http://www.asia.apachecon.com/"><img src="http://www.apache.org/ads/ApacheCon/234x60-2006-asia.gif" alt="ApacheCon Asia 2006" style="margin: 3px;" border="0" height="60" width="236"></img></a>
+    <br></br>
+    <a href="http://www.us.apachecon.com/"><img src="http://www.apache.org/ads/ApacheCon/234x60-2006-us.gif" alt="ApacheCon US 2006" style="margin: 3px;" border="0" height="60" width="236"></img></a>
+    </div></div>
+    <a name="2006"></a><div class="section"><h3>2006</h3>
+     <h4>James 2.3.0 on the way</h4>
+     <p>After a long time of development we have released the first <a href="http://people.apache.org/dist/james/server/">release candidate</a> of James 2.3.0. After a period of user testing version 2.3.0 will be released. - Jul/2006</p>
+     <h4>New project jSPF</h4>
+     <p>James PMC is happy to announce that we are working on a Java implementation of the SPF specification. The first <a href="http://people.apache.org/dist/james/jspf/">betas</a> are already available for download. - Jul/2006</p>
+    </div>
+    <a name="2005"></a><div class="section"><h3>2005</h3>
+     <h4>James PMC react to the closure of Apache Avalon.</h4>
+      <p>James PMC would like to reassure all of our users that James is alive and well. All of the James team have kept abreast of the Avalon developments culminating in the closure of the Avalon project and dispersal of its codebase. We are are keen to stress that this has little impact on our ability to support and develop James in both the short and long terms.<br></br>Over the coming months we will be finalising and publishing a road map for James which will address all of the specific concerns raised by Avalon's closure, but rest assured James' future is safe, and we have enthusiasm and plans aplenty.<br></br> In the meantime we would like to extend our best wishes to all our friends from Avalon, here's luck with your future projects guys!<br></br> If you are at all concerned please subscribe to the server-user mailing list and raise your points there. - 05/Jan/2005</p>
+
+      <h4>James source has moved to &quot;Subversion&quot;</h4>
+      <p>Subversion is a version control system like CVS, but it has advantages over CVS for Apache Software Foundation (ASF) projects.<br></br> In common with all other ASF projects we have reviewed our use of CVS and migrated our code to Subversion.<br></br>
+Have a look at this <a href="FAQ.html#17">FAQ</a> for further details. - 05/Jan/2005</p>
+      <p></p>
+      </div>
+    </div>
+    
+    <a name="releases"></a><div class="section"><h2>releases</h2>
       <p>
         <b>Latest and Stable: James v2.2.0</b>
-        <br/>
+        <br></br>
 James v2.2.0 is the current release, and the latest in the James v2 series.
 Both <a href="http://james.apache.org/download.cgi">binary and source</a> distributions are available.</p>
       <p>James v2.2.0 is a major update to the James platform, with many new features, functional improvements, and bug fixes.
@@ -195,260 +256,33 @@ users are urged to upgrade to v2.2.0 as soon as possible</b>.</p>
       <p>Any bugs found in James are dealt with promptly.  Please provide feedback on the james-user and james-dev mailing lists.</p>
       <p>
         <b>Get your hands on the latest versions..</b>
-        <br/>We put significant milestones, and potential release candidates in the <a href="http://cvs.apache.org/dist/james/">download area.</a>
-        <br/>Whilst the quality of these versions cannot be guaranteed they may contain important bug fixes and cool new features.<br/>
+        <br></br>We put significant milestones, and potential release candidates in the <a href="http://people.apache.org/dist/james/">download area.</a>
+        <br></br>Whilst the quality of these versions cannot be guaranteed they may contain important bug fixes and cool new features.<br></br>
       </p>
     </div>
-</p>
-</div>
-<div class="section">
-<div class="section-header">
-<a name="Feature Status">
-<strong>Feature Status</strong>
-</a>
-</div>
-<p>
-<div class="section-body">
-      <table cellspacing="0" cellpadding="0" class="detail-table">
-<tbody>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td valign="top" class="detail-table-header">Item</td>
-<td class="separator-col"/>
-          <td valign="top" class="detail-table-header">Status</td>
-<td class="separator-col"/>
-          <td valign="top" class="detail-table-header">Since</td>
-<td class="separator-col"/>
-          <td valign="top" class="detail-table-header">First released</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">SMTP server</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.0</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">0.95</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Mailet Engine</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">0.95</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">FileSystem mailboxes/spool</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.0</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">RDBMS mailboxes/spool</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">POP3 server</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.1</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.0</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">RDBMS - Users</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2.1</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2.1</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">LDAP Support - Users</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Experimental</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">TLS Support - POP3</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Experimental</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Remote Manager</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.0</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.0</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">TLS Support - Remote Manager</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Stable</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">NNTP server</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Experimental</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">1.2</td>
-<td class="separator-col"/>
-        </tr>
-        <tr class="detail-table-row">
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">FetchPOP</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">Experimental</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">2.1</td>
-<td class="separator-col"/>
-          <td align="left" valign="top" class="detail-table-content">2.1</td>
-<td class="separator-col"/>
-        </tr>
-      </tbody>
-</table>
+  
+
+      </div>
     </div>
-</p>
-</div>
-</td>
-<!--RIGHT SIDE NAVIGATION-->
-<td nowrap="true" valign="top" class="right-navbar">
-<navbar name="rhs">
-      <p>
-<strong>Project</strong>
-</p>
-<ul>
-<li>
-<a href="http://issues.apache.org/jira/browse/JAMES">Bug Database </a>
-</li>
-<li>
-<a href="http://svn.apache.org/">Source Code</a>
-</li>
-<li>
-<a href="./weare.html">Who We Are</a>
-</li>
-<li>
-<a href="./contribute.html">Contributing</a>
-</li>
-<li>
-<a href="./code-standards.html">Standards</a>
-</li>
-<li>
-<a href="./license.html">License</a>
-</li>
-<li>
-<a href="./changelog.html">Changelog</a>
-</li>
-<li>
-<a href="./todo.html">TODO</a>
-</li>
-</ul>
-      <p>
-<strong>Translated</strong>
-</p>
-<ul>
-<li>
-<a href="http://james.terra-intl.com/">Japanese (web)</a>
-</li>
-</ul>
-      <p>
-<strong>Related Projects</strong>
-</p>
-<ul>
-<li>
-<a href="http://james.apache.org/jspf/index.html">jSPF</a>
-</li>
-<li>
-<a href="http://jakarta.apache.org/index.html">Jakarta</a>
-</li>
-<li>
-<a href="http://ant.apache.org/index.html">Ant</a>
-</li>
-<li>
-<a href="http://avalon.apache.org/index.html">Avalon</a>
-</li>
-</ul>
-      <p>
-<strong>Useful Information</strong>
-</p>
-<ul>
-<li>
-<a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
-</li>
-<li>
-<a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
-</li>
-<li>
-<a href="http://apache.org/foundation/faq.html">Apache</a>
-</li>
-</ul>
-    </navbar>
-</td>
-</tr>
-<!--FOOTER SEPARATOR-->
-<tr>
-<td colspan="3">
-<hr size="1" noshade=""/>
-</td>
-</tr>
-<tr>
-<td colspan="3">
-<div class="page-footer">
-<em>
-        Copyright © 1999-2006, The Apache Software Foundation
-        </em>
-</div>
-</td>
-</tr>
-</table>
-</body>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006
+    
+          Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
 </html>

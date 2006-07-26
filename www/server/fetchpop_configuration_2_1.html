@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.1 - Configuring FetchPOP</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 07/26/2006
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="">Server</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="FAQ.html">James FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="mail.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+          </ul>
+          <h5>Documentation</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_1.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="document_archive.html">Document Archive</a>
+        </li>
+          </ul>
+          <h5>Documentation 2.3B</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_3.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives_2_3.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="apidocs/index.html">James Javadocs</a>
+        </li>
+              
+    <li class="none">
+              <a href="rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+              
+    <li class="none">
+              <a href="todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+<a name="FetchPOP Is Being Deprecated"></a><div class="section"><h2>FetchPOP Is Being Deprecated</h2>
+<p>FetchPOP is being deprecated.
+<a href="fetchmail_configuration_2_2.html">fetchMail</a> provides a superset of
+FetchPOP's functionality and is the preferred solution.</p>
+</div>
+
+<a name="FetchPOP Configuration"></a><div class="section"><h2>FetchPOP Configuration</h2>
+<p>FetchPOP is controlled by a configuration block in the config.xml.
+The fetchpop tag defines the boundaries of the configuration block.  It encloses 
+all the relevant configuration for the FetchPOP scheduler.  The behavior of the POP service is
+controlled by the attributes and children of this tag.</p>
+<p>This tag has an optional boolean attribute - <strong>enabled</strong> - that defines whether 
+the service is active or not.  The value defaults to &quot;false&quot; if not present.</p>
+<p>The only permitted children of the fetchpop tag are <strong>fetch</strong> elements.  Each of 
+these <strong>fetch</strong> tags defines a single FetchPOP task.</p>
+<p>The <strong>fetch</strong> tag has a single required attribute, <strong>name</strong>.  The name 
+of each FetchPOP task must be unique.</p>
+<p>In addition to the <strong>name</strong> attribute, the <strong>fetch</strong> tag has four 
+children, all of which are required.</p>
+<ul>
+<li><strong>host</strong> - The host name or IP address of the POP3 server hosting the mail to be fetched.</li>
+<li><strong>user</strong> - The user name of the account whose mail is to be fetched.</li>
+<li><strong>password</strong> - The password for the account whose mail is to be fetched.</li>
+<li><strong>interval</strong> - A non-negative integer representing the number of milliseconds between fetches.</li>
+</ul>
+</div>
+<a name="Considerations When Handling Fetched Mail"></a><div class="section"><h2>Considerations When Handling Fetched Mail</h2>
+There are a number of issues which have to be considered when handling fetched mail, such as avoiding circular
+routing of mail.  Some scenarios are described below with suggested configurations.
+
+<a name="Handling All Mail for a Domain"></a><div class="section"><h3>Handling All Mail for a Domain</h3>
+This is the intended primary use of FetchPOP.
+If all mail for a domain being fetched is ultimately being handled by this server then it is enough to add
+the domain name as a servername to the servernames section described <a href="serverwide_configuration_2_1.html">here</a>.
+<br></br>This is the simplest solution and is used where James is being used to redistribute all mail from the
+free catch-all POP accounts provided by many domain registration/hosting companies.
+</div>
+<a name="Handling a Subset of a Domain's Mail"></a><div class="section"><h3>Handling a Subset of a Domain's Mail</h3>
+If only part of a domain's mail (perhaps only a single user's POP account) is being handled by this instance
+of James it is important that outgoing mail addressed to this domain that is not intended for James be properly delivered.
+To enable this filtering the FetchPOP scheduler adds a header, X-fetchedby, to the fetched message.  This header can be checked using
+the provided matcher <b>FetchedFrom</b>.  This matcher can be used to direct fetched mail to a processor set up 
+to handle mail fetched from one or more POP3 accounts.  The matcher should be used exactly once in the mail 
+pipeline for each FetchPOP task, as the matcher removes a matching header to prevent outgoing replies or 
+redirections from looping.
+<p>The FetchedFrom matcher is configured with the name of the particular FetchPOP task it is supposed to match.  In general,
+this matcher will be used to direct mail to a custom processor for further processing.  A mailet tag such as the 
+following</p>
+<div class="source"><pre>
+&lt;mailet match=&quot;FetchedFrom=<i>fetchtaskname</i>&quot; class=&quot;ToProcessor&quot;&gt;<br></br>
+&lt;processor&gt;<i>fetchprocessor</i>&lt;/processor&gt;
+&lt;/mailet&gt;
+</pre></div>
+<p>where <i>fetchtaskname</i> is the name of the FetchPOP task being matched and <i>fetchprocessor</i> is the name of the fetched mail 
+processor can be used to this purpose.  The fetched mail processor should contain mailets which will filter 
+and forward mail to real local or remote users.  This can be achieved in the usual fashion as described in the 
+<a href="spoolmanager_configuration_2_1.html">SpoolManager configuration section</a> and in the out of the box 
+configuration file.</p>
+</div>
+ <a name="Catching Undeliverable Mail"></a><div class="section"><h3>Catching Undeliverable Mail</h3>
+<p>It is important to note that this first version of FetchPOP does not access the original intended recipient
+address of the mail, but instead uses the <b>To:</b> address from the message headers.  Since this header may contain an
+alias for the intended recipient, or may never have contained the intended recipient address (it could have been 
+in the Cc: or Bcc: fields) it is possible that James will be unable to deliver the fetched mail.  It is intended 
+that this behaviour be addressed in the next version of James, but in the meantime a catch-all forwarding of 
+locally undeliverable fetched mail is recommended.</p>
+<p>To handle messages where the intended recipient can be determined but is not present in the To: header, the FetchedFrom 
+matcher can be used.  Place a mailet tag with this matcher between the &quot;RecipientIsLocal&quot; and &quot;HostIsLocal&quot; in the 
+Transport processor as defined in the out of the box configuration.  The mailet tag should be configured to use the 
+provided ToProcessor mailet to direct fetched mail to a custom processor.  Thus all mail fetched by FetchPOP that 
+could not be trivially mapped to a local user account will undergo further processing, allowing more complex
+delivery handling.</p>
+<p>For safety the All matcher should be used at the end of your custom fetched mail processor.  This can be used to 
+catch all mail not handled by previous mailets in the processor.  This will enable you to ensure that your 
+configuration is correct and that any mail not correctly delivered is available for examination by the postmaster.</p>
+</div>
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2006
+    
+          Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

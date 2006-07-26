@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.3 - Configuring DNS Services</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 07/26/2006
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="">Server</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="FAQ.html">James FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="mail.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+          </ul>
+          <h5>Documentation</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_1.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="document_archive.html">Document Archive</a>
+        </li>
+          </ul>
+          <h5>Documentation 2.3B</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="documentation_2_3.html">James</a>
+        </li>
+              
+    <li class="none">
+              <a href="design_objectives_2_3.html">Design</a>
+        </li>
+              
+    <li class="none">
+              <a href="apidocs/index.html">James Javadocs</a>
+        </li>
+              
+    <li class="none">
+              <a href="rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+              
+    <li class="none">
+              <a href="todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+<a name="DNS Configuration"></a><div class="section"><h2>DNS Configuration</h2>
+
+  
+<p>DNS Transport services are controlled by a configuration block in
+the config.xml. This block affects SMTP remote delivery.</p>
+
+<p>The dnsserver tag defines the boundaries of the configuration
+block. It encloses all the relevant configuration for the DNS server.
+The behavior of the DNS service is controlled by the attributes and
+children of this tag.</p> 
+
+<p>The standard children of the dnsserver tag are:</p>
+<ul>
+<li><strong>servers</strong> - This is a list of DNS Servers to be used by James and are 
+specified by one, or more <strong><i>server</i></strong> elements, which are child elements. 
+Each server element is the IP address of a single DNS server.
+<div class="source"><pre>
+&lt;servers&gt;
+  &lt;server&gt;127.0.0.1&lt;/server&gt;
+  &lt;server&gt;166.181.194.205&lt;/server&gt;
+&lt;/servers&gt;
+</pre></div>
+</li>
+
+<li><strong>authoritative</strong> - (<strong>true/false</strong>)This tag specifies whether or not 
+to require authoritative (non-cached) DNS records; to only accept DNS responses that are 
+authoritative for the domain. It is primarily useful in an intranet/extranet environment.
+This should always be <strong>false</strong> unless you understand the implications.
+</li>
+</ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2006
+    
+          Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>RemoteDelivery xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../../../../../apidocs/org/apache/james/transport/mailets/RemoteDelivery.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em>/**<em>**********************************************************************</em></em>
+<a name="2" href="#2">2</a>   <em> * Copyright (c) 2000-2006 The Apache Software Foundation.             *</em>
+<a name="3" href="#3">3</a>   <em> * All rights reserved.                                                *</em>
+<a name="4" href="#4">4</a>   <em> * ------------------------------------------------------------------- *</em>
+<a name="5" href="#5">5</a>   <em> * Licensed under the Apache License, Version 2.0 (the "License"); you *</em>
+<a name="6" href="#6">6</a>   <em> * may not use this file except in compliance with the License. You    *</em>
+<a name="7" href="#7">7</a>   <em> * may obtain a copy of the License at:                                *</em>
+<a name="8" href="#8">8</a>   <em> *                                                                     *</em>
+<a name="9" href="#9">9</a>   <em> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                      *</em>
+<a name="10" href="#10">10</a>  <em> *                                                                     *</em>
+<a name="11" href="#11">11</a>  <em> * Unless required by applicable law or agreed to in writing, software *</em>
+<a name="12" href="#12">12</a>  <em> * distributed under the License is distributed on an "AS IS" BASIS,   *</em>
+<a name="13" href="#13">13</a>  <em> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</em>
+<a name="14" href="#14">14</a>  <em> * implied.  See the License for the specific language governing       *</em>
+<a name="15" href="#15">15</a>  <em> * permissions and limitations under the License.                      *</em>
+<a name="16" href="#16">16</a>  <em> ***********************************************************************/</em>
+<a name="17" href="#17">17</a>  
+<a name="18" href="#18">18</a>  <strong>package</strong> org.apache.james.transport.mailets;
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <strong>import</strong> org.apache.avalon.cornerstone.services.store.Store;
+<a name="21" href="#21">21</a>  <strong>import</strong> org.apache.avalon.framework.configuration.DefaultConfiguration;
+<a name="22" href="#22">22</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceException;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceManager;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.Constants;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.services.DNSServer;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.services.SpoolRepository;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.util.TimeConverter;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.mailet.GenericMailet;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.mailet.HostAddress;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.mailet.Mail;
+<a name="31" href="#31">31</a>  <strong>import</strong> org.apache.mailet.MailAddress;
+<a name="32" href="#32">32</a>  <strong>import</strong> org.apache.mailet.MailetContext;
+<a name="33" href="#33">33</a>  <strong>import</strong> org.apache.oro.text.regex.MalformedPatternException;
+<a name="34" href="#34">34</a>  <strong>import</strong> org.apache.oro.text.regex.MatchResult;
+<a name="35" href="#35">35</a>  <strong>import</strong> org.apache.oro.text.regex.Pattern;
+<a name="36" href="#36">36</a>  <strong>import</strong> org.apache.oro.text.regex.Perl5Compiler;
+<a name="37" href="#37">37</a>  <strong>import</strong> org.apache.oro.text.regex.Perl5Matcher;
+<a name="38" href="#38">38</a>  
+<a name="39" href="#39">39</a>  <strong>import</strong> com.sun.mail.smtp.SMTPAddressFailedException;
+<a name="40" href="#40">40</a>  <strong>import</strong> com.sun.mail.smtp.SMTPAddressSucceededException;
+<a name="41" href="#41">41</a>  <strong>import</strong> com.sun.mail.smtp.SMTPSendFailedException;
+<a name="42" href="#42">42</a>  <strong>import</strong> com.sun.mail.smtp.SMTPTransport;
+<a name="43" href="#43">43</a>  
+<a name="44" href="#44">44</a>  <strong>import</strong> javax.mail.Address;
+<a name="45" href="#45">45</a>  <strong>import</strong> javax.mail.MessagingException;
+<a name="46" href="#46">46</a>  <strong>import</strong> javax.mail.SendFailedException;
+<a name="47" href="#47">47</a>  <strong>import</strong> javax.mail.Session;
+<a name="48" href="#48">48</a>  <strong>import</strong> javax.mail.Transport;
+<a name="49" href="#49">49</a>  <strong>import</strong> javax.mail.internet.InternetAddress;
+<a name="50" href="#50">50</a>  <strong>import</strong> javax.mail.internet.MimeMessage;
+<a name="51" href="#51">51</a>  <strong>import</strong> javax.mail.internet.MimeMultipart;
+<a name="52" href="#52">52</a>  <strong>import</strong> javax.mail.internet.MimePart;
+<a name="53" href="#53">53</a>  <strong>import</strong> javax.mail.internet.ParseException;
+<a name="54" href="#54">54</a>  
+<a name="55" href="#55">55</a>  <strong>import</strong> java.io.IOException;
+<a name="56" href="#56">56</a>  <strong>import</strong> java.io.PrintWriter;
+<a name="57" href="#57">57</a>  <strong>import</strong> java.io.StringWriter;
+<a name="58" href="#58">58</a>  <strong>import</strong> java.net.ConnectException;
+<a name="59" href="#59">59</a>  <strong>import</strong> java.net.InetAddress;
+<a name="60" href="#60">60</a>  <strong>import</strong> java.net.SocketException;
+<a name="61" href="#61">61</a>  <strong>import</strong> java.net.UnknownHostException;
+<a name="62" href="#62">62</a>  <strong>import</strong> java.util.ArrayList;
+<a name="63" href="#63">63</a>  <strong>import</strong> java.util.Arrays;
+<a name="64" href="#64">64</a>  <strong>import</strong> java.util.Collection;
+<a name="65" href="#65">65</a>  <strong>import</strong> java.util.Date;
+<a name="66" href="#66">66</a>  <strong>import</strong> java.util.Hashtable;
+<a name="67" href="#67">67</a>  <strong>import</strong> java.util.Iterator;
+<a name="68" href="#68">68</a>  <strong>import</strong> java.util.Locale;
+<a name="69" href="#69">69</a>  <strong>import</strong> java.util.Properties;
+<a name="70" href="#70">70</a>  <strong>import</strong> java.util.StringTokenizer;
+<a name="71" href="#71">71</a>  <strong>import</strong> java.util.Vector;
+<a name="72" href="#72">72</a>  
+<a name="73" href="#73">73</a>  
+<a name="74" href="#74">74</a>  <em>/**<em>*</em></em>
+<a name="75" href="#75">75</a>  <em> * Receives a MessageContainer from JamesSpoolManager and takes care of delivery</em>
+<a name="76" href="#76">76</a>  <em> * the message to remote hosts. If for some reason mail can't be delivered</em>
+<a name="77" href="#77">77</a>  <em> * store it in the "outgoing" Repository and set an Alarm. After the next "delayTime" the</em>
+<a name="78" href="#78">78</a>  <em> * Alarm will wake the servlet that will try to send it again. After "maxRetries"</em>
+<a name="79" href="#79">79</a>  <em> * the mail will be considered undeliverable and will be returned to sender.</em>
+<a name="80" href="#80">80</a>  <em> *</em>
+<a name="81" href="#81">81</a>  <em> * TO DO (in priority):</em>
+<a name="82" href="#82">82</a>  <em> * 1. Support a gateway (a single server where all mail will be delivered) (DONE)</em>
+<a name="83" href="#83">83</a>  <em> * 2. Provide better failure messages (DONE)</em>
+<a name="84" href="#84">84</a>  <em> * 3. More efficiently handle numerous recipients</em>
+<a name="85" href="#85">85</a>  <em> * 4. Migrate to use Phoenix for the delivery threads</em>
+<a name="86" href="#86">86</a>  <em> *</em>
+<a name="87" href="#87">87</a>  <em> * You really want to read the JavaMail documentation if you are</em>
+<a name="88" href="#88">88</a>  <em> * working in here, and you will want to view the list of JavaMail</em>
+<a name="89" href="#89">89</a>  <em> * attributes, which are documented here:</em>
+<a name="90" href="#90">90</a>  <em> *</em>
+<a name="91" href="#91">91</a>  <em> * <a href="http://java.sun.com/products/javamail/1.3/docs/javadocs/com/sun/mail/smtp/package-summary.html" target="alexandria_uri">http://java.sun.com/products/javamail/1.3/docs/javadocs/com/sun/mail/smtp/package-summary.html</a></em>
+<a name="92" href="#92">92</a>  <em> *</em>
+<a name="93" href="#93">93</a>  <em> * as well as other places.</em>
+<a name="94" href="#94">94</a>  <em> *</em>
+<a name="95" href="#95">95</a>  <em> * @version CVS $Revision: 416080 $ $Date: 2006-06-21 21:27:58 +0200 (mer, 21 giu 2006) $</em>
+<a name="96" href="#96">96</a>  <em> */</em>
+<a name="97" href="#97">97</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../../org/apache/james/transport/mailets/RemoteDelivery.html">RemoteDelivery</a> <strong>extends</strong> <a href="../../../../../org/apache/mailet/GenericMailet.html">GenericMailet</a> implements Runnable {
+<a name="98" href="#98">98</a>  
+<a name="99" href="#99">99</a>      <strong>private</strong> <strong>static</strong> <strong>final</strong> <strong>long</strong> DEFAULT_DELAY_TIME = 21600000; <em class="comment">// default is 6*60*60*1000 millis (6 hours)</em>
+<a name="100" href="#100">100</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String PATTERN_STRING =
+<a name="101" href="#101">101</a>         <span class="string">"&#47;&#47;s*([0-9]*&#47;&#47;s*[&#47;&#47;*])?&#47;&#47;s*([0-9]+)&#47;&#47;s*([a-z,A-Z]*)&#47;&#47;s*"</span>;<em class="comment">//pattern to match</em>
+<a name="102" href="#102">102</a>                                                                  <em class="comment">//[attempts*]delay[units]</em>
+<a name="103" href="#103">103</a>                                             
+<a name="104" href="#104">104</a>     <strong>private</strong> <strong>static</strong> Pattern PATTERN = <strong>null</strong>; <em class="comment">//the compiled pattern of the above String</em>
+<a name="105" href="#105">105</a>     
+<a name="106" href="#106">106</a>     <em class="comment">// The DNSServer</em>
+<a name="107" href="#107">107</a>     <strong>private</strong> <a href="../../../../../org/apache/james/services/DNSServer.html">DNSServer</a> dnsServer;
+<a name="108" href="#108">108</a>     
+<a name="109" href="#109">109</a>     <em class="comment">/*</em>
+<a name="110" href="#110">110</a> <em class="comment">     * Static initializer.&lt;p></em>
+<a name="111" href="#111">111</a> <em class="comment">     * Compiles pattern for processing delaytime entries.&lt;p></em>
+<a name="112" href="#112">112</a> <em class="comment">     * Initializes MULTIPLIERS with the supported unit quantifiers</em>
+<a name="113" href="#113">113</a> <em class="comment">     */</em>
+<a name="114" href="#114">114</a>     <strong>static</strong> {
+<a name="115" href="#115">115</a>         <strong>try</strong> {
+<a name="116" href="#116">116</a>             Perl5Compiler compiler = <strong>new</strong> Perl5Compiler(); 
+<a name="117" href="#117">117</a>             PATTERN = compiler.compile(PATTERN_STRING, Perl5Compiler.READ_ONLY_MASK);
+<a name="118" href="#118">118</a>         } <strong>catch</strong>(MalformedPatternException mpe) {
+<a name="119" href="#119">119</a>             <em class="comment">//this should not happen as the pattern string is hardcoded.</em>
+<a name="120" href="#120">120</a>             mpe.printStackTrace (System.err);
+<a name="121" href="#121">121</a>         }
+<a name="122" href="#122">122</a>     }
+<a name="123" href="#123">123</a>     
+<a name="124" href="#124">124</a>     <em>/**<em>*</em></em>
+<a name="125" href="#125">125</a> <em>     * This filter is used in the accept call to the spool.</em>
+<a name="126" href="#126">126</a> <em>     * It will select the next mail ready for processing according to the mails</em>
+<a name="127" href="#127">127</a> <em>     * retrycount and lastUpdated time</em>
+<a name="128" href="#128">128</a> <em>     **/</em>
+<a name="129" href="#129">129</a>     <strong>private</strong> <strong>class</strong> MultipleDelayFilter implements SpoolRepository.AcceptFilter
+<a name="130" href="#130">130</a>     {
+<a name="131" href="#131">131</a>         <em>/**<em>*</em></em>
+<a name="132" href="#132">132</a> <em>         * holds the time to wait for the youngest mail to get ready for processing</em>
+<a name="133" href="#133">133</a> <em>         **/</em>
+<a name="134" href="#134">134</a>         <strong>long</strong> youngest = 0;
+<a name="135" href="#135">135</a> 
+<a name="136" href="#136">136</a>         <em>/**<em>*</em></em>
+<a name="137" href="#137">137</a> <em>         * Uses the getNextDelay to determine if a mail is ready for processing based on the delivered parameters</em>
+<a name="138" href="#138">138</a> <em>         * errorMessage (which holds the retrycount), lastUpdated and state</em>
+<a name="139" href="#139">139</a> <em>         * @param key the name/key of the message</em>
+<a name="140" href="#140">140</a> <em>         * @param state the mails state</em>
+<a name="141" href="#141">141</a> <em>         * @param lastUpdated the mail was last written to the spool at this time.</em>
+<a name="142" href="#142">142</a> <em>         * @param errorMessage actually holds the retrycount as a string (see failMessage below)</em>
+<a name="143" href="#143">143</a> <em>         **/</em>
+<a name="144" href="#144">144</a>         <strong>public</strong> <strong>boolean</strong> accept (String key, String state, <strong>long</strong> lastUpdated, String errorMessage) {
+<a name="145" href="#145">145</a>             <strong>if</strong> (state.equals(Mail.ERROR)) {
+<a name="146" href="#146">146</a>                 <em class="comment">//Test the time...</em>
+<a name="147" href="#147">147</a>                 <strong>int</strong> retries = Integer.parseInt(errorMessage);
+<a name="148" href="#148">148</a>                 
+<a name="149" href="#149">149</a>                 <em class="comment">// If the retries count is 0 we should try to send the mail now!</em>
+<a name="150" href="#150">150</a>                 <strong>if</strong> (retries == 0) <strong>return</strong> <strong>true</strong>;
+<a name="151" href="#151">151</a>                 
+<a name="152" href="#152">152</a>                 <strong>long</strong> delay = getNextDelay (retries);
+<a name="153" href="#153">153</a>                 <strong>long</strong> timeToProcess = delay + lastUpdated;
+<a name="154" href="#154">154</a> 
+<a name="155" href="#155">155</a>                 
+<a name="156" href="#156">156</a>                 <strong>if</strong> (System.currentTimeMillis() > timeToProcess) {
+<a name="157" href="#157">157</a>                     <em class="comment">//We're ready to process this again</em>
+<a name="158" href="#158">158</a>                     <strong>return</strong> <strong>true</strong>;
+<a name="159" href="#159">159</a>                 } <strong>else</strong> {
+<a name="160" href="#160">160</a>                     <em class="comment">//We're not ready to process this.</em>
+<a name="161" href="#161">161</a>                     <strong>if</strong> (youngest == 0 || youngest > timeToProcess) {
+<a name="162" href="#162">162</a>                         <em class="comment">//Mark this as the next most likely possible mail to process</em>
+<a name="163" href="#163">163</a>                         youngest = timeToProcess;
+<a name="164" href="#164">164</a>                     }
+<a name="165" href="#165">165</a>                     <strong>return</strong> false;
+<a name="166" href="#166">166</a>                 }
+<a name="167" href="#167">167</a>             } <strong>else</strong> {
+<a name="168" href="#168">168</a>                 <em class="comment">//This mail is good to go... return the key</em>
+<a name="169" href="#169">169</a>                 <strong>return</strong> <strong>true</strong>;
+<a name="170" href="#170">170</a>             }
+<a name="171" href="#171">171</a>         }
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>         <em>/**<em>*</em></em>
+<a name="174" href="#174">174</a> <em>         * @return the optimal time the SpoolRepository.accept(AcceptFilter) method should wait before</em>
+<a name="175" href="#175">175</a> <em>         * trying to find a mail ready for processing again.</em>
+<a name="176" href="#176">176</a> <em>         **/</em>
+<a name="177" href="#177">177</a>         <strong>public</strong> <strong>long</strong> getWaitTime () {
+<a name="178" href="#178">178</a>             <strong>if</strong> (youngest == 0) {
+<a name="179" href="#179">179</a>                 <strong>return</strong> 0;
+<a name="180" href="#180">180</a>             } <strong>else</strong> {
+<a name="181" href="#181">181</a>                 <strong>long</strong> duration = youngest - System.currentTimeMillis();
+<a name="182" href="#182">182</a>                 youngest = 0; <em class="comment">//get ready for next run</em>
+<a name="183" href="#183">183</a>                 <strong>return</strong> duration &lt;= 0 ? 1 : duration;
+<a name="184" href="#184">184</a>             }
+<a name="185" href="#185">185</a>         }
+<a name="186" href="#186">186</a>     }
+<a name="187" href="#187">187</a> 
+<a name="188" href="#188">188</a>     <em>/**<em>*</em></em>
+<a name="189" href="#189">189</a> <em>     * Controls certain log messages</em>
+<a name="190" href="#190">190</a> <em>     */</em>
+<a name="191" href="#191">191</a>     <strong>private</strong> <strong>boolean</strong> isDebug = false;
+<a name="192" href="#192">192</a> 
+<a name="193" href="#193">193</a>     <strong>private</strong> <a href="../../../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> outgoing; <em class="comment">// The spool of outgoing mail</em>
+<a name="194" href="#194">194</a>     <strong>private</strong> <strong>long</strong>[] delayTimes; <em class="comment">//holds expanded delayTimes</em>
+<a name="195" href="#195">195</a>     <strong>private</strong> <strong>int</strong> maxRetries = 5; <em class="comment">// default number of retries</em>
+<a name="196" href="#196">196</a>     <strong>private</strong> <strong>long</strong> smtpTimeout = 180000;  <em class="comment">//default number of ms to timeout on smtp delivery</em>
+<a name="197" href="#197">197</a>     <strong>private</strong> <strong>boolean</strong> sendPartial = false; <em class="comment">// If false then ANY address errors will cause the transmission to fail</em>
+<a name="198" href="#198">198</a>     <strong>private</strong> <strong>int</strong> connectionTimeout = 60000;  <em class="comment">// The amount of time JavaMail will wait before giving up on a socket connect()</em>
+<a name="199" href="#199">199</a>     <strong>private</strong> <strong>int</strong> deliveryThreadCount = 1; <em class="comment">// default number of delivery threads</em>
+<a name="200" href="#200">200</a>     <strong>private</strong> Collection gatewayServer = <strong>null</strong>; <em class="comment">// the server(s) to send all email to</em>
+<a name="201" href="#201">201</a>     <strong>private</strong> String authUser = <strong>null</strong>; <em class="comment">// auth for gateway server</em>
+<a name="202" href="#202">202</a>     <strong>private</strong> String authPass = <strong>null</strong>; <em class="comment">// password for gateway server</em>
+<a name="203" href="#203">203</a>     <strong>private</strong> String bindAddress = <strong>null</strong>; <em class="comment">// JavaMail delivery socket binds to this local address. If null the JavaMail default will be used.</em>
+<a name="204" href="#204">204</a>     <strong>private</strong> <strong>boolean</strong> isBindUsed = false; <em class="comment">// true, if the bind configuration</em>
+<a name="205" href="#205">205</a>                                         <em class="comment">// parameter is supplied, RemoteDeliverySocketFactory</em>
+<a name="206" href="#206">206</a>                                         <em class="comment">// will be used in this case</em>
+<a name="207" href="#207">207</a>     <strong>private</strong> Collection deliveryThreads = <strong>new</strong> Vector();
+<a name="208" href="#208">208</a>     <strong>private</strong> <strong>volatile</strong> <strong>boolean</strong> destroyed = false; <em class="comment">//Flag that the run method will check and end itself if set to true</em>
+<a name="209" href="#209">209</a>     <strong>private</strong> String bounceProcessor = <strong>null</strong>; <em class="comment">// the processor for creating Bounces</em>
+<a name="210" href="#210">210</a> 
+<a name="211" href="#211">211</a>     <strong>private</strong> Perl5Matcher delayTimeMatcher; <em class="comment">//matcher use at init time to parse delaytime parameters</em>
+<a name="212" href="#212">212</a>     <strong>private</strong> MultipleDelayFilter delayFilter = <strong>new</strong> MultipleDelayFilter ();<em class="comment">//used by accept to selcet the next mail ready for processing</em>
+<a name="213" href="#213">213</a> 
+<a name="214" href="#214">214</a>     
+<a name="215" href="#215">215</a>     <em>/**<em>*</em></em>
+<a name="216" href="#216">216</a> <em>     * Initialize the mailet</em>
+<a name="217" href="#217">217</a> <em>     */</em>
+<a name="218" href="#218">218</a>     <strong>public</strong> <strong>void</strong> init() throws MessagingException {
+<a name="219" href="#219">219</a>         isDebug = (getInitParameter(<span class="string">"debug"</span>) == <strong>null</strong>) ? false : <strong>new</strong> Boolean(getInitParameter(<span class="string">"debug"</span>)).booleanValue();
+<a name="220" href="#220">220</a>         ArrayList delay_times_list = <strong>new</strong> ArrayList();
+<a name="221" href="#221">221</a>         <strong>try</strong> {
+<a name="222" href="#222">222</a>             <strong>if</strong> (getInitParameter(<span class="string">"delayTime"</span>) != <strong>null</strong>) {
+<a name="223" href="#223">223</a>                 delayTimeMatcher = <strong>new</strong> Perl5Matcher();
+<a name="224" href="#224">224</a>                 String delay_times = getInitParameter(<span class="string">"delayTime"</span>);
+<a name="225" href="#225">225</a>                 <em class="comment">//split on comma's</em>
+<a name="226" href="#226">226</a>                 StringTokenizer st = <strong>new</strong> StringTokenizer (delay_times,<span class="string">","</span>);
+<a name="227" href="#227">227</a>                 <strong>while</strong> (st.hasMoreTokens()) {
+<a name="228" href="#228">228</a>                     String delay_time = st.nextToken();
+<a name="229" href="#229">229</a>                     delay_times_list.add (<strong>new</strong> Delay(delay_time));
+<a name="230" href="#230">230</a>                 }
+<a name="231" href="#231">231</a>             } <strong>else</strong> {
+<a name="232" href="#232">232</a>                 <em class="comment">//use default delayTime.</em>
+<a name="233" href="#233">233</a>                 delay_times_list.add (<strong>new</strong> Delay());
+<a name="234" href="#234">234</a>             }
+<a name="235" href="#235">235</a>         } <strong>catch</strong> (Exception e) {
+<a name="236" href="#236">236</a>             log(<span class="string">"Invalid delayTime setting: "</span> + getInitParameter(<span class="string">"delayTime"</span>));
+<a name="237" href="#237">237</a>         }
+<a name="238" href="#238">238</a>         <strong>try</strong> {
+<a name="239" href="#239">239</a>             <strong>if</strong> (getInitParameter(<span class="string">"maxRetries"</span>) != <strong>null</strong>) {
+<a name="240" href="#240">240</a>                 maxRetries = Integer.parseInt(getInitParameter(<span class="string">"maxRetries"</span>));
+<a name="241" href="#241">241</a>             }
+<a name="242" href="#242">242</a>             <em class="comment">//check consistency with delay_times_list attempts</em>
+<a name="243" href="#243">243</a>             <strong>int</strong> total_attempts = calcTotalAttempts (delay_times_list);
+<a name="244" href="#244">244</a>             <strong>if</strong> (total_attempts > maxRetries) {
+<a name="245" href="#245">245</a>                 log(<span class="string">"Total number of delayTime attempts exceeds maxRetries specified. Increasing maxRetries from "</span>+maxRetries+<span class="string">" to "</span>+total_attempts);
+<a name="246" href="#246">246</a>                 maxRetries = total_attempts;
+<a name="247" href="#247">247</a>             } <strong>else</strong> {
+<a name="248" href="#248">248</a>                 <strong>int</strong> extra = maxRetries - total_attempts;
+<a name="249" href="#249">249</a>                 <strong>if</strong> (extra != 0) {
+<a name="250" href="#250">250</a>                     log(<span class="string">"maxRetries is larger than total number of attempts specified. Increasing last delayTime with "</span>+extra+<span class="string">" attempts "</span>);
+<a name="251" href="#251">251</a> 
+<a name="252" href="#252">252</a>                     <strong>if</strong> (delay_times_list.size() != 0) { 
+<a name="253" href="#253">253</a>                         Delay delay = (Delay)delay_times_list.get (delay_times_list.size()-1); <em class="comment">//last Delay</em>
+<a name="254" href="#254">254</a>                         delay.setAttempts (delay.getAttempts()+extra);
+<a name="255" href="#255">255</a>                         log(<span class="string">"Delay of "</span>+delay.getDelayTime()+<span class="string">" msecs is now attempted: "</span>+delay.getAttempts()+<span class="string">" times"</span>);
+<a name="256" href="#256">256</a>                     } <strong>else</strong> {
+<a name="257" href="#257">257</a>                         log (<span class="string">"NO, delaytimes cannot continue"</span>);
+<a name="258" href="#258">258</a>                     }
+<a name="259" href="#259">259</a>                 }
+<a name="260" href="#260">260</a>             }
+<a name="261" href="#261">261</a>             delayTimes = expandDelays (delay_times_list);
+<a name="262" href="#262">262</a>             
+<a name="263" href="#263">263</a>         } <strong>catch</strong> (Exception e) {
+<a name="264" href="#264">264</a>             log(<span class="string">"Invalid maxRetries setting: "</span> + getInitParameter(<span class="string">"maxRetries"</span>));
+<a name="265" href="#265">265</a>         }
+<a name="266" href="#266">266</a>         <strong>try</strong> {
+<a name="267" href="#267">267</a>             <strong>if</strong> (getInitParameter(<span class="string">"timeout"</span>) != <strong>null</strong>) {
+<a name="268" href="#268">268</a>                 smtpTimeout = Integer.parseInt(getInitParameter(<span class="string">"timeout"</span>));
+<a name="269" href="#269">269</a>             }
+<a name="270" href="#270">270</a>         } <strong>catch</strong> (Exception e) {
+<a name="271" href="#271">271</a>             log(<span class="string">"Invalid timeout setting: "</span> + getInitParameter(<span class="string">"timeout"</span>));
+<a name="272" href="#272">272</a>         }
+<a name="273" href="#273">273</a> 
+<a name="274" href="#274">274</a>         <strong>try</strong> {
+<a name="275" href="#275">275</a>             <strong>if</strong> (getInitParameter(<span class="string">"connectiontimeout"</span>) != <strong>null</strong>) {
+<a name="276" href="#276">276</a>                 connectionTimeout = Integer.parseInt(getInitParameter(<span class="string">"connectiontimeout"</span>));
+<a name="277" href="#277">277</a>             }
+<a name="278" href="#278">278</a>         } <strong>catch</strong> (Exception e) {
+<a name="279" href="#279">279</a>             log(<span class="string">"Invalid timeout setting: "</span> + getInitParameter(<span class="string">"timeout"</span>));
+<a name="280" href="#280">280</a>         }
+<a name="281" href="#281">281</a>         sendPartial = (getInitParameter(<span class="string">"sendpartial"</span>) == <strong>null</strong>) ? false : <strong>new</strong> Boolean(getInitParameter(<span class="string">"sendpartial"</span>)).booleanValue();
+<a name="282" href="#282">282</a> 
+<a name="283" href="#283">283</a>         bounceProcessor = getInitParameter(<span class="string">"bounceProcessor"</span>);
+<a name="284" href="#284">284</a> 
+<a name="285" href="#285">285</a>         String gateway = getInitParameter(<span class="string">"gateway"</span>);
+<a name="286" href="#286">286</a>         String gatewayPort = getInitParameter(<span class="string">"gatewayPort"</span>);
+<a name="287" href="#287">287</a> 
+<a name="288" href="#288">288</a>         <strong>if</strong> (gateway != <strong>null</strong>) {
+<a name="289" href="#289">289</a>             gatewayServer = <strong>new</strong> ArrayList();
+<a name="290" href="#290">290</a>             StringTokenizer st = <strong>new</strong> StringTokenizer(gateway, <span class="string">","</span>) ;
+<a name="291" href="#291">291</a>             <strong>while</strong> (st.hasMoreTokens()) {
+<a name="292" href="#292">292</a>                 String server = st.nextToken().trim() ;
+<a name="293" href="#293">293</a>                 <strong>if</strong> (server.indexOf(':') &lt; 0 &amp;&amp; gatewayPort != <strong>null</strong>) {
+<a name="294" href="#294">294</a>                     server += <span class="string">":"</span>;
+<a name="295" href="#295">295</a>                     server += gatewayPort;
+<a name="296" href="#296">296</a>                 }
+<a name="297" href="#297">297</a> 
+<a name="298" href="#298">298</a>                 <strong>if</strong> (isDebug) log(<span class="string">"Adding SMTP gateway: "</span> + server) ;
+<a name="299" href="#299">299</a>                 gatewayServer.add(server);
+<a name="300" href="#300">300</a>             }
+<a name="301" href="#301">301</a>             authUser = getInitParameter(<span class="string">"gatewayusername"</span>);
+<a name="302" href="#302">302</a>             authPass = getInitParameter(<span class="string">"gatewayPassword"</span>);
+<a name="303" href="#303">303</a>         }
+<a name="304" href="#304">304</a> 
+<a name="305" href="#305">305</a>         ServiceManager compMgr = (ServiceManager)getMailetContext().getAttribute(Constants.AVALON_COMPONENT_MANAGER);
+<a name="306" href="#306">306</a>         String outgoingPath = getInitParameter(<span class="string">"outgoing"</span>);
+<a name="307" href="#307">307</a>         <strong>if</strong> (outgoingPath == <strong>null</strong>) {
+<a name="308" href="#308">308</a>             outgoingPath = <span class="string">"file:///../var/mail/outgoing"</span>;
+<a name="309" href="#309">309</a>         }
+<a name="310" href="#310">310</a> 
+<a name="311" href="#311">311</a>         <strong>try</strong> {
+<a name="312" href="#312">312</a>             <em class="comment">// Instantiate the a MailRepository for outgoing mails</em>
+<a name="313" href="#313">313</a>             Store mailstore = (Store) compMgr.lookup(Store.ROLE);
+<a name="314" href="#314">314</a> 
+<a name="315" href="#315">315</a>             DefaultConfiguration spoolConf
+<a name="316" href="#316">316</a>                 = <strong>new</strong> DefaultConfiguration(<span class="string">"repository"</span>, <span class="string">"generated:RemoteDelivery.java"</span>);
+<a name="317" href="#317">317</a>             spoolConf.setAttribute(<span class="string">"destinationURL"</span>, outgoingPath);
+<a name="318" href="#318">318</a>             spoolConf.setAttribute(<span class="string">"type"</span>, <span class="string">"SPOOL"</span>);
+<a name="319" href="#319">319</a>             outgoing = (SpoolRepository) mailstore.select(spoolConf);
+<a name="320" href="#320">320</a>         } <strong>catch</strong> (ServiceException cnfe) {
+<a name="321" href="#321">321</a>             log(<span class="string">"Failed to retrieve Store component:"</span> + cnfe.getMessage());
+<a name="322" href="#322">322</a>         } <strong>catch</strong> (Exception e) {
+<a name="323" href="#323">323</a>             log(<span class="string">"Failed to retrieve Store component:"</span> + e.getMessage());
+<a name="324" href="#324">324</a>         }
+<a name="325" href="#325">325</a>         
+<a name="326" href="#326">326</a>             <em class="comment">// Instantiate the a MailRepository for outgoing mails</em>
+<a name="327" href="#327">327</a>              <strong>try</strong>
+<a name="328" href="#328">328</a>             {
+<a name="329" href="#329">329</a>                 dnsServer = (DNSServer) compMgr.lookup(DNSServer.ROLE);
+<a name="330" href="#330">330</a>             }
+<a name="331" href="#331">331</a>             <strong>catch</strong> (ServiceException e1)
+<a name="332" href="#332">332</a>             {
+<a name="333" href="#333">333</a>                 log(<span class="string">"Failed to retrieve DNSServer"</span> + e1.getMessage());
+<a name="334" href="#334">334</a>             }
+<a name="335" href="#335">335</a> 
+<a name="336" href="#336">336</a>         <em class="comment">//Start up a number of threads</em>
+<a name="337" href="#337">337</a>         <strong>try</strong> {
+<a name="338" href="#338">338</a>             deliveryThreadCount = Integer.parseInt(getInitParameter(<span class="string">"deliveryThreads"</span>));
+<a name="339" href="#339">339</a>         } <strong>catch</strong> (Exception e) {
+<a name="340" href="#340">340</a>         }
+<a name="341" href="#341">341</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; deliveryThreadCount; i++) {
+<a name="342" href="#342">342</a>             StringBuffer nameBuffer =
+<a name="343" href="#343">343</a>                 <strong>new</strong> StringBuffer(32)
+<a name="344" href="#344">344</a>                         .append(<span class="string">"Remote delivery thread ("</span>)
+<a name="345" href="#345">345</a>                         .append(i)
+<a name="346" href="#346">346</a>                         .append(<span class="string">")"</span>);
+<a name="347" href="#347">347</a>             Thread t = <strong>new</strong> Thread(<strong>this</strong>, nameBuffer.toString());
+<a name="348" href="#348">348</a>             t.start();
+<a name="349" href="#349">349</a>             deliveryThreads.add(t);
+<a name="350" href="#350">350</a>         }
+<a name="351" href="#351">351</a> 
+<a name="352" href="#352">352</a>         bindAddress = getInitParameter(<span class="string">"bind"</span>);
+<a name="353" href="#353">353</a>         isBindUsed = bindAddress != <strong>null</strong>;
+<a name="354" href="#354">354</a>         <strong>try</strong> {
+<a name="355" href="#355">355</a>             <strong>if</strong> (isBindUsed) RemoteDeliverySocketFactory.setBindAdress(bindAddress);
+<a name="356" href="#356">356</a>         } <strong>catch</strong> (UnknownHostException e) {
+<a name="357" href="#357">357</a>             log(<span class="string">"Invalid bind setting ("</span> + bindAddress + <span class="string">"): "</span> + e.toString());
+<a name="358" href="#358">358</a>         }
+<a name="359" href="#359">359</a>     }
+<a name="360" href="#360">360</a> 
+<a name="361" href="#361">361</a>     <em class="comment">/*</em>
+<a name="362" href="#362">362</a> <em class="comment">     * private method to log the extended SendFailedException introduced in JavaMail 1.3.2.</em>
+<a name="363" href="#363">363</a> <em class="comment">     */</em>
+<a name="364" href="#364">364</a>     <strong>private</strong> <strong>void</strong> logSendFailedException(SendFailedException sfe) {
+<a name="365" href="#365">365</a>         <strong>if</strong> (isDebug) {
+<a name="366" href="#366">366</a>             MessagingException me = sfe;
+<a name="367" href="#367">367</a>             <strong>if</strong> (me instanceof SMTPSendFailedException) {
+<a name="368" href="#368">368</a>                 SMTPSendFailedException ssfe = (SMTPSendFailedException)me;
+<a name="369" href="#369">369</a>                 log(<span class="string">"SMTP SEND FAILED:"</span>);
+<a name="370" href="#370">370</a>                 log(ssfe.toString());
+<a name="371" href="#371">371</a>                 log(<span class="string">"  Command: "</span> + ssfe.getCommand());
+<a name="372" href="#372">372</a>                 log(<span class="string">"  RetCode: "</span> + ssfe.getReturnCode());
+<a name="373" href="#373">373</a>                 log(<span class="string">"  Response: "</span> + ssfe.getMessage());
+<a name="374" href="#374">374</a>             } <strong>else</strong> {
+<a name="375" href="#375">375</a>                 log(<span class="string">"Send failed: "</span> + me.toString());
+<a name="376" href="#376">376</a>             }
+<a name="377" href="#377">377</a>             Exception ne;
+<a name="378" href="#378">378</a>             <strong>while</strong> ((ne = me.getNextException()) != <strong>null</strong> &amp;&amp; ne instanceof MessagingException) {
+<a name="379" href="#379">379</a>                 me = (MessagingException)ne;
+<a name="380" href="#380">380</a>                 <strong>if</strong> (me instanceof SMTPAddressFailedException) {
+<a name="381" href="#381">381</a>                     SMTPAddressFailedException e = (SMTPAddressFailedException)me;
+<a name="382" href="#382">382</a>                     log(<span class="string">"ADDRESS FAILED:"</span>);
+<a name="383" href="#383">383</a>                     log(e.toString());
+<a name="384" href="#384">384</a>                     log(<span class="string">"  Address: "</span> + e.getAddress());
+<a name="385" href="#385">385</a>                     log(<span class="string">"  Command: "</span> + e.getCommand());
+<a name="386" href="#386">386</a>                     log(<span class="string">"  RetCode: "</span> + e.getReturnCode());
+<a name="387" href="#387">387</a>                     log(<span class="string">"  Response: "</span> + e.getMessage());
+<a name="388" href="#388">388</a>                 } <strong>else</strong> <strong>if</strong> (me instanceof SMTPAddressSucceededException) {
+<a name="389" href="#389">389</a>                     log(<span class="string">"ADDRESS SUCCEEDED:"</span>);
+<a name="390" href="#390">390</a>                     SMTPAddressSucceededException e = (SMTPAddressSucceededException)me;
+<a name="391" href="#391">391</a>                     log(e.toString());
+<a name="392" href="#392">392</a>                     log(<span class="string">"  Address: "</span> + e.getAddress());
+<a name="393" href="#393">393</a>                     log(<span class="string">"  Command: "</span> + e.getCommand());
+<a name="394" href="#394">394</a>                     log(<span class="string">"  RetCode: "</span> + e.getReturnCode());
+<a name="395" href="#395">395</a>                     log(<span class="string">"  Response: "</span> + e.getMessage());
+<a name="396" href="#396">396</a>                 }
+<a name="397" href="#397">397</a>             }
+<a name="398" href="#398">398</a>         }
+<a name="399" href="#399">399</a>     }
+<a name="400" href="#400">400</a> 
+<a name="401" href="#401">401</a>     <em>/**<em>*</em></em>
+<a name="402" href="#402">402</a> <em>     * We can assume that the recipients of this message are all going to the same</em>
+<a name="403" href="#403">403</a> <em>     * mail server.  We will now rely on the DNS server to do DNS MX record lookup</em>
+<a name="404" href="#404">404</a> <em>     * and try to deliver to the multiple mail servers.  If it fails, it should</em>
+<a name="405" href="#405">405</a> <em>     * throw an exception.</em>
+<a name="406" href="#406">406</a> <em>     *</em>
+<a name="407" href="#407">407</a> <em>     * Creation date: (2/24/00 11:25:00 PM)</em>
+<a name="408" href="#408">408</a> <em>     * @param mail org.apache.james.core.MailImpl</em>
+<a name="409" href="#409">409</a> <em>     * @param session javax.mail.Session</em>
+<a name="410" href="#410">410</a> <em>     * @return boolean Whether the delivery was successful and the message can be deleted</em>
+<a name="411" href="#411">411</a> <em>     */</em>
+<a name="412" href="#412">412</a>     <strong>private</strong> <strong>boolean</strong> deliver(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, Session session) {
+<a name="413" href="#413">413</a>         <strong>try</strong> {
+<a name="414" href="#414">414</a>             <strong>if</strong> (isDebug) {
+<a name="415" href="#415">415</a>                 log(<span class="string">"Attempting to deliver "</span> + mail.getName());
+<a name="416" href="#416">416</a>             }
+<a name="417" href="#417">417</a>             MimeMessage message = mail.getMessage();
+<a name="418" href="#418">418</a> 
+<a name="419" href="#419">419</a>             <em class="comment">//Create an array of the recipients as InternetAddress objects</em>
+<a name="420" href="#420">420</a>             Collection recipients = mail.getRecipients();
+<a name="421" href="#421">421</a>             InternetAddress addr[] = <strong>new</strong> InternetAddress[recipients.size()];
+<a name="422" href="#422">422</a>             <strong>int</strong> j = 0;
+<a name="423" href="#423">423</a>             <strong>for</strong> (Iterator i = recipients.iterator(); i.hasNext(); j++) {
+<a name="424" href="#424">424</a>                 <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> rcpt = (MailAddress)i.next();
+<a name="425" href="#425">425</a>                 addr[j] = rcpt.toInternetAddress();
+<a name="426" href="#426">426</a>             }
+<a name="427" href="#427">427</a> 
+<a name="428" href="#428">428</a>             <strong>if</strong> (addr.length &lt;= 0) {
+<a name="429" href="#429">429</a>                 log(<span class="string">"No recipients specified... not sure how this could have happened."</span>);
+<a name="430" href="#430">430</a>                 <strong>return</strong> <strong>true</strong>;
+<a name="431" href="#431">431</a>             }
+<a name="432" href="#432">432</a> 
+<a name="433" href="#433">433</a>             <em class="comment">//Figure out which servers to try to send to.  This collection</em>
+<a name="434" href="#434">434</a>             <em class="comment">//  will hold all the possible target servers</em>
+<a name="435" href="#435">435</a>             Iterator targetServers = <strong>null</strong>;
+<a name="436" href="#436">436</a>             <strong>if</strong> (gatewayServer == <strong>null</strong>) {
+<a name="437" href="#437">437</a>                 <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> rcpt = (MailAddress) recipients.iterator().next();
+<a name="438" href="#438">438</a>                 String host = rcpt.getHost();
+<a name="439" href="#439">439</a> 
+<a name="440" href="#440">440</a>                 <em class="comment">//Lookup the possible targets</em>
+<a name="441" href="#441">441</a>                 targetServers = getMailetContext().getSMTPHostAddresses(host);
+<a name="442" href="#442">442</a>                 <strong>if</strong> (!targetServers.hasNext()) {
+<a name="443" href="#443">443</a>                     log(<span class="string">"No mail server found for: "</span> + host);
+<a name="444" href="#444">444</a>                     StringBuffer exceptionBuffer =
+<a name="445" href="#445">445</a>                         <strong>new</strong> StringBuffer(128)
+<a name="446" href="#446">446</a>                         .append(<span class="string">"There are no DNS entries for the hostname "</span>)
+<a name="447" href="#447">447</a>                         .append(host)
+<a name="448" href="#448">448</a>                         .append(<span class="string">".  I cannot determine where to send this message."</span>);
+<a name="449" href="#449">449</a>                     <strong>return</strong> failMessage(mail, <strong>new</strong> MessagingException(exceptionBuffer.toString()), false);
+<a name="450" href="#450">450</a>                 }
+<a name="451" href="#451">451</a>             } <strong>else</strong> {
+<a name="452" href="#452">452</a>                 targetServers = getGatewaySMTPHostAddresses(gatewayServer);
+<a name="453" href="#453">453</a>             }
+<a name="454" href="#454">454</a> 
+<a name="455" href="#455">455</a>             MessagingException lastError = <strong>null</strong>;
+<a name="456" href="#456">456</a> 
+<a name="457" href="#457">457</a>             <strong>while</strong> ( targetServers.hasNext()) {
+<a name="458" href="#458">458</a>                 <strong>try</strong> {
+<a name="459" href="#459">459</a>                     <a href="../../../../../org/apache/mailet/HostAddress.html">HostAddress</a> outgoingMailServer = (HostAddress) targetServers.next();
+<a name="460" href="#460">460</a>                     StringBuffer logMessageBuffer =
+<a name="461" href="#461">461</a>                         <strong>new</strong> StringBuffer(256)
+<a name="462" href="#462">462</a>                         .append(<span class="string">"Attempting delivery of "</span>)
+<a name="463" href="#463">463</a>                         .append(mail.getName())
+<a name="464" href="#464">464</a>                         .append(<span class="string">" to host "</span>)
+<a name="465" href="#465">465</a>                         .append(outgoingMailServer.getHostName())
+<a name="466" href="#466">466</a>                         .append(<span class="string">" at "</span>)
+<a name="467" href="#467">467</a>                         .append(outgoingMailServer.getHost())
+<a name="468" href="#468">468</a>                         .append(<span class="string">" for addresses "</span>)
+<a name="469" href="#469">469</a>                         .append(Arrays.asList(addr));
+<a name="470" href="#470">470</a>                     log(logMessageBuffer.toString());
+<a name="471" href="#471">471</a> 
+<a name="472" href="#472">472</a>                     Properties props = session.getProperties();
+<a name="473" href="#473">473</a>                     <strong>if</strong> (mail.getSender() == <strong>null</strong>) {
+<a name="474" href="#474">474</a>                         props.put(<span class="string">"mail.smtp.from"</span>, <span class="string">"&lt;>"</span>);
+<a name="475" href="#475">475</a>                     } <strong>else</strong> {
+<a name="476" href="#476">476</a>                         String sender = mail.getSender().toString();
+<a name="477" href="#477">477</a>                         props.put(<span class="string">"mail.smtp.from"</span>, sender);
+<a name="478" href="#478">478</a>                     }
+<a name="479" href="#479">479</a> 
+<a name="480" href="#480">480</a>                     <em class="comment">//Many of these properties are only in later JavaMail versions</em>
+<a name="481" href="#481">481</a>                     <em class="comment">//"mail.smtp.ehlo"  //default true</em>
+<a name="482" href="#482">482</a>                     <em class="comment">//"mail.smtp.auth"  //default false</em>
+<a name="483" href="#483">483</a>                     <em class="comment">//"mail.smtp.dsn.ret"  //default to nothing... appended as RET= after MAIL FROM line.</em>
+<a name="484" href="#484">484</a>                     <em class="comment">//"mail.smtp.dsn.notify" //default to nothing...appended as NOTIFY= after RCPT TO line.</em>
+<a name="485" href="#485">485</a> 
+<a name="486" href="#486">486</a>                     Transport transport = <strong>null</strong>;
+<a name="487" href="#487">487</a>                     <strong>try</strong> {
+<a name="488" href="#488">488</a>                         transport = session.getTransport(outgoingMailServer);
+<a name="489" href="#489">489</a>                         <strong>try</strong> {
+<a name="490" href="#490">490</a>                             <strong>if</strong> (authUser != <strong>null</strong>) {
+<a name="491" href="#491">491</a>                                 transport.connect(outgoingMailServer.getHostName(), authUser, authPass);
+<a name="492" href="#492">492</a>                             } <strong>else</strong> {
+<a name="493" href="#493">493</a>                                 transport.connect();
+<a name="494" href="#494">494</a>                             }
+<a name="495" href="#495">495</a>                         } <strong>catch</strong> (MessagingException me) {
+<a name="496" href="#496">496</a>                             <em class="comment">// Any error on connect should cause the mailet to attempt</em>
+<a name="497" href="#497">497</a>                             <em class="comment">// to connect to the next SMTP server associated with this</em>
+<a name="498" href="#498">498</a>                             <em class="comment">// MX record.  Just log the exception.  We'll worry about</em>
+<a name="499" href="#499">499</a>                             <em class="comment">// failing the message at the end of the loop.</em>
+<a name="500" href="#500">500</a>                             log(me.getMessage());
+<a name="501" href="#501">501</a>                             <strong>continue</strong>;
+<a name="502" href="#502">502</a>                         }
+<a name="503" href="#503">503</a>                         <em class="comment">// if the transport is a SMTPTransport (from sun) some</em>
+<a name="504" href="#504">504</a>                         <em class="comment">// performance enhancement can be done.</em>
+<a name="505" href="#505">505</a>                         <strong>if</strong> (transport instanceof SMTPTransport)  {
+<a name="506" href="#506">506</a>                             SMTPTransport smtpTransport = (SMTPTransport) transport;
+<a name="507" href="#507">507</a>                             <em class="comment">// if the message is alredy 8bit or binary and the</em>
+<a name="508" href="#508">508</a>                             <em class="comment">// server doesn't support the 8bit extension it has</em>
+<a name="509" href="#509">509</a>                             <em class="comment">// to be converted to 7bit. Javamail api don't do</em>
+<a name="510" href="#510">510</a>                             <em class="comment">// that conversion, but it is required to be a</em>
+<a name="511" href="#511">511</a>                             <em class="comment">// rfc-compliant smtp server.</em>
+<a name="512" href="#512">512</a>                             <strong>if</strong> (!smtpTransport.supportsExtension(<span class="string">"8BITMIME"</span>)) { 
+<a name="513" href="#513">513</a>                                 <strong>try</strong> {
+<a name="514" href="#514">514</a>                                     convertTo7Bit(message);
+<a name="515" href="#515">515</a>                                 } <strong>catch</strong> (IOException e) {
+<a name="516" href="#516">516</a>                                     <em class="comment">// An error has occured during the 7bit conversion.</em>
+<a name="517" href="#517">517</a>                                     <em class="comment">// The error is logged and the message is sent anyway.</em>
+<a name="518" href="#518">518</a>                                     
+<a name="519" href="#519">519</a>                                     log(<span class="string">"Error during the conversion to 7 bit."</span>, e);
+<a name="520" href="#520">520</a>                                 }
+<a name="521" href="#521">521</a>                             }
+<a name="522" href="#522">522</a>                             
+<a name="523" href="#523">523</a>                             <em class="comment">/*</em>
+<a name="524" href="#524">524</a> <em class="comment">                             * Workaround for a javamail 1.3.2 bug: if</em>
+<a name="525" href="#525">525</a> <em class="comment">                             * a message is sent without encoding information</em>
+<a name="526" href="#526">526</a> <em class="comment">                             * and the 8bit allow property is set an exception</em>
+<a name="527" href="#527">527</a> <em class="comment">                             * is trown during the mail delivery.</em>
+<a name="528" href="#528">528</a> <em class="comment">                             */</em>
+<a name="529" href="#529">529</a>                             
+<a name="530" href="#530">530</a>                             <strong>try</strong> {
+<a name="531" href="#531">531</a>                                 setEncodingIfMissing(message);
+<a name="532" href="#532">532</a>                             } <strong>catch</strong> (IOException e) {
+<a name="533" href="#533">533</a>                                 log(<span class="string">"Error while adding encoding information to the message"</span>, e);
+<a name="534" href="#534">534</a>                             }
+<a name="535" href="#535">535</a>                         } <strong>else</strong> {
+<a name="536" href="#536">536</a>                             <em class="comment">// If the transport is not the one</em>
+<a name="537" href="#537">537</a>                             <em class="comment">// developed by Sun we are not sure of how it</em>
+<a name="538" href="#538">538</a>                             <em class="comment">// handles the 8 bit mime stuff,</em>
+<a name="539" href="#539">539</a>                             <em class="comment">// so I convert the message to 7bit.</em>
+<a name="540" href="#540">540</a>                             <strong>try</strong> {
+<a name="541" href="#541">541</a>                                 convertTo7Bit(message);
+<a name="542" href="#542">542</a>                             } <strong>catch</strong> (IOException e) {
+<a name="543" href="#543">543</a>                                 log(<span class="string">"Error during the conversion to 7 bit."</span>, e);
+<a name="544" href="#544">544</a>                             }
+<a name="545" href="#545">545</a>                         }
+<a name="546" href="#546">546</a>                         transport.sendMessage(message, addr);
+<a name="547" href="#547">547</a>                     } <strong>finally</strong> {
+<a name="548" href="#548">548</a>                         <strong>if</strong> (transport != <strong>null</strong>) {
+<a name="549" href="#549">549</a>                             transport.close();
+<a name="550" href="#550">550</a>                             transport = <strong>null</strong>;
+<a name="551" href="#551">551</a>                         }
+<a name="552" href="#552">552</a>                     }
+<a name="553" href="#553">553</a>                     logMessageBuffer =
+<a name="554" href="#554">554</a>                                       <strong>new</strong> StringBuffer(256)
+<a name="555" href="#555">555</a>                                       .append(<span class="string">"Mail ("</span>)
+<a name="556" href="#556">556</a>                                       .append(mail.getName())
+<a name="557" href="#557">557</a>                                       .append(<span class="string">") sent successfully to "</span>)
+<a name="558" href="#558">558</a>                                       .append(outgoingMailServer.getHostName())
+<a name="559" href="#559">559</a>                                       .append(<span class="string">" at "</span>)
+<a name="560" href="#560">560</a>                                       .append(outgoingMailServer.getHost())
+<a name="561" href="#561">561</a>                                       .append(<span class="string">" for "</span>)
+<a name="562" href="#562">562</a>                                       .append(mail.getRecipients());
+<a name="563" href="#563">563</a>                     log(logMessageBuffer.toString());
+<a name="564" href="#564">564</a>                     <strong>return</strong> <strong>true</strong>;
+<a name="565" href="#565">565</a>                 } <strong>catch</strong> (SendFailedException sfe) {
+<a name="566" href="#566">566</a>                     logSendFailedException(sfe);
+<a name="567" href="#567">567</a> 
+<a name="568" href="#568">568</a>                     <strong>if</strong> (sfe.getValidSentAddresses() != <strong>null</strong>) {
+<a name="569" href="#569">569</a>                         Address[] validSent = sfe.getValidSentAddresses();
+<a name="570" href="#570">570</a>                         <strong>if</strong> (validSent.length > 0) {
+<a name="571" href="#571">571</a>                             StringBuffer logMessageBuffer =
+<a name="572" href="#572">572</a>                                 <strong>new</strong> StringBuffer(256)
+<a name="573" href="#573">573</a>                                 .append(<span class="string">"Mail ("</span>)
+<a name="574" href="#574">574</a>                                 .append(mail.getName())
+<a name="575" href="#575">575</a>                                 .append(<span class="string">") sent successfully for "</span>)
+<a name="576" href="#576">576</a>                                 .append(Arrays.asList(validSent));
+<a name="577" href="#577">577</a>                             log(logMessageBuffer.toString());
+<a name="578" href="#578">578</a>                         }
+<a name="579" href="#579">579</a>                     }
+<a name="580" href="#580">580</a> 
+<a name="581" href="#581">581</a>                     <em class="comment">/*<em class="comment"> SMTPSendFailedException introduced in JavaMail 1.3.2, and provides detailed protocol reply code for the operation */</em></em>
+<a name="582" href="#582">582</a>                     <strong>if</strong> (sfe instanceof SMTPSendFailedException) {
+<a name="583" href="#583">583</a>                         SMTPSendFailedException ssfe = (SMTPSendFailedException) sfe;
+<a name="584" href="#584">584</a>                         <em class="comment">// if 5xx, terminate this delivery attempt by re-throwing the exception.</em>
+<a name="585" href="#585">585</a>                         <strong>if</strong> (ssfe.getReturnCode() >= 500 &amp;&amp; ssfe.getReturnCode() &lt;= 599) <strong>throw</strong> sfe;
+<a name="586" href="#586">586</a>                     }
+<a name="587" href="#587">587</a> 
+<a name="588" href="#588">588</a>                     <strong>if</strong> (sfe.getValidUnsentAddresses() != <strong>null</strong>
+<a name="589" href="#589">589</a>                         &amp;&amp; sfe.getValidUnsentAddresses().length > 0) {
+<a name="590" href="#590">590</a>                         <strong>if</strong> (isDebug) log(<span class="string">"Send failed, "</span> + sfe.getValidUnsentAddresses().length + <span class="string">" valid addresses remain, continuing with any other servers"</span>);
+<a name="591" href="#591">591</a>                         lastError = sfe;
+<a name="592" href="#592">592</a>                         <strong>continue</strong>;
+<a name="593" href="#593">593</a>                     } <strong>else</strong> {
+<a name="594" href="#594">594</a>                         <em class="comment">// There are no valid addresses left to send, so rethrow</em>
+<a name="595" href="#595">595</a>                         <strong>throw</strong> sfe;
+<a name="596" href="#596">596</a>                     }
+<a name="597" href="#597">597</a>                 } <strong>catch</strong> (MessagingException me) {
+<a name="598" href="#598">598</a>                     <em class="comment">//MessagingException are horribly difficult to figure out what actually happened.</em>
+<a name="599" href="#599">599</a>                     StringBuffer exceptionBuffer =
+<a name="600" href="#600">600</a>                         <strong>new</strong> StringBuffer(256)
+<a name="601" href="#601">601</a>                         .append(<span class="string">"Exception delivering message ("</span>)
+<a name="602" href="#602">602</a>                         .append(mail.getName())
+<a name="603" href="#603">603</a>                         .append(<span class="string">") - "</span>)
+<a name="604" href="#604">604</a>                         .append(me.getMessage());
+<a name="605" href="#605">605</a>                     log(exceptionBuffer.toString());
+<a name="606" href="#606">606</a>                     <strong>if</strong> ((me.getNextException() != <strong>null</strong>) &amp;&amp;
+<a name="607" href="#607">607</a>                           (me.getNextException() instanceof java.io.IOException)) {
+<a name="608" href="#608">608</a>                         <em class="comment">//This is more than likely a temporary failure</em>
+<a name="609" href="#609">609</a> 
+<a name="610" href="#610">610</a>                         <em class="comment">// If it's an IO exception with no nested exception, it's probably</em>
+<a name="611" href="#611">611</a>                         <em class="comment">// some socket or weird I/O related problem.</em>
+<a name="612" href="#612">612</a>                         lastError = me;
+<a name="613" href="#613">613</a>                         <strong>continue</strong>;
+<a name="614" href="#614">614</a>                     }
+<a name="615" href="#615">615</a>                     <em class="comment">// This was not a connection or I/O error particular to one</em>
+<a name="616" href="#616">616</a>                     <em class="comment">// SMTP server of an MX set.  Instead, it is almost certainly</em>
+<a name="617" href="#617">617</a>                     <em class="comment">// a protocol level error.  In this case we assume that this</em>
+<a name="618" href="#618">618</a>                     <em class="comment">// is an error we'd encounter with any of the SMTP servers</em>
+<a name="619" href="#619">619</a>                     <em class="comment">// associated with this MX record, and we pass the exception</em>
+<a name="620" href="#620">620</a>                     <em class="comment">// to the code in the outer block that determines its severity.</em>
+<a name="621" href="#621">621</a>                     <strong>throw</strong> me;
+<a name="622" href="#622">622</a>                 }
+<a name="623" href="#623">623</a>             } <em class="comment">// end while</em>
+<a name="624" href="#624">624</a>             <em class="comment">//If we encountered an exception while looping through,</em>
+<a name="625" href="#625">625</a>             <em class="comment">//throw the last MessagingException we caught.  We only</em>
+<a name="626" href="#626">626</a>             <em class="comment">//do this if we were unable to send the message to any</em>
+<a name="627" href="#627">627</a>             <em class="comment">//server.  If sending eventually succeeded, we exit</em>
+<a name="628" href="#628">628</a>             <em class="comment">//deliver() though the return at the end of the try</em>
+<a name="629" href="#629">629</a>             <em class="comment">//block.</em>
+<a name="630" href="#630">630</a>             <strong>if</strong> (lastError != <strong>null</strong>) {
+<a name="631" href="#631">631</a>                 <strong>throw</strong> lastError;
+<a name="632" href="#632">632</a>             }
+<a name="633" href="#633">633</a>         } <strong>catch</strong> (SendFailedException sfe) {
+<a name="634" href="#634">634</a>         logSendFailedException(sfe);
+<a name="635" href="#635">635</a> 
+<a name="636" href="#636">636</a>             Collection recipients = mail.getRecipients();
+<a name="637" href="#637">637</a> 
+<a name="638" href="#638">638</a>             <strong>boolean</strong> deleteMessage = false;
+<a name="639" href="#639">639</a> 
+<a name="640" href="#640">640</a>             <em class="comment">/*</em>
+<a name="641" href="#641">641</a> <em class="comment">             * If you send a message that has multiple invalid</em>
+<a name="642" href="#642">642</a> <em class="comment">             * addresses, you'll get a top-level SendFailedException</em>
+<a name="643" href="#643">643</a> <em class="comment">             * that that has the valid, valid-unsent, and invalid</em>
+<a name="644" href="#644">644</a> <em class="comment">             * address lists, with all of the server response messages</em>
+<a name="645" href="#645">645</a> <em class="comment">             * will be contained within the nested exceptions.  [Note:</em>
+<a name="646" href="#646">646</a> <em class="comment">             * the content of the nested exceptions is implementation</em>
+<a name="647" href="#647">647</a> <em class="comment">             * dependent.]</em>
+<a name="648" href="#648">648</a> <em class="comment">             *</em>
+<a name="649" href="#649">649</a> <em class="comment">             * sfe.getInvalidAddresses() should be considered permanent.</em>
+<a name="650" href="#650">650</a> <em class="comment">             * sfe.getValidUnsentAddresses() should be considered temporary.</em>
+<a name="651" href="#651">651</a> <em class="comment">             *</em>
+<a name="652" href="#652">652</a> <em class="comment">             * JavaMail v1.3 properly populates those collections based</em>
+<a name="653" href="#653">653</a> <em class="comment">             * upon the 4xx and 5xx response codes to RCPT TO.  Some</em>
+<a name="654" href="#654">654</a> <em class="comment">             * servers, such as Yahoo! don't respond to the RCPT TO,</em>
+<a name="655" href="#655">655</a> <em class="comment">             * and provide a 5xx reply after DATA.  In that case, we</em>
+<a name="656" href="#656">656</a> <em class="comment">             * will pick up the failure from SMTPSendFailedException.</em>
+<a name="657" href="#657">657</a> <em class="comment">             *</em>
+<a name="658" href="#658">658</a> <em class="comment">             */</em>
+<a name="659" href="#659">659</a> 
+<a name="660" href="#660">660</a>             <em class="comment">/*<em class="comment"> SMTPSendFailedException introduced in JavaMail 1.3.2, and provides detailed protocol reply code for the operation */</em></em>
+<a name="661" href="#661">661</a>             <strong>if</strong> (sfe instanceof SMTPSendFailedException) {
+<a name="662" href="#662">662</a>                 <em class="comment">// If we got an SMTPSendFailedException, use its RetCode to determine default permanent/temporary failure</em>
+<a name="663" href="#663">663</a>                 SMTPSendFailedException ssfe = (SMTPSendFailedException) sfe;
+<a name="664" href="#664">664</a>                 deleteMessage = (ssfe.getReturnCode() >= 500 &amp;&amp; ssfe.getReturnCode() &lt;= 599);
+<a name="665" href="#665">665</a>             } <strong>else</strong> {
+<a name="666" href="#666">666</a>                 <em class="comment">// Sometimes we'll get a normal SendFailedException with nested SMTPAddressFailedException, so use the latter RetCode</em>
+<a name="667" href="#667">667</a>                 MessagingException me = sfe;
+<a name="668" href="#668">668</a>                 Exception ne;
+<a name="669" href="#669">669</a>                 <strong>while</strong> ((ne = me.getNextException()) != <strong>null</strong> &amp;&amp; ne instanceof MessagingException) {
+<a name="670" href="#670">670</a>                     me = (MessagingException)ne;
+<a name="671" href="#671">671</a>                     <strong>if</strong> (me instanceof SMTPAddressFailedException) {
+<a name="672" href="#672">672</a>                         SMTPAddressFailedException ssfe = (SMTPAddressFailedException)me;
+<a name="673" href="#673">673</a>                         deleteMessage = (ssfe.getReturnCode() >= 500 &amp;&amp; ssfe.getReturnCode() &lt;= 599);
+<a name="674" href="#674">674</a>                     }
+<a name="675" href="#675">675</a>                 }
+<a name="676" href="#676">676</a>             }
+<a name="677" href="#677">677</a> 
+<a name="678" href="#678">678</a>             <em class="comment">// log the original set of intended recipients</em>
+<a name="679" href="#679">679</a>             <strong>if</strong> (isDebug) log(<span class="string">"Recipients: "</span> + recipients);
+<a name="680" href="#680">680</a> 
+<a name="681" href="#681">681</a>             <strong>if</strong> (sfe.getInvalidAddresses() != <strong>null</strong>) {
+<a name="682" href="#682">682</a>                 Address[] address = sfe.getInvalidAddresses();
+<a name="683" href="#683">683</a>                 <strong>if</strong> (address.length > 0) {
+<a name="684" href="#684">684</a>                     recipients.clear();
+<a name="685" href="#685">685</a>                     <strong>for</strong> (<strong>int</strong> i = 0; i &lt; address.length; i++) {
+<a name="686" href="#686">686</a>                         <strong>try</strong> {
+<a name="687" href="#687">687</a>                             recipients.add(<strong>new</strong> <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a>(address[i].toString()));
+<a name="688" href="#688">688</a>                         } <strong>catch</strong> (ParseException pe) {
+<a name="689" href="#689">689</a>                             <em class="comment">// this should never happen ... we should have</em>
+<a name="690" href="#690">690</a>                             <em class="comment">// caught malformed addresses long before we</em>
+<a name="691" href="#691">691</a>                             <em class="comment">// got to this code.</em>
+<a name="692" href="#692">692</a>                             log(<span class="string">"Can't parse invalid address: "</span> + pe.getMessage());
+<a name="693" href="#693">693</a>                         }
+<a name="694" href="#694">694</a>                     }
+<a name="695" href="#695">695</a>                     <strong>if</strong> (isDebug) log(<span class="string">"Invalid recipients: "</span> + recipients);
+<a name="696" href="#696">696</a>                     deleteMessage = failMessage(mail, sfe, <strong>true</strong>);
+<a name="697" href="#697">697</a>                 }
+<a name="698" href="#698">698</a>             }
+<a name="699" href="#699">699</a> 
+<a name="700" href="#700">700</a>             <strong>if</strong> (sfe.getValidUnsentAddresses() != <strong>null</strong>) {
+<a name="701" href="#701">701</a>                 Address[] address = sfe.getValidUnsentAddresses();
+<a name="702" href="#702">702</a>                 <strong>if</strong> (address.length > 0) {
+<a name="703" href="#703">703</a>                     recipients.clear();
+<a name="704" href="#704">704</a>                     <strong>for</strong> (<strong>int</strong> i = 0; i &lt; address.length; i++) {
+<a name="705" href="#705">705</a>                         <strong>try</strong> {
+<a name="706" href="#706">706</a>                             recipients.add(<strong>new</strong> <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a>(address[i].toString()));
+<a name="707" href="#707">707</a>                         } <strong>catch</strong> (ParseException pe) {
+<a name="708" href="#708">708</a>                             <em class="comment">// this should never happen ... we should have</em>
+<a name="709" href="#709">709</a>                             <em class="comment">// caught malformed addresses long before we</em>
+<a name="710" href="#710">710</a>                             <em class="comment">// got to this code.</em>
+<a name="711" href="#711">711</a>                             log(<span class="string">"Can't parse unsent address: "</span> + pe.getMessage());
+<a name="712" href="#712">712</a>                         }
+<a name="713" href="#713">713</a>                     }
+<a name="714" href="#714">714</a>                     <strong>if</strong> (isDebug) log(<span class="string">"Unsent recipients: "</span> + recipients);
+<a name="715" href="#715">715</a>                     <strong>if</strong> (sfe instanceof SMTPSendFailedException) {
+<a name="716" href="#716">716</a>                         SMTPSendFailedException ssfe = (SMTPSendFailedException) sfe;
+<a name="717" href="#717">717</a>                         deleteMessage = failMessage(mail, sfe, ssfe.getReturnCode() >= 500 &amp;&amp; ssfe.getReturnCode() &lt;= 599);
+<a name="718" href="#718">718</a>                     } <strong>else</strong> {
+<a name="719" href="#719">719</a>                         deleteMessage = failMessage(mail, sfe, false);
+<a name="720" href="#720">720</a>                     }
+<a name="721" href="#721">721</a>                 }
+<a name="722" href="#722">722</a>             }
+<a name="723" href="#723">723</a> 
+<a name="724" href="#724">724</a>             <strong>return</strong> deleteMessage;
+<a name="725" href="#725">725</a>         } <strong>catch</strong> (MessagingException ex) {
+<a name="726" href="#726">726</a>             <em class="comment">// We should do a better job checking this... if the failure is a general</em>
+<a name="727" href="#727">727</a>             <em class="comment">// connect exception, this is less descriptive than more specific SMTP command</em>
+<a name="728" href="#728">728</a>             <em class="comment">// failure... have to lookup and see what are the various Exception</em>
+<a name="729" href="#729">729</a>             <em class="comment">// possibilities</em>
+<a name="730" href="#730">730</a> 
+<a name="731" href="#731">731</a>             <em class="comment">// Unable to deliver message after numerous tries... fail accordingly</em>
+<a name="732" href="#732">732</a> 
+<a name="733" href="#733">733</a>             <em class="comment">// We check whether this is a 5xx error message, which</em>
+<a name="734" href="#734">734</a>             <em class="comment">// indicates a permanent failure (like account doesn't exist</em>
+<a name="735" href="#735">735</a>             <em class="comment">// or mailbox is full or domain is setup wrong).</em>
+<a name="736" href="#736">736</a>             <em class="comment">// We fail permanently if this was a 5xx error</em>
+<a name="737" href="#737">737</a>             <strong>return</strong> failMessage(mail, ex, ('5' == ex.getMessage().charAt(0)));
+<a name="738" href="#738">738</a>         }
+<a name="739" href="#739">739</a> 
+<a name="740" href="#740">740</a>         <em class="comment">/*<em class="comment"> If we get here, we've exhausted the loop of servers without</em></em>
+<a name="741" href="#741">741</a> <em class="comment">         * sending the message or throwing an exception.  One case</em>
+<a name="742" href="#742">742</a> <em class="comment">         * where this might happen is if we get a MessagingException on</em>
+<a name="743" href="#743">743</a> <em class="comment">         * each transport.connect(), e.g., if there is only one server</em>
+<a name="744" href="#744">744</a> <em class="comment">         * and we get a connect exception.</em>
+<a name="745" href="#745">745</a> <em class="comment">         */</em>
+<a name="746" href="#746">746</a>         <strong>return</strong> failMessage(mail, <strong>new</strong> MessagingException(<span class="string">"No mail server(s) available at this time."</span>), false);
+<a name="747" href="#747">747</a>     }
+<a name="748" href="#748">748</a> 
+<a name="749" href="#749">749</a>     <em>/**<em>*</em></em>
+<a name="750" href="#750">750</a> <em>     * Converts a message to 7 bit.</em>
+<a name="751" href="#751">751</a> <em>     * </em>
+<a name="752" href="#752">752</a> <em>     * @param message</em>
+<a name="753" href="#753">753</a> <em>     * @return</em>
+<a name="754" href="#754">754</a> <em>     */</em>
+<a name="755" href="#755">755</a>     <strong>private</strong> <strong>void</strong> convertTo7Bit(MimePart part) throws MessagingException, IOException {
+<a name="756" href="#756">756</a>         <strong>if</strong> (part.isMimeType(<span class="string">"multipart/*"</span>)) {
+<a name="757" href="#757">757</a>             MimeMultipart parts = (MimeMultipart) part.getContent();
+<a name="758" href="#758">758</a>             <strong>int</strong> count = parts.getCount();
+<a name="759" href="#759">759</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; count; i++) {
+<a name="760" href="#760">760</a>                 convertTo7Bit((MimePart)parts.getBodyPart(i));
+<a name="761" href="#761">761</a>             }
+<a name="762" href="#762">762</a>         } <strong>else</strong> {
+<a name="763" href="#763">763</a>             <strong>if</strong> (part.isMimeType(<span class="string">"text/*"</span>)) {
+<a name="764" href="#764">764</a>                 part.setHeader(<span class="string">"Content-Transfer-Encoding"</span>, <span class="string">"quoted-printable"</span>);
+<a name="765" href="#765">765</a>                 part.addHeader(<span class="string">"X-MIME-Autoconverted"</span>, <span class="string">"from 8bit to quoted-printable by "</span>+getMailetContext().getServerInfo());
+<a name="766" href="#766">766</a>             } <strong>else</strong> {
+<a name="767" href="#767">767</a>                 <em class="comment">// if the part doesn't contain text it will be base64 encoded.</em>
+<a name="768" href="#768">768</a>                 part.setHeader(<span class="string">"Content-Transfer-Encoding"</span>, <span class="string">"base64"</span>);
+<a name="769" href="#769">769</a>                 part.addHeader(<span class="string">"X-MIME-Autoconverted"</span>, <span class="string">"from 8bit to base64 by "</span>+getMailetContext().getServerInfo());
+<a name="770" href="#770">770</a>             }
+<a name="771" href="#771">771</a>         }
+<a name="772" href="#772">772</a>     }
+<a name="773" href="#773">773</a>     
+<a name="774" href="#774">774</a>     <em>/**<em>*</em></em>
+<a name="775" href="#775">775</a> <em>     * Adds an encoding information to each text mime part. This is a workaround</em>
+<a name="776" href="#776">776</a> <em>     * for a javamail 1.3.2 bug: if a message is sent without encoding</em>
+<a name="777" href="#777">777</a> <em>     * information a null pointer exception is thrown during the message</em>
+<a name="778" href="#778">778</a> <em>     * delivery.</em>
+<a name="779" href="#779">779</a> <em>     * </em>
+<a name="780" href="#780">780</a> <em>     * @param part</em>
+<a name="781" href="#781">781</a> <em>     * @throws MessagingException</em>
+<a name="782" href="#782">782</a> <em>     * @throws IOException</em>
+<a name="783" href="#783">783</a> <em>     */</em>
+<a name="784" href="#784">784</a>     <strong>private</strong> <strong>void</strong> setEncodingIfMissing(MimePart part) throws MessagingException, IOException {
+<a name="785" href="#785">785</a>         <strong>if</strong> (part.isMimeType(<span class="string">"text/*"</span>)) {
+<a name="786" href="#786">786</a>             String enc = part.getEncoding();
+<a name="787" href="#787">787</a>             <strong>if</strong> (enc == <strong>null</strong>) part.setHeader(<span class="string">"Content-Transfer-Encoding"</span>, <span class="string">"7bit"</span>);
+<a name="788" href="#788">788</a>         } <strong>else</strong> <strong>if</strong> (part.isMimeType(<span class="string">"multipart/*"</span>)) {
+<a name="789" href="#789">789</a>             Object content = part.getContent();
+<a name="790" href="#790">790</a>             <strong>if</strong> (content instanceof MimeMultipart) {
+<a name="791" href="#791">791</a>                 MimeMultipart parts = (MimeMultipart) content;
+<a name="792" href="#792">792</a>                 <strong>int</strong> count = parts.getCount();
+<a name="793" href="#793">793</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; count; i++) {
+<a name="794" href="#794">794</a>                     setEncodingIfMissing((MimePart)parts.getBodyPart(i));
+<a name="795" href="#795">795</a>                 }
+<a name="796" href="#796">796</a>             }
+<a name="797" href="#797">797</a>         }
+<a name="798" href="#798">798</a>     }
+<a name="799" href="#799">799</a>     
+<a name="800" href="#800">800</a>     <em>/**<em>*</em></em>
+<a name="801" href="#801">801</a> <em>     * Insert the method's description here.</em>
+<a name="802" href="#802">802</a> <em>     * Creation date: (2/25/00 1:14:18 AM)</em>
+<a name="803" href="#803">803</a> <em>     * @param mail org.apache.james.core.MailImpl</em>
+<a name="804" href="#804">804</a> <em>     * @param exception javax.mail.MessagingException</em>
+<a name="805" href="#805">805</a> <em>     * @param boolean permanent</em>
+<a name="806" href="#806">806</a> <em>     * @return boolean Whether the message failed fully and can be deleted</em>
+<a name="807" href="#807">807</a> <em>     */</em>
+<a name="808" href="#808">808</a>     <strong>private</strong> <strong>boolean</strong> failMessage(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, MessagingException ex, <strong>boolean</strong> permanent) {
+<a name="809" href="#809">809</a>         StringWriter sout = <strong>new</strong> StringWriter();
+<a name="810" href="#810">810</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
+<a name="811" href="#811">811</a>         <strong>if</strong> (permanent) {
+<a name="812" href="#812">812</a>             out.print(<span class="string">"Permanent"</span>);
+<a name="813" href="#813">813</a>         } <strong>else</strong> {
+<a name="814" href="#814">814</a>             out.print(<span class="string">"Temporary"</span>);
+<a name="815" href="#815">815</a>         }
+<a name="816" href="#816">816</a>         StringBuffer logBuffer =
+<a name="817" href="#817">817</a>             <strong>new</strong> StringBuffer(64)
+<a name="818" href="#818">818</a>                 .append(<span class="string">" exception delivering mail ("</span>)
+<a name="819" href="#819">819</a>                 .append(mail.getName())
+<a name="820" href="#820">820</a>                 .append(<span class="string">": "</span>);
+<a name="821" href="#821">821</a>         out.print(logBuffer.toString());
+<a name="822" href="#822">822</a>         <strong>if</strong> (isDebug) ex.printStackTrace(out);
+<a name="823" href="#823">823</a>         log(sout.toString());
+<a name="824" href="#824">824</a>         <strong>if</strong> (!permanent) {
+<a name="825" href="#825">825</a>             <strong>if</strong> (!mail.getState().equals(Mail.ERROR)) {
+<a name="826" href="#826">826</a>                 mail.setState(Mail.ERROR);
+<a name="827" href="#827">827</a>                 mail.setErrorMessage(<span class="string">"0"</span>);
+<a name="828" href="#828">828</a>                 mail.setLastUpdated(<strong>new</strong> Date());
+<a name="829" href="#829">829</a>             }
+<a name="830" href="#830">830</a>             <strong>int</strong> retries = Integer.parseInt(mail.getErrorMessage());
+<a name="831" href="#831">831</a>             <strong>if</strong> (retries &lt; maxRetries) {
+<a name="832" href="#832">832</a>                 logBuffer =
+<a name="833" href="#833">833</a>                     <strong>new</strong> StringBuffer(128)
+<a name="834" href="#834">834</a>                             .append(<span class="string">"Storing message "</span>)
+<a name="835" href="#835">835</a>                             .append(mail.getName())
+<a name="836" href="#836">836</a>                             .append(<span class="string">" into outgoing after "</span>)
+<a name="837" href="#837">837</a>                             .append(retries)
+<a name="838" href="#838">838</a>                             .append(<span class="string">" retries"</span>);
+<a name="839" href="#839">839</a>                 log(logBuffer.toString());
+<a name="840" href="#840">840</a>                 ++retries;
+<a name="841" href="#841">841</a>                 mail.setErrorMessage(retries + <span class="string">""</span>);
+<a name="842" href="#842">842</a>                 mail.setLastUpdated(<strong>new</strong> Date());
+<a name="843" href="#843">843</a>                 <strong>return</strong> false;
+<a name="844" href="#844">844</a>             } <strong>else</strong> {
+<a name="845" href="#845">845</a>                 logBuffer =
+<a name="846" href="#846">846</a>                     <strong>new</strong> StringBuffer(128)
+<a name="847" href="#847">847</a>                             .append(<span class="string">"Bouncing message "</span>)
+<a name="848" href="#848">848</a>                             .append(mail.getName())
+<a name="849" href="#849">849</a>                             .append(<span class="string">" after "</span>)
+<a name="850" href="#850">850</a>                             .append(retries)
+<a name="851" href="#851">851</a>                             .append(<span class="string">" retries"</span>);
+<a name="852" href="#852">852</a>                 log(logBuffer.toString());
+<a name="853" href="#853">853</a>             }
+<a name="854" href="#854">854</a>         }
+<a name="855" href="#855">855</a> 
+<a name="856" href="#856">856</a>         <strong>if</strong> (mail.getSender() == <strong>null</strong>) {
+<a name="857" href="#857">857</a>             log(<span class="string">"Null Sender: no bounce will be generated for "</span> + mail.getName());
+<a name="858" href="#858">858</a>             <strong>return</strong> <strong>true</strong>;
+<a name="859" href="#859">859</a>         }
+<a name="860" href="#860">860</a> 
+<a name="861" href="#861">861</a>         <strong>if</strong> (bounceProcessor != <strong>null</strong>) {
+<a name="862" href="#862">862</a>             <em class="comment">// do the new DSN bounce</em>
+<a name="863" href="#863">863</a>             <em class="comment">// setting attributes for DSN mailet</em>
+<a name="864" href="#864">864</a>             mail.setAttribute(<span class="string">"delivery-error"</span>, ex);
+<a name="865" href="#865">865</a>             mail.setState(bounceProcessor);
+<a name="866" href="#866">866</a>             <em class="comment">// re-insert the mail into the spool for getting it passed to the dsn-processor</em>
+<a name="867" href="#867">867</a>             <a href="../../../../../org/apache/mailet/MailetContext.html">MailetContext</a> mc = getMailetContext();
+<a name="868" href="#868">868</a>             <strong>try</strong> {
+<a name="869" href="#869">869</a>                 mc.sendMail(mail);
+<a name="870" href="#870">870</a>             } <strong>catch</strong> (MessagingException e) {
+<a name="871" href="#871">871</a>                 <em class="comment">// we shouldn't get an exception, because the mail was already processed</em>
+<a name="872" href="#872">872</a>                 log(<span class="string">"Exception re-inserting failed mail: "</span>, e);
+<a name="873" href="#873">873</a>             }
+<a name="874" href="#874">874</a>         } <strong>else</strong> {
+<a name="875" href="#875">875</a>             <em class="comment">// do an old style bounce</em>
+<a name="876" href="#876">876</a>             bounce(mail, ex);
+<a name="877" href="#877">877</a>         }
+<a name="878" href="#878">878</a>         <strong>return</strong> <strong>true</strong>;
+<a name="879" href="#879">879</a>     }
+<a name="880" href="#880">880</a> 
+<a name="881" href="#881">881</a>     <strong>private</strong> <strong>void</strong> bounce(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, MessagingException ex) {
+<a name="882" href="#882">882</a>         StringWriter sout = <strong>new</strong> StringWriter();
+<a name="883" href="#883">883</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
+<a name="884" href="#884">884</a>         String machine = <span class="string">"[unknown]"</span>;
+<a name="885" href="#885">885</a>         <strong>try</strong> {
+<a name="886" href="#886">886</a>             InetAddress me = InetAddress.getLocalHost();
+<a name="887" href="#887">887</a>             machine = me.getHostName();
+<a name="888" href="#888">888</a>         } <strong>catch</strong>(Exception e){
+<a name="889" href="#889">889</a>             machine = <span class="string">"[address unknown]"</span>;
+<a name="890" href="#890">890</a>         }
+<a name="891" href="#891">891</a>         StringBuffer bounceBuffer =
+<a name="892" href="#892">892</a>             <strong>new</strong> StringBuffer(128)
+<a name="893" href="#893">893</a>                     .append(<span class="string">"Hi. This is the James mail server at "</span>)
+<a name="894" href="#894">894</a>                     .append(machine)
+<a name="895" href="#895">895</a>                     .append(<span class="string">"."</span>);
+<a name="896" href="#896">896</a>         out.println(bounceBuffer.toString());
+<a name="897" href="#897">897</a>         out.println(<span class="string">"I'm afraid I wasn't able to deliver your message to the following addresses."</span>);
+<a name="898" href="#898">898</a>         out.println(<span class="string">"This is a permanent error; I've given up. Sorry it didn't work out.  Below"</span>);
+<a name="899" href="#899">899</a>         out.println(<span class="string">"I include the list of recipients and the reason why I was unable to deliver"</span>);
+<a name="900" href="#900">900</a>         out.println(<span class="string">"your message."</span>);
+<a name="901" href="#901">901</a>         out.println();
+<a name="902" href="#902">902</a>         <strong>for</strong> (Iterator i = mail.getRecipients().iterator(); i.hasNext(); ) {
+<a name="903" href="#903">903</a>             out.println(i.next());
+<a name="904" href="#904">904</a>         }
+<a name="905" href="#905">905</a>         <strong>if</strong> (ex.getNextException() == <strong>null</strong>) {
+<a name="906" href="#906">906</a>             out.println(ex.getMessage().trim());
+<a name="907" href="#907">907</a>         } <strong>else</strong> {
+<a name="908" href="#908">908</a>             Exception ex1 = ex.getNextException();
+<a name="909" href="#909">909</a>             <strong>if</strong> (ex1 instanceof SendFailedException) {
+<a name="910" href="#910">910</a>                 out.println(<span class="string">"Remote mail server told me: "</span> + ex1.getMessage().trim());
+<a name="911" href="#911">911</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof UnknownHostException) {
+<a name="912" href="#912">912</a>                 out.println(<span class="string">"Unknown host: "</span> + ex1.getMessage().trim());
+<a name="913" href="#913">913</a>                 out.println(<span class="string">"This could be a DNS server error, a typo, or a problem with the recipient's mail server."</span>);
+<a name="914" href="#914">914</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof ConnectException) {
+<a name="915" href="#915">915</a>                 <em class="comment">//Already formatted as "Connection timed out: connect"</em>
+<a name="916" href="#916">916</a>                 out.println(ex1.getMessage().trim());
+<a name="917" href="#917">917</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof SocketException) {
+<a name="918" href="#918">918</a>                 out.println(<span class="string">"Socket exception: "</span> + ex1.getMessage().trim());
+<a name="919" href="#919">919</a>             } <strong>else</strong> {
+<a name="920" href="#920">920</a>                 out.println(ex1.getMessage().trim());
+<a name="921" href="#921">921</a>             }
+<a name="922" href="#922">922</a>         }
+<a name="923" href="#923">923</a>         out.println();
+<a name="924" href="#924">924</a> 
+<a name="925" href="#925">925</a>         log(<span class="string">"Sending failure message "</span> + mail.getName());
+<a name="926" href="#926">926</a>         <strong>try</strong> {
+<a name="927" href="#927">927</a>             getMailetContext().bounce(mail, sout.toString());
+<a name="928" href="#928">928</a>         } <strong>catch</strong> (MessagingException me) {
+<a name="929" href="#929">929</a>             log(<span class="string">"Encountered unexpected messaging exception while bouncing message: "</span> + me.getMessage());
+<a name="930" href="#930">930</a>         } <strong>catch</strong> (Exception e) {
+<a name="931" href="#931">931</a>             log(<span class="string">"Encountered unexpected exception while bouncing message: "</span> + e.getMessage());
+<a name="932" href="#932">932</a>         }
+<a name="933" href="#933">933</a>     }
+<a name="934" href="#934">934</a> 
+<a name="935" href="#935">935</a>     <strong>public</strong> String getMailetInfo() {
+<a name="936" href="#936">936</a>         <strong>return</strong> <span class="string">"RemoteDelivery Mailet"</span>;
+<a name="937" href="#937">937</a>     }
+<a name="938" href="#938">938</a> 
+<a name="939" href="#939">939</a>     <em>/**<em>*</em></em>
+<a name="940" href="#940">940</a> <em>     * For this message, we take the list of recipients, organize these into distinct</em>
+<a name="941" href="#941">941</a> <em>     * servers, and duplicate the message for each of these servers, and then call</em>
+<a name="942" href="#942">942</a> <em>     * the deliver (messagecontainer) method for each server-specific</em>
+<a name="943" href="#943">943</a> <em>     * messagecontainer ... that will handle storing it in the outgoing queue if needed.</em>
+<a name="944" href="#944">944</a> <em>     *</em>
+<a name="945" href="#945">945</a> <em>     * @param mail org.apache.mailet.Mail</em>
+<a name="946" href="#946">946</a> <em>     */</em>
+<a name="947" href="#947">947</a>     <strong>public</strong> <strong>void</strong> service(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException{
+<a name="948" href="#948">948</a>         <em class="comment">// Do I want to give the internal key, or the message's Message ID</em>
+<a name="949" href="#949">949</a>         <strong>if</strong> (isDebug) {
+<a name="950" href="#950">950</a>             log(<span class="string">"Remotely delivering mail "</span> + mail.getName());
+<a name="951" href="#951">951</a>         }
+<a name="952" href="#952">952</a>         Collection recipients = mail.getRecipients();
+<a name="953" href="#953">953</a> 
+<a name="954" href="#954">954</a>         <strong>if</strong> (gatewayServer == <strong>null</strong>) {
+<a name="955" href="#955">955</a>             <em class="comment">// Must first organize the recipients into distinct servers (name made case insensitive)</em>
+<a name="956" href="#956">956</a>             Hashtable targets = <strong>new</strong> Hashtable();
+<a name="957" href="#957">957</a>             <strong>for</strong> (Iterator i = recipients.iterator(); i.hasNext();) {
+<a name="958" href="#958">958</a>                 <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> target = (MailAddress)i.next();
+<a name="959" href="#959">959</a>                 String targetServer = target.getHost().toLowerCase(Locale.US);
+<a name="960" href="#960">960</a>                 Collection temp = (Collection)targets.get(targetServer);
+<a name="961" href="#961">961</a>                 <strong>if</strong> (temp == <strong>null</strong>) {
+<a name="962" href="#962">962</a>                     temp = <strong>new</strong> ArrayList();
+<a name="963" href="#963">963</a>                     targets.put(targetServer, temp);
+<a name="964" href="#964">964</a>                 }
+<a name="965" href="#965">965</a>                 temp.add(target);
+<a name="966" href="#966">966</a>             }
+<a name="967" href="#967">967</a> 
+<a name="968" href="#968">968</a>             <em class="comment">//We have the recipients organized into distinct servers... put them into the</em>
+<a name="969" href="#969">969</a>             <em class="comment">//delivery store organized like this... this is ultra inefficient I think...</em>
+<a name="970" href="#970">970</a> 
+<a name="971" href="#971">971</a>             <em class="comment">// Store the new message containers, organized by server, in the outgoing mail repository</em>
+<a name="972" href="#972">972</a>             String name = mail.getName();
+<a name="973" href="#973">973</a>             <strong>for</strong> (Iterator i = targets.keySet().iterator(); i.hasNext(); ) {
+<a name="974" href="#974">974</a>                 String host = (String) i.next();
+<a name="975" href="#975">975</a>                 Collection rec = (Collection) targets.get(host);
+<a name="976" href="#976">976</a>                 <strong>if</strong> (isDebug) {
+<a name="977" href="#977">977</a>                     StringBuffer logMessageBuffer =
+<a name="978" href="#978">978</a>                         <strong>new</strong> StringBuffer(128)
+<a name="979" href="#979">979</a>                                 .append(<span class="string">"Sending mail to "</span>)
+<a name="980" href="#980">980</a>                                 .append(rec)
+<a name="981" href="#981">981</a>                                 .append(<span class="string">" on host "</span>)
+<a name="982" href="#982">982</a>                                 .append(host);
+<a name="983" href="#983">983</a>                     log(logMessageBuffer.toString());
+<a name="984" href="#984">984</a>                 }
+<a name="985" href="#985">985</a>                 mail.setRecipients(rec);
+<a name="986" href="#986">986</a>                 StringBuffer nameBuffer =
+<a name="987" href="#987">987</a>                     <strong>new</strong> StringBuffer(128)
+<a name="988" href="#988">988</a>                             .append(name)
+<a name="989" href="#989">989</a>                             .append(<span class="string">"-to-"</span>)
+<a name="990" href="#990">990</a>                             .append(host);
+<a name="991" href="#991">991</a>                 mail.setName(nameBuffer.toString());
+<a name="992" href="#992">992</a>                 outgoing.store(mail);
+<a name="993" href="#993">993</a>                 <em class="comment">//Set it to try to deliver (in a separate thread) immediately (triggered by storage)</em>
+<a name="994" href="#994">994</a>             }
+<a name="995" href="#995">995</a>         } <strong>else</strong> {
+<a name="996" href="#996">996</a>             <em class="comment">// Store the mail unaltered for processing by the gateway server(s)</em>
+<a name="997" href="#997">997</a>             <strong>if</strong> (isDebug) {
+<a name="998" href="#998">998</a>                 StringBuffer logMessageBuffer =
+<a name="999" href="#999">999</a>                     <strong>new</strong> StringBuffer(128)
+<a name="1000" href="#1000">1000</a>                         .append(<span class="string">"Sending mail to "</span>)
+<a name="1001" href="#1001">1001</a>                         .append(mail.getRecipients())
+<a name="1002" href="#1002">1002</a>                         .append(<span class="string">" via "</span>)
+<a name="1003" href="#1003">1003</a>                         .append(gatewayServer);
+<a name="1004" href="#1004">1004</a>                 log(logMessageBuffer.toString());
+<a name="1005" href="#1005">1005</a>             }
+<a name="1006" href="#1006">1006</a> 
+<a name="1007" href="#1007">1007</a>              <em class="comment">//Set it to try to deliver (in a separate thread) immediately (triggered by storage)</em>
+<a name="1008" href="#1008">1008</a>             outgoing.store(mail);
+<a name="1009" href="#1009">1009</a>         }
+<a name="1010" href="#1010">1010</a>         mail.setState(Mail.GHOST);
+<a name="1011" href="#1011">1011</a>     }
+<a name="1012" href="#1012">1012</a> 
+<a name="1013" href="#1013">1013</a>     <em class="comment">// Need to synchronize to get object monitor for notifyAll()</em>
+<a name="1014" href="#1014">1014</a>     <strong>public</strong> <strong>synchronized</strong> <strong>void</strong> destroy() {
+<a name="1015" href="#1015">1015</a>         <em class="comment">//Mark flag so threads from this mailet stop themselves</em>
+<a name="1016" href="#1016">1016</a>         destroyed = <strong>true</strong>;
+<a name="1017" href="#1017">1017</a>         <em class="comment">//Wake up all threads from waiting for an accept</em>
+<a name="1018" href="#1018">1018</a>         <strong>for</strong> (Iterator i = deliveryThreads.iterator(); i.hasNext(); ) {
+<a name="1019" href="#1019">1019</a>             Thread t = (Thread)i.next();
+<a name="1020" href="#1020">1020</a>             t.interrupt();
+<a name="1021" href="#1021">1021</a>         }
+<a name="1022" href="#1022">1022</a>         notifyAll();
+<a name="1023" href="#1023">1023</a>     }
+<a name="1024" href="#1024">1024</a> 
+<a name="1025" href="#1025">1025</a>     <em>/**<em>*</em></em>
+<a name="1026" href="#1026">1026</a> <em>     * Handles checking the outgoing spool for new mail and delivering them if</em>
+<a name="1027" href="#1027">1027</a> <em>     * there are any</em>
+<a name="1028" href="#1028">1028</a> <em>     */</em>
+<a name="1029" href="#1029">1029</a>     <strong>public</strong> <strong>void</strong> run() {
+<a name="1030" href="#1030">1030</a> 
+<a name="1031" href="#1031">1031</a>         <em class="comment">/*<em class="comment"> TODO: CHANGE ME!!! The problem is that we need to wait for James to</em></em>
+<a name="1032" href="#1032">1032</a> <em class="comment">         * finish initializing.  We expect the HELLO_NAME to be put into</em>
+<a name="1033" href="#1033">1033</a> <em class="comment">         * the MailetContext, but in the current configuration we get</em>
+<a name="1034" href="#1034">1034</a> <em class="comment">         * started before the SMTP Server, which establishes the value.</em>
+<a name="1035" href="#1035">1035</a> <em class="comment">         * Since there is no contractual guarantee that there will be a</em>
+<a name="1036" href="#1036">1036</a> <em class="comment">         * HELLO_NAME value, we can't just wait for it.  As a temporary</em>
+<a name="1037" href="#1037">1037</a> <em class="comment">         * measure, I'm inserting this philosophically unsatisfactory</em>
+<a name="1038" href="#1038">1038</a> <em class="comment">         * fix.</em>
+<a name="1039" href="#1039">1039</a> <em class="comment">         */</em>
+<a name="1040" href="#1040">1040</a>         <strong>long</strong> stop = System.currentTimeMillis() + 60000;
+<a name="1041" href="#1041">1041</a>         <strong>while</strong> ((getMailetContext().getAttribute(Constants.HELLO_NAME) == <strong>null</strong>)
+<a name="1042" href="#1042">1042</a>                &amp;&amp; stop > System.currentTimeMillis()) {
+<a name="1043" href="#1043">1043</a>             <strong>try</strong> {
+<a name="1044" href="#1044">1044</a>                 Thread.sleep(1000);
+<a name="1045" href="#1045">1045</a>             } <strong>catch</strong> (Exception ignored) {} <em class="comment">// wait for James to finish initializing</em>
+<a name="1046" href="#1046">1046</a>         }
+<a name="1047" href="#1047">1047</a> 
+<a name="1048" href="#1048">1048</a>         <em class="comment">//Checks the pool and delivers a mail message</em>
+<a name="1049" href="#1049">1049</a>         Properties props = <strong>new</strong> Properties();
+<a name="1050" href="#1050">1050</a>         <em class="comment">//Not needed for production environment</em>
+<a name="1051" href="#1051">1051</a>         props.put(<span class="string">"mail.debug"</span>, <span class="string">"false"</span>);
+<a name="1052" href="#1052">1052</a>         <em class="comment">// Reactivated: javamail 1.3.2 should no more have problems with "250 OK"</em>
+<a name="1053" href="#1053">1053</a>         <em class="comment">// messages (WAS "false": Prevents problems encountered with 250 OK Messages)</em>
+<a name="1054" href="#1054">1054</a>         props.put(<span class="string">"mail.smtp.ehlo"</span>, <span class="string">"true"</span>);
+<a name="1055" href="#1055">1055</a>         <em class="comment">// By setting this property to true the transport is allowed to</em>
+<a name="1056" href="#1056">1056</a>         <em class="comment">// send 8 bit data to the server (if it supports the 8bitmime extension).</em>
+<a name="1057" href="#1057">1057</a>         <em class="comment">// 2006/03/01 reverted to false because of a javamail bug converting to 8bit</em>
+<a name="1058" href="#1058">1058</a>         <em class="comment">// messages created by an inputstream.</em>
+<a name="1059" href="#1059">1059</a>         props.setProperty(<span class="string">"mail.smtp.allow8bitmime"</span>, <span class="string">"false"</span>);
+<a name="1060" href="#1060">1060</a>         <em class="comment">//Sets timeout on going connections</em>
+<a name="1061" href="#1061">1061</a>         props.put(<span class="string">"mail.smtp.timeout"</span>, smtpTimeout + <span class="string">""</span>);
+<a name="1062" href="#1062">1062</a> 
+<a name="1063" href="#1063">1063</a>         props.put(<span class="string">"mail.smtp.connectiontimeout"</span>, connectionTimeout + <span class="string">""</span>);
+<a name="1064" href="#1064">1064</a>         props.put(<span class="string">"mail.smtp.sendpartial"</span>,String.valueOf(sendPartial));
+<a name="1065" href="#1065">1065</a> 
+<a name="1066" href="#1066">1066</a>         <em class="comment">//Set the hostname we'll use as this server</em>
+<a name="1067" href="#1067">1067</a>         <strong>if</strong> (getMailetContext().getAttribute(Constants.HELLO_NAME) != <strong>null</strong>) {
+<a name="1068" href="#1068">1068</a>             props.put(<span class="string">"mail.smtp.localhost"</span>, getMailetContext().getAttribute(Constants.HELLO_NAME));
+<a name="1069" href="#1069">1069</a>         }
+<a name="1070" href="#1070">1070</a>         <strong>else</strong> {
+<a name="1071" href="#1071">1071</a>             String defaultDomain = (String) getMailetContext().getAttribute(Constants.DEFAULT_DOMAIN);
+<a name="1072" href="#1072">1072</a>             <strong>if</strong> (defaultDomain != <strong>null</strong>) {
+<a name="1073" href="#1073">1073</a>                 props.put(<span class="string">"mail.smtp.localhost"</span>, defaultDomain);
+<a name="1074" href="#1074">1074</a>             }
+<a name="1075" href="#1075">1075</a>         }
+<a name="1076" href="#1076">1076</a> 
+<a name="1077" href="#1077">1077</a>         <strong>if</strong> (isBindUsed) {
+<a name="1078" href="#1078">1078</a>             <em class="comment">// undocumented JavaMail 1.2 feature, smtp transport will use</em>
+<a name="1079" href="#1079">1079</a>             <em class="comment">// our socket factory, which will also set the local address</em>
+<a name="1080" href="#1080">1080</a>             props.put(<span class="string">"mail.smtp.socketFactory.class"</span>,
+<a name="1081" href="#1081">1081</a>                       <span class="string">"org.apache.james.transport.mailets.RemoteDeliverySocketFactory"</span>);
+<a name="1082" href="#1082">1082</a>             <em class="comment">// Don't fallback to the standard socket factory on error, do throw an exception</em>
+<a name="1083" href="#1083">1083</a>             props.put(<span class="string">"mail.smtp.socketFactory.fallback"</span>, <span class="string">"false"</span>);
+<a name="1084" href="#1084">1084</a>         }
+<a name="1085" href="#1085">1085</a>         
+<a name="1086" href="#1086">1086</a>         <strong>if</strong> (authUser != <strong>null</strong>) {
+<a name="1087" href="#1087">1087</a>             props.put(<span class="string">"mail.smtp.auth"</span>,<span class="string">"true"</span>);
+<a name="1088" href="#1088">1088</a>         }
+<a name="1089" href="#1089">1089</a> 
+<a name="1090" href="#1090">1090</a>         Session session = Session.getInstance(props, <strong>null</strong>);
+<a name="1091" href="#1091">1091</a>         <strong>try</strong> {
+<a name="1092" href="#1092">1092</a>             <strong>while</strong> (!Thread.interrupted() &amp;&amp; !destroyed) {
+<a name="1093" href="#1093">1093</a>                 <strong>try</strong> {
+<a name="1094" href="#1094">1094</a>                     <a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail = (Mail)outgoing.accept(delayFilter);
+<a name="1095" href="#1095">1095</a>                     String key = mail.getName();
+<a name="1096" href="#1096">1096</a>                     <strong>try</strong> {
+<a name="1097" href="#1097">1097</a>                         <strong>if</strong> (isDebug) {
+<a name="1098" href="#1098">1098</a>                             StringBuffer logMessageBuffer =
+<a name="1099" href="#1099">1099</a>                                 <strong>new</strong> StringBuffer(128)
+<a name="1100" href="#1100">1100</a>                                         .append(Thread.currentThread().getName())
+<a name="1101" href="#1101">1101</a>                                         .append(<span class="string">" will process mail "</span>)
+<a name="1102" href="#1102">1102</a>                                         .append(key);
+<a name="1103" href="#1103">1103</a>                             log(logMessageBuffer.toString());
+<a name="1104" href="#1104">1104</a>                         }
+<a name="1105" href="#1105">1105</a>                         <strong>if</strong> (deliver(mail, session)) {
+<a name="1106" href="#1106">1106</a>                             <em class="comment">//Message was successfully delivered/fully failed... delete it</em>
+<a name="1107" href="#1107">1107</a>                             outgoing.remove(key);
+<a name="1108" href="#1108">1108</a>                         } <strong>else</strong> {
+<a name="1109" href="#1109">1109</a>                             <em class="comment">//Something happened that will delay delivery.  Store any updates</em>
+<a name="1110" href="#1110">1110</a>                             outgoing.store(mail);
+<a name="1111" href="#1111">1111</a>                             <em class="comment">// This is an update, we have to unlock and notify or this mail</em>
+<a name="1112" href="#1112">1112</a>                             <em class="comment">// is kept locked by this thread</em>
+<a name="1113" href="#1113">1113</a>                             outgoing.unlock(key);
+<a name="1114" href="#1114">1114</a>                             <em class="comment">// We do not notify because we updated an already existing mail</em>
+<a name="1115" href="#1115">1115</a>                             <em class="comment">// and we are now free to handle more mails.</em>
+<a name="1116" href="#1116">1116</a>                             <em class="comment">// Furthermore this mail should not be processed now because we</em>
+<a name="1117" href="#1117">1117</a>                             <em class="comment">// have a retry time scheduling.</em>
+<a name="1118" href="#1118">1118</a>                         }
+<a name="1119" href="#1119">1119</a>                         <em class="comment">//Clear the object handle to make sure it recycles this object.</em>
+<a name="1120" href="#1120">1120</a>                         mail = <strong>null</strong>;
+<a name="1121" href="#1121">1121</a>                     } <strong>catch</strong> (Exception e) {
+<a name="1122" href="#1122">1122</a>                         <em class="comment">// Prevent unexpected exceptions from causing looping by removing</em>
+<a name="1123" href="#1123">1123</a>                         <em class="comment">// message from outgoing.</em>
+<a name="1124" href="#1124">1124</a>                         <em class="comment">// DO NOT CHNANGE THIS to catch Error!  For example, if there were an OutOfMemory condition</em>
+<a name="1125" href="#1125">1125</a>                         <em class="comment">// caused because something else in the server was abusing memory, we would not want to</em>
+<a name="1126" href="#1126">1126</a>                         <em class="comment">// start purging the outgoing spool!</em>
+<a name="1127" href="#1127">1127</a>                         outgoing.remove(key);
+<a name="1128" href="#1128">1128</a>                         <strong>throw</strong> e;
+<a name="1129" href="#1129">1129</a>                     }
+<a name="1130" href="#1130">1130</a>                 } <strong>catch</strong> (Throwable e) {
+<a name="1131" href="#1131">1131</a>                     <strong>if</strong> (!destroyed) log(<span class="string">"Exception caught in RemoteDelivery.run()"</span>, e);
+<a name="1132" href="#1132">1132</a>                 }
+<a name="1133" href="#1133">1133</a>             }
+<a name="1134" href="#1134">1134</a>         } <strong>finally</strong> {
+<a name="1135" href="#1135">1135</a>             <em class="comment">// Restore the thread state to non-interrupted.</em>
+<a name="1136" href="#1136">1136</a>             Thread.interrupted();
+<a name="1137" href="#1137">1137</a>         }
+<a name="1138" href="#1138">1138</a>     }
+<a name="1139" href="#1139">1139</a> 
+<a name="1140" href="#1140">1140</a>     <em>/**<em>*</em></em>
+<a name="1141" href="#1141">1141</a> <em>     * @param list holding Delay objects</em>
+<a name="1142" href="#1142">1142</a> <em>     * @return the total attempts for all delays</em>
+<a name="1143" href="#1143">1143</a> <em>     **/</em>
+<a name="1144" href="#1144">1144</a>     <strong>private</strong> <strong>int</strong> calcTotalAttempts (ArrayList list) {
+<a name="1145" href="#1145">1145</a>         <strong>int</strong> sum = 0;
+<a name="1146" href="#1146">1146</a>         Iterator i = list.iterator();
+<a name="1147" href="#1147">1147</a>         <strong>while</strong> (i.hasNext()) {
+<a name="1148" href="#1148">1148</a>             Delay delay = (Delay)i.next();
+<a name="1149" href="#1149">1149</a>             sum += delay.getAttempts();
+<a name="1150" href="#1150">1150</a>         }
+<a name="1151" href="#1151">1151</a>         <strong>return</strong> sum;
+<a name="1152" href="#1152">1152</a>     }
+<a name="1153" href="#1153">1153</a>     
+<a name="1154" href="#1154">1154</a>     <em>/**<em>*</em></em>
+<a name="1155" href="#1155">1155</a> <em>     * This method expands an ArrayList containing Delay objects into an array holding the</em>
+<a name="1156" href="#1156">1156</a> <em>     * only delaytime in the order.&lt;p></em>
+<a name="1157" href="#1157">1157</a> <em>     * So if the list has 2 Delay objects the first having attempts=2 and delaytime 4000</em>
+<a name="1158" href="#1158">1158</a> <em>     * the second having attempts=1 and delaytime=300000 will be expanded into this array:&lt;p></em>
+<a name="1159" href="#1159">1159</a> <em>     * long[0] = 4000&lt;p></em>
+<a name="1160" href="#1160">1160</a> <em>     * long[1] = 4000&lt;p></em>
+<a name="1161" href="#1161">1161</a> <em>     * long[2] = 300000&lt;p></em>
+<a name="1162" href="#1162">1162</a> <em>     * @param list the list to expand</em>
+<a name="1163" href="#1163">1163</a> <em>     * @return the expanded list</em>
+<a name="1164" href="#1164">1164</a> <em>     **/</em>
+<a name="1165" href="#1165">1165</a>     <strong>private</strong> <strong>long</strong>[] expandDelays (ArrayList list) {
+<a name="1166" href="#1166">1166</a>         <strong>long</strong>[] delays = <strong>new</strong> <strong>long</strong> [calcTotalAttempts(list)];
+<a name="1167" href="#1167">1167</a>         Iterator i = list.iterator();
+<a name="1168" href="#1168">1168</a>         <strong>int</strong> idx = 0;
+<a name="1169" href="#1169">1169</a>         <strong>while</strong> (i.hasNext()) {
+<a name="1170" href="#1170">1170</a>             Delay delay = (Delay)i.next();
+<a name="1171" href="#1171">1171</a>             <strong>for</strong> (<strong>int</strong> j=0; j&lt;delay.getAttempts(); j++) {
+<a name="1172" href="#1172">1172</a>                 delays[idx++]= delay.getDelayTime();
+<a name="1173" href="#1173">1173</a>             }            
+<a name="1174" href="#1174">1174</a>         }
+<a name="1175" href="#1175">1175</a>         <strong>return</strong> delays;
+<a name="1176" href="#1176">1176</a>     }
+<a name="1177" href="#1177">1177</a>     
+<a name="1178" href="#1178">1178</a>     <em>/**<em>*</em></em>
+<a name="1179" href="#1179">1179</a> <em>     * This method returns, given a retry-count, the next delay time to use.</em>
+<a name="1180" href="#1180">1180</a> <em>     * @param retry_count the current retry_count.</em>
+<a name="1181" href="#1181">1181</a> <em>     * @return the next delay time to use, given the retry count</em>
+<a name="1182" href="#1182">1182</a> <em>     **/</em>
+<a name="1183" href="#1183">1183</a>     <strong>private</strong> <strong>long</strong> getNextDelay (<strong>int</strong> retry_count) {
+<a name="1184" href="#1184">1184</a>         <strong>if</strong> (retry_count > delayTimes.length) {
+<a name="1185" href="#1185">1185</a>             <strong>return</strong> DEFAULT_DELAY_TIME;
+<a name="1186" href="#1186">1186</a>         } 
+<a name="1187" href="#1187">1187</a>         <strong>return</strong> delayTimes[retry_count-1];
+<a name="1188" href="#1188">1188</a>     }
+<a name="1189" href="#1189">1189</a> 
+<a name="1190" href="#1190">1190</a>     <em>/**<em>*</em></em>
+<a name="1191" href="#1191">1191</a> <em>     * This class is used to hold a delay time and its corresponding number</em>
+<a name="1192" href="#1192">1192</a> <em>     * of retries.</em>
+<a name="1193" href="#1193">1193</a> <em>     **/</em>
+<a name="1194" href="#1194">1194</a>     <strong>private</strong> <strong>class</strong> Delay {
+<a name="1195" href="#1195">1195</a>         <strong>private</strong> <strong>int</strong> attempts = 1;
+<a name="1196" href="#1196">1196</a>         <strong>private</strong> <strong>long</strong> delayTime = DEFAULT_DELAY_TIME;
+<a name="1197" href="#1197">1197</a>         
+<a name="1198" href="#1198">1198</a>             
+<a name="1199" href="#1199">1199</a>         <em>/**<em>*</em></em>
+<a name="1200" href="#1200">1200</a> <em>         * This constructor expects Strings of the form "[attempt\*]delaytime[unit]". &lt;p></em>
+<a name="1201" href="#1201">1201</a> <em>         * The optional attempt is the number of tries this delay should be used (default = 1)</em>
+<a name="1202" href="#1202">1202</a> <em>         * The unit if present must be one of (msec,sec,minute,hour,day) (default = msec)</em>
+<a name="1203" href="#1203">1203</a> <em>         * The constructor multiplies the delaytime by the relevant multiplier for the unit,</em>
+<a name="1204" href="#1204">1204</a> <em>         * so the delayTime instance variable is always in msec.</em>
+<a name="1205" href="#1205">1205</a> <em>         * @param init_string the string to initialize this Delay object from</em>
+<a name="1206" href="#1206">1206</a> <em>         **/</em>
+<a name="1207" href="#1207">1207</a>         <strong>public</strong> Delay (String init_string) throws MessagingException
+<a name="1208" href="#1208">1208</a>         {
+<a name="1209" href="#1209">1209</a>             String unit = <span class="string">"msec"</span>; <em class="comment">//default unit</em>
+<a name="1210" href="#1210">1210</a>             <strong>if</strong> (delayTimeMatcher.matches (init_string, PATTERN)) {
+<a name="1211" href="#1211">1211</a>                 MatchResult res = delayTimeMatcher.getMatch ();
+<a name="1212" href="#1212">1212</a>                 <em class="comment">//the capturing groups will now hold</em>
+<a name="1213" href="#1213">1213</a>                 <em class="comment">//at 1:  attempts * (if present)</em>
+<a name="1214" href="#1214">1214</a>                 <em class="comment">//at 2:  delaytime</em>
+<a name="1215" href="#1215">1215</a>                 <em class="comment">//at 3:  unit (if present)</em>
+<a name="1216" href="#1216">1216</a>                 
+<a name="1217" href="#1217">1217</a>                 <strong>if</strong> (res.group(1) != <strong>null</strong> &amp;&amp; !res.group(1).equals (<span class="string">""</span>)) {
+<a name="1218" href="#1218">1218</a>                     <em class="comment">//we have an attempt *</em>
+<a name="1219" href="#1219">1219</a>                     String attempt_match = res.group(1);
+<a name="1220" href="#1220">1220</a>                     <em class="comment">//strip the * and whitespace</em>
+<a name="1221" href="#1221">1221</a>                     attempt_match = attempt_match.substring (0,attempt_match.length()-1).trim();
+<a name="1222" href="#1222">1222</a>                     attempts = Integer.parseInt (attempt_match);
+<a name="1223" href="#1223">1223</a>                 }
+<a name="1224" href="#1224">1224</a>                 
+<a name="1225" href="#1225">1225</a>                 delayTime = Long.parseLong (res.group(2));
+<a name="1226" href="#1226">1226</a>                 
+<a name="1227" href="#1227">1227</a>                 <strong>if</strong> (!res.group(3).equals (<span class="string">""</span>)) {
+<a name="1228" href="#1228">1228</a>                     <em class="comment">//we have a unit</em>
+<a name="1229" href="#1229">1229</a>                     unit = res.group(3).toLowerCase(Locale.US);
+<a name="1230" href="#1230">1230</a>                 }
+<a name="1231" href="#1231">1231</a>             } <strong>else</strong> {
+<a name="1232" href="#1232">1232</a>                 <strong>throw</strong> <strong>new</strong> MessagingException(init_string+<span class="string">" does not match "</span>+PATTERN_STRING);
+<a name="1233" href="#1233">1233</a>             }
+<a name="1234" href="#1234">1234</a>                 <strong>try</strong> {
+<a name="1235" href="#1235">1235</a>                 delayTime = TimeConverter.getMilliSeconds(delayTime, unit);
+<a name="1236" href="#1236">1236</a>             } <strong>catch</strong> (NumberFormatException e) {
+<a name="1237" href="#1237">1237</a>                 <strong>throw</strong> <strong>new</strong> MessagingException(e.getMessage());
+<a name="1238" href="#1238">1238</a>             }
+<a name="1239" href="#1239">1239</a>         }
+<a name="1240" href="#1240">1240</a> 
+<a name="1241" href="#1241">1241</a>         <em>/**<em>*</em></em>
+<a name="1242" href="#1242">1242</a> <em>         * This constructor makes a default Delay object, ie. attempts=1 and delayTime=DEFAULT_DELAY_TIME</em>
+<a name="1243" href="#1243">1243</a> <em>         **/</em>
+<a name="1244" href="#1244">1244</a>         <strong>public</strong> Delay () {
+<a name="1245" href="#1245">1245</a>         }
+<a name="1246" href="#1246">1246</a> 
+<a name="1247" href="#1247">1247</a>         <em>/**<em>*</em></em>
+<a name="1248" href="#1248">1248</a> <em>         * @return the delayTime for this Delay</em>
+<a name="1249" href="#1249">1249</a> <em>         **/</em>
+<a name="1250" href="#1250">1250</a>         <strong>public</strong> <strong>long</strong> getDelayTime () {
+<a name="1251" href="#1251">1251</a>             <strong>return</strong> delayTime;
+<a name="1252" href="#1252">1252</a>         }
+<a name="1253" href="#1253">1253</a> 
+<a name="1254" href="#1254">1254</a>         <em>/**<em>*</em></em>
+<a name="1255" href="#1255">1255</a> <em>         * @return the number attempts this Delay should be used.</em>
+<a name="1256" href="#1256">1256</a> <em>         **/</em>
+<a name="1257" href="#1257">1257</a>         <strong>public</strong> <strong>int</strong> getAttempts () {
+<a name="1258" href="#1258">1258</a>             <strong>return</strong> attempts;
+<a name="1259" href="#1259">1259</a>         }
+<a name="1260" href="#1260">1260</a>         
+<a name="1261" href="#1261">1261</a>         <em>/**<em>*</em></em>
+<a name="1262" href="#1262">1262</a> <em>         * Set the number attempts this Delay should be used.</em>
+<a name="1263" href="#1263">1263</a> <em>         **/</em>
+<a name="1264" href="#1264">1264</a>         <strong>public</strong> <strong>void</strong> setAttempts (<strong>int</strong> value) {
+<a name="1265" href="#1265">1265</a>             attempts = value;
+<a name="1266" href="#1266">1266</a>         }
+<a name="1267" href="#1267">1267</a>         
+<a name="1268" href="#1268">1268</a>         <em>/**<em>*</em></em>
+<a name="1269" href="#1269">1269</a> <em>         * Pretty prints this Delay </em>
+<a name="1270" href="#1270">1270</a> <em>         **/</em>
+<a name="1271" href="#1271">1271</a>         <strong>public</strong> String toString () {
+<a name="1272" href="#1272">1272</a>             StringBuffer buf = <strong>new</strong> StringBuffer(15);
+<a name="1273" href="#1273">1273</a>             buf.append (getAttempts ());
+<a name="1274" href="#1274">1274</a>             buf.append ('*');
+<a name="1275" href="#1275">1275</a>             buf.append (getDelayTime());
+<a name="1276" href="#1276">1276</a>             buf.append (<span class="string">"msec"</span>);
+<a name="1277" href="#1277">1277</a>             <strong>return</strong> buf.toString();
+<a name="1278" href="#1278">1278</a>         }
+<a name="1279" href="#1279">1279</a>     }
+<a name="1280" href="#1280">1280</a>     
+<a name="1281" href="#1281">1281</a>     <em class="comment">/*</em>
+<a name="1282" href="#1282">1282</a> <em class="comment">     * Returns an Iterator over org.apache.mailet.HostAddress, a</em>
+<a name="1283" href="#1283">1283</a> <em class="comment">     * specialized subclass of javax.mail.URLName, which provides</em>
+<a name="1284" href="#1284">1284</a> <em class="comment">     * location information for servers that are specified as mail</em>
+<a name="1285" href="#1285">1285</a> <em class="comment">     * handlers for the given hostname.  If no host is found, the</em>
+<a name="1286" href="#1286">1286</a> <em class="comment">     * Iterator returned will be empty and the first call to hasNext()</em>
+<a name="1287" href="#1287">1287</a> <em class="comment">     * will return false.  The Iterator is a nested iterator: the outer</em>
+<a name="1288" href="#1288">1288</a> <em class="comment">     * iteration is over each gateway, and the inner iteration is over</em>
+<a name="1289" href="#1289">1289</a> <em class="comment">     * potentially multiple A records for each gateway.</em>
+<a name="1290" href="#1290">1290</a> <em class="comment">     *</em>
+<a name="1291" href="#1291">1291</a> <em class="comment">     * @see org.apache.james.DNSServer#getSMTPHostAddresses(String)</em>
+<a name="1292" href="#1292">1292</a> <em class="comment">     * @since v2.2.0a16-unstable</em>
+<a name="1293" href="#1293">1293</a> <em class="comment">     * @param gatewayServers - Collection of host[:port] Strings</em>
+<a name="1294" href="#1294">1294</a> <em class="comment">     * @return an Iterator over HostAddress instances, sorted by priority</em>
+<a name="1295" href="#1295">1295</a> <em class="comment">     */</em>
+<a name="1296" href="#1296">1296</a>     <strong>private</strong> Iterator getGatewaySMTPHostAddresses(<strong>final</strong> Collection gatewayServers) {
+<a name="1297" href="#1297">1297</a>         <strong>return</strong> <strong>new</strong> Iterator() {
+<a name="1298" href="#1298">1298</a>             <strong>private</strong> Iterator gateways = gatewayServers.iterator();
+<a name="1299" href="#1299">1299</a>             <strong>private</strong> Iterator addresses = <strong>null</strong>;
+<a name="1300" href="#1300">1300</a> 
+<a name="1301" href="#1301">1301</a>             <strong>public</strong> <strong>boolean</strong> hasNext() {
+<a name="1302" href="#1302">1302</a>                 <em class="comment">/*<em class="comment"> Make sure that when next() is called, that we can</em></em>
+<a name="1303" href="#1303">1303</a> <em class="comment">                 * provide a HostAddress.  This means that we need to</em>
+<a name="1304" href="#1304">1304</a> <em class="comment">                 * have an inner iterator, and verify that it has</em>
+<a name="1305" href="#1305">1305</a> <em class="comment">                 * addresses.  We could, for example, run into a</em>
+<a name="1306" href="#1306">1306</a> <em class="comment">                 * situation where the next gateway didn't have any</em>
+<a name="1307" href="#1307">1307</a> <em class="comment">                 * valid addresses.</em>
+<a name="1308" href="#1308">1308</a> <em class="comment">                 */</em>
+<a name="1309" href="#1309">1309</a>                 <strong>if</strong> (!hasNextAddress() &amp;&amp; gateways.hasNext()) {
+<a name="1310" href="#1310">1310</a>                     <strong>do</strong> {
+<a name="1311" href="#1311">1311</a>                         String server = (String) gateways.next();
+<a name="1312" href="#1312">1312</a>                         String port = <span class="string">"25"</span>;
+<a name="1313" href="#1313">1313</a> 
+<a name="1314" href="#1314">1314</a>                         <strong>int</strong> idx = server.indexOf(':');
+<a name="1315" href="#1315">1315</a>                         <strong>if</strong> ( idx > 0) {
+<a name="1316" href="#1316">1316</a>                             port = server.substring(idx+1);
+<a name="1317" href="#1317">1317</a>                             server = server.substring(0,idx);
+<a name="1318" href="#1318">1318</a>                         }
+<a name="1319" href="#1319">1319</a> 
+<a name="1320" href="#1320">1320</a>                         <strong>final</strong> String nextGateway = server;
+<a name="1321" href="#1321">1321</a>                         <strong>final</strong> String nextGatewayPort = port;
+<a name="1322" href="#1322">1322</a>                         <strong>try</strong> {
+<a name="1323" href="#1323">1323</a>                             <strong>final</strong> InetAddress[] ips = dnsServer.getAllByName(nextGateway);
+<a name="1324" href="#1324">1324</a>                             addresses = <strong>new</strong> Iterator() {
+<a name="1325" href="#1325">1325</a>                                 <strong>private</strong> InetAddress[] ipAddresses = ips;
+<a name="1326" href="#1326">1326</a>                                 <strong>int</strong> i = 0;
+<a name="1327" href="#1327">1327</a> 
+<a name="1328" href="#1328">1328</a>                                 <strong>public</strong> <strong>boolean</strong> hasNext() {
+<a name="1329" href="#1329">1329</a>                                     <strong>return</strong> i &lt; ipAddresses.length;
+<a name="1330" href="#1330">1330</a>                                 }
+<a name="1331" href="#1331">1331</a> 
+<a name="1332" href="#1332">1332</a>                                 <strong>public</strong> Object next() {
+<a name="1333" href="#1333">1333</a>                                     <strong>return</strong> <strong>new</strong> org.apache.mailet.HostAddress(nextGateway, <span class="string">"smtp://"</span> + (ipAddresses[i++]).getHostAddress() + <span class="string">":"</span> + nextGatewayPort);
+<a name="1334" href="#1334">1334</a>                                 }
+<a name="1335" href="#1335">1335</a> 
+<a name="1336" href="#1336">1336</a>                                 <strong>public</strong> <strong>void</strong> remove() {
+<a name="1337" href="#1337">1337</a>                                     <strong>throw</strong> <strong>new</strong> UnsupportedOperationException (<span class="string">"remove not supported by this iterator"</span>);
+<a name="1338" href="#1338">1338</a>                                 }
+<a name="1339" href="#1339">1339</a>                             };
+<a name="1340" href="#1340">1340</a>                         }
+<a name="1341" href="#1341">1341</a>                         <strong>catch</strong> (java.net.UnknownHostException uhe) {
+<a name="1342" href="#1342">1342</a>                             log(<span class="string">"Unknown gateway host: "</span> + uhe.getMessage().trim());
+<a name="1343" href="#1343">1343</a>                             log(<span class="string">"This could be a DNS server error or configuration error."</span>);
+<a name="1344" href="#1344">1344</a>                         }
+<a name="1345" href="#1345">1345</a>                     } <strong>while</strong> (!hasNextAddress() &amp;&amp; gateways.hasNext());
+<a name="1346" href="#1346">1346</a>                 } 
+<a name="1347" href="#1347">1347</a> 
+<a name="1348" href="#1348">1348</a>                 <strong>return</strong> hasNextAddress();
+<a name="1349" href="#1349">1349</a>             }
+<a name="1350" href="#1350">1350</a> 
+<a name="1351" href="#1351">1351</a>             <strong>private</strong> <strong>boolean</strong> hasNextAddress() {
+<a name="1352" href="#1352">1352</a>                 <strong>return</strong> addresses != <strong>null</strong> &amp;&amp; addresses.hasNext();
+<a name="1353" href="#1353">1353</a>             }
+<a name="1354" href="#1354">1354</a> 
+<a name="1355" href="#1355">1355</a>             <strong>public</strong> Object next() {
+<a name="1356" href="#1356">1356</a>                 <strong>return</strong> (addresses != <strong>null</strong>) ? addresses.next() : <strong>null</strong>;
+<a name="1357" href="#1357">1357</a>             }
+<a name="1358" href="#1358">1358</a> 
+<a name="1359" href="#1359">1359</a>             <strong>public</strong> <strong>void</strong> remove() {
+<a name="1360" href="#1360">1360</a>                 <strong>throw</strong> <strong>new</strong> UnsupportedOperationException (<span class="string">"remove not supported by this iterator"</span>);
+<a name="1361" href="#1361">1361</a>             }
+<a name="1362" href="#1362">1362</a>         };
+<a name="1363" href="#1363">1363</a>     }
+<a name="1364" href="#1364">1364</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
