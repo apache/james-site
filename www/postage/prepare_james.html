@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Postage - 
+    Prepare James</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="
+    James jSPF Project Team" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="" id="bannerLeft">
+    
+                                            <img src="images/james-postage-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 08/07/2006
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="http://james.apache.org/server/index.html">Server</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Postage</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <strong>Prepare James</strong>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+  
+  
+    <a name="Prepare James"></a><div class="section"><h2>Prepare James</h2>
+      <p>You should have a James instance readily installed. This means at least extracted James binary and started the server once (see <a href="http://wiki.apache.org/james/JamesQuickstart">JamesQuickstart</a>).</p>
+    </div>
+    <a name="Edit the configuration file JAMES_HOME/apps/james/SAR-INF/config.xml"></a><div class="section"><h2>Edit the configuration file JAMES_HOME/apps/james/SAR-INF/config.xml</h2>
+      <a name="Internal test domain"></a><div class="section"><h3>Internal test domain</h3>
+        <p>In the server names sections, add new line containing the virtual domain &quot;mail.james.local&quot;. This makes James consume all mails addressed to, for example [MAILTO] test@mail.james.local.</p>
+        <p>It should look something like this, depending on your further configuration preferences:</p>
+        <div class="source"><pre>
+&lt;servernames autodetect=&quot;true&quot; autodetectIP=&quot;true&quot;&gt;
+  &lt;!-- CONFIRM? --&gt;
+  &lt;servername&gt;localhost&lt;/servername&gt;
+  &lt;servername&gt;mail.james.local&lt;/servername&gt;
+&lt;/servernames&gt;
+        </pre></div>
+      </div>
+      <a name="Sending external mail"></a><div class="section"><h3>Sending external mail</h3>
+        <p>All mail addresses not handled by James are delivered to their intended destination, if possible. For Postage to intercept this and receive all mails send out by James, we must enable gateway forwarding.</p>
+        <p>change</p>
+        <div class="source"><pre>
+&lt;gateway&gt; otherserver.mydomain.com &lt;/gateway&gt;
+&lt;gatewayPort&gt;25&lt;/gatewayPort&gt;
+        </pre></div>
+        <p>into</p>
+        <div class="source"><pre>
+&lt;gateway&gt; localhost &lt;/gateway&gt;
+&lt;gatewayPort&gt; 2525 &lt;/gatewayPort&gt;
+        </pre></div>
+        <p>If Postage is running on another machine than James, you should use the appropriate host/port combination under which Postage is receiving mail.</p>
+        <p>Now Postage is consuming all mail sent out by James and tries to align the mail it puts into James with mail coming out of the server.</p>
+        <p>NOTE: This configuration makes James unable to deliver regular external mail, don't do this on a production system!</p>
+      </div>
+    </div>
+    <a name="Enable Postage to record memory and thread resource consumption of James"></a><div class="section"><h2>Enable Postage to record memory and thread resource consumption of James</h2>
+      <p>This is optional configuration.</p>
+      <p>It only works, if James is run under JSE5 or newer and only if Postage has been build with JMX support. It also conflicts with James' current genuine MX4J-based JMX support, which has to be disabled (see ConfigureJmx how to use JSE5 JMX support).</p>
+      <p>Edit file &lt;JAMES_HOME&gt;/bin/phoenix.[sh|bat]</p>
+      <p>Replace line</p>
+      <div class="source"><pre>
+JVM_OPTS=&quot;-Djava.ext.dirs=$JVM_EXT_DIRS&quot;
+      </pre></div>
+      <p>with (on one line)</p>
+      <div class="source"><pre>
+JVM_OPTS=&quot;-Djava.ext.dirs=$JVM_EXT_DIRS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false 
+-Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=10201 &quot;
+      </pre></div>
+    </div>
+  
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006
+    
+          Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
