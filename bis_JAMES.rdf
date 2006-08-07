@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<rdf:RDF xml:lang="en"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<!--
+  =======================================================================
+
+   Copyright (c) 2006 The Apache Software Foundation.
+   All rights reserved.
+
+  =======================================================================
+-->
+  <BISData>
+      <Contact>
+        <Project rdf:resource="http://james.apache.org">Apache JAMES</Project>
+        <Name>Serge Knystautas</Name>
+      </Contact>
+      <Product name="JAMES Server">
+        <Distribution versions="v2.2.0">
+          <CryptoSrc manufacturer="Apache Software Foundation" rdf:resource="http://www.apache.org/dist/james/server/source/"/>
+        </Distribution>
+        <!--
+          Remove -current when 2.3.0 final is released
+        -->
+        <Distribution versions="v2.3.0-current">
+          <CryptoSrc manufacturer="Apache Software Foundation" rdf:resource="http://www.apache.org/dist/james/server/source/"/>
+          <CryptoSrc manufacturer="Bouncy Castle" rdf:resource="http://www.bouncycastle.org/download/bcmail-jdk14-129.tar.gz"/>
+        </Distribution>
+        <!--
+        	Update this to include 2.4.0-current, 3.0-current when the roadmap is defined.
+        	Update this when updating bcmail version.
+        -->
+        <Distribution versions="pre-release">
+          <CryptoSrc manufacturer="Apache Software Foundation" rdf:resource="http://svn.apache.org/repos/asf/james/server"/>
+          <CryptoSrc manufacturer="Bouncy Castle" rdf:resource="http://www.bouncycastle.org/download/bcmail-jdk14-129.tar.gz"/>
+        </Distribution>
+      </Product>
+  </BISData>
+</rdf:RDF>
