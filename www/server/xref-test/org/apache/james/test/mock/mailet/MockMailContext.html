@@ -83,51 +83,47 @@
 <a name="74" href="#74">74</a>          <strong>return</strong> false;  <em class="comment">// trivial implementation</em>
 <a name="75" href="#75">75</a>      }
 <a name="76" href="#76">76</a>  
-<a name="77" href="#77">77</a>      <strong>public</strong> <strong>boolean</strong> isLocalEmail(MailAddress mailAddress) {
-<a name="78" href="#78">78</a>          <strong>return</strong> false;  <em class="comment">// trivial implementation</em>
+<a name="77" href="#77">77</a>      <strong>public</strong> <strong>void</strong> log(String message) {
+<a name="78" href="#78">78</a>          System.out.println(message);
 <a name="79" href="#79">79</a>      }
 <a name="80" href="#80">80</a>  
-<a name="81" href="#81">81</a>      <strong>public</strong> <strong>void</strong> log(String message) {
+<a name="81" href="#81">81</a>      <strong>public</strong> <strong>void</strong> log(String message, Throwable t) {
 <a name="82" href="#82">82</a>          System.out.println(message);
-<a name="83" href="#83">83</a>      }
-<a name="84" href="#84">84</a>  
-<a name="85" href="#85">85</a>      <strong>public</strong> <strong>void</strong> log(String message, Throwable t) {
-<a name="86" href="#86">86</a>          System.out.println(message);
-<a name="87" href="#87">87</a>          t.printStackTrace(System.out);
+<a name="83" href="#83">83</a>          t.printStackTrace(System.out);
+<a name="84" href="#84">84</a>      }
+<a name="85" href="#85">85</a>  
+<a name="86" href="#86">86</a>      <strong>public</strong> <strong>void</strong> removeAttribute(String name) {
+<a name="87" href="#87">87</a>          <em class="comment">// trivial implementation</em>
 <a name="88" href="#88">88</a>      }
 <a name="89" href="#89">89</a>  
-<a name="90" href="#90">90</a>      <strong>public</strong> <strong>void</strong> removeAttribute(String name) {
+<a name="90" href="#90">90</a>      <strong>public</strong> <strong>void</strong> sendMail(MimeMessage msg) throws MessagingException {
 <a name="91" href="#91">91</a>          <em class="comment">// trivial implementation</em>
 <a name="92" href="#92">92</a>      }
 <a name="93" href="#93">93</a>  
-<a name="94" href="#94">94</a>      <strong>public</strong> <strong>void</strong> sendMail(MimeMessage msg) throws MessagingException {
+<a name="94" href="#94">94</a>      <strong>public</strong> <strong>void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage msg) throws MessagingException {
 <a name="95" href="#95">95</a>          <em class="comment">// trivial implementation</em>
 <a name="96" href="#96">96</a>      }
 <a name="97" href="#97">97</a>  
-<a name="98" href="#98">98</a>      <strong>public</strong> <strong>void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage msg) throws MessagingException {
+<a name="98" href="#98">98</a>      <strong>public</strong> <strong>void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage msg, String state) throws MessagingException {
 <a name="99" href="#99">99</a>          <em class="comment">// trivial implementation</em>
 <a name="100" href="#100">100</a>     }
 <a name="101" href="#101">101</a> 
-<a name="102" href="#102">102</a>     <strong>public</strong> <strong>void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage msg, String state) throws MessagingException {
+<a name="102" href="#102">102</a>     <strong>public</strong> <strong>void</strong> sendMail(Mail mail) throws MessagingException {
 <a name="103" href="#103">103</a>         <em class="comment">// trivial implementation</em>
 <a name="104" href="#104">104</a>     }
 <a name="105" href="#105">105</a> 
-<a name="106" href="#106">106</a>     <strong>public</strong> <strong>void</strong> sendMail(Mail mail) throws MessagingException {
-<a name="107" href="#107">107</a>         <em class="comment">// trivial implementation</em>
+<a name="106" href="#106">106</a>     <strong>public</strong> <strong>void</strong> setAttribute(String name, Object object) {
+<a name="107" href="#107">107</a>         attributes.put(name,object);
 <a name="108" href="#108">108</a>     }
 <a name="109" href="#109">109</a> 
-<a name="110" href="#110">110</a>     <strong>public</strong> <strong>void</strong> setAttribute(String name, Object object) {
-<a name="111" href="#111">111</a>         attributes.put(name,object);
+<a name="110" href="#110">110</a>     <strong>public</strong> <strong>void</strong> storeMail(MailAddress sender, MailAddress recipient, MimeMessage msg) throws MessagingException {
+<a name="111" href="#111">111</a>         <em class="comment">// trivial implementation</em>
 <a name="112" href="#112">112</a>     }
 <a name="113" href="#113">113</a> 
-<a name="114" href="#114">114</a>     <strong>public</strong> <strong>void</strong> storeMail(MailAddress sender, MailAddress recipient, MimeMessage msg) throws MessagingException {
-<a name="115" href="#115">115</a>         <em class="comment">// trivial implementation</em>
+<a name="114" href="#114">114</a>     <strong>public</strong> Iterator getSMTPHostAddresses(String domainName) {
+<a name="115" href="#115">115</a>         <strong>return</strong> <strong>null</strong>;  <em class="comment">// trivial implementation</em>
 <a name="116" href="#116">116</a>     }
-<a name="117" href="#117">117</a> 
-<a name="118" href="#118">118</a>     <strong>public</strong> Iterator getSMTPHostAddresses(String domainName) {
-<a name="119" href="#119">119</a>         <strong>return</strong> <strong>null</strong>;  <em class="comment">// trivial implementation</em>
-<a name="120" href="#120">120</a>     }
-<a name="121" href="#121">121</a> }
+<a name="117" href="#117">117</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -156,526 +156,530 @@
 <a name="147" href="#147">147</a> 
 <a name="148" href="#148">148</a>         <em class="comment">// duplicates the Mail object, to be able to modify the new mail keeping the original untouched</em>
 <a name="149" href="#149">149</a>         <a href="../../../../../org/apache/james/core/MailImpl.html">MailImpl</a> <strong>new</strong>Mail = <strong>new</strong> <a href="../../../../../org/apache/james/core/MailImpl.html">MailImpl</a>(originalMail,<strong>new</strong>Name(originalMail));
-<a name="150" href="#150">150</a>         <em class="comment">// We don't need to use the original Remote Address and Host,</em>
-<a name="151" href="#151">151</a>         <em class="comment">// and doing so would likely cause a loop with spam detecting</em>
-<a name="152" href="#152">152</a>         <em class="comment">// matchers.</em>
-<a name="153" href="#153">153</a>         <strong>try</strong> {
-<a name="154" href="#154">154</a>             newMail.setRemoteAddr(java.net.InetAddress.getLocalHost().getHostAddress());
-<a name="155" href="#155">155</a>             newMail.setRemoteHost(java.net.InetAddress.getLocalHost().getHostName());
-<a name="156" href="#156">156</a>         } <strong>catch</strong> (java.net.UnknownHostException _) {
-<a name="157" href="#157">157</a>             newMail.setRemoteAddr(<span class="string">"127.0.0.1"</span>);
-<a name="158" href="#158">158</a>             newMail.setRemoteHost(<span class="string">"localhost"</span>);
-<a name="159" href="#159">159</a>         }
-<a name="160" href="#160">160</a> 
-<a name="161" href="#161">161</a>         <strong>if</strong> (originalMail.getSender() == <strong>null</strong>) {
-<a name="162" href="#162">162</a>             <strong>if</strong> (isDebug)
-<a name="163" href="#163">163</a>                 log(<span class="string">"Processing a bounce request for a message with an empty reverse-path.  No bounce will be sent."</span>);
-<a name="164" href="#164">164</a>             <strong>if</strong>(!getPassThrough(originalMail)) {
-<a name="165" href="#165">165</a>                 originalMail.setState(Mail.GHOST);
-<a name="166" href="#166">166</a>             }
-<a name="167" href="#167">167</a>             <strong>return</strong>;
-<a name="168" href="#168">168</a>         }
-<a name="169" href="#169">169</a> 
-<a name="170" href="#170">170</a>         <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> reversePath = originalMail.getSender();
-<a name="171" href="#171">171</a>         <strong>if</strong> (isDebug)
-<a name="172" href="#172">172</a>             log(<span class="string">"Processing a bounce request for a message with a reverse path.  The bounce will be sent to "</span> + reversePath);
-<a name="173" href="#173">173</a> 
-<a name="174" href="#174">174</a>         Collection <strong>new</strong>Recipients = <strong>new</strong> HashSet();
-<a name="175" href="#175">175</a>         newRecipients.add(reversePath);
-<a name="176" href="#176">176</a>         newMail.setRecipients(newRecipients);
-<a name="177" href="#177">177</a> 
-<a name="178" href="#178">178</a>         <strong>if</strong> (isDebug) {
-<a name="179" href="#179">179</a>             log(<span class="string">"New mail - sender: "</span> + newMail.getSender()
-<a name="180" href="#180">180</a>                 + <span class="string">", recipients: "</span> +
-<a name="181" href="#181">181</a>                 arrayToString(newMail.getRecipients().toArray())
-<a name="182" href="#182">182</a>                 + <span class="string">", name: "</span> + newMail.getName()
-<a name="183" href="#183">183</a>                 + <span class="string">", remoteHost: "</span> + newMail.getRemoteHost()
-<a name="184" href="#184">184</a>                 + <span class="string">", remoteAddr: "</span> + newMail.getRemoteAddr()
-<a name="185" href="#185">185</a>                 + <span class="string">", state: "</span> + newMail.getState()
-<a name="186" href="#186">186</a>                 + <span class="string">", lastUpdated: "</span> + newMail.getLastUpdated()
-<a name="187" href="#187">187</a>                 + <span class="string">", errorMessage: "</span> + newMail.getErrorMessage());
-<a name="188" href="#188">188</a>         }
-<a name="189" href="#189">189</a> 
-<a name="190" href="#190">190</a>         <em class="comment">// create the bounce message</em>
-<a name="191" href="#191">191</a>         MimeMessage newMessage =
-<a name="192" href="#192">192</a>             <strong>new</strong> MimeMessage(Session.getDefaultInstance(System.getProperties(),
-<a name="193" href="#193">193</a>                                                        <strong>null</strong>));
-<a name="194" href="#194">194</a> 
-<a name="195" href="#195">195</a>         <a href="../../../../../org/apache/james/util/mail/MimeMultipartReport.html">MimeMultipartReport</a> multipart = <strong>new</strong> <a href="../../../../../org/apache/james/util/mail/MimeMultipartReport.html">MimeMultipartReport</a> ();
-<a name="196" href="#196">196</a>         multipart.setReportType (<span class="string">"delivery-status"</span>);
-<a name="197" href="#197">197</a>         
-<a name="198" href="#198">198</a>         <em class="comment">// part 1: descripive text message</em>
-<a name="199" href="#199">199</a>         MimeBodyPart part1 = createTextMsg(originalMail);
-<a name="200" href="#200">200</a>         multipart.addBodyPart(part1);
-<a name="201" href="#201">201</a> 
-<a name="202" href="#202">202</a>         <em class="comment">// part 2: DSN</em>
-<a name="203" href="#203">203</a>         MimeBodyPart part2 = createDSN(originalMail);
-<a name="204" href="#204">204</a>         multipart.addBodyPart(part2);
-<a name="205" href="#205">205</a> 
-<a name="206" href="#206">206</a> 
-<a name="207" href="#207">207</a>         <em class="comment">// part 3: original mail (optional)</em>
-<a name="208" href="#208">208</a>         <strong>if</strong> (getAttachmentType() != NONE) {
-<a name="209" href="#209">209</a>             MimeBodyPart part3 = createAttachedOriginal(originalMail,getAttachmentType());
-<a name="210" href="#210">210</a>             multipart.addBodyPart(part3);
-<a name="211" href="#211">211</a>         }
-<a name="212" href="#212">212</a> 
-<a name="213" href="#213">213</a> 
-<a name="214" href="#214">214</a>         <em class="comment">// stuffing all together</em>
-<a name="215" href="#215">215</a>         newMessage.setContent(multipart);
-<a name="216" href="#216">216</a>         newMessage.setHeader(RFC2822Headers.CONTENT_TYPE, multipart.getContentType());
-<a name="217" href="#217">217</a>         newMail.setMessage(newMessage);
-<a name="218" href="#218">218</a> 
-<a name="219" href="#219">219</a>         <em class="comment">//Set additional headers</em>
-<a name="220" href="#220">220</a>         setRecipients(newMail, getRecipients(originalMail), originalMail);
-<a name="221" href="#221">221</a>         setTo(newMail, getTo(originalMail), originalMail);
-<a name="222" href="#222">222</a>         setSubjectPrefix(newMail, getSubjectPrefix(originalMail), originalMail);
-<a name="223" href="#223">223</a>         <strong>if</strong>(newMail.getMessage().getHeader(RFC2822Headers.DATE) == <strong>null</strong>) {
-<a name="224" href="#224">224</a>             <strong>new</strong>Mail.getMessage().setHeader(RFC2822Headers.DATE,rfc822DateFormat.format(<strong>new</strong> Date()));
-<a name="225" href="#225">225</a>         }
-<a name="226" href="#226">226</a>         setReplyTo(newMail, getReplyTo(originalMail), originalMail);
-<a name="227" href="#227">227</a>         setReversePath(newMail, getReversePath(originalMail), originalMail);
-<a name="228" href="#228">228</a>         setSender(newMail, getSender(originalMail), originalMail);
-<a name="229" href="#229">229</a>         setIsReply(newMail, isReply(originalMail), originalMail);
-<a name="230" href="#230">230</a> 
-<a name="231" href="#231">231</a>         newMail.getMessage().saveChanges();
-<a name="232" href="#232">232</a>         getMailetContext().sendMail(newMail);
-<a name="233" href="#233">233</a> 
-<a name="234" href="#234">234</a>         <em class="comment">// ghosting the original mail</em>
-<a name="235" href="#235">235</a>         <strong>if</strong>(!getPassThrough(originalMail)) {
-<a name="236" href="#236">236</a>             originalMail.setState(Mail.GHOST);
-<a name="237" href="#237">237</a>         }
-<a name="238" href="#238">238</a>     }
-<a name="239" href="#239">239</a> 
-<a name="240" href="#240">240</a>     <em>/**<em>*</em></em>
-<a name="241" href="#241">241</a> <em>     * Create a MimeBodyPart with a textual description for human readers.</em>
-<a name="242" href="#242">242</a> <em>     *</em>
-<a name="243" href="#243">243</a> <em>     * @param originalMail</em>
-<a name="244" href="#244">244</a> <em>     * @return MimeBodyPart</em>
-<a name="245" href="#245">245</a> <em>     * @throws MessagingException</em>
-<a name="246" href="#246">246</a> <em>     */</em>
-<a name="247" href="#247">247</a>     <strong>protected</strong> MimeBodyPart createTextMsg(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail)
-<a name="248" href="#248">248</a>         throws MessagingException {
-<a name="249" href="#249">249</a>         MimeBodyPart part1 = <strong>new</strong> MimeBodyPart();
-<a name="250" href="#250">250</a>         StringWriter sout = <strong>new</strong> StringWriter();
-<a name="251" href="#251">251</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
-<a name="252" href="#252">252</a>         String machine = <span class="string">"[unknown]"</span>;
-<a name="253" href="#253">253</a>         <strong>try</strong> {
-<a name="254" href="#254">254</a>             InetAddress me = InetAddress.getLocalHost();
-<a name="255" href="#255">255</a>             machine = me.getHostName();
-<a name="256" href="#256">256</a>         } <strong>catch</strong>(Exception e){
-<a name="257" href="#257">257</a>             machine = <span class="string">"[address unknown]"</span>;
-<a name="258" href="#258">258</a>         }
-<a name="259" href="#259">259</a> 
-<a name="260" href="#260">260</a>         StringBuffer bounceBuffer =
-<a name="261" href="#261">261</a>             <strong>new</strong> StringBuffer(128).append (messageString);
-<a name="262" href="#262">262</a>         <strong>int</strong> m_idx_begin = messageString.indexOf(MACHINE_PATTERN);
-<a name="263" href="#263">263</a>         <strong>if</strong> (m_idx_begin != -1) {
-<a name="264" href="#264">264</a>             bounceBuffer.replace (m_idx_begin,
-<a name="265" href="#265">265</a>                                   m_idx_begin+MACHINE_PATTERN.length(),
-<a name="266" href="#266">266</a>                                   machine);
-<a name="267" href="#267">267</a>         }
-<a name="268" href="#268">268</a>         out.println(bounceBuffer.toString());
-<a name="269" href="#269">269</a>         out.println(<span class="string">"Failed recipient(s):"</span>);
-<a name="270" href="#270">270</a>         <strong>for</strong> (Iterator i = originalMail.getRecipients().iterator(); i.hasNext(); ) {
-<a name="271" href="#271">271</a>             out.println(i.next());
-<a name="272" href="#272">272</a>         }
-<a name="273" href="#273">273</a>         MessagingException ex = (MessagingException)originalMail.getAttribute(<span class="string">"delivery-error"</span>);
-<a name="274" href="#274">274</a>         out.println();
-<a name="275" href="#275">275</a>         out.println(<span class="string">"Error message:"</span>);
-<a name="276" href="#276">276</a>         out.println(getErrorMsg(ex));
-<a name="277" href="#277">277</a>         out.println();
-<a name="278" href="#278">278</a> 
-<a name="279" href="#279">279</a>         part1.setText(sout.toString());
-<a name="280" href="#280">280</a>         <strong>return</strong> part1;
-<a name="281" href="#281">281</a>     }
+<a name="150" href="#150">150</a>         <strong>try</strong> {
+<a name="151" href="#151">151</a>             <em class="comment">// We don't need to use the original Remote Address and Host,</em>
+<a name="152" href="#152">152</a>             <em class="comment">// and doing so would likely cause a loop with spam detecting</em>
+<a name="153" href="#153">153</a>             <em class="comment">// matchers.</em>
+<a name="154" href="#154">154</a>             <strong>try</strong> {
+<a name="155" href="#155">155</a>                 newMail.setRemoteAddr(java.net.InetAddress.getLocalHost().getHostAddress());
+<a name="156" href="#156">156</a>                 newMail.setRemoteHost(java.net.InetAddress.getLocalHost().getHostName());
+<a name="157" href="#157">157</a>             } <strong>catch</strong> (java.net.UnknownHostException _) {
+<a name="158" href="#158">158</a>                 newMail.setRemoteAddr(<span class="string">"127.0.0.1"</span>);
+<a name="159" href="#159">159</a>                 newMail.setRemoteHost(<span class="string">"localhost"</span>);
+<a name="160" href="#160">160</a>             }
+<a name="161" href="#161">161</a>     
+<a name="162" href="#162">162</a>             <strong>if</strong> (originalMail.getSender() == <strong>null</strong>) {
+<a name="163" href="#163">163</a>                 <strong>if</strong> (isDebug)
+<a name="164" href="#164">164</a>                     log(<span class="string">"Processing a bounce request for a message with an empty reverse-path.  No bounce will be sent."</span>);
+<a name="165" href="#165">165</a>                 <strong>if</strong>(!getPassThrough(originalMail)) {
+<a name="166" href="#166">166</a>                     originalMail.setState(Mail.GHOST);
+<a name="167" href="#167">167</a>                 }
+<a name="168" href="#168">168</a>                 <strong>return</strong>;
+<a name="169" href="#169">169</a>             }
+<a name="170" href="#170">170</a>     
+<a name="171" href="#171">171</a>             <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> reversePath = originalMail.getSender();
+<a name="172" href="#172">172</a>             <strong>if</strong> (isDebug)
+<a name="173" href="#173">173</a>                 log(<span class="string">"Processing a bounce request for a message with a reverse path.  The bounce will be sent to "</span> + reversePath);
+<a name="174" href="#174">174</a>     
+<a name="175" href="#175">175</a>             Collection <strong>new</strong>Recipients = <strong>new</strong> HashSet();
+<a name="176" href="#176">176</a>             newRecipients.add(reversePath);
+<a name="177" href="#177">177</a>             newMail.setRecipients(newRecipients);
+<a name="178" href="#178">178</a>     
+<a name="179" href="#179">179</a>             <strong>if</strong> (isDebug) {
+<a name="180" href="#180">180</a>                 log(<span class="string">"New mail - sender: "</span> + newMail.getSender()
+<a name="181" href="#181">181</a>                     + <span class="string">", recipients: "</span> +
+<a name="182" href="#182">182</a>                     arrayToString(newMail.getRecipients().toArray())
+<a name="183" href="#183">183</a>                     + <span class="string">", name: "</span> + newMail.getName()
+<a name="184" href="#184">184</a>                     + <span class="string">", remoteHost: "</span> + newMail.getRemoteHost()
+<a name="185" href="#185">185</a>                     + <span class="string">", remoteAddr: "</span> + newMail.getRemoteAddr()
+<a name="186" href="#186">186</a>                     + <span class="string">", state: "</span> + newMail.getState()
+<a name="187" href="#187">187</a>                     + <span class="string">", lastUpdated: "</span> + newMail.getLastUpdated()
+<a name="188" href="#188">188</a>                     + <span class="string">", errorMessage: "</span> + newMail.getErrorMessage());
+<a name="189" href="#189">189</a>             }
+<a name="190" href="#190">190</a>     
+<a name="191" href="#191">191</a>             <em class="comment">// create the bounce message</em>
+<a name="192" href="#192">192</a>             MimeMessage newMessage =
+<a name="193" href="#193">193</a>                 <strong>new</strong> MimeMessage(Session.getDefaultInstance(System.getProperties(),
+<a name="194" href="#194">194</a>                                                            <strong>null</strong>));
+<a name="195" href="#195">195</a>     
+<a name="196" href="#196">196</a>             <a href="../../../../../org/apache/james/util/mail/MimeMultipartReport.html">MimeMultipartReport</a> multipart = <strong>new</strong> <a href="../../../../../org/apache/james/util/mail/MimeMultipartReport.html">MimeMultipartReport</a> ();
+<a name="197" href="#197">197</a>             multipart.setReportType (<span class="string">"delivery-status"</span>);
+<a name="198" href="#198">198</a>             
+<a name="199" href="#199">199</a>             <em class="comment">// part 1: descripive text message</em>
+<a name="200" href="#200">200</a>             MimeBodyPart part1 = createTextMsg(originalMail);
+<a name="201" href="#201">201</a>             multipart.addBodyPart(part1);
+<a name="202" href="#202">202</a>     
+<a name="203" href="#203">203</a>             <em class="comment">// part 2: DSN</em>
+<a name="204" href="#204">204</a>             MimeBodyPart part2 = createDSN(originalMail);
+<a name="205" href="#205">205</a>             multipart.addBodyPart(part2);
+<a name="206" href="#206">206</a>     
+<a name="207" href="#207">207</a>     
+<a name="208" href="#208">208</a>             <em class="comment">// part 3: original mail (optional)</em>
+<a name="209" href="#209">209</a>             <strong>if</strong> (getAttachmentType() != NONE) {
+<a name="210" href="#210">210</a>                 MimeBodyPart part3 = createAttachedOriginal(originalMail,getAttachmentType());
+<a name="211" href="#211">211</a>                 multipart.addBodyPart(part3);
+<a name="212" href="#212">212</a>             }
+<a name="213" href="#213">213</a>     
+<a name="214" href="#214">214</a>     
+<a name="215" href="#215">215</a>             <em class="comment">// stuffing all together</em>
+<a name="216" href="#216">216</a>             newMessage.setContent(multipart);
+<a name="217" href="#217">217</a>             newMessage.setHeader(RFC2822Headers.CONTENT_TYPE, multipart.getContentType());
+<a name="218" href="#218">218</a>             newMail.setMessage(newMessage);
+<a name="219" href="#219">219</a>     
+<a name="220" href="#220">220</a>             <em class="comment">//Set additional headers</em>
+<a name="221" href="#221">221</a>             setRecipients(newMail, getRecipients(originalMail), originalMail);
+<a name="222" href="#222">222</a>             setTo(newMail, getTo(originalMail), originalMail);
+<a name="223" href="#223">223</a>             setSubjectPrefix(newMail, getSubjectPrefix(originalMail), originalMail);
+<a name="224" href="#224">224</a>             <strong>if</strong>(newMail.getMessage().getHeader(RFC2822Headers.DATE) == <strong>null</strong>) {
+<a name="225" href="#225">225</a>                 <strong>new</strong>Mail.getMessage().setHeader(RFC2822Headers.DATE,rfc822DateFormat.format(<strong>new</strong> Date()));
+<a name="226" href="#226">226</a>             }
+<a name="227" href="#227">227</a>             setReplyTo(newMail, getReplyTo(originalMail), originalMail);
+<a name="228" href="#228">228</a>             setReversePath(newMail, getReversePath(originalMail), originalMail);
+<a name="229" href="#229">229</a>             setSender(newMail, getSender(originalMail), originalMail);
+<a name="230" href="#230">230</a>             setIsReply(newMail, isReply(originalMail), originalMail);
+<a name="231" href="#231">231</a>     
+<a name="232" href="#232">232</a>             newMail.getMessage().saveChanges();
+<a name="233" href="#233">233</a>             getMailetContext().sendMail(newMail);
+<a name="234" href="#234">234</a>         } <strong>finally</strong> {
+<a name="235" href="#235">235</a>             newMail.dispose();
+<a name="236" href="#236">236</a>         }
+<a name="237" href="#237">237</a> 
+<a name="238" href="#238">238</a>         <em class="comment">// ghosting the original mail</em>
+<a name="239" href="#239">239</a>         <strong>if</strong>(!getPassThrough(originalMail)) {
+<a name="240" href="#240">240</a>             originalMail.setState(Mail.GHOST);
+<a name="241" href="#241">241</a>         }
+<a name="242" href="#242">242</a>     }
+<a name="243" href="#243">243</a> 
+<a name="244" href="#244">244</a>     <em>/**<em>*</em></em>
+<a name="245" href="#245">245</a> <em>     * Create a MimeBodyPart with a textual description for human readers.</em>
+<a name="246" href="#246">246</a> <em>     *</em>
+<a name="247" href="#247">247</a> <em>     * @param originalMail</em>
+<a name="248" href="#248">248</a> <em>     * @return MimeBodyPart</em>
+<a name="249" href="#249">249</a> <em>     * @throws MessagingException</em>
+<a name="250" href="#250">250</a> <em>     */</em>
+<a name="251" href="#251">251</a>     <strong>protected</strong> MimeBodyPart createTextMsg(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail)
+<a name="252" href="#252">252</a>         throws MessagingException {
+<a name="253" href="#253">253</a>         MimeBodyPart part1 = <strong>new</strong> MimeBodyPart();
+<a name="254" href="#254">254</a>         StringWriter sout = <strong>new</strong> StringWriter();
+<a name="255" href="#255">255</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
+<a name="256" href="#256">256</a>         String machine = <span class="string">"[unknown]"</span>;
+<a name="257" href="#257">257</a>         <strong>try</strong> {
+<a name="258" href="#258">258</a>             InetAddress me = InetAddress.getLocalHost();
+<a name="259" href="#259">259</a>             machine = me.getHostName();
+<a name="260" href="#260">260</a>         } <strong>catch</strong>(Exception e){
+<a name="261" href="#261">261</a>             machine = <span class="string">"[address unknown]"</span>;
+<a name="262" href="#262">262</a>         }
+<a name="263" href="#263">263</a> 
+<a name="264" href="#264">264</a>         StringBuffer bounceBuffer =
+<a name="265" href="#265">265</a>             <strong>new</strong> StringBuffer(128).append (messageString);
+<a name="266" href="#266">266</a>         <strong>int</strong> m_idx_begin = messageString.indexOf(MACHINE_PATTERN);
+<a name="267" href="#267">267</a>         <strong>if</strong> (m_idx_begin != -1) {
+<a name="268" href="#268">268</a>             bounceBuffer.replace (m_idx_begin,
+<a name="269" href="#269">269</a>                                   m_idx_begin+MACHINE_PATTERN.length(),
+<a name="270" href="#270">270</a>                                   machine);
+<a name="271" href="#271">271</a>         }
+<a name="272" href="#272">272</a>         out.println(bounceBuffer.toString());
+<a name="273" href="#273">273</a>         out.println(<span class="string">"Failed recipient(s):"</span>);
+<a name="274" href="#274">274</a>         <strong>for</strong> (Iterator i = originalMail.getRecipients().iterator(); i.hasNext(); ) {
+<a name="275" href="#275">275</a>             out.println(i.next());
+<a name="276" href="#276">276</a>         }
+<a name="277" href="#277">277</a>         MessagingException ex = (MessagingException)originalMail.getAttribute(<span class="string">"delivery-error"</span>);
+<a name="278" href="#278">278</a>         out.println();
+<a name="279" href="#279">279</a>         out.println(<span class="string">"Error message:"</span>);
+<a name="280" href="#280">280</a>         out.println(getErrorMsg(ex));
+<a name="281" href="#281">281</a>         out.println();
 <a name="282" href="#282">282</a> 
-<a name="283" href="#283">283</a>     <em>/**<em>*</em></em>
-<a name="284" href="#284">284</a> <em>     * creates the DSN-bodypart for automated processing</em>
-<a name="285" href="#285">285</a> <em>     *</em>
-<a name="286" href="#286">286</a> <em>     * @param originalMail</em>
-<a name="287" href="#287">287</a> <em>     * @return MimeBodyPart dsn-bodypart</em>
-<a name="288" href="#288">288</a> <em>     * @throws MessagingException</em>
-<a name="289" href="#289">289</a> <em>     */</em>
-<a name="290" href="#290">290</a>     <strong>protected</strong> MimeBodyPart createDSN(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail) throws MessagingException {
-<a name="291" href="#291">291</a>         MimeBodyPart dsn = <strong>new</strong> MimeBodyPart();
-<a name="292" href="#292">292</a>         StringWriter sout = <strong>new</strong> StringWriter();
-<a name="293" href="#293">293</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
-<a name="294" href="#294">294</a>         String nameType = <strong>null</strong>;
-<a name="295" href="#295">295</a> 
-<a name="296" href="#296">296</a> 
-<a name="297" href="#297">297</a>         <em class="comment">////////////////////////</em>
-<a name="298" href="#298">298</a>         <em class="comment">// per message fields //</em>
-<a name="299" href="#299">299</a>         <em class="comment">////////////////////////</em>
+<a name="283" href="#283">283</a>         part1.setText(sout.toString());
+<a name="284" href="#284">284</a>         <strong>return</strong> part1;
+<a name="285" href="#285">285</a>     }
+<a name="286" href="#286">286</a> 
+<a name="287" href="#287">287</a>     <em>/**<em>*</em></em>
+<a name="288" href="#288">288</a> <em>     * creates the DSN-bodypart for automated processing</em>
+<a name="289" href="#289">289</a> <em>     *</em>
+<a name="290" href="#290">290</a> <em>     * @param originalMail</em>
+<a name="291" href="#291">291</a> <em>     * @return MimeBodyPart dsn-bodypart</em>
+<a name="292" href="#292">292</a> <em>     * @throws MessagingException</em>
+<a name="293" href="#293">293</a> <em>     */</em>
+<a name="294" href="#294">294</a>     <strong>protected</strong> MimeBodyPart createDSN(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail) throws MessagingException {
+<a name="295" href="#295">295</a>         MimeBodyPart dsn = <strong>new</strong> MimeBodyPart();
+<a name="296" href="#296">296</a>         StringWriter sout = <strong>new</strong> StringWriter();
+<a name="297" href="#297">297</a>         PrintWriter out = <strong>new</strong> PrintWriter(sout, <strong>true</strong>);
+<a name="298" href="#298">298</a>         String nameType = <strong>null</strong>;
+<a name="299" href="#299">299</a> 
 <a name="300" href="#300">300</a> 
-<a name="301" href="#301">301</a>         <em class="comment">//optional: envelope-id</em>
-<a name="302" href="#302">302</a>         <em class="comment">// TODO: Envelope-Id</em>
-<a name="303" href="#303">303</a>         <em class="comment">// The Original-Envelope-Id is NOT the same as the Message-Id from the header.</em>
-<a name="304" href="#304">304</a>         <em class="comment">// The Message-Id identifies the content of the message, while the Original-Envelope-ID</em>
-<a name="305" href="#305">305</a>         <em class="comment">// identifies the transaction in which the message is sent.  (see RFC3461)</em>
-<a name="306" href="#306">306</a>         <em class="comment">// so do NOT out.println("Original-Envelope-Id:"+originalMail.getMessage().getMessageID());</em>
-<a name="307" href="#307">307</a> 
-<a name="308" href="#308">308</a> 
-<a name="309" href="#309">309</a>         <em class="comment">//required: reporting MTA</em>
-<a name="310" href="#310">310</a>         <em class="comment">// this is always us, since we do not translate non-internet-mail</em>
-<a name="311" href="#311">311</a>         <em class="comment">// failure reports into DSNs</em>
-<a name="312" href="#312">312</a>         nameType = <span class="string">"dns"</span>;
-<a name="313" href="#313">313</a>         <strong>try</strong> {
-<a name="314" href="#314">314</a>             String myAddress =
-<a name="315" href="#315">315</a>                 (String)getMailetContext().getAttribute(Constants.HELLO_NAME);
-<a name="316" href="#316">316</a>             <em class="comment">/*</em>
-<a name="317" href="#317">317</a> <em class="comment">            String myAddress = InetAddress.getLocalHost().getCanonicalHostName();</em>
-<a name="318" href="#318">318</a> <em class="comment">            */</em>
-<a name="319" href="#319">319</a>             out.println(<span class="string">"Reporting-MTA: "</span>+nameType+<span class="string">"; "</span>+myAddress);
-<a name="320" href="#320">320</a>         } <strong>catch</strong>(Exception e){
-<a name="321" href="#321">321</a>             <em class="comment">// we should always know our address, so we shouldn't get here</em>
-<a name="322" href="#322">322</a>             log(<span class="string">"WARNING: sending DSN without required Reporting-MTA Address"</span>);
-<a name="323" href="#323">323</a>         }
-<a name="324" href="#324">324</a> 
-<a name="325" href="#325">325</a>         <em class="comment">//only for gateways to non-internet mail systems: dsn-gateway</em>
-<a name="326" href="#326">326</a> 
-<a name="327" href="#327">327</a>         <em class="comment">//optional: received from</em>
-<a name="328" href="#328">328</a>         out.println(<span class="string">"Received-From-MTA: "</span>+nameType+<span class="string">"; "</span>+originalMail.getRemoteHost());
-<a name="329" href="#329">329</a> 
-<a name="330" href="#330">330</a>         <em class="comment">//optional: Arrival-Date</em>
-<a name="331" href="#331">331</a> 
-<a name="332" href="#332">332</a>         <em class="comment">//////////////////////////</em>
-<a name="333" href="#333">333</a>         <em class="comment">// per recipient fields //</em>
-<a name="334" href="#334">334</a>         <em class="comment">//////////////////////////</em>
+<a name="301" href="#301">301</a>         <em class="comment">////////////////////////</em>
+<a name="302" href="#302">302</a>         <em class="comment">// per message fields //</em>
+<a name="303" href="#303">303</a>         <em class="comment">////////////////////////</em>
+<a name="304" href="#304">304</a> 
+<a name="305" href="#305">305</a>         <em class="comment">//optional: envelope-id</em>
+<a name="306" href="#306">306</a>         <em class="comment">// TODO: Envelope-Id</em>
+<a name="307" href="#307">307</a>         <em class="comment">// The Original-Envelope-Id is NOT the same as the Message-Id from the header.</em>
+<a name="308" href="#308">308</a>         <em class="comment">// The Message-Id identifies the content of the message, while the Original-Envelope-ID</em>
+<a name="309" href="#309">309</a>         <em class="comment">// identifies the transaction in which the message is sent.  (see RFC3461)</em>
+<a name="310" href="#310">310</a>         <em class="comment">// so do NOT out.println("Original-Envelope-Id:"+originalMail.getMessage().getMessageID());</em>
+<a name="311" href="#311">311</a> 
+<a name="312" href="#312">312</a> 
+<a name="313" href="#313">313</a>         <em class="comment">//required: reporting MTA</em>
+<a name="314" href="#314">314</a>         <em class="comment">// this is always us, since we do not translate non-internet-mail</em>
+<a name="315" href="#315">315</a>         <em class="comment">// failure reports into DSNs</em>
+<a name="316" href="#316">316</a>         nameType = <span class="string">"dns"</span>;
+<a name="317" href="#317">317</a>         <strong>try</strong> {
+<a name="318" href="#318">318</a>             String myAddress =
+<a name="319" href="#319">319</a>                 (String)getMailetContext().getAttribute(Constants.HELLO_NAME);
+<a name="320" href="#320">320</a>             <em class="comment">/*</em>
+<a name="321" href="#321">321</a> <em class="comment">            String myAddress = InetAddress.getLocalHost().getCanonicalHostName();</em>
+<a name="322" href="#322">322</a> <em class="comment">            */</em>
+<a name="323" href="#323">323</a>             out.println(<span class="string">"Reporting-MTA: "</span>+nameType+<span class="string">"; "</span>+myAddress);
+<a name="324" href="#324">324</a>         } <strong>catch</strong>(Exception e){
+<a name="325" href="#325">325</a>             <em class="comment">// we should always know our address, so we shouldn't get here</em>
+<a name="326" href="#326">326</a>             log(<span class="string">"WARNING: sending DSN without required Reporting-MTA Address"</span>);
+<a name="327" href="#327">327</a>         }
+<a name="328" href="#328">328</a> 
+<a name="329" href="#329">329</a>         <em class="comment">//only for gateways to non-internet mail systems: dsn-gateway</em>
+<a name="330" href="#330">330</a> 
+<a name="331" href="#331">331</a>         <em class="comment">//optional: received from</em>
+<a name="332" href="#332">332</a>         out.println(<span class="string">"Received-From-MTA: "</span>+nameType+<span class="string">"; "</span>+originalMail.getRemoteHost());
+<a name="333" href="#333">333</a> 
+<a name="334" href="#334">334</a>         <em class="comment">//optional: Arrival-Date</em>
 <a name="335" href="#335">335</a> 
-<a name="336" href="#336">336</a>         Iterator recipients = originalMail.getRecipients().iterator();
-<a name="337" href="#337">337</a>         <strong>while</strong> (recipients.hasNext())
-<a name="338" href="#338">338</a>             {
-<a name="339" href="#339">339</a>                 <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> rec = (MailAddress)recipients.next();
-<a name="340" href="#340">340</a>                 String addressType = <span class="string">"rfc822"</span>;
-<a name="341" href="#341">341</a> 
-<a name="342" href="#342">342</a>                 <em class="comment">//required: blank line</em>
-<a name="343" href="#343">343</a>                 out.println();
-<a name="344" href="#344">344</a> 
-<a name="345" href="#345">345</a>                 <em class="comment">//optional: original recipient (see RFC3461)</em>
-<a name="346" href="#346">346</a>                 <em class="comment">//out.println("Original-Recipient: "+addressType+"; "+ ??? );</em>
-<a name="347" href="#347">347</a> 
-<a name="348" href="#348">348</a>                 <em class="comment">//required: final recipient</em>
-<a name="349" href="#349">349</a>                 out.println(<span class="string">"Final-Recipient: "</span>+addressType+<span class="string">"; "</span>+rec.toString());
-<a name="350" href="#350">350</a> 
-<a name="351" href="#351">351</a>                 <em class="comment">//required: action</em>
-<a name="352" href="#352">352</a>                 <em class="comment">// alowed values: failed, delayed, delivered, relayed, expanded</em>
-<a name="353" href="#353">353</a>                 <em class="comment">// TODO: until now, we do error-bounces only</em>
-<a name="354" href="#354">354</a>                 out.println(<span class="string">"Action: failed"</span>);
-<a name="355" href="#355">355</a> 
-<a name="356" href="#356">356</a>                 <em class="comment">//required: status</em>
-<a name="357" href="#357">357</a>                 <em class="comment">// get Exception for getting status information</em>
-<a name="358" href="#358">358</a>                 <em class="comment">// TODO: it would be nice if the SMTP-handler would set a status attribute we can use here</em>
-<a name="359" href="#359">359</a>                 MessagingException ex =
-<a name="360" href="#360">360</a>                     (MessagingException) originalMail.getAttribute(<span class="string">"delivery-error"</span>);
-<a name="361" href="#361">361</a>                 out.println(<span class="string">"Status: "</span>+getStatus(ex));
-<a name="362" href="#362">362</a> 
-<a name="363" href="#363">363</a>                 <em class="comment">//optional: remote MTA</em>
-<a name="364" href="#364">364</a>                 <em class="comment">//to which MTA were we talking while the Error occured?</em>
-<a name="365" href="#365">365</a> 
-<a name="366" href="#366">366</a>                 <em class="comment">//optional: diagnostic-code</em>
-<a name="367" href="#367">367</a>                 String diagnosticType = <strong>null</strong>;
-<a name="368" href="#368">368</a>                 <em class="comment">// this typically is the return value received during smtp</em>
-<a name="369" href="#369">369</a>                 <em class="comment">// (or other transport) communication</em>
-<a name="370" href="#370">370</a>                 <em class="comment">// and should be stored as attribute by the smtp handler</em>
-<a name="371" href="#371">371</a>                 <em class="comment">// but until now we only have error-messages.</em>
-<a name="372" href="#372">372</a>                 String diagnosticCode = getErrorMsg(ex);
-<a name="373" href="#373">373</a>                 <em class="comment">// Sometimes this is the smtp diagnostic code,</em>
-<a name="374" href="#374">374</a>                 <em class="comment">// but James often gives us other messages</em>
-<a name="375" href="#375">375</a>                 Perl5Matcher diagMatcher = <strong>new</strong> Perl5Matcher();
-<a name="376" href="#376">376</a>                 <strong>boolean</strong> smtpDiagCodeAvailable =
-<a name="377" href="#377">377</a>                     diagMatcher.matches(diagnosticCode, diagPattern);
-<a name="378" href="#378">378</a>                 <strong>if</strong> (smtpDiagCodeAvailable){
-<a name="379" href="#379">379</a>                     diagnosticType = <span class="string">"smtp"</span>;
-<a name="380" href="#380">380</a>                 } <strong>else</strong> {
-<a name="381" href="#381">381</a>                     diagnosticType = <span class="string">"X-James"</span>;
-<a name="382" href="#382">382</a>                 }
-<a name="383" href="#383">383</a>                 out.println(<span class="string">"Diagnostic-Code: "</span>+diagnosticType+<span class="string">"; "</span>+diagnosticCode);
-<a name="384" href="#384">384</a>             
-<a name="385" href="#385">385</a>                 <em class="comment">//optional: last attempt</em>
-<a name="386" href="#386">386</a>                 out.println(<span class="string">"Last-Attempt-Date: "</span>+
-<a name="387" href="#387">387</a>                             rfc822DateFormat.format(originalMail.getLastUpdated()));
-<a name="388" href="#388">388</a> 
-<a name="389" href="#389">389</a>                 <em class="comment">//optional: retry until</em>
-<a name="390" href="#390">390</a>                 <em class="comment">//only for 'delayed' reports .. but we don't report this (at least until now)</em>
-<a name="391" href="#391">391</a> 
-<a name="392" href="#392">392</a>                 <em class="comment">//optional: extension fields</em>
-<a name="393" href="#393">393</a> 
-<a name="394" href="#394">394</a>             }
+<a name="336" href="#336">336</a>         <em class="comment">//////////////////////////</em>
+<a name="337" href="#337">337</a>         <em class="comment">// per recipient fields //</em>
+<a name="338" href="#338">338</a>         <em class="comment">//////////////////////////</em>
+<a name="339" href="#339">339</a> 
+<a name="340" href="#340">340</a>         Iterator recipients = originalMail.getRecipients().iterator();
+<a name="341" href="#341">341</a>         <strong>while</strong> (recipients.hasNext())
+<a name="342" href="#342">342</a>             {
+<a name="343" href="#343">343</a>                 <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> rec = (MailAddress)recipients.next();
+<a name="344" href="#344">344</a>                 String addressType = <span class="string">"rfc822"</span>;
+<a name="345" href="#345">345</a> 
+<a name="346" href="#346">346</a>                 <em class="comment">//required: blank line</em>
+<a name="347" href="#347">347</a>                 out.println();
+<a name="348" href="#348">348</a> 
+<a name="349" href="#349">349</a>                 <em class="comment">//optional: original recipient (see RFC3461)</em>
+<a name="350" href="#350">350</a>                 <em class="comment">//out.println("Original-Recipient: "+addressType+"; "+ ??? );</em>
+<a name="351" href="#351">351</a> 
+<a name="352" href="#352">352</a>                 <em class="comment">//required: final recipient</em>
+<a name="353" href="#353">353</a>                 out.println(<span class="string">"Final-Recipient: "</span>+addressType+<span class="string">"; "</span>+rec.toString());
+<a name="354" href="#354">354</a> 
+<a name="355" href="#355">355</a>                 <em class="comment">//required: action</em>
+<a name="356" href="#356">356</a>                 <em class="comment">// alowed values: failed, delayed, delivered, relayed, expanded</em>
+<a name="357" href="#357">357</a>                 <em class="comment">// TODO: until now, we do error-bounces only</em>
+<a name="358" href="#358">358</a>                 out.println(<span class="string">"Action: failed"</span>);
+<a name="359" href="#359">359</a> 
+<a name="360" href="#360">360</a>                 <em class="comment">//required: status</em>
+<a name="361" href="#361">361</a>                 <em class="comment">// get Exception for getting status information</em>
+<a name="362" href="#362">362</a>                 <em class="comment">// TODO: it would be nice if the SMTP-handler would set a status attribute we can use here</em>
+<a name="363" href="#363">363</a>                 MessagingException ex =
+<a name="364" href="#364">364</a>                     (MessagingException) originalMail.getAttribute(<span class="string">"delivery-error"</span>);
+<a name="365" href="#365">365</a>                 out.println(<span class="string">"Status: "</span>+getStatus(ex));
+<a name="366" href="#366">366</a> 
+<a name="367" href="#367">367</a>                 <em class="comment">//optional: remote MTA</em>
+<a name="368" href="#368">368</a>                 <em class="comment">//to which MTA were we talking while the Error occured?</em>
+<a name="369" href="#369">369</a> 
+<a name="370" href="#370">370</a>                 <em class="comment">//optional: diagnostic-code</em>
+<a name="371" href="#371">371</a>                 String diagnosticType = <strong>null</strong>;
+<a name="372" href="#372">372</a>                 <em class="comment">// this typically is the return value received during smtp</em>
+<a name="373" href="#373">373</a>                 <em class="comment">// (or other transport) communication</em>
+<a name="374" href="#374">374</a>                 <em class="comment">// and should be stored as attribute by the smtp handler</em>
+<a name="375" href="#375">375</a>                 <em class="comment">// but until now we only have error-messages.</em>
+<a name="376" href="#376">376</a>                 String diagnosticCode = getErrorMsg(ex);
+<a name="377" href="#377">377</a>                 <em class="comment">// Sometimes this is the smtp diagnostic code,</em>
+<a name="378" href="#378">378</a>                 <em class="comment">// but James often gives us other messages</em>
+<a name="379" href="#379">379</a>                 Perl5Matcher diagMatcher = <strong>new</strong> Perl5Matcher();
+<a name="380" href="#380">380</a>                 <strong>boolean</strong> smtpDiagCodeAvailable =
+<a name="381" href="#381">381</a>                     diagMatcher.matches(diagnosticCode, diagPattern);
+<a name="382" href="#382">382</a>                 <strong>if</strong> (smtpDiagCodeAvailable){
+<a name="383" href="#383">383</a>                     diagnosticType = <span class="string">"smtp"</span>;
+<a name="384" href="#384">384</a>                 } <strong>else</strong> {
+<a name="385" href="#385">385</a>                     diagnosticType = <span class="string">"X-James"</span>;
+<a name="386" href="#386">386</a>                 }
+<a name="387" href="#387">387</a>                 out.println(<span class="string">"Diagnostic-Code: "</span>+diagnosticType+<span class="string">"; "</span>+diagnosticCode);
+<a name="388" href="#388">388</a>             
+<a name="389" href="#389">389</a>                 <em class="comment">//optional: last attempt</em>
+<a name="390" href="#390">390</a>                 out.println(<span class="string">"Last-Attempt-Date: "</span>+
+<a name="391" href="#391">391</a>                             rfc822DateFormat.format(originalMail.getLastUpdated()));
+<a name="392" href="#392">392</a> 
+<a name="393" href="#393">393</a>                 <em class="comment">//optional: retry until</em>
+<a name="394" href="#394">394</a>                 <em class="comment">//only for 'delayed' reports .. but we don't report this (at least until now)</em>
 <a name="395" href="#395">395</a> 
-<a name="396" href="#396">396</a> 
-<a name="397" href="#397">397</a>         <em class="comment">// Changed this from rfc822 handling to text/plain</em>
-<a name="398" href="#398">398</a>         <em class="comment">// It should be handled correctly as delivery-status but it</em>
-<a name="399" href="#399">399</a>         <em class="comment">// is better text/plain than rfc822 (rfc822 add message headers not</em>
-<a name="400" href="#400">400</a>         <em class="comment">// allowed in the delivery-status.</em>
-<a name="401" href="#401">401</a>         <em class="comment">// text/plain does not support rfc822 header encoding that we</em>
-<a name="402" href="#402">402</a>         <em class="comment">// should support here.</em>
-<a name="403" href="#403">403</a>         dsn.setContent(sout.toString(), <span class="string">"text/plain"</span>);
-<a name="404" href="#404">404</a>         dsn.setHeader(<span class="string">"Content-Type"</span>,<span class="string">"message/delivery-status"</span>);
-<a name="405" href="#405">405</a>         dsn.setDescription(<span class="string">"Delivery Status Notification"</span>);
-<a name="406" href="#406">406</a>         dsn.setFileName(<span class="string">"status.dat"</span>);
-<a name="407" href="#407">407</a>         <strong>return</strong> dsn;
-<a name="408" href="#408">408</a>     }
-<a name="409" href="#409">409</a> 
-<a name="410" href="#410">410</a>     <em>/**<em>*</em></em>
-<a name="411" href="#411">411</a> <em>     * Create a MimeBodyPart with the original Mail as Attachment</em>
-<a name="412" href="#412">412</a> <em>     *</em>
-<a name="413" href="#413">413</a> <em>     * @param originalMail</em>
-<a name="414" href="#414">414</a> <em>     * @return MimeBodyPart</em>
-<a name="415" href="#415">415</a> <em>     * @throws MessagingException</em>
-<a name="416" href="#416">416</a> <em>     */</em>
-<a name="417" href="#417">417</a>     <strong>protected</strong> MimeBodyPart createAttachedOriginal(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail, <strong>int</strong> attachmentType)
-<a name="418" href="#418">418</a>         throws MessagingException {
-<a name="419" href="#419">419</a>         MimeBodyPart part = <strong>new</strong> MimeBodyPart();
-<a name="420" href="#420">420</a>         MimeMessage originalMessage = originalMail.getMessage();
-<a name="421" href="#421">421</a>         
-<a name="422" href="#422">422</a>         <strong>if</strong> (attachmentType == HEADS) {
-<a name="423" href="#423">423</a>             part.setContent(getMessageHeaders(originalMessage), <span class="string">"text/plain"</span>);
-<a name="424" href="#424">424</a>             part.setHeader(<span class="string">"Content-Type"</span>,<span class="string">"text/rfc822-headers"</span>);
-<a name="425" href="#425">425</a>         } <strong>else</strong> {
-<a name="426" href="#426">426</a>             part.setContent(originalMessage, <span class="string">"message/rfc822"</span>);
-<a name="427" href="#427">427</a>         }
-<a name="428" href="#428">428</a>         
-<a name="429" href="#429">429</a>         <strong>if</strong> ((originalMessage.getSubject() != <strong>null</strong>) &amp;&amp; 
-<a name="430" href="#430">430</a>             (originalMessage.getSubject().trim().length() > 0)) {
-<a name="431" href="#431">431</a>             part.setFileName(originalMessage.getSubject().trim());
-<a name="432" href="#432">432</a>         } <strong>else</strong> {
-<a name="433" href="#433">433</a>             part.setFileName(<span class="string">"No Subject"</span>);
-<a name="434" href="#434">434</a>         }
-<a name="435" href="#435">435</a>         part.setDisposition(<span class="string">"Attachment"</span>);
-<a name="436" href="#436">436</a>         <strong>return</strong> part;
-<a name="437" href="#437">437</a>     }
-<a name="438" href="#438">438</a> 
-<a name="439" href="#439">439</a>     <em>/**<em>*</em></em>
-<a name="440" href="#440">440</a> <em>     * Guessing status code by the exception provided.</em>
-<a name="441" href="#441">441</a> <em>     * This method should use the status attribute when the</em>
-<a name="442" href="#442">442</a> <em>     * SMTP-handler somewhen provides it</em>
-<a name="443" href="#443">443</a> <em>     *</em>
-<a name="444" href="#444">444</a> <em>     * @param MessagingException</em>
-<a name="445" href="#445">445</a> <em>     * @return status code</em>
-<a name="446" href="#446">446</a> <em>     */</em>
-<a name="447" href="#447">447</a>     <strong>protected</strong> String getStatus(MessagingException me) {
-<a name="448" href="#448">448</a>         <strong>if</strong> (me.getNextException() == <strong>null</strong>) {
-<a name="449" href="#449">449</a>             String mess = me.getMessage();
-<a name="450" href="#450">450</a>             Perl5Matcher m = <strong>new</strong> Perl5Matcher();
-<a name="451" href="#451">451</a>             StringBuffer sb = <strong>new</strong> StringBuffer();
-<a name="452" href="#452">452</a>             <strong>if</strong> (m.matches(mess, statusPattern)) {
-<a name="453" href="#453">453</a>                 MatchResult res = m.getMatch();
-<a name="454" href="#454">454</a>                 sb.append(res.group(1));
-<a name="455" href="#455">455</a>                 <strong>return</strong> sb.toString();
-<a name="456" href="#456">456</a>             }
-<a name="457" href="#457">457</a>             <em class="comment">// bad destination system adress</em>
-<a name="458" href="#458">458</a>             <strong>if</strong> (mess.startsWith(<span class="string">"There are no DNS entries for the hostname"</span>))
-<a name="459" href="#459">459</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYSTEM);
-<a name="460" href="#460">460</a> 
-<a name="461" href="#461">461</a>             <em class="comment">// no answer from host (4.4.1) or</em>
-<a name="462" href="#462">462</a>             <em class="comment">// system not accepting network messages (4.3.2), lets guess ...</em>
-<a name="463" href="#463">463</a>             <strong>if</strong> (mess.equals(<span class="string">"No mail server(s) available at this time."</span>))
-<a name="464" href="#464">464</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_NO_ANSWER);
-<a name="465" href="#465">465</a> 
-<a name="466" href="#466">466</a>             <em class="comment">// other/unknown error</em>
-<a name="467" href="#467">467</a>             <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
-<a name="468" href="#468">468</a>         } <strong>else</strong> {
-<a name="469" href="#469">469</a>             Exception ex1 = me.getNextException();
-<a name="470" href="#470">470</a>             Perl5Matcher m = <strong>new</strong> Perl5Matcher ();
-<a name="471" href="#471">471</a>             StringBuffer sb = <strong>new</strong> StringBuffer();
-<a name="472" href="#472">472</a>             <strong>if</strong> (m.matches(ex1.getMessage(), statusPattern)) {
-<a name="473" href="#473">473</a>                 MatchResult res = m.getMatch();
-<a name="474" href="#474">474</a>                 sb.append(res.group(1));
-<a name="475" href="#475">475</a>                 <strong>return</strong> sb.toString();
-<a name="476" href="#476">476</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof SendFailedException) {
-<a name="477" href="#477">477</a>                 <em class="comment">// other/undefined protocol status</em>
-<a name="478" href="#478">478</a>                 <strong>int</strong> smtpCode = 0;
-<a name="479" href="#479">479</a>                 <strong>try</strong> {
-<a name="480" href="#480">480</a>                     smtpCode = Integer.parseInt(ex1.getMessage().substring(0,3));
-<a name="481" href="#481">481</a>                 } <strong>catch</strong>(NumberFormatException e) {
-<a name="482" href="#482">482</a>                 }
-<a name="483" href="#483">483</a> 
-<a name="484" href="#484">484</a>                 <strong>switch</strong> (smtpCode) {
-<a name="485" href="#485">485</a>                 
-<a name="486" href="#486">486</a>                     <em class="comment">// Req mail action not taken: mailbox unavailable</em>
-<a name="487" href="#487">487</a>                     <strong>case</strong> 450: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.MAILBOX_OTHER);
-<a name="488" href="#488">488</a>                     <em class="comment">// Req action aborted: local error in processing</em>
-<a name="489" href="#489">489</a>                     <strong>case</strong> 451: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.SYSTEM_OTHER);
-<a name="490" href="#490">490</a>                     <em class="comment">// Req action not taken: insufficient sys storage</em>
-<a name="491" href="#491">491</a>                     <strong>case</strong> 452: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.SYSTEM_FULL);
-<a name="492" href="#492">492</a>                     <em class="comment">// Syntax error, command unrecognized</em>
-<a name="493" href="#493">493</a>                     <strong>case</strong> 500: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_SYNTAX);
-<a name="494" href="#494">494</a>                     <em class="comment">// Syntax error in parameters or arguments</em>
-<a name="495" href="#495">495</a>                     <strong>case</strong> 501: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_ARG);
-<a name="496" href="#496">496</a>                     <em class="comment">// Command not implemented</em>
-<a name="497" href="#497">497</a>                     <strong>case</strong> 502: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_CMD);
-<a name="498" href="#498">498</a>                     <em class="comment">// Bad sequence of commands</em>
-<a name="499" href="#499">499</a>                     <strong>case</strong> 503: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_CMD);
-<a name="500" href="#500">500</a>                     <em class="comment">// Command parameter not implemented</em>
-<a name="501" href="#501">501</a>                     <strong>case</strong> 504: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_ARG);
-<a name="502" href="#502">502</a>                     <em class="comment">// Req mail action not taken: mailbox unavailable</em>
-<a name="503" href="#503">503</a>                     <strong>case</strong> 550: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.MAILBOX_OTHER);
-<a name="504" href="#504">504</a>                     <em class="comment">// User not local; please try &lt;...></em>
-<a name="505" href="#505">505</a>                     <em class="comment">// 5.7.1 Select another host to act as your forwarder</em>
-<a name="506" href="#506">506</a>                     <strong>case</strong> 551: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.SECURITY_AUTH);
-<a name="507" href="#507">507</a>                     <em class="comment">// Req mail action aborted: exceeded storage alloc</em>
-<a name="508" href="#508">508</a>                     <strong>case</strong> 552: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.MAILBOX_FULL);
-<a name="509" href="#509">509</a>                     <em class="comment">// Req action not taken: mailbox name not allowed</em>
-<a name="510" href="#510">510</a>                     <strong>case</strong> 553: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYNTAX);
-<a name="511" href="#511">511</a>                     <em class="comment">// Transaction failed</em>
-<a name="512" href="#512">512</a>                     <strong>case</strong> 554: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
-<a name="513" href="#513">513</a>                     <em class="comment">// Not authorized. This is not an SMTP code, but many server use it.</em>
-<a name="514" href="#514">514</a>                     <strong>case</strong> 571: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.SECURITY_AUTH);
-<a name="515" href="#515">515</a>                     
-<a name="516" href="#516">516</a>                     <strong>default</strong>:
-<a name="517" href="#517">517</a>                         <em class="comment">// if we get an smtp returncode starting with 4</em>
-<a name="518" href="#518">518</a>                         <em class="comment">// it is an persistent transient error, else permanent</em>
-<a name="519" href="#519">519</a>                         <strong>if</strong> (ex1.getMessage().startsWith(<span class="string">"4"</span>)) {
-<a name="520" href="#520">520</a>                             <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.DELIVERY_OTHER);
-<a name="521" href="#521">521</a>                         } <strong>else</strong> <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_OTHER);
-<a name="522" href="#522">522</a>                 }
-<a name="523" href="#523">523</a> 
-<a name="524" href="#524">524</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof UnknownHostException) {
-<a name="525" href="#525">525</a>                 <em class="comment">// bad destination system address</em>
-<a name="526" href="#526">526</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYSTEM);
-<a name="527" href="#527">527</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof ConnectException) {
-<a name="528" href="#528">528</a>                 <em class="comment">// bad connection</em>
-<a name="529" href="#529">529</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_CONNECTION);
-<a name="530" href="#530">530</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof SocketException) {
-<a name="531" href="#531">531</a>                 <em class="comment">// bad connection</em>
-<a name="532" href="#532">532</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_CONNECTION);
-<a name="533" href="#533">533</a>             } <strong>else</strong> {
-<a name="534" href="#534">534</a>                 <em class="comment">// other/undefined/unknown error</em>
-<a name="535" href="#535">535</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
-<a name="536" href="#536">536</a>             }
-<a name="537" href="#537">537</a>         }
-<a name="538" href="#538">538</a>     }
-<a name="539" href="#539">539</a> 
-<a name="540" href="#540">540</a>     <em>/**<em>*</em></em>
-<a name="541" href="#541">541</a> <em>     * Utility method for getting the error message from the (nested) exception.</em>
-<a name="542" href="#542">542</a> <em>     * @param MessagingException</em>
-<a name="543" href="#543">543</a> <em>     * @return error message</em>
-<a name="544" href="#544">544</a> <em>     */</em>
-<a name="545" href="#545">545</a>     <strong>protected</strong> String getErrorMsg(MessagingException me) {
-<a name="546" href="#546">546</a>         <strong>if</strong> (me.getNextException() == <strong>null</strong>) {
-<a name="547" href="#547">547</a>             <strong>return</strong> me.getMessage().trim();
-<a name="548" href="#548">548</a>         } <strong>else</strong> {
-<a name="549" href="#549">549</a>             Exception ex1 = me.getNextException();
-<a name="550" href="#550">550</a>             <strong>return</strong> ex1.getMessage().trim();
-<a name="551" href="#551">551</a>         }
-<a name="552" href="#552">552</a>     }
-<a name="553" href="#553">553</a> 
-<a name="554" href="#554">554</a>     <em>/**<em>*</em></em>
-<a name="555" href="#555">555</a> <em>     * Utility method for obtaining a string representation of an array of Objects.</em>
-<a name="556" href="#556">556</a> <em>     */</em>
-<a name="557" href="#557">557</a>     <strong>private</strong> String arrayToString(Object[] array) {
-<a name="558" href="#558">558</a>         <strong>if</strong> (array == <strong>null</strong>) {
-<a name="559" href="#559">559</a>             <strong>return</strong> <span class="string">"null"</span>;
-<a name="560" href="#560">560</a>         }
-<a name="561" href="#561">561</a>         StringBuffer sb = <strong>new</strong> StringBuffer(1024);
-<a name="562" href="#562">562</a>         sb.append(<span class="string">"["</span>);
-<a name="563" href="#563">563</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; array.length; i++) {
-<a name="564" href="#564">564</a>             <strong>if</strong> (i > 0) {
-<a name="565" href="#565">565</a>                 sb.append(<span class="string">","</span>);
-<a name="566" href="#566">566</a>             }
-<a name="567" href="#567">567</a>             sb.append(array[i]);
-<a name="568" href="#568">568</a>         }
-<a name="569" href="#569">569</a>         sb.append(<span class="string">"]"</span>);
-<a name="570" href="#570">570</a>         <strong>return</strong> sb.toString();
-<a name="571" href="#571">571</a>     }
-<a name="572" href="#572">572</a> 
-<a name="573" href="#573">573</a>     <em>/**<em>*</em></em>
-<a name="574" href="#574">574</a> <em>     * Create a unique new primary key name.</em>
-<a name="575" href="#575">575</a> <em>     *</em>
-<a name="576" href="#576">576</a> <em>     * @param mail the mail to use as the basis for the new mail name</em>
-<a name="577" href="#577">577</a> <em>     * @return a new name</em>
-<a name="578" href="#578">578</a> <em>     */</em>
-<a name="579" href="#579">579</a>     <strong>protected</strong> String newName(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException {
-<a name="580" href="#580">580</a>         String oldName = mail.getName();
-<a name="581" href="#581">581</a> 
-<a name="582" href="#582">582</a>         <em class="comment">// Checking if the original mail name is too long, perhaps because of a</em>
-<a name="583" href="#583">583</a>         <em class="comment">// loop caused by a configuration error.</em>
-<a name="584" href="#584">584</a>         <em class="comment">// it could cause a "null pointer exception" in AvalonMailRepository much</em>
-<a name="585" href="#585">585</a>         <em class="comment">// harder to understand.</em>
-<a name="586" href="#586">586</a>         <strong>if</strong> (oldName.length() > 76) {
-<a name="587" href="#587">587</a>             <strong>int</strong> count = 0;
-<a name="588" href="#588">588</a>             <strong>int</strong> index = 0;
-<a name="589" href="#589">589</a>             <strong>while</strong> ((index = oldName.indexOf('!', index + 1)) >= 0) {
-<a name="590" href="#590">590</a>                 count++;
-<a name="591" href="#591">591</a>             }
-<a name="592" href="#592">592</a>             <em class="comment">// It looks like a configuration loop. It's better to stop.</em>
-<a name="593" href="#593">593</a>             <strong>if</strong> (count > 7) {
-<a name="594" href="#594">594</a>                 <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Unable to create a new message name: too long."</span>
-<a name="595" href="#595">595</a>                                              + <span class="string">" Possible loop in config.xml."</span>);
-<a name="596" href="#596">596</a>             }
-<a name="597" href="#597">597</a>             <strong>else</strong> {
-<a name="598" href="#598">598</a>                 oldName = oldName.substring(0, 76);
-<a name="599" href="#599">599</a>             }
-<a name="600" href="#600">600</a>         }
-<a name="601" href="#601">601</a> 
-<a name="602" href="#602">602</a>         StringBuffer nameBuffer =
-<a name="603" href="#603">603</a>             <strong>new</strong> StringBuffer(64)
-<a name="604" href="#604">604</a>             .append(oldName)
-<a name="605" href="#605">605</a>             .append(<span class="string">"-!"</span>)
-<a name="606" href="#606">606</a>             .append(random.nextInt(1048576));
-<a name="607" href="#607">607</a>         <strong>return</strong> nameBuffer.toString();
-<a name="608" href="#608">608</a>     }
-<a name="609" href="#609">609</a> 
-<a name="610" href="#610">610</a> 
-<a name="611" href="#611">611</a> 
-<a name="612" href="#612">612</a>     <strong>public</strong> String getMailetInfo() {
-<a name="613" href="#613">613</a>         <strong>return</strong> <span class="string">"DSNBounce Mailet"</span>;
-<a name="614" href="#614">614</a>     }
-<a name="615" href="#615">615</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
-<a name="616" href="#616">616</a>     <em class="comment">/*<em class="comment"> ****************** Begin of getX and setX methods ****************** */</em></em>
-<a name="617" href="#617">617</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
-<a name="618" href="#618">618</a> 
-<a name="619" href="#619">619</a>     <em>/**<em>* Gets the expected init parameters.  */</em></em>
-<a name="620" href="#620">620</a>     <strong>protected</strong>  String[] getAllowedInitParameters() {
-<a name="621" href="#621">621</a>         String[] allowedArray = {
-<a name="622" href="#622">622</a>             <span class="string">"debug"</span>,
-<a name="623" href="#623">623</a>             <span class="string">"passThrough"</span>,
-<a name="624" href="#624">624</a>             <span class="string">"messageString"</span>,
-<a name="625" href="#625">625</a>             <span class="string">"attachment"</span>,
-<a name="626" href="#626">626</a>             <span class="string">"sender"</span>,
-<a name="627" href="#627">627</a>             <span class="string">"prefix"</span>
-<a name="628" href="#628">628</a>         };
-<a name="629" href="#629">629</a>         <strong>return</strong> allowedArray;
-<a name="630" href="#630">630</a>     }
-<a name="631" href="#631">631</a> 
-<a name="632" href="#632">632</a>     <em>/**<em>*</em></em>
-<a name="633" href="#633">633</a> <em>     * @return the &lt;CODE>attachment&lt;/CODE> init parameter, or &lt;CODE>MESSAGE&lt;/CODE> if missing</em>
-<a name="634" href="#634">634</a> <em>     */</em>
-<a name="635" href="#635">635</a>     <strong>protected</strong> <strong>int</strong> getAttachmentType() throws MessagingException {
-<a name="636" href="#636">636</a>         <strong>return</strong> getTypeCode(getInitParameter(<span class="string">"attachment"</span>,<span class="string">"message"</span>));
-<a name="637" href="#637">637</a>     }
-<a name="638" href="#638">638</a> 
-<a name="639" href="#639">639</a> 
-<a name="640" href="#640">640</a>     <em>/**<em>*</em></em>
-<a name="641" href="#641">641</a> <em>     * @return &lt;CODE>SpecialAddress.REVERSE_PATH&lt;/CODE></em>
-<a name="642" href="#642">642</a> <em>     */</em>
-<a name="643" href="#643">643</a>     <strong>protected</strong> Collection getRecipients() {
-<a name="644" href="#644">644</a>         Collection <strong>new</strong>Recipients = <strong>new</strong> HashSet();
-<a name="645" href="#645">645</a>         newRecipients.add(SpecialAddress.REVERSE_PATH);
-<a name="646" href="#646">646</a>         <strong>return</strong> newRecipients;
-<a name="647" href="#647">647</a>     }
-<a name="648" href="#648">648</a> 
-<a name="649" href="#649">649</a>     <em>/**<em>*</em></em>
-<a name="650" href="#650">650</a> <em>     * @return &lt;CODE>SpecialAddress.REVERSE_PATH&lt;/CODE></em>
-<a name="651" href="#651">651</a> <em>     */</em>
-<a name="652" href="#652">652</a>     <strong>protected</strong> InternetAddress[] getTo() {
-<a name="653" href="#653">653</a>         InternetAddress[] apparentlyTo = <strong>new</strong> InternetAddress[1];
-<a name="654" href="#654">654</a>         apparentlyTo[0] = SpecialAddress.REVERSE_PATH.toInternetAddress();
-<a name="655" href="#655">655</a>         <strong>return</strong> apparentlyTo;
-<a name="656" href="#656">656</a>     }
-<a name="657" href="#657">657</a> 
-<a name="658" href="#658">658</a>     <em>/**<em>*</em></em>
-<a name="659" href="#659">659</a> <em>     * @return &lt;CODE>SpecialAddress.NULL&lt;/CODE> (the meaning of bounce)</em>
-<a name="660" href="#660">660</a> <em>     */</em>
-<a name="661" href="#661">661</a>     <strong>protected</strong> <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> getReversePath(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail) {
-<a name="662" href="#662">662</a>         <strong>return</strong> SpecialAddress.NULL;
-<a name="663" href="#663">663</a>     }
-<a name="664" href="#664">664</a> 
-<a name="665" href="#665">665</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
-<a name="666" href="#666">666</a>     <em class="comment">/*<em class="comment"> ******************* End of getX and setX methods ******************* */</em></em>
-<a name="667" href="#667">667</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
+<a name="396" href="#396">396</a>                 <em class="comment">//optional: extension fields</em>
+<a name="397" href="#397">397</a> 
+<a name="398" href="#398">398</a>             }
+<a name="399" href="#399">399</a> 
+<a name="400" href="#400">400</a> 
+<a name="401" href="#401">401</a>         <em class="comment">// Changed this from rfc822 handling to text/plain</em>
+<a name="402" href="#402">402</a>         <em class="comment">// It should be handled correctly as delivery-status but it</em>
+<a name="403" href="#403">403</a>         <em class="comment">// is better text/plain than rfc822 (rfc822 add message headers not</em>
+<a name="404" href="#404">404</a>         <em class="comment">// allowed in the delivery-status.</em>
+<a name="405" href="#405">405</a>         <em class="comment">// text/plain does not support rfc822 header encoding that we</em>
+<a name="406" href="#406">406</a>         <em class="comment">// should support here.</em>
+<a name="407" href="#407">407</a>         dsn.setContent(sout.toString(), <span class="string">"text/plain"</span>);
+<a name="408" href="#408">408</a>         dsn.setHeader(<span class="string">"Content-Type"</span>,<span class="string">"message/delivery-status"</span>);
+<a name="409" href="#409">409</a>         dsn.setDescription(<span class="string">"Delivery Status Notification"</span>);
+<a name="410" href="#410">410</a>         dsn.setFileName(<span class="string">"status.dat"</span>);
+<a name="411" href="#411">411</a>         <strong>return</strong> dsn;
+<a name="412" href="#412">412</a>     }
+<a name="413" href="#413">413</a> 
+<a name="414" href="#414">414</a>     <em>/**<em>*</em></em>
+<a name="415" href="#415">415</a> <em>     * Create a MimeBodyPart with the original Mail as Attachment</em>
+<a name="416" href="#416">416</a> <em>     *</em>
+<a name="417" href="#417">417</a> <em>     * @param originalMail</em>
+<a name="418" href="#418">418</a> <em>     * @return MimeBodyPart</em>
+<a name="419" href="#419">419</a> <em>     * @throws MessagingException</em>
+<a name="420" href="#420">420</a> <em>     */</em>
+<a name="421" href="#421">421</a>     <strong>protected</strong> MimeBodyPart createAttachedOriginal(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail, <strong>int</strong> attachmentType)
+<a name="422" href="#422">422</a>         throws MessagingException {
+<a name="423" href="#423">423</a>         MimeBodyPart part = <strong>new</strong> MimeBodyPart();
+<a name="424" href="#424">424</a>         MimeMessage originalMessage = originalMail.getMessage();
+<a name="425" href="#425">425</a>         
+<a name="426" href="#426">426</a>         <strong>if</strong> (attachmentType == HEADS) {
+<a name="427" href="#427">427</a>             part.setContent(getMessageHeaders(originalMessage), <span class="string">"text/plain"</span>);
+<a name="428" href="#428">428</a>             part.setHeader(<span class="string">"Content-Type"</span>,<span class="string">"text/rfc822-headers"</span>);
+<a name="429" href="#429">429</a>         } <strong>else</strong> {
+<a name="430" href="#430">430</a>             part.setContent(originalMessage, <span class="string">"message/rfc822"</span>);
+<a name="431" href="#431">431</a>         }
+<a name="432" href="#432">432</a>         
+<a name="433" href="#433">433</a>         <strong>if</strong> ((originalMessage.getSubject() != <strong>null</strong>) &amp;&amp; 
+<a name="434" href="#434">434</a>             (originalMessage.getSubject().trim().length() > 0)) {
+<a name="435" href="#435">435</a>             part.setFileName(originalMessage.getSubject().trim());
+<a name="436" href="#436">436</a>         } <strong>else</strong> {
+<a name="437" href="#437">437</a>             part.setFileName(<span class="string">"No Subject"</span>);
+<a name="438" href="#438">438</a>         }
+<a name="439" href="#439">439</a>         part.setDisposition(<span class="string">"Attachment"</span>);
+<a name="440" href="#440">440</a>         <strong>return</strong> part;
+<a name="441" href="#441">441</a>     }
+<a name="442" href="#442">442</a> 
+<a name="443" href="#443">443</a>     <em>/**<em>*</em></em>
+<a name="444" href="#444">444</a> <em>     * Guessing status code by the exception provided.</em>
+<a name="445" href="#445">445</a> <em>     * This method should use the status attribute when the</em>
+<a name="446" href="#446">446</a> <em>     * SMTP-handler somewhen provides it</em>
+<a name="447" href="#447">447</a> <em>     *</em>
+<a name="448" href="#448">448</a> <em>     * @param MessagingException</em>
+<a name="449" href="#449">449</a> <em>     * @return status code</em>
+<a name="450" href="#450">450</a> <em>     */</em>
+<a name="451" href="#451">451</a>     <strong>protected</strong> String getStatus(MessagingException me) {
+<a name="452" href="#452">452</a>         <strong>if</strong> (me.getNextException() == <strong>null</strong>) {
+<a name="453" href="#453">453</a>             String mess = me.getMessage();
+<a name="454" href="#454">454</a>             Perl5Matcher m = <strong>new</strong> Perl5Matcher();
+<a name="455" href="#455">455</a>             StringBuffer sb = <strong>new</strong> StringBuffer();
+<a name="456" href="#456">456</a>             <strong>if</strong> (m.matches(mess, statusPattern)) {
+<a name="457" href="#457">457</a>                 MatchResult res = m.getMatch();
+<a name="458" href="#458">458</a>                 sb.append(res.group(1));
+<a name="459" href="#459">459</a>                 <strong>return</strong> sb.toString();
+<a name="460" href="#460">460</a>             }
+<a name="461" href="#461">461</a>             <em class="comment">// bad destination system adress</em>
+<a name="462" href="#462">462</a>             <strong>if</strong> (mess.startsWith(<span class="string">"There are no DNS entries for the hostname"</span>))
+<a name="463" href="#463">463</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYSTEM);
+<a name="464" href="#464">464</a> 
+<a name="465" href="#465">465</a>             <em class="comment">// no answer from host (4.4.1) or</em>
+<a name="466" href="#466">466</a>             <em class="comment">// system not accepting network messages (4.3.2), lets guess ...</em>
+<a name="467" href="#467">467</a>             <strong>if</strong> (mess.equals(<span class="string">"No mail server(s) available at this time."</span>))
+<a name="468" href="#468">468</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_NO_ANSWER);
+<a name="469" href="#469">469</a> 
+<a name="470" href="#470">470</a>             <em class="comment">// other/unknown error</em>
+<a name="471" href="#471">471</a>             <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
+<a name="472" href="#472">472</a>         } <strong>else</strong> {
+<a name="473" href="#473">473</a>             Exception ex1 = me.getNextException();
+<a name="474" href="#474">474</a>             Perl5Matcher m = <strong>new</strong> Perl5Matcher ();
+<a name="475" href="#475">475</a>             StringBuffer sb = <strong>new</strong> StringBuffer();
+<a name="476" href="#476">476</a>             <strong>if</strong> (m.matches(ex1.getMessage(), statusPattern)) {
+<a name="477" href="#477">477</a>                 MatchResult res = m.getMatch();
+<a name="478" href="#478">478</a>                 sb.append(res.group(1));
+<a name="479" href="#479">479</a>                 <strong>return</strong> sb.toString();
+<a name="480" href="#480">480</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof SendFailedException) {
+<a name="481" href="#481">481</a>                 <em class="comment">// other/undefined protocol status</em>
+<a name="482" href="#482">482</a>                 <strong>int</strong> smtpCode = 0;
+<a name="483" href="#483">483</a>                 <strong>try</strong> {
+<a name="484" href="#484">484</a>                     smtpCode = Integer.parseInt(ex1.getMessage().substring(0,3));
+<a name="485" href="#485">485</a>                 } <strong>catch</strong>(NumberFormatException e) {
+<a name="486" href="#486">486</a>                 }
+<a name="487" href="#487">487</a> 
+<a name="488" href="#488">488</a>                 <strong>switch</strong> (smtpCode) {
+<a name="489" href="#489">489</a>                 
+<a name="490" href="#490">490</a>                     <em class="comment">// Req mail action not taken: mailbox unavailable</em>
+<a name="491" href="#491">491</a>                     <strong>case</strong> 450: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.MAILBOX_OTHER);
+<a name="492" href="#492">492</a>                     <em class="comment">// Req action aborted: local error in processing</em>
+<a name="493" href="#493">493</a>                     <strong>case</strong> 451: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.SYSTEM_OTHER);
+<a name="494" href="#494">494</a>                     <em class="comment">// Req action not taken: insufficient sys storage</em>
+<a name="495" href="#495">495</a>                     <strong>case</strong> 452: <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.SYSTEM_FULL);
+<a name="496" href="#496">496</a>                     <em class="comment">// Syntax error, command unrecognized</em>
+<a name="497" href="#497">497</a>                     <strong>case</strong> 500: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_SYNTAX);
+<a name="498" href="#498">498</a>                     <em class="comment">// Syntax error in parameters or arguments</em>
+<a name="499" href="#499">499</a>                     <strong>case</strong> 501: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_ARG);
+<a name="500" href="#500">500</a>                     <em class="comment">// Command not implemented</em>
+<a name="501" href="#501">501</a>                     <strong>case</strong> 502: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_CMD);
+<a name="502" href="#502">502</a>                     <em class="comment">// Bad sequence of commands</em>
+<a name="503" href="#503">503</a>                     <strong>case</strong> 503: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_CMD);
+<a name="504" href="#504">504</a>                     <em class="comment">// Command parameter not implemented</em>
+<a name="505" href="#505">505</a>                     <strong>case</strong> 504: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_INVALID_ARG);
+<a name="506" href="#506">506</a>                     <em class="comment">// Req mail action not taken: mailbox unavailable</em>
+<a name="507" href="#507">507</a>                     <strong>case</strong> 550: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.MAILBOX_OTHER);
+<a name="508" href="#508">508</a>                     <em class="comment">// User not local; please try &lt;...></em>
+<a name="509" href="#509">509</a>                     <em class="comment">// 5.7.1 Select another host to act as your forwarder</em>
+<a name="510" href="#510">510</a>                     <strong>case</strong> 551: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.SECURITY_AUTH);
+<a name="511" href="#511">511</a>                     <em class="comment">// Req mail action aborted: exceeded storage alloc</em>
+<a name="512" href="#512">512</a>                     <strong>case</strong> 552: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.MAILBOX_FULL);
+<a name="513" href="#513">513</a>                     <em class="comment">// Req action not taken: mailbox name not allowed</em>
+<a name="514" href="#514">514</a>                     <strong>case</strong> 553: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYNTAX);
+<a name="515" href="#515">515</a>                     <em class="comment">// Transaction failed</em>
+<a name="516" href="#516">516</a>                     <strong>case</strong> 554: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
+<a name="517" href="#517">517</a>                     <em class="comment">// Not authorized. This is not an SMTP code, but many server use it.</em>
+<a name="518" href="#518">518</a>                     <strong>case</strong> 571: <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.SECURITY_AUTH);
+<a name="519" href="#519">519</a>                     
+<a name="520" href="#520">520</a>                     <strong>default</strong>:
+<a name="521" href="#521">521</a>                         <em class="comment">// if we get an smtp returncode starting with 4</em>
+<a name="522" href="#522">522</a>                         <em class="comment">// it is an persistent transient error, else permanent</em>
+<a name="523" href="#523">523</a>                         <strong>if</strong> (ex1.getMessage().startsWith(<span class="string">"4"</span>)) {
+<a name="524" href="#524">524</a>                             <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.DELIVERY_OTHER);
+<a name="525" href="#525">525</a>                         } <strong>else</strong> <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.DELIVERY_OTHER);
+<a name="526" href="#526">526</a>                 }
+<a name="527" href="#527">527</a> 
+<a name="528" href="#528">528</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof UnknownHostException) {
+<a name="529" href="#529">529</a>                 <em class="comment">// bad destination system address</em>
+<a name="530" href="#530">530</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.ADDRESS_SYSTEM);
+<a name="531" href="#531">531</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof ConnectException) {
+<a name="532" href="#532">532</a>                 <em class="comment">// bad connection</em>
+<a name="533" href="#533">533</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_CONNECTION);
+<a name="534" href="#534">534</a>             } <strong>else</strong> <strong>if</strong> (ex1 instanceof SocketException) {
+<a name="535" href="#535">535</a>                 <em class="comment">// bad connection</em>
+<a name="536" href="#536">536</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.TRANSIENT, DSNStatus.NETWORK_CONNECTION);
+<a name="537" href="#537">537</a>             } <strong>else</strong> {
+<a name="538" href="#538">538</a>                 <em class="comment">// other/undefined/unknown error</em>
+<a name="539" href="#539">539</a>                 <strong>return</strong> DSNStatus.getStatus(DSNStatus.PERMANENT, DSNStatus.UNDEFINED_STATUS);
+<a name="540" href="#540">540</a>             }
+<a name="541" href="#541">541</a>         }
+<a name="542" href="#542">542</a>     }
+<a name="543" href="#543">543</a> 
+<a name="544" href="#544">544</a>     <em>/**<em>*</em></em>
+<a name="545" href="#545">545</a> <em>     * Utility method for getting the error message from the (nested) exception.</em>
+<a name="546" href="#546">546</a> <em>     * @param MessagingException</em>
+<a name="547" href="#547">547</a> <em>     * @return error message</em>
+<a name="548" href="#548">548</a> <em>     */</em>
+<a name="549" href="#549">549</a>     <strong>protected</strong> String getErrorMsg(MessagingException me) {
+<a name="550" href="#550">550</a>         <strong>if</strong> (me.getNextException() == <strong>null</strong>) {
+<a name="551" href="#551">551</a>             <strong>return</strong> me.getMessage().trim();
+<a name="552" href="#552">552</a>         } <strong>else</strong> {
+<a name="553" href="#553">553</a>             Exception ex1 = me.getNextException();
+<a name="554" href="#554">554</a>             <strong>return</strong> ex1.getMessage().trim();
+<a name="555" href="#555">555</a>         }
+<a name="556" href="#556">556</a>     }
+<a name="557" href="#557">557</a> 
+<a name="558" href="#558">558</a>     <em>/**<em>*</em></em>
+<a name="559" href="#559">559</a> <em>     * Utility method for obtaining a string representation of an array of Objects.</em>
+<a name="560" href="#560">560</a> <em>     */</em>
+<a name="561" href="#561">561</a>     <strong>private</strong> String arrayToString(Object[] array) {
+<a name="562" href="#562">562</a>         <strong>if</strong> (array == <strong>null</strong>) {
+<a name="563" href="#563">563</a>             <strong>return</strong> <span class="string">"null"</span>;
+<a name="564" href="#564">564</a>         }
+<a name="565" href="#565">565</a>         StringBuffer sb = <strong>new</strong> StringBuffer(1024);
+<a name="566" href="#566">566</a>         sb.append(<span class="string">"["</span>);
+<a name="567" href="#567">567</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; array.length; i++) {
+<a name="568" href="#568">568</a>             <strong>if</strong> (i > 0) {
+<a name="569" href="#569">569</a>                 sb.append(<span class="string">","</span>);
+<a name="570" href="#570">570</a>             }
+<a name="571" href="#571">571</a>             sb.append(array[i]);
+<a name="572" href="#572">572</a>         }
+<a name="573" href="#573">573</a>         sb.append(<span class="string">"]"</span>);
+<a name="574" href="#574">574</a>         <strong>return</strong> sb.toString();
+<a name="575" href="#575">575</a>     }
+<a name="576" href="#576">576</a> 
+<a name="577" href="#577">577</a>     <em>/**<em>*</em></em>
+<a name="578" href="#578">578</a> <em>     * Create a unique new primary key name.</em>
+<a name="579" href="#579">579</a> <em>     *</em>
+<a name="580" href="#580">580</a> <em>     * @param mail the mail to use as the basis for the new mail name</em>
+<a name="581" href="#581">581</a> <em>     * @return a new name</em>
+<a name="582" href="#582">582</a> <em>     */</em>
+<a name="583" href="#583">583</a>     <strong>protected</strong> String newName(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException {
+<a name="584" href="#584">584</a>         String oldName = mail.getName();
+<a name="585" href="#585">585</a> 
+<a name="586" href="#586">586</a>         <em class="comment">// Checking if the original mail name is too long, perhaps because of a</em>
+<a name="587" href="#587">587</a>         <em class="comment">// loop caused by a configuration error.</em>
+<a name="588" href="#588">588</a>         <em class="comment">// it could cause a "null pointer exception" in AvalonMailRepository much</em>
+<a name="589" href="#589">589</a>         <em class="comment">// harder to understand.</em>
+<a name="590" href="#590">590</a>         <strong>if</strong> (oldName.length() > 76) {
+<a name="591" href="#591">591</a>             <strong>int</strong> count = 0;
+<a name="592" href="#592">592</a>             <strong>int</strong> index = 0;
+<a name="593" href="#593">593</a>             <strong>while</strong> ((index = oldName.indexOf('!', index + 1)) >= 0) {
+<a name="594" href="#594">594</a>                 count++;
+<a name="595" href="#595">595</a>             }
+<a name="596" href="#596">596</a>             <em class="comment">// It looks like a configuration loop. It's better to stop.</em>
+<a name="597" href="#597">597</a>             <strong>if</strong> (count > 7) {
+<a name="598" href="#598">598</a>                 <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Unable to create a new message name: too long."</span>
+<a name="599" href="#599">599</a>                                              + <span class="string">" Possible loop in config.xml."</span>);
+<a name="600" href="#600">600</a>             }
+<a name="601" href="#601">601</a>             <strong>else</strong> {
+<a name="602" href="#602">602</a>                 oldName = oldName.substring(0, 76);
+<a name="603" href="#603">603</a>             }
+<a name="604" href="#604">604</a>         }
+<a name="605" href="#605">605</a> 
+<a name="606" href="#606">606</a>         StringBuffer nameBuffer =
+<a name="607" href="#607">607</a>             <strong>new</strong> StringBuffer(64)
+<a name="608" href="#608">608</a>             .append(oldName)
+<a name="609" href="#609">609</a>             .append(<span class="string">"-!"</span>)
+<a name="610" href="#610">610</a>             .append(random.nextInt(1048576));
+<a name="611" href="#611">611</a>         <strong>return</strong> nameBuffer.toString();
+<a name="612" href="#612">612</a>     }
+<a name="613" href="#613">613</a> 
+<a name="614" href="#614">614</a> 
+<a name="615" href="#615">615</a> 
+<a name="616" href="#616">616</a>     <strong>public</strong> String getMailetInfo() {
+<a name="617" href="#617">617</a>         <strong>return</strong> <span class="string">"DSNBounce Mailet"</span>;
+<a name="618" href="#618">618</a>     }
+<a name="619" href="#619">619</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
+<a name="620" href="#620">620</a>     <em class="comment">/*<em class="comment"> ****************** Begin of getX and setX methods ****************** */</em></em>
+<a name="621" href="#621">621</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
+<a name="622" href="#622">622</a> 
+<a name="623" href="#623">623</a>     <em>/**<em>* Gets the expected init parameters.  */</em></em>
+<a name="624" href="#624">624</a>     <strong>protected</strong>  String[] getAllowedInitParameters() {
+<a name="625" href="#625">625</a>         String[] allowedArray = {
+<a name="626" href="#626">626</a>             <span class="string">"debug"</span>,
+<a name="627" href="#627">627</a>             <span class="string">"passThrough"</span>,
+<a name="628" href="#628">628</a>             <span class="string">"messageString"</span>,
+<a name="629" href="#629">629</a>             <span class="string">"attachment"</span>,
+<a name="630" href="#630">630</a>             <span class="string">"sender"</span>,
+<a name="631" href="#631">631</a>             <span class="string">"prefix"</span>
+<a name="632" href="#632">632</a>         };
+<a name="633" href="#633">633</a>         <strong>return</strong> allowedArray;
+<a name="634" href="#634">634</a>     }
+<a name="635" href="#635">635</a> 
+<a name="636" href="#636">636</a>     <em>/**<em>*</em></em>
+<a name="637" href="#637">637</a> <em>     * @return the &lt;CODE>attachment&lt;/CODE> init parameter, or &lt;CODE>MESSAGE&lt;/CODE> if missing</em>
+<a name="638" href="#638">638</a> <em>     */</em>
+<a name="639" href="#639">639</a>     <strong>protected</strong> <strong>int</strong> getAttachmentType() throws MessagingException {
+<a name="640" href="#640">640</a>         <strong>return</strong> getTypeCode(getInitParameter(<span class="string">"attachment"</span>,<span class="string">"message"</span>));
+<a name="641" href="#641">641</a>     }
+<a name="642" href="#642">642</a> 
+<a name="643" href="#643">643</a> 
+<a name="644" href="#644">644</a>     <em>/**<em>*</em></em>
+<a name="645" href="#645">645</a> <em>     * @return &lt;CODE>SpecialAddress.REVERSE_PATH&lt;/CODE></em>
+<a name="646" href="#646">646</a> <em>     */</em>
+<a name="647" href="#647">647</a>     <strong>protected</strong> Collection getRecipients() {
+<a name="648" href="#648">648</a>         Collection <strong>new</strong>Recipients = <strong>new</strong> HashSet();
+<a name="649" href="#649">649</a>         newRecipients.add(SpecialAddress.REVERSE_PATH);
+<a name="650" href="#650">650</a>         <strong>return</strong> newRecipients;
+<a name="651" href="#651">651</a>     }
+<a name="652" href="#652">652</a> 
+<a name="653" href="#653">653</a>     <em>/**<em>*</em></em>
+<a name="654" href="#654">654</a> <em>     * @return &lt;CODE>SpecialAddress.REVERSE_PATH&lt;/CODE></em>
+<a name="655" href="#655">655</a> <em>     */</em>
+<a name="656" href="#656">656</a>     <strong>protected</strong> InternetAddress[] getTo() {
+<a name="657" href="#657">657</a>         InternetAddress[] apparentlyTo = <strong>new</strong> InternetAddress[1];
+<a name="658" href="#658">658</a>         apparentlyTo[0] = SpecialAddress.REVERSE_PATH.toInternetAddress();
+<a name="659" href="#659">659</a>         <strong>return</strong> apparentlyTo;
+<a name="660" href="#660">660</a>     }
+<a name="661" href="#661">661</a> 
+<a name="662" href="#662">662</a>     <em>/**<em>*</em></em>
+<a name="663" href="#663">663</a> <em>     * @return &lt;CODE>SpecialAddress.NULL&lt;/CODE> (the meaning of bounce)</em>
+<a name="664" href="#664">664</a> <em>     */</em>
+<a name="665" href="#665">665</a>     <strong>protected</strong> <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> getReversePath(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> originalMail) {
+<a name="666" href="#666">666</a>         <strong>return</strong> SpecialAddress.NULL;
+<a name="667" href="#667">667</a>     }
 <a name="668" href="#668">668</a> 
-<a name="669" href="#669">669</a> }
+<a name="669" href="#669">669</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
+<a name="670" href="#670">670</a>     <em class="comment">/*<em class="comment"> ******************* End of getX and setX methods ******************* */</em></em>
+<a name="671" href="#671">671</a>     <em class="comment">/*<em class="comment"> ******************************************************************** */</em></em>
+<a name="672" href="#672">672</a> 
+<a name="673" href="#673">673</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

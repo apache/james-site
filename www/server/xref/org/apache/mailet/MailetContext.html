@@ -155,142 +155,126 @@
 <a name="146" href="#146">146</a> <em>     *</em>
 <a name="147" href="#147">147</a> <em>     * @param userAccount - user identifier.</em>
 <a name="148" href="#148">148</a> <em>     * @return true if the acount is a local account</em>
-<a name="149" href="#149">149</a> <em>     * </em>
-<a name="150" href="#150">150</a> <em>     * @deprecated use isLocalEmail(MailAddress) instead</em>
-<a name="151" href="#151">151</a> <em>     * </em>
-<a name="152" href="#152">152</a> <em>     * @since James 2.4.0 this method expect to receive also the domain</em>
-<a name="153" href="#153">153</a> <em>     * name within the userAccount string (user\@domain).</em>
-<a name="154" href="#154">154</a> <em>     * By default it will use \@localhost when no domain is passed.</em>
-<a name="155" href="#155">155</a> <em>     */</em>
-<a name="156" href="#156">156</a>     <strong>boolean</strong> isLocalUser(String userAccount);
-<a name="157" href="#157">157</a>     
-<a name="158" href="#158">158</a>     <em>/**<em>*</em></em>
-<a name="159" href="#159">159</a> <em>     * Checks if a user account is exists in the mail context.</em>
-<a name="160" href="#160">160</a> <em>     *</em>
-<a name="161" href="#161">161</a> <em>     * @param userAccount - user identifier.</em>
-<a name="162" href="#162">162</a> <em>     * @return true if the acount is a local account</em>
-<a name="163" href="#163">163</a> <em>     * </em>
-<a name="164" href="#164">164</a> <em>     * @since James 2.4.0</em>
-<a name="165" href="#165">165</a> <em>     */</em>
-<a name="166" href="#166">166</a>     <strong>boolean</strong> isLocalEmail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> mailAddress);
-<a name="167" href="#167">167</a> 
-<a name="168" href="#168">168</a>     <em>/**<em>*</em></em>
-<a name="169" href="#169">169</a> <em>     * Writes the specified message to a mailet log file, usually an event</em>
-<a name="170" href="#170">170</a> <em>     * log.  The name and type of the mailet log file is specific to the mailet</em>
-<a name="171" href="#171">171</a> <em>     * container.</em>
-<a name="172" href="#172">172</a> <em>     *</em>
-<a name="173" href="#173">173</a> <em>     * @param message - a String specifying the message to be written to the log file</em>
-<a name="174" href="#174">174</a> <em>     */</em>
-<a name="175" href="#175">175</a>     <strong>void</strong> log(String message);
-<a name="176" href="#176">176</a> 
-<a name="177" href="#177">177</a>     <em>/**<em>*</em></em>
-<a name="178" href="#178">178</a> <em>     * Writes an explanatory message and a stack trace for a given Throwable</em>
-<a name="179" href="#179">179</a> <em>     * exception to the mailet log file.</em>
-<a name="180" href="#180">180</a> <em>     *</em>
-<a name="181" href="#181">181</a> <em>     * @param message - a String that describes the error or exception</em>
-<a name="182" href="#182">182</a> <em>     * @param throwable - the Throwable error or exception</em>
-<a name="183" href="#183">183</a> <em>     */</em>
-<a name="184" href="#184">184</a>     <strong>void</strong> log(String message, Throwable t);
-<a name="185" href="#185">185</a> 
-<a name="186" href="#186">186</a>     <em>/**<em>*</em></em>
-<a name="187" href="#187">187</a> <em>     * Removes the attribute with the given name from the mailet context.  After</em>
-<a name="188" href="#188">188</a> <em>     * removal, subsequent calls to getAttribute(java.lang.String) to retrieve</em>
-<a name="189" href="#189">189</a> <em>     * the attribute's value will return null.</em>
-<a name="190" href="#190">190</a> <em>     *</em>
-<a name="191" href="#191">191</a> <em>     * @param name - a String specifying the name of the attribute to be removed</em>
-<a name="192" href="#192">192</a> <em>     */</em>
-<a name="193" href="#193">193</a>     <strong>void</strong> removeAttribute(String name);
-<a name="194" href="#194">194</a> 
-<a name="195" href="#195">195</a>     <em>/**<em>*</em></em>
-<a name="196" href="#196">196</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
-<a name="197" href="#197">197</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
-<a name="198" href="#198">198</a> <em>     * This uses sender and recipients as specified in the message itself.</em>
-<a name="199" href="#199">199</a> <em>     *</em>
-<a name="200" href="#200">200</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
-<a name="201" href="#201">201</a> <em>     * @throws MessagingException - if the message fails to parse</em>
-<a name="202" href="#202">202</a> <em>     */</em>
-<a name="203" href="#203">203</a>     <strong>void</strong> sendMail(MimeMessage msg)
-<a name="204" href="#204">204</a>         throws MessagingException;
-<a name="205" href="#205">205</a> 
-<a name="206" href="#206">206</a>     <em>/**<em>*</em></em>
-<a name="207" href="#207">207</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
-<a name="208" href="#208">208</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
-<a name="209" href="#209">209</a> <em>     *</em>
-<a name="210" href="#210">210</a> <em>     * @param sender - the sender of the message</em>
-<a name="211" href="#211">211</a> <em>     * @param recipients - a Collection of MailAddress objects of recipients</em>
-<a name="212" href="#212">212</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
-<a name="213" href="#213">213</a> <em>     * @throws MessagingException - if the message fails to parse</em>
-<a name="214" href="#214">214</a> <em>     */</em>
-<a name="215" href="#215">215</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage msg)
-<a name="216" href="#216">216</a>         throws MessagingException;
-<a name="217" href="#217">217</a> 
-<a name="218" href="#218">218</a>     <em>/**<em>*</em></em>
-<a name="219" href="#219">219</a> <em>     * Send an outgoing message to the top of this mailet container queue for the</em>
-<a name="220" href="#220">220</a> <em>     * appropriate processor that is specified.</em>
-<a name="221" href="#221">221</a> <em>     *</em>
-<a name="222" href="#222">222</a> <em>     * @param sender - the sender of the message</em>
-<a name="223" href="#223">223</a> <em>     * @param recipients - a Collection of MailAddress objects of recipients</em>
-<a name="224" href="#224">224</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
-<a name="225" href="#225">225</a> <em>     * @param state - the state of the message, indicates which processor to use</em>
-<a name="226" href="#226">226</a> <em>     * This is a String that names a processor for which the message will be queued</em>
-<a name="227" href="#227">227</a> <em>     * @throws MessagingException - if the message fails to parse</em>
-<a name="228" href="#228">228</a> <em>     */</em>
-<a name="229" href="#229">229</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage msg, String state)
-<a name="230" href="#230">230</a>         throws MessagingException;
-<a name="231" href="#231">231</a> 
-<a name="232" href="#232">232</a>     <em>/**<em>*</em></em>
-<a name="233" href="#233">233</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
-<a name="234" href="#234">234</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
-<a name="235" href="#235">235</a> <em>     * The Mail object provides all envelope and content information</em>
-<a name="236" href="#236">236</a> <em>     *</em>
-<a name="237" href="#237">237</a> <em>     * @param mail - the message that is to sent</em>
-<a name="238" href="#238">238</a> <em>     * @throws MessagingException - if the message fails to spool</em>
-<a name="239" href="#239">239</a> <em>     */</em>
-<a name="240" href="#240">240</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail)
-<a name="241" href="#241">241</a>             throws MessagingException;
-<a name="242" href="#242">242</a> 
-<a name="243" href="#243">243</a>     <em>/**<em>*</em></em>
-<a name="244" href="#244">244</a> <em>     * Binds an object to a given attribute name in this mailet context.  If the name</em>
-<a name="245" href="#245">245</a> <em>     * specified is already used for an attribute, this method will remove the old</em>
-<a name="246" href="#246">246</a> <em>     * attribute and bind the name to the new attribute.</em>
-<a name="247" href="#247">247</a> <em>     * &lt;p></em>
-<a name="248" href="#248">248</a> <em>     * Attribute names should follow the same convention as package names. The Java</em>
-<a name="249" href="#249">249</a> <em>     * Mailet API specification reserves names matching java.*, javax.*, and sun.*.</em>
-<a name="250" href="#250">250</a> <em>     *</em>
-<a name="251" href="#251">251</a> <em>     * @param name - a String specifying the name of the attribute</em>
-<a name="252" href="#252">252</a> <em>     * @param object - an Object representing the attribute to be bound</em>
-<a name="253" href="#253">253</a> <em>     */</em>
-<a name="254" href="#254">254</a>     <strong>void</strong> setAttribute(String name, Object object);
-<a name="255" href="#255">255</a> 
-<a name="256" href="#256">256</a>     <em>/**<em>*</em></em>
-<a name="257" href="#257">257</a> <em>     * Stores the message is in the local repository associated with</em>
-<a name="258" href="#258">258</a> <em>     * recipient for later retrieval, e.g., by a POP3 or IMAP service.</em>
-<a name="259" href="#259">259</a> <em>     *</em>
-<a name="260" href="#260">260</a> <em>     * @deprecated - use sparingly.  Service will be replaced with</em>
-<a name="261" href="#261">261</a> <em>     * resource acquired via JNDI.</em>
-<a name="262" href="#262">262</a> <em>     * @param sender - the sender of the incoming message</em>
-<a name="263" href="#263">263</a> <em>     * @param recipient - the user who is receiving this message (as a complete email address)</em>
-<a name="264" href="#264">264</a> <em>     * @param msg - the MimeMessage to store in a local mailbox</em>
-<a name="265" href="#265">265</a> <em>     * @throws MessagingException - if the message fails to parse</em>
+<a name="149" href="#149">149</a> <em>     */</em>
+<a name="150" href="#150">150</a>     <strong>boolean</strong> isLocalUser(String userAccount);
+<a name="151" href="#151">151</a> 
+<a name="152" href="#152">152</a>     <em>/**<em>*</em></em>
+<a name="153" href="#153">153</a> <em>     * Writes the specified message to a mailet log file, usually an event</em>
+<a name="154" href="#154">154</a> <em>     * log.  The name and type of the mailet log file is specific to the mailet</em>
+<a name="155" href="#155">155</a> <em>     * container.</em>
+<a name="156" href="#156">156</a> <em>     *</em>
+<a name="157" href="#157">157</a> <em>     * @param message - a String specifying the message to be written to the log file</em>
+<a name="158" href="#158">158</a> <em>     */</em>
+<a name="159" href="#159">159</a>     <strong>void</strong> log(String message);
+<a name="160" href="#160">160</a> 
+<a name="161" href="#161">161</a>     <em>/**<em>*</em></em>
+<a name="162" href="#162">162</a> <em>     * Writes an explanatory message and a stack trace for a given Throwable</em>
+<a name="163" href="#163">163</a> <em>     * exception to the mailet log file.</em>
+<a name="164" href="#164">164</a> <em>     *</em>
+<a name="165" href="#165">165</a> <em>     * @param message - a String that describes the error or exception</em>
+<a name="166" href="#166">166</a> <em>     * @param throwable - the Throwable error or exception</em>
+<a name="167" href="#167">167</a> <em>     */</em>
+<a name="168" href="#168">168</a>     <strong>void</strong> log(String message, Throwable t);
+<a name="169" href="#169">169</a> 
+<a name="170" href="#170">170</a>     <em>/**<em>*</em></em>
+<a name="171" href="#171">171</a> <em>     * Removes the attribute with the given name from the mailet context.  After</em>
+<a name="172" href="#172">172</a> <em>     * removal, subsequent calls to getAttribute(java.lang.String) to retrieve</em>
+<a name="173" href="#173">173</a> <em>     * the attribute's value will return null.</em>
+<a name="174" href="#174">174</a> <em>     *</em>
+<a name="175" href="#175">175</a> <em>     * @param name - a String specifying the name of the attribute to be removed</em>
+<a name="176" href="#176">176</a> <em>     */</em>
+<a name="177" href="#177">177</a>     <strong>void</strong> removeAttribute(String name);
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a>     <em>/**<em>*</em></em>
+<a name="180" href="#180">180</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
+<a name="181" href="#181">181</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
+<a name="182" href="#182">182</a> <em>     * This uses sender and recipients as specified in the message itself.</em>
+<a name="183" href="#183">183</a> <em>     *</em>
+<a name="184" href="#184">184</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
+<a name="185" href="#185">185</a> <em>     * @throws MessagingException - if the message fails to parse</em>
+<a name="186" href="#186">186</a> <em>     */</em>
+<a name="187" href="#187">187</a>     <strong>void</strong> sendMail(MimeMessage msg)
+<a name="188" href="#188">188</a>         throws MessagingException;
+<a name="189" href="#189">189</a> 
+<a name="190" href="#190">190</a>     <em>/**<em>*</em></em>
+<a name="191" href="#191">191</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
+<a name="192" href="#192">192</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
+<a name="193" href="#193">193</a> <em>     *</em>
+<a name="194" href="#194">194</a> <em>     * @param sender - the sender of the message</em>
+<a name="195" href="#195">195</a> <em>     * @param recipients - a Collection of MailAddress objects of recipients</em>
+<a name="196" href="#196">196</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
+<a name="197" href="#197">197</a> <em>     * @throws MessagingException - if the message fails to parse</em>
+<a name="198" href="#198">198</a> <em>     */</em>
+<a name="199" href="#199">199</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage msg)
+<a name="200" href="#200">200</a>         throws MessagingException;
+<a name="201" href="#201">201</a> 
+<a name="202" href="#202">202</a>     <em>/**<em>*</em></em>
+<a name="203" href="#203">203</a> <em>     * Send an outgoing message to the top of this mailet container queue for the</em>
+<a name="204" href="#204">204</a> <em>     * appropriate processor that is specified.</em>
+<a name="205" href="#205">205</a> <em>     *</em>
+<a name="206" href="#206">206</a> <em>     * @param sender - the sender of the message</em>
+<a name="207" href="#207">207</a> <em>     * @param recipients - a Collection of MailAddress objects of recipients</em>
+<a name="208" href="#208">208</a> <em>     * @param msg - the MimeMessage of the headers and body content of the outgoing message</em>
+<a name="209" href="#209">209</a> <em>     * @param state - the state of the message, indicates which processor to use</em>
+<a name="210" href="#210">210</a> <em>     * This is a String that names a processor for which the message will be queued</em>
+<a name="211" href="#211">211</a> <em>     * @throws MessagingException - if the message fails to parse</em>
+<a name="212" href="#212">212</a> <em>     */</em>
+<a name="213" href="#213">213</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage msg, String state)
+<a name="214" href="#214">214</a>         throws MessagingException;
+<a name="215" href="#215">215</a> 
+<a name="216" href="#216">216</a>     <em>/**<em>*</em></em>
+<a name="217" href="#217">217</a> <em>     * Send an outgoing message to the top of this mailet container's root queue.</em>
+<a name="218" href="#218">218</a> <em>     * This is the equivalent of opening an SMTP session to localhost.</em>
+<a name="219" href="#219">219</a> <em>     * The Mail object provides all envelope and content information</em>
+<a name="220" href="#220">220</a> <em>     *</em>
+<a name="221" href="#221">221</a> <em>     * @param mail - the message that is to sent</em>
+<a name="222" href="#222">222</a> <em>     * @throws MessagingException - if the message fails to spool</em>
+<a name="223" href="#223">223</a> <em>     */</em>
+<a name="224" href="#224">224</a>     <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail)
+<a name="225" href="#225">225</a>             throws MessagingException;
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>     <em>/**<em>*</em></em>
+<a name="228" href="#228">228</a> <em>     * Binds an object to a given attribute name in this mailet context.  If the name</em>
+<a name="229" href="#229">229</a> <em>     * specified is already used for an attribute, this method will remove the old</em>
+<a name="230" href="#230">230</a> <em>     * attribute and bind the name to the new attribute.</em>
+<a name="231" href="#231">231</a> <em>     * &lt;p></em>
+<a name="232" href="#232">232</a> <em>     * Attribute names should follow the same convention as package names. The Java</em>
+<a name="233" href="#233">233</a> <em>     * Mailet API specification reserves names matching java.*, javax.*, and sun.*.</em>
+<a name="234" href="#234">234</a> <em>     *</em>
+<a name="235" href="#235">235</a> <em>     * @param name - a String specifying the name of the attribute</em>
+<a name="236" href="#236">236</a> <em>     * @param object - an Object representing the attribute to be bound</em>
+<a name="237" href="#237">237</a> <em>     */</em>
+<a name="238" href="#238">238</a>     <strong>void</strong> setAttribute(String name, Object object);
+<a name="239" href="#239">239</a> 
+<a name="240" href="#240">240</a>     <em>/**<em>*</em></em>
+<a name="241" href="#241">241</a> <em>     * Stores the message is in the local repository associated with</em>
+<a name="242" href="#242">242</a> <em>     * recipient for later retrieval, e.g., by a POP3 or IMAP service.</em>
+<a name="243" href="#243">243</a> <em>     *</em>
+<a name="244" href="#244">244</a> <em>     * @deprecated - use sparingly.  Service will be replaced with</em>
+<a name="245" href="#245">245</a> <em>     * resource acquired via JNDI.</em>
+<a name="246" href="#246">246</a> <em>     * @param sender - the sender of the incoming message</em>
+<a name="247" href="#247">247</a> <em>     * @param recipient - the user who is receiving this message (as a complete email address)</em>
+<a name="248" href="#248">248</a> <em>     * @param msg - the MimeMessage to store in a local mailbox</em>
+<a name="249" href="#249">249</a> <em>     * @throws MessagingException - if the message fails to parse</em>
+<a name="250" href="#250">250</a> <em>     */</em>
+<a name="251" href="#251">251</a>     <strong>void</strong> storeMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> recipient, MimeMessage msg)
+<a name="252" href="#252">252</a>         throws MessagingException;
+<a name="253" href="#253">253</a> 
+<a name="254" href="#254">254</a>     <em>/**<em>*</em></em>
+<a name="255" href="#255">255</a> <em>     * Returns an Iterator over HostAddress, a specialized subclass of</em>
+<a name="256" href="#256">256</a> <em>     * javax.mail.URLName, which provides location information for</em>
+<a name="257" href="#257">257</a> <em>     * servers that are specified as mail handlers for the given</em>
+<a name="258" href="#258">258</a> <em>     * hostname.  This is done using MX records, and the HostAddress</em>
+<a name="259" href="#259">259</a> <em>     * instances are returned sorted by MX priority.  If no host is</em>
+<a name="260" href="#260">260</a> <em>     * found for domainName, the Iterator returned will be empty and the</em>
+<a name="261" href="#261">261</a> <em>     * first call to hasNext() will return false.</em>
+<a name="262" href="#262">262</a> <em>     *</em>
+<a name="263" href="#263">263</a> <em>     * @since Mailet API v2.2.0a16-unstable</em>
+<a name="264" href="#264">264</a> <em>     * @param domainName - the domain for which to find mail servers</em>
+<a name="265" href="#265">265</a> <em>     * @return an Iterator over HostAddress instances, sorted by priority</em>
 <a name="266" href="#266">266</a> <em>     */</em>
-<a name="267" href="#267">267</a>     <strong>void</strong> storeMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> recipient, MimeMessage msg)
-<a name="268" href="#268">268</a>         throws MessagingException;
-<a name="269" href="#269">269</a> 
-<a name="270" href="#270">270</a>     <em>/**<em>*</em></em>
-<a name="271" href="#271">271</a> <em>     * Returns an Iterator over HostAddress, a specialized subclass of</em>
-<a name="272" href="#272">272</a> <em>     * javax.mail.URLName, which provides location information for</em>
-<a name="273" href="#273">273</a> <em>     * servers that are specified as mail handlers for the given</em>
-<a name="274" href="#274">274</a> <em>     * hostname.  This is done using MX records, and the HostAddress</em>
-<a name="275" href="#275">275</a> <em>     * instances are returned sorted by MX priority.  If no host is</em>
-<a name="276" href="#276">276</a> <em>     * found for domainName, the Iterator returned will be empty and the</em>
-<a name="277" href="#277">277</a> <em>     * first call to hasNext() will return false.</em>
-<a name="278" href="#278">278</a> <em>     *</em>
-<a name="279" href="#279">279</a> <em>     * @since Mailet API v2.2.0a16-unstable</em>
-<a name="280" href="#280">280</a> <em>     * @param domainName - the domain for which to find mail servers</em>
-<a name="281" href="#281">281</a> <em>     * @return an Iterator over HostAddress instances, sorted by priority</em>
-<a name="282" href="#282">282</a> <em>     */</em>
-<a name="283" href="#283">283</a>     Iterator getSMTPHostAddresses(String domainName);
-<a name="284" href="#284">284</a> }
+<a name="267" href="#267">267</a>     Iterator getSMTPHostAddresses(String domainName);
+<a name="268" href="#268">268</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

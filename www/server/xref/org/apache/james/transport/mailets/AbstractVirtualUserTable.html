@@ -168,155 +168,159 @@
 <a name="159" href="#159">159</a>             <em class="comment">// duplicates the Mail object, to be able to modify the new mail keeping the original untouched</em>
 <a name="160" href="#160">160</a>             <a href="../../../../../org/apache/james/core/MailImpl.html">MailImpl</a> <strong>new</strong>Mail = <strong>new</strong> <a href="../../../../../org/apache/james/core/MailImpl.html">MailImpl</a>(mail,<strong>new</strong>Name(mail));
 <a name="161" href="#161">161</a>             <strong>try</strong> {
-<a name="162" href="#162">162</a>                 newMail.setRemoteAddr(java.net.InetAddress.getLocalHost().getHostAddress());
-<a name="163" href="#163">163</a>                 newMail.setRemoteHost(java.net.InetAddress.getLocalHost().getHostName());
-<a name="164" href="#164">164</a>             } <strong>catch</strong> (java.net.UnknownHostException _) {
-<a name="165" href="#165">165</a>                 newMail.setRemoteAddr(<span class="string">"127.0.0.1"</span>);
-<a name="166" href="#166">166</a>                 newMail.setRemoteHost(<span class="string">"localhost"</span>);
-<a name="167" href="#167">167</a>             }
-<a name="168" href="#168">168</a>             newMail.setRecipients(recipientsToAddForward);
-<a name="169" href="#169">169</a>             newMail.setAttribute(MARKER, Boolean.TRUE);
-<a name="170" href="#170">170</a>             getMailetContext().sendMail(newMail);
-<a name="171" href="#171">171</a>         }
-<a name="172" href="#172">172</a> 
-<a name="173" href="#173">173</a>         <em class="comment">// If there are no recipients left, Ghost the message</em>
-<a name="174" href="#174">174</a>         <strong>if</strong> (recipients.size() == 0) {
-<a name="175" href="#175">175</a>             mail.setState(Mail.GHOST);
-<a name="176" href="#176">176</a>         }
-<a name="177" href="#177">177</a>     }
-<a name="178" href="#178">178</a> 
-<a name="179" href="#179">179</a>     <em>/**<em>*</em></em>
-<a name="180" href="#180">180</a> <em>     * Override to map virtual recipients to real recipients, both local and non-local.</em>
-<a name="181" href="#181">181</a> <em>     * Each key in the provided map corresponds to a potential virtual recipient, stored as</em>
-<a name="182" href="#182">182</a> <em>     * a &lt;code>MailAddress&lt;/code> object.</em>
-<a name="183" href="#183">183</a> <em>     * </em>
-<a name="184" href="#184">184</a> <em>     * Translate virtual recipients to real recipients by mapping a string containing the</em>
-<a name="185" href="#185">185</a> <em>     * address of the real recipient as a value to a key. Leave the value &lt;code>null&lt;code></em>
-<a name="186" href="#186">186</a> <em>     * if no mapping should be performed. Multiple recipients may be specified by delineating</em>
-<a name="187" href="#187">187</a> <em>     * the mapped string with commas, semi-colons or colons.</em>
-<a name="188" href="#188">188</a> <em>     * </em>
-<a name="189" href="#189">189</a> <em>     * @param recipientsMap the mapping of virtual to real recipients, as </em>
-<a name="190" href="#190">190</a> <em>     *    &lt;code>MailAddress&lt;/code>es to &lt;code>String&lt;/code>s.</em>
-<a name="191" href="#191">191</a> <em>     */</em>
-<a name="192" href="#192">192</a>     <strong>protected</strong> <strong>abstract</strong> <strong>void</strong> mapRecipients(Map recipientsMap) throws MessagingException;
-<a name="193" href="#193">193</a>   
-<a name="194" href="#194">194</a>     <em>/**<em>*</em></em>
-<a name="195" href="#195">195</a> <em>     * Sends the message for DSN processing</em>
-<a name="196" href="#196">196</a> <em>     *</em>
-<a name="197" href="#197">197</a> <em>     * @param mail the Mail instance being processed</em>
-<a name="198" href="#198">198</a> <em>     * @param address the MailAddress causing the DSN</em>
-<a name="199" href="#199">199</a> <em>     * @param error a String in the form "error:&lt;code> &lt;msg>"</em>
-<a name="200" href="#200">200</a> <em>     */</em>
-<a name="201" href="#201">201</a>     <strong>private</strong> <strong>void</strong> processDSN(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> address, String error) {
-<a name="202" href="#202">202</a>         <em class="comment">// parse "error:&lt;code> &lt;msg>"</em>
-<a name="203" href="#203">203</a>       <strong>int</strong> msgPos = error.indexOf(' ');
-<a name="204" href="#204">204</a>       <strong>try</strong> {
-<a name="205" href="#205">205</a>           Integer code = Integer.valueOf(error.substring(<span class="string">"error:"</span>.length(),msgPos));
-<a name="206" href="#206">206</a>       } <strong>catch</strong> (NumberFormatException e) {
-<a name="207" href="#207">207</a>           log(<span class="string">"Cannot send DSN.  Exception parsing DSN code from: "</span> + error, e);
-<a name="208" href="#208">208</a>           <strong>return</strong>;
-<a name="209" href="#209">209</a>       }
-<a name="210" href="#210">210</a>       String msg = error.substring(msgPos + 1);
-<a name="211" href="#211">211</a>       <em class="comment">// process bounce for "source" address</em>
-<a name="212" href="#212">212</a>       <strong>try</strong> {
-<a name="213" href="#213">213</a>           getMailetContext().bounce(mail, error);
-<a name="214" href="#214">214</a>       }
-<a name="215" href="#215">215</a>       <strong>catch</strong> (MessagingException me) {
-<a name="216" href="#216">216</a>           log(<span class="string">"Cannot send DSN.  Exception during DSN processing: "</span>, me);
-<a name="217" href="#217">217</a>       }
-<a name="218" href="#218">218</a>   }
-<a name="219" href="#219">219</a> 
-<a name="220" href="#220">220</a>   <em>/**<em>*</em></em>
-<a name="221" href="#221">221</a> <em>   * Processes regex virtual user mapping</em>
-<a name="222" href="#222">222</a> <em>   *</em>
-<a name="223" href="#223">223</a> <em>   * If a mapped target string begins with the prefix regex:, it must be</em>
-<a name="224" href="#224">224</a> <em>   * formatted as regex:&lt;regular-expression>:&lt;parameterized-string>,</em>
-<a name="225" href="#225">225</a> <em>   * e.g., regex:(.*)@(.*):${1}@tld</em>
+<a name="162" href="#162">162</a>                 <strong>try</strong> {
+<a name="163" href="#163">163</a>                     newMail.setRemoteAddr(java.net.InetAddress.getLocalHost().getHostAddress());
+<a name="164" href="#164">164</a>                     newMail.setRemoteHost(java.net.InetAddress.getLocalHost().getHostName());
+<a name="165" href="#165">165</a>                 } <strong>catch</strong> (java.net.UnknownHostException _) {
+<a name="166" href="#166">166</a>                     newMail.setRemoteAddr(<span class="string">"127.0.0.1"</span>);
+<a name="167" href="#167">167</a>                     newMail.setRemoteHost(<span class="string">"localhost"</span>);
+<a name="168" href="#168">168</a>                 }
+<a name="169" href="#169">169</a>                 newMail.setRecipients(recipientsToAddForward);
+<a name="170" href="#170">170</a>                 newMail.setAttribute(MARKER, Boolean.TRUE);
+<a name="171" href="#171">171</a>                 getMailetContext().sendMail(newMail);
+<a name="172" href="#172">172</a>             } <strong>finally</strong> {
+<a name="173" href="#173">173</a>                 newMail.dispose();
+<a name="174" href="#174">174</a>             }
+<a name="175" href="#175">175</a>         }
+<a name="176" href="#176">176</a> 
+<a name="177" href="#177">177</a>         <em class="comment">// If there are no recipients left, Ghost the message</em>
+<a name="178" href="#178">178</a>         <strong>if</strong> (recipients.size() == 0) {
+<a name="179" href="#179">179</a>             mail.setState(Mail.GHOST);
+<a name="180" href="#180">180</a>         }
+<a name="181" href="#181">181</a>     }
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>     <em>/**<em>*</em></em>
+<a name="184" href="#184">184</a> <em>     * Override to map virtual recipients to real recipients, both local and non-local.</em>
+<a name="185" href="#185">185</a> <em>     * Each key in the provided map corresponds to a potential virtual recipient, stored as</em>
+<a name="186" href="#186">186</a> <em>     * a &lt;code>MailAddress&lt;/code> object.</em>
+<a name="187" href="#187">187</a> <em>     * </em>
+<a name="188" href="#188">188</a> <em>     * Translate virtual recipients to real recipients by mapping a string containing the</em>
+<a name="189" href="#189">189</a> <em>     * address of the real recipient as a value to a key. Leave the value &lt;code>null&lt;code></em>
+<a name="190" href="#190">190</a> <em>     * if no mapping should be performed. Multiple recipients may be specified by delineating</em>
+<a name="191" href="#191">191</a> <em>     * the mapped string with commas, semi-colons or colons.</em>
+<a name="192" href="#192">192</a> <em>     * </em>
+<a name="193" href="#193">193</a> <em>     * @param recipientsMap the mapping of virtual to real recipients, as </em>
+<a name="194" href="#194">194</a> <em>     *    &lt;code>MailAddress&lt;/code>es to &lt;code>String&lt;/code>s.</em>
+<a name="195" href="#195">195</a> <em>     */</em>
+<a name="196" href="#196">196</a>     <strong>protected</strong> <strong>abstract</strong> <strong>void</strong> mapRecipients(Map recipientsMap) throws MessagingException;
+<a name="197" href="#197">197</a>   
+<a name="198" href="#198">198</a>     <em>/**<em>*</em></em>
+<a name="199" href="#199">199</a> <em>     * Sends the message for DSN processing</em>
+<a name="200" href="#200">200</a> <em>     *</em>
+<a name="201" href="#201">201</a> <em>     * @param mail the Mail instance being processed</em>
+<a name="202" href="#202">202</a> <em>     * @param address the MailAddress causing the DSN</em>
+<a name="203" href="#203">203</a> <em>     * @param error a String in the form "error:&lt;code> &lt;msg>"</em>
+<a name="204" href="#204">204</a> <em>     */</em>
+<a name="205" href="#205">205</a>     <strong>private</strong> <strong>void</strong> processDSN(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> address, String error) {
+<a name="206" href="#206">206</a>         <em class="comment">// parse "error:&lt;code> &lt;msg>"</em>
+<a name="207" href="#207">207</a>       <strong>int</strong> msgPos = error.indexOf(' ');
+<a name="208" href="#208">208</a>       <strong>try</strong> {
+<a name="209" href="#209">209</a>           Integer code = Integer.valueOf(error.substring(<span class="string">"error:"</span>.length(),msgPos));
+<a name="210" href="#210">210</a>       } <strong>catch</strong> (NumberFormatException e) {
+<a name="211" href="#211">211</a>           log(<span class="string">"Cannot send DSN.  Exception parsing DSN code from: "</span> + error, e);
+<a name="212" href="#212">212</a>           <strong>return</strong>;
+<a name="213" href="#213">213</a>       }
+<a name="214" href="#214">214</a>       String msg = error.substring(msgPos + 1);
+<a name="215" href="#215">215</a>       <em class="comment">// process bounce for "source" address</em>
+<a name="216" href="#216">216</a>       <strong>try</strong> {
+<a name="217" href="#217">217</a>           getMailetContext().bounce(mail, error);
+<a name="218" href="#218">218</a>       }
+<a name="219" href="#219">219</a>       <strong>catch</strong> (MessagingException me) {
+<a name="220" href="#220">220</a>           log(<span class="string">"Cannot send DSN.  Exception during DSN processing: "</span>, me);
+<a name="221" href="#221">221</a>       }
+<a name="222" href="#222">222</a>   }
+<a name="223" href="#223">223</a> 
+<a name="224" href="#224">224</a>   <em>/**<em>*</em></em>
+<a name="225" href="#225">225</a> <em>   * Processes regex virtual user mapping</em>
 <a name="226" href="#226">226</a> <em>   *</em>
-<a name="227" href="#227">227</a> <em>   * @param mail the Mail instance being processed</em>
-<a name="228" href="#228">228</a> <em>   * @param address the MailAddress to be mapped</em>
-<a name="229" href="#229">229</a> <em>   * @param targetString a String specifying the mapping</em>
-<a name="230" href="#230">230</a> <em>   */</em>
-<a name="231" href="#231">231</a>   <strong>private</strong> String regexMap(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> address, String targetString) {
-<a name="232" href="#232">232</a>       String result = <strong>null</strong>;
-<a name="233" href="#233">233</a> 
-<a name="234" href="#234">234</a>       <strong>try</strong> {
-<a name="235" href="#235">235</a>           <strong>int</strong> msgPos = targetString.indexOf(':', <span class="string">"regex:"</span>.length() + 1);
-<a name="236" href="#236">236</a> 
-<a name="237" href="#237">237</a>           <em class="comment">// log("regex: targetString = " + targetString);</em>
-<a name="238" href="#238">238</a>           <em class="comment">// log("regex: msgPos = " + msgPos);</em>
-<a name="239" href="#239">239</a>           <em class="comment">// log("regex: compile " + targetString.substring("regex:".length(), msgPos));</em>
-<a name="240" href="#240">240</a>           <em class="comment">// log("regex: address = " + address.toString());</em>
-<a name="241" href="#241">241</a>           <em class="comment">// log("regex: replace = " + targetString.substring(msgPos + 1));</em>
-<a name="242" href="#242">242</a> 
-<a name="243" href="#243">243</a>           Pattern pattern = <strong>new</strong> Perl5Compiler().compile(targetString.substring(<span class="string">"regex:"</span>.length(), msgPos));
-<a name="244" href="#244">244</a>           Perl5Matcher matcher = <strong>new</strong> Perl5Matcher();
-<a name="245" href="#245">245</a> 
-<a name="246" href="#246">246</a>           <strong>if</strong> (matcher.matches(address.toString(), pattern)) {
-<a name="247" href="#247">247</a>               MatchResult match = matcher.getMatch();
-<a name="248" href="#248">248</a>               Map parameters = <strong>new</strong> HashMap(match.groups());
-<a name="249" href="#249">249</a>               <strong>for</strong> (<strong>int</strong> i = 1; i &lt; match.groups(); i++) {
-<a name="250" href="#250">250</a>                   parameters.put(Integer.toString(i), match.group(i));
-<a name="251" href="#251">251</a>               }
-<a name="252" href="#252">252</a>               result = XMLResources.replaceParameters(targetString.substring(msgPos + 1), parameters);
-<a name="253" href="#253">253</a>           }
-<a name="254" href="#254">254</a>       }
-<a name="255" href="#255">255</a>       <strong>catch</strong> (Exception e) {
-<a name="256" href="#256">256</a>           log(<span class="string">"Exception during regexMap processing: "</span>, e);
-<a name="257" href="#257">257</a>       }
-<a name="258" href="#258">258</a> 
-<a name="259" href="#259">259</a>       <em class="comment">// log("regex: result = " + result);</em>
-<a name="260" href="#260">260</a>       <strong>return</strong> result;
-<a name="261" href="#261">261</a>   }
+<a name="227" href="#227">227</a> <em>   * If a mapped target string begins with the prefix regex:, it must be</em>
+<a name="228" href="#228">228</a> <em>   * formatted as regex:&lt;regular-expression>:&lt;parameterized-string>,</em>
+<a name="229" href="#229">229</a> <em>   * e.g., regex:(.*)@(.*):${1}@tld</em>
+<a name="230" href="#230">230</a> <em>   *</em>
+<a name="231" href="#231">231</a> <em>   * @param mail the Mail instance being processed</em>
+<a name="232" href="#232">232</a> <em>   * @param address the MailAddress to be mapped</em>
+<a name="233" href="#233">233</a> <em>   * @param targetString a String specifying the mapping</em>
+<a name="234" href="#234">234</a> <em>   */</em>
+<a name="235" href="#235">235</a>   <strong>private</strong> String regexMap(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail, <a href="../../../../../org/apache/mailet/MailAddress.html">MailAddress</a> address, String targetString) {
+<a name="236" href="#236">236</a>       String result = <strong>null</strong>;
+<a name="237" href="#237">237</a> 
+<a name="238" href="#238">238</a>       <strong>try</strong> {
+<a name="239" href="#239">239</a>           <strong>int</strong> msgPos = targetString.indexOf(':', <span class="string">"regex:"</span>.length() + 1);
+<a name="240" href="#240">240</a> 
+<a name="241" href="#241">241</a>           <em class="comment">// log("regex: targetString = " + targetString);</em>
+<a name="242" href="#242">242</a>           <em class="comment">// log("regex: msgPos = " + msgPos);</em>
+<a name="243" href="#243">243</a>           <em class="comment">// log("regex: compile " + targetString.substring("regex:".length(), msgPos));</em>
+<a name="244" href="#244">244</a>           <em class="comment">// log("regex: address = " + address.toString());</em>
+<a name="245" href="#245">245</a>           <em class="comment">// log("regex: replace = " + targetString.substring(msgPos + 1));</em>
+<a name="246" href="#246">246</a> 
+<a name="247" href="#247">247</a>           Pattern pattern = <strong>new</strong> Perl5Compiler().compile(targetString.substring(<span class="string">"regex:"</span>.length(), msgPos));
+<a name="248" href="#248">248</a>           Perl5Matcher matcher = <strong>new</strong> Perl5Matcher();
+<a name="249" href="#249">249</a> 
+<a name="250" href="#250">250</a>           <strong>if</strong> (matcher.matches(address.toString(), pattern)) {
+<a name="251" href="#251">251</a>               MatchResult match = matcher.getMatch();
+<a name="252" href="#252">252</a>               Map parameters = <strong>new</strong> HashMap(match.groups());
+<a name="253" href="#253">253</a>               <strong>for</strong> (<strong>int</strong> i = 1; i &lt; match.groups(); i++) {
+<a name="254" href="#254">254</a>                   parameters.put(Integer.toString(i), match.group(i));
+<a name="255" href="#255">255</a>               }
+<a name="256" href="#256">256</a>               result = XMLResources.replaceParameters(targetString.substring(msgPos + 1), parameters);
+<a name="257" href="#257">257</a>           }
+<a name="258" href="#258">258</a>       }
+<a name="259" href="#259">259</a>       <strong>catch</strong> (Exception e) {
+<a name="260" href="#260">260</a>           log(<span class="string">"Exception during regexMap processing: "</span>, e);
+<a name="261" href="#261">261</a>       }
 <a name="262" href="#262">262</a> 
-<a name="263" href="#263">263</a>   <em>/**<em>*</em></em>
-<a name="264" href="#264">264</a> <em>   * Returns the character used to delineate multiple addresses.</em>
-<a name="265" href="#265">265</a> <em>   * </em>
-<a name="266" href="#266">266</a> <em>   * @param targetString the string to parse</em>
-<a name="267" href="#267">267</a> <em>   * @return the character to tokenize on</em>
-<a name="268" href="#268">268</a> <em>   */</em>
-<a name="269" href="#269">269</a>   <strong>private</strong> String getSeparator(String targetString) {
-<a name="270" href="#270">270</a>       <strong>return</strong> (targetString.indexOf(',') > -1 ? <span class="string">","</span> : (targetString.indexOf(';') > -1 ? <span class="string">";"</span> : (targetString.indexOf(<span class="string">"regex:"</span>) > -1? <span class="string">""</span> : <span class="string">":"</span> )));
-<a name="271" href="#271">271</a>   }
-<a name="272" href="#272">272</a> 
-<a name="273" href="#273">273</a>   <strong>private</strong> <strong>static</strong> <strong>final</strong> java.util.Random random = <strong>new</strong> java.util.Random();  <em class="comment">// Used to generate new mail names</em>
-<a name="274" href="#274">274</a> 
-<a name="275" href="#275">275</a>   <em>/**<em>*</em></em>
-<a name="276" href="#276">276</a> <em>   * Create a unique new primary key name.</em>
-<a name="277" href="#277">277</a> <em>   *</em>
-<a name="278" href="#278">278</a> <em>   * @param mail the mail to use as the basis for the new mail name</em>
-<a name="279" href="#279">279</a> <em>   * @return a new name</em>
-<a name="280" href="#280">280</a> <em>   */</em>
-<a name="281" href="#281">281</a>   <strong>private</strong> String newName(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException {
-<a name="282" href="#282">282</a>       String oldName = mail.getName();
-<a name="283" href="#283">283</a> 
-<a name="284" href="#284">284</a>         <em class="comment">// Checking if the original mail name is too long, perhaps because of a</em>
-<a name="285" href="#285">285</a>         <em class="comment">// loop caused by a configuration error.</em>
-<a name="286" href="#286">286</a>         <em class="comment">// it could cause a "null pointer exception" in AvalonMailRepository much</em>
-<a name="287" href="#287">287</a>         <em class="comment">// harder to understand.</em>
-<a name="288" href="#288">288</a>       <strong>if</strong> (oldName.length() > 76) {
-<a name="289" href="#289">289</a>           <strong>int</strong> count = 0;
-<a name="290" href="#290">290</a>           <strong>int</strong> index = 0;
-<a name="291" href="#291">291</a>           <strong>while</strong> ((index = oldName.indexOf('!', index + 1)) >= 0) {
-<a name="292" href="#292">292</a>               count++;
-<a name="293" href="#293">293</a>           }
-<a name="294" href="#294">294</a>             <em class="comment">// It looks like a configuration loop. It's better to stop.</em>
-<a name="295" href="#295">295</a>           <strong>if</strong> (count > 7) {
-<a name="296" href="#296">296</a>               <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Unable to create a new message name: too long.  Possible loop in config.xml."</span>);
+<a name="263" href="#263">263</a>       <em class="comment">// log("regex: result = " + result);</em>
+<a name="264" href="#264">264</a>       <strong>return</strong> result;
+<a name="265" href="#265">265</a>   }
+<a name="266" href="#266">266</a> 
+<a name="267" href="#267">267</a>   <em>/**<em>*</em></em>
+<a name="268" href="#268">268</a> <em>   * Returns the character used to delineate multiple addresses.</em>
+<a name="269" href="#269">269</a> <em>   * </em>
+<a name="270" href="#270">270</a> <em>   * @param targetString the string to parse</em>
+<a name="271" href="#271">271</a> <em>   * @return the character to tokenize on</em>
+<a name="272" href="#272">272</a> <em>   */</em>
+<a name="273" href="#273">273</a>   <strong>private</strong> String getSeparator(String targetString) {
+<a name="274" href="#274">274</a>       <strong>return</strong> (targetString.indexOf(',') > -1 ? <span class="string">","</span> : (targetString.indexOf(';') > -1 ? <span class="string">";"</span> : (targetString.indexOf(<span class="string">"regex:"</span>) > -1? <span class="string">""</span> : <span class="string">":"</span> )));
+<a name="275" href="#275">275</a>   }
+<a name="276" href="#276">276</a> 
+<a name="277" href="#277">277</a>   <strong>private</strong> <strong>static</strong> <strong>final</strong> java.util.Random random = <strong>new</strong> java.util.Random();  <em class="comment">// Used to generate new mail names</em>
+<a name="278" href="#278">278</a> 
+<a name="279" href="#279">279</a>   <em>/**<em>*</em></em>
+<a name="280" href="#280">280</a> <em>   * Create a unique new primary key name.</em>
+<a name="281" href="#281">281</a> <em>   *</em>
+<a name="282" href="#282">282</a> <em>   * @param mail the mail to use as the basis for the new mail name</em>
+<a name="283" href="#283">283</a> <em>   * @return a new name</em>
+<a name="284" href="#284">284</a> <em>   */</em>
+<a name="285" href="#285">285</a>   <strong>private</strong> String newName(<a href="../../../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException {
+<a name="286" href="#286">286</a>       String oldName = mail.getName();
+<a name="287" href="#287">287</a> 
+<a name="288" href="#288">288</a>         <em class="comment">// Checking if the original mail name is too long, perhaps because of a</em>
+<a name="289" href="#289">289</a>         <em class="comment">// loop caused by a configuration error.</em>
+<a name="290" href="#290">290</a>         <em class="comment">// it could cause a "null pointer exception" in AvalonMailRepository much</em>
+<a name="291" href="#291">291</a>         <em class="comment">// harder to understand.</em>
+<a name="292" href="#292">292</a>       <strong>if</strong> (oldName.length() > 76) {
+<a name="293" href="#293">293</a>           <strong>int</strong> count = 0;
+<a name="294" href="#294">294</a>           <strong>int</strong> index = 0;
+<a name="295" href="#295">295</a>           <strong>while</strong> ((index = oldName.indexOf('!', index + 1)) >= 0) {
+<a name="296" href="#296">296</a>               count++;
 <a name="297" href="#297">297</a>           }
-<a name="298" href="#298">298</a>           <strong>else</strong> {
-<a name="299" href="#299">299</a>               oldName = oldName.substring(0, 76);
-<a name="300" href="#300">300</a>           }
-<a name="301" href="#301">301</a>       }
-<a name="302" href="#302">302</a> 
-<a name="303" href="#303">303</a>       StringBuffer nameBuffer =
-<a name="304" href="#304">304</a>                                <strong>new</strong> StringBuffer(64)
-<a name="305" href="#305">305</a>                                .append(oldName)
-<a name="306" href="#306">306</a>                                .append(<span class="string">"-!"</span>)
-<a name="307" href="#307">307</a>                                .append(random.nextInt(1048576));
-<a name="308" href="#308">308</a>       <strong>return</strong> nameBuffer.toString();
-<a name="309" href="#309">309</a>   }
-<a name="310" href="#310">310</a> }
+<a name="298" href="#298">298</a>             <em class="comment">// It looks like a configuration loop. It's better to stop.</em>
+<a name="299" href="#299">299</a>           <strong>if</strong> (count > 7) {
+<a name="300" href="#300">300</a>               <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Unable to create a new message name: too long.  Possible loop in config.xml."</span>);
+<a name="301" href="#301">301</a>           }
+<a name="302" href="#302">302</a>           <strong>else</strong> {
+<a name="303" href="#303">303</a>               oldName = oldName.substring(0, 76);
+<a name="304" href="#304">304</a>           }
+<a name="305" href="#305">305</a>       }
+<a name="306" href="#306">306</a> 
+<a name="307" href="#307">307</a>       StringBuffer nameBuffer =
+<a name="308" href="#308">308</a>                                <strong>new</strong> StringBuffer(64)
+<a name="309" href="#309">309</a>                                .append(oldName)
+<a name="310" href="#310">310</a>                                .append(<span class="string">"-!"</span>)
+<a name="311" href="#311">311</a>                                .append(random.nextInt(1048576));
+<a name="312" href="#312">312</a>       <strong>return</strong> nameBuffer.toString();
+<a name="313" href="#313">313</a>   }
+<a name="314" href="#314">314</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -146,111 +146,110 @@
 <a name="137" href="#137">137</a> <em>        assertFalse(mw.messageParsed());</em>
 <a name="138" href="#138">138</a> <em>        assertTrue(mw.isModified());</em>
 <a name="139" href="#139">139</a> <em>        mw.setMessageLoadable(true);</em>
-<a name="140" href="#140">140</a> <em>        </em>
-<a name="141" href="#141">141</a> <em>    }</em>
-<a name="142" href="#142">142</a> <em>    */</em>
-<a name="143" href="#143">143</a> 
-<a name="144" href="#144">144</a>     <strong>public</strong> <strong>void</strong> testDeferredHeaderLoading() throws MessagingException, IOException {
-<a name="145" href="#145">145</a>         mw.setHeadersLoadable(false);
-<a name="146" href="#146">146</a>         <strong>try</strong> {
-<a name="147" href="#147">147</a>             assertEquals(<span class="string">"foo"</span>,mw.getSubject());
-<a name="148" href="#148">148</a>             fail(<span class="string">"subject should not be loadable here, headers loading is disabled"</span>);
-<a name="149" href="#149">149</a>         } <strong>catch</strong> (IllegalStateException e) {
-<a name="150" href="#150">150</a>             
-<a name="151" href="#151">151</a>         }
-<a name="152" href="#152">152</a>     }
-<a name="153" href="#153">153</a> 
-<a name="154" href="#154">154</a>     <em>/**<em>*</em></em>
-<a name="155" href="#155">155</a> <em>     * See JAMES-474</em>
-<a name="156" href="#156">156</a> <em>     * MimeMessageWrapper(MimeMessage) should clone the original message.</em>
-<a name="157" href="#157">157</a> <em>     */</em>
-<a name="158" href="#158">158</a>     <strong>public</strong> <strong>void</strong> testMessageCloned() throws MessagingException, IOException, InterruptedException {
-<a name="159" href="#159">159</a>         MimeMessageWrapper mmw = <strong>new</strong> MimeMessageWrapper(mw);
-<a name="160" href="#160">160</a>         ContainerUtil.dispose(mw);
-<a name="161" href="#161">161</a>         mw = <strong>null</strong>;
-<a name="162" href="#162">162</a>         System.gc();
-<a name="163" href="#163">163</a>         Thread.sleep(200);
-<a name="164" href="#164">164</a>         mmw.writeTo(System.out);
-<a name="165" href="#165">165</a>     }
-<a name="166" href="#166">166</a> 
-<a name="167" href="#167">167</a>     <em class="comment">/*</em>
-<a name="168" href="#168">168</a> <em class="comment">     * Class under test for String getSubject()</em>
-<a name="169" href="#169">169</a> <em class="comment">     */</em>
-<a name="170" href="#170">170</a>     <strong>public</strong> <strong>void</strong> testGetSubjectFolding() {
-<a name="171" href="#171">171</a>         <strong>try</strong> {
-<a name="172" href="#172">172</a>             StringBuffer res = <strong>new</strong> StringBuffer();
-<a name="173" href="#173">173</a>             BufferedReader r = <strong>new</strong> BufferedReader(<strong>new</strong> InputStreamReader(mw.getInputStream()));
-<a name="174" href="#174">174</a>             String line;
-<a name="175" href="#175">175</a>             <strong>while</strong> (r.ready()) {
-<a name="176" href="#176">176</a>                 line = r.readLine();
-<a name="177" href="#177">177</a>                 res.append(line+<span class="string">"\r\n"</span>);
-<a name="178" href="#178">178</a>             }
-<a name="179" href="#179">179</a>             r.close();
-<a name="180" href="#180">180</a>             assertEquals(body,res.toString());
-<a name="181" href="#181">181</a>         } <strong>catch</strong> (MessagingException e) {
-<a name="182" href="#182">182</a>             <em class="comment">// TODO Auto-generated catch block</em>
-<a name="183" href="#183">183</a>             e.printStackTrace();
-<a name="184" href="#184">184</a>         } <strong>catch</strong> (IOException e) {
-<a name="185" href="#185">185</a>             <em class="comment">// TODO Auto-generated catch block</em>
-<a name="186" href="#186">186</a>             e.printStackTrace();
-<a name="187" href="#187">187</a>         }
-<a name="188" href="#188">188</a>     }
-<a name="189" href="#189">189</a>     
-<a name="190" href="#190">190</a>     <em class="comment">/*</em>
-<a name="191" href="#191">191</a> <em class="comment">     * Class under test for String getSubject()</em>
-<a name="192" href="#192">192</a> <em class="comment">     */</em>
-<a name="193" href="#193">193</a>     <strong>public</strong> <strong>void</strong> testAddHeaderAndSave() {
-<a name="194" href="#194">194</a>         <strong>try</strong> {
-<a name="195" href="#195">195</a>             mw.addHeader(<span class="string">"X-Test"</span>, <span class="string">"X-Value"</span>);
-<a name="196" href="#196">196</a>             
-<a name="197" href="#197">197</a>             assertEquals(<span class="string">"X-Value"</span>, mw.getHeader(<span class="string">"X-Test"</span>)[0]);
-<a name="198" href="#198">198</a>             
-<a name="199" href="#199">199</a>             mw.saveChanges();
-<a name="200" href="#200">200</a> 
-<a name="201" href="#201">201</a>             ByteArrayOutputStream rawMessage = <strong>new</strong> ByteArrayOutputStream();
-<a name="202" href="#202">202</a>             mw.writeTo(rawMessage);
-<a name="203" href="#203">203</a>             
-<a name="204" href="#204">204</a>             assertEquals(<span class="string">"X-Value"</span>, mw.getHeader(<span class="string">"X-Test"</span>)[0]);
-<a name="205" href="#205">205</a> 
-<a name="206" href="#206">206</a>             String res = rawMessage.toString();
-<a name="207" href="#207">207</a>             
-<a name="208" href="#208">208</a>             <strong>boolean</strong> found = res.indexOf(<span class="string">"X-Test: X-Value"</span>) > 0;
-<a name="209" href="#209">209</a>             assertEquals(<strong>true</strong>,found);
-<a name="210" href="#210">210</a> 
-<a name="211" href="#211">211</a>         } <strong>catch</strong> (MessagingException e) {
-<a name="212" href="#212">212</a>             <em class="comment">// TODO Auto-generated catch block</em>
-<a name="213" href="#213">213</a>             e.printStackTrace();
-<a name="214" href="#214">214</a>         } <strong>catch</strong> (IOException e) {
-<a name="215" href="#215">215</a>             <em class="comment">// TODO Auto-generated catch block</em>
-<a name="216" href="#216">216</a>             e.printStackTrace();
-<a name="217" href="#217">217</a>         }
-<a name="218" href="#218">218</a>     }
-<a name="219" href="#219">219</a> 
-<a name="220" href="#220">220</a>     
-<a name="221" href="#221">221</a>     <strong>public</strong> <strong>void</strong> testReplaceReturnPathOnBadMessage() throws Exception {
-<a name="222" href="#222">222</a>         MimeMessage message = getMessageWithBadReturnPath();
-<a name="223" href="#223">223</a>         message.setHeader(RFC2822Headers.RETURN_PATH, <span class="string">"&lt;test@test.de>"</span>);
-<a name="224" href="#224">224</a>         Enumeration e =  message.getMatchingHeaderLines(<strong>new</strong> String[] {<span class="string">"Return-Path"</span>});
-<a name="225" href="#225">225</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,e.nextElement());
-<a name="226" href="#226">226</a>         assertFalse(e.hasMoreElements());
-<a name="227" href="#227">227</a>         Enumeration h =  message.getAllHeaderLines();
-<a name="228" href="#228">228</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,h.nextElement());
-<a name="229" href="#229">229</a>         assertFalse(h.nextElement().toString().startsWith(<span class="string">"Return-Path:"</span>));
-<a name="230" href="#230">230</a>     }
-<a name="231" href="#231">231</a>     
-<a name="232" href="#232">232</a>     <strong>public</strong> <strong>void</strong> testAddReturnPathOnBadMessage() throws Exception {
-<a name="233" href="#233">233</a>         MimeMessage message = getMessageWithBadReturnPath();
-<a name="234" href="#234">234</a>         message.addHeader(RFC2822Headers.RETURN_PATH, <span class="string">"&lt;test@test.de>"</span>);
-<a name="235" href="#235">235</a>         <em class="comment">// test that we have now 2 return-paths</em>
-<a name="236" href="#236">236</a>         Enumeration e = message.getMatchingHeaderLines(<strong>new</strong> String[] {<span class="string">"Return-Path"</span>});
-<a name="237" href="#237">237</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,e.nextElement());
-<a name="238" href="#238">238</a>         assertEquals(<span class="string">"Return-Path: &lt;mybadreturn@example.com>"</span>,e.nextElement());
-<a name="239" href="#239">239</a>         <em class="comment">// test that return-path is the first line</em>
-<a name="240" href="#240">240</a>         Enumeration h =  message.getAllHeaderLines();
-<a name="241" href="#241">241</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,h.nextElement());
-<a name="242" href="#242">242</a>     }
-<a name="243" href="#243">243</a> 
-<a name="244" href="#244">244</a> }
+<a name="140" href="#140">140</a> <em>    }</em>
+<a name="141" href="#141">141</a> <em>    */</em>
+<a name="142" href="#142">142</a> 
+<a name="143" href="#143">143</a>     <strong>public</strong> <strong>void</strong> testDeferredHeaderLoading() throws MessagingException, IOException {
+<a name="144" href="#144">144</a>         mw.setHeadersLoadable(false);
+<a name="145" href="#145">145</a>         <strong>try</strong> {
+<a name="146" href="#146">146</a>             assertEquals(<span class="string">"foo"</span>,mw.getSubject());
+<a name="147" href="#147">147</a>             fail(<span class="string">"subject should not be loadable here, headers loading is disabled"</span>);
+<a name="148" href="#148">148</a>         } <strong>catch</strong> (IllegalStateException e) {
+<a name="149" href="#149">149</a>             
+<a name="150" href="#150">150</a>         }
+<a name="151" href="#151">151</a>     }
+<a name="152" href="#152">152</a> 
+<a name="153" href="#153">153</a>     <em>/**<em>*</em></em>
+<a name="154" href="#154">154</a> <em>     * See JAMES-474</em>
+<a name="155" href="#155">155</a> <em>     * MimeMessageWrapper(MimeMessage) should clone the original message.</em>
+<a name="156" href="#156">156</a> <em>     */</em>
+<a name="157" href="#157">157</a>     <strong>public</strong> <strong>void</strong> testMessageCloned() throws MessagingException, IOException, InterruptedException {
+<a name="158" href="#158">158</a>         MimeMessageWrapper mmw = <strong>new</strong> MimeMessageWrapper(mw);
+<a name="159" href="#159">159</a>         ContainerUtil.dispose(mw);
+<a name="160" href="#160">160</a>         mw = <strong>null</strong>;
+<a name="161" href="#161">161</a>         System.gc();
+<a name="162" href="#162">162</a>         Thread.sleep(200);
+<a name="163" href="#163">163</a>         mmw.writeTo(System.out);
+<a name="164" href="#164">164</a>     }
+<a name="165" href="#165">165</a> 
+<a name="166" href="#166">166</a>     <em class="comment">/*</em>
+<a name="167" href="#167">167</a> <em class="comment">     * Class under test for String getSubject()</em>
+<a name="168" href="#168">168</a> <em class="comment">     */</em>
+<a name="169" href="#169">169</a>     <strong>public</strong> <strong>void</strong> testGetSubjectFolding() {
+<a name="170" href="#170">170</a>         <strong>try</strong> {
+<a name="171" href="#171">171</a>             StringBuffer res = <strong>new</strong> StringBuffer();
+<a name="172" href="#172">172</a>             BufferedReader r = <strong>new</strong> BufferedReader(<strong>new</strong> InputStreamReader(mw.getInputStream()));
+<a name="173" href="#173">173</a>             String line;
+<a name="174" href="#174">174</a>             <strong>while</strong> (r.ready()) {
+<a name="175" href="#175">175</a>                 line = r.readLine();
+<a name="176" href="#176">176</a>                 res.append(line+<span class="string">"\r\n"</span>);
+<a name="177" href="#177">177</a>             }
+<a name="178" href="#178">178</a>             r.close();
+<a name="179" href="#179">179</a>             assertEquals(body,res.toString());
+<a name="180" href="#180">180</a>         } <strong>catch</strong> (MessagingException e) {
+<a name="181" href="#181">181</a>             <em class="comment">// TODO Auto-generated catch block</em>
+<a name="182" href="#182">182</a>             e.printStackTrace();
+<a name="183" href="#183">183</a>         } <strong>catch</strong> (IOException e) {
+<a name="184" href="#184">184</a>             <em class="comment">// TODO Auto-generated catch block</em>
+<a name="185" href="#185">185</a>             e.printStackTrace();
+<a name="186" href="#186">186</a>         }
+<a name="187" href="#187">187</a>     }
+<a name="188" href="#188">188</a>     
+<a name="189" href="#189">189</a>     <em class="comment">/*</em>
+<a name="190" href="#190">190</a> <em class="comment">     * Class under test for String getSubject()</em>
+<a name="191" href="#191">191</a> <em class="comment">     */</em>
+<a name="192" href="#192">192</a>     <strong>public</strong> <strong>void</strong> testAddHeaderAndSave() {
+<a name="193" href="#193">193</a>         <strong>try</strong> {
+<a name="194" href="#194">194</a>             mw.addHeader(<span class="string">"X-Test"</span>, <span class="string">"X-Value"</span>);
+<a name="195" href="#195">195</a>             
+<a name="196" href="#196">196</a>             assertEquals(<span class="string">"X-Value"</span>, mw.getHeader(<span class="string">"X-Test"</span>)[0]);
+<a name="197" href="#197">197</a>             
+<a name="198" href="#198">198</a>             mw.saveChanges();
+<a name="199" href="#199">199</a> 
+<a name="200" href="#200">200</a>             ByteArrayOutputStream rawMessage = <strong>new</strong> ByteArrayOutputStream();
+<a name="201" href="#201">201</a>             mw.writeTo(rawMessage);
+<a name="202" href="#202">202</a>             
+<a name="203" href="#203">203</a>             assertEquals(<span class="string">"X-Value"</span>, mw.getHeader(<span class="string">"X-Test"</span>)[0]);
+<a name="204" href="#204">204</a> 
+<a name="205" href="#205">205</a>             String res = rawMessage.toString();
+<a name="206" href="#206">206</a>             
+<a name="207" href="#207">207</a>             <strong>boolean</strong> found = res.indexOf(<span class="string">"X-Test: X-Value"</span>) > 0;
+<a name="208" href="#208">208</a>             assertEquals(<strong>true</strong>,found);
+<a name="209" href="#209">209</a> 
+<a name="210" href="#210">210</a>         } <strong>catch</strong> (MessagingException e) {
+<a name="211" href="#211">211</a>             <em class="comment">// TODO Auto-generated catch block</em>
+<a name="212" href="#212">212</a>             e.printStackTrace();
+<a name="213" href="#213">213</a>         } <strong>catch</strong> (IOException e) {
+<a name="214" href="#214">214</a>             <em class="comment">// TODO Auto-generated catch block</em>
+<a name="215" href="#215">215</a>             e.printStackTrace();
+<a name="216" href="#216">216</a>         }
+<a name="217" href="#217">217</a>     }
+<a name="218" href="#218">218</a> 
+<a name="219" href="#219">219</a>     
+<a name="220" href="#220">220</a>     <strong>public</strong> <strong>void</strong> testReplaceReturnPathOnBadMessage() throws Exception {
+<a name="221" href="#221">221</a>         MimeMessage message = getMessageWithBadReturnPath();
+<a name="222" href="#222">222</a>         message.setHeader(RFC2822Headers.RETURN_PATH, <span class="string">"&lt;test@test.de>"</span>);
+<a name="223" href="#223">223</a>         Enumeration e =  message.getMatchingHeaderLines(<strong>new</strong> String[] {<span class="string">"Return-Path"</span>});
+<a name="224" href="#224">224</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,e.nextElement());
+<a name="225" href="#225">225</a>         assertFalse(e.hasMoreElements());
+<a name="226" href="#226">226</a>         Enumeration h =  message.getAllHeaderLines();
+<a name="227" href="#227">227</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,h.nextElement());
+<a name="228" href="#228">228</a>         assertFalse(h.nextElement().toString().startsWith(<span class="string">"Return-Path:"</span>));
+<a name="229" href="#229">229</a>     }
+<a name="230" href="#230">230</a>     
+<a name="231" href="#231">231</a>     <strong>public</strong> <strong>void</strong> testAddReturnPathOnBadMessage() throws Exception {
+<a name="232" href="#232">232</a>         MimeMessage message = getMessageWithBadReturnPath();
+<a name="233" href="#233">233</a>         message.addHeader(RFC2822Headers.RETURN_PATH, <span class="string">"&lt;test@test.de>"</span>);
+<a name="234" href="#234">234</a>         <em class="comment">// test that we have now 2 return-paths</em>
+<a name="235" href="#235">235</a>         Enumeration e = message.getMatchingHeaderLines(<strong>new</strong> String[] {<span class="string">"Return-Path"</span>});
+<a name="236" href="#236">236</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,e.nextElement());
+<a name="237" href="#237">237</a>         assertEquals(<span class="string">"Return-Path: &lt;mybadreturn@example.com>"</span>,e.nextElement());
+<a name="238" href="#238">238</a>         <em class="comment">// test that return-path is the first line</em>
+<a name="239" href="#239">239</a>         Enumeration h =  message.getAllHeaderLines();
+<a name="240" href="#240">240</a>         assertEquals(<span class="string">"Return-Path: &lt;test@test.de>"</span>,h.nextElement());
+<a name="241" href="#241">241</a>     }
+<a name="242" href="#242">242</a> 
+<a name="243" href="#243">243</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

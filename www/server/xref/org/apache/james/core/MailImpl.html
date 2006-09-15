@@ -63,7 +63,7 @@
 <a name="54" href="#54">54</a>  <em> * messages stored in file repositories &lt;I>with&lt;/I> attributes by James version > 2.2.0a8</em>
 <a name="55" href="#55">55</a>  <em> * will be processed by previous versions, ignoring the attributes.&lt;/P></em>
 <a name="56" href="#56">56</a>  <em> *</em>
-<a name="57" href="#57">57</a>  <em> * @version CVS $Revision: 414873 $ $Date: 2006-06-16 20:05:43 +0200 (ven, 16 giu 2006) $</em>
+<a name="57" href="#57">57</a>  <em> * @version CVS $Revision: 442571 $ $Date: 2006-09-12 14:38:57 +0200 (mar, 12 set 2006) $</em>
 <a name="58" href="#58">58</a>  <em> */</em>
 <a name="59" href="#59">59</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/james/core/MailImpl.html">MailImpl</a> implements Disposable, <a href="../../../../org/apache/mailet/Mail.html">Mail</a> {
 <a name="60" href="#60">60</a>      
@@ -393,240 +393,247 @@
 <a name="384" href="#384">384</a> <em>     * @param message the new MimeMessage associated with this MailImpl</em>
 <a name="385" href="#385">385</a> <em>     */</em>
 <a name="386" href="#386">386</a>     <strong>public</strong> <strong>void</strong> setMessage(MimeMessage message) {
-<a name="387" href="#387">387</a>         <strong>this</strong>.message = message;
-<a name="388" href="#388">388</a>     }
-<a name="389" href="#389">389</a>     <em>/**<em>*</em></em>
-<a name="390" href="#390">390</a> <em>     * Set the recipients for this MailImpl.</em>
-<a name="391" href="#391">391</a> <em>     *</em>
-<a name="392" href="#392">392</a> <em>     * @param recipients the recipients for this MailImpl</em>
-<a name="393" href="#393">393</a> <em>     */</em>
-<a name="394" href="#394">394</a>     <strong>public</strong> <strong>void</strong> setRecipients(Collection recipients) {
-<a name="395" href="#395">395</a>         <strong>this</strong>.recipients = recipients;
+<a name="387" href="#387">387</a>         <strong>if</strong> (<strong>this</strong>.message != message) {
+<a name="388" href="#388">388</a>             <em class="comment">// If a setMessage is called on a Mail that already have a message</em>
+<a name="389" href="#389">389</a>             <em class="comment">// (discouraged) we have to make sure that the message we remove is</em>
+<a name="390" href="#390">390</a>             <em class="comment">// correctly unreferenced and disposed, otherwise it will keep locks</em>
+<a name="391" href="#391">391</a>             <strong>if</strong> (<strong>this</strong>.message != <strong>null</strong>) {
+<a name="392" href="#392">392</a>                 ContainerUtil.dispose(<strong>this</strong>.message);
+<a name="393" href="#393">393</a>             }
+<a name="394" href="#394">394</a>             <strong>this</strong>.message = message;
+<a name="395" href="#395">395</a>         }
 <a name="396" href="#396">396</a>     }
 <a name="397" href="#397">397</a>     <em>/**<em>*</em></em>
-<a name="398" href="#398">398</a> <em>     * Set the sender of this MailImpl.</em>
+<a name="398" href="#398">398</a> <em>     * Set the recipients for this MailImpl.</em>
 <a name="399" href="#399">399</a> <em>     *</em>
-<a name="400" href="#400">400</a> <em>     * @param sender the sender of this MailImpl</em>
+<a name="400" href="#400">400</a> <em>     * @param recipients the recipients for this MailImpl</em>
 <a name="401" href="#401">401</a> <em>     */</em>
-<a name="402" href="#402">402</a>     <strong>public</strong> <strong>void</strong> setSender(<a href="../../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender) {
-<a name="403" href="#403">403</a>         <strong>this</strong>.sender = sender;
+<a name="402" href="#402">402</a>     <strong>public</strong> <strong>void</strong> setRecipients(Collection recipients) {
+<a name="403" href="#403">403</a>         <strong>this</strong>.recipients = recipients;
 <a name="404" href="#404">404</a>     }
 <a name="405" href="#405">405</a>     <em>/**<em>*</em></em>
-<a name="406" href="#406">406</a> <em>     * Set the state of this MailImpl.</em>
+<a name="406" href="#406">406</a> <em>     * Set the sender of this MailImpl.</em>
 <a name="407" href="#407">407</a> <em>     *</em>
-<a name="408" href="#408">408</a> <em>     * @param state the state of this MailImpl</em>
+<a name="408" href="#408">408</a> <em>     * @param sender the sender of this MailImpl</em>
 <a name="409" href="#409">409</a> <em>     */</em>
-<a name="410" href="#410">410</a>     <strong>public</strong> <strong>void</strong> setState(String state) {
-<a name="411" href="#411">411</a>         <strong>this</strong>.state = state;
+<a name="410" href="#410">410</a>     <strong>public</strong> <strong>void</strong> setSender(<a href="../../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender) {
+<a name="411" href="#411">411</a>         <strong>this</strong>.sender = sender;
 <a name="412" href="#412">412</a>     }
 <a name="413" href="#413">413</a>     <em>/**<em>*</em></em>
-<a name="414" href="#414">414</a> <em>     * Set the remote address associated with this MailImpl.</em>
+<a name="414" href="#414">414</a> <em>     * Set the state of this MailImpl.</em>
 <a name="415" href="#415">415</a> <em>     *</em>
-<a name="416" href="#416">416</a> <em>     * @param remoteHost the new remote host associated with this MailImpl</em>
+<a name="416" href="#416">416</a> <em>     * @param state the state of this MailImpl</em>
 <a name="417" href="#417">417</a> <em>     */</em>
-<a name="418" href="#418">418</a>     <strong>public</strong> <strong>void</strong> setRemoteHost(String remoteHost) {
-<a name="419" href="#419">419</a>         <strong>this</strong>.remoteHost = remoteHost;
+<a name="418" href="#418">418</a>     <strong>public</strong> <strong>void</strong> setState(String state) {
+<a name="419" href="#419">419</a>         <strong>this</strong>.state = state;
 <a name="420" href="#420">420</a>     }
 <a name="421" href="#421">421</a>     <em>/**<em>*</em></em>
 <a name="422" href="#422">422</a> <em>     * Set the remote address associated with this MailImpl.</em>
 <a name="423" href="#423">423</a> <em>     *</em>
-<a name="424" href="#424">424</a> <em>     * @param remoteAddr the new remote address associated with this MailImpl</em>
+<a name="424" href="#424">424</a> <em>     * @param remoteHost the new remote host associated with this MailImpl</em>
 <a name="425" href="#425">425</a> <em>     */</em>
-<a name="426" href="#426">426</a>     <strong>public</strong> <strong>void</strong> setRemoteAddr(String remoteAddr) {
-<a name="427" href="#427">427</a>         <strong>this</strong>.remoteAddr = remoteAddr;
+<a name="426" href="#426">426</a>     <strong>public</strong> <strong>void</strong> setRemoteHost(String remoteHost) {
+<a name="427" href="#427">427</a>         <strong>this</strong>.remoteHost = remoteHost;
 <a name="428" href="#428">428</a>     }
 <a name="429" href="#429">429</a>     <em>/**<em>*</em></em>
-<a name="430" href="#430">430</a> <em>     * Set the date this mail was last updated.</em>
+<a name="430" href="#430">430</a> <em>     * Set the remote address associated with this MailImpl.</em>
 <a name="431" href="#431">431</a> <em>     *</em>
-<a name="432" href="#432">432</a> <em>     * @param lastUpdated the date the mail was last updated</em>
+<a name="432" href="#432">432</a> <em>     * @param remoteAddr the new remote address associated with this MailImpl</em>
 <a name="433" href="#433">433</a> <em>     */</em>
-<a name="434" href="#434">434</a>     <strong>public</strong> <strong>void</strong> setLastUpdated(Date lastUpdated) {
-<a name="435" href="#435">435</a>         <em class="comment">// Make a defensive copy to ensure that the date</em>
-<a name="436" href="#436">436</a>         <em class="comment">// doesn't get changed external to the class</em>
-<a name="437" href="#437">437</a>         <strong>if</strong> (lastUpdated != <strong>null</strong>) {
-<a name="438" href="#438">438</a>             lastUpdated = <strong>new</strong> Date(lastUpdated.getTime());
-<a name="439" href="#439">439</a>         }
-<a name="440" href="#440">440</a>         <strong>this</strong>.lastUpdated = lastUpdated;
-<a name="441" href="#441">441</a>     }
-<a name="442" href="#442">442</a>     <em>/**<em>*</em></em>
-<a name="443" href="#443">443</a> <em>     * Writes the message out to an OutputStream.</em>
-<a name="444" href="#444">444</a> <em>     *</em>
-<a name="445" href="#445">445</a> <em>     * @param out the OutputStream to which to write the content</em>
-<a name="446" href="#446">446</a> <em>     *</em>
-<a name="447" href="#447">447</a> <em>     * @throws MessagingException if the MimeMessage is not set for this MailImpl</em>
-<a name="448" href="#448">448</a> <em>     * @throws IOException if an error occurs while reading or writing from the stream</em>
-<a name="449" href="#449">449</a> <em>     */</em>
-<a name="450" href="#450">450</a>     <strong>public</strong> <strong>void</strong> writeMessageTo(OutputStream out) throws IOException, MessagingException {
-<a name="451" href="#451">451</a>         <strong>if</strong> (message != <strong>null</strong>) {
-<a name="452" href="#452">452</a>             message.writeTo(out);
-<a name="453" href="#453">453</a>         } <strong>else</strong> {
-<a name="454" href="#454">454</a>             <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"No message set for this MailImpl."</span>);
-<a name="455" href="#455">455</a>         }
-<a name="456" href="#456">456</a>     }
-<a name="457" href="#457">457</a>     
-<a name="458" href="#458">458</a>     <em class="comment">// Serializable Methods</em>
-<a name="459" href="#459">459</a>     <em class="comment">// TODO: These need some work.  Currently very tightly coupled to</em>
-<a name="460" href="#460">460</a>     <em class="comment">//       the internal representation.</em>
-<a name="461" href="#461">461</a>     <em>/**<em>*</em></em>
-<a name="462" href="#462">462</a> <em>     * Read the MailImpl from an &lt;code>ObjectInputStream&lt;/code>.</em>
-<a name="463" href="#463">463</a> <em>     *</em>
-<a name="464" href="#464">464</a> <em>     * @param in the ObjectInputStream from which the object is read</em>
-<a name="465" href="#465">465</a> <em>     *</em>
-<a name="466" href="#466">466</a> <em>     * @throws IOException if an error occurs while reading from the stream</em>
-<a name="467" href="#467">467</a> <em>     * @throws ClassNotFoundException ?</em>
-<a name="468" href="#468">468</a> <em>     * @throws ClassCastException if the serialized objects are not of the appropriate type</em>
-<a name="469" href="#469">469</a> <em>     */</em>
-<a name="470" href="#470">470</a>     <strong>private</strong> <strong>void</strong> readObject(java.io.ObjectInputStream in)
-<a name="471" href="#471">471</a>         throws IOException, ClassNotFoundException {
-<a name="472" href="#472">472</a>         <strong>try</strong> {
-<a name="473" href="#473">473</a>             Object obj = in.readObject();
-<a name="474" href="#474">474</a>             <strong>if</strong> (obj == <strong>null</strong>) {
-<a name="475" href="#475">475</a>                 sender = <strong>null</strong>;
-<a name="476" href="#476">476</a>             } <strong>else</strong> <strong>if</strong> (obj instanceof String) {
-<a name="477" href="#477">477</a>                 sender = <strong>new</strong> <a href="../../../../org/apache/mailet/MailAddress.html">MailAddress</a>((String) obj);
-<a name="478" href="#478">478</a>             } <strong>else</strong> <strong>if</strong> (obj instanceof MailAddress) {
-<a name="479" href="#479">479</a>                 sender = (MailAddress) obj;
-<a name="480" href="#480">480</a>             }
-<a name="481" href="#481">481</a>         } <strong>catch</strong> (ParseException pe) {
-<a name="482" href="#482">482</a>             <strong>throw</strong> <strong>new</strong> IOException(<span class="string">"Error parsing sender address: "</span> + pe.getMessage());
-<a name="483" href="#483">483</a>         }
-<a name="484" href="#484">484</a>         recipients = (Collection) in.readObject();
-<a name="485" href="#485">485</a>         state = (String) in.readObject();
-<a name="486" href="#486">486</a>         errorMessage = (String) in.readObject();
-<a name="487" href="#487">487</a>         name = (String) in.readObject();
-<a name="488" href="#488">488</a>         remoteHost = (String) in.readObject();
-<a name="489" href="#489">489</a>         remoteAddr = (String) in.readObject();
-<a name="490" href="#490">490</a>         setLastUpdated((Date) in.readObject());
-<a name="491" href="#491">491</a>         <em class="comment">// the following is under try/catch to be backwards compatible</em>
-<a name="492" href="#492">492</a>         <em class="comment">// with messages created with James version &lt;= 2.2.0a8</em>
-<a name="493" href="#493">493</a>         <strong>try</strong> {
-<a name="494" href="#494">494</a>             attributes = (HashMap) in.readObject();
-<a name="495" href="#495">495</a>         } <strong>catch</strong> (OptionalDataException ode) {
-<a name="496" href="#496">496</a>             <strong>if</strong> (ode.eof) {
-<a name="497" href="#497">497</a>                 attributes = <strong>new</strong> HashMap();
-<a name="498" href="#498">498</a>             } <strong>else</strong> {
-<a name="499" href="#499">499</a>                 <strong>throw</strong> ode;
-<a name="500" href="#500">500</a>             }
-<a name="501" href="#501">501</a>         }
-<a name="502" href="#502">502</a>     }
-<a name="503" href="#503">503</a>     <em>/**<em>*</em></em>
-<a name="504" href="#504">504</a> <em>     * Write the MailImpl to an &lt;code>ObjectOutputStream&lt;/code>.</em>
-<a name="505" href="#505">505</a> <em>     *</em>
-<a name="506" href="#506">506</a> <em>     * @param in the ObjectOutputStream to which the object is written</em>
-<a name="507" href="#507">507</a> <em>     *</em>
-<a name="508" href="#508">508</a> <em>     * @throws IOException if an error occurs while writing to the stream</em>
-<a name="509" href="#509">509</a> <em>     */</em>
-<a name="510" href="#510">510</a>     <strong>private</strong> <strong>void</strong> writeObject(java.io.ObjectOutputStream out) throws IOException {
-<a name="511" href="#511">511</a>         out.writeObject(sender);
-<a name="512" href="#512">512</a>         out.writeObject(recipients);
-<a name="513" href="#513">513</a>         out.writeObject(state);
-<a name="514" href="#514">514</a>         out.writeObject(errorMessage);
-<a name="515" href="#515">515</a>         out.writeObject(name);
-<a name="516" href="#516">516</a>         out.writeObject(remoteHost);
-<a name="517" href="#517">517</a>         out.writeObject(remoteAddr);
-<a name="518" href="#518">518</a>         out.writeObject(lastUpdated);
-<a name="519" href="#519">519</a>         out.writeObject(attributes);
-<a name="520" href="#520">520</a>     }
-<a name="521" href="#521">521</a> 
-<a name="522" href="#522">522</a>     <em>/**<em>*</em></em>
-<a name="523" href="#523">523</a> <em>     * @see org.apache.avalon.framework.activity.Disposable#dispose()</em>
-<a name="524" href="#524">524</a> <em>     */</em>
-<a name="525" href="#525">525</a>     <strong>public</strong> <strong>void</strong> dispose() {
-<a name="526" href="#526">526</a>         ContainerUtil.dispose(message);
-<a name="527" href="#527">527</a>         message = <strong>null</strong>;
+<a name="434" href="#434">434</a>     <strong>public</strong> <strong>void</strong> setRemoteAddr(String remoteAddr) {
+<a name="435" href="#435">435</a>         <strong>this</strong>.remoteAddr = remoteAddr;
+<a name="436" href="#436">436</a>     }
+<a name="437" href="#437">437</a>     <em>/**<em>*</em></em>
+<a name="438" href="#438">438</a> <em>     * Set the date this mail was last updated.</em>
+<a name="439" href="#439">439</a> <em>     *</em>
+<a name="440" href="#440">440</a> <em>     * @param lastUpdated the date the mail was last updated</em>
+<a name="441" href="#441">441</a> <em>     */</em>
+<a name="442" href="#442">442</a>     <strong>public</strong> <strong>void</strong> setLastUpdated(Date lastUpdated) {
+<a name="443" href="#443">443</a>         <em class="comment">// Make a defensive copy to ensure that the date</em>
+<a name="444" href="#444">444</a>         <em class="comment">// doesn't get changed external to the class</em>
+<a name="445" href="#445">445</a>         <strong>if</strong> (lastUpdated != <strong>null</strong>) {
+<a name="446" href="#446">446</a>             lastUpdated = <strong>new</strong> Date(lastUpdated.getTime());
+<a name="447" href="#447">447</a>         }
+<a name="448" href="#448">448</a>         <strong>this</strong>.lastUpdated = lastUpdated;
+<a name="449" href="#449">449</a>     }
+<a name="450" href="#450">450</a>     <em>/**<em>*</em></em>
+<a name="451" href="#451">451</a> <em>     * Writes the message out to an OutputStream.</em>
+<a name="452" href="#452">452</a> <em>     *</em>
+<a name="453" href="#453">453</a> <em>     * @param out the OutputStream to which to write the content</em>
+<a name="454" href="#454">454</a> <em>     *</em>
+<a name="455" href="#455">455</a> <em>     * @throws MessagingException if the MimeMessage is not set for this MailImpl</em>
+<a name="456" href="#456">456</a> <em>     * @throws IOException if an error occurs while reading or writing from the stream</em>
+<a name="457" href="#457">457</a> <em>     */</em>
+<a name="458" href="#458">458</a>     <strong>public</strong> <strong>void</strong> writeMessageTo(OutputStream out) throws IOException, MessagingException {
+<a name="459" href="#459">459</a>         <strong>if</strong> (message != <strong>null</strong>) {
+<a name="460" href="#460">460</a>             message.writeTo(out);
+<a name="461" href="#461">461</a>         } <strong>else</strong> {
+<a name="462" href="#462">462</a>             <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"No message set for this MailImpl."</span>);
+<a name="463" href="#463">463</a>         }
+<a name="464" href="#464">464</a>     }
+<a name="465" href="#465">465</a>     
+<a name="466" href="#466">466</a>     <em class="comment">// Serializable Methods</em>
+<a name="467" href="#467">467</a>     <em class="comment">// TODO: These need some work.  Currently very tightly coupled to</em>
+<a name="468" href="#468">468</a>     <em class="comment">//       the internal representation.</em>
+<a name="469" href="#469">469</a>     <em>/**<em>*</em></em>
+<a name="470" href="#470">470</a> <em>     * Read the MailImpl from an &lt;code>ObjectInputStream&lt;/code>.</em>
+<a name="471" href="#471">471</a> <em>     *</em>
+<a name="472" href="#472">472</a> <em>     * @param in the ObjectInputStream from which the object is read</em>
+<a name="473" href="#473">473</a> <em>     *</em>
+<a name="474" href="#474">474</a> <em>     * @throws IOException if an error occurs while reading from the stream</em>
+<a name="475" href="#475">475</a> <em>     * @throws ClassNotFoundException ?</em>
+<a name="476" href="#476">476</a> <em>     * @throws ClassCastException if the serialized objects are not of the appropriate type</em>
+<a name="477" href="#477">477</a> <em>     */</em>
+<a name="478" href="#478">478</a>     <strong>private</strong> <strong>void</strong> readObject(java.io.ObjectInputStream in)
+<a name="479" href="#479">479</a>         throws IOException, ClassNotFoundException {
+<a name="480" href="#480">480</a>         <strong>try</strong> {
+<a name="481" href="#481">481</a>             Object obj = in.readObject();
+<a name="482" href="#482">482</a>             <strong>if</strong> (obj == <strong>null</strong>) {
+<a name="483" href="#483">483</a>                 sender = <strong>null</strong>;
+<a name="484" href="#484">484</a>             } <strong>else</strong> <strong>if</strong> (obj instanceof String) {
+<a name="485" href="#485">485</a>                 sender = <strong>new</strong> <a href="../../../../org/apache/mailet/MailAddress.html">MailAddress</a>((String) obj);
+<a name="486" href="#486">486</a>             } <strong>else</strong> <strong>if</strong> (obj instanceof MailAddress) {
+<a name="487" href="#487">487</a>                 sender = (MailAddress) obj;
+<a name="488" href="#488">488</a>             }
+<a name="489" href="#489">489</a>         } <strong>catch</strong> (ParseException pe) {
+<a name="490" href="#490">490</a>             <strong>throw</strong> <strong>new</strong> IOException(<span class="string">"Error parsing sender address: "</span> + pe.getMessage());
+<a name="491" href="#491">491</a>         }
+<a name="492" href="#492">492</a>         recipients = (Collection) in.readObject();
+<a name="493" href="#493">493</a>         state = (String) in.readObject();
+<a name="494" href="#494">494</a>         errorMessage = (String) in.readObject();
+<a name="495" href="#495">495</a>         name = (String) in.readObject();
+<a name="496" href="#496">496</a>         remoteHost = (String) in.readObject();
+<a name="497" href="#497">497</a>         remoteAddr = (String) in.readObject();
+<a name="498" href="#498">498</a>         setLastUpdated((Date) in.readObject());
+<a name="499" href="#499">499</a>         <em class="comment">// the following is under try/catch to be backwards compatible</em>
+<a name="500" href="#500">500</a>         <em class="comment">// with messages created with James version &lt;= 2.2.0a8</em>
+<a name="501" href="#501">501</a>         <strong>try</strong> {
+<a name="502" href="#502">502</a>             attributes = (HashMap) in.readObject();
+<a name="503" href="#503">503</a>         } <strong>catch</strong> (OptionalDataException ode) {
+<a name="504" href="#504">504</a>             <strong>if</strong> (ode.eof) {
+<a name="505" href="#505">505</a>                 attributes = <strong>new</strong> HashMap();
+<a name="506" href="#506">506</a>             } <strong>else</strong> {
+<a name="507" href="#507">507</a>                 <strong>throw</strong> ode;
+<a name="508" href="#508">508</a>             }
+<a name="509" href="#509">509</a>         }
+<a name="510" href="#510">510</a>     }
+<a name="511" href="#511">511</a>     <em>/**<em>*</em></em>
+<a name="512" href="#512">512</a> <em>     * Write the MailImpl to an &lt;code>ObjectOutputStream&lt;/code>.</em>
+<a name="513" href="#513">513</a> <em>     *</em>
+<a name="514" href="#514">514</a> <em>     * @param in the ObjectOutputStream to which the object is written</em>
+<a name="515" href="#515">515</a> <em>     *</em>
+<a name="516" href="#516">516</a> <em>     * @throws IOException if an error occurs while writing to the stream</em>
+<a name="517" href="#517">517</a> <em>     */</em>
+<a name="518" href="#518">518</a>     <strong>private</strong> <strong>void</strong> writeObject(java.io.ObjectOutputStream out) throws IOException {
+<a name="519" href="#519">519</a>         out.writeObject(sender);
+<a name="520" href="#520">520</a>         out.writeObject(recipients);
+<a name="521" href="#521">521</a>         out.writeObject(state);
+<a name="522" href="#522">522</a>         out.writeObject(errorMessage);
+<a name="523" href="#523">523</a>         out.writeObject(name);
+<a name="524" href="#524">524</a>         out.writeObject(remoteHost);
+<a name="525" href="#525">525</a>         out.writeObject(remoteAddr);
+<a name="526" href="#526">526</a>         out.writeObject(lastUpdated);
+<a name="527" href="#527">527</a>         out.writeObject(attributes);
 <a name="528" href="#528">528</a>     }
 <a name="529" href="#529">529</a> 
 <a name="530" href="#530">530</a>     <em>/**<em>*</em></em>
-<a name="531" href="#531">531</a> <em>     * This method is necessary, when Mail repositories needs to deal</em>
-<a name="532" href="#532">532</a> <em>     * explicitly with storing Mail attributes as a Serializable</em>
-<a name="533" href="#533">533</a> <em>     * Note: This method is not exposed in the Mail interface,</em>
-<a name="534" href="#534">534</a> <em>     * it is for internal use by James only.</em>
-<a name="535" href="#535">535</a> <em>     * @return Serializable of the entire attributes collection</em>
-<a name="536" href="#536">536</a> <em>     * @since 2.2.0</em>
-<a name="537" href="#537">537</a> <em>     **/</em>
-<a name="538" href="#538">538</a>     <strong>public</strong> HashMap getAttributesRaw ()
-<a name="539" href="#539">539</a>     {
-<a name="540" href="#540">540</a>         <strong>return</strong> attributes;
-<a name="541" href="#541">541</a>     }
-<a name="542" href="#542">542</a>     
-<a name="543" href="#543">543</a>     <em>/**<em>*</em></em>
-<a name="544" href="#544">544</a> <em>     * This method is necessary, when Mail repositories needs to deal</em>
-<a name="545" href="#545">545</a> <em>     * explicitly with retriving Mail attributes as a Serializable</em>
-<a name="546" href="#546">546</a> <em>     * Note: This method is not exposed in the Mail interface,</em>
-<a name="547" href="#547">547</a> <em>     * it is for internal use by James only.</em>
-<a name="548" href="#548">548</a> <em>     * @return Serializable of the entire attributes collection</em>
-<a name="549" href="#549">549</a> <em>     * @since 2.2.0</em>
-<a name="550" href="#550">550</a> <em>     **/</em>
-<a name="551" href="#551">551</a>     <strong>public</strong> <strong>void</strong> setAttributesRaw (HashMap attr)
-<a name="552" href="#552">552</a>     {
-<a name="553" href="#553">553</a>         <strong>this</strong>.attributes = (attr == <strong>null</strong>) ? <strong>new</strong> HashMap() : attr;
-<a name="554" href="#554">554</a>     }
-<a name="555" href="#555">555</a> 
-<a name="556" href="#556">556</a>     <em>/**<em>*</em></em>
-<a name="557" href="#557">557</a> <em>     * @see org.apache.mailet.Mail#getAttribute(String)</em>
-<a name="558" href="#558">558</a> <em>     * @since 2.2.0</em>
-<a name="559" href="#559">559</a> <em>     */</em>
-<a name="560" href="#560">560</a>     <strong>public</strong> Serializable getAttribute(String key) {
-<a name="561" href="#561">561</a>         <strong>return</strong> (Serializable)attributes.get(key);
-<a name="562" href="#562">562</a>     }
+<a name="531" href="#531">531</a> <em>     * @see org.apache.avalon.framework.activity.Disposable#dispose()</em>
+<a name="532" href="#532">532</a> <em>     */</em>
+<a name="533" href="#533">533</a>     <strong>public</strong> <strong>void</strong> dispose() {
+<a name="534" href="#534">534</a>         ContainerUtil.dispose(message);
+<a name="535" href="#535">535</a>         message = <strong>null</strong>;
+<a name="536" href="#536">536</a>     }
+<a name="537" href="#537">537</a> 
+<a name="538" href="#538">538</a>     <em>/**<em>*</em></em>
+<a name="539" href="#539">539</a> <em>     * This method is necessary, when Mail repositories needs to deal</em>
+<a name="540" href="#540">540</a> <em>     * explicitly with storing Mail attributes as a Serializable</em>
+<a name="541" href="#541">541</a> <em>     * Note: This method is not exposed in the Mail interface,</em>
+<a name="542" href="#542">542</a> <em>     * it is for internal use by James only.</em>
+<a name="543" href="#543">543</a> <em>     * @return Serializable of the entire attributes collection</em>
+<a name="544" href="#544">544</a> <em>     * @since 2.2.0</em>
+<a name="545" href="#545">545</a> <em>     **/</em>
+<a name="546" href="#546">546</a>     <strong>public</strong> HashMap getAttributesRaw () {
+<a name="547" href="#547">547</a>         <strong>return</strong> attributes;
+<a name="548" href="#548">548</a>     }
+<a name="549" href="#549">549</a>     
+<a name="550" href="#550">550</a>     <em>/**<em>*</em></em>
+<a name="551" href="#551">551</a> <em>     * This method is necessary, when Mail repositories needs to deal</em>
+<a name="552" href="#552">552</a> <em>     * explicitly with retriving Mail attributes as a Serializable</em>
+<a name="553" href="#553">553</a> <em>     * Note: This method is not exposed in the Mail interface,</em>
+<a name="554" href="#554">554</a> <em>     * it is for internal use by James only.</em>
+<a name="555" href="#555">555</a> <em>     * @return Serializable of the entire attributes collection</em>
+<a name="556" href="#556">556</a> <em>     * @since 2.2.0</em>
+<a name="557" href="#557">557</a> <em>     **/</em>
+<a name="558" href="#558">558</a>     <strong>public</strong> <strong>void</strong> setAttributesRaw (HashMap attr)
+<a name="559" href="#559">559</a>     {
+<a name="560" href="#560">560</a>         <strong>this</strong>.attributes = (attr == <strong>null</strong>) ? <strong>new</strong> HashMap() : attr;
+<a name="561" href="#561">561</a>     }
+<a name="562" href="#562">562</a> 
 <a name="563" href="#563">563</a>     <em>/**<em>*</em></em>
-<a name="564" href="#564">564</a> <em>     * @see org.apache.mailet.Mail#setAttribute(String,Serializable)</em>
+<a name="564" href="#564">564</a> <em>     * @see org.apache.mailet.Mail#getAttribute(String)</em>
 <a name="565" href="#565">565</a> <em>     * @since 2.2.0</em>
 <a name="566" href="#566">566</a> <em>     */</em>
-<a name="567" href="#567">567</a>     <strong>public</strong> Serializable setAttribute(String key, Serializable object) {
-<a name="568" href="#568">568</a>         <strong>return</strong> (Serializable)attributes.put(key, object);
+<a name="567" href="#567">567</a>     <strong>public</strong> Serializable getAttribute(String key) {
+<a name="568" href="#568">568</a>         <strong>return</strong> (Serializable)attributes.get(key);
 <a name="569" href="#569">569</a>     }
 <a name="570" href="#570">570</a>     <em>/**<em>*</em></em>
-<a name="571" href="#571">571</a> <em>     * @see org.apache.mailet.Mail#removeAttribute(String)</em>
+<a name="571" href="#571">571</a> <em>     * @see org.apache.mailet.Mail#setAttribute(String,Serializable)</em>
 <a name="572" href="#572">572</a> <em>     * @since 2.2.0</em>
 <a name="573" href="#573">573</a> <em>     */</em>
-<a name="574" href="#574">574</a>     <strong>public</strong> Serializable removeAttribute(String key) {
-<a name="575" href="#575">575</a>         <strong>return</strong> (Serializable)attributes.remove(key);
+<a name="574" href="#574">574</a>     <strong>public</strong> Serializable setAttribute(String key, Serializable object) {
+<a name="575" href="#575">575</a>         <strong>return</strong> (Serializable)attributes.put(key, object);
 <a name="576" href="#576">576</a>     }
 <a name="577" href="#577">577</a>     <em>/**<em>*</em></em>
-<a name="578" href="#578">578</a> <em>     * @see org.apache.mailet.Mail#removeAllAttributes()</em>
+<a name="578" href="#578">578</a> <em>     * @see org.apache.mailet.Mail#removeAttribute(String)</em>
 <a name="579" href="#579">579</a> <em>     * @since 2.2.0</em>
 <a name="580" href="#580">580</a> <em>     */</em>
-<a name="581" href="#581">581</a>     <strong>public</strong> <strong>void</strong> removeAllAttributes() {
-<a name="582" href="#582">582</a>         attributes.clear();
+<a name="581" href="#581">581</a>     <strong>public</strong> Serializable removeAttribute(String key) {
+<a name="582" href="#582">582</a>         <strong>return</strong> (Serializable)attributes.remove(key);
 <a name="583" href="#583">583</a>     }
 <a name="584" href="#584">584</a>     <em>/**<em>*</em></em>
-<a name="585" href="#585">585</a> <em>     * @see org.apache.mailet.Mail#getAttributeNames()</em>
+<a name="585" href="#585">585</a> <em>     * @see org.apache.mailet.Mail#removeAllAttributes()</em>
 <a name="586" href="#586">586</a> <em>     * @since 2.2.0</em>
 <a name="587" href="#587">587</a> <em>     */</em>
-<a name="588" href="#588">588</a>     <strong>public</strong> Iterator getAttributeNames() {
-<a name="589" href="#589">589</a>         <strong>return</strong> attributes.keySet().iterator();
+<a name="588" href="#588">588</a>     <strong>public</strong> <strong>void</strong> removeAllAttributes() {
+<a name="589" href="#589">589</a>         attributes.clear();
 <a name="590" href="#590">590</a>     }
 <a name="591" href="#591">591</a>     <em>/**<em>*</em></em>
-<a name="592" href="#592">592</a> <em>     * @see org.apache.mailet.Mail#hasAttributes()</em>
+<a name="592" href="#592">592</a> <em>     * @see org.apache.mailet.Mail#getAttributeNames()</em>
 <a name="593" href="#593">593</a> <em>     * @since 2.2.0</em>
 <a name="594" href="#594">594</a> <em>     */</em>
-<a name="595" href="#595">595</a>     <strong>public</strong> <strong>boolean</strong> hasAttributes() {
-<a name="596" href="#596">596</a>         <strong>return</strong> !attributes.isEmpty();
+<a name="595" href="#595">595</a>     <strong>public</strong> Iterator getAttributeNames() {
+<a name="596" href="#596">596</a>         <strong>return</strong> attributes.keySet().iterator();
 <a name="597" href="#597">597</a>     }
-<a name="598" href="#598">598</a> 
-<a name="599" href="#599">599</a> 
-<a name="600" href="#600">600</a>     <em>/**<em>*</em></em>
-<a name="601" href="#601">601</a> <em>     * This methods provide cloning for serializable objects.</em>
-<a name="602" href="#602">602</a> <em>     * Mail Attributes are Serializable but not Clonable so we need a deep copy</em>
-<a name="603" href="#603">603</a> <em>     *</em>
-<a name="604" href="#604">604</a> <em>     * @param input Object to be cloned</em>
-<a name="605" href="#605">605</a> <em>     * @return the cloned Object</em>
-<a name="606" href="#606">606</a> <em>     * @throws IOException</em>
-<a name="607" href="#607">607</a> <em>     * @throws ClassNotFoundException</em>
-<a name="608" href="#608">608</a> <em>     */</em>
-<a name="609" href="#609">609</a>     <strong>private</strong> <strong>static</strong> Object cloneSerializableObject(Object o) throws IOException, ClassNotFoundException {
-<a name="610" href="#610">610</a>         ByteArrayOutputStream b = <strong>new</strong> ByteArrayOutputStream();
-<a name="611" href="#611">611</a>         ObjectOutputStream out = <strong>new</strong> ObjectOutputStream(b);
-<a name="612" href="#612">612</a>         out.writeObject(o);
-<a name="613" href="#613">613</a>         out.flush();
-<a name="614" href="#614">614</a>         out.close();
-<a name="615" href="#615">615</a>         ByteArrayInputStream bi=<strong>new</strong> ByteArrayInputStream(b.toByteArray());
-<a name="616" href="#616">616</a>         ObjectInputStream in = <strong>new</strong> ObjectInputStream(bi);
-<a name="617" href="#617">617</a>         Object no = in.readObject();
-<a name="618" href="#618">618</a>         <strong>return</strong> no;
-<a name="619" href="#619">619</a>     }
-<a name="620" href="#620">620</a> }
+<a name="598" href="#598">598</a>     <em>/**<em>*</em></em>
+<a name="599" href="#599">599</a> <em>     * @see org.apache.mailet.Mail#hasAttributes()</em>
+<a name="600" href="#600">600</a> <em>     * @since 2.2.0</em>
+<a name="601" href="#601">601</a> <em>     */</em>
+<a name="602" href="#602">602</a>     <strong>public</strong> <strong>boolean</strong> hasAttributes() {
+<a name="603" href="#603">603</a>         <strong>return</strong> !attributes.isEmpty();
+<a name="604" href="#604">604</a>     }
+<a name="605" href="#605">605</a> 
+<a name="606" href="#606">606</a> 
+<a name="607" href="#607">607</a>     <em>/**<em>*</em></em>
+<a name="608" href="#608">608</a> <em>     * This methods provide cloning for serializable objects.</em>
+<a name="609" href="#609">609</a> <em>     * Mail Attributes are Serializable but not Clonable so we need a deep copy</em>
+<a name="610" href="#610">610</a> <em>     *</em>
+<a name="611" href="#611">611</a> <em>     * @param input Object to be cloned</em>
+<a name="612" href="#612">612</a> <em>     * @return the cloned Object</em>
+<a name="613" href="#613">613</a> <em>     * @throws IOException</em>
+<a name="614" href="#614">614</a> <em>     * @throws ClassNotFoundException</em>
+<a name="615" href="#615">615</a> <em>     */</em>
+<a name="616" href="#616">616</a>     <strong>private</strong> <strong>static</strong> Object cloneSerializableObject(Object o) throws IOException, ClassNotFoundException {
+<a name="617" href="#617">617</a>         ByteArrayOutputStream b = <strong>new</strong> ByteArrayOutputStream();
+<a name="618" href="#618">618</a>         ObjectOutputStream out = <strong>new</strong> ObjectOutputStream(b);
+<a name="619" href="#619">619</a>         out.writeObject(o);
+<a name="620" href="#620">620</a>         out.flush();
+<a name="621" href="#621">621</a>         out.close();
+<a name="622" href="#622">622</a>         ByteArrayInputStream bi=<strong>new</strong> ByteArrayInputStream(b.toByteArray());
+<a name="623" href="#623">623</a>         ObjectInputStream in = <strong>new</strong> ObjectInputStream(bi);
+<a name="624" href="#624">624</a>         Object no = in.readObject();
+<a name="625" href="#625">625</a>         <strong>return</strong> no;
+<a name="626" href="#626">626</a>     }
+<a name="627" href="#627">627</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

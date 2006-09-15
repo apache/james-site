@@ -109,7 +109,7 @@
 <a name="100" href="#100">100</a>         MimeMessage mm3 = getWrappedMessage(m2clone.getMessage());
 <a name="101" href="#101">101</a>         assertNotNull(mm3);
 <a name="102" href="#102">102</a>         <em class="comment">// dispose m2 and check that the clone has still a valid message and it is the same!</em>
-<a name="103" href="#103">103</a>         ContainerUtil.dispose(m2);
+<a name="103" href="#103">103</a>         ((MailImpl) m2).dispose();
 <a name="104" href="#104">104</a>         assertEquals(mm3,getWrappedMessage(m2clone.getMessage()));
 <a name="105" href="#105">105</a>         <em class="comment">// change the message that should be not referenced by m2 that has</em>
 <a name="106" href="#106">106</a>         <em class="comment">// been disposed, so it should not clone it!</em>
@@ -135,7 +135,7 @@
 <a name="126" href="#126">126</a>         MimeMessage mm = getWrappedMessage(mail.getMessage());
 <a name="127" href="#127">127</a>         assertNotSame(mail.getMessage(),mailClone.getMessage());
 <a name="128" href="#128">128</a>         <em class="comment">// dispose mail and check that the clone has still a valid message and it is the same!</em>
-<a name="129" href="#129">129</a>         ContainerUtil.dispose(mail);
+<a name="129" href="#129">129</a>         ((MailImpl) mail).dispose();
 <a name="130" href="#130">130</a>         ContainerUtil.dispose(messageFromSources);
 <a name="131" href="#131">131</a>         <em class="comment">// need to add a gc and a wait, because the original mimemessage should be finalized before the test.</em>
 <a name="132" href="#132">132</a>         System.gc();
@@ -184,12 +184,12 @@
 <a name="175" href="#175">175</a>         MailImpl mail = <strong>new</strong> MailImpl(<span class="string">"test"</span>,<strong>new</strong> MailAddress(<span class="string">"test@test.com"</span>),r,messageFromSources);
 <a name="176" href="#176">176</a>         <em class="comment">// cloning the message</em>
 <a name="177" href="#177">177</a>         MailImpl mailClone = (MailImpl) mail.duplicate();
-<a name="178" href="#178">178</a>         ContainerUtil.dispose(mail);
+<a name="178" href="#178">178</a>         mail.dispose();
 <a name="179" href="#179">179</a> 
 <a name="180" href="#180">180</a>         assertNotNull(getWrappedMessage(mailClone.getMessage()));
 <a name="181" href="#181">181</a>         assertNull(mail.getMessage());
 <a name="182" href="#182">182</a> 
-<a name="183" href="#183">183</a>         ContainerUtil.dispose(mailClone);
+<a name="183" href="#183">183</a>         mailClone.dispose();
 <a name="184" href="#184">184</a>         
 <a name="185" href="#185">185</a>         assertNull(mailClone.getMessage());
 <a name="186" href="#186">186</a>         assertNull(mail.getMessage());
