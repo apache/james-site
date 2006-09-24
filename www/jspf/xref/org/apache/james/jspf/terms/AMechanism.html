@@ -31,13 +31,13 @@
 <a name="22" href="#22">22</a>  
 <a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.jspf.core.IPAddr;
 <a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.jspf.core.SPF1Data;
-<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
-<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.exceptions.TempErrorException;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.jspf.parser.SPF1Parser;
-<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.james.jspf.util.Inet6Util;
-<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.james.jspf.util.ConfigurationMatch;
-<a name="30" href="#30">30</a>  
-<a name="31" href="#31">31</a>  <strong>import</strong> java.util.ArrayList;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.exceptions.NoneException;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.jspf.exceptions.TempErrorException;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.james.jspf.parser.SPF1Parser;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.james.jspf.util.Inet6Util;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.james.jspf.util.ConfigurationMatch;
+<a name="31" href="#31">31</a>  
 <a name="32" href="#32">32</a>  <strong>import</strong> java.util.List;
 <a name="33" href="#33">33</a>  
 <a name="34" href="#34">34</a>  <em>/**<em>*</em></em>
@@ -63,117 +63,129 @@
 <a name="54" href="#54">54</a>  <em>     */</em>
 <a name="55" href="#55">55</a>      <strong>public</strong> <strong>boolean</strong> run(SPF1Data spfData) throws PermErrorException,
 <a name="56" href="#56">56</a>              <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a> {
-<a name="57" href="#57">57</a>          ArrayList addressList = <strong>new</strong> ArrayList();
-<a name="58" href="#58">58</a>  
-<a name="59" href="#59">59</a>          <em class="comment">// update currentDepth</em>
-<a name="60" href="#60">60</a>          spfData.setCurrentDepth(spfData.getCurrentDepth() + 1);
-<a name="61" href="#61">61</a>  
-<a name="62" href="#62">62</a>          <em class="comment">// Get the right host.</em>
-<a name="63" href="#63">63</a>          String host = expandHost(spfData);
-<a name="64" href="#64">64</a>  
-<a name="65" href="#65">65</a>          <em class="comment">// get the ipAddress</em>
-<a name="66" href="#66">66</a>          <strong>try</strong> {
-<a name="67" href="#67">67</a>              <strong>if</strong> (Inet6Util.isValidIPV4Address(spfData.getIpAddress())) {
-<a name="68" href="#68">68</a>  
-<a name="69" href="#69">69</a>                  <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress = IPAddr.getAddress(spfData.getIpAddress(),
-<a name="70" href="#70">70</a>                          getIp4cidr());
-<a name="71" href="#71">71</a>  
-<a name="72" href="#72">72</a>                  <strong>try</strong> {
-<a name="73" href="#73">73</a>                      addressList.addAll(spfData.getDnsProbe().getARecords(host,
-<a name="74" href="#74">74</a>                              getIp4cidr()));
-<a name="75" href="#75">75</a>                      <strong>if</strong> (checkAddressList(checkAddress, addressList)) {
-<a name="76" href="#76">76</a>                          <strong>return</strong> <strong>true</strong>;
-<a name="77" href="#77">77</a>                      }
-<a name="78" href="#78">78</a>                  } <strong>catch</strong> (Exception e) {
-<a name="79" href="#79">79</a>                      <em class="comment">// no a records just return null</em>
-<a name="80" href="#80">80</a>                      <strong>return</strong> false;
-<a name="81" href="#81">81</a>                  }
-<a name="82" href="#82">82</a>              } <strong>else</strong> {
-<a name="83" href="#83">83</a>                  <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress = IPAddr.getAddress(spfData.getIpAddress(),
-<a name="84" href="#84">84</a>                          getIp6cidr());
-<a name="85" href="#85">85</a>  
-<a name="86" href="#86">86</a>                  <strong>try</strong> {
-<a name="87" href="#87">87</a>                      addressList.addAll(spfData.getDnsProbe().getAAAARecords(
-<a name="88" href="#88">88</a>                              host, getIp6cidr()));
-<a name="89" href="#89">89</a>                      <strong>if</strong> (checkAddressList(checkAddress, addressList)) {
-<a name="90" href="#90">90</a>                          <strong>return</strong> <strong>true</strong>;
-<a name="91" href="#91">91</a>                      }
-<a name="92" href="#92">92</a>                  } <strong>catch</strong> (Exception e) {
-<a name="93" href="#93">93</a>                      <em class="comment">// no aaaa records just return null</em>
-<a name="94" href="#94">94</a>                      <strong>return</strong> false;
-<a name="95" href="#95">95</a>                  }
-<a name="96" href="#96">96</a>  
-<a name="97" href="#97">97</a>              }
-<a name="98" href="#98">98</a>          } <strong>catch</strong> (Exception e) {
-<a name="99" href="#99">99</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"No valid ipAddress: "</span>
-<a name="100" href="#100">100</a>                     + spfData.getIpAddress());
-<a name="101" href="#101">101</a>         }
-<a name="102" href="#102">102</a>         <em class="comment">// No match found</em>
-<a name="103" href="#103">103</a>         <strong>return</strong> false;
-<a name="104" href="#104">104</a>     }
-<a name="105" href="#105">105</a> 
-<a name="106" href="#106">106</a>     <em>/**<em>*</em></em>
-<a name="107" href="#107">107</a> <em>     * @see org.apache.james.jspf.terms.GenericMechanism#config(ConfigurationMatch)</em>
-<a name="108" href="#108">108</a> <em>     */</em>
-<a name="109" href="#109">109</a>     <strong>public</strong> <strong>synchronized</strong> <strong>void</strong> config(<a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a> params) throws PermErrorException {
-<a name="110" href="#110">110</a>         <strong>super</strong>.config(params);
-<a name="111" href="#111">111</a>         <strong>if</strong> (params.groupCount() >= 2 &amp;&amp; params.group(2) != <strong>null</strong>) {
-<a name="112" href="#112">112</a>             ip4cidr = Integer.parseInt(params.group(2).toString());
-<a name="113" href="#113">113</a>             <strong>if</strong> (ip4cidr > 32) {
-<a name="114" href="#114">114</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Ivalid IP4 CIDR length"</span>);
-<a name="115" href="#115">115</a>             }
-<a name="116" href="#116">116</a>         } <strong>else</strong> {
-<a name="117" href="#117">117</a>             ip4cidr = 32;
-<a name="118" href="#118">118</a>         }
-<a name="119" href="#119">119</a>         <strong>if</strong> (params.groupCount() >= 3 &amp;&amp; params.group(3) != <strong>null</strong>) {
-<a name="120" href="#120">120</a>             ip6cidr = Integer.parseInt(params.group(3).toString());
-<a name="121" href="#121">121</a>             <strong>if</strong> (ip6cidr > 128) {
-<a name="122" href="#122">122</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Ivalid IP6 CIDR length"</span>);
-<a name="123" href="#123">123</a>             }
-<a name="124" href="#124">124</a>         } <strong>else</strong> {
-<a name="125" href="#125">125</a>             ip6cidr = 128;
-<a name="126" href="#126">126</a>         }
-<a name="127" href="#127">127</a>     }
-<a name="128" href="#128">128</a> 
-<a name="129" href="#129">129</a>     <em>/**<em>*</em></em>
-<a name="130" href="#130">130</a> <em>     * Check if the given ipaddress array contains the provided ip.</em>
-<a name="131" href="#131">131</a> <em>     * </em>
-<a name="132" href="#132">132</a> <em>     * @param checkAddress</em>
-<a name="133" href="#133">133</a> <em>     *            The ip wich should be contained in the given ArrayList</em>
-<a name="134" href="#134">134</a> <em>     * @param addressList</em>
-<a name="135" href="#135">135</a> <em>     *            The ip ArrayList.</em>
-<a name="136" href="#136">136</a> <em>     * @return true or false</em>
-<a name="137" href="#137">137</a> <em>     */</em>
-<a name="138" href="#138">138</a>     <strong>public</strong> <strong>boolean</strong> checkAddressList(<a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress, List addressList) {
-<a name="139" href="#139">139</a> 
-<a name="140" href="#140">140</a>         <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> aValue = <strong>null</strong>;
-<a name="141" href="#141">141</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; addressList.size(); i++) {
-<a name="142" href="#142">142</a> 
-<a name="143" href="#143">143</a>             aValue = (IPAddr) addressList.get(i);
-<a name="144" href="#144">144</a> 
-<a name="145" href="#145">145</a>             <strong>if</strong> (checkAddress.getMaskedIPAddress().equals(
-<a name="146" href="#146">146</a>                     aValue.getMaskedIPAddress())) {
-<a name="147" href="#147">147</a>                 <strong>return</strong> <strong>true</strong>;
-<a name="148" href="#148">148</a>             }
-<a name="149" href="#149">149</a>         }
-<a name="150" href="#150">150</a>         <strong>return</strong> false;
-<a name="151" href="#151">151</a>     }
-<a name="152" href="#152">152</a> 
-<a name="153" href="#153">153</a>     <em>/**<em>*</em></em>
-<a name="154" href="#154">154</a> <em>     * @return Returns the ip4cidr.</em>
-<a name="155" href="#155">155</a> <em>     */</em>
-<a name="156" href="#156">156</a>     <strong>protected</strong> <strong>synchronized</strong> <strong>int</strong> getIp4cidr() {
-<a name="157" href="#157">157</a>         <strong>return</strong> ip4cidr;
-<a name="158" href="#158">158</a>     }
-<a name="159" href="#159">159</a> 
-<a name="160" href="#160">160</a>     <em>/**<em>*</em></em>
-<a name="161" href="#161">161</a> <em>     * @return Returns the ip6cidr.</em>
-<a name="162" href="#162">162</a> <em>     */</em>
-<a name="163" href="#163">163</a>     <strong>protected</strong> <strong>synchronized</strong> <strong>int</strong> getIp6cidr() {
-<a name="164" href="#164">164</a>         <strong>return</strong> ip6cidr;
-<a name="165" href="#165">165</a>     }
-<a name="166" href="#166">166</a> 
-<a name="167" href="#167">167</a> }
+<a name="57" href="#57">57</a>          <em class="comment">// update currentDepth</em>
+<a name="58" href="#58">58</a>          spfData.setCurrentDepth(spfData.getCurrentDepth() + 1);
+<a name="59" href="#59">59</a>  
+<a name="60" href="#60">60</a>          <em class="comment">// Get the right host.</em>
+<a name="61" href="#61">61</a>          String host = expandHost(spfData);
+<a name="62" href="#62">62</a>  
+<a name="63" href="#63">63</a>          <em class="comment">// get the ipAddress</em>
+<a name="64" href="#64">64</a>          <strong>try</strong> {
+<a name="65" href="#65">65</a>              <strong>if</strong> (Inet6Util.isValidIPV4Address(spfData.getIpAddress())) {
+<a name="66" href="#66">66</a>  
+<a name="67" href="#67">67</a>                  <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress = IPAddr.getAddress(spfData.getIpAddress(),
+<a name="68" href="#68">68</a>                          getIp4cidr());
+<a name="69" href="#69">69</a>  
+<a name="70" href="#70">70</a>                  <strong>try</strong> {
+<a name="71" href="#71">71</a>                      List aRecords =spfData.getDnsProbe().getARecords(host);
+<a name="72" href="#72">72</a>           
+<a name="73" href="#73">73</a>                      <strong>if</strong> (aRecords == <strong>null</strong>) {
+<a name="74" href="#74">74</a>                          <strong>return</strong> false;
+<a name="75" href="#75">75</a>                      }
+<a name="76" href="#76">76</a>  
+<a name="77" href="#77">77</a>                      <strong>if</strong> (checkAddressList(checkAddress, aRecords, getIp4cidr())) {
+<a name="78" href="#78">78</a>                          <strong>return</strong> <strong>true</strong>;
+<a name="79" href="#79">79</a>                      }
+<a name="80" href="#80">80</a>                  } <strong>catch</strong> (NoneException e) {
+<a name="81" href="#81">81</a>                      e.printStackTrace();
+<a name="82" href="#82">82</a>                      <em class="comment">// no a records just return null</em>
+<a name="83" href="#83">83</a>                      <strong>return</strong> false;
+<a name="84" href="#84">84</a>                  }
+<a name="85" href="#85">85</a>              } <strong>else</strong> {
+<a name="86" href="#86">86</a>                  <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress = IPAddr.getAddress(spfData.getIpAddress(),
+<a name="87" href="#87">87</a>                          getIp6cidr());
+<a name="88" href="#88">88</a>  
+<a name="89" href="#89">89</a>                  <strong>try</strong> {
+<a name="90" href="#90">90</a>                      List aaaaRecords =spfData.getDnsProbe().getAAAARecords(host);
+<a name="91" href="#91">91</a>                      
+<a name="92" href="#92">92</a>                      <strong>if</strong> (aaaaRecords == <strong>null</strong>) {
+<a name="93" href="#93">93</a>                          <strong>return</strong> false;
+<a name="94" href="#94">94</a>                      }
+<a name="95" href="#95">95</a>                      
+<a name="96" href="#96">96</a>                      <strong>if</strong> (checkAddressList(checkAddress, aaaaRecords, getIp6cidr())) {
+<a name="97" href="#97">97</a>                          <strong>return</strong> <strong>true</strong>;
+<a name="98" href="#98">98</a>                      }
+<a name="99" href="#99">99</a>                  } <strong>catch</strong> (NoneException e) {
+<a name="100" href="#100">100</a>                     <em class="comment">// no aaaa records just return null</em>
+<a name="101" href="#101">101</a>                     <strong>return</strong> false;
+<a name="102" href="#102">102</a>                 }
+<a name="103" href="#103">103</a> 
+<a name="104" href="#104">104</a>             }
+<a name="105" href="#105">105</a>         } <strong>catch</strong> (Exception e) {
+<a name="106" href="#106">106</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"No valid ipAddress: "</span>
+<a name="107" href="#107">107</a>                     + spfData.getIpAddress());
+<a name="108" href="#108">108</a>         }
+<a name="109" href="#109">109</a>         <em class="comment">// No match found</em>
+<a name="110" href="#110">110</a>         <strong>return</strong> false;
+<a name="111" href="#111">111</a>     }
+<a name="112" href="#112">112</a> 
+<a name="113" href="#113">113</a>     <em>/**<em>*</em></em>
+<a name="114" href="#114">114</a> <em>     * @see org.apache.james.jspf.terms.GenericMechanism#config(ConfigurationMatch)</em>
+<a name="115" href="#115">115</a> <em>     */</em>
+<a name="116" href="#116">116</a>     <strong>public</strong> <strong>synchronized</strong> <strong>void</strong> config(<a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a> params) throws PermErrorException {
+<a name="117" href="#117">117</a>         <strong>super</strong>.config(params);
+<a name="118" href="#118">118</a>         <strong>if</strong> (params.groupCount() >= 2 &amp;&amp; params.group(2) != <strong>null</strong>) {
+<a name="119" href="#119">119</a>             ip4cidr = Integer.parseInt(params.group(2).toString());
+<a name="120" href="#120">120</a>             <strong>if</strong> (ip4cidr > 32) {
+<a name="121" href="#121">121</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Ivalid IP4 CIDR length"</span>);
+<a name="122" href="#122">122</a>             }
+<a name="123" href="#123">123</a>         } <strong>else</strong> {
+<a name="124" href="#124">124</a>             ip4cidr = 32;
+<a name="125" href="#125">125</a>         }
+<a name="126" href="#126">126</a>         <strong>if</strong> (params.groupCount() >= 3 &amp;&amp; params.group(3) != <strong>null</strong>) {
+<a name="127" href="#127">127</a>             ip6cidr = Integer.parseInt(params.group(3).toString());
+<a name="128" href="#128">128</a>             <strong>if</strong> (ip6cidr > 128) {
+<a name="129" href="#129">129</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Ivalid IP6 CIDR length"</span>);
+<a name="130" href="#130">130</a>             }
+<a name="131" href="#131">131</a>         } <strong>else</strong> {
+<a name="132" href="#132">132</a>             ip6cidr = 128;
+<a name="133" href="#133">133</a>         }
+<a name="134" href="#134">134</a>     }
+<a name="135" href="#135">135</a> 
+<a name="136" href="#136">136</a>     <em>/**<em>*</em></em>
+<a name="137" href="#137">137</a> <em>     * Check if the given ipaddress array contains the provided ip.</em>
+<a name="138" href="#138">138</a> <em>     * </em>
+<a name="139" href="#139">139</a> <em>     * @param checkAddress</em>
+<a name="140" href="#140">140</a> <em>     *            The ip wich should be contained in the given ArrayList</em>
+<a name="141" href="#141">141</a> <em>     * @param addressList</em>
+<a name="142" href="#142">142</a> <em>     *            The ip ArrayList.</em>
+<a name="143" href="#143">143</a> <em>     * @return true or false</em>
+<a name="144" href="#144">144</a> <em>     * @throws PermErrorException </em>
+<a name="145" href="#145">145</a> <em>     */</em>
+<a name="146" href="#146">146</a>     <strong>public</strong> <strong>boolean</strong> checkAddressList(<a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> checkAddress, List addressList, <strong>int</strong> cidr) throws PermErrorException {
+<a name="147" href="#147">147</a> 
+<a name="148" href="#148">148</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; addressList.size(); i++) {
+<a name="149" href="#149">149</a>             <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> ip = (IPAddr) addressList.get(i);
+<a name="150" href="#150">150</a> 
+<a name="151" href="#151">151</a>             <em class="comment">// Check for empty record</em>
+<a name="152" href="#152">152</a>             <strong>if</strong> (ip != <strong>null</strong>) {
+<a name="153" href="#153">153</a>                 <em class="comment">// set the mask in the address.</em>
+<a name="154" href="#154">154</a>                 <em class="comment">// TODO should we use cidr from the parameters or the input checkAddress cidr?</em>
+<a name="155" href="#155">155</a>                 ip.setMask(checkAddress.getMaskLength());
+<a name="156" href="#156">156</a>                 <strong>if</strong> (checkAddress.getMaskedIPAddress().equals(
+<a name="157" href="#157">157</a>                         ip.getMaskedIPAddress())) {
+<a name="158" href="#158">158</a>                     <strong>return</strong> <strong>true</strong>;
+<a name="159" href="#159">159</a>                 }
+<a name="160" href="#160">160</a>             }
+<a name="161" href="#161">161</a>         }
+<a name="162" href="#162">162</a>         <strong>return</strong> false;
+<a name="163" href="#163">163</a>     }
+<a name="164" href="#164">164</a> 
+<a name="165" href="#165">165</a>     <em>/**<em>*</em></em>
+<a name="166" href="#166">166</a> <em>     * @return Returns the ip4cidr.</em>
+<a name="167" href="#167">167</a> <em>     */</em>
+<a name="168" href="#168">168</a>     <strong>protected</strong> <strong>synchronized</strong> <strong>int</strong> getIp4cidr() {
+<a name="169" href="#169">169</a>         <strong>return</strong> ip4cidr;
+<a name="170" href="#170">170</a>     }
+<a name="171" href="#171">171</a> 
+<a name="172" href="#172">172</a>     <em>/**<em>*</em></em>
+<a name="173" href="#173">173</a> <em>     * @return Returns the ip6cidr.</em>
+<a name="174" href="#174">174</a> <em>     */</em>
+<a name="175" href="#175">175</a>     <strong>protected</strong> <strong>synchronized</strong> <strong>int</strong> getIp6cidr() {
+<a name="176" href="#176">176</a>         <strong>return</strong> ip6cidr;
+<a name="177" href="#177">177</a>     }
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
