@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.3 - Creating Mailing Lists</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 09/26/2006
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../jspf/index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James Server</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../design_objectives.html">Objectives</a>
+        </li>
+              
+    <li class="none">
+              <a href="../FAQ.html">James FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Concepts</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="summary.html">Summary</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="repositories.html">Repositories</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet_api.html">The Mailet API</a>
+        </li>
+          </ul>
+          <h5>How to...</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="build_instructions.html">Build James</a>
+        </li>
+              
+    <li class="none">
+              <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Configuration</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="dns_configuration.html">DNS Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="pop3_configuration.html">POP3 Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="smtp_configuration.html">SMTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="nntp_configuration.html">NNTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="fetchmail_configuration.html">FetchMail</a>
+        </li>
+              
+    <li class="none">
+              <a href="remotemanager_configuration.html">RemoteManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager_configuration.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="serverwide_configuration.html">Server-wide</a>
+        </li>
+              
+    <li class="none">
+              <a href="adding_users.html">Adding Users</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_matchers.html">Provided Matchers</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_mailets.html">Provided Mailets</a>
+        </li>
+          </ul>
+          <h5>Common Configurations</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="smtp_auth.html">Using SMTP AUTH</a>
+        </li>
+              
+    <li class="none">
+              <a href="using_database.html">Using a Database with James</a>
+        </li>
+              
+    <li class="none">
+              <a href="usingTLS.html">Using TLS/SSL</a>
+        </li>
+              
+    <li class="none">
+              <a href="james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              
+    <li class="none">
+              <strong>Creating Mailing Lists</strong>
+        </li>
+          </ul>
+          <h5>Customization</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="custom_matcher.html">How to write a custom Matcher</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_mailet.html">How to write a custom Mailet</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+ 
+
+
+<a name="How To Create Mailing Lists"></a><div class="section"><h2>How To Create Mailing Lists</h2>
+<p>One of the frequent questions on the James-User Mailing List is how
+to create a mailing list. This document explains one way of using the
+currently supplied Matchers and Mailets in James v2.3.</p>
+
+<p>Basically, the process requires creating two &lt;mailet&gt; entries
+and a repository.  The first mailet handles list commands (currently
+only <i>list-name</i>-on and <i>list-name</i>-off).  The second mailet
+handles list messages.  The repository will hold the e-mail addresses
+of list subscribers.</p>
+
+<p>The mailets go into the processor chain (e.g., at the top of the
+<i>transport</i> processor), the repository goes into the
+&lt;users-store&gt; block.</p>
+
+<a name="Setting up the Mailets"></a><div class="section"><h3>Setting up the Mailets</h3>
+
+<p>You need to setup two mailets.</p>
+
+<p>The first mailet that you need to setup is an instance of the <a href="provided_mailets.html#AvalonListservManager">Avalon Listserv
+Manager</a> mailet.  This will handle subscribing and unsubscribing.
+[Note: the current code does not support confirmed opt-in, just basic
+commands.]  The <a href="provided_matchers.html#CommandForListserv">CommandForListserv</a>
+matcher is used to invoke match messages containing commands for the
+mailing list.</p>
+
+<p>The second mailet is an instance of the <a href="provided_mailets.html#AvalonListserv">Avalon Listserv</a>
+mailet.  That mailet actually receives messages for the list and
+causes them to be distributed.  The <a href="provided_matchers.html#RecipientIs">RecipientIs</a> matcher
+is used to match messages intended for the mailing list.</p>
+
+<p>The following illustrates the two &lt;mailet&gt; elements that need to be added:</p>
+
+<div class="source"><pre>
+  &lt;mailet match=&quot;CommandForListserv=<i>list-name</i>@<i>domain</i>&quot;
+          class=&quot;AvalonListservManager&quot;&gt;
+    &lt;repositoryName&gt;<i>list-name</i>&lt;/repositoryName&gt;
+  &lt;/mailet&gt;
+
+  &lt;mailet match=&quot;RecipientIs=<i>list-name</i>@<i>domain</i>&quot; class=&quot;AvalonListserv&quot;&gt;
+    &lt;repositoryName&gt;<i>list-name</i>&lt;/repositoryName&gt;
+    ... list options ...
+  &lt;/mailet&gt;
+</pre></div>
+
+</div>
+
+<a name="Setting up the Repository"></a><div class="section"><h3>Setting up the Repository</h3>
+
+<p>The mailing list mailets need a repository within which to store
+the subscriber list.  There is a separate repository for each mailing
+list, and is completely independent of the user repository used by
+James to manage e-mail accounts.  This is configured in the
+&lt;users-store&gt; block of config.xml.</p>
+
+<p>The following illustrates a database-backed repository using JDBC
+with the ListUsersJdbcRepository class.  Notice that there will be a
+single table, <i>lists</i>, created in the db://maildb resource
+defined elsewhere.  There are currently two columns: the list name and
+the list subscriber.</p>
+
+<div class="source"><pre>
+  &lt;repository name=&quot;<i>list-name</i>&quot;
+                 class=&quot;org.apache.james.userrepository.ListUsersJdbcRepository&quot;
+                 destinationURL=&quot;db://maildb/lists/<i>list-name</i>&quot;&gt;
+    &lt;sqlFile&gt;file://conf/sqlResources.xml&lt;/sqlFile&gt;
+  &lt;/repository&gt;
+</pre></div>
+
+<p>The following illustrates a file-system repository using the
+UsersFileRepository class. [Note: the destination URL is a child
+element when configuring a file-system repository, and an attribute
+when configuring a database-backed repository.  This inconsistency
+will be addressed in a future version of James.]</p>
+
+<div class="source"><pre>
+  &lt;repository name=&quot;<i>list-name</i>&quot;
+                 class=&quot;org.apache.james.userrepository.UsersFileRepository&quot;&gt;
+    &lt;destination URL=&quot;file://var/lists/<i>list-name</i>/&quot; /&gt; 
+  &lt;/repository&gt;
+</pre></div>
+
+</div>
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2006
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

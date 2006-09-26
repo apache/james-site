@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.3 - Provided Matchers</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 09/26/2006
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../jspf/index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James Server</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../design_objectives.html">Objectives</a>
+        </li>
+              
+    <li class="none">
+              <a href="../FAQ.html">James FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Concepts</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="summary.html">Summary</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="repositories.html">Repositories</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet_api.html">The Mailet API</a>
+        </li>
+          </ul>
+          <h5>How to...</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="build_instructions.html">Build James</a>
+        </li>
+              
+    <li class="none">
+              <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Configuration</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="dns_configuration.html">DNS Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="pop3_configuration.html">POP3 Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="smtp_configuration.html">SMTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="nntp_configuration.html">NNTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="fetchmail_configuration.html">FetchMail</a>
+        </li>
+              
+    <li class="none">
+              <a href="remotemanager_configuration.html">RemoteManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager_configuration.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="serverwide_configuration.html">Server-wide</a>
+        </li>
+              
+    <li class="none">
+              <a href="adding_users.html">Adding Users</a>
+        </li>
+              
+    <li class="none">
+              <strong>Provided Matchers</strong>
+        </li>
+              
+    <li class="none">
+              <a href="provided_mailets.html">Provided Mailets</a>
+        </li>
+          </ul>
+          <h5>Common Configurations</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="smtp_auth.html">Using SMTP AUTH</a>
+        </li>
+              
+    <li class="none">
+              <a href="using_database.html">Using a Database with James</a>
+        </li>
+              
+    <li class="none">
+              <a href="usingTLS.html">Using TLS/SSL</a>
+        </li>
+              
+    <li class="none">
+              <a href="james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailing_lists.html">Creating Mailing Lists</a>
+        </li>
+          </ul>
+          <h5>Customization</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="custom_matcher.html">How to write a custom Matcher</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_mailet.html">How to write a custom Mailet</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+
+<a name="Matchers"></a><div class="section"><h2>Matchers</h2>
+
+<p>James provides a number of implemented Matchers for use by James administrators in their 
+configurations.  These are primarily matchers that members of the James developer or user 
+communities have found useful in their own configurations.  A description of how to configure 
+Matchers and use them in the James SpoolManager can be found <a href="spoolmanager_configuration.html">here</a>.</p>
+
+<a name="All"></a><div class="section"><h3>All</h3>
+<p>Description: This matcher is the trivial one - it matches all mails being processed. All recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="AttachmentFileNameIs"></a><div class="section"><h3>AttachmentFileNameIs</h3>
+<p>Description: It can be used to refuse emails with SCR, PIF, EXE etc. attachments.
+It matches mails that has a file attachment with a file name meeting one of the supplied filters.
+All recipients are returned.</p>
+<p>Configuration string: A comma or space delimited list of file names. 
+File names may start with a wildcard '*'. Example: *.scr,*.bat,*.pif,*.pi,*.com,*.exe
+<pre><code>
+&lt;mailet match=&quot;AttachmentFileNameIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="CommandForListserv"></a><div class="section"><h3>CommandForListserv</h3>
+<p>Description: The CommandForListserv matcher is used as a simple filter to recognize emails that are list server 
+commands.  It will match any email addressed to the list server host, as well as any email that is addressed
+to a user named &lt;prefix&gt;-on or &lt;prefix&gt;-off on any host.  Only those matching recipients will be returned.</p>
+<p>Configuration string: An email address of the form &lt;prefix&gt;@&lt;host&gt;, where host is the hostname used for the listserver and prefix is the command prefix.
+<pre><code>
+&lt;mailet match=&quot;CommandForListserv=james-on@list.working-dogs.com&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="CommandForListservManager"></a><div class="section"><h3>CommandForListservManager</h3>
+<p>Description: CommandListservMatcher is the matcher that pairs with the CommandListservManager mailet. It checks to see if the request is 
+intended for the ListservManager, but doesn't guarantee that it is a valid command.  Only those matching recipients will be returned.</p>
+<p>Configuration string: An email address.
+<pre><code>
+&lt;mailet match=&quot;CommandForListservManager=announce@localhost&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="CompareNumericHeaderValue"></a><div class="section"><h3>CompareNumericHeaderValue</h3>
+<p>Description: Matches mails containing a header with a numeric value whose comparison with the specified value is true.
+If the header is missing in the message, there will be <i>no match</i>. All recipients are returned.</p>
+<p>Configuration string: The headerName, a comparison operator and the numeric headerValue
+to compare with, <i>space or tab delimited</i>.
+<pre><code>
+&lt;mailet match=&quot;CompareNumericHeaderValue= X-MessageIsSpamProbability &gt; 0.9&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="FetchedFrom"></a><div class="section"><h3>FetchedFrom</h3>
+<p>Description: A matcher intended for use with the FetchMail server.  It matches a custom header (X-fetched-from) that is 
+set by the FetchMail server.  FetchMail sets this header to the name of the FetchPOP task which originally fetched
+the message.  All recipients are returned.</p>
+<p>Configuration string: The name of the FetchMail task which originally fetched the message.
+<pre><code>
+&lt;mailet match=&quot;FetchedFrom=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="FileRegexMatcher"></a><div class="section"><h3>FileRegexMatcher</h3>
+<p>Description: A matcher which can be used to match on a attachment when the given regex match. All recipients are returned.</p>
+<p>Configuration string: A regex for match attachmentname.
+<pre><code>
+&lt;mailet match=&quot;FileRegexMatcher=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HasAttachment"></a><div class="section"><h3>HasAttachment</h3>
+<p>Description: Matches those messages with a MIME type of &quot;multipart/mixed&quot;.  All recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="HasHabeasWarrantMark"></a><div class="section"><h3>HasHabeasWarrantMark</h3>
+<p>Description: Matches mails that have the Habeas Warrant (see http://www.habeas.com for details).  All recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="HasHeader"></a><div class="section"><h3>HasHeader</h3>
+<p>Description: Matches mails that have the specified header.  All recipients are returned.</p>
+<p>Configuration string: The name of the header whose presence determines the match.
+<pre><code>
+&lt;mailet match=&quot;HasHeader=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HasMailAttribute"></a><div class="section"><h3>HasMailAttribute</h3>
+<p>Description: Matches mails that have the specified Mail Attribute.  All 
+recipients are returned.</p>
+<p>Configuration string: The name of the Mail Attribute to match. For example:<br></br>
+<pre><code>
+&lt;mailet match=&quot;HasMailAttribute=name&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HasMailAttributeWithValue"></a><div class="section"><h3>HasMailAttributeWithValue</h3>
+<p>Description: Matches mails that have the specified Mail Attribute and the
+specified MailAttribute value. All recipients are returned.</p>
+<p>MailAttributes are types of Object whereas the value specified in the Matcher
+condition is of type String. The toString() method is used to obtain a String
+representation of the Mail Attribute value for matching. The 
+String.equals(String) method tests for a match.</p>
+<p>Configuration string: The name of the Mail Attribute to be matched,  a comma
+and then the String value to be matched. For example:<br></br>
+<pre><code>
+&lt;mailet match=&quot;HasMailAttributeWithValue=name, value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HasMailAttributeWithValueRegex"></a><div class="section"><h3>HasMailAttributeWithValueRegex</h3>
+<p>Description: Matches mails that have the specified Mail Attribute and 
+a MailAttribute value that matches the specified regular expression.
+All recipients are returned.</p>
+<p>MailAttributes are types of Object whereas the value specified in the Matcher
+condition is of type String. The toString() method is used to obtain a String
+representation of the Mail Attribute value for matching. The regular
+expression must follow Perl5 syntax.</p>
+<p>Configuration string: The name of the Mail Attribute to be matched,  a comma
+and then the regular expression used to match the value against. For example:<br></br>
+<pre><code>
+&lt;mailet match=&quot;HasMailAttributeWithValueRegex=name, regex&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HostIs"></a><div class="section"><h3>HostIs</h3>
+<p>Description: Matches mails that are sent to email addresses on hosts that are in the configuration list.  Only 
+recipients that are on one of the hosts are returned.</p>
+<p>Configuration string: A list of host names, comma or space delimited.
+<pre><code>
+&lt;mailet match=&quot;HostIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="HostIsLocal"></a><div class="section"><h3>HostIsLocal</h3>
+<p>Description: Matches mails that are sent to email addresses on local hosts.  Only 
+recipients that are on one of the local hosts are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="InSpammerBlacklist"></a><div class="section"><h3>InSpammerBlacklist</h3>
+<p>Description: Checks the mail against one of a number of mail-abuse.org IP lists. All recipients are returned</p>
+<p>Configuration string: One of three strings - &quot;blackholes.mail-abuse.org&quot;, &quot;relays.mail-abuse.org&quot;, or &quot;dialups.mail-abuse.org&quot;.</p>
+</div>
+
+<a name="IsInWhiteList"></a><div class="section"><h3>IsInWhiteList</h3>
+<p>Description: Matches recipients having the mail sender in the recipient's private whitelist.
+The recipient name is always converted to its primary name (handling aliases).</p>
+<p>Configuration string: The database name containing the white list table.</p>
+<pre><code>
+&lt;mailet match=&quot;IsInWhiteList=db://maildb&quot; class=&quot;ToProcessor&quot;&gt;
+  &lt;processor&gt; transport &lt;/processor&gt;
+&lt;/mailet&gt;
+</code></pre>
+</div>
+
+<a name="IsSingleRecipient"></a><div class="section"><h3>IsSingleRecipient</h3>
+<p>Description: Matches those messages sent to only a single recipient.  The single recipient is returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="NESSpamCheck"></a><div class="section"><h3>NESSpamCheck</h3>
+<p>Description: A matcher derived from a Netscape Mail Server spam filter.  If the matcher detects headers that 
+indicate spam, the message is matched.  All recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="RecipientIs"></a><div class="section"><h3>RecipientIs</h3>
+<p>Description: Matches mails that are sent to one of the recipients on a specified list.  Only 
+matching recipients are returned.</p>
+<p>Configuration string: A list of recipient addresses, comma, tab, or space delimited.
+<pre><code>
+&lt;mailet match=&quot;RecipientIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="RecipientIsLocal"></a><div class="section"><h3>RecipientIsLocal</h3>
+<p>Description: Matches mails that are sent to email addresses on local hosts with users that have local acccunts.  Only 
+matching recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="RecipientIsOverFixedQuota"></a><div class="section"><h3>RecipientIsOverFixedQuota</h3>
+<p>Description: Matches mails that are send to email addresses which are over the given quota. Only 
+matching recipients are returned.</p>
+<p>Configuration string: The quota
+<pre><code>
+&lt;mailet match=&quot;RecipientIsOverFixedQuota=10m&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="RecipientIsRegex"></a><div class="section"><h3>RecipientIsRegex</h3>
+<p>Description: Matches mails that are send to email addresses which are matched given regex. Only 
+matching recipients are returned.</p>
+<p>Configuration string: The quota
+<pre><code>
+&lt;mailet match=&quot;RecipientIsRegex=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+
+<a name="RelayLimit"></a><div class="section"><h3>RelayLimit</h3>
+<p>Description: Counts the number of Received headers in the mail (each of which represents a server 
+in the relay chain).  If the number equals or exceeds the specified limit, the mail is 
+matched.  All recipients are returned.</p>
+<p>Configuration string: a positive integer that is the limit on the number of relays.
+<pre><code>
+&lt;mailet match=&quot;RelayLimit=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="RemoteAddrInNetwork"></a><div class="section"><h3>RemoteAddrInNetwork</h3>
+<p>Description: Checks the remote address from which the mail was received against the configured list.  If the address matches one on the list, the matcher considers it a match.  
+All recipients are returned.</p>
+<p>Configuration string: A list of domain names, IP addresses, or wildcarded IP subnets of any class.  The 
+list may be comma or space delimited.
+<pre><code>
+&lt;mailet match=&quot;RemoteAddrInNetwork=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="RemoteAddrNotInNetwork"></a><div class="section"><h3>RemoteAddrNotInNetwork</h3>
+<p>Description: Checks the remote address from which the mail was received against the configured list.  If the address doesn't match one on the list, the matcher considers it a match. 
+All recipients are returned.</p>
+<p>Configuration string: A list of domain names, IP addresses, or wildcarded IP subnets of any class.  The 
+list may be comma or space delimited.
+<pre><code>
+&lt;mailet match=&quot;RemoteAddrNotInNetwork=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SenderHostIs"></a><div class="section"><h3>SenderHostIs</h3>
+<p>Description: Matches mails where the host name in the address of the sender cannot be resolved.  All 
+recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="SenderInFakeDomain"></a><div class="section"><h3>SenderInFakeDomain</h3>
+<p>Description: Matches mails where the host name in the address of the sender cannot be resolved.  All 
+recipients are returned.</p>
+<p>Configuration string: None.</p>
+</div>
+
+<a name="SenderIs"></a><div class="section"><h3>SenderIs</h3>
+<p>Description: Matches mails that are sent by one of the senders on a specified list.  All 
+recipients are returned.</p>
+<p>Configuration string: A list of sender addresses, comma, tab, or space delimited.
+<pre><code>
+&lt;mailet match=&quot;SenderIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SenderIsNull"></a><div class="section"><h3>SenderIsNull</h3>
+<p>Description: Matches mails that are sent by a null sender.</p>
+<p>Configuration string: none.
+<pre><code>
+&lt;mailet match=&quot;SenderIsNull&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SenderIsRegex"></a><div class="section"><h3>SenderIsRegex</h3>
+<p>Description: Matches mails that are sent by one of the senders matched the given regex.
+All recipients are returned.</p>
+<p>Configuration string: A regex.
+<pre><code>
+&lt;mailet match=&quot;SenderIsRegex=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SizeGreaterThan"></a><div class="section"><h3>SizeGreaterThan</h3>
+<p>Description: Matches emails with a total message size (headers and body) greater than the specified limit.  
+All recipients are returned.</p>
+<p>Configuration string: a positive integer followed by an 'm' or a 'k'.  This is the maximum message size permitted 
+specified in megabytes or kilobytes respectively.
+<pre><code>
+&lt;mailet match=&quot;SizeGreaterThan=1m&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SMTPAuthSuccessful"></a><div class="section"><h3>SMTPAuthSuccessful</h3>
+<p>Description: Matches mails that are send from an authorized sender. All recipients are returned.</p>
+<p>Configuration string: none.
+<pre><code>
+&lt;mailet match=&quot;SMTPAuthSuccessful&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SMTPAuthUserIs"></a><div class="section"><h3>SMTPAuthUserIs</h3>
+<p>Description: Matches mails that are send from one of the given authorized senders. All recipients are returned.</p>
+<p>Configuration string: none.
+<pre><code>
+&lt;mailet match=&quot;SMTPAuthUserIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+
+<a name="SubjectIs"></a><div class="section"><h3>SubjectIs</h3>
+<p>Description: Matches emails with the specified subject.  All recipients are returned.</p>
+<p>Configuration string: The string against which mail subject headers are matched.
+<pre><code>
+&lt;mailet match=&quot;SubjectIs=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="SubjectStartsWith"></a><div class="section"><h3>SubjectStartsWith</h3>
+<p>Description: Matches emails whose subject header starts with the specified string.  All recipients are returned.</p>
+<p>Configuration string: The string against which mail subject headers are matched.
+<pre><code>
+&lt;mailet match=&quot;SubjectStartsWith=value&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+<a name="UserIs"></a><div class="section"><h3>UserIs</h3>
+<p>Description: Matches mails that are sent to email addresses that have userids that are in the configuration list.  Only 
+matching recipients are returned.</p>
+<p>Configuration string: A list of user names, comma or space delimited.
+<pre><code>
+&lt;mailet match=&quot;UserIs=value, value, ..&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre>
+</p>
+</div>
+
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2006
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

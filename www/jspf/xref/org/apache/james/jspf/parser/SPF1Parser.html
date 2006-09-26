@@ -100,442 +100,447 @@
 <a name="91" href="#91">91</a>  
 <a name="92" href="#92">92</a>      <strong>public</strong> <strong>static</strong> <strong>final</strong> String ALPHA_PATTERN = <span class="string">"[a-zA-Z]"</span>;
 <a name="93" href="#93">93</a>  
-<a name="94" href="#94">94</a>      <strong>private</strong> <strong>static</strong> <strong>final</strong> String MACRO_LETTER_PATTERN = <span class="string">"[lsoditpvhcrLSODITPVHCR]"</span>;
-<a name="95" href="#95">95</a>  
-<a name="96" href="#96">96</a>      <strong>private</strong> <strong>static</strong> <strong>final</strong> String TRANSFORMERS_REGEX = <span class="string">"&#47;&#47;d*[r]?"</span>;
-<a name="97" href="#97">97</a>  
-<a name="98" href="#98">98</a>      <strong>private</strong> <strong>static</strong> <strong>final</strong> String DELEMITER_REGEX = <span class="string">"[&#47;&#47;.&#47;&#47;-&#47;&#47;+,/_&#47;&#47;=]"</span>;
-<a name="99" href="#99">99</a>  
-<a name="100" href="#100">100</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String MACRO_EXPAND_REGEX = <span class="string">"&#47;&#47;%(?:&#47;&#47;{"</span>
-<a name="101" href="#101">101</a>             + MACRO_LETTER_PATTERN + TRANSFORMERS_REGEX + DELEMITER_REGEX + <span class="string">"*"</span>
-<a name="102" href="#102">102</a>             + <span class="string">"&#47;&#47;}|&#47;&#47;%|&#47;&#47;_|&#47;&#47;-)"</span>;
-<a name="103" href="#103">103</a> 
-<a name="104" href="#104">104</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String MACRO_LITERAL_REGEX = <span class="string">"[&#47;&#47;x21-&#47;&#47;x24&#47;&#47;x26-&#47;&#47;x7e]"</span>;
-<a name="105" href="#105">105</a> 
-<a name="106" href="#106">106</a>     <em>/**<em>*</em></em>
-<a name="107" href="#107">107</a> <em>     * ABNF: macro-string = *( macro-expand / macro-literal )</em>
-<a name="108" href="#108">108</a> <em>     */</em>
-<a name="109" href="#109">109</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String MACRO_STRING_REGEX = <span class="string">"(?:"</span> + MACRO_EXPAND_REGEX
-<a name="110" href="#110">110</a>             + <span class="string">"|"</span> + MACRO_LITERAL_REGEX + <span class="string">"{1})*"</span>;
-<a name="111" href="#111">111</a> 
-<a name="112" href="#112">112</a>     <em>/**<em>*</em></em>
-<a name="113" href="#113">113</a> <em>     * ABNF: qualifier = "+" / "-" / "?" / "~"</em>
-<a name="114" href="#114">114</a> <em>     */</em>
-<a name="115" href="#115">115</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String QUALIFIER_PATTERN = <span class="string">"["</span> + <span class="string">"&#47;&#47;"</span>
-<a name="116" href="#116">116</a>             + SPF1Constants.PASS + <span class="string">"&#47;&#47;"</span> + SPF1Constants.FAIL + <span class="string">"&#47;&#47;"</span>
-<a name="117" href="#117">117</a>             + SPF1Constants.NEUTRAL + <span class="string">"&#47;&#47;"</span> + SPF1Constants.SOFTFAIL + <span class="string">"]"</span>;
-<a name="118" href="#118">118</a> 
-<a name="119" href="#119">119</a>     <em>/**<em>*</em></em>
-<a name="120" href="#120">120</a> <em>     * ABNF: toplabel = ( *alphanum ALPHA *alphanum ) / ( 1*alphanum "-" *(</em>
-<a name="121" href="#121">121</a> <em>     * alphanum / "-" ) alphanum ) ; LDH rule plus additional TLD restrictions ;</em>
-<a name="122" href="#122">122</a> <em>     * (see [RFC3696], Section 2)</em>
-<a name="123" href="#123">123</a> <em>     */</em>
-<a name="124" href="#124">124</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String TOP_LABEL_REGEX = <span class="string">"(?:"</span>
-<a name="125" href="#125">125</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"*"</span> + SPF1Parser.ALPHA_PATTERN
-<a name="126" href="#126">126</a>             + <span class="string">"{1}"</span> + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"*|(?:"</span>
-<a name="127" href="#127">127</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"+"</span> + <span class="string">"&#47;&#47;-"</span> + <span class="string">"(?:"</span>
-<a name="128" href="#128">128</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"|&#47;&#47;-)*"</span>
-<a name="129" href="#129">129</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"))"</span>;
-<a name="130" href="#130">130</a> 
-<a name="131" href="#131">131</a>     <em>/**<em>*</em></em>
-<a name="132" href="#132">132</a> <em>     * ABNF: domain-end = ( "." toplabel [ "." ] ) / macro-expand</em>
-<a name="133" href="#133">133</a> <em>     */</em>
-<a name="134" href="#134">134</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String DOMAIN_END_REGEX = <span class="string">"(?:&#47;&#47;."</span> + TOP_LABEL_REGEX
-<a name="135" href="#135">135</a>             + <span class="string">"&#47;&#47;.?"</span> + <span class="string">"|"</span> + SPF1Parser.MACRO_EXPAND_REGEX + <span class="string">")"</span>;
-<a name="136" href="#136">136</a> 
-<a name="137" href="#137">137</a>     <em>/**<em>*</em></em>
-<a name="138" href="#138">138</a> <em>     * ABNF: domain-spec = macro-string domain-end</em>
-<a name="139" href="#139">139</a> <em>     */</em>
-<a name="140" href="#140">140</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String DOMAIN_SPEC_REGEX = <span class="string">"("</span>
-<a name="141" href="#141">141</a>             + SPF1Parser.MACRO_STRING_REGEX + DOMAIN_END_REGEX + <span class="string">")"</span>;
-<a name="142" href="#142">142</a> 
-<a name="143" href="#143">143</a>     <strong>private</strong> Pattern termsSeparatorPattern = <strong>null</strong>;
-<a name="144" href="#144">144</a> 
-<a name="145" href="#145">145</a>     <strong>private</strong> Pattern termPattern = <strong>null</strong>;
-<a name="146" href="#146">146</a> 
-<a name="147" href="#147">147</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_QUALIFIER_POS;
-<a name="148" href="#148">148</a> 
-<a name="149" href="#149">149</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_MECHANISM_POS;
-<a name="150" href="#150">150</a> 
-<a name="151" href="#151">151</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_MODIFIER_POS;
-<a name="152" href="#152">152</a> 
-<a name="153" href="#153">153</a>     <strong>private</strong> Collection mechanismsCollection;
-<a name="154" href="#154">154</a> 
-<a name="155" href="#155">155</a>     <strong>private</strong> Collection modifiersCollection;
-<a name="156" href="#156">156</a> 
-<a name="157" href="#157">157</a>     <strong>private</strong> List matchResultPositions;
-<a name="158" href="#158">158</a> 
-<a name="159" href="#159">159</a>     <strong>private</strong> <a href="../../../../../org/apache/james/jspf/core/Logger.html">Logger</a> log;
-<a name="160" href="#160">160</a> 
-<a name="161" href="#161">161</a>     <strong>private</strong> String termFile = <span class="string">"org/apache/james/jspf/parser/jspf.default.terms"</span>;
-<a name="162" href="#162">162</a> 
-<a name="163" href="#163">163</a>     <strong>private</strong> <strong>class</strong> TermDef {
-<a name="164" href="#164">164</a>         <strong>private</strong> Pattern pattern;
+<a name="94" href="#94">94</a>      <em class="comment">// Changed this because C, T and R MACRO_LETTERS are not available </em>
+<a name="95" href="#95">95</a>      <em class="comment">// in record parsing and must return a PermError.</em>
+<a name="96" href="#96">96</a>     
+<a name="97" href="#97">97</a>      <em class="comment">// private static final String MACRO_LETTER_PATTERN = "[lsodipvhcrtLSODIPVHCRT]";</em>
+<a name="98" href="#98">98</a>  
+<a name="99" href="#99">99</a>      <strong>private</strong> <strong>static</strong> <strong>final</strong> String MACRO_LETTER_PATTERN = <span class="string">"[lsodipvhLSODIPVH]"</span>;
+<a name="100" href="#100">100</a> 
+<a name="101" href="#101">101</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String TRANSFORMERS_REGEX = <span class="string">"&#47;&#47;d*[r]?"</span>;
+<a name="102" href="#102">102</a> 
+<a name="103" href="#103">103</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String DELEMITER_REGEX = <span class="string">"[&#47;&#47;.&#47;&#47;-&#47;&#47;+,/_&#47;&#47;=]"</span>;
+<a name="104" href="#104">104</a> 
+<a name="105" href="#105">105</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String MACRO_EXPAND_REGEX = <span class="string">"&#47;&#47;%(?:&#47;&#47;{"</span>
+<a name="106" href="#106">106</a>             + MACRO_LETTER_PATTERN + TRANSFORMERS_REGEX + DELEMITER_REGEX + <span class="string">"*"</span>
+<a name="107" href="#107">107</a>             + <span class="string">"&#47;&#47;}|&#47;&#47;%|&#47;&#47;_|&#47;&#47;-)"</span>;
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String MACRO_LITERAL_REGEX = <span class="string">"[&#47;&#47;x21-&#47;&#47;x24&#47;&#47;x26-&#47;&#47;x7e]"</span>;
+<a name="110" href="#110">110</a> 
+<a name="111" href="#111">111</a>     <em>/**<em>*</em></em>
+<a name="112" href="#112">112</a> <em>     * ABNF: macro-string = *( macro-expand / macro-literal )</em>
+<a name="113" href="#113">113</a> <em>     */</em>
+<a name="114" href="#114">114</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String MACRO_STRING_REGEX = <span class="string">"(?:"</span> + MACRO_EXPAND_REGEX
+<a name="115" href="#115">115</a>             + <span class="string">"|"</span> + MACRO_LITERAL_REGEX + <span class="string">"{1})*"</span>;
+<a name="116" href="#116">116</a> 
+<a name="117" href="#117">117</a>     <em>/**<em>*</em></em>
+<a name="118" href="#118">118</a> <em>     * ABNF: qualifier = "+" / "-" / "?" / "~"</em>
+<a name="119" href="#119">119</a> <em>     */</em>
+<a name="120" href="#120">120</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String QUALIFIER_PATTERN = <span class="string">"["</span> + <span class="string">"&#47;&#47;"</span>
+<a name="121" href="#121">121</a>             + SPF1Constants.PASS + <span class="string">"&#47;&#47;"</span> + SPF1Constants.FAIL + <span class="string">"&#47;&#47;"</span>
+<a name="122" href="#122">122</a>             + SPF1Constants.NEUTRAL + <span class="string">"&#47;&#47;"</span> + SPF1Constants.SOFTFAIL + <span class="string">"]"</span>;
+<a name="123" href="#123">123</a> 
+<a name="124" href="#124">124</a>     <em>/**<em>*</em></em>
+<a name="125" href="#125">125</a> <em>     * ABNF: toplabel = ( *alphanum ALPHA *alphanum ) / ( 1*alphanum "-" *(</em>
+<a name="126" href="#126">126</a> <em>     * alphanum / "-" ) alphanum ) ; LDH rule plus additional TLD restrictions ;</em>
+<a name="127" href="#127">127</a> <em>     * (see [RFC3696], Section 2)</em>
+<a name="128" href="#128">128</a> <em>     */</em>
+<a name="129" href="#129">129</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String TOP_LABEL_REGEX = <span class="string">"(?:"</span>
+<a name="130" href="#130">130</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"*"</span> + SPF1Parser.ALPHA_PATTERN
+<a name="131" href="#131">131</a>             + <span class="string">"{1}"</span> + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"*|(?:"</span>
+<a name="132" href="#132">132</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"+"</span> + <span class="string">"&#47;&#47;-"</span> + <span class="string">"(?:"</span>
+<a name="133" href="#133">133</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"|&#47;&#47;-)*"</span>
+<a name="134" href="#134">134</a>             + SPF1Parser.ALPHA_DIGIT_PATTERN + <span class="string">"))"</span>;
+<a name="135" href="#135">135</a> 
+<a name="136" href="#136">136</a>     <em>/**<em>*</em></em>
+<a name="137" href="#137">137</a> <em>     * ABNF: domain-end = ( "." toplabel [ "." ] ) / macro-expand</em>
+<a name="138" href="#138">138</a> <em>     */</em>
+<a name="139" href="#139">139</a>     <strong>private</strong> <strong>static</strong> <strong>final</strong> String DOMAIN_END_REGEX = <span class="string">"(?:&#47;&#47;."</span> + TOP_LABEL_REGEX
+<a name="140" href="#140">140</a>             + <span class="string">"&#47;&#47;.?"</span> + <span class="string">"|"</span> + SPF1Parser.MACRO_EXPAND_REGEX + <span class="string">")"</span>;
+<a name="141" href="#141">141</a> 
+<a name="142" href="#142">142</a>     <em>/**<em>*</em></em>
+<a name="143" href="#143">143</a> <em>     * ABNF: domain-spec = macro-string domain-end</em>
+<a name="144" href="#144">144</a> <em>     */</em>
+<a name="145" href="#145">145</a>     <strong>public</strong> <strong>static</strong> <strong>final</strong> String DOMAIN_SPEC_REGEX = <span class="string">"("</span>
+<a name="146" href="#146">146</a>             + SPF1Parser.MACRO_STRING_REGEX + DOMAIN_END_REGEX + <span class="string">")"</span>;
+<a name="147" href="#147">147</a> 
+<a name="148" href="#148">148</a>     <strong>private</strong> Pattern termsSeparatorPattern = <strong>null</strong>;
+<a name="149" href="#149">149</a> 
+<a name="150" href="#150">150</a>     <strong>private</strong> Pattern termPattern = <strong>null</strong>;
+<a name="151" href="#151">151</a> 
+<a name="152" href="#152">152</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_QUALIFIER_POS;
+<a name="153" href="#153">153</a> 
+<a name="154" href="#154">154</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_MECHANISM_POS;
+<a name="155" href="#155">155</a> 
+<a name="156" href="#156">156</a>     <strong>private</strong> <strong>int</strong> TERM_STEP_REGEX_MODIFIER_POS;
+<a name="157" href="#157">157</a> 
+<a name="158" href="#158">158</a>     <strong>private</strong> Collection mechanismsCollection;
+<a name="159" href="#159">159</a> 
+<a name="160" href="#160">160</a>     <strong>private</strong> Collection modifiersCollection;
+<a name="161" href="#161">161</a> 
+<a name="162" href="#162">162</a>     <strong>private</strong> List matchResultPositions;
+<a name="163" href="#163">163</a> 
+<a name="164" href="#164">164</a>     <strong>private</strong> <a href="../../../../../org/apache/james/jspf/core/Logger.html">Logger</a> log;
 <a name="165" href="#165">165</a> 
-<a name="166" href="#166">166</a>         <strong>private</strong> Class termDef;
+<a name="166" href="#166">166</a>     <strong>private</strong> String termFile = <span class="string">"org/apache/james/jspf/parser/jspf.default.terms"</span>;
 <a name="167" href="#167">167</a> 
-<a name="168" href="#168">168</a>         <strong>private</strong> <strong>int</strong> matchSize = 0;
-<a name="169" href="#169">169</a> 
-<a name="170" href="#170">170</a>         <strong>public</strong> TermDef(Class tClass) throws IllegalArgumentException,
-<a name="171" href="#171">171</a>                 SecurityException, IllegalAccessException, NoSuchFieldException {
-<a name="172" href="#172">172</a>             String pString = (String) tClass.getField(<span class="string">"REGEX"</span>).get(<strong>null</strong>);
-<a name="173" href="#173">173</a>             pattern = Pattern.compile(pString);
-<a name="174" href="#174">174</a>             termDef = tClass;
-<a name="175" href="#175">175</a>             calcGroups(pString);
-<a name="176" href="#176">176</a>         }
-<a name="177" href="#177">177</a> 
-<a name="178" href="#178">178</a>         <em>/**<em>*</em></em>
-<a name="179" href="#179">179</a> <em>         * This method should be done differently. We currently don't hanlde the</em>
-<a name="180" href="#180">180</a> <em>         * escaping at all.</em>
-<a name="181" href="#181">181</a> <em>         * </em>
-<a name="182" href="#182">182</a> <em>         * @param pString</em>
-<a name="183" href="#183">183</a> <em>         */</em>
-<a name="184" href="#184">184</a>         <strong>private</strong> <strong>void</strong> calcGroups(String pString) {
-<a name="185" href="#185">185</a>             <strong>int</strong> i = 0;
-<a name="186" href="#186">186</a>             <strong>int</strong> c = 0;
-<a name="187" href="#187">187</a>             <strong>while</strong> (<strong>true</strong>) {
-<a name="188" href="#188">188</a>                 <strong>int</strong> p1 = pString.indexOf(<span class="string">"("</span>, i);
-<a name="189" href="#189">189</a>                 <strong>int</strong> p2 = pString.indexOf(<span class="string">"(?:"</span>, i);
-<a name="190" href="#190">190</a>                 <strong>if</strong> (p1 &lt; 0)
-<a name="191" href="#191">191</a>                     <strong>break</strong>;
-<a name="192" href="#192">192</a>                 <strong>if</strong> (p1 != p2)
-<a name="193" href="#193">193</a>                     c++;
-<a name="194" href="#194">194</a>                 i = p1 + 1;
-<a name="195" href="#195">195</a>             }
-<a name="196" href="#196">196</a>             matchSize = c;
-<a name="197" href="#197">197</a>         }
-<a name="198" href="#198">198</a> 
-<a name="199" href="#199">199</a>         <strong>public</strong> Pattern getPattern() {
-<a name="200" href="#200">200</a>             <strong>return</strong> pattern;
-<a name="201" href="#201">201</a>         }
-<a name="202" href="#202">202</a> 
-<a name="203" href="#203">203</a>         <strong>public</strong> Class getTermDef() {
-<a name="204" href="#204">204</a>             <strong>return</strong> termDef;
-<a name="205" href="#205">205</a>         }
-<a name="206" href="#206">206</a> 
-<a name="207" href="#207">207</a>         <strong>public</strong> <strong>int</strong> getMatchSize() {
-<a name="208" href="#208">208</a>             <strong>return</strong> matchSize;
-<a name="209" href="#209">209</a>         }
-<a name="210" href="#210">210</a>     }
+<a name="168" href="#168">168</a>     <strong>private</strong> <strong>class</strong> TermDef {
+<a name="169" href="#169">169</a>         <strong>private</strong> Pattern pattern;
+<a name="170" href="#170">170</a> 
+<a name="171" href="#171">171</a>         <strong>private</strong> Class termDef;
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>         <strong>private</strong> <strong>int</strong> matchSize = 0;
+<a name="174" href="#174">174</a> 
+<a name="175" href="#175">175</a>         <strong>public</strong> TermDef(Class tClass) throws IllegalArgumentException,
+<a name="176" href="#176">176</a>                 SecurityException, IllegalAccessException, NoSuchFieldException {
+<a name="177" href="#177">177</a>             String pString = (String) tClass.getField(<span class="string">"REGEX"</span>).get(<strong>null</strong>);
+<a name="178" href="#178">178</a>             pattern = Pattern.compile(pString);
+<a name="179" href="#179">179</a>             termDef = tClass;
+<a name="180" href="#180">180</a>             calcGroups(pString);
+<a name="181" href="#181">181</a>         }
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>         <em>/**<em>*</em></em>
+<a name="184" href="#184">184</a> <em>         * This method should be done differently. We currently don't hanlde the</em>
+<a name="185" href="#185">185</a> <em>         * escaping at all.</em>
+<a name="186" href="#186">186</a> <em>         * </em>
+<a name="187" href="#187">187</a> <em>         * @param pString</em>
+<a name="188" href="#188">188</a> <em>         */</em>
+<a name="189" href="#189">189</a>         <strong>private</strong> <strong>void</strong> calcGroups(String pString) {
+<a name="190" href="#190">190</a>             <strong>int</strong> i = 0;
+<a name="191" href="#191">191</a>             <strong>int</strong> c = 0;
+<a name="192" href="#192">192</a>             <strong>while</strong> (<strong>true</strong>) {
+<a name="193" href="#193">193</a>                 <strong>int</strong> p1 = pString.indexOf(<span class="string">"("</span>, i);
+<a name="194" href="#194">194</a>                 <strong>int</strong> p2 = pString.indexOf(<span class="string">"(?:"</span>, i);
+<a name="195" href="#195">195</a>                 <strong>if</strong> (p1 &lt; 0)
+<a name="196" href="#196">196</a>                     <strong>break</strong>;
+<a name="197" href="#197">197</a>                 <strong>if</strong> (p1 != p2)
+<a name="198" href="#198">198</a>                     c++;
+<a name="199" href="#199">199</a>                 i = p1 + 1;
+<a name="200" href="#200">200</a>             }
+<a name="201" href="#201">201</a>             matchSize = c;
+<a name="202" href="#202">202</a>         }
+<a name="203" href="#203">203</a> 
+<a name="204" href="#204">204</a>         <strong>public</strong> Pattern getPattern() {
+<a name="205" href="#205">205</a>             <strong>return</strong> pattern;
+<a name="206" href="#206">206</a>         }
+<a name="207" href="#207">207</a> 
+<a name="208" href="#208">208</a>         <strong>public</strong> Class getTermDef() {
+<a name="209" href="#209">209</a>             <strong>return</strong> termDef;
+<a name="210" href="#210">210</a>         }
 <a name="211" href="#211">211</a> 
-<a name="212" href="#212">212</a>     <em>/**<em>*</em></em>
-<a name="213" href="#213">213</a> <em>     * Constructor. Creates all the values needed to run the parsing</em>
-<a name="214" href="#214">214</a> <em>     * </em>
-<a name="215" href="#215">215</a> <em>     * @param loggerThe logger to use</em>
-<a name="216" href="#216">216</a> <em>     */</em>
-<a name="217" href="#217">217</a>     <strong>public</strong> SPF1Parser(<a href="../../../../../org/apache/james/jspf/core/Logger.html">Logger</a> logger) {
-<a name="218" href="#218">218</a>         log = logger;
-<a name="219" href="#219">219</a>         <strong>try</strong> {
-<a name="220" href="#220">220</a>             InputStream is = Thread.currentThread().getContextClassLoader()
-<a name="221" href="#221">221</a>                     .getResourceAsStream(termFile);
-<a name="222" href="#222">222</a>             Properties p = <strong>new</strong> Properties();
-<a name="223" href="#223">223</a>             p.load(is);
-<a name="224" href="#224">224</a>             String mechs = p.getProperty(<span class="string">"mechanisms"</span>);
-<a name="225" href="#225">225</a>             String mods = p.getProperty(<span class="string">"modifiers"</span>);
-<a name="226" href="#226">226</a>             String[] classes;
-<a name="227" href="#227">227</a>             classes = mechs.split(<span class="string">","</span>);
-<a name="228" href="#228">228</a>             Class[] knownMechanisms = <strong>new</strong> Class[classes.length];
-<a name="229" href="#229">229</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; classes.length; i++) {
-<a name="230" href="#230">230</a>                 log.debug(<span class="string">"Add following class as known mechanismn: "</span>
-<a name="231" href="#231">231</a>                         + classes[i]);
-<a name="232" href="#232">232</a>                 knownMechanisms[i] = Thread.currentThread()
-<a name="233" href="#233">233</a>                         .getContextClassLoader().loadClass(classes[i]);
-<a name="234" href="#234">234</a>             }
-<a name="235" href="#235">235</a>             mechanismsCollection = createTermCollection(knownMechanisms);
-<a name="236" href="#236">236</a>             classes = mods.split(<span class="string">","</span>);
-<a name="237" href="#237">237</a>             Class[] knownModifiers = <strong>new</strong> Class[classes.length];
-<a name="238" href="#238">238</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; classes.length; i++) {
-<a name="239" href="#239">239</a>                 log.debug(<span class="string">"Add following class as known modifier: "</span>
-<a name="240" href="#240">240</a>                         + classes[i]);
-<a name="241" href="#241">241</a>                 knownModifiers[i] = Thread.currentThread()
-<a name="242" href="#242">242</a>                         .getContextClassLoader().loadClass(classes[i]);
-<a name="243" href="#243">243</a>             }
-<a name="244" href="#244">244</a>             modifiersCollection = createTermCollection(knownModifiers);
-<a name="245" href="#245">245</a> 
-<a name="246" href="#246">246</a>         } <strong>catch</strong> (IOException e) {
-<a name="247" href="#247">247</a>             <strong>throw</strong> <strong>new</strong> IllegalStateException(
-<a name="248" href="#248">248</a>                     <span class="string">"Term configuration cannot be found"</span>);
-<a name="249" href="#249">249</a>         } <strong>catch</strong> (ClassNotFoundException e) {
-<a name="250" href="#250">250</a>             <strong>throw</strong> <strong>new</strong> IllegalStateException(
-<a name="251" href="#251">251</a>                     <span class="string">"One configured class cannot be found"</span>);
-<a name="252" href="#252">252</a>         }
-<a name="253" href="#253">253</a> 
-<a name="254" href="#254">254</a>         <em>/**<em>*</em></em>
-<a name="255" href="#255">255</a> <em>         * ABNF: mechanism = ( all / include / A / MX / PTR / IP4 / IP6 / exists )</em>
-<a name="256" href="#256">256</a> <em>         */</em>
-<a name="257" href="#257">257</a>         String MECHANISM_REGEX = createRegex(mechanismsCollection);
+<a name="212" href="#212">212</a>         <strong>public</strong> <strong>int</strong> getMatchSize() {
+<a name="213" href="#213">213</a>             <strong>return</strong> matchSize;
+<a name="214" href="#214">214</a>         }
+<a name="215" href="#215">215</a>     }
+<a name="216" href="#216">216</a> 
+<a name="217" href="#217">217</a>     <em>/**<em>*</em></em>
+<a name="218" href="#218">218</a> <em>     * Constructor. Creates all the values needed to run the parsing</em>
+<a name="219" href="#219">219</a> <em>     * </em>
+<a name="220" href="#220">220</a> <em>     * @param loggerThe logger to use</em>
+<a name="221" href="#221">221</a> <em>     */</em>
+<a name="222" href="#222">222</a>     <strong>public</strong> SPF1Parser(<a href="../../../../../org/apache/james/jspf/core/Logger.html">Logger</a> logger) {
+<a name="223" href="#223">223</a>         log = logger;
+<a name="224" href="#224">224</a>         <strong>try</strong> {
+<a name="225" href="#225">225</a>             InputStream is = Thread.currentThread().getContextClassLoader()
+<a name="226" href="#226">226</a>                     .getResourceAsStream(termFile);
+<a name="227" href="#227">227</a>             Properties p = <strong>new</strong> Properties();
+<a name="228" href="#228">228</a>             p.load(is);
+<a name="229" href="#229">229</a>             String mechs = p.getProperty(<span class="string">"mechanisms"</span>);
+<a name="230" href="#230">230</a>             String mods = p.getProperty(<span class="string">"modifiers"</span>);
+<a name="231" href="#231">231</a>             String[] classes;
+<a name="232" href="#232">232</a>             classes = mechs.split(<span class="string">","</span>);
+<a name="233" href="#233">233</a>             Class[] knownMechanisms = <strong>new</strong> Class[classes.length];
+<a name="234" href="#234">234</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; classes.length; i++) {
+<a name="235" href="#235">235</a>                 log.debug(<span class="string">"Add following class as known mechanismn: "</span>
+<a name="236" href="#236">236</a>                         + classes[i]);
+<a name="237" href="#237">237</a>                 knownMechanisms[i] = Thread.currentThread()
+<a name="238" href="#238">238</a>                         .getContextClassLoader().loadClass(classes[i]);
+<a name="239" href="#239">239</a>             }
+<a name="240" href="#240">240</a>             mechanismsCollection = createTermCollection(knownMechanisms);
+<a name="241" href="#241">241</a>             classes = mods.split(<span class="string">","</span>);
+<a name="242" href="#242">242</a>             Class[] knownModifiers = <strong>new</strong> Class[classes.length];
+<a name="243" href="#243">243</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; classes.length; i++) {
+<a name="244" href="#244">244</a>                 log.debug(<span class="string">"Add following class as known modifier: "</span>
+<a name="245" href="#245">245</a>                         + classes[i]);
+<a name="246" href="#246">246</a>                 knownModifiers[i] = Thread.currentThread()
+<a name="247" href="#247">247</a>                         .getContextClassLoader().loadClass(classes[i]);
+<a name="248" href="#248">248</a>             }
+<a name="249" href="#249">249</a>             modifiersCollection = createTermCollection(knownModifiers);
+<a name="250" href="#250">250</a> 
+<a name="251" href="#251">251</a>         } <strong>catch</strong> (IOException e) {
+<a name="252" href="#252">252</a>             <strong>throw</strong> <strong>new</strong> IllegalStateException(
+<a name="253" href="#253">253</a>                     <span class="string">"Term configuration cannot be found"</span>);
+<a name="254" href="#254">254</a>         } <strong>catch</strong> (ClassNotFoundException e) {
+<a name="255" href="#255">255</a>             <strong>throw</strong> <strong>new</strong> IllegalStateException(
+<a name="256" href="#256">256</a>                     <span class="string">"One configured class cannot be found"</span>);
+<a name="257" href="#257">257</a>         }
 <a name="258" href="#258">258</a> 
 <a name="259" href="#259">259</a>         <em>/**<em>*</em></em>
-<a name="260" href="#260">260</a> <em>         * ABNF: modifier = redirect / explanation / unknown-modifier</em>
+<a name="260" href="#260">260</a> <em>         * ABNF: mechanism = ( all / include / A / MX / PTR / IP4 / IP6 / exists )</em>
 <a name="261" href="#261">261</a> <em>         */</em>
-<a name="262" href="#262">262</a>         String MODIFIER_REGEX = <span class="string">"("</span> + createRegex(modifiersCollection) + <span class="string">")"</span>;
+<a name="262" href="#262">262</a>         String MECHANISM_REGEX = createRegex(mechanismsCollection);
 <a name="263" href="#263">263</a> 
 <a name="264" href="#264">264</a>         <em>/**<em>*</em></em>
-<a name="265" href="#265">265</a> <em>         * ABNF: directive = [ qualifier ] mechanism</em>
+<a name="265" href="#265">265</a> <em>         * ABNF: modifier = redirect / explanation / unknown-modifier</em>
 <a name="266" href="#266">266</a> <em>         */</em>
-<a name="267" href="#267">267</a>         String DIRECTIVE_REGEX = <span class="string">"("</span> + QUALIFIER_PATTERN + <span class="string">"?)("</span>
-<a name="268" href="#268">268</a>                 + MECHANISM_REGEX + <span class="string">")"</span>;
-<a name="269" href="#269">269</a> 
-<a name="270" href="#270">270</a>         <em>/**<em>*</em></em>
-<a name="271" href="#271">271</a> <em>         * ABNF: ( directive / modifier )</em>
-<a name="272" href="#272">272</a> <em>         */</em>
-<a name="273" href="#273">273</a>         String TERM_REGEX = <span class="string">"(?:"</span> + MODIFIER_REGEX + <span class="string">"|"</span> + DIRECTIVE_REGEX
-<a name="274" href="#274">274</a>                 + <span class="string">")"</span>;
-<a name="275" href="#275">275</a> 
-<a name="276" href="#276">276</a>         <em>/**<em>*</em></em>
-<a name="277" href="#277">277</a> <em>         * ABNF: 1*SP</em>
-<a name="278" href="#278">278</a> <em>         */</em>
-<a name="279" href="#279">279</a>         String TERMS_SEPARATOR_REGEX = <span class="string">"[ ]+"</span>;
+<a name="267" href="#267">267</a>         String MODIFIER_REGEX = <span class="string">"("</span> + createRegex(modifiersCollection) + <span class="string">")"</span>;
+<a name="268" href="#268">268</a> 
+<a name="269" href="#269">269</a>         <em>/**<em>*</em></em>
+<a name="270" href="#270">270</a> <em>         * ABNF: directive = [ qualifier ] mechanism</em>
+<a name="271" href="#271">271</a> <em>         */</em>
+<a name="272" href="#272">272</a>         String DIRECTIVE_REGEX = <span class="string">"("</span> + QUALIFIER_PATTERN + <span class="string">"?)("</span>
+<a name="273" href="#273">273</a>                 + MECHANISM_REGEX + <span class="string">")"</span>;
+<a name="274" href="#274">274</a> 
+<a name="275" href="#275">275</a>         <em>/**<em>*</em></em>
+<a name="276" href="#276">276</a> <em>         * ABNF: ( directive / modifier )</em>
+<a name="277" href="#277">277</a> <em>         */</em>
+<a name="278" href="#278">278</a>         String TERM_REGEX = <span class="string">"(?:"</span> + MODIFIER_REGEX + <span class="string">"|"</span> + DIRECTIVE_REGEX
+<a name="279" href="#279">279</a>                 + <span class="string">")"</span>;
 <a name="280" href="#280">280</a> 
-<a name="281" href="#281">281</a>         termsSeparatorPattern = Pattern.compile(TERMS_SEPARATOR_REGEX);
-<a name="282" href="#282">282</a>         termPattern = Pattern.compile(TERM_REGEX);
-<a name="283" href="#283">283</a> 
-<a name="284" href="#284">284</a>         initializePositions();
-<a name="285" href="#285">285</a>     }
-<a name="286" href="#286">286</a> 
-<a name="287" href="#287">287</a>     <em>/**<em>*</em></em>
-<a name="288" href="#288">288</a> <em>     * Fill in the matchResultPositions ArrayList. This array simply map each</em>
-<a name="289" href="#289">289</a> <em>     * regex matchgroup to the Term class that originated that part of the</em>
-<a name="290" href="#290">290</a> <em>     * regex.</em>
-<a name="291" href="#291">291</a> <em>     */</em>
-<a name="292" href="#292">292</a>     <strong>private</strong> <strong>void</strong> initializePositions() {
-<a name="293" href="#293">293</a>         ArrayList matchResultPositions = <strong>new</strong> ArrayList();
-<a name="294" href="#294">294</a> 
-<a name="295" href="#295">295</a>         <em class="comment">// FULL MATCH</em>
-<a name="296" href="#296">296</a>         <strong>int</strong> posIndex = 0;
-<a name="297" href="#297">297</a>         matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="298" href="#298">298</a>         matchResultPositions.add(posIndex, <strong>null</strong>);
+<a name="281" href="#281">281</a>         <em>/**<em>*</em></em>
+<a name="282" href="#282">282</a> <em>         * ABNF: 1*SP</em>
+<a name="283" href="#283">283</a> <em>         */</em>
+<a name="284" href="#284">284</a>         String TERMS_SEPARATOR_REGEX = <span class="string">"[ ]+"</span>;
+<a name="285" href="#285">285</a> 
+<a name="286" href="#286">286</a>         termsSeparatorPattern = Pattern.compile(TERMS_SEPARATOR_REGEX);
+<a name="287" href="#287">287</a>         termPattern = Pattern.compile(TERM_REGEX);
+<a name="288" href="#288">288</a> 
+<a name="289" href="#289">289</a>         initializePositions();
+<a name="290" href="#290">290</a>     }
+<a name="291" href="#291">291</a> 
+<a name="292" href="#292">292</a>     <em>/**<em>*</em></em>
+<a name="293" href="#293">293</a> <em>     * Fill in the matchResultPositions ArrayList. This array simply map each</em>
+<a name="294" href="#294">294</a> <em>     * regex matchgroup to the Term class that originated that part of the</em>
+<a name="295" href="#295">295</a> <em>     * regex.</em>
+<a name="296" href="#296">296</a> <em>     */</em>
+<a name="297" href="#297">297</a>     <strong>private</strong> <strong>void</strong> initializePositions() {
+<a name="298" href="#298">298</a>         ArrayList matchResultPositions = <strong>new</strong> ArrayList();
 <a name="299" href="#299">299</a> 
-<a name="300" href="#300">300</a>         Iterator i;
-<a name="301" href="#301">301</a> 
-<a name="302" href="#302">302</a>         TERM_STEP_REGEX_MODIFIER_POS = ++posIndex;
-<a name="303" href="#303">303</a>         matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="304" href="#304">304</a>         matchResultPositions.add(TERM_STEP_REGEX_MODIFIER_POS, <strong>null</strong>);
-<a name="305" href="#305">305</a>         i = modifiersCollection.iterator();
-<a name="306" href="#306">306</a>         <strong>while</strong> (i.hasNext()) {
-<a name="307" href="#307">307</a>             TermDef td = (TermDef) i.next();
-<a name="308" href="#308">308</a>             <strong>int</strong> size = td.getMatchSize() + 1;
-<a name="309" href="#309">309</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; size; k++) {
-<a name="310" href="#310">310</a>                 posIndex++;
-<a name="311" href="#311">311</a>                 matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="312" href="#312">312</a>                 matchResultPositions.add(posIndex, td);
-<a name="313" href="#313">313</a>             }
-<a name="314" href="#314">314</a>         }
-<a name="315" href="#315">315</a> 
-<a name="316" href="#316">316</a>         TERM_STEP_REGEX_QUALIFIER_POS = ++posIndex;
-<a name="317" href="#317">317</a>         matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="318" href="#318">318</a>         matchResultPositions.add(posIndex, <strong>null</strong>);
-<a name="319" href="#319">319</a> 
-<a name="320" href="#320">320</a>         TERM_STEP_REGEX_MECHANISM_POS = ++posIndex;
-<a name="321" href="#321">321</a>         matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="322" href="#322">322</a>         matchResultPositions.add(TERM_STEP_REGEX_MECHANISM_POS, <strong>null</strong>);
-<a name="323" href="#323">323</a>         i = mechanismsCollection.iterator();
-<a name="324" href="#324">324</a>         <strong>while</strong> (i.hasNext()) {
-<a name="325" href="#325">325</a>             TermDef td = (TermDef) i.next();
-<a name="326" href="#326">326</a>             <strong>int</strong> size = td.getMatchSize() + 1;
-<a name="327" href="#327">327</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; size; k++) {
-<a name="328" href="#328">328</a>                 posIndex++;
-<a name="329" href="#329">329</a>                 matchResultPositions.ensureCapacity(posIndex + 1);
-<a name="330" href="#330">330</a>                 matchResultPositions.add(posIndex, td);
-<a name="331" href="#331">331</a>             }
-<a name="332" href="#332">332</a>         }
-<a name="333" href="#333">333</a> 
-<a name="334" href="#334">334</a>         <strong>if</strong> (log.isDebugEnabled()) {
-<a name="335" href="#335">335</a>             log.debug(<span class="string">"Parsing catch group positions: Modifiers["</span>
-<a name="336" href="#336">336</a>                     + TERM_STEP_REGEX_MODIFIER_POS + <span class="string">"] Qualifier["</span>
-<a name="337" href="#337">337</a>                     + TERM_STEP_REGEX_QUALIFIER_POS + <span class="string">" Mechanism["</span>
-<a name="338" href="#338">338</a>                     + TERM_STEP_REGEX_MECHANISM_POS + <span class="string">"]"</span>);
-<a name="339" href="#339">339</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; matchResultPositions.size(); k++) {
-<a name="340" href="#340">340</a>                 log
-<a name="341" href="#341">341</a>                         .debug(k
-<a name="342" href="#342">342</a>                                 + <span class="string">") "</span>
-<a name="343" href="#343">343</a>                                 + (matchResultPositions.get(k) != <strong>null</strong> ? ((TermDef) matchResultPositions
-<a name="344" href="#344">344</a>                                         .get(k)).getPattern()
-<a name="345" href="#345">345</a>                                         : <strong>null</strong>));
-<a name="346" href="#346">346</a>             }
-<a name="347" href="#347">347</a>         }
-<a name="348" href="#348">348</a>         
-<a name="349" href="#349">349</a>         <strong>this</strong>.matchResultPositions = Collections.synchronizedList(matchResultPositions);
-<a name="350" href="#350">350</a>     }
-<a name="351" href="#351">351</a> 
-<a name="352" href="#352">352</a>     <em>/**<em>*</em></em>
-<a name="353" href="#353">353</a> <em>     * Loop the classes searching for a String static field named</em>
-<a name="354" href="#354">354</a> <em>     * staticFieldName and create an OR regeex like this:</em>
-<a name="355" href="#355">355</a> <em>     * (?:FIELD1|FIELD2|FIELD3)</em>
-<a name="356" href="#356">356</a> <em>     * </em>
-<a name="357" href="#357">357</a> <em>     * @param classes</em>
-<a name="358" href="#358">358</a> <em>     *            classes to analyze</em>
-<a name="359" href="#359">359</a> <em>     * @param staticFieldName</em>
-<a name="360" href="#360">360</a> <em>     *            static field to concatenate</em>
-<a name="361" href="#361">361</a> <em>     * @return regex The regex</em>
-<a name="362" href="#362">362</a> <em>     */</em>
-<a name="363" href="#363">363</a>     <strong>private</strong> String createRegex(Collection commandMap) {
-<a name="364" href="#364">364</a>         StringBuffer modifierRegex = <strong>new</strong> StringBuffer();
-<a name="365" href="#365">365</a>         Iterator i = commandMap.iterator();
-<a name="366" href="#366">366</a>         <strong>boolean</strong> first = <strong>true</strong>;
-<a name="367" href="#367">367</a>         <strong>while</strong> (i.hasNext()) {
-<a name="368" href="#368">368</a>             <strong>if</strong> (first) {
-<a name="369" href="#369">369</a>                 modifierRegex.append(<span class="string">"(?:("</span>);
-<a name="370" href="#370">370</a>                 first = false;
-<a name="371" href="#371">371</a>             } <strong>else</strong> {
-<a name="372" href="#372">372</a>                 modifierRegex.append(<span class="string">")|("</span>);
-<a name="373" href="#373">373</a>             }
-<a name="374" href="#374">374</a>             Pattern pattern = ((TermDef) i.next()).getPattern();
-<a name="375" href="#375">375</a>             modifierRegex.append(pattern.pattern());
-<a name="376" href="#376">376</a>         }
-<a name="377" href="#377">377</a>         modifierRegex.append(<span class="string">"))"</span>);
-<a name="378" href="#378">378</a>         <strong>return</strong> modifierRegex.toString();
-<a name="379" href="#379">379</a>     }
-<a name="380" href="#380">380</a> 
-<a name="381" href="#381">381</a>     <em>/**<em>*</em></em>
-<a name="382" href="#382">382</a> <em>     * </em>
-<a name="383" href="#383">383</a> <em>     * @param classes</em>
-<a name="384" href="#384">384</a> <em>     *            classes to analyze</em>
-<a name="385" href="#385">385</a> <em>     * @param staticFieldName</em>
-<a name="386" href="#386">386</a> <em>     *            static field to concatenate</em>
-<a name="387" href="#387">387</a> <em>     * @return map &lt;Class,Pattern></em>
-<a name="388" href="#388">388</a> <em>     */</em>
-<a name="389" href="#389">389</a>     <strong>private</strong> Collection createTermCollection(Class[] classes) {
-<a name="390" href="#390">390</a>         Collection l = <strong>new</strong> ArrayList();
-<a name="391" href="#391">391</a>         <strong>for</strong> (<strong>int</strong> j = 0; j &lt; classes.length; j++) {
-<a name="392" href="#392">392</a>             Class mechClass = classes[j];
-<a name="393" href="#393">393</a>             <strong>try</strong> {
-<a name="394" href="#394">394</a>                 l.add(<strong>new</strong> TermDef(mechClass));
-<a name="395" href="#395">395</a>             } <strong>catch</strong> (Exception e) {
-<a name="396" href="#396">396</a>                 log.debug(<span class="string">"Unable to create the term collection"</span>, e);
-<a name="397" href="#397">397</a>                 <strong>throw</strong> <strong>new</strong> IllegalStateException(
-<a name="398" href="#398">398</a>                         <span class="string">"Unable to create the term collection"</span>);
-<a name="399" href="#399">399</a>             }
-<a name="400" href="#400">400</a>         }
-<a name="401" href="#401">401</a>         <strong>return</strong> Collections.synchronizedCollection(l);
-<a name="402" href="#402">402</a>     }
-<a name="403" href="#403">403</a> 
-<a name="404" href="#404">404</a>     <em>/**<em>*</em></em>
-<a name="405" href="#405">405</a> <em>     * This Method parse the given spf record and checks for syntax</em>
-<a name="406" href="#406">406</a> <em>     * </em>
-<a name="407" href="#407">407</a> <em>     * parse can be called by multiple concurrent threads.</em>
-<a name="408" href="#408">408</a> <em>     * </em>
-<a name="409" href="#409">409</a> <em>     * @param spfRecord</em>
-<a name="410" href="#410">410</a> <em>     *            The String which represent the spf record in dns</em>
-<a name="411" href="#411">411</a> <em>     * @return result The SPF1Record</em>
-<a name="412" href="#412">412</a> <em>     * @throws PermErrorException</em>
-<a name="413" href="#413">413</a> <em>     *             Get thrown if an syntax error was detected</em>
-<a name="414" href="#414">414</a> <em>     * @throws NoneException</em>
-<a name="415" href="#415">415</a> <em>     *             Get thrown if no spf record could be found</em>
-<a name="416" href="#416">416</a> <em>     * @throws NeutralException Get thrown if an empty spf record was found </em>
-<a name="417" href="#417">417</a> <em>     */</em>
-<a name="418" href="#418">418</a>     <strong>public</strong> SPF1Record parse(String spfRecord) throws PermErrorException,
-<a name="419" href="#419">419</a>             NoneException, <a href="../../../../../org/apache/james/jspf/exceptions/NeutralException.html">NeutralException</a> {
-<a name="420" href="#420">420</a> 
-<a name="421" href="#421">421</a>         log.debug(<span class="string">"Start parsing SPF-Record: "</span> + spfRecord);
-<a name="422" href="#422">422</a> 
-<a name="423" href="#423">423</a>         SPF1Record result = <strong>new</strong> SPF1Record();
-<a name="424" href="#424">424</a> 
-<a name="425" href="#425">425</a>         <em class="comment">// check the version "header"</em>
-<a name="426" href="#426">426</a>         <strong>if</strong> (spfRecord.startsWith(SPF1Constants.SPF_VERSION + <span class="string">" "</span>) || spfRecord.equalsIgnoreCase(SPF1Constants.SPF_VERSION)) {
-<a name="427" href="#427">427</a>             <strong>if</strong> (!spfRecord.startsWith(SPF1Constants.SPF_VERSION + <span class="string">" "</span>)) <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/NeutralException.html">NeutralException</a>(<span class="string">"Empty SPF Record"</span>);
-<a name="428" href="#428">428</a>         } <strong>else</strong> {
-<a name="429" href="#429">429</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/NoneException.html">NoneException</a>(<span class="string">"No valid SPF Record: "</span> + spfRecord);
-<a name="430" href="#430">430</a>         }
-<a name="431" href="#431">431</a> 
-<a name="432" href="#432">432</a>         <em class="comment">// extract terms</em>
-<a name="433" href="#433">433</a>         String[] terms = termsSeparatorPattern.split(spfRecord.replaceFirst(
-<a name="434" href="#434">434</a>                 SPF1Constants.SPF_VERSION, <span class="string">""</span>));
-<a name="435" href="#435">435</a> 
-<a name="436" href="#436">436</a>         <em class="comment">// cycle terms</em>
-<a name="437" href="#437">437</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; terms.length; i++) {
-<a name="438" href="#438">438</a>             <strong>if</strong> (terms[i].length() > 0) {
-<a name="439" href="#439">439</a>                 Matcher termMatcher = termPattern.matcher(terms[i]);
-<a name="440" href="#440">440</a>                 <strong>if</strong> (!termMatcher.matches()) {
-<a name="441" href="#441">441</a>                     <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Term ["</span> + terms[i]
-<a name="442" href="#442">442</a>                             + <span class="string">"] is not syntactically valid: "</span>
-<a name="443" href="#443">443</a>                             + termPattern.pattern());
-<a name="444" href="#444">444</a>                 }
-<a name="445" href="#445">445</a> 
-<a name="446" href="#446">446</a>                 <em class="comment">// true if we matched a modifier, false if we matched a</em>
-<a name="447" href="#447">447</a>                 <em class="comment">// directive</em>
-<a name="448" href="#448">448</a>                 String modifierString = termMatcher
-<a name="449" href="#449">449</a>                         .group(TERM_STEP_REGEX_MODIFIER_POS);
+<a name="300" href="#300">300</a>         <em class="comment">// FULL MATCH</em>
+<a name="301" href="#301">301</a>         <strong>int</strong> posIndex = 0;
+<a name="302" href="#302">302</a>         matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="303" href="#303">303</a>         matchResultPositions.add(posIndex, <strong>null</strong>);
+<a name="304" href="#304">304</a> 
+<a name="305" href="#305">305</a>         Iterator i;
+<a name="306" href="#306">306</a> 
+<a name="307" href="#307">307</a>         TERM_STEP_REGEX_MODIFIER_POS = ++posIndex;
+<a name="308" href="#308">308</a>         matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="309" href="#309">309</a>         matchResultPositions.add(TERM_STEP_REGEX_MODIFIER_POS, <strong>null</strong>);
+<a name="310" href="#310">310</a>         i = modifiersCollection.iterator();
+<a name="311" href="#311">311</a>         <strong>while</strong> (i.hasNext()) {
+<a name="312" href="#312">312</a>             TermDef td = (TermDef) i.next();
+<a name="313" href="#313">313</a>             <strong>int</strong> size = td.getMatchSize() + 1;
+<a name="314" href="#314">314</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; size; k++) {
+<a name="315" href="#315">315</a>                 posIndex++;
+<a name="316" href="#316">316</a>                 matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="317" href="#317">317</a>                 matchResultPositions.add(posIndex, td);
+<a name="318" href="#318">318</a>             }
+<a name="319" href="#319">319</a>         }
+<a name="320" href="#320">320</a> 
+<a name="321" href="#321">321</a>         TERM_STEP_REGEX_QUALIFIER_POS = ++posIndex;
+<a name="322" href="#322">322</a>         matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="323" href="#323">323</a>         matchResultPositions.add(posIndex, <strong>null</strong>);
+<a name="324" href="#324">324</a> 
+<a name="325" href="#325">325</a>         TERM_STEP_REGEX_MECHANISM_POS = ++posIndex;
+<a name="326" href="#326">326</a>         matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="327" href="#327">327</a>         matchResultPositions.add(TERM_STEP_REGEX_MECHANISM_POS, <strong>null</strong>);
+<a name="328" href="#328">328</a>         i = mechanismsCollection.iterator();
+<a name="329" href="#329">329</a>         <strong>while</strong> (i.hasNext()) {
+<a name="330" href="#330">330</a>             TermDef td = (TermDef) i.next();
+<a name="331" href="#331">331</a>             <strong>int</strong> size = td.getMatchSize() + 1;
+<a name="332" href="#332">332</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; size; k++) {
+<a name="333" href="#333">333</a>                 posIndex++;
+<a name="334" href="#334">334</a>                 matchResultPositions.ensureCapacity(posIndex + 1);
+<a name="335" href="#335">335</a>                 matchResultPositions.add(posIndex, td);
+<a name="336" href="#336">336</a>             }
+<a name="337" href="#337">337</a>         }
+<a name="338" href="#338">338</a> 
+<a name="339" href="#339">339</a>         <strong>if</strong> (log.isDebugEnabled()) {
+<a name="340" href="#340">340</a>             log.debug(<span class="string">"Parsing catch group positions: Modifiers["</span>
+<a name="341" href="#341">341</a>                     + TERM_STEP_REGEX_MODIFIER_POS + <span class="string">"] Qualifier["</span>
+<a name="342" href="#342">342</a>                     + TERM_STEP_REGEX_QUALIFIER_POS + <span class="string">" Mechanism["</span>
+<a name="343" href="#343">343</a>                     + TERM_STEP_REGEX_MECHANISM_POS + <span class="string">"]"</span>);
+<a name="344" href="#344">344</a>             <strong>for</strong> (<strong>int</strong> k = 0; k &lt; matchResultPositions.size(); k++) {
+<a name="345" href="#345">345</a>                 log
+<a name="346" href="#346">346</a>                         .debug(k
+<a name="347" href="#347">347</a>                                 + <span class="string">") "</span>
+<a name="348" href="#348">348</a>                                 + (matchResultPositions.get(k) != <strong>null</strong> ? ((TermDef) matchResultPositions
+<a name="349" href="#349">349</a>                                         .get(k)).getPattern()
+<a name="350" href="#350">350</a>                                         : <strong>null</strong>));
+<a name="351" href="#351">351</a>             }
+<a name="352" href="#352">352</a>         }
+<a name="353" href="#353">353</a>         
+<a name="354" href="#354">354</a>         <strong>this</strong>.matchResultPositions = Collections.synchronizedList(matchResultPositions);
+<a name="355" href="#355">355</a>     }
+<a name="356" href="#356">356</a> 
+<a name="357" href="#357">357</a>     <em>/**<em>*</em></em>
+<a name="358" href="#358">358</a> <em>     * Loop the classes searching for a String static field named</em>
+<a name="359" href="#359">359</a> <em>     * staticFieldName and create an OR regeex like this:</em>
+<a name="360" href="#360">360</a> <em>     * (?:FIELD1|FIELD2|FIELD3)</em>
+<a name="361" href="#361">361</a> <em>     * </em>
+<a name="362" href="#362">362</a> <em>     * @param classes</em>
+<a name="363" href="#363">363</a> <em>     *            classes to analyze</em>
+<a name="364" href="#364">364</a> <em>     * @param staticFieldName</em>
+<a name="365" href="#365">365</a> <em>     *            static field to concatenate</em>
+<a name="366" href="#366">366</a> <em>     * @return regex The regex</em>
+<a name="367" href="#367">367</a> <em>     */</em>
+<a name="368" href="#368">368</a>     <strong>private</strong> String createRegex(Collection commandMap) {
+<a name="369" href="#369">369</a>         StringBuffer modifierRegex = <strong>new</strong> StringBuffer();
+<a name="370" href="#370">370</a>         Iterator i = commandMap.iterator();
+<a name="371" href="#371">371</a>         <strong>boolean</strong> first = <strong>true</strong>;
+<a name="372" href="#372">372</a>         <strong>while</strong> (i.hasNext()) {
+<a name="373" href="#373">373</a>             <strong>if</strong> (first) {
+<a name="374" href="#374">374</a>                 modifierRegex.append(<span class="string">"(?:("</span>);
+<a name="375" href="#375">375</a>                 first = false;
+<a name="376" href="#376">376</a>             } <strong>else</strong> {
+<a name="377" href="#377">377</a>                 modifierRegex.append(<span class="string">")|("</span>);
+<a name="378" href="#378">378</a>             }
+<a name="379" href="#379">379</a>             Pattern pattern = ((TermDef) i.next()).getPattern();
+<a name="380" href="#380">380</a>             modifierRegex.append(pattern.pattern());
+<a name="381" href="#381">381</a>         }
+<a name="382" href="#382">382</a>         modifierRegex.append(<span class="string">"))"</span>);
+<a name="383" href="#383">383</a>         <strong>return</strong> modifierRegex.toString();
+<a name="384" href="#384">384</a>     }
+<a name="385" href="#385">385</a> 
+<a name="386" href="#386">386</a>     <em>/**<em>*</em></em>
+<a name="387" href="#387">387</a> <em>     * </em>
+<a name="388" href="#388">388</a> <em>     * @param classes</em>
+<a name="389" href="#389">389</a> <em>     *            classes to analyze</em>
+<a name="390" href="#390">390</a> <em>     * @param staticFieldName</em>
+<a name="391" href="#391">391</a> <em>     *            static field to concatenate</em>
+<a name="392" href="#392">392</a> <em>     * @return map &lt;Class,Pattern></em>
+<a name="393" href="#393">393</a> <em>     */</em>
+<a name="394" href="#394">394</a>     <strong>private</strong> Collection createTermCollection(Class[] classes) {
+<a name="395" href="#395">395</a>         Collection l = <strong>new</strong> ArrayList();
+<a name="396" href="#396">396</a>         <strong>for</strong> (<strong>int</strong> j = 0; j &lt; classes.length; j++) {
+<a name="397" href="#397">397</a>             Class mechClass = classes[j];
+<a name="398" href="#398">398</a>             <strong>try</strong> {
+<a name="399" href="#399">399</a>                 l.add(<strong>new</strong> TermDef(mechClass));
+<a name="400" href="#400">400</a>             } <strong>catch</strong> (Exception e) {
+<a name="401" href="#401">401</a>                 log.debug(<span class="string">"Unable to create the term collection"</span>, e);
+<a name="402" href="#402">402</a>                 <strong>throw</strong> <strong>new</strong> IllegalStateException(
+<a name="403" href="#403">403</a>                         <span class="string">"Unable to create the term collection"</span>);
+<a name="404" href="#404">404</a>             }
+<a name="405" href="#405">405</a>         }
+<a name="406" href="#406">406</a>         <strong>return</strong> Collections.synchronizedCollection(l);
+<a name="407" href="#407">407</a>     }
+<a name="408" href="#408">408</a> 
+<a name="409" href="#409">409</a>     <em>/**<em>*</em></em>
+<a name="410" href="#410">410</a> <em>     * This Method parse the given spf record and checks for syntax</em>
+<a name="411" href="#411">411</a> <em>     * </em>
+<a name="412" href="#412">412</a> <em>     * parse can be called by multiple concurrent threads.</em>
+<a name="413" href="#413">413</a> <em>     * </em>
+<a name="414" href="#414">414</a> <em>     * @param spfRecord</em>
+<a name="415" href="#415">415</a> <em>     *            The String which represent the spf record in dns</em>
+<a name="416" href="#416">416</a> <em>     * @return result The SPF1Record</em>
+<a name="417" href="#417">417</a> <em>     * @throws PermErrorException</em>
+<a name="418" href="#418">418</a> <em>     *             Get thrown if an syntax error was detected</em>
+<a name="419" href="#419">419</a> <em>     * @throws NoneException</em>
+<a name="420" href="#420">420</a> <em>     *             Get thrown if no spf record could be found</em>
+<a name="421" href="#421">421</a> <em>     * @throws NeutralException Get thrown if an empty spf record was found </em>
+<a name="422" href="#422">422</a> <em>     */</em>
+<a name="423" href="#423">423</a>     <strong>public</strong> SPF1Record parse(String spfRecord) throws PermErrorException,
+<a name="424" href="#424">424</a>             NoneException, <a href="../../../../../org/apache/james/jspf/exceptions/NeutralException.html">NeutralException</a> {
+<a name="425" href="#425">425</a> 
+<a name="426" href="#426">426</a>         log.debug(<span class="string">"Start parsing SPF-Record: "</span> + spfRecord);
+<a name="427" href="#427">427</a> 
+<a name="428" href="#428">428</a>         SPF1Record result = <strong>new</strong> SPF1Record();
+<a name="429" href="#429">429</a> 
+<a name="430" href="#430">430</a>         <em class="comment">// check the version "header"</em>
+<a name="431" href="#431">431</a>         <strong>if</strong> (spfRecord.startsWith(SPF1Constants.SPF_VERSION + <span class="string">" "</span>) || spfRecord.equalsIgnoreCase(SPF1Constants.SPF_VERSION)) {
+<a name="432" href="#432">432</a>             <strong>if</strong> (!spfRecord.startsWith(SPF1Constants.SPF_VERSION + <span class="string">" "</span>)) <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/NeutralException.html">NeutralException</a>(<span class="string">"Empty SPF Record"</span>);
+<a name="433" href="#433">433</a>         } <strong>else</strong> {
+<a name="434" href="#434">434</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/NoneException.html">NoneException</a>(<span class="string">"No valid SPF Record: "</span> + spfRecord);
+<a name="435" href="#435">435</a>         }
+<a name="436" href="#436">436</a> 
+<a name="437" href="#437">437</a>         <em class="comment">// extract terms</em>
+<a name="438" href="#438">438</a>         String[] terms = termsSeparatorPattern.split(spfRecord.replaceFirst(
+<a name="439" href="#439">439</a>                 SPF1Constants.SPF_VERSION, <span class="string">""</span>));
+<a name="440" href="#440">440</a> 
+<a name="441" href="#441">441</a>         <em class="comment">// cycle terms</em>
+<a name="442" href="#442">442</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; terms.length; i++) {
+<a name="443" href="#443">443</a>             <strong>if</strong> (terms[i].length() > 0) {
+<a name="444" href="#444">444</a>                 Matcher termMatcher = termPattern.matcher(terms[i]);
+<a name="445" href="#445">445</a>                 <strong>if</strong> (!termMatcher.matches()) {
+<a name="446" href="#446">446</a>                     <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Term ["</span> + terms[i]
+<a name="447" href="#447">447</a>                             + <span class="string">"] is not syntactically valid: "</span>
+<a name="448" href="#448">448</a>                             + termPattern.pattern());
+<a name="449" href="#449">449</a>                 }
 <a name="450" href="#450">450</a> 
-<a name="451" href="#451">451</a>                 <strong>if</strong> (mod<strong>if</strong>ierString != <strong>null</strong>) {
-<a name="452" href="#452">452</a>                     <em class="comment">// MODIFIER</em>
-<a name="453" href="#453">453</a>                     <a href="../../../../../org/apache/james/jspf/core/Modifier.html">Modifier</a> mod = (Modifier) lookupAndCreateTerm(termMatcher,
-<a name="454" href="#454">454</a>                             TERM_STEP_REGEX_MODIFIER_POS);
+<a name="451" href="#451">451</a>                 <em class="comment">// true if we matched a modifier, false if we matched a</em>
+<a name="452" href="#452">452</a>                 <em class="comment">// directive</em>
+<a name="453" href="#453">453</a>                 String modifierString = termMatcher
+<a name="454" href="#454">454</a>                         .group(TERM_STEP_REGEX_MODIFIER_POS);
 <a name="455" href="#455">455</a> 
-<a name="456" href="#456">456</a>                     <strong>if</strong> (mod.enforceSingleInstance()) {
-<a name="457" href="#457">457</a>                         Iterator it = result.getModifiers().iterator();
-<a name="458" href="#458">458</a>                         <strong>while</strong> (it.hasNext()) {
-<a name="459" href="#459">459</a>                             <strong>if</strong> (it.next().getClass().equals(mod.getClass())) {
-<a name="460" href="#460">460</a>                                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"More than one "</span>
-<a name="461" href="#461">461</a>                                         + modifierString
-<a name="462" href="#462">462</a>                                         + <span class="string">" found in SPF-Record"</span>);
-<a name="463" href="#463">463</a>                             }
-<a name="464" href="#464">464</a>                         }
-<a name="465" href="#465">465</a>                     }
-<a name="466" href="#466">466</a> 
-<a name="467" href="#467">467</a>                     result.getModifiers().add(mod);
-<a name="468" href="#468">468</a> 
-<a name="469" href="#469">469</a>                 } <strong>else</strong> {
-<a name="470" href="#470">470</a>                     <em class="comment">// DIRECTIVE</em>
-<a name="471" href="#471">471</a>                     String qualifier = termMatcher
-<a name="472" href="#472">472</a>                             .group(TERM_STEP_REGEX_QUALIFIER_POS);
+<a name="456" href="#456">456</a>                 <strong>if</strong> (mod<strong>if</strong>ierString != <strong>null</strong>) {
+<a name="457" href="#457">457</a>                     <em class="comment">// MODIFIER</em>
+<a name="458" href="#458">458</a>                     <a href="../../../../../org/apache/james/jspf/core/Modifier.html">Modifier</a> mod = (Modifier) lookupAndCreateTerm(termMatcher,
+<a name="459" href="#459">459</a>                             TERM_STEP_REGEX_MODIFIER_POS);
+<a name="460" href="#460">460</a> 
+<a name="461" href="#461">461</a>                     <strong>if</strong> (mod.enforceSingleInstance()) {
+<a name="462" href="#462">462</a>                         Iterator it = result.getModifiers().iterator();
+<a name="463" href="#463">463</a>                         <strong>while</strong> (it.hasNext()) {
+<a name="464" href="#464">464</a>                             <strong>if</strong> (it.next().getClass().equals(mod.getClass())) {
+<a name="465" href="#465">465</a>                                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"More than one "</span>
+<a name="466" href="#466">466</a>                                         + modifierString
+<a name="467" href="#467">467</a>                                         + <span class="string">" found in SPF-Record"</span>);
+<a name="468" href="#468">468</a>                             }
+<a name="469" href="#469">469</a>                         }
+<a name="470" href="#470">470</a>                     }
+<a name="471" href="#471">471</a> 
+<a name="472" href="#472">472</a>                     result.getModifiers().add(mod);
 <a name="473" href="#473">473</a> 
-<a name="474" href="#474">474</a>                     Object mech = lookupAndCreateTerm(termMatcher,
-<a name="475" href="#475">475</a>                             TERM_STEP_REGEX_MECHANISM_POS);
-<a name="476" href="#476">476</a> 
-<a name="477" href="#477">477</a>                     result.getDirectives().add(
-<a name="478" href="#478">478</a>                             <strong>new</strong> <a href="../../../../../org/apache/james/jspf/core/Directive.html">Directive</a>(qualifier, (Mechanism) mech));
-<a name="479" href="#479">479</a> 
-<a name="480" href="#480">480</a>                 }
+<a name="474" href="#474">474</a>                 } <strong>else</strong> {
+<a name="475" href="#475">475</a>                     <em class="comment">// DIRECTIVE</em>
+<a name="476" href="#476">476</a>                     String qualifier = termMatcher
+<a name="477" href="#477">477</a>                             .group(TERM_STEP_REGEX_QUALIFIER_POS);
+<a name="478" href="#478">478</a> 
+<a name="479" href="#479">479</a>                     Object mech = lookupAndCreateTerm(termMatcher,
+<a name="480" href="#480">480</a>                             TERM_STEP_REGEX_MECHANISM_POS);
 <a name="481" href="#481">481</a> 
-<a name="482" href="#482">482</a>             }
-<a name="483" href="#483">483</a>         }
+<a name="482" href="#482">482</a>                     result.getDirectives().add(
+<a name="483" href="#483">483</a>                             <strong>new</strong> <a href="../../../../../org/apache/james/jspf/core/Directive.html">Directive</a>(qualifier, (Mechanism) mech));
 <a name="484" href="#484">484</a> 
-<a name="485" href="#485">485</a>         <strong>return</strong> result;
-<a name="486" href="#486">486</a>     }
-<a name="487" href="#487">487</a> 
-<a name="488" href="#488">488</a>     <em>/**<em>*</em></em>
-<a name="489" href="#489">489</a> <em>     * @param res</em>
-<a name="490" href="#490">490</a> <em>     *            the MatchResult</em>
-<a name="491" href="#491">491</a> <em>     * @param start</em>
-<a name="492" href="#492">492</a> <em>     *            the position where the terms starts</em>
-<a name="493" href="#493">493</a> <em>     * @return</em>
-<a name="494" href="#494">494</a> <em>     * @throws PermErrorException</em>
-<a name="495" href="#495">495</a> <em>     */</em>
-<a name="496" href="#496">496</a>     <strong>private</strong> Object lookupAndCreateTerm(Matcher res, <strong>int</strong> start)
-<a name="497" href="#497">497</a>             throws <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a> {
-<a name="498" href="#498">498</a>         <strong>for</strong> (<strong>int</strong> k = start + 1; k &lt; res.groupCount(); k++) {
-<a name="499" href="#499">499</a>             <strong>if</strong> (res.group(k) != <strong>null</strong> &amp;&amp; k != TERM_STEP_REGEX_QUALIFIER_POS) {
-<a name="500" href="#500">500</a>                 TermDef c = (TermDef) matchResultPositions.get(k);
-<a name="501" href="#501">501</a>                 <a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a> subres = <strong>new</strong> <a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a>(res, k, c
-<a name="502" href="#502">502</a>                         .getMatchSize());
-<a name="503" href="#503">503</a>                 <strong>try</strong> {
-<a name="504" href="#504">504</a>                     Object term = c.getTermDef().newInstance();
-<a name="505" href="#505">505</a>                     <strong>if</strong> (term instanceof LogEnabled) {
-<a name="506" href="#506">506</a>                         ((<a href="../../../../../org/apache/james/jspf/core/LogEnabled.html">LogEnabled</a>) term).enableLogging(log);
-<a name="507" href="#507">507</a>                     }
-<a name="508" href="#508">508</a>                     <strong>if</strong> (term instanceof Configurable) {
-<a name="509" href="#509">509</a>                         <strong>if</strong> (subres == <strong>null</strong> || subres.groupCount() == 0) {
-<a name="510" href="#510">510</a>                             ((<a href="../../../../../org/apache/james/jspf/core/Configurable.html">Configurable</a>) term).config(<strong>null</strong>);
-<a name="511" href="#511">511</a>                         } <strong>else</strong> {
-<a name="512" href="#512">512</a>                             ((<a href="../../../../../org/apache/james/jspf/core/Configurable.html">Configurable</a>) term).config(subres);
-<a name="513" href="#513">513</a>                         }
-<a name="514" href="#514">514</a>                     }
-<a name="515" href="#515">515</a>                     <strong>return</strong> term;
-<a name="516" href="#516">516</a>                 } <strong>catch</strong> (IllegalAccessException e) {
-<a name="517" href="#517">517</a>                     <strong>throw</strong> <strong>new</strong> IllegalStateException(
-<a name="518" href="#518">518</a>                             <span class="string">"Unexpected error creating term: "</span> + e.getMessage());
-<a name="519" href="#519">519</a>                 } <strong>catch</strong> (InstantiationException e) {
-<a name="520" href="#520">520</a>                     <strong>throw</strong> <strong>new</strong> IllegalStateException(
-<a name="521" href="#521">521</a>                             <span class="string">"Unexpected error creating term: "</span> + e.getMessage());
-<a name="522" href="#522">522</a>                 }
-<a name="523" href="#523">523</a> 
-<a name="524" href="#524">524</a>             }
-<a name="525" href="#525">525</a>         }
-<a name="526" href="#526">526</a>         <strong>return</strong> <strong>null</strong>;
-<a name="527" href="#527">527</a>     }
+<a name="485" href="#485">485</a>                 }
+<a name="486" href="#486">486</a> 
+<a name="487" href="#487">487</a>             }
+<a name="488" href="#488">488</a>         }
+<a name="489" href="#489">489</a> 
+<a name="490" href="#490">490</a>         <strong>return</strong> result;
+<a name="491" href="#491">491</a>     }
+<a name="492" href="#492">492</a> 
+<a name="493" href="#493">493</a>     <em>/**<em>*</em></em>
+<a name="494" href="#494">494</a> <em>     * @param res</em>
+<a name="495" href="#495">495</a> <em>     *            the MatchResult</em>
+<a name="496" href="#496">496</a> <em>     * @param start</em>
+<a name="497" href="#497">497</a> <em>     *            the position where the terms starts</em>
+<a name="498" href="#498">498</a> <em>     * @return</em>
+<a name="499" href="#499">499</a> <em>     * @throws PermErrorException</em>
+<a name="500" href="#500">500</a> <em>     */</em>
+<a name="501" href="#501">501</a>     <strong>private</strong> Object lookupAndCreateTerm(Matcher res, <strong>int</strong> start)
+<a name="502" href="#502">502</a>             throws <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a> {
+<a name="503" href="#503">503</a>         <strong>for</strong> (<strong>int</strong> k = start + 1; k &lt; res.groupCount(); k++) {
+<a name="504" href="#504">504</a>             <strong>if</strong> (res.group(k) != <strong>null</strong> &amp;&amp; k != TERM_STEP_REGEX_QUALIFIER_POS) {
+<a name="505" href="#505">505</a>                 TermDef c = (TermDef) matchResultPositions.get(k);
+<a name="506" href="#506">506</a>                 <a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a> subres = <strong>new</strong> <a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a>(res, k, c
+<a name="507" href="#507">507</a>                         .getMatchSize());
+<a name="508" href="#508">508</a>                 <strong>try</strong> {
+<a name="509" href="#509">509</a>                     Object term = c.getTermDef().newInstance();
+<a name="510" href="#510">510</a>                     <strong>if</strong> (term instanceof LogEnabled) {
+<a name="511" href="#511">511</a>                         ((<a href="../../../../../org/apache/james/jspf/core/LogEnabled.html">LogEnabled</a>) term).enableLogging(log);
+<a name="512" href="#512">512</a>                     }
+<a name="513" href="#513">513</a>                     <strong>if</strong> (term instanceof Configurable) {
+<a name="514" href="#514">514</a>                         <strong>if</strong> (subres == <strong>null</strong> || subres.groupCount() == 0) {
+<a name="515" href="#515">515</a>                             ((<a href="../../../../../org/apache/james/jspf/core/Configurable.html">Configurable</a>) term).config(<strong>null</strong>);
+<a name="516" href="#516">516</a>                         } <strong>else</strong> {
+<a name="517" href="#517">517</a>                             ((<a href="../../../../../org/apache/james/jspf/core/Configurable.html">Configurable</a>) term).config(subres);
+<a name="518" href="#518">518</a>                         }
+<a name="519" href="#519">519</a>                     }
+<a name="520" href="#520">520</a>                     <strong>return</strong> term;
+<a name="521" href="#521">521</a>                 } <strong>catch</strong> (IllegalAccessException e) {
+<a name="522" href="#522">522</a>                     <strong>throw</strong> <strong>new</strong> IllegalStateException(
+<a name="523" href="#523">523</a>                             <span class="string">"Unexpected error creating term: "</span> + e.getMessage());
+<a name="524" href="#524">524</a>                 } <strong>catch</strong> (InstantiationException e) {
+<a name="525" href="#525">525</a>                     <strong>throw</strong> <strong>new</strong> IllegalStateException(
+<a name="526" href="#526">526</a>                             <span class="string">"Unexpected error creating term: "</span> + e.getMessage());
+<a name="527" href="#527">527</a>                 }
 <a name="528" href="#528">528</a> 
-<a name="529" href="#529">529</a> }
+<a name="529" href="#529">529</a>             }
+<a name="530" href="#530">530</a>         }
+<a name="531" href="#531">531</a>         <strong>return</strong> <strong>null</strong>;
+<a name="532" href="#532">532</a>     }
+<a name="533" href="#533">533</a> 
+<a name="534" href="#534">534</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

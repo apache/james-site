@@ -29,9 +29,9 @@
 <a name="20" href="#20">20</a>  
 <a name="21" href="#21">21</a>  <strong>package</strong> org.apache.james.jspf.terms;
 <a name="22" href="#22">22</a>  
-<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.jspf.core.IPAddr;
-<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.jspf.core.SPF1Data;
-<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.exceptions.NoneException;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.jspf.core.DNSService;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.jspf.core.IPAddr;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.core.SPF1Data;
 <a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
 <a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.jspf.exceptions.TempErrorException;
 <a name="28" href="#28">28</a>  <strong>import</strong> org.apache.james.jspf.parser.SPF1Parser;
@@ -57,55 +57,67 @@
 <a name="48" href="#48">48</a>      <strong>public</strong> <strong>boolean</strong> run(SPF1Data spfData) throws PermErrorException,
 <a name="49" href="#49">49</a>              <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a> {
 <a name="50" href="#50">50</a>          String compareDomain;
-<a name="51" href="#51">51</a>          <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> compareIP;
-<a name="52" href="#52">52</a>          ArrayList validatedHosts = <strong>new</strong> ArrayList();
-<a name="53" href="#53">53</a>  
-<a name="54" href="#54">54</a>          <strong>try</strong> { 
-<a name="55" href="#55">55</a>              <em class="comment">// update currentDepth</em>
-<a name="56" href="#56">56</a>              spfData.setCurrentDepth(spfData.getCurrentDepth() + 1);
-<a name="57" href="#57">57</a>  
-<a name="58" href="#58">58</a>              <em class="comment">// Get the right host.</em>
-<a name="59" href="#59">59</a>              String host = expandHost(spfData);
-<a name="60" href="#60">60</a>  
-<a name="61" href="#61">61</a>          
-<a name="62" href="#62">62</a>              <em class="comment">// Get PTR Records for the ipAddress which is provided by SPF1Data</em>
-<a name="63" href="#63">63</a>              List domainList = spfData.getDnsProbe().getPTRRecords(
-<a name="64" href="#64">64</a>                      spfData.getIpAddress());
-<a name="65" href="#65">65</a>              
-<a name="66" href="#66">66</a>              <em class="comment">// Should never happen</em>
-<a name="67" href="#67">67</a>              <strong>if</strong> (domainList == <strong>null</strong>) <strong>return</strong> false;
-<a name="68" href="#68">68</a>             
-<a name="69" href="#69">69</a>              <strong>for</strong> (<strong>int</strong> i = 0; i &lt; domainList.size(); i++) {
-<a name="70" href="#70">70</a>  
-<a name="71" href="#71">71</a>                  <em class="comment">// Get a record for this</em>
-<a name="72" href="#72">72</a>                  List aList = spfData.getDnsProbe().getARecords(
-<a name="73" href="#73">73</a>                          (String) domainList.get(i));
-<a name="74" href="#74">74</a>                  <strong>for</strong> (<strong>int</strong> j = 0; j &lt; aList.size(); j++) {
-<a name="75" href="#75">75</a>                      compareIP = (IPAddr) aList.get(j);
-<a name="76" href="#76">76</a>                      <strong>if</strong> (compareIP.toString().equals(spfData.getIpAddress())) {
-<a name="77" href="#77">77</a>                          validatedHosts.add(domainList.get(i));
-<a name="78" href="#78">78</a>                      }
-<a name="79" href="#79">79</a>                  }
-<a name="80" href="#80">80</a>              }
-<a name="81" href="#81">81</a>  
-<a name="82" href="#82">82</a>              <em class="comment">// Check if we match one of this ptr!</em>
-<a name="83" href="#83">83</a>              <strong>for</strong> (<strong>int</strong> j = 0; j &lt; validatedHosts.size(); j++) {
-<a name="84" href="#84">84</a>                  compareDomain = (String) validatedHosts.get(j);
-<a name="85" href="#85">85</a>                  <strong>if</strong> (compareDomain.equals(host)
-<a name="86" href="#86">86</a>                          || compareDomain.endsWith(<span class="string">"."</span> + host)) {
-<a name="87" href="#87">87</a>                      <strong>return</strong> <strong>true</strong>;
-<a name="88" href="#88">88</a>                  }
-<a name="89" href="#89">89</a>              }
-<a name="90" href="#90">90</a>          } <strong>catch</strong> (NoneException e) {
-<a name="91" href="#91">91</a>              <em class="comment">// No PTR record found    </em>
-<a name="92" href="#92">92</a>              <strong>return</strong> false;    
-<a name="93" href="#93">93</a>          }
-<a name="94" href="#94">94</a>          
-<a name="95" href="#95">95</a>          <strong>return</strong> false;
-<a name="96" href="#96">96</a>  
-<a name="97" href="#97">97</a>      }
-<a name="98" href="#98">98</a>  
-<a name="99" href="#99">99</a>  }
+<a name="51" href="#51">51</a>          ArrayList validatedHosts = <strong>new</strong> ArrayList();
+<a name="52" href="#52">52</a>  
+<a name="53" href="#53">53</a>          <em class="comment">// update currentDepth</em>
+<a name="54" href="#54">54</a>          spfData.setCurrentDepth(spfData.getCurrentDepth() + 1);
+<a name="55" href="#55">55</a>  
+<a name="56" href="#56">56</a>          <em class="comment">// Get the right host.</em>
+<a name="57" href="#57">57</a>          String host = expandHost(spfData);
+<a name="58" href="#58">58</a>  
+<a name="59" href="#59">59</a>          <strong>try</strong> {
+<a name="60" href="#60">60</a>              <em class="comment">// Get PTR Records for the ipAddress which is provided by SPF1Data</em>
+<a name="61" href="#61">61</a>              <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> ip = IPAddr.getAddress(spfData.getIpAddress());
+<a name="62" href="#62">62</a>              List domainList = spfData.getDnsProbe().getRecords(ip.getReverseIP() + <span class="string">".in-addr.arpa"</span>, DNSService.PTR);
+<a name="63" href="#63">63</a>      
+<a name="64" href="#64">64</a>              <em class="comment">// No PTR records found</em>
+<a name="65" href="#65">65</a>              <strong>if</strong> (domainList == <strong>null</strong>) <strong>return</strong> false;
+<a name="66" href="#66">66</a>      
+<a name="67" href="#67">67</a>              <em class="comment">// check if the maximum lookup count is reached</em>
+<a name="68" href="#68">68</a>              <strong>if</strong> (spfData.getDnsProbe().getRecordLimit() > 0 &amp;&amp; domainList.size() > spfData.getDnsProbe().getRecordLimit()) {
+<a name="69" href="#69">69</a>                  <em class="comment">// Truncate the PTR list to getRecordLimit.</em>
+<a name="70" href="#70">70</a>                  <em class="comment">// See #ptr-limit rfc4408 test</em>
+<a name="71" href="#71">71</a>                  domainList = domainList.subList(0, spfData.getDnsProbe().getRecordLimit()-1);
+<a name="72" href="#72">72</a>                  <em class="comment">// throw new PermErrorException("Maximum PTR lookup count reached");</em>
+<a name="73" href="#73">73</a>              }
+<a name="74" href="#74">74</a>      
+<a name="75" href="#75">75</a>             
+<a name="76" href="#76">76</a>              <strong>for</strong> (<strong>int</strong> i = 0; i &lt; domainList.size(); i++) {
+<a name="77" href="#77">77</a>      
+<a name="78" href="#78">78</a>                  <em class="comment">// Get a record for this</em>
+<a name="79" href="#79">79</a>                  List aList = spfData.getDnsProbe().getRecords(
+<a name="80" href="#80">80</a>                          (String) domainList.get(i), DNSService.A);
+<a name="81" href="#81">81</a>                  
+<a name="82" href="#82">82</a>                  <em class="comment">// TODO check this: this is a direct result of the NoneException</em>
+<a name="83" href="#83">83</a>                  <em class="comment">// removal, and I'm not sure this is correct: maybe we should continue</em>
+<a name="84" href="#84">84</a>                  <strong>if</strong> (aList == <strong>null</strong>) {
+<a name="85" href="#85">85</a>                      <strong>return</strong> false;
+<a name="86" href="#86">86</a>                  }
+<a name="87" href="#87">87</a>                  
+<a name="88" href="#88">88</a>                  <strong>for</strong> (<strong>int</strong> j = 0; j &lt; aList.size(); j++) {
+<a name="89" href="#89">89</a>                      <strong>if</strong> (aList.get(j).equals(spfData.getIpAddress())) {
+<a name="90" href="#90">90</a>                          validatedHosts.add(domainList.get(i));
+<a name="91" href="#91">91</a>                      }
+<a name="92" href="#92">92</a>                  }
+<a name="93" href="#93">93</a>              }
+<a name="94" href="#94">94</a>      
+<a name="95" href="#95">95</a>              <em class="comment">// Check if we match one of this ptr!</em>
+<a name="96" href="#96">96</a>              <strong>for</strong> (<strong>int</strong> j = 0; j &lt; validatedHosts.size(); j++) {
+<a name="97" href="#97">97</a>                  compareDomain = (String) validatedHosts.get(j);
+<a name="98" href="#98">98</a>                  <strong>if</strong> (compareDomain.equals(host)
+<a name="99" href="#99">99</a>                          || compareDomain.endsWith(<span class="string">"."</span> + host)) {
+<a name="100" href="#100">100</a>                     <strong>return</strong> <strong>true</strong>;
+<a name="101" href="#101">101</a>                 }
+<a name="102" href="#102">102</a>             }
+<a name="103" href="#103">103</a>             
+<a name="104" href="#104">104</a>             <strong>return</strong> false;
+<a name="105" href="#105">105</a>         } <strong>catch</strong> (DNSService.TimeoutException e) {
+<a name="106" href="#106">106</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a>(<span class="string">"Timeout querying the dns server"</span>);
+<a name="107" href="#107">107</a>         }
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>     }
+<a name="110" href="#110">110</a> 
+<a name="111" href="#111">111</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
