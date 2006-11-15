@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 10/30/2006
+        Last Published: 11/15/2006
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -90,8 +90,18 @@
               <a href="../design_objectives.html">Objectives</a>
         </li>
               
-    <li class="none">
+          
+              
+      
+              
+        <li class="expanded">
               <a href="../FAQ.html">James FAQ</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="../james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              </ul>
         </li>
               
     <li class="none">
@@ -1169,7 +1179,27 @@
                                               .append(datasourceName)
                                               .append(&quot;'&quot;);
                 throw new MailetException(exceptionBuffer.toString());
-            }</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#618">618</a></td></tr><tr class="a"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#722">722</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            }</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#325">325</a></td></tr><tr class="a"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#600">600</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        String recipientUser = recipientMailAddress.getUser().toLowerCase(Locale.US);
+                        String recipientHost = recipientMailAddress.getHost().toLowerCase(Locale.US);
+                        
+                        if (getMailetContext().isLocalServer(recipientHost)) {
+                            // not a remote recipient, so skip
+                            continue;
+                        }
+                        
+                        if (conn == null) {
+                            conn = datasource.getConnection();
+                        }
+                        
+                        if (selectStmt == null) {
+                            selectStmt = conn.prepareStatement(selectByPK);
+                        }
+                        selectStmt.setString(1, senderUser);
+                        selectStmt.setString(2, senderHost);
+                        selectStmt.setString(3, recipientUser);
+                        selectStmt.setString(4, recipientHost);
+                        selectRS = selectStmt.executeQuery();
+                        if (!selectRS.next()) {</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#618">618</a></td></tr><tr class="a"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#722">722</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         ObjectOutputStream oos = new ObjectOutputStream(baos);
                         try {
                             if (mc instanceof MailImpl) {
