@@ -30,8 +30,8 @@
 <a name="21" href="#21">21</a>  <strong>package</strong> org.apache.jsieve.commands;
 <a name="22" href="#22">22</a>  
 <a name="23" href="#23">23</a>  <strong>import</strong> org.apache.jsieve.Block;
-<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.jsieve.SieveException;
-<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.jsieve.SyntaxException;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.jsieve.SieveContext;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.jsieve.SieveException;
 <a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.mail.MailAdapter;
 <a name="27" href="#27">27</a>  
 <a name="28" href="#28">28</a>  <em>/**<em>*</em></em>
@@ -73,13 +73,13 @@
 <a name="64" href="#64">64</a>      }
 <a name="65" href="#65">65</a>      
 <a name="66" href="#66">66</a>      <em>/**<em>*</em></em>
-<a name="67" href="#67">67</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateBlock(Block)</em>
+<a name="67" href="#67">67</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateBlock(Block, SieveContext)</em>
 <a name="68" href="#68">68</a>  <em>     */</em>
-<a name="69" href="#69">69</a>      <strong>protected</strong> <strong>void</strong> validateBlock(<a href="../../../../org/apache/jsieve/Block.html">Block</a> block)
+<a name="69" href="#69">69</a>      <strong>protected</strong> <strong>void</strong> validateBlock(<a href="../../../../org/apache/jsieve/Block.html">Block</a> block, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
 <a name="70" href="#70">70</a>              throws <a href="../../../../org/apache/jsieve/SieveException.html">SieveException</a>
 <a name="71" href="#71">71</a>      {           
 <a name="72" href="#72">72</a>          <strong>if</strong> (<strong>null</strong> == block)
-<a name="73" href="#73">73</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting a Block."</span>);         
+<a name="73" href="#73">73</a>              <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting a Block."</span>);         
 <a name="74" href="#74">74</a>      }        
 <a name="75" href="#75">75</a>      
 <a name="76" href="#76">76</a>  

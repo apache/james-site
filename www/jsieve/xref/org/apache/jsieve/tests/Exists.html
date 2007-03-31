@@ -33,9 +33,9 @@
 <a name="24" href="#24">24</a>  <strong>import</strong> java.util.List;
 <a name="25" href="#25">25</a>  
 <a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.Arguments;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SieveException;
-<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.StringListArgument;
-<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.SyntaxException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SieveContext;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.SieveException;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.StringListArgument;
 <a name="30" href="#30">30</a>  <strong>import</strong> org.apache.jsieve.mail.MailAdapter;
 <a name="31" href="#31">31</a>  
 <a name="32" href="#32">32</a>  <em>/**<em>*</em></em>
@@ -53,9 +53,9 @@
 <a name="44" href="#44">44</a>      }
 <a name="45" href="#45">45</a>  
 <a name="46" href="#46">46</a>      <em>/**<em>*</em></em>
-<a name="47" href="#47">47</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#executeBasic(MailAdapter, Arguments)</em>
+<a name="47" href="#47">47</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#executeBasic(MailAdapter, Arguments, SieveContext)</em>
 <a name="48" href="#48">48</a>  <em>     */</em>
-<a name="49" href="#49">49</a>      <strong>protected</strong> <strong>boolean</strong> executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments)
+<a name="49" href="#49">49</a>      <strong>protected</strong> <strong>boolean</strong> executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
 <a name="50" href="#50">50</a>          throws <a href="../../../../org/apache/jsieve/SieveException.html">SieveException</a>
 <a name="51" href="#51">51</a>      {
 <a name="52" href="#52">52</a>  
@@ -74,19 +74,19 @@
 <a name="65" href="#65">65</a>      }
 <a name="66" href="#66">66</a>  
 <a name="67" href="#67">67</a>      <em>/**<em>*</em></em>
-<a name="68" href="#68">68</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#validateArguments(Arguments)</em>
+<a name="68" href="#68">68</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#validateArguments(Arguments, ScriptContext)</em>
 <a name="69" href="#69">69</a>  <em>     */</em>
-<a name="70" href="#70">70</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments) throws SieveException
+<a name="70" href="#70">70</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) throws SieveException
 <a name="71" href="#71">71</a>      {
 <a name="72" href="#72">72</a>          List argumentsList = arguments.getArgumentList();
 <a name="73" href="#73">73</a>          <strong>if</strong> (1 != argumentsList.size())
-<a name="74" href="#74">74</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting exactly one argument"</span>);
+<a name="74" href="#74">74</a>              <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting exactly one argument"</span>);
 <a name="75" href="#75">75</a>              
 <a name="76" href="#76">76</a>          <strong>if</strong> (!(argumentsList.get(0) instanceof StringListArgument))
-<a name="77" href="#77">77</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting a StringList"</span>);        
+<a name="77" href="#77">77</a>              <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting a StringList"</span>);        
 <a name="78" href="#78">78</a>                 
 <a name="79" href="#79">79</a>          <strong>if</strong> (arguments.hasTests())
-<a name="80" href="#80">80</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Found unexpected tests"</span>);
+<a name="80" href="#80">80</a>              <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Found unexpected tests"</span>);
 <a name="81" href="#81">81</a>      }
 <a name="82" href="#82">82</a>  
 <a name="83" href="#83">83</a>  }

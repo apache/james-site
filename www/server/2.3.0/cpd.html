@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 11/15/2006
+        Last Published: 03/30/2007
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -327,7 +327,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>CPD Results</h2><p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html">CPD</a> 3.7.</p></div><div class="section"><h2>Duplications</h2><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\transport\mailets\BayesianAnalysis.java</td><td><a href="./xref/org/apache/james/transport/mailets/BayesianAnalysis.html#385">385</a></td></tr><tr class="a"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#680">680</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>        }
+        <div class="section"><h2>CPD Results</h2><p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html">CPD</a> 3.9.</p></div><div class="section"><h2>Duplications</h2><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\transport\mailets\BayesianAnalysis.java</td><td><a href="./xref/org/apache/james/transport/mailets/BayesianAnalysis.html#385">385</a></td></tr><tr class="a"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#680">680</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>        }
     }
     
     private void sendReplyFromPostmaster(Mail mail, String stringContent) throws MessagingException {
@@ -1179,27 +1179,7 @@
                                               .append(datasourceName)
                                               .append(&quot;'&quot;);
                 throw new MailetException(exceptionBuffer.toString());
-            }</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#325">325</a></td></tr><tr class="a"><td>org\apache\james\transport\mailets\WhiteListManager.java</td><td><a href="./xref/org/apache/james/transport/mailets/WhiteListManager.html#600">600</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        String recipientUser = recipientMailAddress.getUser().toLowerCase(Locale.US);
-                        String recipientHost = recipientMailAddress.getHost().toLowerCase(Locale.US);
-                        
-                        if (getMailetContext().isLocalServer(recipientHost)) {
-                            // not a remote recipient, so skip
-                            continue;
-                        }
-                        
-                        if (conn == null) {
-                            conn = datasource.getConnection();
-                        }
-                        
-                        if (selectStmt == null) {
-                            selectStmt = conn.prepareStatement(selectByPK);
-                        }
-                        selectStmt.setString(1, senderUser);
-                        selectStmt.setString(2, senderHost);
-                        selectStmt.setString(3, recipientUser);
-                        selectStmt.setString(4, recipientHost);
-                        selectRS = selectStmt.executeQuery();
-                        if (!selectRS.next()) {</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#618">618</a></td></tr><tr class="a"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#722">722</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            }</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#618">618</a></td></tr><tr class="a"><td>org\apache\james\mailrepository\JDBCMailRepository.java</td><td><a href="./xref/org/apache/james/mailrepository/JDBCMailRepository.html#722">722</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         ObjectOutputStream oos = new ObjectOutputStream(baos);
                         try {
                             if (mc instanceof MailImpl) {
@@ -1328,7 +1308,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2002-2006
+          2002-2007
     
           The Apache Software Foundation
           
@@ -1343,5 +1323,11 @@
         <hr/>
       </div>
     </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
   </body>
 </html>

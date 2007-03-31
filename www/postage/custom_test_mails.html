@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Postage - 
+    Custom test mails</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="
+    James Postage Project Team" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="index.html" id="bannerLeft">
+    
+                                            <img src="images/james-postage-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 03/30/2007
+                      </div>
+            <div class="xright">      <a href="../index.html">JAMES Project</a>
+          |
+          <a href="../server/index.html">Server</a>
+          |
+          <a href="../jspf/index.html">jSPF</a>
+          |
+          <a href="../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../jsieve/index.html">JSieve</a>
+          |
+          <a href="../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Postage</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="prepare_james.html">Prepare James</a>
+        </li>
+              
+    <li class="none">
+              <a href="test_mail_format.html">Test mail format</a>
+        </li>
+              
+    <li class="none">
+              <strong>Custom test mails</strong>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+  
+  
+    <a name="How to run your own test mails"></a><div class="section"><h2>How to run your own test mails</h2>
+      <p>Custom test mails are usefull to test specific configurations or functionalities of your mail server.</p>
+      <p>Take for example virus checking. You want to make sure that mails containing a virus are recognized and flagged in the right way.</p>
+      <p>To achieve this, you make Postage generate mock-up virus mails. When working correctly, the server for example marks those mails by adding a warning header.
+         Postage picks up the mail and a custom validator checks if the header is present.</p> 
+      <p>At validation time, custom code has access to the complete mail, including headers and body parts available for validation.</p>
+      <p>Depending on the result, you mark the mail's result record as valid/invalid making the result appear in the detailed report.</p>
+    </div>
+         
+    <a name="Two classes to implement"></a><div class="section"><h2>Two classes to implement</h2>
+      <p>MailFactory and MailValidator are two interfaces which must be implemented. Both can be found in package <code>org.apache.james.postage.mail</code>.</p>
+      <p>MailFactory generates the test mail, MailValidator analyzes the received mail and
+         checks if it conforms to the expected result, whatever 'result' may be in the particular use case.</p>
+    </div>
+         
+    <a name="MailFactory"></a><div class="section"><h2>MailFactory</h2>
+      <p>To comply with Postage best practices, it is recommended not to implement MailFactory directly. 
+         The most convenient way is to subclass org.apache.james.postage.mail.AbstractMailFactory.
+         Two methods must be implemented:
+        </p>
+        <p>
+           <div class="source"><pre>abstract protected void populateMessage(MimeMessage message, MailSender mailSender, MailProcessingRecord mailProcessingRecord) throws MessagingException;</pre></div>
+        </p>
+        <p><code>populateMessage</code> receives an initialized <code>MimeMessage</code> which is missing only use case specific data. 
+           See <code>DefaultMailFactory.java</code> for an example.
+        </p>
+        <p>
+            <div class="source"><pre>abstract protected Class getValidatorClass();</pre></div>
+      </p>
+        <p><code>getValidatorClass</code> must simply return the validators class object.
+        </p>
+    </div>
+         
+    <a name="Adding the factory class to the configuration"></a><div class="section"><h2>Adding the factory class to the configuration</h2>
+      <p>Each <code>&lt;send&gt;</code> element in the Postage configuration file has an optional attribute, <code>mail-factory-class</code>.
+         It simply receives the fully-qualified class name. Here is an example:
+          <div class="source"><pre>
+ &lt;profile name=&quot;int-ext&quot; source=&quot;intern&quot; target=&quot;extern&quot;&gt;
+     &lt;send count-per-min=&quot;10&quot; subject=&quot;int2ext&quot;
+         text-size-min=&quot;10&quot; text-size-max=&quot;1000&quot; binary-size-min=&quot;1&quot; binary-size-max=&quot;1000&quot;
+         <b>mail-factory-class=&quot;my.own.custom.TestMailFactory&quot;</b>
+     /&gt;
+ &lt;/profile&gt;
+          </pre></div>
+      </p>
+    </div>
+         
+    <a name="MailValidator"></a><div class="section"><h2>MailValidator</h2>
+      <p>The validator class is responsible for judging whether the resulting mail matches the expected criteria. 
+         The <code>DefaultMailValidator</code> for example checks if binary and text body parts have the same sizes 
+         as when they were originally created by <code>DefaultMailFactory</code>. </p>
+        <p>Other potential validations include checking headers, added footers, removed attachments, introspecting mime contents and many more.
+        </p>
+        <p>
+         All validators are required to implement interface <code>org.apache.james.postage.mail.MailValidator</code>, declaring one method:<br></br>
+           <div class="source"><pre>boolean validate(Message message, MailProcessingRecord record);</pre></div>
+        </p>
+        <p>The MailFactory adds a Postage header to the test email, specifying which validator class has to be instantiated. If this header is missing, 
+        the validation cannot be invoked.
+        </p>
+        
+         
+    </div>
+         
+  
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006-2007
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>

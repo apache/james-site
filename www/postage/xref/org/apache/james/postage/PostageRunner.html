@@ -29,29 +29,29 @@
 <a name="20" href="#20">20</a>  
 <a name="21" href="#21">21</a>  <strong>package</strong> org.apache.james.postage;
 <a name="22" href="#22">22</a>  
-<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.postage.configuration.PostageConfiguration;
-<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.postage.configuration.SendProfile;
-<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.postage.configuration.MailSender;
-<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.postage.result.PostageRunnerResultImpl;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.postage.result.PostageRunnerResult;
-<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.james.postage.client.RemoteManagerClient;
-<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.james.postage.client.POP3Client;
-<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.james.postage.client.SMTPClient;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.commons.logging.Log;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.commons.logging.LogFactory;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.postage.client.POP3Client;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.postage.client.RemoteManagerClient;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.postage.client.SMTPClient;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.james.postage.configuration.MailSender;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.james.postage.configuration.PostageConfiguration;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.james.postage.configuration.SendProfile;
 <a name="31" href="#31">31</a>  <strong>import</strong> org.apache.james.postage.execution.SampleController;
-<a name="32" href="#32">32</a>  <strong>import</strong> org.apache.james.postage.smtpserver.SMTPMailSink;
-<a name="33" href="#33">33</a>  <strong>import</strong> org.apache.james.postage.jmx.JVMResourceSampler;
-<a name="34" href="#34">34</a>  <strong>import</strong> org.apache.commons.logging.Log;
-<a name="35" href="#35">35</a>  <strong>import</strong> org.apache.commons.logging.LogFactory;
+<a name="32" href="#32">32</a>  <strong>import</strong> org.apache.james.postage.jmx.JVMResourceSampler;
+<a name="33" href="#33">33</a>  <strong>import</strong> org.apache.james.postage.result.PostageRunnerResult;
+<a name="34" href="#34">34</a>  <strong>import</strong> org.apache.james.postage.result.PostageRunnerResultImpl;
+<a name="35" href="#35">35</a>  <strong>import</strong> org.apache.james.postage.smtpserver.SMTPMailSink;
 <a name="36" href="#36">36</a>  
-<a name="37" href="#37">37</a>  <strong>import</strong> java.util.ArrayList;
-<a name="38" href="#38">38</a>  <strong>import</strong> java.util.List;
+<a name="37" href="#37">37</a>  <strong>import</strong> java.io.File;
+<a name="38" href="#38">38</a>  <strong>import</strong> java.util.ArrayList;
 <a name="39" href="#39">39</a>  <strong>import</strong> java.util.Iterator;
 <a name="40" href="#40">40</a>  <strong>import</strong> java.util.LinkedHashSet;
-<a name="41" href="#41">41</a>  <strong>import</strong> java.util.Set;
-<a name="42" href="#42">42</a>  <strong>import</strong> java.io.File;
+<a name="41" href="#41">41</a>  <strong>import</strong> java.util.List;
+<a name="42" href="#42">42</a>  <strong>import</strong> java.util.Set;
 <a name="43" href="#43">43</a>  
 <a name="44" href="#44">44</a>  <em>/**<em>*</em></em>
-<a name="45" href="#45">45</a>  <em> * central controlling class for the testing process. starts all workers, collects data and stops when time is out.</em>
+<a name="45" href="#45">45</a>  <em> * central controlling class for the testing process. starts all workers, collects data and stops when time is out.&lt;br/></em>
 <a name="46" href="#46">46</a>  <em> * relates to one and only one Scenario section from the configuration file.</em>
 <a name="47" href="#47">47</a>  <em> */</em>
 <a name="48" href="#48">48</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/james/postage/PostageRunner.html">PostageRunner</a> implements Runnable {
@@ -107,7 +107,7 @@
 <a name="98" href="#98">98</a>      <strong>public</strong> <a href="../../../../org/apache/james/postage/PostageRunner.html">PostageRunner</a>(<a href="../../../../org/apache/james/postage/configuration/PostageConfiguration.html">PostageConfiguration</a> postageConfiguration) {
 <a name="99" href="#99">99</a>          m_messageIdPrefix = <span class="string">""</span> + System.currentTimeMillis();
 <a name="100" href="#100">100</a> 
-<a name="101" href="#101">101</a>       m_postageConfiguration = postageConfiguration;
+<a name="101" href="#101">101</a>         m_postageConfiguration = postageConfiguration;
 <a name="102" href="#102">102</a> 
 <a name="103" href="#103">103</a>         <strong>int</strong> totalMailsPerMin = m_postageConfiguration.getTotalMailsPerMin();
 <a name="104" href="#104">104</a>         <strong>int</strong> durationMinutes = m_postageConfiguration.getDurationMinutes();
@@ -393,7 +393,7 @@
 <a name="384" href="#384">384</a>             Set existingUsers = getExistingUsers(host, remoteManagerPort, remoteManagerUsername, remoteManagerPassword);
 <a name="385" href="#385">385</a> 
 <a name="386" href="#386">386</a>             <a href="../../../../org/apache/james/postage/client/RemoteManagerClient.html">RemoteManagerClient</a> remoteManagerClient = <strong>new</strong> <a href="../../../../org/apache/james/postage/client/RemoteManagerClient.html">RemoteManagerClient</a>(host, remoteManagerPort, remoteManagerUsername, remoteManagerPassword);
-<a name="387" href="#387">387</a>             <strong>boolean</strong> loginSuccess = remoteManagerClient.login();
+<a name="387" href="#387">387</a>             remoteManagerClient.login();
 <a name="388" href="#388">388</a>             ArrayList internalUsers = <strong>new</strong> ArrayList();
 <a name="389" href="#389">389</a>             <strong>for</strong> (<strong>int</strong> i = 1; i &lt;= <strong>int</strong>ernalUserCount; i++) {
 <a name="390" href="#390">390</a>                 String username = internalUsernamePrefix + i;
@@ -401,13 +401,13 @@
 <a name="392" href="#392">392</a>                     log.info(<span class="string">"user already exists: "</span> + username);
 <a name="393" href="#393">393</a>                     <strong>if</strong> (!m_postageConfiguration.isInternalReuseExisting()) {
 <a name="394" href="#394">394</a>                         remoteManagerClient.executeCommand(<span class="string">"deluser "</span> + username);
-<a name="395" href="#395">395</a>                         List answers = remoteManagerClient.readAnswer();
+<a name="395" href="#395">395</a>                         remoteManagerClient.readAnswer();
 <a name="396" href="#396">396</a>                         addUser(remoteManagerClient, username, internalPassword);
-<a name="397" href="#397">397</a>                         answers = remoteManagerClient.readAnswer();
+<a name="397" href="#397">397</a>                         remoteManagerClient.readAnswer();
 <a name="398" href="#398">398</a>                         log.info(<span class="string">"user deleted and re-created: "</span> + username);
 <a name="399" href="#399">399</a>                     }
 <a name="400" href="#400">400</a>                     remoteManagerClient.executeCommand(<span class="string">"setpassword "</span> + username + <span class="string">" "</span> + internalPassword);
-<a name="401" href="#401">401</a>                     List answers = remoteManagerClient.readAnswer();
+<a name="401" href="#401">401</a>                     remoteManagerClient.readAnswer();
 <a name="402" href="#402">402</a>                 } <strong>else</strong> {
 <a name="403" href="#403">403</a>                     addUser(remoteManagerClient, username, internalPassword);
 <a name="404" href="#404">404</a>                 }
@@ -427,7 +427,7 @@
 <a name="418" href="#418">418</a>         <strong>try</strong> {
 <a name="419" href="#419">419</a>             smtpMailSink.initialize();
 <a name="420" href="#420">420</a>         } <strong>catch</strong> (Exception e) {
-<a name="421" href="#421">421</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/postage/StartupException.html">StartupException</a>(<span class="string">"failed to setup"</span>);
+<a name="421" href="#421">421</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/james/postage/StartupException.html">StartupException</a>(<span class="string">"failed to setup"</span>,e);
 <a name="422" href="#422">422</a>         }
 <a name="423" href="#423">423</a>         m_smtpMailSink = smtpMailSink;
 <a name="424" href="#424">424</a>         log.info(<span class="string">"forwarded mail interceptor is set up."</span>);
@@ -452,7 +452,7 @@
 <a name="443" href="#443">443</a> 
 <a name="444" href="#444">444</a>     <strong>private</strong> <strong>void</strong> addUser(<a href="../../../../org/apache/james/postage/client/RemoteManagerClient.html">RemoteManagerClient</a> remoteManagerClient, String username, String internalPassword) {
 <a name="445" href="#445">445</a>         remoteManagerClient.executeCommand(<span class="string">"adduser "</span> + username + <span class="string">" "</span> + internalPassword);
-<a name="446" href="#446">446</a>         List answers = remoteManagerClient.readAnswer();
+<a name="446" href="#446">446</a>         remoteManagerClient.readAnswer();
 <a name="447" href="#447">447</a>         log.info(<span class="string">"user created: "</span> + username);
 <a name="448" href="#448">448</a>     }
 <a name="449" href="#449">449</a> 

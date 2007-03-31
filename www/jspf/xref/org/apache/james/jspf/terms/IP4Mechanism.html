@@ -29,11 +29,11 @@
 <a name="20" href="#20">20</a>  
 <a name="21" href="#21">21</a>  <strong>package</strong> org.apache.james.jspf.terms;
 <a name="22" href="#22">22</a>  
-<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.jspf.core.IPAddr;
-<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.jspf.core.SPF1Data;
-<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
-<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.util.Inet6Util;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.jspf.util.ConfigurationMatch;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.james.jspf.core.Configuration;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.james.jspf.core.IPAddr;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.james.jspf.core.SPF1Data;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.james.jspf.exceptions.PermErrorException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.james.jspf.util.Inet6Util;
 <a name="28" href="#28">28</a>  
 <a name="29" href="#29">29</a>  <em>/**<em>*</em></em>
 <a name="30" href="#30">30</a>  <em> * This class represent the ip4 mechanism</em>
@@ -68,9 +68,9 @@
 <a name="59" href="#59">59</a>      }
 <a name="60" href="#60">60</a>  
 <a name="61" href="#61">61</a>      <em>/**<em>*</em></em>
-<a name="62" href="#62">62</a>  <em>     * @see org.apache.james.jspf.terms.GenericMechanism#config(ConfigurationMatch)</em>
+<a name="62" href="#62">62</a>  <em>     * @see org.apache.james.jspf.terms.GenericMechanism#config(Configuration)</em>
 <a name="63" href="#63">63</a>  <em>     */</em>
-<a name="64" href="#64">64</a>      <strong>public</strong> <strong>synchronized</strong> <strong>void</strong> config(<a href="../../../../../org/apache/james/jspf/util/ConfigurationMatch.html">ConfigurationMatch</a> params) throws PermErrorException {
+<a name="64" href="#64">64</a>      <strong>public</strong> <strong>synchronized</strong> <strong>void</strong> config(<a href="../../../../../org/apache/james/jspf/core/Configuration.html">Configuration</a> params) throws PermErrorException {
 <a name="65" href="#65">65</a>          <strong>if</strong> (params.groupCount() == 0) {
 <a name="66" href="#66">66</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Missing ip"</span>);
 <a name="67" href="#67">67</a>          }
@@ -80,7 +80,7 @@
 <a name="71" href="#71">71</a>          }
 <a name="72" href="#72">72</a>          <strong>int</strong> maskLength = getMaxCidr();
 <a name="73" href="#73">73</a>          <strong>if</strong> (params.groupCount() >= 2 &amp;&amp; params.group(2) != <strong>null</strong>) {
-<a name="74" href="#74">74</a>              String maskLengthString = params.group(2).toString();
+<a name="74" href="#74">74</a>              String maskLengthString = params.group(2);
 <a name="75" href="#75">75</a>              maskLength = Integer.parseInt(maskLengthString);
 <a name="76" href="#76">76</a>  
 <a name="77" href="#77">77</a>              <strong>if</strong> (maskLength > getMaxCidr() || (maskLengthString.length() > 1 &amp;&amp; maskLengthString.startsWith(<span class="string">"0"</span>))) {

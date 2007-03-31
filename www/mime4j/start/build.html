@@ -23,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../" id="bannerLeft">
+                  <a href="../" id="bannerLeft">
     
                                             <img src="../images/james-mime4j-logo.gif" alt="" />
     
@@ -46,19 +46,19 @@
   
   
             <div class="xleft">
-        Last Published: 08/27/2006
+        Last Published: 03/30/2007
                       </div>
-            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
-          <a href="http://james.apache.org/server/index.html">Server</a>
+          <a href="../../server/index.html">Server</a>
           |
-          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          <a href="../../jspf/index.html">jSPF</a>
           |
-          <a href="../">Mime4J</a>
+          <a href="../../mime4j/index.html">Mime4J</a>
           |
-          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          <a href="../../jsieve/index.html">JSieve</a>
           |
-          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          <a href="../../postage/index.html">Postage</a>
           
   
 
@@ -154,6 +154,21 @@
               <a href="../project-reports.html">Project Reports</a>
               </li>
           </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
                                        <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
             <img alt="Built by Maven" src="../images/logos/maven-feather.png"></img>
           </a>
@@ -185,13 +200,13 @@
                 <p>
                     Issue the following commands in a shell:
                     <blockquote>
-                        <code>svn co 'https://svn.apache.org/repos/asf/james/mime4j/trunk/' mime4j</code><br></br>
+                        <code>svn checkout http://svn.apache.org/repos/asf/james/mime4k/trunk james-mime4j</code><br></br>
                     </blockquote>
                 </p>
             </div>
             <a name="Download and Install Maven"></a><div class="section"><h3>Download and Install Maven</h3>
                 <p> You will need to download and install <a href="http://maven.apache.org/">Maven</a> before building
-                    the sources. The build has been tested with version 1.0 of
+                    the sources. The build has been tested with version 2.0 of
                     Maven so use this or a later version if possible. </p>
                 <p> One of the main differences between Maven and plain ant is
                     that Maven manages external dependencies for your projects
@@ -207,16 +222,22 @@
             <a name="Building the mime4j Jar"></a><div class="section"><h3>Building the mime4j Jar</h3>
                 <p> Once Maven has been installed, building the project should
                     be as simple as typing <blockquote>
-                        <code>cd mime4j-x.y/ (cd mime4j/ if sources come from
-                            Subversion)<br></br>maven jar</code>
+                        <code>cd mime4j-x.y/ (cd james-mime4j/ if sources come from
+                            Subversion)<br></br>mvn package</code>
                     </blockquote> from the command line. Maven will
-                    automatically run all test cases for you. If you want to
-                    disable the tests you should replace the last command above
-                    with <blockquote>
-                        <code>maven -Dmaven.test.skip=true jar</code>
-                    </blockquote> Maven will create the
-                    <code>mime4j-x.y.jar</code> jar file in the
-                    <code>target</code> directory. For more information on using
+                    automatically run all test cases for you and create the
+                    jar file in the <code>target</code> directory. 
+                </p>
+                <p>
+                    To install the jar into your local Maven repository run <blockquote>
+                        <code>mvn install</code></blockquote>
+                </p>
+                <p>
+                    To generate an Eclipse project from the sources run <blockquote>
+                        <code>mvn eclipse:eclipse</code></blockquote>
+                </p>
+                <p>
+                    For more information on using
                     Maven, have a look at the <a href="http://maven.apache.org/">Maven web site</a>. </p>
             </div>
         </div>
@@ -229,9 +250,9 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2004-2006
+          2004-2007
     
-          Apache Software Foundation
+          The Apache Software Foundation
           
   
 
@@ -244,5 +265,11 @@
         <hr/>
       </div>
     </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
   </body>
 </html>

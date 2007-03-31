@@ -32,8 +32,8 @@
 <a name="23" href="#23">23</a>  <strong>import</strong> org.apache.jsieve.Arguments;
 <a name="24" href="#24">24</a>  <strong>import</strong> org.apache.jsieve.Block;
 <a name="25" href="#25">25</a>  <strong>import</strong> org.apache.jsieve.CommandException;
-<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.SieveException;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SyntaxException;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.SieveContext;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SieveException;
 <a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.TestList;
 <a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.mail.MailAdapter;
 <a name="30" href="#30">30</a>  
@@ -55,10 +55,10 @@
 <a name="46" href="#46">46</a>  <em>     * &lt;p>Conditionally eexecute a Block if an Elsif Condition is allowed and</em>
 <a name="47" href="#47">47</a>  <em>     * runnable.&lt;/p> </em>
 <a name="48" href="#48">48</a>  <em>     * &lt;p>Also,</em>
-<a name="49" href="#49">49</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#executeBasic(MailAdapter, Arguments, Block)</em>
+<a name="49" href="#49">49</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#executeBasic(MailAdapter, Arguments, Block, SieveContext)</em>
 <a name="50" href="#50">50</a>  <em>     * &lt;/p></em>
 <a name="51" href="#51">51</a>  <em>     */</em>
-<a name="52" href="#52">52</a>      <strong>protected</strong> Object executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/Block.html">Block</a> block)
+<a name="52" href="#52">52</a>      <strong>protected</strong> Object executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/Block.html">Block</a> block, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
 <a name="53" href="#53">53</a>          throws <a href="../../../../org/apache/jsieve/SieveException.html">SieveException</a>
 <a name="54" href="#54">54</a>      {
 <a name="55" href="#55">55</a>          <em class="comment">// Check Syntax</em>
@@ -85,13 +85,13 @@
 <a name="76" href="#76">76</a>      }
 <a name="77" href="#77">77</a>      
 <a name="78" href="#78">78</a>      <em>/**<em>*</em></em>
-<a name="79" href="#79">79</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments)</em>
+<a name="79" href="#79">79</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)</em>
 <a name="80" href="#80">80</a>  <em>     */</em>
-<a name="81" href="#81">81</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments) throws SieveException
+<a name="81" href="#81">81</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) throws SieveException
 <a name="82" href="#82">82</a>      {
 <a name="83" href="#83">83</a>          <a href="../../../../org/apache/jsieve/TestList.html">TestList</a> testList = arguments.getTestList();
 <a name="84" href="#84">84</a>          <strong>if</strong> (<strong>null</strong> == testList || testList.getTests().isEmpty())
-<a name="85" href="#85">85</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting a Test"</span>);
+<a name="85" href="#85">85</a>              <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting a Test"</span>);
 <a name="86" href="#86">86</a>      }
 <a name="87" href="#87">87</a>      
 <a name="88" href="#88">88</a>  

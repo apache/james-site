@@ -33,8 +33,8 @@
 <a name="24" href="#24">24</a>  <strong>import</strong> java.util.List;
 <a name="25" href="#25">25</a>  
 <a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.Arguments;
-<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SieveException;
-<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.SyntaxException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.SieveContext;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.SieveException;
 <a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.Test;
 <a name="30" href="#30">30</a>  <strong>import</strong> org.apache.jsieve.mail.MailAdapter;
 <a name="31" href="#31">31</a>  
@@ -53,14 +53,14 @@
 <a name="44" href="#44">44</a>      }
 <a name="45" href="#45">45</a>  
 <a name="46" href="#46">46</a>      <em>/**<em>*</em></em>
-<a name="47" href="#47">47</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#executeBasic(MailAdapter, Arguments)</em>
+<a name="47" href="#47">47</a>  <em>     * @see org.apache.jsieve.tests.AbstractTest#executeBasic(MailAdapter, Arguments, SieveContext)</em>
 <a name="48" href="#48">48</a>  <em>     */</em>
-<a name="49" href="#49">49</a>      <strong>protected</strong> <strong>boolean</strong> executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments) throws SieveException
+<a name="49" href="#49">49</a>      <strong>protected</strong> <strong>boolean</strong> executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) throws SieveException
 <a name="50" href="#50">50</a>      {
 <a name="51" href="#51">51</a>          <strong>boolean</strong> result = <strong>true</strong>;
 <a name="52" href="#52">52</a>          List tests = arguments.getTestList().getTests();
 <a name="53" href="#53">53</a>          <strong>if</strong> (tests.size() != 1)
-<a name="54" href="#54">54</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(
+<a name="54" href="#54">54</a>              <strong>throw</strong> context.getCoordinate().syntaxException(
 <a name="55" href="#55">55</a>                  <span class="string">"Exactly 1 test permitted. Found "</span> + tests.size());
 <a name="56" href="#56">56</a>          Iterator testsIter = tests.iterator();
 <a name="57" href="#57">57</a>          <strong>while</strong> (testsIter.hasNext())

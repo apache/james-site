@@ -307,10 +307,10 @@
 <a name="298" href="#298">298</a>     <strong>protected</strong> <strong>static</strong> MailAddress getSoleRecipient(Mail aMail)
 <a name="299" href="#299">299</a>             throws MessagingException
 <a name="300" href="#300">300</a>     {
-<a name="301" href="#301">301</a>         <strong>if</strong> (aMail.getRecipients() == <strong>null</strong>) {
+<a name="301" href="#301">301</a>           <strong>if</strong> (aMail.getRecipients() == <strong>null</strong>) {
 <a name="302" href="#302">302</a>           <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Invalid number of recipients - 0"</span>
 <a name="303" href="#303">303</a>               + <span class="string">". Exactly 1 recipient is expected."</span>);
-<a name="304" href="#304">304</a>         } <strong>else</strong> <strong>if</strong> (1 != aMail.getRecipients().size())
+<a name="304" href="#304">304</a>           } <strong>else</strong> <strong>if</strong> (1 != aMail.getRecipients().size())
 <a name="305" href="#305">305</a>             <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Invalid number of recipients - "</span>
 <a name="306" href="#306">306</a>                     + <strong>new</strong> Integer(aMail.getRecipients().size()).toString()
 <a name="307" href="#307">307</a>                     + <span class="string">". Exactly 1 recipient is expected."</span>);

@@ -34,9 +34,9 @@
 <a name="25" href="#25">25</a>  
 <a name="26" href="#26">26</a>  <strong>import</strong> org.apache.jsieve.Arguments;
 <a name="27" href="#27">27</a>  <strong>import</strong> org.apache.jsieve.Block;
-<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.SieveException;
-<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.StringListArgument;
-<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.jsieve.SyntaxException;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.jsieve.SieveContext;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.jsieve.SieveException;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.jsieve.StringListArgument;
 <a name="31" href="#31">31</a>  <strong>import</strong> org.apache.jsieve.commands.AbstractActionCommand;
 <a name="32" href="#32">32</a>  <strong>import</strong> org.apache.jsieve.mail.Action;
 <a name="33" href="#33">33</a>  <strong>import</strong> org.apache.jsieve.mail.ActionFileInto;
@@ -65,13 +65,13 @@
 <a name="56" href="#56">56</a>  <em>     * Command is silently ignored. </em>
 <a name="57" href="#57">57</a>  <em>     * &lt;/p></em>
 <a name="58" href="#58">58</a>  <em>     * &lt;p>Also,</em>
-<a name="59" href="#59">59</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#executeBasic(MailAdapter, Arguments, Block)</em>
+<a name="59" href="#59">59</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#executeBasic(MailAdapter, Arguments, Block, SieveContext)</em>
 <a name="60" href="#60">60</a>  <em>     * &lt;/p></em>
 <a name="61" href="#61">61</a>  <em>     */</em>
 <a name="62" href="#62">62</a>      <strong>protected</strong> Object executeBasic(
 <a name="63" href="#63">63</a>          <a href="../../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail,
 <a name="64" href="#64">64</a>          <a href="../../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments,
-<a name="65" href="#65">65</a>          <a href="../../../../../org/apache/jsieve/Block.html">Block</a> block)
+<a name="65" href="#65">65</a>          <a href="../../../../../org/apache/jsieve/Block.html">Block</a> block, <a href="../../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
 <a name="66" href="#66">66</a>          throws <a href="../../../../../org/apache/jsieve/SieveException.html">SieveException</a>
 <a name="67" href="#67">67</a>      {
 <a name="68" href="#68">68</a>          String destination =
@@ -101,21 +101,21 @@
 <a name="92" href="#92">92</a>      }
 <a name="93" href="#93">93</a>      
 <a name="94" href="#94">94</a>      <em>/**<em>*</em></em>
-<a name="95" href="#95">95</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments)</em>
+<a name="95" href="#95">95</a>  <em>     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)</em>
 <a name="96" href="#96">96</a>  <em>     */</em>
-<a name="97" href="#97">97</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments) throws SieveException
+<a name="97" href="#97">97</a>      <strong>protected</strong> <strong>void</strong> validateArguments(<a href="../../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) throws SieveException
 <a name="98" href="#98">98</a>      {
 <a name="99" href="#99">99</a>          List args = arguments.getArgumentList();
 <a name="100" href="#100">100</a>         <strong>if</strong> (args.size() != 1)
-<a name="101" href="#101">101</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(
+<a name="101" href="#101">101</a>             <strong>throw</strong> context.getCoordinate().syntaxException(
 <a name="102" href="#102">102</a>                 <span class="string">"Exactly 1 argument permitted. Found "</span> + args.size());
 <a name="103" href="#103">103</a> 
 <a name="104" href="#104">104</a>         Object argument = args.get(0);
 <a name="105" href="#105">105</a>         <strong>if</strong> (!(argument instanceof StringListArgument))
-<a name="106" href="#106">106</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting a string-list"</span>);
+<a name="106" href="#106">106</a>             <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting a string-list"</span>);
 <a name="107" href="#107">107</a> 
 <a name="108" href="#108">108</a>         <strong>if</strong> (1 != ((StringListArgument) argument).getList().size())
-<a name="109" href="#109">109</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/jsieve/SyntaxException.html">SyntaxException</a>(<span class="string">"Expecting exactly one argument"</span>);
+<a name="109" href="#109">109</a>             <strong>throw</strong> context.getCoordinate().syntaxException(<span class="string">"Expecting exactly one argument"</span>);
 <a name="110" href="#110">110</a>     }
 <a name="111" href="#111">111</a>     
 <a name="112" href="#112">112</a> 

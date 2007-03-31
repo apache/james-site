@@ -20,7 +20,7 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
           <meta name="author" content="
-    James jSPF Project Team" />
+    James Postage Project Team" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
       </head>
   <body class="composite">
@@ -48,7 +48,7 @@
   
   
             <div class="xleft">
-        Last Published: 09/26/2006
+        Last Published: 03/30/2007
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -91,6 +91,14 @@
               
     <li class="none">
               <a href="prepare_james.html">Prepare James</a>
+        </li>
+              
+    <li class="none">
+              <a href="test_mail_format.html">Test mail format</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_test_mails.html">Custom test mails</a>
         </li>
           </ul>
           <h5>Project Documentation</h5>
@@ -164,31 +172,46 @@
         
   
   
-    <a name="Overview"></a><div class="section"><h2>Overview</h2>
-      <p>Postage is a stand-alone application generating constant mail traffic on a James server instance. It can be considered being a load test tool.</p>
-      <p>Postage records the resources used by James and supports finding resource leaks, for example memory bottlenecks.</p>
-      <p>While putting load on James, Postage also records the resulting mail traffic and tries to match incoming and outgoing mail making it possible to use it for end-to-end test.</p>
-      <p>It's flexible enough to mimic many real-world load scenarios, for example</p>
-      <ul>
-        <li>many users, each receiving few mails every day</li>
-        <li>few users, heavily receiving mails</li>
-        <li>moderate mail traffic, yet very big attachments</li>
-      </ul>
+    <a name="Postage - A Mail-Traffic Generator"></a><div class="section"><h2>Postage - A Mail-Traffic Generator</h2>
+      <p>Postage is a stand-alone pure-java application generating mail traffic on mail servers.</p>
+      <p>It uses standard mail protocols to do this, currently POP3 and SMTP.</p>
+      <p>Therefore, it is well suited for testing any mail server supporting those protocols.</p>
+      <p>It was particularily created for running against Apache James Server and contains special feature for it.</p>   
     </div>
-    <a name="Features"></a><div class="section"><h2>Features</h2>
-      <ul>
-        <li>Easy XML-file-based configuration with multiple running scenarios for different load profiles</li>
-        <li>Supports unlimited number of internal and external users.</li>
-        <li>Within one scenario supports different email profiles running in parallel. Every profile has its own specification in terms of</li>
+         
+    <a name="Load scenarios"></a><div class="section"><h2>Load scenarios</h2>
+      <p>Through the easy-to-use XML-file-based configuration, you can specify exactly the running scenario for your load profile.</p>
+      <p>Supports unlimited number of internal and external users.</p>
+      <p>Is flexible enough to mimic many real-world load scenarios, for example
+        <ul>
+              <li>many users, each receiving few mails every day</li>
+              <li>few users, heavily receiving mails</li>
+              <li>moderate mail traffic, yet very big attachments</li>
+            </ul>
+      
+      Within one scenario, Postage supports different email profiles running in parallel. Every profile has its own specification in terms of
           <ul>
             <li>number of generated mails per minute</li>
             <li>sender/receiver</li>
             <li>mail size</li>
           </ul>
-        <li>Records incoming and outgoing mails and matches them to keep track of successful and failed deliveries</li>
-        <li>Is able to record the Mail Servers thread and heap memory consumption (only Java SE 5)</li>
-      </ul>
+      
     </div>
+         
+    <a name="Delivery analysis"></a><div class="section"><h2>Delivery analysis</h2>
+      Going beyond tools like <i>postal</i>, Postage tries to capture its test mails on the target location, records statistics and validates the result. 
+         So you can see not only the load, but also track successful and failed deliveries.   
+    </div>
+         
+    <a name="Track Server resource consumption"></a><div class="section"><h2>Track Server resource consumption</h2>
+      Postage is able to monitor the Server for memory and thread consumption, if it is running under Java 5 SE.   
+    </div>
+         
+    <a name="Pluggability"></a><div class="section"><h2>Pluggability</h2>
+      Per default, Postage generates test mails containing one textual and one binary part each having random sizes.   
+      This default behavior can be overridden on a email profile basis. User defined MailFactory and MailValidator classes which generate and handle use-case-specific mails can be plugged in very easily.
+    </div>
+    
   
 
       </div>
@@ -198,7 +221,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2006
+          2006-2007
     
           The Apache Software Foundation
           
@@ -213,5 +236,11 @@
         <hr/>
       </div>
     </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
   </body>
 </html>
