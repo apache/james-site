@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.3 - The SpoolManager, Matchers, and Mailets</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 03/30/2007
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../jspf/index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James Server</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../design_objectives.html">Objectives</a>
+        </li>
+              
+          
+              
+      
+              
+        <li class="expanded">
+              <a href="../FAQ.html">James FAQ</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="../james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              </ul>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Concepts</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="summary.html">Summary</a>
+        </li>
+              
+    <li class="none">
+              <strong>SpoolManager</strong>
+        </li>
+              
+    <li class="none">
+              <a href="repositories.html">Repositories</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet_api.html">The Mailet API</a>
+        </li>
+          </ul>
+          <h5>How to...</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="build_instructions.html">Build James</a>
+        </li>
+              
+    <li class="none">
+              <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Configuration</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="dns_configuration.html">DNS Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="pop3_configuration.html">POP3 Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="smtp_configuration.html">SMTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="nntp_configuration.html">NNTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="fetchmail_configuration.html">FetchMail</a>
+        </li>
+              
+    <li class="none">
+              <a href="remotemanager_configuration.html">RemoteManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager_configuration.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="serverwide_configuration.html">Server-wide</a>
+        </li>
+              
+    <li class="none">
+              <a href="adding_users.html">Adding Users</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_matchers.html">Provided Matchers</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_mailets.html">Provided Mailets</a>
+        </li>
+          </ul>
+          <h5>Common Configurations</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="smtp_auth.html">Using SMTP AUTH</a>
+        </li>
+              
+    <li class="none">
+              <a href="using_database.html">Using a Database with James</a>
+        </li>
+              
+    <li class="none">
+              <a href="usingTLS.html">Using TLS/SSL</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailing_lists.html">Creating Mailing Lists</a>
+        </li>
+          </ul>
+          <h5>Customization</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="custom_matcher.html">How to write a custom Matcher</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_mailet.html">How to write a custom Mailet</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+<a name="The SpoolManager, Matchers, and Mailets"></a><div class="section"><h2>The SpoolManager, Matchers, and Mailets</h2>
+
+<p>James separates the services that deliver mail to James (i.e. SMTP, FetchMail) 
+from the engine that processes mail after it is received by James.  The 
+SpoolManager component is James' mail processing engine.  James' SpoolManager component 
+is a Mailet container.  It is these mailets and matchers that actually carry out mail processing.</p>
+
+<p>Core to the SpoolManager operation are Matchers and Mailets.  A Matcher is a 
+simple object that checks whether a mail message matches a particular condition. 
+A mailet is another type object that processes an email message in some way.  Some 
+typical tasks appropriate for a mailet would be adding a header, delivering the message 
+to a local repository, or handling remote delivery.  Both the Matcher and Mailet APIs are 
+public, allowing James users to write their own custom matchers and mailets.  James 
+comes with a large set of pre-built matchers and mailets.</p>
+
+<p>Matchers and mailets are used in pairs.  At each stage in processing a message is checked 
+against a matcher.  The matcher will attempt to match the mail message.  The match is not simply
+a yes or no issue.  Instead, the match method returns a collection of matched recipients.  If the 
+this collection of matched recipients is empty, the mailet is not invoked.  If the collection of
+matched recipients is the entire set of original recipients, the mail is then processed by the 
+associated mailet.  Finally, if the matcher only matches a proper subset of the original recipients,
+the original mail is duplicated.  The recipients for one message are set to the matched recipients,
+and that message is processed by the mailet.  The recipients for the other mail are set to the
+non-matching recipients, and that message is not processed by the mailet.</p>
+
+<p>More on matchers and mailets can be found <a href="mailet_api.html">here</a>.</p>
+
+<p>One level up from the matchers and mailets are the processors.  Each processor 
+is a list of matcher/mailet pairs.  During mail processing, mail messages will be 
+processed by each pair, in order.  In most cases, the message will be processed by 
+all the pairs in the processor.  However, it is possible for a mailet to change the 
+state of the mail message so it is immediately directed to another processor, and no 
+additional processing occurs in the current processor.  Typically this occurs when the mailet wants to prevent 
+future processing of this message (i.e. the mail message has been delivered locally, 
+and hence requires no further processing) or when the mail message has been identified
+as a candidate for special processing (i.e. the message is spam and thus should be 
+routed to the spam processor).  Because of this redirection, the processors in the 
+SpoolManager form a tree.  The root processor, which must be present, is the root of
+this tree.</p>
+
+<p>The SpoolManager continually checks for mail in the spool repository.  When
+mail is first found in the repository, it is delivered to the root processor.  
+Mail can be placed on this spool from a number of sources (SMTP, FetchPOP, a 
+custom component).  This spool repository is also used for storage of mail that is
+being redirected from one processor to another.  Mail messages are driven through 
+the processor tree until they reach the end of a processor or are marked completed 
+by a mailet.</p>
+
+<p>More on configuration of the SpoolManager can be found <a href="spoolmanager_configuration.html">here</a>.</p>
+
+<p>Much of the power of James lies in the SpoolManager component.  Custom matchers and 
+mailets can be easily developed to address an administrator's particular needs.  The 
+processor tree can easily be configured to sort, filter, and deliver mail based on any 
+number of criteria.  Mail administrators new to James should spend some time learning how 
+to configure the SpoolManager to meet their needs.</p>
+
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2007
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>

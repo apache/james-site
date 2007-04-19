@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - 
+  James 2.3 - Configuring the SMTP Service</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 03/30/2007
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../jspf/index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James Server</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../design_objectives.html">Objectives</a>
+        </li>
+              
+          
+              
+      
+              
+        <li class="expanded">
+              <a href="../FAQ.html">James FAQ</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="../james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              </ul>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Concepts</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="summary.html">Summary</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="repositories.html">Repositories</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet_api.html">The Mailet API</a>
+        </li>
+          </ul>
+          <h5>How to...</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="build_instructions.html">Build James</a>
+        </li>
+              
+    <li class="none">
+              <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Configuration</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="dns_configuration.html">DNS Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="pop3_configuration.html">POP3 Server</a>
+        </li>
+              
+    <li class="none">
+              <strong>SMTP Server</strong>
+        </li>
+              
+    <li class="none">
+              <a href="nntp_configuration.html">NNTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="fetchmail_configuration.html">FetchMail</a>
+        </li>
+              
+    <li class="none">
+              <a href="remotemanager_configuration.html">RemoteManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager_configuration.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="serverwide_configuration.html">Server-wide</a>
+        </li>
+              
+    <li class="none">
+              <a href="adding_users.html">Adding Users</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_matchers.html">Provided Matchers</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_mailets.html">Provided Mailets</a>
+        </li>
+          </ul>
+          <h5>Common Configurations</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="smtp_auth.html">Using SMTP AUTH</a>
+        </li>
+              
+    <li class="none">
+              <a href="using_database.html">Using a Database with James</a>
+        </li>
+              
+    <li class="none">
+              <a href="usingTLS.html">Using TLS/SSL</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailing_lists.html">Creating Mailing Lists</a>
+        </li>
+          </ul>
+          <h5>Customization</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="custom_matcher.html">How to write a custom Matcher</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_mailet.html">How to write a custom Mailet</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="changelog.html">Changelog</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/dist/james">Test builds</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+<a name="SMTP Configuration"></a><div class="section"><h2>SMTP Configuration</h2>
+<p>The SMTP service is controlled by a configuration block in the config.xml.
+The smtpserver tag defines the boundaries of the configuration block.  It encloses 
+all the relevant configuration for the SMTP server.  The behavior of the SMTP service is
+controlled by the attributes and children of this tag.</p>
+
+<p>This tag has an optional boolean attribute - <strong>enabled</strong> - that defines whether the service is active or not.  The value defaults to &quot;true&quot; if
+not present.</p>
+<p>The standard children of the smtpserver tag are:</p>
+<ul>
+<li><strong>port</strong> - This is an optional integer value.  This value is the port on which this SMTP server is configured 
+to listen.If the tag or value is omitted, the value will default to the standard SMTP port, 25.</li>
+<li><strong>bind</strong> - This is an optional value.  If present, this value is a string describing 
+the IP address to which this service should be bound.  If the tag or value is absent then the service 
+will bind to all network interfaces for the machine.</li>
+<li><strong>useTLS</strong> - This is an optional boolean value.  If this value is true, then the &quot;ssl&quot;
+server socket factory is used to generate the server socket for this service.  If it is false, the 
+&quot;plain&quot; server socket factory is used.  In either case this behavior is overridden by the serverSocketType 
+tag which is described under the expert configuration options.</li>
+<li><strong>handler</strong> - This is an artifact preserved for backwards compatibility.  This tag 
+was used to group related parameters.  It should disappear in future versions.</li>
+<ul>
+<li><strong>helloName</strong> - This is a required tag with an optional body that defines the server name 
+used in the initial service greeting.  The tag may have an optional attribute - <strong>autodetect</strong>.  If 
+the autodetect attribute is present and true, the service will use the local hostname
+returned by the Java libraries.  If autodetect is absent or false, the body of the tag will be used.  In
+this case, if no body is present, the value &quot;localhost&quot; will be used.</li>
+<li><strong>connectionTimeout</strong> - This is an optional tag with a non-negative integer body.  </li>
+<li><strong>authRequired</strong> - This is an optional tag with a boolean body.  If true, then the server will 
+require authentication before delivering mail to non-local email addresses.  If this tag is absent, or the value 
+is false then the client will not be prompted for authentication.  Only simple user/password authentication is
+supported at this time.</li>
+<li><strong>verifyIdentity</strong> - This is an optional tag with a boolean body.  This option can only be used 
+if SMTP authentication is required.  If the parameter is set to true then the sender address for the submitted message
+will be verified against the authenticated subject.</li>
+<li><strong>maxmessagesize</strong> - This is an optional tag with a non-negative integer body.  It specifies the maximum 
+size, in kbytes, of any message that will be transmitted by this SMTP server.  It is a service-wide, as opposed to 
+a per user, limit.  If the value is zero then there is no limit.  If the tag isn't specified, the service will
+default to an unlimited message size.</li>
+</ul>
+</ul>
+There are a few additional children of the smtpserver tag that are appropriate for advanced 
+configurations.  These should only be used by expert administrators.  All tags in this group are optional.
+<ul>
+<li><strong>serverSocketFactory</strong> - This is an optional tag with a string body.  If the tag is present, 
+the body must be the name of one of the server socket factories specified in the socket manager block.  Any other 
+value will result in an error.  If present, this tag overrides the useTLS tag.</li>
+<li><strong>threadGroup</strong> - This is an optional tag with a string body.  If the tag is present, 
+the body must be the name of one of the thread groups specified in the thread manager block.  Any other 
+value will result in an error.  This tag is best used to fine tune thread allocation between the services.</li>
+<li><strong>connectionLimit</strong> - The connectionLimit parameter specifies the maximum number of client 
+connections that this service will allow.  If no value is specified, the value defaults to that specified in 
+the connectionmanager block.  A value of 0 means that there is no limit imposed 
+by the service, although resource limitations imposed by other components 
+(i.e. max # of threads) may serve to limit the number of open connections.</li>
+</ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2007
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
