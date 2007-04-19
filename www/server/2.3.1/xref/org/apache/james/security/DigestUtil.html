@@ -7,176 +7,178 @@
 <body>
 <div id="overview"><a href="../../../../../../../../../../apidocs/org/apache/james/security/DigestUtil.html">View Javadoc</a></div><pre>
 
-<a name="1" href="#1">1</a>   <em>/**<em>**********************************************************************</em></em>
-<a name="2" href="#2">2</a>   <em> * Copyright (c) 2000-2006 The Apache Software Foundation.             *</em>
-<a name="3" href="#3">3</a>   <em> * All rights reserved.                                                *</em>
-<a name="4" href="#4">4</a>   <em> * ------------------------------------------------------------------- *</em>
-<a name="5" href="#5">5</a>   <em> * Licensed under the Apache License, Version 2.0 (the "License"); you *</em>
-<a name="6" href="#6">6</a>   <em> * may not use this file except in compliance with the License. You    *</em>
-<a name="7" href="#7">7</a>   <em> * may obtain a copy of the License at:                                *</em>
-<a name="8" href="#8">8</a>   <em> *                                                                     *</em>
-<a name="9" href="#9">9</a>   <em> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                      *</em>
-<a name="10" href="#10">10</a>  <em> *                                                                     *</em>
-<a name="11" href="#11">11</a>  <em> * Unless required by applicable law or agreed to in writing, software *</em>
-<a name="12" href="#12">12</a>  <em> * distributed under the License is distributed on an "AS IS" BASIS,   *</em>
-<a name="13" href="#13">13</a>  <em> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or     *</em>
-<a name="14" href="#14">14</a>  <em> * implied.  See the License for the specific language governing       *</em>
-<a name="15" href="#15">15</a>  <em> * permissions and limitations under the License.                      *</em>
-<a name="16" href="#16">16</a>  <em> ***********************************************************************/</em>
-<a name="17" href="#17">17</a>  
-<a name="18" href="#18">18</a>  <strong>package</strong> org.apache.james.security;
+<a name="1" href="#1">1</a>   <em>/**<em>***************************************************************</em></em>
+<a name="2" href="#2">2</a>   <em> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
+<a name="3" href="#3">3</a>   <em> * or more contributor license agreements.  See the NOTICE file *</em>
+<a name="4" href="#4">4</a>   <em> * distributed with this work for additional information        *</em>
+<a name="5" href="#5">5</a>   <em> * regarding copyright ownership.  The ASF licenses this file   *</em>
+<a name="6" href="#6">6</a>   <em> * to you under the Apache License, Version 2.0 (the            *</em>
+<a name="7" href="#7">7</a>   <em> * "License"); you may not use this file except in compliance   *</em>
+<a name="8" href="#8">8</a>   <em> * with the License.  You may obtain a copy of the License at   *</em>
+<a name="9" href="#9">9</a>   <em> *                                                              *</em>
+<a name="10" href="#10">10</a>  <em> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                 *</em>
+<a name="11" href="#11">11</a>  <em> *                                                              *</em>
+<a name="12" href="#12">12</a>  <em> * Unless required by applicable law or agreed to in writing,   *</em>
+<a name="13" href="#13">13</a>  <em> * software distributed under the License is distributed on an  *</em>
+<a name="14" href="#14">14</a>  <em> * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *</em>
+<a name="15" href="#15">15</a>  <em> * KIND, either express or implied.  See the License for the    *</em>
+<a name="16" href="#16">16</a>  <em> * specific language governing permissions and limitations      *</em>
+<a name="17" href="#17">17</a>  <em> * under the License.                                           *</em>
+<a name="18" href="#18">18</a>  <em> ****************************************************************/</em>
 <a name="19" href="#19">19</a>  
-<a name="20" href="#20">20</a>  <strong>import</strong> javax.mail.MessagingException;
-<a name="21" href="#21">21</a>  <strong>import</strong> javax.mail.internet.MimeUtility;
-<a name="22" href="#22">22</a>  
-<a name="23" href="#23">23</a>  <strong>import</strong> java.io.ByteArrayOutputStream;
-<a name="24" href="#24">24</a>  <strong>import</strong> java.io.FileInputStream;
-<a name="25" href="#25">25</a>  <strong>import</strong> java.io.FileOutputStream;
-<a name="26" href="#26">26</a>  <strong>import</strong> java.io.IOException;
-<a name="27" href="#27">27</a>  <strong>import</strong> java.io.OutputStream;
-<a name="28" href="#28">28</a>  <strong>import</strong> java.security.MessageDigest;
-<a name="29" href="#29">29</a>  <strong>import</strong> java.security.NoSuchAlgorithmException;
-<a name="30" href="#30">30</a>  <strong>import</strong> java.util.Locale;
-<a name="31" href="#31">31</a>  
-<a name="32" href="#32">32</a>  
-<a name="33" href="#33">33</a>  <em>/**<em>*</em></em>
-<a name="34" href="#34">34</a>  <em> * Computes and verifies digests of files and strings</em>
-<a name="35" href="#35">35</a>  <em> *</em>
-<a name="36" href="#36">36</a>  <em> *</em>
-<a name="37" href="#37">37</a>  <em> * @version $Revision: 365582 $</em>
-<a name="38" href="#38">38</a>  <em> */</em>
-<a name="39" href="#39">39</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/james/security/DigestUtil.html">DigestUtil</a> {
-<a name="40" href="#40">40</a>  
-<a name="41" href="#41">41</a>      <em>/**<em>*</em></em>
-<a name="42" href="#42">42</a>  <em>     * Command line interface. Use -help for arguments.</em>
-<a name="43" href="#43">43</a>  <em>     *</em>
-<a name="44" href="#44">44</a>  <em>     * @param args the arguments passed in on the command line</em>
-<a name="45" href="#45">45</a>  <em>     */</em>
-<a name="46" href="#46">46</a>      <strong>public</strong> <strong>static</strong> <strong>void</strong> main(String[] args) {
-<a name="47" href="#47">47</a>  
-<a name="48" href="#48">48</a>          String alg = <span class="string">"SHA"</span>;
-<a name="49" href="#49">49</a>          <strong>boolean</strong> file = false;
-<a name="50" href="#50">50</a>      
-<a name="51" href="#51">51</a>          <strong>if</strong> (args.length == 0 || args.length > 4) {
-<a name="52" href="#52">52</a>              printUsage();
-<a name="53" href="#53">53</a>              <strong>return</strong>;
-<a name="54" href="#54">54</a>          }
-<a name="55" href="#55">55</a>      
-<a name="56" href="#56">56</a>          <strong>for</strong> (<strong>int</strong> i = 0; i &lt; args.length; i++) {
-<a name="57" href="#57">57</a>              String currArg = args[i].toLowerCase(Locale.US);
-<a name="58" href="#58">58</a>              <strong>if</strong> (currArg.equals(<span class="string">"-help"</span>)
-<a name="59" href="#59">59</a>                  || currArg.equals(<span class="string">"-usage"</span>)) {
-<a name="60" href="#60">60</a>                  printUsage();
-<a name="61" href="#61">61</a>                  <strong>return</strong>;
-<a name="62" href="#62">62</a>              }
-<a name="63" href="#63">63</a>              <strong>if</strong> (currArg.equals(<span class="string">"-alg"</span>)) {
-<a name="64" href="#64">64</a>                  alg = args[i+1];
-<a name="65" href="#65">65</a>              }
-<a name="66" href="#66">66</a>              <strong>if</strong> (currArg.equals(<span class="string">"-file"</span>)) {
-<a name="67" href="#67">67</a>                  file = <strong>true</strong>;
-<a name="68" href="#68">68</a>              }
-<a name="69" href="#69">69</a>          }
-<a name="70" href="#70">70</a>      
-<a name="71" href="#71">71</a>          <strong>if</strong> (file) {
-<a name="72" href="#72">72</a>              digestFile(args[args.length - 1], alg);
-<a name="73" href="#73">73</a>              <strong>return</strong> ;
-<a name="74" href="#74">74</a>          } <strong>else</strong> {
-<a name="75" href="#75">75</a>              <strong>try</strong> {
-<a name="76" href="#76">76</a>                  String hash = digestString(args[args.length - 1], alg);
-<a name="77" href="#77">77</a>                  System.out.println(<span class="string">"Hash is: "</span> + hash);
-<a name="78" href="#78">78</a>                  <strong>return</strong>;
-<a name="79" href="#79">79</a>              } <strong>catch</strong> (NoSuchAlgorithmException nsae) {
-<a name="80" href="#80">80</a>                  System.out.println(<span class="string">"No such algorithm available"</span>);
-<a name="81" href="#81">81</a>              }
-<a name="82" href="#82">82</a>          }
-<a name="83" href="#83">83</a>      }
-<a name="84" href="#84">84</a>  
-<a name="85" href="#85">85</a>      <em>/**<em>*</em></em>
-<a name="86" href="#86">86</a>  <em>     * Print the command line usage string.</em>
-<a name="87" href="#87">87</a>  <em>     */</em>
-<a name="88" href="#88">88</a>      <strong>public</strong> <strong>static</strong> <strong>void</strong> printUsage() {
-<a name="89" href="#89">89</a>          System.out.println(<span class="string">"Usage: "</span> 
-<a name="90" href="#90">90</a>                             + <span class="string">"java org.apache.james.security.DigestUtil"</span>
-<a name="91" href="#91">91</a>                             + <span class="string">" [-alg algorithm]"</span>
-<a name="92" href="#92">92</a>                             + <span class="string">" [-file] filename|string"</span>);
-<a name="93" href="#93">93</a>      }
-<a name="94" href="#94">94</a>  
-<a name="95" href="#95">95</a>      <em>/**<em>*</em></em>
-<a name="96" href="#96">96</a>  <em>     * Calculate digest of given file with given algorithm.</em>
-<a name="97" href="#97">97</a>  <em>     * Writes digest to file named filename.algorithm .</em>
-<a name="98" href="#98">98</a>  <em>     *</em>
-<a name="99" href="#99">99</a>  <em>     * @param filename the String name of the file to be hashed</em>
-<a name="100" href="#100">100</a> <em>     * @param algorithm the algorithm to be used to compute the digest</em>
-<a name="101" href="#101">101</a> <em>     */</em>
-<a name="102" href="#102">102</a>     <strong>public</strong> <strong>static</strong> <strong>void</strong> digestFile(String filename, String algorithm) {
-<a name="103" href="#103">103</a>         byte[] b = <strong>new</strong> byte[65536];
-<a name="104" href="#104">104</a>         <strong>int</strong> count = 0;
-<a name="105" href="#105">105</a>         <strong>int</strong> read = 0;
-<a name="106" href="#106">106</a>         FileInputStream fis = <strong>null</strong>;
-<a name="107" href="#107">107</a>         FileOutputStream fos = <strong>null</strong>;
-<a name="108" href="#108">108</a>         <strong>try</strong> {
-<a name="109" href="#109">109</a>             MessageDigest md = MessageDigest.getInstance(algorithm);
-<a name="110" href="#110">110</a>             fis = <strong>new</strong> FileInputStream(filename);
-<a name="111" href="#111">111</a>             <strong>while</strong> (fis.available() > 0) {
-<a name="112" href="#112">112</a>                 read =  fis.read(b);
-<a name="113" href="#113">113</a>                 md.update(b, 0, read);
-<a name="114" href="#114">114</a>                 count += read;
-<a name="115" href="#115">115</a>             }
-<a name="116" href="#116">116</a>             byte[] digest = md.digest();
-<a name="117" href="#117">117</a>             StringBuffer fileNameBuffer =
-<a name="118" href="#118">118</a>                 <strong>new</strong> StringBuffer(128)
-<a name="119" href="#119">119</a>                         .append(filename)
-<a name="120" href="#120">120</a>                         .append(<span class="string">"."</span>)
-<a name="121" href="#121">121</a>                         .append(algorithm);
-<a name="122" href="#122">122</a>             fos = <strong>new</strong> FileOutputStream(fileNameBuffer.toString());
-<a name="123" href="#123">123</a>             OutputStream encodedStream = MimeUtility.encode(fos, <span class="string">"base64"</span>);
-<a name="124" href="#124">124</a>             encodedStream.write(digest);
-<a name="125" href="#125">125</a>             fos.flush();
-<a name="126" href="#126">126</a>         } <strong>catch</strong> (Exception e) {
-<a name="127" href="#127">127</a>             System.out.println(<span class="string">"Error computing Digest: "</span> + e);
-<a name="128" href="#128">128</a>         } <strong>finally</strong> {
-<a name="129" href="#129">129</a>             <strong>try</strong> {
-<a name="130" href="#130">130</a>                 fis.close();
-<a name="131" href="#131">131</a>                 fos.close();
-<a name="132" href="#132">132</a>             } <strong>catch</strong> (Exception ignored) {}
-<a name="133" href="#133">133</a>         }
-<a name="134" href="#134">134</a>     }
-<a name="135" href="#135">135</a> 
-<a name="136" href="#136">136</a>     <em>/**<em>*</em></em>
-<a name="137" href="#137">137</a> <em>     * Calculate digest of given String using given algorithm.</em>
-<a name="138" href="#138">138</a> <em>     * Encode digest in MIME-like base64.</em>
-<a name="139" href="#139">139</a> <em>     *</em>
-<a name="140" href="#140">140</a> <em>     * @param pass the String to be hashed</em>
-<a name="141" href="#141">141</a> <em>     * @param algorithm the algorithm to be used</em>
-<a name="142" href="#142">142</a> <em>     * @return String Base-64 encoding of digest</em>
-<a name="143" href="#143">143</a> <em>     *</em>
-<a name="144" href="#144">144</a> <em>     * @throws NoSuchAlgorithmException if the algorithm passed in cannot be found</em>
-<a name="145" href="#145">145</a> <em>     */</em>
-<a name="146" href="#146">146</a>     <strong>public</strong> <strong>static</strong> String digestString(String pass, String algorithm )
-<a name="147" href="#147">147</a>             throws NoSuchAlgorithmException  {
-<a name="148" href="#148">148</a> 
-<a name="149" href="#149">149</a>         MessageDigest md;
-<a name="150" href="#150">150</a>         ByteArrayOutputStream bos;
-<a name="151" href="#151">151</a> 
-<a name="152" href="#152">152</a>         <strong>try</strong> {
-<a name="153" href="#153">153</a>             md = MessageDigest.getInstance(algorithm);
-<a name="154" href="#154">154</a>             byte[] digest = md.digest(pass.getBytes(<span class="string">"iso-8859-1"</span>));
-<a name="155" href="#155">155</a>             bos = <strong>new</strong> ByteArrayOutputStream();
-<a name="156" href="#156">156</a>             OutputStream encodedStream = MimeUtility.encode(bos, <span class="string">"base64"</span>);
-<a name="157" href="#157">157</a>             encodedStream.write(digest);
-<a name="158" href="#158">158</a>             <strong>return</strong> bos.toString(<span class="string">"iso-8859-1"</span>);
-<a name="159" href="#159">159</a>         } <strong>catch</strong> (IOException ioe) {
-<a name="160" href="#160">160</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal error: "</span> + ioe);
-<a name="161" href="#161">161</a>         } <strong>catch</strong> (MessagingException me) {
-<a name="162" href="#162">162</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal error: "</span> + me);
-<a name="163" href="#163">163</a>         }
-<a name="164" href="#164">164</a>     }
-<a name="165" href="#165">165</a> 
-<a name="166" href="#166">166</a>     <em>/**<em>*</em></em>
-<a name="167" href="#167">167</a> <em>     * Private constructor to prevent instantiation of the class</em>
-<a name="168" href="#168">168</a> <em>     */</em>
-<a name="169" href="#169">169</a>     <strong>private</strong> <a href="../../../../org/apache/james/security/DigestUtil.html">DigestUtil</a>() {}
-<a name="170" href="#170">170</a> }
+<a name="20" href="#20">20</a>  <strong>package</strong> org.apache.james.security;
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <strong>import</strong> javax.mail.MessagingException;
+<a name="23" href="#23">23</a>  <strong>import</strong> javax.mail.internet.MimeUtility;
+<a name="24" href="#24">24</a>  
+<a name="25" href="#25">25</a>  <strong>import</strong> java.io.ByteArrayOutputStream;
+<a name="26" href="#26">26</a>  <strong>import</strong> java.io.FileInputStream;
+<a name="27" href="#27">27</a>  <strong>import</strong> java.io.FileOutputStream;
+<a name="28" href="#28">28</a>  <strong>import</strong> java.io.IOException;
+<a name="29" href="#29">29</a>  <strong>import</strong> java.io.OutputStream;
+<a name="30" href="#30">30</a>  <strong>import</strong> java.security.MessageDigest;
+<a name="31" href="#31">31</a>  <strong>import</strong> java.security.NoSuchAlgorithmException;
+<a name="32" href="#32">32</a>  <strong>import</strong> java.util.Locale;
+<a name="33" href="#33">33</a>  
+<a name="34" href="#34">34</a>  
+<a name="35" href="#35">35</a>  <em>/**<em>*</em></em>
+<a name="36" href="#36">36</a>  <em> * Computes and verifies digests of files and strings</em>
+<a name="37" href="#37">37</a>  <em> *</em>
+<a name="38" href="#38">38</a>  <em> *</em>
+<a name="39" href="#39">39</a>  <em> * @version $Revision: 494012 $</em>
+<a name="40" href="#40">40</a>  <em> */</em>
+<a name="41" href="#41">41</a>  <strong>public</strong> <strong>class</strong> <a href="../../../../org/apache/james/security/DigestUtil.html">DigestUtil</a> {
+<a name="42" href="#42">42</a>  
+<a name="43" href="#43">43</a>      <em>/**<em>*</em></em>
+<a name="44" href="#44">44</a>  <em>     * Command line interface. Use -help for arguments.</em>
+<a name="45" href="#45">45</a>  <em>     *</em>
+<a name="46" href="#46">46</a>  <em>     * @param args the arguments passed in on the command line</em>
+<a name="47" href="#47">47</a>  <em>     */</em>
+<a name="48" href="#48">48</a>      <strong>public</strong> <strong>static</strong> <strong>void</strong> main(String[] args) {
+<a name="49" href="#49">49</a>  
+<a name="50" href="#50">50</a>          String alg = <span class="string">"SHA"</span>;
+<a name="51" href="#51">51</a>          <strong>boolean</strong> file = false;
+<a name="52" href="#52">52</a>      
+<a name="53" href="#53">53</a>          <strong>if</strong> (args.length == 0 || args.length > 4) {
+<a name="54" href="#54">54</a>              printUsage();
+<a name="55" href="#55">55</a>              <strong>return</strong>;
+<a name="56" href="#56">56</a>          }
+<a name="57" href="#57">57</a>      
+<a name="58" href="#58">58</a>          <strong>for</strong> (<strong>int</strong> i = 0; i &lt; args.length; i++) {
+<a name="59" href="#59">59</a>              String currArg = args[i].toLowerCase(Locale.US);
+<a name="60" href="#60">60</a>              <strong>if</strong> (currArg.equals(<span class="string">"-help"</span>)
+<a name="61" href="#61">61</a>                  || currArg.equals(<span class="string">"-usage"</span>)) {
+<a name="62" href="#62">62</a>                  printUsage();
+<a name="63" href="#63">63</a>                  <strong>return</strong>;
+<a name="64" href="#64">64</a>              }
+<a name="65" href="#65">65</a>              <strong>if</strong> (currArg.equals(<span class="string">"-alg"</span>)) {
+<a name="66" href="#66">66</a>                  alg = args[i+1];
+<a name="67" href="#67">67</a>              }
+<a name="68" href="#68">68</a>              <strong>if</strong> (currArg.equals(<span class="string">"-file"</span>)) {
+<a name="69" href="#69">69</a>                  file = <strong>true</strong>;
+<a name="70" href="#70">70</a>              }
+<a name="71" href="#71">71</a>          }
+<a name="72" href="#72">72</a>      
+<a name="73" href="#73">73</a>          <strong>if</strong> (file) {
+<a name="74" href="#74">74</a>              digestFile(args[args.length - 1], alg);
+<a name="75" href="#75">75</a>              <strong>return</strong> ;
+<a name="76" href="#76">76</a>          } <strong>else</strong> {
+<a name="77" href="#77">77</a>              <strong>try</strong> {
+<a name="78" href="#78">78</a>                  String hash = digestString(args[args.length - 1], alg);
+<a name="79" href="#79">79</a>                  System.out.println(<span class="string">"Hash is: "</span> + hash);
+<a name="80" href="#80">80</a>                  <strong>return</strong>;
+<a name="81" href="#81">81</a>              } <strong>catch</strong> (NoSuchAlgorithmException nsae) {
+<a name="82" href="#82">82</a>                  System.out.println(<span class="string">"No such algorithm available"</span>);
+<a name="83" href="#83">83</a>              }
+<a name="84" href="#84">84</a>          }
+<a name="85" href="#85">85</a>      }
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>      <em>/**<em>*</em></em>
+<a name="88" href="#88">88</a>  <em>     * Print the command line usage string.</em>
+<a name="89" href="#89">89</a>  <em>     */</em>
+<a name="90" href="#90">90</a>      <strong>public</strong> <strong>static</strong> <strong>void</strong> printUsage() {
+<a name="91" href="#91">91</a>          System.out.println(<span class="string">"Usage: "</span> 
+<a name="92" href="#92">92</a>                             + <span class="string">"java org.apache.james.security.DigestUtil"</span>
+<a name="93" href="#93">93</a>                             + <span class="string">" [-alg algorithm]"</span>
+<a name="94" href="#94">94</a>                             + <span class="string">" [-file] filename|string"</span>);
+<a name="95" href="#95">95</a>      }
+<a name="96" href="#96">96</a>  
+<a name="97" href="#97">97</a>      <em>/**<em>*</em></em>
+<a name="98" href="#98">98</a>  <em>     * Calculate digest of given file with given algorithm.</em>
+<a name="99" href="#99">99</a>  <em>     * Writes digest to file named filename.algorithm .</em>
+<a name="100" href="#100">100</a> <em>     *</em>
+<a name="101" href="#101">101</a> <em>     * @param filename the String name of the file to be hashed</em>
+<a name="102" href="#102">102</a> <em>     * @param algorithm the algorithm to be used to compute the digest</em>
+<a name="103" href="#103">103</a> <em>     */</em>
+<a name="104" href="#104">104</a>     <strong>public</strong> <strong>static</strong> <strong>void</strong> digestFile(String filename, String algorithm) {
+<a name="105" href="#105">105</a>         byte[] b = <strong>new</strong> byte[65536];
+<a name="106" href="#106">106</a>         <strong>int</strong> count = 0;
+<a name="107" href="#107">107</a>         <strong>int</strong> read = 0;
+<a name="108" href="#108">108</a>         FileInputStream fis = <strong>null</strong>;
+<a name="109" href="#109">109</a>         FileOutputStream fos = <strong>null</strong>;
+<a name="110" href="#110">110</a>         <strong>try</strong> {
+<a name="111" href="#111">111</a>             MessageDigest md = MessageDigest.getInstance(algorithm);
+<a name="112" href="#112">112</a>             fis = <strong>new</strong> FileInputStream(filename);
+<a name="113" href="#113">113</a>             <strong>while</strong> (fis.available() > 0) {
+<a name="114" href="#114">114</a>                 read =  fis.read(b);
+<a name="115" href="#115">115</a>                 md.update(b, 0, read);
+<a name="116" href="#116">116</a>                 count += read;
+<a name="117" href="#117">117</a>             }
+<a name="118" href="#118">118</a>             byte[] digest = md.digest();
+<a name="119" href="#119">119</a>             StringBuffer fileNameBuffer =
+<a name="120" href="#120">120</a>                 <strong>new</strong> StringBuffer(128)
+<a name="121" href="#121">121</a>                         .append(filename)
+<a name="122" href="#122">122</a>                         .append(<span class="string">"."</span>)
+<a name="123" href="#123">123</a>                         .append(algorithm);
+<a name="124" href="#124">124</a>             fos = <strong>new</strong> FileOutputStream(fileNameBuffer.toString());
+<a name="125" href="#125">125</a>             OutputStream encodedStream = MimeUtility.encode(fos, <span class="string">"base64"</span>);
+<a name="126" href="#126">126</a>             encodedStream.write(digest);
+<a name="127" href="#127">127</a>             fos.flush();
+<a name="128" href="#128">128</a>         } <strong>catch</strong> (Exception e) {
+<a name="129" href="#129">129</a>             System.out.println(<span class="string">"Error computing Digest: "</span> + e);
+<a name="130" href="#130">130</a>         } <strong>finally</strong> {
+<a name="131" href="#131">131</a>             <strong>try</strong> {
+<a name="132" href="#132">132</a>                 fis.close();
+<a name="133" href="#133">133</a>                 fos.close();
+<a name="134" href="#134">134</a>             } <strong>catch</strong> (Exception ignored) {}
+<a name="135" href="#135">135</a>         }
+<a name="136" href="#136">136</a>     }
+<a name="137" href="#137">137</a> 
+<a name="138" href="#138">138</a>     <em>/**<em>*</em></em>
+<a name="139" href="#139">139</a> <em>     * Calculate digest of given String using given algorithm.</em>
+<a name="140" href="#140">140</a> <em>     * Encode digest in MIME-like base64.</em>
+<a name="141" href="#141">141</a> <em>     *</em>
+<a name="142" href="#142">142</a> <em>     * @param pass the String to be hashed</em>
+<a name="143" href="#143">143</a> <em>     * @param algorithm the algorithm to be used</em>
+<a name="144" href="#144">144</a> <em>     * @return String Base-64 encoding of digest</em>
+<a name="145" href="#145">145</a> <em>     *</em>
+<a name="146" href="#146">146</a> <em>     * @throws NoSuchAlgorithmException if the algorithm passed in cannot be found</em>
+<a name="147" href="#147">147</a> <em>     */</em>
+<a name="148" href="#148">148</a>     <strong>public</strong> <strong>static</strong> String digestString(String pass, String algorithm )
+<a name="149" href="#149">149</a>             throws NoSuchAlgorithmException  {
+<a name="150" href="#150">150</a> 
+<a name="151" href="#151">151</a>         MessageDigest md;
+<a name="152" href="#152">152</a>         ByteArrayOutputStream bos;
+<a name="153" href="#153">153</a> 
+<a name="154" href="#154">154</a>         <strong>try</strong> {
+<a name="155" href="#155">155</a>             md = MessageDigest.getInstance(algorithm);
+<a name="156" href="#156">156</a>             byte[] digest = md.digest(pass.getBytes(<span class="string">"iso-8859-1"</span>));
+<a name="157" href="#157">157</a>             bos = <strong>new</strong> ByteArrayOutputStream();
+<a name="158" href="#158">158</a>             OutputStream encodedStream = MimeUtility.encode(bos, <span class="string">"base64"</span>);
+<a name="159" href="#159">159</a>             encodedStream.write(digest);
+<a name="160" href="#160">160</a>             <strong>return</strong> bos.toString(<span class="string">"iso-8859-1"</span>);
+<a name="161" href="#161">161</a>         } <strong>catch</strong> (IOException ioe) {
+<a name="162" href="#162">162</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal error: "</span> + ioe);
+<a name="163" href="#163">163</a>         } <strong>catch</strong> (MessagingException me) {
+<a name="164" href="#164">164</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal error: "</span> + me);
+<a name="165" href="#165">165</a>         }
+<a name="166" href="#166">166</a>     }
+<a name="167" href="#167">167</a> 
+<a name="168" href="#168">168</a>     <em>/**<em>*</em></em>
+<a name="169" href="#169">169</a> <em>     * Private constructor to prevent instantiation of the class</em>
+<a name="170" href="#170">170</a> <em>     */</em>
+<a name="171" href="#171">171</a>     <strong>private</strong> <a href="../../../../org/apache/james/security/DigestUtil.html">DigestUtil</a>() {}
+<a name="172" href="#172">172</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

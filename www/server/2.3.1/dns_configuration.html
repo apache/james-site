@@ -46,7 +46,7 @@
   
   
             <div class="xleft">
-        Last Published: 03/30/2007
+        Last Published: 04/19/2007
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -289,7 +289,7 @@
         </li>
               
     <li class="none">
-              <a href="http://people.apache.org/dist/james">Test builds</a>
+              <a href="../../downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -345,6 +345,14 @@ authoritative for the domain. It is primarily useful in an intranet/extranet env
 This should always be <strong>false</strong> unless you understand the implications.
 </li>
 </ul>
+</div>
+<a name="Sun JVM DNS Lookup Configuration."></a><div class="section"><h2>Sun JVM DNS Lookup Configuration.</h2>
+Sun's JVM Internet address lookup uses a cache which is unbounded and doesn't time out.<br></br>
+This is obviously not great for a long running process like a mail server so we have introduced a system property <strong>networkaddress.cache.ttl</strong> that is used by the distributed phoenix start-up scripts, at startup, to override the java 1.4 <strong>Security.setProperty(&quot;networkaddress.cache.ttl&quot;)</strong>.<br></br> By default this is set to <strong>300</strong> seconds.
+<p>This workaround will only be present if you use James as distributed. If you use James in any other container, including different versions of Phoenix, you will need to ensure that you make a similar configuration change to allow the internet address cache to perform acceptably.</p>
+<p>James 2.3 has this workaround and it requires it to operate acceptably. Future versions of James will continue to have the workaround in place but will *not* require it. This will provide continued support for any mailets which you may deploy from other sources which might continue to use Sun's InetAddress class for DNS resolution.</p>
+<p>We are not currently aware of the behaviour of this cache in other JVM implementations, nor of the effect, if any, which this change might have on them</p>
+<p>For more on this read defect report <a href="http://issues.apache.org/jira/browse/JAMES-592">JAMES-592</a> and related defects.</p>
 </div>
 
 
