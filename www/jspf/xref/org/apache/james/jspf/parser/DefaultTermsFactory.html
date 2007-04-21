@@ -139,9 +139,9 @@
 <a name="130" href="#130">130</a>     <em>/**<em>*</em></em>
 <a name="131" href="#131">131</a> <em>     * @see org.apache.james.jspf.parser.TermsFactory#createTerm(org.apache.james.jspf.parser.TermDefinition, org.apache.james.jspf.core.MatcherBasedConfiguration)</em>
 <a name="132" href="#132">132</a> <em>     */</em>
-<a name="133" href="#133">133</a>     <strong>public</strong> Object createTerm(<a href="../../../../../org/apache/james/jspf/parser/TermDefinition.html">TermDefinition</a> termDef, <a href="../../../../../org/apache/james/jspf/core/Configuration.html">Configuration</a> subres) throws PermErrorException, InstantiationException {
+<a name="133" href="#133">133</a>     <strong>public</strong> Object createTerm(Class termDef, <a href="../../../../../org/apache/james/jspf/core/Configuration.html">Configuration</a> subres) throws PermErrorException, InstantiationException {
 <a name="134" href="#134">134</a>         <strong>try</strong> {
-<a name="135" href="#135">135</a>             Object term = termDef.getTermDef().newInstance();
+<a name="135" href="#135">135</a>             Object term = termDef.newInstance();
 <a name="136" href="#136">136</a>             
 <a name="137" href="#137">137</a>             <strong>try</strong> {
 <a name="138" href="#138">138</a>                 wiringService.wire(term);

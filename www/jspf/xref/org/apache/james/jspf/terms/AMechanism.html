@@ -215,57 +215,56 @@
 <a name="206" href="#206">206</a>     <strong>public</strong> List getAAAARecords(<a href="../../../../../org/apache/james/jspf/core/DNSService.html">DNSService</a> dns, String strServer)
 <a name="207" href="#207">207</a>             throws PermErrorException, <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a> {
 <a name="208" href="#208">208</a>         List listAAAAData;
-<a name="209" href="#209">209</a>         <strong>if</strong> (IPAddr.isIPAddr(strServer)) {
-<a name="210" href="#210">210</a>             <a href="../../../../../org/apache/james/jspf/core/IPAddr.html">IPAddr</a> ipTest = IPAddr.getAddress(strServer);
-<a name="211" href="#211">211</a>             <em class="comment">// Address is already an IP address, so add it to list</em>
-<a name="212" href="#212">212</a>             listAAAAData = <strong>new</strong> ArrayList();
-<a name="213" href="#213">213</a>             listAAAAData.add(ipTest);
-<a name="214" href="#214">214</a>         } <strong>else</strong> {
-<a name="215" href="#215">215</a>             <strong>try</strong> {
-<a name="216" href="#216">216</a>                 listAAAAData = dns.getRecords(strServer, DNSService.AAAA);
-<a name="217" href="#217">217</a>             } <strong>catch</strong> (DNSService.TimeoutException e) {
-<a name="218" href="#218">218</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a>(<span class="string">"Timeout querying dns server"</span>);
-<a name="219" href="#219">219</a>             }
-<a name="220" href="#220">220</a>         }
-<a name="221" href="#221">221</a>         <strong>return</strong> listAAAAData;
-<a name="222" href="#222">222</a>     }
+<a name="209" href="#209">209</a>         <strong>if</strong> (IPAddr.isIPV6(strServer)) {
+<a name="210" href="#210">210</a>             <em class="comment">// Address is already an IP address, so add it to list</em>
+<a name="211" href="#211">211</a>             listAAAAData = <strong>new</strong> ArrayList();
+<a name="212" href="#212">212</a>             listAAAAData.add(strServer);
+<a name="213" href="#213">213</a>         } <strong>else</strong> {
+<a name="214" href="#214">214</a>             <strong>try</strong> {
+<a name="215" href="#215">215</a>                 listAAAAData = dns.getRecords(strServer, DNSService.AAAA);
+<a name="216" href="#216">216</a>             } <strong>catch</strong> (DNSService.TimeoutException e) {
+<a name="217" href="#217">217</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a>(<span class="string">"Timeout querying dns server"</span>);
+<a name="218" href="#218">218</a>             }
+<a name="219" href="#219">219</a>         }
+<a name="220" href="#220">220</a>         <strong>return</strong> listAAAAData;
+<a name="221" href="#221">221</a>     }
+<a name="222" href="#222">222</a> 
 <a name="223" href="#223">223</a> 
-<a name="224" href="#224">224</a> 
-<a name="225" href="#225">225</a>     <em>/**<em>*</em></em>
-<a name="226" href="#226">226</a> <em>     * Get a list of IPAddr's for a server</em>
-<a name="227" href="#227">227</a> <em>     * </em>
-<a name="228" href="#228">228</a> <em>     * @params dns the DNSService to query</em>
-<a name="229" href="#229">229</a> <em>     * @param strServer</em>
-<a name="230" href="#230">230</a> <em>     *            The hostname or ipAddress whe should get the A-Records for</em>
-<a name="231" href="#231">231</a> <em>     * @return The ipAddresses</em>
-<a name="232" href="#232">232</a> <em>     * @throws PermErrorException</em>
-<a name="233" href="#233">233</a> <em>     *             if an PermError should be returned</em>
-<a name="234" href="#234">234</a> <em>     * @throws TempErrorException</em>
-<a name="235" href="#235">235</a> <em>     *             if the lookup result was "TRY_AGAIN"</em>
-<a name="236" href="#236">236</a> <em>     */</em>
-<a name="237" href="#237">237</a>     <strong>public</strong> List getARecords(<a href="../../../../../org/apache/james/jspf/core/DNSService.html">DNSService</a> dns, String strServer) throws PermErrorException, TempErrorException {
-<a name="238" href="#238">238</a>         List listAData;
-<a name="239" href="#239">239</a>         <strong>if</strong> (IPAddr.isIPAddr(strServer)) {
-<a name="240" href="#240">240</a>             listAData = <strong>new</strong> ArrayList();
-<a name="241" href="#241">241</a>             listAData.add(strServer);
-<a name="242" href="#242">242</a>         } <strong>else</strong> {
-<a name="243" href="#243">243</a>             <strong>try</strong> {
-<a name="244" href="#244">244</a>                 listAData = dns.getRecords(strServer, DNSService.A);
-<a name="245" href="#245">245</a>             } <strong>catch</strong> (DNSService.TimeoutException e) {
-<a name="246" href="#246">246</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a>(<span class="string">"Timeout querying dns server"</span>);
-<a name="247" href="#247">247</a>             }
-<a name="248" href="#248">248</a>         }
-<a name="249" href="#249">249</a>         <strong>return</strong> listAData;
-<a name="250" href="#250">250</a>     }
-<a name="251" href="#251">251</a> 
-<a name="252" href="#252">252</a>     <em>/**<em>*</em></em>
-<a name="253" href="#253">253</a> <em>     * @see org.apache.james.jspf.wiring.DNSServiceEnabled#enableDNSService(org.apache.james.jspf.core.DNSService)</em>
-<a name="254" href="#254">254</a> <em>     */</em>
-<a name="255" href="#255">255</a>     <strong>public</strong> <strong>void</strong> enableDNSService(<a href="../../../../../org/apache/james/jspf/core/DNSService.html">DNSService</a> service) {
-<a name="256" href="#256">256</a>         <strong>this</strong>.dnsService = service;
-<a name="257" href="#257">257</a>     }
-<a name="258" href="#258">258</a> 
-<a name="259" href="#259">259</a> }
+<a name="224" href="#224">224</a>     <em>/**<em>*</em></em>
+<a name="225" href="#225">225</a> <em>     * Get a list of IPAddr's for a server</em>
+<a name="226" href="#226">226</a> <em>     * </em>
+<a name="227" href="#227">227</a> <em>     * @params dns the DNSService to query</em>
+<a name="228" href="#228">228</a> <em>     * @param strServer</em>
+<a name="229" href="#229">229</a> <em>     *            The hostname or ipAddress whe should get the A-Records for</em>
+<a name="230" href="#230">230</a> <em>     * @return The ipAddresses</em>
+<a name="231" href="#231">231</a> <em>     * @throws PermErrorException</em>
+<a name="232" href="#232">232</a> <em>     *             if an PermError should be returned</em>
+<a name="233" href="#233">233</a> <em>     * @throws TempErrorException</em>
+<a name="234" href="#234">234</a> <em>     *             if the lookup result was "TRY_AGAIN"</em>
+<a name="235" href="#235">235</a> <em>     */</em>
+<a name="236" href="#236">236</a>     <strong>public</strong> List getARecords(<a href="../../../../../org/apache/james/jspf/core/DNSService.html">DNSService</a> dns, String strServer) throws PermErrorException, TempErrorException {
+<a name="237" href="#237">237</a>         List listAData;
+<a name="238" href="#238">238</a>         <strong>if</strong> (IPAddr.isIPAddr(strServer)) {
+<a name="239" href="#239">239</a>             listAData = <strong>new</strong> ArrayList();
+<a name="240" href="#240">240</a>             listAData.add(strServer);
+<a name="241" href="#241">241</a>         } <strong>else</strong> {
+<a name="242" href="#242">242</a>             <strong>try</strong> {
+<a name="243" href="#243">243</a>                 listAData = dns.getRecords(strServer, DNSService.A);
+<a name="244" href="#244">244</a>             } <strong>catch</strong> (DNSService.TimeoutException e) {
+<a name="245" href="#245">245</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/TempErrorException.html">TempErrorException</a>(<span class="string">"Timeout querying dns server"</span>);
+<a name="246" href="#246">246</a>             }
+<a name="247" href="#247">247</a>         }
+<a name="248" href="#248">248</a>         <strong>return</strong> listAData;
+<a name="249" href="#249">249</a>     }
+<a name="250" href="#250">250</a> 
+<a name="251" href="#251">251</a>     <em>/**<em>*</em></em>
+<a name="252" href="#252">252</a> <em>     * @see org.apache.james.jspf.wiring.DNSServiceEnabled#enableDNSService(org.apache.james.jspf.core.DNSService)</em>
+<a name="253" href="#253">253</a> <em>     */</em>
+<a name="254" href="#254">254</a>     <strong>public</strong> <strong>void</strong> enableDNSService(<a href="../../../../../org/apache/james/jspf/core/DNSService.html">DNSService</a> service) {
+<a name="255" href="#255">255</a>         <strong>this</strong>.dnsService = service;
+<a name="256" href="#256">256</a>     }
+<a name="257" href="#257">257</a> 
+<a name="258" href="#258">258</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

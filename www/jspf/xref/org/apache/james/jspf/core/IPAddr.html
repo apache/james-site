@@ -100,402 +100,398 @@
 <a name="91" href="#91">91</a>  <em>     * @return true or false</em>
 <a name="92" href="#92">92</a>  <em>     */</em>
 <a name="93" href="#93">93</a>      <strong>public</strong> <strong>static</strong> <strong>boolean</strong> isIPAddr(String data) {
-<a name="94" href="#94">94</a>          <strong>if</strong> (data instanceof String) {
-<a name="95" href="#95">95</a>              <strong>try</strong> {
-<a name="96" href="#96">96</a>                  getAddress((String) data);
-<a name="97" href="#97">97</a>                  <strong>return</strong> <strong>true</strong>;
-<a name="98" href="#98">98</a>              } <strong>catch</strong> (PermErrorException e) {
-<a name="99" href="#99">99</a>                  <strong>return</strong> false;
-<a name="100" href="#100">100</a>             }
-<a name="101" href="#101">101</a>         } <strong>else</strong> {
-<a name="102" href="#102">102</a>             <strong>return</strong> false;
-<a name="103" href="#103">103</a>         }
-<a name="104" href="#104">104</a>     }
-<a name="105" href="#105">105</a> 
-<a name="106" href="#106">106</a>     <em>/**<em>*</em></em>
-<a name="107" href="#107">107</a> <em>     * Set default values for ipv6</em>
-<a name="108" href="#108">108</a> <em>     * </em>
-<a name="109" href="#109">109</a> <em>     */</em>
-<a name="110" href="#110">110</a>     <strong>private</strong> <strong>void</strong> setIP6Defaults() {
-<a name="111" href="#111">111</a>         ipLength = 16;
-<a name="112" href="#112">112</a>         ipJoiner = <span class="string">":"</span>;
-<a name="113" href="#113">113</a>         address = <strong>new</strong> <strong>int</strong>[8];
-<a name="114" href="#114">114</a>         mask = <strong>new</strong> <strong>int</strong>[8];
-<a name="115" href="#115">115</a>         ipRun = 8;
-<a name="116" href="#116">116</a>     }
-<a name="117" href="#117">117</a> 
-<a name="118" href="#118">118</a>     <em>/**<em>*</em></em>
-<a name="119" href="#119">119</a> <em>     * create series of 16 bit masks for each ip block</em>
-<a name="120" href="#120">120</a> <em>     * </em>
-<a name="121" href="#121">121</a> <em>     * @param maskLength</em>
-<a name="122" href="#122">122</a> <em>     *            The netmask</em>
-<a name="123" href="#123">123</a> <em>     */</em>
-<a name="124" href="#124">124</a>     <strong>public</strong> <strong>void</strong> setMask(<strong>int</strong> maskLength) {
-<a name="125" href="#125">125</a>         <strong>int</strong> startMask;
-<a name="126" href="#126">126</a>         <strong>int</strong> shift;
-<a name="127" href="#127">127</a>         <strong>int</strong> maskSize;
-<a name="128" href="#128">128</a> 
-<a name="129" href="#129">129</a>         <strong>this</strong>.maskLength = maskLength;
-<a name="130" href="#130">130</a>         <strong>if</strong> (ipLength == 4) {
-<a name="131" href="#131">131</a>             <strong>if</strong> (!((maskLength > -1) &amp;&amp; (maskLength &lt; 33))) {
-<a name="132" href="#132">132</a>                 maskLength = 32;
-<a name="133" href="#133">133</a>             }
-<a name="134" href="#134">134</a>             maskSize = 8;
-<a name="135" href="#135">135</a>             startMask = (maskLength - 1) / maskSize;
-<a name="136" href="#136">136</a>         } <strong>else</strong> {
-<a name="137" href="#137">137</a>             <strong>if</strong> (!((maskLength > -1) &amp;&amp; (maskLength &lt; 129))) {
-<a name="138" href="#138">138</a>                 maskLength = 128;
-<a name="139" href="#139">139</a>             }
-<a name="140" href="#140">140</a>             maskSize = 16;
-<a name="141" href="#141">141</a>             startMask = (maskLength - 1) / maskSize;
-<a name="142" href="#142">142</a>         }
-<a name="143" href="#143">143</a> 
-<a name="144" href="#144">144</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
-<a name="145" href="#145">145</a>             <em class="comment">// full mask</em>
-<a name="146" href="#146">146</a>             <strong>if</strong> (i &lt; startMask) {
-<a name="147" href="#147">147</a>                 mask[i] = MASK16;
-<a name="148" href="#148">148</a>                 <em class="comment">// variable mask</em>
-<a name="149" href="#149">149</a>             } <strong>else</strong> <strong>if</strong> (i == startMask) {
-<a name="150" href="#150">150</a>                 shift = ((i + 1) * maskSize) - maskLength;
-<a name="151" href="#151">151</a>                 mask[i] = (MASK16 &lt;&lt; shift) &amp; MASK16;
-<a name="152" href="#152">152</a>                 <em class="comment">// no mask</em>
-<a name="153" href="#153">153</a>             } <strong>else</strong> {
-<a name="154" href="#154">154</a>                 mask[i] = 0;
-<a name="155" href="#155">155</a>             }
-<a name="156" href="#156">156</a>         }
-<a name="157" href="#157">157</a>     }
-<a name="158" href="#158">158</a> 
-<a name="159" href="#159">159</a>     <em>/**<em>*</em></em>
-<a name="160" href="#160">160</a> <em>     * Strip the last char of a string when it ends with a dot</em>
-<a name="161" href="#161">161</a> <em>     * </em>
-<a name="162" href="#162">162</a> <em>     * @param data</em>
-<a name="163" href="#163">163</a> <em>     *            The String where the dot should removed</em>
-<a name="164" href="#164">164</a> <em>     * @return modified The Given String with last char stripped</em>
-<a name="165" href="#165">165</a> <em>     */</em>
-<a name="166" href="#166">166</a>     <strong>public</strong> <strong>static</strong> String stripDot(String data) {
-<a name="167" href="#167">167</a> 
-<a name="168" href="#168">168</a>         data = data.trim();
-<a name="169" href="#169">169</a> 
-<a name="170" href="#170">170</a>         <strong>if</strong> (data.endsWith(<span class="string">"."</span>)) {
-<a name="171" href="#171">171</a>             <strong>return</strong> data.substring(0, data.length() - 1);
-<a name="172" href="#172">172</a>         } <strong>else</strong> {
-<a name="173" href="#173">173</a>             <strong>return</strong> data;
-<a name="174" href="#174">174</a>         }
-<a name="175" href="#175">175</a> 
-<a name="176" href="#176">176</a>     }
-<a name="177" href="#177">177</a> 
-<a name="178" href="#178">178</a>     <em>/**<em>*</em></em>
-<a name="179" href="#179">179</a> <em>     * Convert ipAddress to a byte Array which represent the ipAddress</em>
-<a name="180" href="#180">180</a> <em>     * </em>
-<a name="181" href="#181">181</a> <em>     * @param netAddress</em>
-<a name="182" href="#182">182</a> <em>     *            The ipAddress we should convert</em>
-<a name="183" href="#183">183</a> <em>     * @throws PermErrorException</em>
-<a name="184" href="#184">184</a> <em>     *             on error</em>
-<a name="185" href="#185">185</a> <em>     */</em>
-<a name="186" href="#186">186</a>     <strong>private</strong> <strong>void</strong> stringToInternal(String netAddress) throws PermErrorException {
-<a name="187" href="#187">187</a>         netAddress = stripDot(netAddress);
-<a name="188" href="#188">188</a> 
-<a name="189" href="#189">189</a>         <strong>try</strong> {
-<a name="190" href="#190">190</a>             byte[] bytes = Inet6Util.createByteArrayFromIPAddressString(netAddress);
-<a name="191" href="#191">191</a>     
-<a name="192" href="#192">192</a>             <strong>if</strong> (bytes.length == 4) {
-<a name="193" href="#193">193</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; bytes.length; i++) {
-<a name="194" href="#194">194</a>                     address[i] = bytes[i];
-<a name="195" href="#195">195</a>                 }
-<a name="196" href="#196">196</a>             } <strong>else</strong> <strong>if</strong> (bytes.length == 16) {
-<a name="197" href="#197">197</a>                 setIP6Defaults();
-<a name="198" href="#198">198</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; bytes.length / 2; i++) {
-<a name="199" href="#199">199</a>                     address[i] = unsigned(bytes[i * 2]) * 256
-<a name="200" href="#200">200</a>                             + unsigned(bytes[i * 2 + 1]);
-<a name="201" href="#201">201</a>                 }
-<a name="202" href="#202">202</a>             } <strong>else</strong> {
-<a name="203" href="#203">203</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Not a valid address: "</span> + netAddress);
-<a name="204" href="#204">204</a>             }
-<a name="205" href="#205">205</a>         } <strong>catch</strong> (NumberFormatException e) {
-<a name="206" href="#206">206</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Not a valid address: "</span> + netAddress);
-<a name="207" href="#207">207</a>         }
-<a name="208" href="#208">208</a>     }
-<a name="209" href="#209">209</a> 
-<a name="210" href="#210">210</a>     <em>/**<em>*</em></em>
-<a name="211" href="#211">211</a> <em>     * Return the Hexdecimal representation of the given long value</em>
-<a name="212" href="#212">212</a> <em>     * </em>
-<a name="213" href="#213">213</a> <em>     * @param data The value to retrieve the Hexdecimal for</em>
-<a name="214" href="#214">214</a> <em>     * @return The Hexdecimal representation of the given value</em>
-<a name="215" href="#215">215</a> <em>     */</em>
-<a name="216" href="#216">216</a>     <strong>private</strong> String getHex(<strong>long</strong> data) {
-<a name="217" href="#217">217</a>         StringBuffer fullHex = <strong>new</strong> StringBuffer();
-<a name="218" href="#218">218</a>         fullHex.append(<span class="string">"0000"</span> + Long.toHexString(data).toUpperCase());
-<a name="219" href="#219">219</a>         fullHex = fullHex.delete(0, fullHex.length() - 4);
-<a name="220" href="#220">220</a>         <strong>return</strong> fullHex.toString();
-<a name="221" href="#221">221</a>     }
-<a name="222" href="#222">222</a> 
-<a name="223" href="#223">223</a>     <em>/**<em>*</em></em>
-<a name="224" href="#224">224</a> <em>     * @see #getInAddress(String)</em>
-<a name="225" href="#225">225</a> <em>     */</em>
-<a name="226" href="#226">226</a>     <strong>public</strong> String getIPAddress() {
-<a name="227" href="#227">227</a>         <strong>return</strong> getIPAddress(address);
-<a name="228" href="#228">228</a>     }
-<a name="229" href="#229">229</a> 
-<a name="230" href="#230">230</a>     <em>/**<em>*</em></em>
-<a name="231" href="#231">231</a> <em>     * Get ip Address from given int Array</em>
-<a name="232" href="#232">232</a> <em>     * </em>
-<a name="233" href="#233">233</a> <em>     * @param addressData</em>
-<a name="234" href="#234">234</a> <em>     *            The int Array</em>
-<a name="235" href="#235">235</a> <em>     * @return ipAddress The ipAddress</em>
-<a name="236" href="#236">236</a> <em>     */</em>
-<a name="237" href="#237">237</a>     <strong>private</strong> String getIPAddress(<strong>int</strong>[] addressData) {
-<a name="238" href="#238">238</a>         StringBuffer createAddress = <strong>new</strong> StringBuffer();
-<a name="239" href="#239">239</a>         <strong>int</strong>[] workingAddress;
-<a name="240" href="#240">240</a> 
-<a name="241" href="#241">241</a>         <em class="comment">// convert internal address to 8 bit</em>
-<a name="242" href="#242">242</a>         <strong>if</strong> (ipLength == 4) {
-<a name="243" href="#243">243</a>             workingAddress = get8BitAddress(addressData);
-<a name="244" href="#244">244</a>             <em class="comment">// create IP string</em>
-<a name="245" href="#245">245</a>             createAddress.append(workingAddress[0]);
-<a name="246" href="#246">246</a>             <strong>for</strong> (<strong>int</strong> i = 1; i &lt; ipRun; i++) {
-<a name="247" href="#247">247</a>                 createAddress.append(ipJoiner + workingAddress[i]);
-<a name="248" href="#248">248</a>             }
-<a name="249" href="#249">249</a>             <em class="comment">// leave internal address as 16 bit</em>
-<a name="250" href="#250">250</a>         } <strong>else</strong> {
-<a name="251" href="#251">251</a>             workingAddress = addressData;
-<a name="252" href="#252">252</a>             <em class="comment">// create IP string</em>
-<a name="253" href="#253">253</a>             createAddress.append(getHex(workingAddress[0]));
-<a name="254" href="#254">254</a>             <strong>for</strong> (<strong>int</strong> i = 1; i &lt; ipRun; i++) {
-<a name="255" href="#255">255</a>                 createAddress.append(ipJoiner + getHex(workingAddress[i]));
-<a name="256" href="#256">256</a>             }
-<a name="257" href="#257">257</a>         }
-<a name="258" href="#258">258</a> 
-<a name="259" href="#259">259</a>         <strong>return</strong> createAddress.toString();
-<a name="260" href="#260">260</a>     }
-<a name="261" href="#261">261</a> 
-<a name="262" href="#262">262</a>     <em>/**<em>*</em></em>
-<a name="263" href="#263">263</a> <em>     * </em>
-<a name="264" href="#264">264</a> <em>     * @see #getIPAddress(int[])</em>
-<a name="265" href="#265">265</a> <em>     */</em>
-<a name="266" href="#266">266</a>     <strong>public</strong> String getMaskedIPAddress() {
-<a name="267" href="#267">267</a>         <strong>return</strong> getIPAddress(maskedAddress(address, mask));
-<a name="268" href="#268">268</a>     }
-<a name="269" href="#269">269</a> 
-<a name="270" href="#270">270</a>     <em>/**<em>*</em></em>
-<a name="271" href="#271">271</a> <em>     * Return the NibbleFormat of the IPAddr</em>
-<a name="272" href="#272">272</a> <em>     * </em>
-<a name="273" href="#273">273</a> <em>     * @return ipAddress The ipAddress in nibbleFormat </em>
-<a name="274" href="#274">274</a> <em>     */</em>
-<a name="275" href="#275">275</a>     <strong>public</strong> String getNibbleFormat() {
-<a name="276" href="#276">276</a>         <strong>return</strong> getNibbleFormat(address);
-<a name="277" href="#277">277</a>     }
-<a name="278" href="#278">278</a>     
-<a name="279" href="#279">279</a>     <strong>private</strong> String getNibbleFormat(<strong>int</strong>[] address) {
-<a name="280" href="#280">280</a>         StringBuffer sb = <strong>new</strong> StringBuffer();
-<a name="281" href="#281">281</a>         <strong>int</strong>[] ip = address;
-<a name="282" href="#282">282</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ip.length; i++) {
-<a name="283" href="#283">283</a>             String hex = getHex(ip[i]);
-<a name="284" href="#284">284</a>             <strong>for</strong> (<strong>int</strong> j = 0; j &lt; hex.length(); j++) {
-<a name="285" href="#285">285</a>                 sb.append(hex.charAt(j));
-<a name="286" href="#286">286</a>                 <strong>if</strong> (i != ip.length -1 || j != hex.length() -1) {
-<a name="287" href="#287">287</a>                     sb.append(<span class="string">"."</span>);
-<a name="288" href="#288">288</a>                 }
-<a name="289" href="#289">289</a>             }
-<a name="290" href="#290">290</a>         }
-<a name="291" href="#291">291</a>         <strong>return</strong> sb.toString();
-<a name="292" href="#292">292</a>     }
-<a name="293" href="#293">293</a> 
-<a name="294" href="#294">294</a>     <em>/**<em>*</em></em>
-<a name="295" href="#295">295</a> <em>     * Get reverse ipAddress</em>
-<a name="296" href="#296">296</a> <em>     * </em>
-<a name="297" href="#297">297</a> <em>     * @return reverse ipAddress</em>
-<a name="298" href="#298">298</a> <em>     */</em>
-<a name="299" href="#299">299</a>     <strong>public</strong> String getReverseIP() {
-<a name="300" href="#300">300</a>         <strong>if</strong>(isIPV6(getIPAddress())) {
-<a name="301" href="#301">301</a>             StringBuffer ip6 = <strong>new</strong> StringBuffer(getNibbleFormat());
-<a name="302" href="#302">302</a>             <strong>return</strong> ip6.reverse().append(<span class="string">".ip6.arpa"</span>).toString();     
-<a name="303" href="#303">303</a>         }
-<a name="304" href="#304">304</a>         <strong>return</strong> (getIPAddress(reverseIP(address)) + <span class="string">".in-addr.arpa"</span>);
-<a name="305" href="#305">305</a>     }
-<a name="306" href="#306">306</a> 
-<a name="307" href="#307">307</a>     <em>/**<em>*</em></em>
-<a name="308" href="#308">308</a> <em>     * Converts 16 bit representation to 8 bit for IP4</em>
-<a name="309" href="#309">309</a> <em>     * </em>
-<a name="310" href="#310">310</a> <em>     * @param addressData</em>
-<a name="311" href="#311">311</a> <em>     *            The given int Array</em>
-<a name="312" href="#312">312</a> <em>     * @return converted String</em>
-<a name="313" href="#313">313</a> <em>     */</em>
-<a name="314" href="#314">314</a>     <strong>private</strong> <strong>int</strong>[] get8BitAddress(<strong>int</strong>[] addressData) {
-<a name="315" href="#315">315</a>         <strong>int</strong>[] convertAddress = <strong>new</strong> <strong>int</strong>[4];
-<a name="316" href="#316">316</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
-<a name="317" href="#317">317</a>             convertAddress[i] = addressData[i] &amp; MASK8;
-<a name="318" href="#318">318</a>         }
-<a name="319" href="#319">319</a>         <strong>return</strong> convertAddress;
-<a name="320" href="#320">320</a>     }
-<a name="321" href="#321">321</a> 
-<a name="322" href="#322">322</a>     <em>/**<em>*</em></em>
-<a name="323" href="#323">323</a> <em>     * Create a masked address given an address and mask</em>
-<a name="324" href="#324">324</a> <em>     * </em>
-<a name="325" href="#325">325</a> <em>     * @param addressData</em>
-<a name="326" href="#326">326</a> <em>     *            The int Array represent the ipAddress</em>
-<a name="327" href="#327">327</a> <em>     * @param maskData</em>
-<a name="328" href="#328">328</a> <em>     *            The int array represent the mask</em>
-<a name="329" href="#329">329</a> <em>     * @return maskedAddress</em>
-<a name="330" href="#330">330</a> <em>     */</em>
-<a name="331" href="#331">331</a>     <strong>private</strong> <strong>int</strong>[] maskedAddress(<strong>int</strong>[] addressData, <strong>int</strong>[] maskData) {
-<a name="332" href="#332">332</a>         <strong>int</strong>[] maskedAddress = <strong>new</strong> <strong>int</strong>[ipLength];
-<a name="333" href="#333">333</a> 
-<a name="334" href="#334">334</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
-<a name="335" href="#335">335</a>             maskedAddress[i] = addressData[i] &amp; maskData[i];
-<a name="336" href="#336">336</a>         }
-<a name="337" href="#337">337</a>         <strong>return</strong> maskedAddress;
-<a name="338" href="#338">338</a>     }
-<a name="339" href="#339">339</a> 
-<a name="340" href="#340">340</a>     <em>/**<em>*</em></em>
-<a name="341" href="#341">341</a> <em>     * Reverses internal address</em>
-<a name="342" href="#342">342</a> <em>     * </em>
-<a name="343" href="#343">343</a> <em>     * @param addressData</em>
-<a name="344" href="#344">344</a> <em>     *            The int array represent the ipAddress</em>
-<a name="345" href="#345">345</a> <em>     * @return reverseIP</em>
-<a name="346" href="#346">346</a> <em>     */</em>
-<a name="347" href="#347">347</a>     <strong>private</strong> <strong>int</strong>[] reverseIP(<strong>int</strong>[] addressData) {
-<a name="348" href="#348">348</a>         <strong>int</strong>[] reverseIP = <strong>new</strong> <strong>int</strong>[ipLength];
-<a name="349" href="#349">349</a>         <strong>int</strong> temp;
-<a name="350" href="#350">350</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
-<a name="351" href="#351">351</a>             temp = addressData[i];
-<a name="352" href="#352">352</a>             reverseIP[i] = addressData[(ipRun - 1) - i];
-<a name="353" href="#353">353</a>             reverseIP[(ipRun - 1) - i] = temp;
-<a name="354" href="#354">354</a>         }
-<a name="355" href="#355">355</a>         <strong>return</strong> reverseIP;
-<a name="356" href="#356">356</a>     }
-<a name="357" href="#357">357</a> 
-<a name="358" href="#358">358</a>     <em>/**<em>*</em></em>
-<a name="359" href="#359">359</a> <em>     * Get mask length</em>
-<a name="360" href="#360">360</a> <em>     * </em>
-<a name="361" href="#361">361</a> <em>     * @return maskLength</em>
-<a name="362" href="#362">362</a> <em>     */</em>
-<a name="363" href="#363">363</a>     <strong>public</strong> <strong>int</strong> getMaskLength() {
-<a name="364" href="#364">364</a>         <strong>return</strong> maskLength;
-<a name="365" href="#365">365</a>     }
-<a name="366" href="#366">366</a> 
-<a name="367" href="#367">367</a>     
-<a name="368" href="#368">368</a>     <strong>public</strong> String toString() {
-<a name="369" href="#369">369</a>         <strong>return</strong> getIPAddress();
+<a name="94" href="#94">94</a>          <strong>try</strong> {
+<a name="95" href="#95">95</a>              getAddress(data);
+<a name="96" href="#96">96</a>              <strong>return</strong> <strong>true</strong>;
+<a name="97" href="#97">97</a>          } <strong>catch</strong> (PermErrorException e) {
+<a name="98" href="#98">98</a>              <strong>return</strong> false;
+<a name="99" href="#99">99</a>          }
+<a name="100" href="#100">100</a>     }
+<a name="101" href="#101">101</a> 
+<a name="102" href="#102">102</a>     <em>/**<em>*</em></em>
+<a name="103" href="#103">103</a> <em>     * Set default values for ipv6</em>
+<a name="104" href="#104">104</a> <em>     * </em>
+<a name="105" href="#105">105</a> <em>     */</em>
+<a name="106" href="#106">106</a>     <strong>private</strong> <strong>void</strong> setIP6Defaults() {
+<a name="107" href="#107">107</a>         ipLength = 16;
+<a name="108" href="#108">108</a>         ipJoiner = <span class="string">":"</span>;
+<a name="109" href="#109">109</a>         address = <strong>new</strong> <strong>int</strong>[8];
+<a name="110" href="#110">110</a>         mask = <strong>new</strong> <strong>int</strong>[8];
+<a name="111" href="#111">111</a>         ipRun = 8;
+<a name="112" href="#112">112</a>     }
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a>     <em>/**<em>*</em></em>
+<a name="115" href="#115">115</a> <em>     * create series of 16 bit masks for each ip block</em>
+<a name="116" href="#116">116</a> <em>     * </em>
+<a name="117" href="#117">117</a> <em>     * @param maskLength</em>
+<a name="118" href="#118">118</a> <em>     *            The netmask</em>
+<a name="119" href="#119">119</a> <em>     */</em>
+<a name="120" href="#120">120</a>     <strong>public</strong> <strong>void</strong> setMask(<strong>int</strong> maskLength) {
+<a name="121" href="#121">121</a>         <strong>int</strong> startMask;
+<a name="122" href="#122">122</a>         <strong>int</strong> shift;
+<a name="123" href="#123">123</a>         <strong>int</strong> maskSize;
+<a name="124" href="#124">124</a> 
+<a name="125" href="#125">125</a>         <strong>this</strong>.maskLength = maskLength;
+<a name="126" href="#126">126</a>         <strong>if</strong> (ipLength == 4) {
+<a name="127" href="#127">127</a>             <strong>if</strong> (!((maskLength > -1) &amp;&amp; (maskLength &lt; 33))) {
+<a name="128" href="#128">128</a>                 maskLength = 32;
+<a name="129" href="#129">129</a>             }
+<a name="130" href="#130">130</a>             maskSize = 8;
+<a name="131" href="#131">131</a>             startMask = (maskLength - 1) / maskSize;
+<a name="132" href="#132">132</a>         } <strong>else</strong> {
+<a name="133" href="#133">133</a>             <strong>if</strong> (!((maskLength > -1) &amp;&amp; (maskLength &lt; 129))) {
+<a name="134" href="#134">134</a>                 maskLength = 128;
+<a name="135" href="#135">135</a>             }
+<a name="136" href="#136">136</a>             maskSize = 16;
+<a name="137" href="#137">137</a>             startMask = (maskLength - 1) / maskSize;
+<a name="138" href="#138">138</a>         }
+<a name="139" href="#139">139</a> 
+<a name="140" href="#140">140</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
+<a name="141" href="#141">141</a>             <em class="comment">// full mask</em>
+<a name="142" href="#142">142</a>             <strong>if</strong> (i &lt; startMask) {
+<a name="143" href="#143">143</a>                 mask[i] = MASK16;
+<a name="144" href="#144">144</a>                 <em class="comment">// variable mask</em>
+<a name="145" href="#145">145</a>             } <strong>else</strong> <strong>if</strong> (i == startMask) {
+<a name="146" href="#146">146</a>                 shift = ((i + 1) * maskSize) - maskLength;
+<a name="147" href="#147">147</a>                 mask[i] = (MASK16 &lt;&lt; shift) &amp; MASK16;
+<a name="148" href="#148">148</a>                 <em class="comment">// no mask</em>
+<a name="149" href="#149">149</a>             } <strong>else</strong> {
+<a name="150" href="#150">150</a>                 mask[i] = 0;
+<a name="151" href="#151">151</a>             }
+<a name="152" href="#152">152</a>         }
+<a name="153" href="#153">153</a>     }
+<a name="154" href="#154">154</a> 
+<a name="155" href="#155">155</a>     <em>/**<em>*</em></em>
+<a name="156" href="#156">156</a> <em>     * Strip the last char of a string when it ends with a dot</em>
+<a name="157" href="#157">157</a> <em>     * </em>
+<a name="158" href="#158">158</a> <em>     * @param data</em>
+<a name="159" href="#159">159</a> <em>     *            The String where the dot should removed</em>
+<a name="160" href="#160">160</a> <em>     * @return modified The Given String with last char stripped</em>
+<a name="161" href="#161">161</a> <em>     */</em>
+<a name="162" href="#162">162</a>     <strong>public</strong> <strong>static</strong> String stripDot(String data) {
+<a name="163" href="#163">163</a> 
+<a name="164" href="#164">164</a>         data = data.trim();
+<a name="165" href="#165">165</a> 
+<a name="166" href="#166">166</a>         <strong>if</strong> (data.endsWith(<span class="string">"."</span>)) {
+<a name="167" href="#167">167</a>             <strong>return</strong> data.substring(0, data.length() - 1);
+<a name="168" href="#168">168</a>         } <strong>else</strong> {
+<a name="169" href="#169">169</a>             <strong>return</strong> data;
+<a name="170" href="#170">170</a>         }
+<a name="171" href="#171">171</a> 
+<a name="172" href="#172">172</a>     }
+<a name="173" href="#173">173</a> 
+<a name="174" href="#174">174</a>     <em>/**<em>*</em></em>
+<a name="175" href="#175">175</a> <em>     * Convert ipAddress to a byte Array which represent the ipAddress</em>
+<a name="176" href="#176">176</a> <em>     * </em>
+<a name="177" href="#177">177</a> <em>     * @param netAddress</em>
+<a name="178" href="#178">178</a> <em>     *            The ipAddress we should convert</em>
+<a name="179" href="#179">179</a> <em>     * @throws PermErrorException</em>
+<a name="180" href="#180">180</a> <em>     *             on error</em>
+<a name="181" href="#181">181</a> <em>     */</em>
+<a name="182" href="#182">182</a>     <strong>private</strong> <strong>void</strong> stringToInternal(String netAddress) throws PermErrorException {
+<a name="183" href="#183">183</a>         netAddress = stripDot(netAddress);
+<a name="184" href="#184">184</a> 
+<a name="185" href="#185">185</a>         <strong>try</strong> {
+<a name="186" href="#186">186</a>             byte[] bytes = Inet6Util.createByteArrayFromIPAddressString(netAddress);
+<a name="187" href="#187">187</a>     
+<a name="188" href="#188">188</a>             <strong>if</strong> (bytes.length == 4) {
+<a name="189" href="#189">189</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; bytes.length; i++) {
+<a name="190" href="#190">190</a>                     address[i] = bytes[i];
+<a name="191" href="#191">191</a>                 }
+<a name="192" href="#192">192</a>             } <strong>else</strong> <strong>if</strong> (bytes.length == 16) {
+<a name="193" href="#193">193</a>                 setIP6Defaults();
+<a name="194" href="#194">194</a>                 <strong>for</strong> (<strong>int</strong> i = 0; i &lt; bytes.length / 2; i++) {
+<a name="195" href="#195">195</a>                     address[i] = unsigned(bytes[i * 2]) * 256
+<a name="196" href="#196">196</a>                             + unsigned(bytes[i * 2 + 1]);
+<a name="197" href="#197">197</a>                 }
+<a name="198" href="#198">198</a>             } <strong>else</strong> {
+<a name="199" href="#199">199</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Not a valid address: "</span> + netAddress);
+<a name="200" href="#200">200</a>             }
+<a name="201" href="#201">201</a>         } <strong>catch</strong> (NumberFormatException e) {
+<a name="202" href="#202">202</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Not a valid address: "</span> + netAddress);
+<a name="203" href="#203">203</a>         }
+<a name="204" href="#204">204</a>     }
+<a name="205" href="#205">205</a> 
+<a name="206" href="#206">206</a>     <em>/**<em>*</em></em>
+<a name="207" href="#207">207</a> <em>     * Return the Hexdecimal representation of the given long value</em>
+<a name="208" href="#208">208</a> <em>     * </em>
+<a name="209" href="#209">209</a> <em>     * @param data The value to retrieve the Hexdecimal for</em>
+<a name="210" href="#210">210</a> <em>     * @return The Hexdecimal representation of the given value</em>
+<a name="211" href="#211">211</a> <em>     */</em>
+<a name="212" href="#212">212</a>     <strong>private</strong> String getHex(<strong>long</strong> data) {
+<a name="213" href="#213">213</a>         StringBuffer fullHex = <strong>new</strong> StringBuffer();
+<a name="214" href="#214">214</a>         fullHex.append(<span class="string">"0000"</span> + Long.toHexString(data).toUpperCase());
+<a name="215" href="#215">215</a>         fullHex = fullHex.delete(0, fullHex.length() - 4);
+<a name="216" href="#216">216</a>         <strong>return</strong> fullHex.toString();
+<a name="217" href="#217">217</a>     }
+<a name="218" href="#218">218</a> 
+<a name="219" href="#219">219</a>     <em>/**<em>*</em></em>
+<a name="220" href="#220">220</a> <em>     * @see #getInAddress(String)</em>
+<a name="221" href="#221">221</a> <em>     */</em>
+<a name="222" href="#222">222</a>     <strong>public</strong> String getIPAddress() {
+<a name="223" href="#223">223</a>         <strong>return</strong> getIPAddress(address);
+<a name="224" href="#224">224</a>     }
+<a name="225" href="#225">225</a> 
+<a name="226" href="#226">226</a>     <em>/**<em>*</em></em>
+<a name="227" href="#227">227</a> <em>     * Get ip Address from given int Array</em>
+<a name="228" href="#228">228</a> <em>     * </em>
+<a name="229" href="#229">229</a> <em>     * @param addressData</em>
+<a name="230" href="#230">230</a> <em>     *            The int Array</em>
+<a name="231" href="#231">231</a> <em>     * @return ipAddress The ipAddress</em>
+<a name="232" href="#232">232</a> <em>     */</em>
+<a name="233" href="#233">233</a>     <strong>private</strong> String getIPAddress(<strong>int</strong>[] addressData) {
+<a name="234" href="#234">234</a>         StringBuffer createAddress = <strong>new</strong> StringBuffer();
+<a name="235" href="#235">235</a>         <strong>int</strong>[] workingAddress;
+<a name="236" href="#236">236</a> 
+<a name="237" href="#237">237</a>         <em class="comment">// convert internal address to 8 bit</em>
+<a name="238" href="#238">238</a>         <strong>if</strong> (ipLength == 4) {
+<a name="239" href="#239">239</a>             workingAddress = get8BitAddress(addressData);
+<a name="240" href="#240">240</a>             <em class="comment">// create IP string</em>
+<a name="241" href="#241">241</a>             createAddress.append(workingAddress[0]);
+<a name="242" href="#242">242</a>             <strong>for</strong> (<strong>int</strong> i = 1; i &lt; ipRun; i++) {
+<a name="243" href="#243">243</a>                 createAddress.append(ipJoiner + workingAddress[i]);
+<a name="244" href="#244">244</a>             }
+<a name="245" href="#245">245</a>             <em class="comment">// leave internal address as 16 bit</em>
+<a name="246" href="#246">246</a>         } <strong>else</strong> {
+<a name="247" href="#247">247</a>             workingAddress = addressData;
+<a name="248" href="#248">248</a>             <em class="comment">// create IP string</em>
+<a name="249" href="#249">249</a>             createAddress.append(getHex(workingAddress[0]));
+<a name="250" href="#250">250</a>             <strong>for</strong> (<strong>int</strong> i = 1; i &lt; ipRun; i++) {
+<a name="251" href="#251">251</a>                 createAddress.append(ipJoiner + getHex(workingAddress[i]));
+<a name="252" href="#252">252</a>             }
+<a name="253" href="#253">253</a>         }
+<a name="254" href="#254">254</a> 
+<a name="255" href="#255">255</a>         <strong>return</strong> createAddress.toString();
+<a name="256" href="#256">256</a>     }
+<a name="257" href="#257">257</a> 
+<a name="258" href="#258">258</a>     <em>/**<em>*</em></em>
+<a name="259" href="#259">259</a> <em>     * </em>
+<a name="260" href="#260">260</a> <em>     * @see #getIPAddress(int[])</em>
+<a name="261" href="#261">261</a> <em>     */</em>
+<a name="262" href="#262">262</a>     <strong>public</strong> String getMaskedIPAddress() {
+<a name="263" href="#263">263</a>         <strong>return</strong> getIPAddress(maskedAddress(address, mask));
+<a name="264" href="#264">264</a>     }
+<a name="265" href="#265">265</a> 
+<a name="266" href="#266">266</a>     <em>/**<em>*</em></em>
+<a name="267" href="#267">267</a> <em>     * Return the NibbleFormat of the IPAddr</em>
+<a name="268" href="#268">268</a> <em>     * </em>
+<a name="269" href="#269">269</a> <em>     * @return ipAddress The ipAddress in nibbleFormat </em>
+<a name="270" href="#270">270</a> <em>     */</em>
+<a name="271" href="#271">271</a>     <strong>public</strong> String getNibbleFormat() {
+<a name="272" href="#272">272</a>         <strong>return</strong> getNibbleFormat(address);
+<a name="273" href="#273">273</a>     }
+<a name="274" href="#274">274</a>     
+<a name="275" href="#275">275</a>     <strong>private</strong> String getNibbleFormat(<strong>int</strong>[] address) {
+<a name="276" href="#276">276</a>         StringBuffer sb = <strong>new</strong> StringBuffer();
+<a name="277" href="#277">277</a>         <strong>int</strong>[] ip = address;
+<a name="278" href="#278">278</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ip.length; i++) {
+<a name="279" href="#279">279</a>             String hex = getHex(ip[i]);
+<a name="280" href="#280">280</a>             <strong>for</strong> (<strong>int</strong> j = 0; j &lt; hex.length(); j++) {
+<a name="281" href="#281">281</a>                 sb.append(hex.charAt(j));
+<a name="282" href="#282">282</a>                 <strong>if</strong> (i != ip.length -1 || j != hex.length() -1) {
+<a name="283" href="#283">283</a>                     sb.append(<span class="string">"."</span>);
+<a name="284" href="#284">284</a>                 }
+<a name="285" href="#285">285</a>             }
+<a name="286" href="#286">286</a>         }
+<a name="287" href="#287">287</a>         <strong>return</strong> sb.toString();
+<a name="288" href="#288">288</a>     }
+<a name="289" href="#289">289</a> 
+<a name="290" href="#290">290</a>     <em>/**<em>*</em></em>
+<a name="291" href="#291">291</a> <em>     * Get reverse ipAddress</em>
+<a name="292" href="#292">292</a> <em>     * </em>
+<a name="293" href="#293">293</a> <em>     * @return reverse ipAddress</em>
+<a name="294" href="#294">294</a> <em>     */</em>
+<a name="295" href="#295">295</a>     <strong>public</strong> String getReverseIP() {
+<a name="296" href="#296">296</a>         <strong>if</strong>(isIPV6(getIPAddress())) {
+<a name="297" href="#297">297</a>             StringBuffer ip6 = <strong>new</strong> StringBuffer(getNibbleFormat());
+<a name="298" href="#298">298</a>             <strong>return</strong> ip6.reverse().append(<span class="string">".ip6.arpa"</span>).toString();     
+<a name="299" href="#299">299</a>         }
+<a name="300" href="#300">300</a>         <strong>return</strong> (getIPAddress(reverseIP(address)) + <span class="string">".in-addr.arpa"</span>);
+<a name="301" href="#301">301</a>     }
+<a name="302" href="#302">302</a> 
+<a name="303" href="#303">303</a>     <em>/**<em>*</em></em>
+<a name="304" href="#304">304</a> <em>     * Converts 16 bit representation to 8 bit for IP4</em>
+<a name="305" href="#305">305</a> <em>     * </em>
+<a name="306" href="#306">306</a> <em>     * @param addressData</em>
+<a name="307" href="#307">307</a> <em>     *            The given int Array</em>
+<a name="308" href="#308">308</a> <em>     * @return converted String</em>
+<a name="309" href="#309">309</a> <em>     */</em>
+<a name="310" href="#310">310</a>     <strong>private</strong> <strong>int</strong>[] get8BitAddress(<strong>int</strong>[] addressData) {
+<a name="311" href="#311">311</a>         <strong>int</strong>[] convertAddress = <strong>new</strong> <strong>int</strong>[4];
+<a name="312" href="#312">312</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
+<a name="313" href="#313">313</a>             convertAddress[i] = addressData[i] &amp; MASK8;
+<a name="314" href="#314">314</a>         }
+<a name="315" href="#315">315</a>         <strong>return</strong> convertAddress;
+<a name="316" href="#316">316</a>     }
+<a name="317" href="#317">317</a> 
+<a name="318" href="#318">318</a>     <em>/**<em>*</em></em>
+<a name="319" href="#319">319</a> <em>     * Create a masked address given an address and mask</em>
+<a name="320" href="#320">320</a> <em>     * </em>
+<a name="321" href="#321">321</a> <em>     * @param addressData</em>
+<a name="322" href="#322">322</a> <em>     *            The int Array represent the ipAddress</em>
+<a name="323" href="#323">323</a> <em>     * @param maskData</em>
+<a name="324" href="#324">324</a> <em>     *            The int array represent the mask</em>
+<a name="325" href="#325">325</a> <em>     * @return maskedAddress</em>
+<a name="326" href="#326">326</a> <em>     */</em>
+<a name="327" href="#327">327</a>     <strong>private</strong> <strong>int</strong>[] maskedAddress(<strong>int</strong>[] addressData, <strong>int</strong>[] maskData) {
+<a name="328" href="#328">328</a>         <strong>int</strong>[] maskedAddress = <strong>new</strong> <strong>int</strong>[ipLength];
+<a name="329" href="#329">329</a> 
+<a name="330" href="#330">330</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
+<a name="331" href="#331">331</a>             maskedAddress[i] = addressData[i] &amp; maskData[i];
+<a name="332" href="#332">332</a>         }
+<a name="333" href="#333">333</a>         <strong>return</strong> maskedAddress;
+<a name="334" href="#334">334</a>     }
+<a name="335" href="#335">335</a> 
+<a name="336" href="#336">336</a>     <em>/**<em>*</em></em>
+<a name="337" href="#337">337</a> <em>     * Reverses internal address</em>
+<a name="338" href="#338">338</a> <em>     * </em>
+<a name="339" href="#339">339</a> <em>     * @param addressData</em>
+<a name="340" href="#340">340</a> <em>     *            The int array represent the ipAddress</em>
+<a name="341" href="#341">341</a> <em>     * @return reverseIP</em>
+<a name="342" href="#342">342</a> <em>     */</em>
+<a name="343" href="#343">343</a>     <strong>private</strong> <strong>int</strong>[] reverseIP(<strong>int</strong>[] addressData) {
+<a name="344" href="#344">344</a>         <strong>int</strong>[] reverseIP = <strong>new</strong> <strong>int</strong>[ipLength];
+<a name="345" href="#345">345</a>         <strong>int</strong> temp;
+<a name="346" href="#346">346</a>         <strong>for</strong> (<strong>int</strong> i = 0; i &lt; ipRun; i++) {
+<a name="347" href="#347">347</a>             temp = addressData[i];
+<a name="348" href="#348">348</a>             reverseIP[i] = addressData[(ipRun - 1) - i];
+<a name="349" href="#349">349</a>             reverseIP[(ipRun - 1) - i] = temp;
+<a name="350" href="#350">350</a>         }
+<a name="351" href="#351">351</a>         <strong>return</strong> reverseIP;
+<a name="352" href="#352">352</a>     }
+<a name="353" href="#353">353</a> 
+<a name="354" href="#354">354</a>     <em>/**<em>*</em></em>
+<a name="355" href="#355">355</a> <em>     * Get mask length</em>
+<a name="356" href="#356">356</a> <em>     * </em>
+<a name="357" href="#357">357</a> <em>     * @return maskLength</em>
+<a name="358" href="#358">358</a> <em>     */</em>
+<a name="359" href="#359">359</a>     <strong>public</strong> <strong>int</strong> getMaskLength() {
+<a name="360" href="#360">360</a>         <strong>return</strong> maskLength;
+<a name="361" href="#361">361</a>     }
+<a name="362" href="#362">362</a> 
+<a name="363" href="#363">363</a>     
+<a name="364" href="#364">364</a>     <strong>public</strong> String toString() {
+<a name="365" href="#365">365</a>         <strong>return</strong> getIPAddress();
+<a name="366" href="#366">366</a>     }
+<a name="367" href="#367">367</a> 
+<a name="368" href="#368">368</a>     <strong>private</strong> <strong>int</strong> unsigned(byte data) {
+<a name="369" href="#369">369</a>         <strong>return</strong> data >= 0 ? data : 256 + data;
 <a name="370" href="#370">370</a>     }
 <a name="371" href="#371">371</a> 
-<a name="372" href="#372">372</a>     <strong>private</strong> <strong>int</strong> unsigned(byte data) {
-<a name="373" href="#373">373</a>         <strong>return</strong> data >= 0 ? data : 256 + data;
-<a name="374" href="#374">374</a>     }
-<a name="375" href="#375">375</a> 
-<a name="376" href="#376">376</a>     <em>/**<em>*</em></em>
-<a name="377" href="#377">377</a> <em>     * This method return the InAddress for the given ip.</em>
-<a name="378" href="#378">378</a> <em>     * </em>
-<a name="379" href="#379">379</a> <em>     * @param ipAddress -</em>
-<a name="380" href="#380">380</a> <em>     *            ipAddress that should be processed</em>
-<a name="381" href="#381">381</a> <em>     * @return the inAddress (in-addr or ip6)</em>
-<a name="382" href="#382">382</a> <em>     * @throws PermErrorException</em>
-<a name="383" href="#383">383</a> <em>     *             if the ipAddress is not valid (rfc conform)</em>
-<a name="384" href="#384">384</a> <em>     */</em>
-<a name="385" href="#385">385</a>     <strong>public</strong> <strong>static</strong> String getInAddress(String ipAddress)
-<a name="386" href="#386">386</a>             throws <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a> {
-<a name="387" href="#387">387</a>         <strong>if</strong> (ipAddress == <strong>null</strong>) {
-<a name="388" href="#388">388</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(
-<a name="389" href="#389">389</a>                     <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);
-<a name="390" href="#390">390</a>         } <strong>else</strong> <strong>if</strong> (Inet6Util.isValidIPV4Address(ipAddress)) {
-<a name="391" href="#391">391</a>             <strong>return</strong> <span class="string">"in-addr"</span>;
-<a name="392" href="#392">392</a>         } <strong>else</strong> <strong>if</strong> (Inet6Util.isValidIP6Address(ipAddress)) {
-<a name="393" href="#393">393</a>             <strong>return</strong> <span class="string">"ip6"</span>;
-<a name="394" href="#394">394</a>         } <strong>else</strong> {
-<a name="395" href="#395">395</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(
-<a name="396" href="#396">396</a>                     <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);
-<a name="397" href="#397">397</a>         }
-<a name="398" href="#398">398</a>     }
-<a name="399" href="#399">399</a> 
-<a name="400" href="#400">400</a>     <em>/**<em>*</em></em>
-<a name="401" href="#401">401</a> <em>     * Check if the given IP is valid. Works with ipv4 and ip6</em>
-<a name="402" href="#402">402</a> <em>     * </em>
-<a name="403" href="#403">403</a> <em>     * @param ip</em>
-<a name="404" href="#404">404</a> <em>     *            The ipaddress to check</em>
-<a name="405" href="#405">405</a> <em>     * @return true or false</em>
-<a name="406" href="#406">406</a> <em>     */</em>
-<a name="407" href="#407">407</a>     <strong>public</strong> <strong>static</strong> <strong>boolean</strong> isValidIP(String ip) {
-<a name="408" href="#408">408</a>         <strong>return</strong> ip != <strong>null</strong>
-<a name="409" href="#409">409</a>                 &amp;&amp; (Inet6Util.isValidIPV4Address(ip) || Inet6Util
-<a name="410" href="#410">410</a>                         .isValidIP6Address(ip));
-<a name="411" href="#411">411</a>     }
-<a name="412" href="#412">412</a>     
-<a name="413" href="#413">413</a>     <em>/**<em>*</em></em>
-<a name="414" href="#414">414</a> <em>     * Return if the given ipAddress is ipv6</em>
-<a name="415" href="#415">415</a> <em>     * </em>
-<a name="416" href="#416">416</a> <em>     * @param ip The ipAddress</em>
-<a name="417" href="#417">417</a> <em>     * @return true or false</em>
-<a name="418" href="#418">418</a> <em>     */</em>
-<a name="419" href="#419">419</a>     <strong>public</strong> <strong>static</strong> <strong>boolean</strong> isIPV6(String ip) {
-<a name="420" href="#420">420</a>         <strong>return</strong> Inet6Util.isValidIP6Address(ip);
-<a name="421" href="#421">421</a>     }
-<a name="422" href="#422">422</a> 
-<a name="423" href="#423">423</a>     <em>/**<em>*</em></em>
-<a name="424" href="#424">424</a> <em>     * This method try to covnert an ip address to an easy readable ip. See</em>
-<a name="425" href="#425">425</a> <em>     * <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html" target="alexandria_uri">http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html</a> for</em>
-<a name="426" href="#426">426</a> <em>     * the format it returns. For ipv4 it make no convertion</em>
-<a name="427" href="#427">427</a> <em>     * </em>
-<a name="428" href="#428">428</a> <em>     * @param ip</em>
-<a name="429" href="#429">429</a> <em>     *            The ip which should be tried to convert</em>
-<a name="430" href="#430">430</a> <em>     * @return ip The converted ip</em>
-<a name="431" href="#431">431</a> <em>     */</em>
-<a name="432" href="#432">432</a>     <strong>public</strong> <strong>static</strong> String getReadableIP(String ip) {
-<a name="433" href="#433">433</a> 
-<a name="434" href="#434">434</a>         <em class="comment">// Convert the ip if its an ipv6 ip. For ipv4 no conversion is needed</em>
-<a name="435" href="#435">435</a>         <strong>if</strong> (Inet6Util.isValidIP6Address(ip)) {
-<a name="436" href="#436">436</a>             <strong>try</strong> {
-<a name="437" href="#437">437</a>                 <strong>return</strong> getConvertedIP(ip);
-<a name="438" href="#438">438</a>             } <strong>catch</strong> (UnknownHostException e) {
-<a name="439" href="#439">439</a>                 <em class="comment">// ignore this</em>
-<a name="440" href="#440">440</a>             }
-<a name="441" href="#441">441</a>         }
-<a name="442" href="#442">442</a>         <strong>return</strong> ip;
-<a name="443" href="#443">443</a>     }
-<a name="444" href="#444">444</a>     
-<a name="445" href="#445">445</a>     <strong>private</strong> <strong>static</strong> String getConvertedIP(String ip) throws UnknownHostException {
-<a name="446" href="#446">446</a>         <em class="comment">// Convert the ip if its an ipv6 ip. For ipv4 no conversion is needed</em>
-<a name="447" href="#447">447</a>         <strong>return</strong> Address.getByName(ip).getHostAddress();
-<a name="448" href="#448">448</a>     }
-<a name="449" href="#449">449</a>     
-<a name="450" href="#450">450</a>     <em>/**<em>*</em></em>
-<a name="451" href="#451">451</a> <em>     * This method convert the given ip to the proper format. Convertion will only done if the given ipAddress is ipv6 and ipv4-mapped</em>
-<a name="452" href="#452">452</a> <em>     * </em>
-<a name="453" href="#453">453</a> <em>     * This must be done to correct handle IPv4-mapped-addresses. </em>
-<a name="454" href="#454">454</a> <em>     * See: <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html" target="alexandria_uri">http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html</a></em>
-<a name="455" href="#455">455</a> <em>     *</em>
-<a name="456" href="#456">456</a> <em>     * Special IPv6 address:</em>
-<a name="457" href="#457">457</a> <em>     *  IPv4-mapped address:     </em>
-<a name="458" href="#458">458</a> <em>     *      Of the form::ffff:w.x.y.z, this IPv6 address is used to represent an IPv4 address. It allows </em>
-<a name="459" href="#459">459</a> <em>     *      the native program to use the same address data structure and also the same socket when </em>
-<a name="460" href="#460">460</a> <em>     *      communicating with both IPv4 and IPv6 nodes. In InetAddress and Inet6Address, it is used </em>
-<a name="461" href="#461">461</a> <em>     *      for internal representation; it has no functional role. Java will never return an IPv4-mapped address. </em>
-<a name="462" href="#462">462</a> <em>     *      These classes can take an IPv4-mapped address as input, both in byte array and text representation. </em>
-<a name="463" href="#463">463</a> <em>     *       However, it will be converted into an IPv4 address.</em>
-<a name="464" href="#464">464</a> <em>     * @param ip the ipAddress to convert</em>
-<a name="465" href="#465">465</a> <em>     * @return return converted ip</em>
-<a name="466" href="#466">466</a> <em>     * @throws PermErrorException if the given ipAddress is invalid</em>
-<a name="467" href="#467">467</a> <em>     */</em>
-<a name="468" href="#468">468</a>     <strong>public</strong> <strong>static</strong> String getProperIpAddress(String ip) throws PermErrorException {
-<a name="469" href="#469">469</a>         <strong>if</strong> (isIPV6(ip) &amp;&amp; isIPV4MappedIP(ip)) {
-<a name="470" href="#470">470</a>             <strong>try</strong> {
-<a name="471" href="#471">471</a>                 <strong>return</strong> getConvertedIP(ip);
-<a name="472" href="#472">472</a>             } <strong>catch</strong> (UnknownHostException e) {
-<a name="473" href="#473">473</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Invalid ipAddress: "</span> + ip);
-<a name="474" href="#474">474</a>             }
-<a name="475" href="#475">475</a>         }
-<a name="476" href="#476">476</a>         <strong>return</strong> ip;
-<a name="477" href="#477">477</a>         
-<a name="478" href="#478">478</a>     }
-<a name="479" href="#479">479</a>     
-<a name="480" href="#480">480</a>     <em>/**<em>*</em></em>
-<a name="481" href="#481">481</a> <em>     * Return true if the given ipAddress is a ipv4-mapped-address</em>
-<a name="482" href="#482">482</a> <em>     * @param ip</em>
-<a name="483" href="#483">483</a> <em>     * @return</em>
-<a name="484" href="#484">484</a> <em>     */</em>
-<a name="485" href="#485">485</a>     <strong>private</strong> <strong>static</strong> <strong>boolean</strong> isIPV4MappedIP(String ip) {
-<a name="486" href="#486">486</a>         <strong>return</strong> ip.toUpperCase().matches(ipv4MappedRegex);
-<a name="487" href="#487">487</a>     }
-<a name="488" href="#488">488</a> 
-<a name="489" href="#489">489</a> }
+<a name="372" href="#372">372</a>     <em>/**<em>*</em></em>
+<a name="373" href="#373">373</a> <em>     * This method return the InAddress for the given ip.</em>
+<a name="374" href="#374">374</a> <em>     * </em>
+<a name="375" href="#375">375</a> <em>     * @param ipAddress -</em>
+<a name="376" href="#376">376</a> <em>     *            ipAddress that should be processed</em>
+<a name="377" href="#377">377</a> <em>     * @return the inAddress (in-addr or ip6)</em>
+<a name="378" href="#378">378</a> <em>     * @throws PermErrorException</em>
+<a name="379" href="#379">379</a> <em>     *             if the ipAddress is not valid (rfc conform)</em>
+<a name="380" href="#380">380</a> <em>     */</em>
+<a name="381" href="#381">381</a>     <strong>public</strong> <strong>static</strong> String getInAddress(String ipAddress)
+<a name="382" href="#382">382</a>             throws <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a> {
+<a name="383" href="#383">383</a>         <strong>if</strong> (ipAddress == <strong>null</strong>) {
+<a name="384" href="#384">384</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(
+<a name="385" href="#385">385</a>                     <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);
+<a name="386" href="#386">386</a>         } <strong>else</strong> <strong>if</strong> (Inet6Util.isValidIPV4Address(ipAddress)) {
+<a name="387" href="#387">387</a>             <strong>return</strong> <span class="string">"in-addr"</span>;
+<a name="388" href="#388">388</a>         } <strong>else</strong> <strong>if</strong> (Inet6Util.isValidIP6Address(ipAddress)) {
+<a name="389" href="#389">389</a>             <strong>return</strong> <span class="string">"ip6"</span>;
+<a name="390" href="#390">390</a>         } <strong>else</strong> {
+<a name="391" href="#391">391</a>             <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(
+<a name="392" href="#392">392</a>                     <span class="string">"IP is not a valid ipv4 or ipv6 address"</span>);
+<a name="393" href="#393">393</a>         }
+<a name="394" href="#394">394</a>     }
+<a name="395" href="#395">395</a> 
+<a name="396" href="#396">396</a>     <em>/**<em>*</em></em>
+<a name="397" href="#397">397</a> <em>     * Check if the given IP is valid. Works with ipv4 and ip6</em>
+<a name="398" href="#398">398</a> <em>     * </em>
+<a name="399" href="#399">399</a> <em>     * @param ip</em>
+<a name="400" href="#400">400</a> <em>     *            The ipaddress to check</em>
+<a name="401" href="#401">401</a> <em>     * @return true or false</em>
+<a name="402" href="#402">402</a> <em>     */</em>
+<a name="403" href="#403">403</a>     <strong>public</strong> <strong>static</strong> <strong>boolean</strong> isValidIP(String ip) {
+<a name="404" href="#404">404</a>         <strong>return</strong> ip != <strong>null</strong>
+<a name="405" href="#405">405</a>                 &amp;&amp; (Inet6Util.isValidIPV4Address(ip) || Inet6Util
+<a name="406" href="#406">406</a>                         .isValidIP6Address(ip));
+<a name="407" href="#407">407</a>     }
+<a name="408" href="#408">408</a>     
+<a name="409" href="#409">409</a>     <em>/**<em>*</em></em>
+<a name="410" href="#410">410</a> <em>     * Return if the given ipAddress is ipv6</em>
+<a name="411" href="#411">411</a> <em>     * </em>
+<a name="412" href="#412">412</a> <em>     * @param ip The ipAddress</em>
+<a name="413" href="#413">413</a> <em>     * @return true or false</em>
+<a name="414" href="#414">414</a> <em>     */</em>
+<a name="415" href="#415">415</a>     <strong>public</strong> <strong>static</strong> <strong>boolean</strong> isIPV6(String ip) {
+<a name="416" href="#416">416</a>         <strong>return</strong> Inet6Util.isValidIP6Address(ip);
+<a name="417" href="#417">417</a>     }
+<a name="418" href="#418">418</a> 
+<a name="419" href="#419">419</a>     <em>/**<em>*</em></em>
+<a name="420" href="#420">420</a> <em>     * This method try to covnert an ip address to an easy readable ip. See</em>
+<a name="421" href="#421">421</a> <em>     * <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html" target="alexandria_uri">http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html</a> for</em>
+<a name="422" href="#422">422</a> <em>     * the format it returns. For ipv4 it make no convertion</em>
+<a name="423" href="#423">423</a> <em>     * </em>
+<a name="424" href="#424">424</a> <em>     * @param ip</em>
+<a name="425" href="#425">425</a> <em>     *            The ip which should be tried to convert</em>
+<a name="426" href="#426">426</a> <em>     * @return ip The converted ip</em>
+<a name="427" href="#427">427</a> <em>     */</em>
+<a name="428" href="#428">428</a>     <strong>public</strong> <strong>static</strong> String getReadableIP(String ip) {
+<a name="429" href="#429">429</a> 
+<a name="430" href="#430">430</a>         <em class="comment">// Convert the ip if its an ipv6 ip. For ipv4 no conversion is needed</em>
+<a name="431" href="#431">431</a>         <strong>if</strong> (Inet6Util.isValidIP6Address(ip)) {
+<a name="432" href="#432">432</a>             <strong>try</strong> {
+<a name="433" href="#433">433</a>                 <strong>return</strong> getConvertedIP(ip);
+<a name="434" href="#434">434</a>             } <strong>catch</strong> (UnknownHostException e) {
+<a name="435" href="#435">435</a>                 <em class="comment">// ignore this</em>
+<a name="436" href="#436">436</a>             }
+<a name="437" href="#437">437</a>         }
+<a name="438" href="#438">438</a>         <strong>return</strong> ip;
+<a name="439" href="#439">439</a>     }
+<a name="440" href="#440">440</a>     
+<a name="441" href="#441">441</a>     <strong>private</strong> <strong>static</strong> String getConvertedIP(String ip) throws UnknownHostException {
+<a name="442" href="#442">442</a>         <em class="comment">// Convert the ip if its an ipv6 ip. For ipv4 no conversion is needed</em>
+<a name="443" href="#443">443</a>         <strong>return</strong> Address.getByName(ip).getHostAddress();
+<a name="444" href="#444">444</a>     }
+<a name="445" href="#445">445</a>     
+<a name="446" href="#446">446</a>     <em>/**<em>*</em></em>
+<a name="447" href="#447">447</a> <em>     * This method convert the given ip to the proper format. Convertion will only done if the given ipAddress is ipv6 and ipv4-mapped</em>
+<a name="448" href="#448">448</a> <em>     * </em>
+<a name="449" href="#449">449</a> <em>     * This must be done to correct handle IPv4-mapped-addresses. </em>
+<a name="450" href="#450">450</a> <em>     * See: <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html" target="alexandria_uri">http://java.sun.com/j2se/1.4.2/docs/api/java/net/Inet6Address.html</a></em>
+<a name="451" href="#451">451</a> <em>     *</em>
+<a name="452" href="#452">452</a> <em>     * Special IPv6 address:</em>
+<a name="453" href="#453">453</a> <em>     *  IPv4-mapped address:     </em>
+<a name="454" href="#454">454</a> <em>     *      Of the form::ffff:w.x.y.z, this IPv6 address is used to represent an IPv4 address. It allows </em>
+<a name="455" href="#455">455</a> <em>     *      the native program to use the same address data structure and also the same socket when </em>
+<a name="456" href="#456">456</a> <em>     *      communicating with both IPv4 and IPv6 nodes. In InetAddress and Inet6Address, it is used </em>
+<a name="457" href="#457">457</a> <em>     *      for internal representation; it has no functional role. Java will never return an IPv4-mapped address. </em>
+<a name="458" href="#458">458</a> <em>     *      These classes can take an IPv4-mapped address as input, both in byte array and text representation. </em>
+<a name="459" href="#459">459</a> <em>     *       However, it will be converted into an IPv4 address.</em>
+<a name="460" href="#460">460</a> <em>     * @param ip the ipAddress to convert</em>
+<a name="461" href="#461">461</a> <em>     * @return return converted ip</em>
+<a name="462" href="#462">462</a> <em>     * @throws PermErrorException if the given ipAddress is invalid</em>
+<a name="463" href="#463">463</a> <em>     */</em>
+<a name="464" href="#464">464</a>     <strong>public</strong> <strong>static</strong> String getProperIpAddress(String ip) throws PermErrorException {
+<a name="465" href="#465">465</a>         <strong>if</strong> (isIPV6(ip) &amp;&amp; isIPV4MappedIP(ip)) {
+<a name="466" href="#466">466</a>             <strong>try</strong> {
+<a name="467" href="#467">467</a>                 <strong>return</strong> getConvertedIP(ip);
+<a name="468" href="#468">468</a>             } <strong>catch</strong> (UnknownHostException e) {
+<a name="469" href="#469">469</a>                 <strong>throw</strong> <strong>new</strong> <a href="../../../../../org/apache/james/jspf/exceptions/PermErrorException.html">PermErrorException</a>(<span class="string">"Invalid ipAddress: "</span> + ip);
+<a name="470" href="#470">470</a>             }
+<a name="471" href="#471">471</a>         }
+<a name="472" href="#472">472</a>         <strong>return</strong> ip;
+<a name="473" href="#473">473</a>         
+<a name="474" href="#474">474</a>     }
+<a name="475" href="#475">475</a>     
+<a name="476" href="#476">476</a>     <em>/**<em>*</em></em>
+<a name="477" href="#477">477</a> <em>     * Return true if the given ipAddress is a ipv4-mapped-address</em>
+<a name="478" href="#478">478</a> <em>     * @param ip</em>
+<a name="479" href="#479">479</a> <em>     * @return</em>
+<a name="480" href="#480">480</a> <em>     */</em>
+<a name="481" href="#481">481</a>     <strong>private</strong> <strong>static</strong> <strong>boolean</strong> isIPV4MappedIP(String ip) {
+<a name="482" href="#482">482</a>         <strong>return</strong> ip.toUpperCase().matches(ipv4MappedRegex);
+<a name="483" href="#483">483</a>     }
+<a name="484" href="#484">484</a> 
+<a name="485" href="#485">485</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

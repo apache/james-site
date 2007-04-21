@@ -79,46 +79,39 @@
 <a name="70" href="#70">70</a>      <strong>public</strong> String getRecord() {
 <a name="71" href="#71">71</a>          <strong>return</strong> record;
 <a name="72" href="#72">72</a>      }
-<a name="73" href="#73">73</a>  
+<a name="73" href="#73">73</a>      
 <a name="74" href="#74">74</a>      <em>/**<em>*</em></em>
-<a name="75" href="#75">75</a>  <em>     * @param record a record in its string source format</em>
-<a name="76" href="#76">76</a>  <em>     */</em>
-<a name="77" href="#77">77</a>      <strong>public</strong> <strong>void</strong> setRecord(String record) {
-<a name="78" href="#78">78</a>          <strong>this</strong>.record = record;
-<a name="79" href="#79">79</a>      }
-<a name="80" href="#80">80</a>      
-<a name="81" href="#81">81</a>      <em>/**<em>*</em></em>
-<a name="82" href="#82">82</a>  <em>     * Return a single iterator over Directives and Modifiers</em>
-<a name="83" href="#83">83</a>  <em>     * </em>
-<a name="84" href="#84">84</a>  <em>     * @return a chained iterator of the terms</em>
-<a name="85" href="#85">85</a>  <em>     */</em>
-<a name="86" href="#86">86</a>      <strong>public</strong> Iterator iterator() {
-<a name="87" href="#87">87</a>          <strong>return</strong> <strong>new</strong> Iterator() {
-<a name="88" href="#88">88</a>              <strong>boolean</strong> first = <strong>true</strong>;
-<a name="89" href="#89">89</a>              Iterator current = getDirectives().iterator();
-<a name="90" href="#90">90</a>  
-<a name="91" href="#91">91</a>              <strong>public</strong> <strong>boolean</strong> hasNext() {
-<a name="92" href="#92">92</a>                  <strong>if</strong> (current.hasNext()) { 
-<a name="93" href="#93">93</a>                      <strong>return</strong> <strong>true</strong>;
-<a name="94" href="#94">94</a>                  } <strong>else</strong> <strong>if</strong> (first) {
-<a name="95" href="#95">95</a>                      current = getModifiers().iterator();
-<a name="96" href="#96">96</a>                      first = false;
-<a name="97" href="#97">97</a>                      <strong>return</strong> current.hasNext();
-<a name="98" href="#98">98</a>                  } <strong>else</strong> <strong>return</strong> false;
-<a name="99" href="#99">99</a>              }
-<a name="100" href="#100">100</a> 
-<a name="101" href="#101">101</a>             <strong>public</strong> Object next() {
-<a name="102" href="#102">102</a>                 <strong>return</strong> current.next();
-<a name="103" href="#103">103</a>             }
+<a name="75" href="#75">75</a>  <em>     * Return a single iterator over Directives and Modifiers</em>
+<a name="76" href="#76">76</a>  <em>     * </em>
+<a name="77" href="#77">77</a>  <em>     * @return a chained iterator of the terms</em>
+<a name="78" href="#78">78</a>  <em>     */</em>
+<a name="79" href="#79">79</a>      <strong>public</strong> Iterator iterator() {
+<a name="80" href="#80">80</a>          <strong>return</strong> <strong>new</strong> Iterator() {
+<a name="81" href="#81">81</a>              <strong>boolean</strong> first = <strong>true</strong>;
+<a name="82" href="#82">82</a>              Iterator current = getDirectives().iterator();
+<a name="83" href="#83">83</a>  
+<a name="84" href="#84">84</a>              <strong>public</strong> <strong>boolean</strong> hasNext() {
+<a name="85" href="#85">85</a>                  <strong>if</strong> (current.hasNext()) { 
+<a name="86" href="#86">86</a>                      <strong>return</strong> <strong>true</strong>;
+<a name="87" href="#87">87</a>                  } <strong>else</strong> <strong>if</strong> (first) {
+<a name="88" href="#88">88</a>                      current = getModifiers().iterator();
+<a name="89" href="#89">89</a>                      first = false;
+<a name="90" href="#90">90</a>                      <strong>return</strong> current.hasNext();
+<a name="91" href="#91">91</a>                  } <strong>else</strong> <strong>return</strong> false;
+<a name="92" href="#92">92</a>              }
+<a name="93" href="#93">93</a>  
+<a name="94" href="#94">94</a>              <strong>public</strong> Object next() {
+<a name="95" href="#95">95</a>                  <strong>return</strong> current.next();
+<a name="96" href="#96">96</a>              }
+<a name="97" href="#97">97</a>  
+<a name="98" href="#98">98</a>              <strong>public</strong> <strong>void</strong> remove() {
+<a name="99" href="#99">99</a>                  <strong>throw</strong> <strong>new</strong> UnsupportedOperationException(<span class="string">"Readonly iterator"</span>);
+<a name="100" href="#100">100</a>             }
+<a name="101" href="#101">101</a>             
+<a name="102" href="#102">102</a>         };
+<a name="103" href="#103">103</a>     }
 <a name="104" href="#104">104</a> 
-<a name="105" href="#105">105</a>             <strong>public</strong> <strong>void</strong> remove() {
-<a name="106" href="#106">106</a>                 <strong>throw</strong> <strong>new</strong> UnsupportedOperationException(<span class="string">"Readonly iterator"</span>);
-<a name="107" href="#107">107</a>             }
-<a name="108" href="#108">108</a>             
-<a name="109" href="#109">109</a>         };
-<a name="110" href="#110">110</a>     }
-<a name="111" href="#111">111</a> 
-<a name="112" href="#112">112</a> }
+<a name="105" href="#105">105</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

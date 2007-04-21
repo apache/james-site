@@ -112,18 +112,18 @@
 <a name="103" href="#103">103</a> 
 <a name="104" href="#104">104</a>     <strong>protected</strong> <strong>void</strong> setUp() throws Exception {
 <a name="105" href="#105">105</a>         <strong>super</strong>.setUp();
-<a name="106" href="#106">106</a>         defIp4me = <strong>new</strong> MacroExpand(<strong>new</strong> rfcIP4MacroData(), <strong>new</strong> ConsoleLogger());
-<a name="107" href="#107">107</a>         defIp6me = <strong>new</strong> MacroExpand(<strong>new</strong> rfcIP6MacroData(), <strong>new</strong> ConsoleLogger());
+<a name="106" href="#106">106</a>         defIp4me = <strong>new</strong> MacroExpand(<strong>new</strong> <a href="../../../../../org/apache/james/jspf/ConsoleLogger.html">ConsoleLogger</a>(), <strong>null</strong>);
+<a name="107" href="#107">107</a>         defIp6me = <strong>new</strong> MacroExpand(<strong>new</strong> <a href="../../../../../org/apache/james/jspf/ConsoleLogger.html">ConsoleLogger</a>(), <strong>null</strong>);
 <a name="108" href="#108">108</a>     }
 <a name="109" href="#109">109</a> 
 <a name="110" href="#110">110</a>     <strong>public</strong> <strong>void</strong> testPercS() throws PermErrorException {
 <a name="111" href="#111">111</a>         assertEquals(<span class="string">"strong-bad@email.example.com"</span>, defIp4me
-<a name="112" href="#112">112</a>                 .expandDomain(<span class="string">"%{s}"</span>));
+<a name="112" href="#112">112</a>                 .expand(<span class="string">"%{s}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="113" href="#113">113</a>     }
 <a name="114" href="#114">114</a> 
 <a name="115" href="#115">115</a>     <strong>public</strong> <strong>void</strong> testPercK() throws PermErrorException {
 <a name="116" href="#116">116</a>         <strong>try</strong> {
-<a name="117" href="#117">117</a>             defIp4me.expandDomain(<span class="string">"%{k}"</span>);
+<a name="117" href="#117">117</a>             defIp4me.expand(<span class="string">"%{k}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN);
 <a name="118" href="#118">118</a>             fail(<span class="string">"%{k} is not a valid expansion"</span>);
 <a name="119" href="#119">119</a>         } <strong>catch</strong> (PermErrorException e) {
 <a name="120" href="#120">120</a>         }
@@ -131,67 +131,67 @@
 <a name="122" href="#122">122</a> 
 <a name="123" href="#123">123</a>     <strong>public</strong> <strong>void</strong> testPercentAloneIsError() throws PermErrorException {
 <a name="124" href="#124">124</a>         <strong>try</strong> {
-<a name="125" href="#125">125</a>             defIp4me.expandDomain(<span class="string">"%{s}%"</span>);
+<a name="125" href="#125">125</a>             defIp4me.expand(<span class="string">"%{s}%"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN);
 <a name="126" href="#126">126</a>             fail(<span class="string">"invalid percent at end of line"</span>);
 <a name="127" href="#127">127</a>         } <strong>catch</strong> (PermErrorException e) {
 <a name="128" href="#128">128</a>         }
 <a name="129" href="#129">129</a>     }
 <a name="130" href="#130">130</a> 
 <a name="131" href="#131">131</a>     <strong>public</strong> <strong>void</strong> testDoublePercent() throws PermErrorException {
-<a name="132" href="#132">132</a>         assertEquals(<span class="string">"%"</span>, defIp4me.expandDomain(<span class="string">"%%"</span>));
+<a name="132" href="#132">132</a>         assertEquals(<span class="string">"%"</span>, defIp4me.expand(<span class="string">"%%"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="133" href="#133">133</a>     }
 <a name="134" href="#134">134</a> 
 <a name="135" href="#135">135</a>     <strong>public</strong> <strong>void</strong> testPercO() throws PermErrorException {
-<a name="136" href="#136">136</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expandDomain(<span class="string">"%{o}"</span>));
+<a name="136" href="#136">136</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expand(<span class="string">"%{o}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="137" href="#137">137</a>     }
 <a name="138" href="#138">138</a> 
 <a name="139" href="#139">139</a>     <strong>public</strong> <strong>void</strong> testPercD() throws PermErrorException {
-<a name="140" href="#140">140</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expandDomain(<span class="string">"%{d}"</span>));
-<a name="141" href="#141">141</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expandDomain(<span class="string">"%{d4}"</span>));
-<a name="142" href="#142">142</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expandDomain(<span class="string">"%{d3}"</span>));
-<a name="143" href="#143">143</a>         assertEquals(<span class="string">"example.com"</span>, defIp4me.expandDomain(<span class="string">"%{d2}"</span>));
-<a name="144" href="#144">144</a>         assertEquals(<span class="string">"com"</span>, defIp4me.expandDomain(<span class="string">"%{d1}"</span>));
-<a name="145" href="#145">145</a>         assertEquals(<span class="string">"com.example.email"</span>, defIp4me.expandDomain(<span class="string">"%{dr}"</span>));
-<a name="146" href="#146">146</a>         assertEquals(<span class="string">"example.email"</span>, defIp4me.expandDomain(<span class="string">"%{d2r}"</span>));
+<a name="140" href="#140">140</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expand(<span class="string">"%{d}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="141" href="#141">141</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expand(<span class="string">"%{d4}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="142" href="#142">142</a>         assertEquals(<span class="string">"email.example.com"</span>, defIp4me.expand(<span class="string">"%{d3}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="143" href="#143">143</a>         assertEquals(<span class="string">"example.com"</span>, defIp4me.expand(<span class="string">"%{d2}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="144" href="#144">144</a>         assertEquals(<span class="string">"com"</span>, defIp4me.expand(<span class="string">"%{d1}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="145" href="#145">145</a>         assertEquals(<span class="string">"com.example.email"</span>, defIp4me.expand(<span class="string">"%{dr}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="146" href="#146">146</a>         assertEquals(<span class="string">"example.email"</span>, defIp4me.expand(<span class="string">"%{d2r}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="147" href="#147">147</a>     }
 <a name="148" href="#148">148</a> 
 <a name="149" href="#149">149</a>     <strong>public</strong> <strong>void</strong> testPercL() throws PermErrorException {
-<a name="150" href="#150">150</a>         assertEquals(<span class="string">"strong-bad"</span>, defIp4me.expandDomain(<span class="string">"%{l}"</span>));
-<a name="151" href="#151">151</a>         assertEquals(<span class="string">"strong.bad"</span>, defIp4me.expandDomain(<span class="string">"%{l-}"</span>));
-<a name="152" href="#152">152</a>         assertEquals(<span class="string">"strong-bad"</span>, defIp4me.expandDomain(<span class="string">"%{lr}"</span>));
-<a name="153" href="#153">153</a>         assertEquals(<span class="string">"bad.strong"</span>, defIp4me.expandDomain(<span class="string">"%{lr-}"</span>));
-<a name="154" href="#154">154</a>         assertEquals(<span class="string">"strong"</span>, defIp4me.expandDomain(<span class="string">"%{l1r-}"</span>));
+<a name="150" href="#150">150</a>         assertEquals(<span class="string">"strong-bad"</span>, defIp4me.expand(<span class="string">"%{l}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="151" href="#151">151</a>         assertEquals(<span class="string">"strong.bad"</span>, defIp4me.expand(<span class="string">"%{l-}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="152" href="#152">152</a>         assertEquals(<span class="string">"strong-bad"</span>, defIp4me.expand(<span class="string">"%{lr}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="153" href="#153">153</a>         assertEquals(<span class="string">"bad.strong"</span>, defIp4me.expand(<span class="string">"%{lr-}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
+<a name="154" href="#154">154</a>         assertEquals(<span class="string">"strong"</span>, defIp4me.expand(<span class="string">"%{l1r-}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="155" href="#155">155</a>     }
 <a name="156" href="#156">156</a> 
 <a name="157" href="#157">157</a>     <strong>public</strong> <strong>void</strong> testExample1() throws PermErrorException {
 <a name="158" href="#158">158</a>         assertEquals(<span class="string">"3.2.0.192.in-addr._spf.example.com"</span>, defIp4me
-<a name="159" href="#159">159</a>                 .expandDomain(<span class="string">"%{ir}.%{v}._spf.%{d2}"</span>));
+<a name="159" href="#159">159</a>                 .expand(<span class="string">"%{ir}.%{v}._spf.%{d2}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="160" href="#160">160</a>     }
 <a name="161" href="#161">161</a> 
 <a name="162" href="#162">162</a>     <strong>public</strong> <strong>void</strong> testExample2() throws PermErrorException {
 <a name="163" href="#163">163</a>         assertEquals(<span class="string">"bad.strong.lp._spf.example.com"</span>, defIp4me
-<a name="164" href="#164">164</a>                 .expandDomain(<span class="string">"%{lr-}.lp._spf.%{d2}"</span>));
+<a name="164" href="#164">164</a>                 .expand(<span class="string">"%{lr-}.lp._spf.%{d2}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="165" href="#165">165</a>     }
 <a name="166" href="#166">166</a> 
 <a name="167" href="#167">167</a>     <strong>public</strong> <strong>void</strong> testExample3() throws PermErrorException {
 <a name="168" href="#168">168</a>         assertEquals(<span class="string">"bad.strong.lp.3.2.0.192.in-addr._spf.example.com"</span>,
-<a name="169" href="#169">169</a>                 defIp4me.expandDomain(<span class="string">"%{lr-}.lp.%{ir}.%{v}._spf.%{d2}"</span>));
+<a name="169" href="#169">169</a>                 defIp4me.expand(<span class="string">"%{lr-}.lp.%{ir}.%{v}._spf.%{d2}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="170" href="#170">170</a>     }
 <a name="171" href="#171">171</a> 
 <a name="172" href="#172">172</a>     <strong>public</strong> <strong>void</strong> testExample4() throws PermErrorException {
 <a name="173" href="#173">173</a>         assertEquals(<span class="string">"3.2.0.192.in-addr.strong.lp._spf.example.com"</span>, defIp4me
-<a name="174" href="#174">174</a>                 .expandDomain(<span class="string">"%{ir}.%{v}.%{l1r-}.lp._spf.%{d2}"</span>));
+<a name="174" href="#174">174</a>                 .expand(<span class="string">"%{ir}.%{v}.%{l1r-}.lp._spf.%{d2}"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="175" href="#175">175</a>     }
 <a name="176" href="#176">176</a> 
 <a name="177" href="#177">177</a>     <strong>public</strong> <strong>void</strong> testExample5() throws PermErrorException {
 <a name="178" href="#178">178</a>         assertEquals(<span class="string">"example.com.trusted-domains.example.net"</span>, defIp4me
-<a name="179" href="#179">179</a>                 .expandDomain(<span class="string">"%{d2}.trusted-domains.example.net"</span>));
+<a name="179" href="#179">179</a>                 .expand(<span class="string">"%{d2}.trusted-domains.example.net"</span>, <strong>new</strong> rfcIP4MacroData(), MacroExpand.DOMAIN));
 <a name="180" href="#180">180</a>     }
 <a name="181" href="#181">181</a> 
 <a name="182" href="#182">182</a>     <strong>public</strong> <strong>void</strong> testExample6_ipv6() throws PermErrorException {
 <a name="183" href="#183">183</a>         assertEquals(
 <a name="184" href="#184">184</a>                 <span class="string">"1.0.B.C.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.B.D.0.1.0.0.2.ip6._spf.example.com"</span>,
-<a name="185" href="#185">185</a>                 defIp6me.expandDomain(<span class="string">"%{ir}.%{v}._spf.%{d2}"</span>));
+<a name="185" href="#185">185</a>                 defIp6me.expand(<span class="string">"%{ir}.%{v}._spf.%{d2}"</span>, <strong>new</strong> rfcIP6MacroData(), MacroExpand.DOMAIN));
 <a name="186" href="#186">186</a>     }
 <a name="187" href="#187">187</a> 
 <a name="188" href="#188">188</a> }
