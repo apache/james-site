@@ -48,7 +48,7 @@
   
   
             <div class="xleft">
-        Last Published: 04/19/2007
+        Last Published: 04/25/2007
                       </div>
             <div class="xright">      <a href="index.html">JAMES Project</a>
           |
@@ -226,6 +226,7 @@
   
 
 
+
 <a name="Downloading the Apache James Mail Server"></a><div class="section"><h2>Downloading the Apache James Mail Server</h2>
 
 <p>Use the links below to download the Apache James Mail Server from one of
@@ -350,7 +351,6 @@ a specific change.
 </div>
 
 
-
       </div>
     </div>
     <div class="clear">
@@ -378,6 +378,59 @@ a specific change.
     <script type="text/javascript">
       _uacct = "UA-1384591-1";
       urchinTracker();
+    </script>
+    <script type="text/javascript">
+    if (document.getElementsByTagName) { 
+      var hrefs = document.getElementsByTagName('a'); 
+      var extensions = ["gz","bz2","zip","jar","asc","sar"];
+      for (var l = 0; l < hrefs.length; l++) {
+        if (hrefs[l] != "") {
+          var path = hrefs[l].pathname;
+          var external = hrefs[l].hostname != location.host;
+          if (external) {
+            var splitted = path.split('.');
+            var ext = splitted[splitted.length-1];
+            for (var e = 0; e < extensions.length; e++) {
+              if (extensions[e] == ext) {
+                startListening(hrefs[l],"click",trackDownloads);
+              }
+    	}
+          }
+        }
+      } 
+    } 
+    
+    function startListening (obj,evnt,func) { 
+      if (obj.addEventListener) {
+        obj.addEventListener(evnt,func,false); 
+      } else if (obj.attachEvent) {
+        obj.attachEvent("on" + evnt,func); 
+      } 
+    } 
+    
+    function trackDownloads (evnt) { 
+      var lnk; 
+      if (evnt.srcElement) { 
+        var elmnt = evnt.srcElement; 
+        while (elmnt.tagName != "A") { 
+          var newelmnt = elmnt.parentNode; 
+          elmnt = newelmnt; 
+        } 
+        lnk = elmnt.hostname + "/" + elmnt.pathname + elmnt.search; 
+      } else { 
+        lnk = this.hostname + this.pathname + this.search; 
+      } 
+    
+      var pos = lnk.indexOf("/james/");
+      if (pos != -1) {
+        lnk = lnk.substr(pos+7);
+      }
+      lnk = "/downloads/"+lnk;
+    
+      if (typeof(urchinTracker) == "function") {
+        urchinTracker(lnk);
+      }
+    } 
     </script>
   </body>
 </html>
