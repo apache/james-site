@@ -46,11 +46,13 @@
   
   
             <div class="xleft">
-        Last Published: 03/30/2007
+        Last Published: 05/08/2007
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
           <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../mailet/index.html">Mailet API</a>
           |
           <a href="../../jspf/index.html">jSPF</a>
           |
@@ -97,20 +99,20 @@
               
                 
               
-            
-            
       
+            
+            
               
             <li class="expanded">
               <a href="../start/index.html">Start</a>
                 <ul>
                   
     <li class="none">
-              <strong>Build</strong>
+              <a href="../start/download.html">Download</a>
         </li>
                   
     <li class="none">
-              <a href="../start/download.html">Download</a>
+              <strong>Build</strong>
         </li>
               </ul>
         </li>
@@ -145,10 +147,6 @@
       
             
       
-            
-      
-            
-      
               
         <li class="collapsed">
               <a href="../project-reports.html">Project Reports</a>
@@ -162,7 +160,7 @@
         </li>
               
     <li class="none">
-              <a href="http://people.apache.org/dist/james">Test builds</a>
+              <a href="../../downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -188,19 +186,18 @@
     
         <a name="Building mime4j"></a><div class="section"><h2>Building mime4j</h2>
             <a name="Using a Stable Release"></a><div class="section"><h3>Using a Stable Release</h3>
-                <p> Go to the <a href="http://sourceforge.net/project/showfiles.php?group_id=108895">
-                        Sourceforge download pages</a> and download the most
-                    recent release in your preferred format, either
-                    <code>mime4j-x.y-src.tar.gz</code> or
-                    <code>mime4j-x.y-src.zip</code>. Extracting the archived
-                    sources will create the directory <code>mime4j-x.y/</code>
-                </p>
+            <p> Go to the <a href="http://james.apache.org/download.cgi">download 
+              pages</a> and download the most recent
+                release in your preferred format, either
+                <code>james-mime4j-x.y-src.tar.gz</code> or <code>james-mime4j-x.y-src.zip</code>.
+                Extracting the archived sources will create the directory
+                <code>james-mime4j-x.y/</code>.</p>
             </div>
             <a name="Checking Out From Subversion"></a><div class="section"><h3>Checking Out From Subversion</h3>
                 <p>
                     Issue the following commands in a shell:
                     <blockquote>
-                        <code>svn checkout http://svn.apache.org/repos/asf/james/mime4k/trunk james-mime4j</code><br></br>
+                        <code>svn checkout http://svn.apache.org/repos/asf/james/mime4j/trunk james-mime4j</code><br></br>
                     </blockquote>
                 </p>
             </div>
@@ -222,7 +219,7 @@
             <a name="Building the mime4j Jar"></a><div class="section"><h3>Building the mime4j Jar</h3>
                 <p> Once Maven has been installed, building the project should
                     be as simple as typing <blockquote>
-                        <code>cd mime4j-x.y/ (cd james-mime4j/ if sources come from
+                        <code>cd james-mime4j-x.y/ (cd james-mime4j/ if sources come from
                             Subversion)<br></br>mvn package</code>
                     </blockquote> from the command line. Maven will
                     automatically run all test cases for you and create the
@@ -235,6 +232,15 @@
                 <p>
                     To generate an Eclipse project from the sources run <blockquote>
                         <code>mvn eclipse:eclipse</code></blockquote>
+                </p>
+                <p>
+                  <strong>NOTE!</strong> Mime4j uses <a href="https://javacc.dev.java.net/">JavaCC</a> to generate parsers for
+                  header fields. <code>mvn eclipse:eclipse</code> currently has problems with 
+                  generating proper source folders for the JavaCC generated code.
+                  After running <code>mvn eclipse:eclipse</code> you must manually
+                  add <code>target/generated-sources/javacc</code> and 
+                  <code>target/generated-sources/jjtree</code> as source folders
+                  under <em>Project -&gt; Properties</em> in Eclipse.
                 </p>
                 <p>
                     For more information on using

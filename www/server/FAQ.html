@@ -48,11 +48,13 @@
   
   
             <div class="xleft">
-        Last Published: 04/29/2007
+        Last Published: 05/08/2007
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
           <a href="../server/index.html">Server</a>
+          |
+          <a href="../mailet/index.html">Mailet API</a>
           |
           <a href="../jspf/index.html">jSPF</a>
           |
@@ -280,7 +282,7 @@
     &lt;sqlFile&gt;file://conf/sqlResources.xml&lt;/sqlFile&gt;
 &lt;/repository&gt;
 </pre></div>
-        Database users will also need to ensure that they have <a href="2.3.0/using_database.html">configured a data-source</a> named to match the destination URL
+        Database users will also need to ensure that they have <a href="2.3.1/using_database.html">configured a data-source</a> named to match the destination URL
         Using the filesystem:-
         <div class="source"><pre>
 &lt;repository name=&quot;list-james&quot;
@@ -338,7 +340,7 @@
       </div>
       <a name="7"></a>
       <a name="What about support virtual hosting?"></a><div class="section"><h3>What about support virtual hosting?</h3>
-        <p>James v2.1+ includes a new mailet for database users, <a href="2.3.0/apidocs/org/apache/james/transport/mailets/JDBCVirtualUserTable.html">JDBCVirtualUserTable</a>, that mimics some of the sendmail capabilities of the same name.</p>
+        <p>James v2.1+ includes a new mailet for database users, <a href="2.3.1/apidocs/org/apache/james/transport/mailets/JDBCVirtualUserTable.html">JDBCVirtualUserTable</a>, that mimics some of the sendmail capabilities of the same name.</p>
         <p>JDBCVirtualUserTable does not provide any administation tools.
 You'll have to create and maintain the database table yourself.  The
 standard configuration is as follows:</p>
@@ -383,7 +385,7 @@ match as follows (in precedence order):
         <p>We are largely reliant on what Avalon is doing in terms of classloading, but here are a few tips and suggestions:
   <ul>
             <li>Stick jars in the james/lib directory and add them to the classpath in run.bat or run.sh.</li>
-            <li>Instructions for including classes for custom mailets and matchers can be found <a href="2.3.0/custom_mailet.html">here</a> and <a href="2.3.0/custom_matcher.html">here</a> respectively..</li>
+            <li>Instructions for including classes for custom mailets and matchers can be found <a href="2.3.1/custom_mailet.html">here</a> and <a href="2.3.1/custom_matcher.html">here</a> respectively..</li>
           </ul>
   Eventually we hope to support mailet reloading and a special lib and classes directory within the james directory that custom mailets can load from, but for now these are hopefully some useful tips.
       </div>
