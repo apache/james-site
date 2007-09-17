@@ -208,7 +208,7 @@
 <a name="199" href="#199">199</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands =
 <a name="200" href="#200">200</a>             (<a href="../../../org/apache/jsieve/Commands.html">Commands</a>) ((List) node.childrenAccept(<strong>this</strong>, children)).get(0);
 <a name="201" href="#201">201</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong>new</strong> <a href="../../../org/apache/jsieve/Block.html">Block</a>(commands);
-<a name="202" href="#202">202</a> 
+<a name="202" href="#202">202</a>         context.setCoordinate(node.getCoordinate());
 <a name="203" href="#203">203</a>         <em class="comment">// Answer the result of executing the Block</em>
 <a name="204" href="#204">204</a>         <strong>return</strong> block.execute((MailAdapter)data);
 <a name="205" href="#205">205</a>     }

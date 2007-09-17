@@ -1,0 +1,130 @@
+<?xml version="1.0"  encoding="UTF-8"?><pmd-cpd>
+<duplication lines="56" tokens="138">
+<file line="144" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/ComparatorManager.java"/>
+<file line="147" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/TestManager.java"/>
+<codefragment>
+<![CDATA[
+            return (ExecutableTest)lookup(name).newInstance();
+        }
+        catch (InstantiationException e)
+        {
+            throw new LookupException(e.getMessage());
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new LookupException(e.getMessage());
+        }
+    }    
+    
+    /**
+     * Method isSupported answers a boolean indicating if a Test name is 
+     * configured.
+     * @param name - The Test name
+     * @return boolean - True if the Test name is configured.
+     */
+    public boolean isSupported(String name)
+    {
+        boolean isSupported = true;
+        try
+        {
+            lookup(name);
+        }
+        catch (LookupException e)
+        {
+            isSupported = false;
+        }
+        return isSupported;
+    }    
+    
+    /**
+     * <p>Method getClassName answers the name of the class to which a Test name is
+     * mapped.</p>
+     * 
+     * @param name - The name of the Test
+     * @return String - The name of the class
+     * @throws LookupException
+     */
+    protected String getClassName(String name)
+        throws LookupException
+    {
+        String className;
+        try
+        {
+            className = (String) getClassNameMap().get(name.toLowerCase());
+        }
+        catch (SieveConfigurationException e)
+        {
+            throw new LookupException(
+                "Lookup failed due to a Configuration Exception: "
+                    + e.getMessage());
+        }
+        if (null == className)
+            throw new LookupException("Test named '" + name + "' not mapped.");
+]]>
+</codefragment>
+</duplication>
+<duplication lines="27" tokens="114">
+<file line="66" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/commands/Redirect.java"/>
+<file line="88" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/commands/optional/FileInto.java"/>
+<codefragment>
+<![CDATA[
+            mail.addAction(new ActionFileInto(destination));
+
+        return null;
+    }
+    
+    /**
+     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)
+     */
+    protected void validateArguments(Arguments arguments, SieveContext context) throws SieveException
+    {
+        List args = arguments.getArgumentList();
+        if (args.size() != 1)
+            throw context.getCoordinate().syntaxException(
+                "Exactly 1 argument permitted. Found " + args.size());
+
+        Object argument = args.get(0);
+        if (!(argument instanceof StringListArgument))
+            throw context.getCoordinate().syntaxException("Expecting a string-list");
+
+        if (1 != ((StringListArgument) argument).getList().size())
+            throw context.getCoordinate().syntaxException("Expecting exactly one argument");
+    }
+    
+
+    
+
+}
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="110">
+<file line="69" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/commands/Redirect.java"/>
+<file line="95" path="/opt/development/sieve-workspace/jsieve/src/main/java/org/apache/jsieve/commands/optional/Reject.java"/>
+<codefragment>
+<![CDATA[
+    } 
+    
+    /**
+     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)
+     */
+    protected void validateArguments(Arguments arguments, SieveContext context) throws SieveException
+    {
+        List args = arguments.getArgumentList();
+        if (args.size() != 1)
+            throw context.getCoordinate().syntaxException(
+                "Exactly 1 argument permitted. Found " + args.size());
+
+        Object argument = args.get(0);
+        if (!(argument instanceof StringListArgument))
+            throw context.getCoordinate().syntaxException("Expecting a string-list");
+
+        if (1 != ((StringListArgument) argument).getList().size())
+            throw context.getCoordinate().syntaxException("Expecting exactly one argument");
+    }  
+
+}
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

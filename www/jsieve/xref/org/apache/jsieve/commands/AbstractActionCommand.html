@@ -69,7 +69,7 @@
 <a name="60" href="#60">60</a>      <strong>protected</strong> <strong>void</strong> validateState(<a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) throws CommandException
 <a name="61" href="#61">61</a>      {
 <a name="62" href="#62">62</a>          <strong>if</strong> (CommandStateManager.getInstance().isRejected())
-<a name="63" href="#63">63</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/CommandException.html">CommandException</a>(<span class="string">"Cannot perform Actions on a rejected message."</span>);
+<a name="63" href="#63">63</a>              <strong>throw</strong> context.getCoordinate().commandException(<span class="string">"Cannot perform Actions on a rejected message."</span>);
 <a name="64" href="#64">64</a>      }    
 <a name="65" href="#65">65</a>      
 <a name="66" href="#66">66</a>  }

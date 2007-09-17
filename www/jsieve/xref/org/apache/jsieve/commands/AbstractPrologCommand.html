@@ -60,7 +60,7 @@
 <a name="51" href="#51">51</a>          <strong>super</strong>.validateState(context);
 <a name="52" href="#52">52</a>          
 <a name="53" href="#53">53</a>          <strong>if</strong> (!(CommandStateManager.getInstance().isInProlog()))
-<a name="54" href="#54">54</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/CommandException.html">CommandException</a>(<span class="string">"Invalid state for a prolog command."</span>);     
+<a name="54" href="#54">54</a>              <strong>throw</strong> context.getCoordinate().commandException(<span class="string">"Invalid state for a prolog command."</span>);     
 <a name="55" href="#55">55</a>      }
 <a name="56" href="#56">56</a>      
 <a name="57" href="#57">57</a>  

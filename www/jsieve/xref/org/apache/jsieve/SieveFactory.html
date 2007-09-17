@@ -98,7 +98,7 @@
 <a name="89" href="#89">89</a>      {
 <a name="90" href="#90">90</a>          <strong>try</strong>
 <a name="91" href="#91">91</a>          {
-<a name="92" href="#92">92</a>              <strong>return</strong> <strong>new</strong> SieveParser(inputStream).start();
+<a name="92" href="#92">92</a>              <strong>return</strong> <strong>new</strong> SieveParser(inputStream, <span class="string">"UTF-8"</span>).start();
 <a name="93" href="#93">93</a>          }
 <a name="94" href="#94">94</a>          <strong>catch</strong> (ParseException ex)
 <a name="95" href="#95">95</a>          {
@@ -130,115 +130,127 @@
 <a name="121" href="#121">121</a>         throws <a href="../../../org/apache/jsieve/SieveException.html">SieveException</a>
 <a name="122" href="#122">122</a>     {
 <a name="123" href="#123">123</a>         SieveParserVisitor visitor = <strong>new</strong> <a href="../../../org/apache/jsieve/SieveParserVisitorImpl.html">SieveParserVisitorImpl</a>();
-<a name="124" href="#124">124</a>         ConditionManager.resetInstance();
-<a name="125" href="#125">125</a>         CommandStateManager.resetInstance();
-<a name="126" href="#126">126</a>         <strong>try</strong>
-<a name="127" href="#127">127</a>         {
-<a name="128" href="#128">128</a>             <em class="comment">// Evaluate the Nodes</em>
-<a name="129" href="#129">129</a>             startNode.jjtAccept(visitor, mail);
-<a name="130" href="#130">130</a> 
-<a name="131" href="#131">131</a>         }
-<a name="132" href="#132">132</a>         <strong>catch</strong> (StopException ex)
-<a name="133" href="#133">133</a>         {
-<a name="134" href="#134">134</a>             <em class="comment">// Stop is OK</em>
-<a name="135" href="#135">135</a>         }
-<a name="136" href="#136">136</a>         <strong>catch</strong> (SieveException ex)
-<a name="137" href="#137">137</a>         {
-<a name="138" href="#138">138</a>             Log log = Logger.getLog();
-<a name="139" href="#139">139</a>             <strong>if</strong> (log.isErrorEnabled())
-<a name="140" href="#140">140</a>                 log.error(<span class="string">"Evaluation failed. Reason: "</span> + ex.getMessage());
-<a name="141" href="#141">141</a>             <strong>if</strong> (log.isDebugEnabled())
-<a name="142" href="#142">142</a>                 log.debug(<span class="string">"Evaluation failed."</span>, ex);
-<a name="143" href="#143">143</a>             <strong>throw</strong> ex;
-<a name="144" href="#144">144</a>         }
-<a name="145" href="#145">145</a> 
-<a name="146" href="#146">146</a>         <em class="comment">// If after evaluating all of the nodes or stopping, implicitKeep is still</em>
-<a name="147" href="#147">147</a>         <em class="comment">// in effect, add a Keep to the list of Actions.</em>
-<a name="148" href="#148">148</a>         <strong>if</strong> (CommandStateManager.getInstance().isImplicitKeep())
-<a name="149" href="#149">149</a>             mail.addAction(<strong>new</strong> <a href="../../../org/apache/jsieve/mail/ActionKeep.html">ActionKeep</a>());
-<a name="150" href="#150">150</a> 
-<a name="151" href="#151">151</a>         <em class="comment">// Execute the List of Actions   </em>
-<a name="152" href="#152">152</a>         <strong>try</strong>
-<a name="153" href="#153">153</a>         {
-<a name="154" href="#154">154</a>             mail.executeActions();
-<a name="155" href="#155">155</a>         }
-<a name="156" href="#156">156</a>         <strong>catch</strong> (SieveException ex)
-<a name="157" href="#157">157</a>         {
-<a name="158" href="#158">158</a>             Log log = Logger.getLog();
-<a name="159" href="#159">159</a>             <strong>if</strong> (log.isErrorEnabled())
-<a name="160" href="#160">160</a>                 log.error(<span class="string">"Evaluation failed. Reason: "</span> + ex.getMessage());
-<a name="161" href="#161">161</a>             <strong>if</strong> (log.isDebugEnabled())
-<a name="162" href="#162">162</a>                 log.debug(<span class="string">"Evaluation failed."</span>, ex);
-<a name="163" href="#163">163</a>             <strong>throw</strong> ex;
-<a name="164" href="#164">164</a>         }
-<a name="165" href="#165">165</a>     }
-<a name="166" href="#166">166</a>     
-<a name="167" href="#167">167</a>     
-<a name="168" href="#168">168</a>     <em>/**<em>*</em></em>
-<a name="169" href="#169">169</a> <em>     * Method interpret parses a Sieve script and then evaluates the result against</em>
-<a name="170" href="#170">170</a> <em>     * a mail.</em>
-<a name="171" href="#171">171</a> <em>     * @param mail</em>
-<a name="172" href="#172">172</a> <em>     * @param inputStream</em>
-<a name="173" href="#173">173</a> <em>     * @throws ParseException</em>
-<a name="174" href="#174">174</a> <em>     * @throws SieveException</em>
-<a name="175" href="#175">175</a> <em>     */</em>
-<a name="176" href="#176">176</a>     <strong>public</strong> <strong>void</strong> interpret(<a href="../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, InputStream inputStream)
-<a name="177" href="#177">177</a>         throws ParseException, <a href="../../../org/apache/jsieve/SieveException.html">SieveException</a>
-<a name="178" href="#178">178</a>     {
-<a name="179" href="#179">179</a>         evaluate(mail, parse(inputStream));
-<a name="180" href="#180">180</a>     }        
-<a name="181" href="#181">181</a> 
-<a name="182" href="#182">182</a>     <em>/**<em>*</em></em>
-<a name="183" href="#183">183</a> <em>     * Returns the instance of the receiver, lazily initialised if required.</em>
-<a name="184" href="#184">184</a> <em>     * @return SieveFactory</em>
-<a name="185" href="#185">185</a> <em>     */</em>
-<a name="186" href="#186">186</a>     <strong>public</strong> <strong>static</strong> <strong>synchronized</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> getInstance()
-<a name="187" href="#187">187</a>     {
-<a name="188" href="#188">188</a>         <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> instance = <strong>null</strong>;
-<a name="189" href="#189">189</a>         <strong>if</strong> (<strong>null</strong> == (instance = getInstanceBasic()))
-<a name="190" href="#190">190</a>         {
-<a name="191" href="#191">191</a>             updateInstance();
-<a name="192" href="#192">192</a>             <strong>return</strong> getInstance();
-<a name="193" href="#193">193</a>         }
-<a name="194" href="#194">194</a>         <strong>return</strong> instance;
-<a name="195" href="#195">195</a>     }
-<a name="196" href="#196">196</a>     
-<a name="197" href="#197">197</a>     <em>/**<em>*</em></em>
-<a name="198" href="#198">198</a> <em>     * Computes an instance of the receiver.</em>
-<a name="199" href="#199">199</a> <em>     * @return SieveFactory</em>
-<a name="200" href="#200">200</a> <em>     */</em>
-<a name="201" href="#201">201</a>     <strong>public</strong> <strong>static</strong>  SieveFactory computeInstance()
-<a name="202" href="#202">202</a>     {
-<a name="203" href="#203">203</a>         <strong>return</strong> <strong>new</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a>();
-<a name="204" href="#204">204</a>     }    
-<a name="205" href="#205">205</a>     
-<a name="206" href="#206">206</a>     <em>/**<em>*</em></em>
-<a name="207" href="#207">207</a> <em>     * Returns the instance of the receiver.</em>
-<a name="208" href="#208">208</a> <em>     * @return SieveFactory</em>
-<a name="209" href="#209">209</a> <em>     */</em>
-<a name="210" href="#210">210</a>     <strong>private</strong> <strong>static</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> getInstanceBasic()
-<a name="211" href="#211">211</a>     {
-<a name="212" href="#212">212</a>         <strong>return</strong> fieldInstance;
-<a name="213" href="#213">213</a>     }    
-<a name="214" href="#214">214</a> 
-<a name="215" href="#215">215</a>     <em>/**<em>*</em></em>
-<a name="216" href="#216">216</a> <em>     * Sets the instance of the receiver.</em>
-<a name="217" href="#217">217</a> <em>     * @param instance The instance to set</em>
-<a name="218" href="#218">218</a> <em>     */</em>
-<a name="219" href="#219">219</a>     <strong>protected</strong> <strong>static</strong> <strong>void</strong> setInstance(<a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> instance)
-<a name="220" href="#220">220</a>     {
-<a name="221" href="#221">221</a>         fieldInstance = instance;
-<a name="222" href="#222">222</a>     }
-<a name="223" href="#223">223</a>     
-<a name="224" href="#224">224</a>     <em>/**<em>*</em></em>
-<a name="225" href="#225">225</a> <em>     * Updates the instance of the receiver.</em>
-<a name="226" href="#226">226</a> <em>     */</em>
-<a name="227" href="#227">227</a>     <strong>protected</strong> <strong>static</strong> <strong>void</strong> updateInstance()
-<a name="228" href="#228">228</a>     {
-<a name="229" href="#229">229</a>         setInstance(computeInstance());
-<a name="230" href="#230">230</a>     }    
-<a name="231" href="#231">231</a> 
-<a name="232" href="#232">232</a> }
+<a name="124" href="#124">124</a>         reset();
+<a name="125" href="#125">125</a>         <strong>try</strong>
+<a name="126" href="#126">126</a>         {
+<a name="127" href="#127">127</a>             <strong>try</strong>
+<a name="128" href="#128">128</a>             {
+<a name="129" href="#129">129</a>                 <em class="comment">// Evaluate the Nodes</em>
+<a name="130" href="#130">130</a>                 startNode.jjtAccept(visitor, mail);
+<a name="131" href="#131">131</a> 
+<a name="132" href="#132">132</a>             }
+<a name="133" href="#133">133</a>             <strong>catch</strong> (StopException ex)
+<a name="134" href="#134">134</a>             {
+<a name="135" href="#135">135</a>                 <em class="comment">// Stop is OK</em>
+<a name="136" href="#136">136</a>             }
+<a name="137" href="#137">137</a>             <strong>catch</strong> (SieveException ex)
+<a name="138" href="#138">138</a>             {
+<a name="139" href="#139">139</a>                 Log log = Logger.getLog();
+<a name="140" href="#140">140</a>                 <strong>if</strong> (log.isErrorEnabled())
+<a name="141" href="#141">141</a>                     log.error(<span class="string">"Evaluation failed. Reason: "</span> + ex.getMessage());
+<a name="142" href="#142">142</a>                 <strong>if</strong> (log.isDebugEnabled())
+<a name="143" href="#143">143</a>                     log.debug(<span class="string">"Evaluation failed."</span>, ex);
+<a name="144" href="#144">144</a>                 <strong>throw</strong> ex;
+<a name="145" href="#145">145</a>             }
+<a name="146" href="#146">146</a> 
+<a name="147" href="#147">147</a>             <em class="comment">// If after evaluating all of the nodes or stopping, implicitKeep is still</em>
+<a name="148" href="#148">148</a>             <em class="comment">// in effect, add a Keep to the list of Actions.</em>
+<a name="149" href="#149">149</a>             <strong>if</strong> (CommandStateManager.getInstance().isImplicitKeep())
+<a name="150" href="#150">150</a>                 mail.addAction(<strong>new</strong> <a href="../../../org/apache/jsieve/mail/ActionKeep.html">ActionKeep</a>());
+<a name="151" href="#151">151</a> 
+<a name="152" href="#152">152</a>             <em class="comment">// Execute the List of Actions   </em>
+<a name="153" href="#153">153</a>             <strong>try</strong>
+<a name="154" href="#154">154</a>             {
+<a name="155" href="#155">155</a>                 mail.executeActions();
+<a name="156" href="#156">156</a>             }
+<a name="157" href="#157">157</a>             <strong>catch</strong> (SieveException ex)
+<a name="158" href="#158">158</a>             {
+<a name="159" href="#159">159</a>                 Log log = Logger.getLog();
+<a name="160" href="#160">160</a>                 <strong>if</strong> (log.isErrorEnabled())
+<a name="161" href="#161">161</a>                     log.error(<span class="string">"Evaluation failed. Reason: "</span> + ex.getMessage());
+<a name="162" href="#162">162</a>                 <strong>if</strong> (log.isDebugEnabled())
+<a name="163" href="#163">163</a>                     log.debug(<span class="string">"Evaluation failed."</span>, ex);
+<a name="164" href="#164">164</a>                 <strong>throw</strong> ex;
+<a name="165" href="#165">165</a>             }
+<a name="166" href="#166">166</a>         } 
+<a name="167" href="#167">167</a>         <strong>finally</strong> 
+<a name="168" href="#168">168</a>         {
+<a name="169" href="#169">169</a>             <em class="comment">// Tidy up managers stored in thread local variables</em>
+<a name="170" href="#170">170</a>             reset();
+<a name="171" href="#171">171</a>         }
+<a name="172" href="#172">172</a>     }
+<a name="173" href="#173">173</a> 
+<a name="174" href="#174">174</a>     <strong>private</strong> <strong>void</strong> reset() {
+<a name="175" href="#175">175</a>         ConditionManager.resetInstance();
+<a name="176" href="#176">176</a>         CommandStateManager.resetInstance();
+<a name="177" href="#177">177</a>     }
+<a name="178" href="#178">178</a>     
+<a name="179" href="#179">179</a>     
+<a name="180" href="#180">180</a>     <em>/**<em>*</em></em>
+<a name="181" href="#181">181</a> <em>     * Method interpret parses a Sieve script and then evaluates the result against</em>
+<a name="182" href="#182">182</a> <em>     * a mail.</em>
+<a name="183" href="#183">183</a> <em>     * @param mail</em>
+<a name="184" href="#184">184</a> <em>     * @param inputStream</em>
+<a name="185" href="#185">185</a> <em>     * @throws ParseException</em>
+<a name="186" href="#186">186</a> <em>     * @throws SieveException</em>
+<a name="187" href="#187">187</a> <em>     */</em>
+<a name="188" href="#188">188</a>     <strong>public</strong> <strong>void</strong> interpret(<a href="../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, InputStream inputStream)
+<a name="189" href="#189">189</a>         throws ParseException, <a href="../../../org/apache/jsieve/SieveException.html">SieveException</a>
+<a name="190" href="#190">190</a>     {
+<a name="191" href="#191">191</a>         evaluate(mail, parse(inputStream));
+<a name="192" href="#192">192</a>     }        
+<a name="193" href="#193">193</a> 
+<a name="194" href="#194">194</a>     <em>/**<em>*</em></em>
+<a name="195" href="#195">195</a> <em>     * Returns the instance of the receiver, lazily initialised if required.</em>
+<a name="196" href="#196">196</a> <em>     * @return SieveFactory</em>
+<a name="197" href="#197">197</a> <em>     */</em>
+<a name="198" href="#198">198</a>     <strong>public</strong> <strong>static</strong> <strong>synchronized</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> getInstance()
+<a name="199" href="#199">199</a>     {
+<a name="200" href="#200">200</a>         <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> instance = <strong>null</strong>;
+<a name="201" href="#201">201</a>         <strong>if</strong> (<strong>null</strong> == (instance = getInstanceBasic()))
+<a name="202" href="#202">202</a>         {
+<a name="203" href="#203">203</a>             updateInstance();
+<a name="204" href="#204">204</a>             <strong>return</strong> getInstance();
+<a name="205" href="#205">205</a>         }
+<a name="206" href="#206">206</a>         <strong>return</strong> instance;
+<a name="207" href="#207">207</a>     }
+<a name="208" href="#208">208</a>     
+<a name="209" href="#209">209</a>     <em>/**<em>*</em></em>
+<a name="210" href="#210">210</a> <em>     * Computes an instance of the receiver.</em>
+<a name="211" href="#211">211</a> <em>     * @return SieveFactory</em>
+<a name="212" href="#212">212</a> <em>     */</em>
+<a name="213" href="#213">213</a>     <strong>public</strong> <strong>static</strong>  SieveFactory computeInstance()
+<a name="214" href="#214">214</a>     {
+<a name="215" href="#215">215</a>         <strong>return</strong> <strong>new</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a>();
+<a name="216" href="#216">216</a>     }    
+<a name="217" href="#217">217</a>     
+<a name="218" href="#218">218</a>     <em>/**<em>*</em></em>
+<a name="219" href="#219">219</a> <em>     * Returns the instance of the receiver.</em>
+<a name="220" href="#220">220</a> <em>     * @return SieveFactory</em>
+<a name="221" href="#221">221</a> <em>     */</em>
+<a name="222" href="#222">222</a>     <strong>private</strong> <strong>static</strong> <a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> getInstanceBasic()
+<a name="223" href="#223">223</a>     {
+<a name="224" href="#224">224</a>         <strong>return</strong> fieldInstance;
+<a name="225" href="#225">225</a>     }    
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>     <em>/**<em>*</em></em>
+<a name="228" href="#228">228</a> <em>     * Sets the instance of the receiver.</em>
+<a name="229" href="#229">229</a> <em>     * @param instance The instance to set</em>
+<a name="230" href="#230">230</a> <em>     */</em>
+<a name="231" href="#231">231</a>     <strong>protected</strong> <strong>static</strong> <strong>void</strong> setInstance(<a href="../../../org/apache/jsieve/SieveFactory.html">SieveFactory</a> instance)
+<a name="232" href="#232">232</a>     {
+<a name="233" href="#233">233</a>         fieldInstance = instance;
+<a name="234" href="#234">234</a>     }
+<a name="235" href="#235">235</a>     
+<a name="236" href="#236">236</a>     <em>/**<em>*</em></em>
+<a name="237" href="#237">237</a> <em>     * Updates the instance of the receiver.</em>
+<a name="238" href="#238">238</a> <em>     */</em>
+<a name="239" href="#239">239</a>     <strong>protected</strong> <strong>static</strong> <strong>void</strong> updateInstance()
+<a name="240" href="#240">240</a>     {
+<a name="241" href="#241">241</a>         setInstance(computeInstance());
+<a name="242" href="#242">242</a>     }    
+<a name="243" href="#243">243</a> 
+<a name="244" href="#244">244</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

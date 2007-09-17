@@ -64,7 +64,7 @@
 <a name="55" href="#55">55</a>      {
 <a name="56" href="#56">56</a>          <em class="comment">// Check Syntax</em>
 <a name="57" href="#57">57</a>          <strong>if</strong> (!ConditionManager.getInstance().isElseAllowed())
-<a name="58" href="#58">58</a>              <strong>throw</strong> <strong>new</strong> <a href="../../../../org/apache/jsieve/CommandException.html">CommandException</a>(<span class="string">"Unexpected Command: \&quot;else\&quot;."</span>);
+<a name="58" href="#58">58</a>              <strong>throw</strong> context.getCoordinate().commandException(<span class="string">"Unexpected Command: \&quot;else\&quot;."</span>);
 <a name="59" href="#59">59</a>  
 <a name="60" href="#60">60</a>          <em class="comment">// Check Runnable                </em>
 <a name="61" href="#61">61</a>          <strong>if</strong> (!ConditionManager.getInstance().isElseRunnable())

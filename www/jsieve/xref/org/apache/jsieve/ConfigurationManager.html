@@ -154,290 +154,310 @@
 <a name="145" href="#145">145</a>         <strong>return</strong> <span class="string">"sieveConfig.xml"</span>;
 <a name="146" href="#146">146</a>     }
 <a name="147" href="#147">147</a>     <em>/**<em>*</em></em>
-<a name="148" href="#148">148</a> <em>     * Method getConfigStream answers an InputStream over the Sieve</em>
-<a name="149" href="#149">149</a> <em>     * configuration file. It is located by searching the classpath of the</em>
-<a name="150" href="#150">150</a> <em>     * current ClassLoader.</em>
-<a name="151" href="#151">151</a> <em>     * </em>
-<a name="152" href="#152">152</a> <em>     * @return InputStream</em>
-<a name="153" href="#153">153</a> <em>     * @throws IOException</em>
-<a name="154" href="#154">154</a> <em>     */</em>
-<a name="155" href="#155">155</a>     <strong>static</strong> <strong>protected</strong> InputStream getConfigStream() throws IOException
-<a name="156" href="#156">156</a>     {
-<a name="157" href="#157">157</a>         InputStream stream = ConfigurationManager.<strong>class</strong>.getClassLoader()
-<a name="158" href="#158">158</a>                 .getResourceAsStream(getConfigName());
-<a name="159" href="#159">159</a>         <strong>if</strong> (<strong>null</strong> == stream)
-<a name="160" href="#160">160</a>             <strong>throw</strong> <strong>new</strong> IOException(<span class="string">"Resource \&quot;"</span> + getConfigName()
-<a name="161" href="#161">161</a>                     + <span class="string">"\&quot; not found"</span>);
-<a name="162" href="#162">162</a>         <strong>return</strong> stream;
-<a name="163" href="#163">163</a>     }
-<a name="164" href="#164">164</a>     <em>/**<em>*</em></em>
-<a name="165" href="#165">165</a> <em>     * Method getCommandMap answers a Map of Command names and their associated</em>
-<a name="166" href="#166">166</a> <em>     * class names, lazily initialized if required.</em>
-<a name="167" href="#167">167</a> <em>     * </em>
-<a name="168" href="#168">168</a> <em>     * @return Map</em>
-<a name="169" href="#169">169</a> <em>     */</em>
-<a name="170" href="#170">170</a>     <strong>public</strong> <strong>synchronized</strong> Map getCommandMap()
-<a name="171" href="#171">171</a>     {
-<a name="172" href="#172">172</a>         Map commandMap = <strong>null</strong>;
-<a name="173" href="#173">173</a>         <strong>if</strong> (<strong>null</strong> == (commandMap = getCommandMapBasic()))
+<a name="148" href="#148">148</a> <em>     * &lt;p></em>
+<a name="149" href="#149">149</a> <em>     * Method getConfigStream answers an InputStream over the Sieve</em>
+<a name="150" href="#150">150</a> <em>     * configuration file. It is located by searching the classpath of the</em>
+<a name="151" href="#151">151</a> <em>     * current ClassLoader.</em>
+<a name="152" href="#152">152</a> <em>     * &lt;/p>&lt;p></em>
+<a name="153" href="#153">153</a> <em>     * The context classloader is searched first. If a suitably named</em>
+<a name="154" href="#154">154</a> <em>     * resource is found then this is returned. Otherwise, the classloader</em>
+<a name="155" href="#155">155</a> <em>     * used to load this class is searched for the resource.</em>
+<a name="156" href="#156">156</a> <em>     * &lt;/p></em>
+<a name="157" href="#157">157</a> <em>     * @return InputStream</em>
+<a name="158" href="#158">158</a> <em>     * @throws IOException</em>
+<a name="159" href="#159">159</a> <em>     */</em>
+<a name="160" href="#160">160</a>     <strong>static</strong> <strong>protected</strong> InputStream getConfigStream() throws IOException
+<a name="161" href="#161">161</a>     {
+<a name="162" href="#162">162</a>         InputStream stream = <strong>null</strong>;
+<a name="163" href="#163">163</a>         <strong>final</strong> String configName = getConfigName();
+<a name="164" href="#164">164</a>         <em class="comment">// Context classloader is usually right in a JEE evironment</em>
+<a name="165" href="#165">165</a>         <strong>final</strong> ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+<a name="166" href="#166">166</a>         <strong>if</strong> (contextClassLoader != <strong>null</strong>)
+<a name="167" href="#167">167</a>         {
+<a name="168" href="#168">168</a>             stream = contextClassLoader.getResourceAsStream(configName);
+<a name="169" href="#169">169</a>         }
+<a name="170" href="#170">170</a>         
+<a name="171" href="#171">171</a>         <em class="comment">// Sometimes context classloader will not be set conventionally</em>
+<a name="172" href="#172">172</a>         <em class="comment">// So, try class classloader</em>
+<a name="173" href="#173">173</a>         <strong>if</strong> (<strong>null</strong> == stream)
 <a name="174" href="#174">174</a>         {
-<a name="175" href="#175">175</a>             updateCommandMap();
-<a name="176" href="#176">176</a>             <strong>return</strong> getCommandMap();
+<a name="175" href="#175">175</a>             stream = ConfigurationManager.<strong>class</strong>.getClassLoader()
+<a name="176" href="#176">176</a>                 .getResourceAsStream(configName);
 <a name="177" href="#177">177</a>         }
-<a name="178" href="#178">178</a>         <strong>return</strong> commandMap;
-<a name="179" href="#179">179</a>     }
-<a name="180" href="#180">180</a>     <em>/**<em>*</em></em>
-<a name="181" href="#181">181</a> <em>     * Method getTestMap answers a Map of Test names and their associated class</em>
-<a name="182" href="#182">182</a> <em>     * names, lazily initialized if required.</em>
-<a name="183" href="#183">183</a> <em>     * </em>
-<a name="184" href="#184">184</a> <em>     * @return Map</em>
-<a name="185" href="#185">185</a> <em>     */</em>
-<a name="186" href="#186">186</a>     <strong>public</strong> <strong>synchronized</strong> Map getTestMap()
-<a name="187" href="#187">187</a>     {
-<a name="188" href="#188">188</a>         Map testMap = <strong>null</strong>;
-<a name="189" href="#189">189</a>         <strong>if</strong> (<strong>null</strong> == (testMap = getTestMapBasic()))
-<a name="190" href="#190">190</a>         {
-<a name="191" href="#191">191</a>             updateTestMap();
-<a name="192" href="#192">192</a>             <strong>return</strong> getTestMap();
-<a name="193" href="#193">193</a>         }
-<a name="194" href="#194">194</a>         <strong>return</strong> testMap;
-<a name="195" href="#195">195</a>     }
-<a name="196" href="#196">196</a>     <em>/**<em>*</em></em>
-<a name="197" href="#197">197</a> <em>     * Method getComparatorMap answers a Map of Comparator names and their</em>
-<a name="198" href="#198">198</a> <em>     * associated class names, lazily initialized if required.</em>
-<a name="199" href="#199">199</a> <em>     * </em>
-<a name="200" href="#200">200</a> <em>     * @return Map</em>
-<a name="201" href="#201">201</a> <em>     */</em>
-<a name="202" href="#202">202</a>     <strong>public</strong> <strong>synchronized</strong> Map getComparatorMap()
-<a name="203" href="#203">203</a>     {
-<a name="204" href="#204">204</a>         Map comparatorMap = <strong>null</strong>;
-<a name="205" href="#205">205</a>         <strong>if</strong> (<strong>null</strong> == (comparatorMap = getComparatorMapBasic()))
-<a name="206" href="#206">206</a>         {
-<a name="207" href="#207">207</a>             updateComparatorMap();
-<a name="208" href="#208">208</a>             <strong>return</strong> getComparatorMap();
-<a name="209" href="#209">209</a>         }
-<a name="210" href="#210">210</a>         <strong>return</strong> comparatorMap;
-<a name="211" href="#211">211</a>     }
-<a name="212" href="#212">212</a>     <em>/**<em>*</em></em>
-<a name="213" href="#213">213</a> <em>     * Method getCommandMapBasic answers a Map of Command names and their</em>
-<a name="214" href="#214">214</a> <em>     * associated class names.</em>
-<a name="215" href="#215">215</a> <em>     * </em>
-<a name="216" href="#216">216</a> <em>     * @return Map</em>
-<a name="217" href="#217">217</a> <em>     */</em>
-<a name="218" href="#218">218</a>     <strong>private</strong> Map getCommandMapBasic()
-<a name="219" href="#219">219</a>     {
-<a name="220" href="#220">220</a>         <strong>return</strong> fieldCommandMap;
-<a name="221" href="#221">221</a>     }
-<a name="222" href="#222">222</a>     <em>/**<em>*</em></em>
-<a name="223" href="#223">223</a> <em>     * Method getTestMapBasic answers a Map of Test names and their associated</em>
-<a name="224" href="#224">224</a> <em>     * class names.</em>
-<a name="225" href="#225">225</a> <em>     * </em>
-<a name="226" href="#226">226</a> <em>     * @return Map</em>
-<a name="227" href="#227">227</a> <em>     */</em>
-<a name="228" href="#228">228</a>     <strong>private</strong> Map getTestMapBasic()
-<a name="229" href="#229">229</a>     {
-<a name="230" href="#230">230</a>         <strong>return</strong> fieldTestMap;
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a>         <strong>if</strong> (<strong>null</strong> == stream)
+<a name="180" href="#180">180</a>             <strong>throw</strong> <strong>new</strong> IOException(<span class="string">"Resource \&quot;"</span> + configName
+<a name="181" href="#181">181</a>                     + <span class="string">"\&quot; not found"</span>);
+<a name="182" href="#182">182</a>         <strong>return</strong> stream;
+<a name="183" href="#183">183</a>     }
+<a name="184" href="#184">184</a>     <em>/**<em>*</em></em>
+<a name="185" href="#185">185</a> <em>     * Method getCommandMap answers a Map of Command names and their associated</em>
+<a name="186" href="#186">186</a> <em>     * class names, lazily initialized if required.</em>
+<a name="187" href="#187">187</a> <em>     * </em>
+<a name="188" href="#188">188</a> <em>     * @return Map</em>
+<a name="189" href="#189">189</a> <em>     */</em>
+<a name="190" href="#190">190</a>     <strong>public</strong> <strong>synchronized</strong> Map getCommandMap()
+<a name="191" href="#191">191</a>     {
+<a name="192" href="#192">192</a>         Map commandMap = <strong>null</strong>;
+<a name="193" href="#193">193</a>         <strong>if</strong> (<strong>null</strong> == (commandMap = getCommandMapBasic()))
+<a name="194" href="#194">194</a>         {
+<a name="195" href="#195">195</a>             updateCommandMap();
+<a name="196" href="#196">196</a>             <strong>return</strong> getCommandMap();
+<a name="197" href="#197">197</a>         }
+<a name="198" href="#198">198</a>         <strong>return</strong> commandMap;
+<a name="199" href="#199">199</a>     }
+<a name="200" href="#200">200</a>     <em>/**<em>*</em></em>
+<a name="201" href="#201">201</a> <em>     * Method getTestMap answers a Map of Test names and their associated class</em>
+<a name="202" href="#202">202</a> <em>     * names, lazily initialized if required.</em>
+<a name="203" href="#203">203</a> <em>     * </em>
+<a name="204" href="#204">204</a> <em>     * @return Map</em>
+<a name="205" href="#205">205</a> <em>     */</em>
+<a name="206" href="#206">206</a>     <strong>public</strong> <strong>synchronized</strong> Map getTestMap()
+<a name="207" href="#207">207</a>     {
+<a name="208" href="#208">208</a>         Map testMap = <strong>null</strong>;
+<a name="209" href="#209">209</a>         <strong>if</strong> (<strong>null</strong> == (testMap = getTestMapBasic()))
+<a name="210" href="#210">210</a>         {
+<a name="211" href="#211">211</a>             updateTestMap();
+<a name="212" href="#212">212</a>             <strong>return</strong> getTestMap();
+<a name="213" href="#213">213</a>         }
+<a name="214" href="#214">214</a>         <strong>return</strong> testMap;
+<a name="215" href="#215">215</a>     }
+<a name="216" href="#216">216</a>     <em>/**<em>*</em></em>
+<a name="217" href="#217">217</a> <em>     * Method getComparatorMap answers a Map of Comparator names and their</em>
+<a name="218" href="#218">218</a> <em>     * associated class names, lazily initialized if required.</em>
+<a name="219" href="#219">219</a> <em>     * </em>
+<a name="220" href="#220">220</a> <em>     * @return Map</em>
+<a name="221" href="#221">221</a> <em>     */</em>
+<a name="222" href="#222">222</a>     <strong>public</strong> <strong>synchronized</strong> Map getComparatorMap()
+<a name="223" href="#223">223</a>     {
+<a name="224" href="#224">224</a>         Map comparatorMap = <strong>null</strong>;
+<a name="225" href="#225">225</a>         <strong>if</strong> (<strong>null</strong> == (comparatorMap = getComparatorMapBasic()))
+<a name="226" href="#226">226</a>         {
+<a name="227" href="#227">227</a>             updateComparatorMap();
+<a name="228" href="#228">228</a>             <strong>return</strong> getComparatorMap();
+<a name="229" href="#229">229</a>         }
+<a name="230" href="#230">230</a>         <strong>return</strong> comparatorMap;
 <a name="231" href="#231">231</a>     }
 <a name="232" href="#232">232</a>     <em>/**<em>*</em></em>
-<a name="233" href="#233">233</a> <em>     * Method getComparatorMapBasic answers a Map of Comparator names and their</em>
-<a name="234" href="#234">234</a> <em>     * a ssociated class names.</em>
+<a name="233" href="#233">233</a> <em>     * Method getCommandMapBasic answers a Map of Command names and their</em>
+<a name="234" href="#234">234</a> <em>     * associated class names.</em>
 <a name="235" href="#235">235</a> <em>     * </em>
 <a name="236" href="#236">236</a> <em>     * @return Map</em>
 <a name="237" href="#237">237</a> <em>     */</em>
-<a name="238" href="#238">238</a>     <strong>private</strong> Map getComparatorMapBasic()
+<a name="238" href="#238">238</a>     <strong>private</strong> Map getCommandMapBasic()
 <a name="239" href="#239">239</a>     {
-<a name="240" href="#240">240</a>         <strong>return</strong> fieldComparatorMap;
+<a name="240" href="#240">240</a>         <strong>return</strong> fieldCommandMap;
 <a name="241" href="#241">241</a>     }
 <a name="242" href="#242">242</a>     <em>/**<em>*</em></em>
-<a name="243" href="#243">243</a> <em>     * Method computeCommandMap answers a new CommandMap.</em>
-<a name="244" href="#244">244</a> <em>     * </em>
-<a name="245" href="#245">245</a> <em>     * @return Map</em>
-<a name="246" href="#246">246</a> <em>     */</em>
-<a name="247" href="#247">247</a>     <strong>protected</strong> Map computeCommandMap()
-<a name="248" href="#248">248</a>     {
-<a name="249" href="#249">249</a>         <strong>return</strong> <strong>new</strong> HashMap();
-<a name="250" href="#250">250</a>     }
-<a name="251" href="#251">251</a>     <em>/**<em>*</em></em>
-<a name="252" href="#252">252</a> <em>     * Method computeTestMap answers a new TestMap.</em>
-<a name="253" href="#253">253</a> <em>     * </em>
-<a name="254" href="#254">254</a> <em>     * @return Map</em>
-<a name="255" href="#255">255</a> <em>     */</em>
-<a name="256" href="#256">256</a>     <strong>protected</strong> Map computeTestMap()
-<a name="257" href="#257">257</a>     {
-<a name="258" href="#258">258</a>         <strong>return</strong> <strong>new</strong> HashMap();
-<a name="259" href="#259">259</a>     }
-<a name="260" href="#260">260</a>     <em>/**<em>*</em></em>
-<a name="261" href="#261">261</a> <em>     * Method computeComparatorMap answers a new ComparatorMap.</em>
-<a name="262" href="#262">262</a> <em>     * </em>
-<a name="263" href="#263">263</a> <em>     * @return Map</em>
-<a name="264" href="#264">264</a> <em>     */</em>
-<a name="265" href="#265">265</a>     <strong>protected</strong> Map computeComparatorMap()
-<a name="266" href="#266">266</a>     {
-<a name="267" href="#267">267</a>         <strong>return</strong> <strong>new</strong> HashMap();
-<a name="268" href="#268">268</a>     }
-<a name="269" href="#269">269</a>     <em>/**<em>*</em></em>
-<a name="270" href="#270">270</a> <em>     * Method putCommandMapEntry adds an association between a Command name and</em>
-<a name="271" href="#271">271</a> <em>     * an implementation class to the Command Map.</em>
-<a name="272" href="#272">272</a> <em>     * </em>
-<a name="273" href="#273">273</a> <em>     * @param name</em>
-<a name="274" href="#274">274</a> <em>     * @param className</em>
+<a name="243" href="#243">243</a> <em>     * Method getTestMapBasic answers a Map of Test names and their associated</em>
+<a name="244" href="#244">244</a> <em>     * class names.</em>
+<a name="245" href="#245">245</a> <em>     * </em>
+<a name="246" href="#246">246</a> <em>     * @return Map</em>
+<a name="247" href="#247">247</a> <em>     */</em>
+<a name="248" href="#248">248</a>     <strong>private</strong> Map getTestMapBasic()
+<a name="249" href="#249">249</a>     {
+<a name="250" href="#250">250</a>         <strong>return</strong> fieldTestMap;
+<a name="251" href="#251">251</a>     }
+<a name="252" href="#252">252</a>     <em>/**<em>*</em></em>
+<a name="253" href="#253">253</a> <em>     * Method getComparatorMapBasic answers a Map of Comparator names and their</em>
+<a name="254" href="#254">254</a> <em>     * a ssociated class names.</em>
+<a name="255" href="#255">255</a> <em>     * </em>
+<a name="256" href="#256">256</a> <em>     * @return Map</em>
+<a name="257" href="#257">257</a> <em>     */</em>
+<a name="258" href="#258">258</a>     <strong>private</strong> Map getComparatorMapBasic()
+<a name="259" href="#259">259</a>     {
+<a name="260" href="#260">260</a>         <strong>return</strong> fieldComparatorMap;
+<a name="261" href="#261">261</a>     }
+<a name="262" href="#262">262</a>     <em>/**<em>*</em></em>
+<a name="263" href="#263">263</a> <em>     * Method computeCommandMap answers a new CommandMap.</em>
+<a name="264" href="#264">264</a> <em>     * </em>
+<a name="265" href="#265">265</a> <em>     * @return Map</em>
+<a name="266" href="#266">266</a> <em>     */</em>
+<a name="267" href="#267">267</a>     <strong>protected</strong> Map computeCommandMap()
+<a name="268" href="#268">268</a>     {
+<a name="269" href="#269">269</a>         <strong>return</strong> <strong>new</strong> HashMap();
+<a name="270" href="#270">270</a>     }
+<a name="271" href="#271">271</a>     <em>/**<em>*</em></em>
+<a name="272" href="#272">272</a> <em>     * Method computeTestMap answers a new TestMap.</em>
+<a name="273" href="#273">273</a> <em>     * </em>
+<a name="274" href="#274">274</a> <em>     * @return Map</em>
 <a name="275" href="#275">275</a> <em>     */</em>
-<a name="276" href="#276">276</a>     <strong>public</strong> <strong>void</strong> putCommandMapEntry(String name, String className)
+<a name="276" href="#276">276</a>     <strong>protected</strong> Map computeTestMap()
 <a name="277" href="#277">277</a>     {
-<a name="278" href="#278">278</a>         getCommandMap().put(name, className);
+<a name="278" href="#278">278</a>         <strong>return</strong> <strong>new</strong> HashMap();
 <a name="279" href="#279">279</a>     }
 <a name="280" href="#280">280</a>     <em>/**<em>*</em></em>
-<a name="281" href="#281">281</a> <em>     * Method putTestMapEntry adds an association between a Test name and an</em>
-<a name="282" href="#282">282</a> <em>     * implementation class to the Test Map.</em>
-<a name="283" href="#283">283</a> <em>     * </em>
-<a name="284" href="#284">284</a> <em>     * @param name</em>
-<a name="285" href="#285">285</a> <em>     * @param className</em>
-<a name="286" href="#286">286</a> <em>     */</em>
-<a name="287" href="#287">287</a>     <strong>public</strong> <strong>void</strong> putTestMapEntry(String name, String className)
-<a name="288" href="#288">288</a>     {
-<a name="289" href="#289">289</a>         getTestMap().put(name, className);
-<a name="290" href="#290">290</a>     }
-<a name="291" href="#291">291</a>     <em>/**<em>*</em></em>
-<a name="292" href="#292">292</a> <em>     * Method putComparatorMapEntry adds an association between a Comparator</em>
-<a name="293" href="#293">293</a> <em>     * name and an implementation class to the Comparator Map.</em>
-<a name="294" href="#294">294</a> <em>     * </em>
-<a name="295" href="#295">295</a> <em>     * @param name</em>
-<a name="296" href="#296">296</a> <em>     * @param className</em>
-<a name="297" href="#297">297</a> <em>     */</em>
-<a name="298" href="#298">298</a>     <strong>public</strong> <strong>void</strong> putComparatorMapEntry(String name, String className)
-<a name="299" href="#299">299</a>     {
-<a name="300" href="#300">300</a>         getComparatorMap().put(name, className);
-<a name="301" href="#301">301</a>     }
-<a name="302" href="#302">302</a>     <em>/**<em>*</em></em>
-<a name="303" href="#303">303</a> <em>     * Returns the digester, lazily initialised if required.</em>
-<a name="304" href="#304">304</a> <em>     * </em>
-<a name="305" href="#305">305</a> <em>     * @return Digester</em>
+<a name="281" href="#281">281</a> <em>     * Method computeComparatorMap answers a new ComparatorMap.</em>
+<a name="282" href="#282">282</a> <em>     * </em>
+<a name="283" href="#283">283</a> <em>     * @return Map</em>
+<a name="284" href="#284">284</a> <em>     */</em>
+<a name="285" href="#285">285</a>     <strong>protected</strong> Map computeComparatorMap()
+<a name="286" href="#286">286</a>     {
+<a name="287" href="#287">287</a>         <strong>return</strong> <strong>new</strong> HashMap();
+<a name="288" href="#288">288</a>     }
+<a name="289" href="#289">289</a>     <em>/**<em>*</em></em>
+<a name="290" href="#290">290</a> <em>     * Method putCommandMapEntry adds an association between a Command name and</em>
+<a name="291" href="#291">291</a> <em>     * an implementation class to the Command Map.</em>
+<a name="292" href="#292">292</a> <em>     * </em>
+<a name="293" href="#293">293</a> <em>     * @param name</em>
+<a name="294" href="#294">294</a> <em>     * @param className</em>
+<a name="295" href="#295">295</a> <em>     */</em>
+<a name="296" href="#296">296</a>     <strong>public</strong> <strong>void</strong> putCommandMapEntry(String name, String className)
+<a name="297" href="#297">297</a>     {
+<a name="298" href="#298">298</a>         getCommandMap().put(name, className);
+<a name="299" href="#299">299</a>     }
+<a name="300" href="#300">300</a>     <em>/**<em>*</em></em>
+<a name="301" href="#301">301</a> <em>     * Method putTestMapEntry adds an association between a Test name and an</em>
+<a name="302" href="#302">302</a> <em>     * implementation class to the Test Map.</em>
+<a name="303" href="#303">303</a> <em>     * </em>
+<a name="304" href="#304">304</a> <em>     * @param name</em>
+<a name="305" href="#305">305</a> <em>     * @param className</em>
 <a name="306" href="#306">306</a> <em>     */</em>
-<a name="307" href="#307">307</a>     <strong>protected</strong> <strong>synchronized</strong> Digester getDigester()
+<a name="307" href="#307">307</a>     <strong>public</strong> <strong>void</strong> putTestMapEntry(String name, String className)
 <a name="308" href="#308">308</a>     {
-<a name="309" href="#309">309</a>         Digester digester = <strong>null</strong>;
-<a name="310" href="#310">310</a>         <strong>if</strong> (<strong>null</strong> == (digester = getDigesterBasic()))
-<a name="311" href="#311">311</a>         {
-<a name="312" href="#312">312</a>             updateDigester();
-<a name="313" href="#313">313</a>             <strong>return</strong> getDigester();
-<a name="314" href="#314">314</a>         }
-<a name="315" href="#315">315</a>         <strong>return</strong> digester;
-<a name="316" href="#316">316</a>     }
-<a name="317" href="#317">317</a>     <em>/**<em>*</em></em>
-<a name="318" href="#318">318</a> <em>     * Returns the digester.</em>
-<a name="319" href="#319">319</a> <em>     * </em>
-<a name="320" href="#320">320</a> <em>     * @return Digester</em>
-<a name="321" href="#321">321</a> <em>     */</em>
-<a name="322" href="#322">322</a>     <strong>private</strong> Digester getDigesterBasic()
-<a name="323" href="#323">323</a>     {
-<a name="324" href="#324">324</a>         <strong>return</strong> fieldDigester;
-<a name="325" href="#325">325</a>     }
-<a name="326" href="#326">326</a>     <em>/**<em>*</em></em>
-<a name="327" href="#327">327</a> <em>     * Method computeDigester answers a new digester intialised with the rules</em>
-<a name="328" href="#328">328</a> <em>     * to parse the Sieve configuration file.</em>
-<a name="329" href="#329">329</a> <em>     * </em>
-<a name="330" href="#330">330</a> <em>     * @return Digester</em>
-<a name="331" href="#331">331</a> <em>     */</em>
-<a name="332" href="#332">332</a>     <strong>protected</strong> Digester computeDigester()
-<a name="333" href="#333">333</a>     {
-<a name="334" href="#334">334</a>         Digester digester = <strong>new</strong> Digester();
-<a name="335" href="#335">335</a>         digester.push(<strong>this</strong>);
-<a name="336" href="#336">336</a>         digester.setValidating(false);
-<a name="337" href="#337">337</a>         <em class="comment">// CommandMap rules</em>
-<a name="338" href="#338">338</a>         digester.addCallMethod(<span class="string">"sieve/commandMap/entry"</span>, <span class="string">"putCommandMapEntry"</span>,
-<a name="339" href="#339">339</a>                 2, <strong>new</strong> Class[]{String.<strong>class</strong>, String.<strong>class</strong>});
-<a name="340" href="#340">340</a>         digester.addCallParam(<span class="string">"sieve/commandMap/entry/name"</span>, 0);
-<a name="341" href="#341">341</a>         digester.addCallParam(<span class="string">"sieve/commandMap/entry/class"</span>, 1);
-<a name="342" href="#342">342</a>         <em class="comment">// TestMap rules</em>
-<a name="343" href="#343">343</a>         digester.addCallMethod(<span class="string">"sieve/testMap/entry"</span>, <span class="string">"putTestMapEntry"</span>, 2,
-<a name="344" href="#344">344</a>                 <strong>new</strong> Class[]{String.<strong>class</strong>, String.<strong>class</strong>});
-<a name="345" href="#345">345</a>         digester.addCallParam(<span class="string">"sieve/testMap/entry/name"</span>, 0);
-<a name="346" href="#346">346</a>         digester.addCallParam(<span class="string">"sieve/testMap/entry/class"</span>, 1);
-<a name="347" href="#347">347</a>         <em class="comment">// ComparatorMap rules</em>
-<a name="348" href="#348">348</a>         digester.addCallMethod(<span class="string">"sieve/comparatorMap/entry"</span>,
-<a name="349" href="#349">349</a>                 <span class="string">"putComparatorMapEntry"</span>, 2, <strong>new</strong> Class[]{String.<strong>class</strong>,
-<a name="350" href="#350">350</a>                         String.<strong>class</strong>});
-<a name="351" href="#351">351</a>         digester.addCallParam(<span class="string">"sieve/comparatorMap/entry/name"</span>, 0);
-<a name="352" href="#352">352</a>         digester.addCallParam(<span class="string">"sieve/comparatorMap/entry/class"</span>, 1);
-<a name="353" href="#353">353</a>         <strong>return</strong> digester;
-<a name="354" href="#354">354</a>     }
-<a name="355" href="#355">355</a>     <em>/**<em>*</em></em>
-<a name="356" href="#356">356</a> <em>     * Sets the digester.</em>
-<a name="357" href="#357">357</a> <em>     * </em>
-<a name="358" href="#358">358</a> <em>     * @param digester The digester to set</em>
-<a name="359" href="#359">359</a> <em>     */</em>
-<a name="360" href="#360">360</a>     <strong>protected</strong> <strong>void</strong> setDigester(Digester digester)
-<a name="361" href="#361">361</a>     {
-<a name="362" href="#362">362</a>         fieldDigester = digester;
-<a name="363" href="#363">363</a>     }
-<a name="364" href="#364">364</a>     <em>/**<em>*</em></em>
-<a name="365" href="#365">365</a> <em>     * Updates the digester.</em>
-<a name="366" href="#366">366</a> <em>     */</em>
-<a name="367" href="#367">367</a>     <strong>protected</strong> <strong>void</strong> updateDigester()
-<a name="368" href="#368">368</a>     {
-<a name="369" href="#369">369</a>         setDigester(computeDigester());
-<a name="370" href="#370">370</a>     }
-<a name="371" href="#371">371</a>     <em>/**<em>*</em></em>
-<a name="372" href="#372">372</a> <em>     * Method parse uses the Digester to parse the XML statements in the Sieve</em>
-<a name="373" href="#373">373</a> <em>     * configuration file into Java objects.</em>
-<a name="374" href="#374">374</a> <em>     * </em>
-<a name="375" href="#375">375</a> <em>     * @return Object</em>
-<a name="376" href="#376">376</a> <em>     * @throws SAXException</em>
-<a name="377" href="#377">377</a> <em>     * @throws IOException</em>
-<a name="378" href="#378">378</a> <em>     */</em>
-<a name="379" href="#379">379</a>     <strong>protected</strong> Object parse() throws SAXException, IOException
-<a name="380" href="#380">380</a>     {
-<a name="381" href="#381">381</a>         <strong>return</strong> getDigester().parse(getConfigStream());
-<a name="382" href="#382">382</a>     }
-<a name="383" href="#383">383</a>     <em>/**<em>*</em></em>
-<a name="384" href="#384">384</a> <em>     * Sets the commandMap.</em>
-<a name="385" href="#385">385</a> <em>     * </em>
-<a name="386" href="#386">386</a> <em>     * @param commandMap The commandMap to set</em>
-<a name="387" href="#387">387</a> <em>     */</em>
-<a name="388" href="#388">388</a>     <strong>protected</strong> <strong>void</strong> setCommandMap(Map commandMap)
-<a name="389" href="#389">389</a>     {
-<a name="390" href="#390">390</a>         fieldCommandMap = commandMap;
-<a name="391" href="#391">391</a>     }
-<a name="392" href="#392">392</a>     <em>/**<em>*</em></em>
-<a name="393" href="#393">393</a> <em>     * Sets the testMap.</em>
+<a name="309" href="#309">309</a>         getTestMap().put(name, className);
+<a name="310" href="#310">310</a>     }
+<a name="311" href="#311">311</a>     <em>/**<em>*</em></em>
+<a name="312" href="#312">312</a> <em>     * Method putComparatorMapEntry adds an association between a Comparator</em>
+<a name="313" href="#313">313</a> <em>     * name and an implementation class to the Comparator Map.</em>
+<a name="314" href="#314">314</a> <em>     * </em>
+<a name="315" href="#315">315</a> <em>     * @param name</em>
+<a name="316" href="#316">316</a> <em>     * @param className</em>
+<a name="317" href="#317">317</a> <em>     */</em>
+<a name="318" href="#318">318</a>     <strong>public</strong> <strong>void</strong> putComparatorMapEntry(String name, String className)
+<a name="319" href="#319">319</a>     {
+<a name="320" href="#320">320</a>         getComparatorMap().put(name, className);
+<a name="321" href="#321">321</a>     }
+<a name="322" href="#322">322</a>     <em>/**<em>*</em></em>
+<a name="323" href="#323">323</a> <em>     * Returns the digester, lazily initialised if required.</em>
+<a name="324" href="#324">324</a> <em>     * </em>
+<a name="325" href="#325">325</a> <em>     * @return Digester</em>
+<a name="326" href="#326">326</a> <em>     */</em>
+<a name="327" href="#327">327</a>     <strong>protected</strong> <strong>synchronized</strong> Digester getDigester()
+<a name="328" href="#328">328</a>     {
+<a name="329" href="#329">329</a>         Digester digester = <strong>null</strong>;
+<a name="330" href="#330">330</a>         <strong>if</strong> (<strong>null</strong> == (digester = getDigesterBasic()))
+<a name="331" href="#331">331</a>         {
+<a name="332" href="#332">332</a>             updateDigester();
+<a name="333" href="#333">333</a>             <strong>return</strong> getDigester();
+<a name="334" href="#334">334</a>         }
+<a name="335" href="#335">335</a>         <strong>return</strong> digester;
+<a name="336" href="#336">336</a>     }
+<a name="337" href="#337">337</a>     <em>/**<em>*</em></em>
+<a name="338" href="#338">338</a> <em>     * Returns the digester.</em>
+<a name="339" href="#339">339</a> <em>     * </em>
+<a name="340" href="#340">340</a> <em>     * @return Digester</em>
+<a name="341" href="#341">341</a> <em>     */</em>
+<a name="342" href="#342">342</a>     <strong>private</strong> Digester getDigesterBasic()
+<a name="343" href="#343">343</a>     {
+<a name="344" href="#344">344</a>         <strong>return</strong> fieldDigester;
+<a name="345" href="#345">345</a>     }
+<a name="346" href="#346">346</a>     <em>/**<em>*</em></em>
+<a name="347" href="#347">347</a> <em>     * Method computeDigester answers a new digester intialised with the rules</em>
+<a name="348" href="#348">348</a> <em>     * to parse the Sieve configuration file.</em>
+<a name="349" href="#349">349</a> <em>     * </em>
+<a name="350" href="#350">350</a> <em>     * @return Digester</em>
+<a name="351" href="#351">351</a> <em>     */</em>
+<a name="352" href="#352">352</a>     <strong>protected</strong> Digester computeDigester()
+<a name="353" href="#353">353</a>     {
+<a name="354" href="#354">354</a>         Digester digester = <strong>new</strong> Digester();
+<a name="355" href="#355">355</a>         digester.push(<strong>this</strong>);
+<a name="356" href="#356">356</a>         digester.setValidating(false);
+<a name="357" href="#357">357</a>         <em class="comment">// CommandMap rules</em>
+<a name="358" href="#358">358</a>         digester.addCallMethod(<span class="string">"sieve/commandMap/entry"</span>, <span class="string">"putCommandMapEntry"</span>,
+<a name="359" href="#359">359</a>                 2, <strong>new</strong> Class[]{String.<strong>class</strong>, String.<strong>class</strong>});
+<a name="360" href="#360">360</a>         digester.addCallParam(<span class="string">"sieve/commandMap/entry/name"</span>, 0);
+<a name="361" href="#361">361</a>         digester.addCallParam(<span class="string">"sieve/commandMap/entry/class"</span>, 1);
+<a name="362" href="#362">362</a>         <em class="comment">// TestMap rules</em>
+<a name="363" href="#363">363</a>         digester.addCallMethod(<span class="string">"sieve/testMap/entry"</span>, <span class="string">"putTestMapEntry"</span>, 2,
+<a name="364" href="#364">364</a>                 <strong>new</strong> Class[]{String.<strong>class</strong>, String.<strong>class</strong>});
+<a name="365" href="#365">365</a>         digester.addCallParam(<span class="string">"sieve/testMap/entry/name"</span>, 0);
+<a name="366" href="#366">366</a>         digester.addCallParam(<span class="string">"sieve/testMap/entry/class"</span>, 1);
+<a name="367" href="#367">367</a>         <em class="comment">// ComparatorMap rules</em>
+<a name="368" href="#368">368</a>         digester.addCallMethod(<span class="string">"sieve/comparatorMap/entry"</span>,
+<a name="369" href="#369">369</a>                 <span class="string">"putComparatorMapEntry"</span>, 2, <strong>new</strong> Class[]{String.<strong>class</strong>,
+<a name="370" href="#370">370</a>                         String.<strong>class</strong>});
+<a name="371" href="#371">371</a>         digester.addCallParam(<span class="string">"sieve/comparatorMap/entry/name"</span>, 0);
+<a name="372" href="#372">372</a>         digester.addCallParam(<span class="string">"sieve/comparatorMap/entry/class"</span>, 1);
+<a name="373" href="#373">373</a>         <strong>return</strong> digester;
+<a name="374" href="#374">374</a>     }
+<a name="375" href="#375">375</a>     <em>/**<em>*</em></em>
+<a name="376" href="#376">376</a> <em>     * Sets the digester.</em>
+<a name="377" href="#377">377</a> <em>     * </em>
+<a name="378" href="#378">378</a> <em>     * @param digester The digester to set</em>
+<a name="379" href="#379">379</a> <em>     */</em>
+<a name="380" href="#380">380</a>     <strong>protected</strong> <strong>void</strong> setDigester(Digester digester)
+<a name="381" href="#381">381</a>     {
+<a name="382" href="#382">382</a>         fieldDigester = digester;
+<a name="383" href="#383">383</a>     }
+<a name="384" href="#384">384</a>     <em>/**<em>*</em></em>
+<a name="385" href="#385">385</a> <em>     * Updates the digester.</em>
+<a name="386" href="#386">386</a> <em>     */</em>
+<a name="387" href="#387">387</a>     <strong>protected</strong> <strong>void</strong> updateDigester()
+<a name="388" href="#388">388</a>     {
+<a name="389" href="#389">389</a>         setDigester(computeDigester());
+<a name="390" href="#390">390</a>     }
+<a name="391" href="#391">391</a>     <em>/**<em>*</em></em>
+<a name="392" href="#392">392</a> <em>     * Method parse uses the Digester to parse the XML statements in the Sieve</em>
+<a name="393" href="#393">393</a> <em>     * configuration file into Java objects.</em>
 <a name="394" href="#394">394</a> <em>     * </em>
-<a name="395" href="#395">395</a> <em>     * @param testMap The testMap to set</em>
-<a name="396" href="#396">396</a> <em>     */</em>
-<a name="397" href="#397">397</a>     <strong>protected</strong> <strong>void</strong> setTestMap(Map testMap)
-<a name="398" href="#398">398</a>     {
-<a name="399" href="#399">399</a>         fieldTestMap = testMap;
-<a name="400" href="#400">400</a>     }
-<a name="401" href="#401">401</a>     <em>/**<em>*</em></em>
-<a name="402" href="#402">402</a> <em>     * Sets the comparatorMap.</em>
-<a name="403" href="#403">403</a> <em>     * </em>
-<a name="404" href="#404">404</a> <em>     * @param comparatorMap The comparatorMap to set</em>
-<a name="405" href="#405">405</a> <em>     */</em>
-<a name="406" href="#406">406</a>     <strong>protected</strong> <strong>void</strong> setComparatorMap(Map comparatorMap)
-<a name="407" href="#407">407</a>     {
-<a name="408" href="#408">408</a>         fieldComparatorMap = comparatorMap;
-<a name="409" href="#409">409</a>     }
-<a name="410" href="#410">410</a>     <em>/**<em>*</em></em>
-<a name="411" href="#411">411</a> <em>     * Updates the commandMap.</em>
-<a name="412" href="#412">412</a> <em>     */</em>
-<a name="413" href="#413">413</a>     <strong>protected</strong> <strong>void</strong> updateCommandMap()
-<a name="414" href="#414">414</a>     {
-<a name="415" href="#415">415</a>         setCommandMap(computeCommandMap());
-<a name="416" href="#416">416</a>     }
-<a name="417" href="#417">417</a>     <em>/**<em>*</em></em>
-<a name="418" href="#418">418</a> <em>     * Updates the testMap.</em>
-<a name="419" href="#419">419</a> <em>     */</em>
-<a name="420" href="#420">420</a>     <strong>protected</strong> <strong>void</strong> updateTestMap()
-<a name="421" href="#421">421</a>     {
-<a name="422" href="#422">422</a>         setTestMap(computeTestMap());
-<a name="423" href="#423">423</a>     }
-<a name="424" href="#424">424</a>     <em>/**<em>*</em></em>
-<a name="425" href="#425">425</a> <em>     * Updates the comparatorMap.</em>
-<a name="426" href="#426">426</a> <em>     */</em>
-<a name="427" href="#427">427</a>     <strong>protected</strong> <strong>void</strong> updateComparatorMap()
-<a name="428" href="#428">428</a>     {
-<a name="429" href="#429">429</a>         setComparatorMap(computeComparatorMap());
-<a name="430" href="#430">430</a>     }
-<a name="431" href="#431">431</a> }
+<a name="395" href="#395">395</a> <em>     * @return Object</em>
+<a name="396" href="#396">396</a> <em>     * @throws SAXException</em>
+<a name="397" href="#397">397</a> <em>     * @throws IOException</em>
+<a name="398" href="#398">398</a> <em>     */</em>
+<a name="399" href="#399">399</a>     <strong>protected</strong> Object parse() throws SAXException, IOException
+<a name="400" href="#400">400</a>     {
+<a name="401" href="#401">401</a>         <strong>return</strong> getDigester().parse(getConfigStream());
+<a name="402" href="#402">402</a>     }
+<a name="403" href="#403">403</a>     <em>/**<em>*</em></em>
+<a name="404" href="#404">404</a> <em>     * Sets the commandMap.</em>
+<a name="405" href="#405">405</a> <em>     * </em>
+<a name="406" href="#406">406</a> <em>     * @param commandMap The commandMap to set</em>
+<a name="407" href="#407">407</a> <em>     */</em>
+<a name="408" href="#408">408</a>     <strong>protected</strong> <strong>void</strong> setCommandMap(Map commandMap)
+<a name="409" href="#409">409</a>     {
+<a name="410" href="#410">410</a>         fieldCommandMap = commandMap;
+<a name="411" href="#411">411</a>     }
+<a name="412" href="#412">412</a>     <em>/**<em>*</em></em>
+<a name="413" href="#413">413</a> <em>     * Sets the testMap.</em>
+<a name="414" href="#414">414</a> <em>     * </em>
+<a name="415" href="#415">415</a> <em>     * @param testMap The testMap to set</em>
+<a name="416" href="#416">416</a> <em>     */</em>
+<a name="417" href="#417">417</a>     <strong>protected</strong> <strong>void</strong> setTestMap(Map testMap)
+<a name="418" href="#418">418</a>     {
+<a name="419" href="#419">419</a>         fieldTestMap = testMap;
+<a name="420" href="#420">420</a>     }
+<a name="421" href="#421">421</a>     <em>/**<em>*</em></em>
+<a name="422" href="#422">422</a> <em>     * Sets the comparatorMap.</em>
+<a name="423" href="#423">423</a> <em>     * </em>
+<a name="424" href="#424">424</a> <em>     * @param comparatorMap The comparatorMap to set</em>
+<a name="425" href="#425">425</a> <em>     */</em>
+<a name="426" href="#426">426</a>     <strong>protected</strong> <strong>void</strong> setComparatorMap(Map comparatorMap)
+<a name="427" href="#427">427</a>     {
+<a name="428" href="#428">428</a>         fieldComparatorMap = comparatorMap;
+<a name="429" href="#429">429</a>     }
+<a name="430" href="#430">430</a>     <em>/**<em>*</em></em>
+<a name="431" href="#431">431</a> <em>     * Updates the commandMap.</em>
+<a name="432" href="#432">432</a> <em>     */</em>
+<a name="433" href="#433">433</a>     <strong>protected</strong> <strong>void</strong> updateCommandMap()
+<a name="434" href="#434">434</a>     {
+<a name="435" href="#435">435</a>         setCommandMap(computeCommandMap());
+<a name="436" href="#436">436</a>     }
+<a name="437" href="#437">437</a>     <em>/**<em>*</em></em>
+<a name="438" href="#438">438</a> <em>     * Updates the testMap.</em>
+<a name="439" href="#439">439</a> <em>     */</em>
+<a name="440" href="#440">440</a>     <strong>protected</strong> <strong>void</strong> updateTestMap()
+<a name="441" href="#441">441</a>     {
+<a name="442" href="#442">442</a>         setTestMap(computeTestMap());
+<a name="443" href="#443">443</a>     }
+<a name="444" href="#444">444</a>     <em>/**<em>*</em></em>
+<a name="445" href="#445">445</a> <em>     * Updates the comparatorMap.</em>
+<a name="446" href="#446">446</a> <em>     */</em>
+<a name="447" href="#447">447</a>     <strong>protected</strong> <strong>void</strong> updateComparatorMap()
+<a name="448" href="#448">448</a>     {
+<a name="449" href="#449">449</a>         setComparatorMap(computeComparatorMap());
+<a name="450" href="#450">450</a>     }
+<a name="451" href="#451">451</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
