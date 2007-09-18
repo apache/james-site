@@ -45,11 +45,13 @@
   
   
             <div class="xleft">
-        Last Published: 09/17/2007
+        Last Published: 09/18/2007
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
           <a href="../server/index.html">Server</a>
+          |
+          <a href="../mailet/index.html">Mailet API</a>
           |
           <a href="../jspf/index.html">jSPF</a>
           |
@@ -173,7 +175,7 @@
         </li>
               
     <li class="none">
-              <a href="http://people.apache.org/dist/james">Test builds</a>
+              <a href="../downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -194,108 +196,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>CPD Results</h2><p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html">CPD</a> 3.9.</p></div><div class="section"><h2>Duplications</h2><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org/apache/jsieve/ComparatorManager.java</td><td><a href="./xref/org/apache/jsieve/ComparatorManager.html#144">144</a></td></tr><tr class="a"><td>org/apache/jsieve/TestManager.java</td><td><a href="./xref/org/apache/jsieve/TestManager.html#147">147</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>            return (ExecutableTest)lookup(name).newInstance();
-        }
-        catch (InstantiationException e)
-        {
-            throw new LookupException(e.getMessage());
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new LookupException(e.getMessage());
-        }
-    }    
-    
-    /**
-     * Method isSupported answers a boolean indicating if a Test name is 
-     * configured.
-     * @param name - The Test name
-     * @return boolean - True if the Test name is configured.
-     */
-    public boolean isSupported(String name)
-    {
-        boolean isSupported = true;
-        try
-        {
-            lookup(name);
-        }
-        catch (LookupException e)
-        {
-            isSupported = false;
-        }
-        return isSupported;
-    }    
-    
-    /**
-     * &lt;p&gt;Method getClassName answers the name of the class to which a Test name is
-     * mapped.&lt;/p&gt;
-     * 
-     * @param name - The name of the Test
-     * @return String - The name of the class
-     * @throws LookupException
-     */
-    protected String getClassName(String name)
-        throws LookupException
-    {
-        String className;
-        try
-        {
-            className = (String) getClassNameMap().get(name.toLowerCase());
-        }
-        catch (SieveConfigurationException e)
-        {
-            throw new LookupException(
-                &quot;Lookup failed due to a Configuration Exception: &quot;
-                    + e.getMessage());
-        }
-        if (null == className)
-            throw new LookupException(&quot;Test named '&quot; + name + &quot;' not mapped.&quot;);</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org/apache/jsieve/commands/Redirect.java</td><td><a href="./xref/org/apache/jsieve/commands/Redirect.html#66">66</a></td></tr><tr class="a"><td>org/apache/jsieve/commands/optional/FileInto.java</td><td><a href="./xref/org/apache/jsieve/commands/optional/FileInto.html#88">88</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>            mail.addAction(new ActionFileInto(destination));
-
-        return null;
-    }
-    
-    /**
-     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)
-     */
-    protected void validateArguments(Arguments arguments, SieveContext context) throws SieveException
-    {
-        List args = arguments.getArgumentList();
-        if (args.size() != 1)
-            throw context.getCoordinate().syntaxException(
-                &quot;Exactly 1 argument permitted. Found &quot; + args.size());
-
-        Object argument = args.get(0);
-        if (!(argument instanceof StringListArgument))
-            throw context.getCoordinate().syntaxException(&quot;Expecting a string-list&quot;);
-
-        if (1 != ((StringListArgument) argument).getList().size())
-            throw context.getCoordinate().syntaxException(&quot;Expecting exactly one argument&quot;);
-    }
-    
-
-    
-
-}</pre></div></td></tr><table class="bodyTable"></p><p><table class="bodyTable"><tr class="a"><th>File</th><th>Line</th></tr><tr class="b"><td>org/apache/jsieve/commands/Redirect.java</td><td><a href="./xref/org/apache/jsieve/commands/Redirect.html#69">69</a></td></tr><tr class="a"><td>org/apache/jsieve/commands/optional/Reject.java</td><td><a href="./xref/org/apache/jsieve/commands/optional/Reject.html#95">95</a></td></tr><tr class="b"><td colspan='2'><div class="source"><pre>    } 
-    
-    /**
-     * @see org.apache.jsieve.commands.AbstractCommand#validateArguments(Arguments, SieveContext)
-     */
-    protected void validateArguments(Arguments arguments, SieveContext context) throws SieveException
-    {
-        List args = arguments.getArgumentList();
-        if (args.size() != 1)
-            throw context.getCoordinate().syntaxException(
-                &quot;Exactly 1 argument permitted. Found &quot; + args.size());
-
-        Object argument = args.get(0);
-        if (!(argument instanceof StringListArgument))
-            throw context.getCoordinate().syntaxException(&quot;Expecting a string-list&quot;);
-
-        if (1 != ((StringListArgument) argument).getList().size())
-            throw context.getCoordinate().syntaxException(&quot;Expecting exactly one argument&quot;);
-    }  
-
-}</pre></div></td></tr><table class="bodyTable"></p></div>
+        <div class="section"><h2>CPD Results</h2><p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html">CPD</a> 3.9.</p></div><div class="section"><h2>Duplications</h2>CPD found no problems in your source code.</div>
       </div>
     </div>
     <div class="clear">
@@ -318,5 +219,11 @@
         <hr/>
       </div>
     </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
   </body>
 </html>
