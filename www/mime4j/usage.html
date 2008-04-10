@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James mime4j - Usage</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="images/james-mime4j-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 04/10/2008
+                      </div>
+            <div class="xright">      <a href="../index.html">JAMES Project</a>
+          |
+          <a href="../server/index.html">Server</a>
+          |
+          <a href="../mailet/index.html">Mailet API</a>
+          |
+          <a href="../jspf/index.html">jSPF</a>
+          |
+          <a href="../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../jsieve/index.html">JSieve</a>
+          |
+          <a href="../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>mime4j</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="status.html">News and Status</a>
+        </li>
+              
+    <li class="none">
+              <a href="samples.html">Example</a>
+        </li>
+              
+    <li class="none">
+              <strong>Usage</strong>
+        </li>
+              
+                
+              
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="start/index.html">Start</a>
+              </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Related Projects</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://hc.apache.org/httpcomponents-client/httpmime/index.html">httpmime</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="../downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="Usage">Usage</a></h2><p>Mime4j provides two different API's: An event based API by using the <a href="apidocs/org/apache/james/mime4j/MimeStreamParser.html"> MimeStreamParser</a>. Alternatively, you may use the iterative API, which is available through the <a href="apidocs/org/apache/james/mime4j/MimeTokenStream.html"> MimeTokenStream</a>. In terms of speed, you should not note any differences.</p><ul><li><a href="#Token Streams">Token Streams</a></li><li><a href="#Sample Token Stream">Sample Token Stream</a></li><li><a href="#Event Handlers">Event Handlers</a></li><li><a href="#Sample Event Stream">Sample Event Stream</a></li></ul></div><div class="section"><h2><a name="Token Streams">Token Streams</a></h2><p>The iterative approach is using the class <a href="apidocs/org/apache/james/mime4j/MimeTokenStream.html"> MimeTokenStream</a>. Here's an example, how you could use the token stream:</p><div class="source"><pre>  MimeTokenStream stream = new MimeTokenStream();
+  stream.parse(new BufferedInputStream(new FileInputStream(&quot;mime.msg&quot;)));
+  for (int state = stream.getState();
+       state != MimeTokenStream.T_END_OF_STREAM;
+       state = stream.next()) {
+    switch (state) {
+      case MimeTokenStream.T_BODY:
+        System.out.println(&quot;Body detected, contents = &quot;
+          + stream.getInputStream() + &quot;, header data = &quot;
+          + stream.getBodyDescriptor());
+        break;
+      case MimeTokenStream.T_FIELD:
+        System.out.println(&quot;Header field detected: &quot;
+          + stream.getField());
+        break;
+      case MimeTokenStream.T_START_MULTIPART:
+        System.out.println(&quot;Multipart message detexted,&quot;
+          + &quot; header data = &quot;
+          + stream.getBodyDescriptor());
+      ...
+    }
+  }
+</pre></div><p>The token stream provides a set of tokens. Tokens are identified by a state. Most states are simply event indicators, with no additional data available. However, there are some states, which provide additional data. For example, the state <tt>T_BODY</tt>, which indicates that an actual body is available, If you note this state, then you may ask for the bodies contents, which are provided through the <tt>getInputStream()</tt> method, or you might ask for the header data by invoking <tt>getBodyDescriptor()</tt>.</p></div><div class="section"><h2><a name="Sample Token Stream">Sample Token Stream</a></h2><p>The following sample should give you a rough idea of the order, in which you'll receive tokens:</p><div class="source"><pre>  T_START_MESSAGE
+      T_START_HEADER
+          T_FIELD
+          T_FIELD
+          ...
+      T_END_HEADER
+      T_START_MULTIPART
+          T_PREAMBLE
+          T_START_BODYPART
+              T_START_HEADER
+                  T_FIELD
+                  T_FIELD
+                  ...
+              T_END_HEADER
+              T_BODY
+          T_END_BODYPART
+          T_START_BODYPART
+              T_START_HEADER
+                  T_FIELD
+                  T_FIELD
+                  ...
+              T_END_HEADER
+              T_BODY
+          T_END_BODYPART
+          T_EPILOGUE
+      T_END_MULTIPART
+   T_END_MESSAGE
+</pre></div><p>The example shows a multipart message with two parts.</p></div><div class="section"><h2><a name="Event Handlers">Event Handlers</a></h2><p>The event based API requires, that you provide an event handler, which receives events. The event handler is an object, which implements the <a href="apidocs/org/apache/james/mime4j/ContentHandler.html"> ContentHandler</a> interface. Here's an example, how you could implement an event handler:</p><div class="source"><pre>  public class MyContentHandler extends org.apache.james.mime4j.ContentHandler {
+      public body(BodyDescriptor bd, InputStream is)
+              throws MimeException, IOException {
+          System.out.println(&quot;Body detected, contents = &quot;
+              + is + &quot;, header data = &quot; + bd);
+      }
+      public void field(String fieldData) throws MimeException {
+          System.out.println(&quot;Header field detected: &quot;
+              + fieldData);
+      }
+      public void startMultipart(BodyDescriptor bd) throws MimeException {
+          System.out.println(&quot;Multipart message detexted, header data = &quot;
+              + bd);
+      }
+      ...
+  }
+</pre></div><p>A little bit of additional code allows us to create an example, which is functionally equivalent to the example from the section on <a href="#Token Streams">Token Streams</a>:</p><div class="source"><pre>  ContentHandler handler = new MyContentHandler();
+  MimeStreamParser parser = new MimeStreamParser();
+  parser.setContentHandler(handler);
+  parser.parse(new BufferedInputStream(new FileInputStream(&quot;mime.msg&quot;)));
+</pre></div></div><div class="section"><h2><a name="Sample Event Stream">Sample Event Stream</a></h2><p>Like above for tokens, we provide an additional example, which demonstrates the typical order of events that you have to expect:</p><div class="source"><pre>  startMessage()
+      startHeader()
+          field(...)
+          field(...)
+          ...
+      endHeader()
+      startMultipart()
+          preamble(...)
+          startBodyPart()
+              startHeader()
+                  field(...)
+                  field(...)
+                  ...
+              endHeader()
+              body()
+          endBodyPart()
+          startBodyPart()
+              startHeader()
+                  field(...)
+                  field(...)
+                  ...
+              endHeader()
+              body()
+          endBodyPart()
+          epilogue(...)
+      endMultipart()
+  endMessage()
+</pre></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2004-2008
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
