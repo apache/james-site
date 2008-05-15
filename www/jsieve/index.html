@@ -11,16 +11,14 @@
 
 <html>
   <head>
-    <title>jSieve - 
-  Overview</title>
+    <title>jSieve - Overview</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-          <meta name="author" content="
-  jSieve Project" />
+          <meta name="author" content="jSieve Project" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
       </head>
   <body class="composite">
@@ -48,7 +46,7 @@
   
   
             <div class="xleft">
-        Last Published: 09/18/2007
+        Last Published: 05/11/2008
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -60,7 +58,7 @@
           |
           <a href="../mime4j/index.html">Mime4J</a>
           |
-          <a href="../jsieve/index.html">JSieve</a>
+          <a href="index.html">JSieve</a>
           |
           <a href="../postage/index.html">Postage</a>
           
@@ -92,19 +90,27 @@
         </li>
               
     <li class="none">
-              <a href="rfc2234.txt">RFC 2234 (ABNF)</a>
+              <a href="features.html">Sieve Features</a>
         </li>
               
     <li class="none">
-              <a href="rfc2244.txt">RFC 2244 (ACAP)</a>
+              <a href="start.html">Getting Started</a>
         </li>
               
     <li class="none">
-              <a href="rfc2298.txt">RFC 2298 (MDN)</a>
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
         </li>
               
     <li class="none">
-              <a href="rfc3028.txt">RFC 3028 (Sieve)</a>
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
         </li>
           </ul>
           <h5>Project Documentation</h5>
@@ -134,6 +140,8 @@
               
                 
               
+      
+            
       
             
       
@@ -177,219 +185,43 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
-
- 
-
-
-<a name="What is jSieve?"></a><div class="section"><h2>What is jSieve?</h2>
+        <div class="section"><h2><a name="What_is_jSieve"></a>
+What is jSieve?</h2>
 <p>
 jSieve is a Java implementation of the Sieve mail filtering language defined by 
-<a href="http://www.rfc-editor.org/rfc/rfc3028.txt">RFC 3028</a>. jSieve is implemented 
+<a href="http://www.rfc-editor.org/rfc/rfc3028.txt" class="externalLink">RFC 3028</a>
+. jSieve is implemented 
 as a language processor that can be plugged into any internet mail application to add 
 Sieve support.
 </p>
 <p>
-jSieve is a subproject of <a href="http://james.apache.org">Apache JAMES</a>.
+jSieve is a subproject of <a href="http://james.apache.org" class="externalLink">Apache JAMES</a>
+.
 All who are interested in developing jSieve and JAMES will be warmly
-welcomed on the <a href="mail-lists.html">mailing lists</a>.
+welcomed on the <a href="mail-lists.html">mailing lists</a>
+.
 </p>
-<a name="What is Sieve?"></a><div class="section"><h3>What is Sieve?</h3>
+<div class="section"><h3><a name="What_is_Sieve"></a>
+What is Sieve?</h3>
 <p>
 Sieve is an extensible mail filtering language. It's limited expressiveness (no loops
 or variables, no tests with side effects) allows user created scripts to be run 
 safely on email servers. Sieve is targeted at the final delivery phase 
-(where an incoming email is transfered to a user's mailbox).
+(where an incoming email is transferred to a user's mailbox).
 </p>
 <p>
 Sieve scripts are composed of commands. Control commands manage the execution of the script.
 Test commands define side-effect free criteria. 
 Action commands are mail operations to be performed.
 </p>
-
-</div>
-<a name="Sieve Features Supported By jSieve"></a><div class="section"><h3>Sieve Features Supported By jSieve</h3>
-<p>
-jSieve is limited only by the platform on which it runs.
-</p>
-<table class="bodyTable">
-<tr class="a"><th>Limits</th><th></th></tr>
-<tr class="b"><td>Maximum Number Of Actions</td><td>No intrinsic limit</td></tr>
-<tr class="a"><td>Maximum Number Of Nested Blocks</td><td>No intrinsic limit</td></tr>
-<tr class="b"><td>Maximum Number Of Nested Test Lists</td><td>No intrinsic limit</td></tr>
-</table>
-<p>
-jSieve supports the standard control commands specified in RFC 3028.
-</p>
-<table class="bodyTable">
-<tr class="a">
-<th>Control Command</th><th>Specification</th><th>Supported</th>
-</tr>
-<tr class="b">
-<td>If</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr>
-<td>Require</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-<tr class="a">
-<td>Stop</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr>
-</table>
-<p>
-jSieve supports all action commands (both required and optional) 
-specified in RFC 3028. 
-</p><p>
-<strong>Note</strong> that jSieve uses a pluggable 
-<code>MailAdapter</code> as an interface to the mail server.
-Not all implementations may fully support all actions.
-</p>  
-<table class="bodyTable">
-<tr class="b">
-<th>Action Command</th><th>Specification</th><th>Supported</th>
-</tr><tr class="a">
-<td>reject</td><td>RFC 3028 (OPTIONAL)</td><td>yes</td>
-</tr><tr class="b">
-<td>fileinto</td><td>RFC 3028 (OPTIONAL)</td><td>yes</td>
-</tr><tr class="a">
-<td>redirect</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>keep</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="a">
-<td>discard</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr>
-</table>
-<p>
-jSieve supports all tests commands specified in RFC 3028.
-</p>
-<table class="bodyTable">
-<tr class="b">
-<th>Test Command</th><th>Specification</th><th>Supported</th>
-</tr><tr class="a">
-<td>address</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>allof</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="a">
-<td>anyof</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>envelope</td><td>RFC 3028 (OPTIONAL)</td><td>yes</td>
-</tr><tr class="a">
-<td>exists</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>false</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="a">
-<td>header</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>not</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="a">
-<td>size</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="b">
-<td>true</td><td>RFC 3028 (REQUIRED)</td><td>yes</td>
-</tr><tr class="a">
-<td>body</td><td><a href="http://tools.ietf.org/html/draft-ietf-sieve-body-00">SIEVE body extension</a></td><td>partial</td>
-</tr>
-</table>
-</div>
-<a name="jSieve Extension Commands"></a><div class="section"><h3>jSieve Extension Commands</h3>
-<p>
-jSieve allows extension commands to be developed
-and plugged in at run time.
-The following extension commands ship with jSieve:
-</p>
-<table class="bodyTable">
-<tr class="b"><th>Name</th><th>Function</th></tr>
-<tr class="a"><td>Log</td><td>Logs messages</td></tr>
-</table>
 </div>
 </div>
-
-<a name="Getting Started"></a><div class="section"><h2>Getting Started</h2>
-<p>Until these pages are fleshed out, the best way to understand jSieve is read the 
-<a href="apidocs/index.html">Javadocs</a> 
-and look at the <a href="xref/index.html">source code</a>. 
-The jUnit tests illustrate many aspects
-of the implementation.
-</p>
-<a name="Using jSieve"></a><div class="section"><h3>Using jSieve</h3>
-<a name="Standalone"></a><div class="section"><h3>Standalone</h3>
-<p>
-<a href="xref/org/apache/jsieve/SieveFactory.html">
-<code>org.apache.jsieve.SieveFactory</code></a> is the primary invocation
-point for all Sieve operations. The API is clean and simple.
-See the 
-<a href="apidocs/index.html">javadocs</a> for more details.
-</p>
-</div>
-<a name="In JAMES"></a><div class="section"><h3>In JAMES</h3>
-<p>
-The <code>SieveToMultiMailbox</code> mailet is included in JAMES.
-It is integrated with the message delivery spool and provides per-user 
-Sieve scripting using jSieve. 
-</p>
+<div class="section"><h2><a name="News"></a>
+News</h2>
+<div class="section"><h3><a name="a2008"></a>
+2008</h3>
 </div>
 </div>
-<a name="Implementing A Mail Adapter"></a><div class="section"><h3>Implementing A Mail Adapter</h3>
-<p>
-<a href="xref/org/apache/jsieve/mail/MailAdapter.html">
-<code>org.apache.jsieve.mail.MailAdapter</code></a> is the interface API used
-by jSieve to interact with a mail server. 
-</p><p>
-The mail adapter wraps an email
-and supplies information (required by the script) about the email. It is 
-responsible for accumulating <code>Action</code>s during the parsing of a
-script and for executing them once the parsing is complete.
-</p><p>
-See the 
-<a href="apidocs/index.html">javadocs</a> for more details and this
-<a href="xref/org/apache/jsieve/samples/james/SieveMailAdapter.html">sample</a>.
-</p>
-</div>
-<a name="Creating A Custom Extension Command"></a><div class="section"><h3>Creating A Custom Extension Command</h3>
-<p>
-<a href="xref/org/apache/jsieve/commands/extensions/Log.html">
-<code>org.apache.jsieve.commands.extensions.Log</code></a> is an example
-of a custom extension command. It is recommended that custom commands
-extend <a href="xref/org/apache/jsieve/commands/AbstractCommand.html">
-<code>AbstractCommand</code></a>. See the 
-<a href="apidocs/index.html">javadocs</a> for more details.
-</p><p>
-Custom commands need to be registered with 
-<a href="xref/org/apache/jsieve/ConfigurationManager.html">
-<code>ConfigurationManager</code></a> before they can be used. This
-may be done programmatically but the recommended method is by altering
-the <code>sieveConfig.xml</code> configuration file. 
-</p>
-</div>
-<a name="Building jSieve"></a><div class="section"><h3>Building jSieve</h3>
-<p>
-jSieve uses <a href="http://ant.apache.org">Ant</a>. <code>ant -projecthelp</code>
-describes appropriate targets. <code>ant</code> runs the default target.
-</p>
-</div>
-</div>
-
-<a name="Comments, Questions and Issues"></a><div class="section"><h2>Comments, Questions and Issues</h2>
-<p>jSieve is a sub-project of Apache James. Please direct your comments and questions
-to the relevant James list.
-</p>
-<p>To report issues, such as bugs, go to the
-<a href="https://issues.apache.org/jira/browse/JSIEVE">jSieve Issue Tracker</a>.
-As jSieve comes with a fairly extensive suite of jUnit Tests, it would be most 
-helpful for bug reports to be accompanied by an illustrative jUnit test case.
-</p>
-<a name="Frequently Asked Question"></a><div class="section"><h2>Frequently Asked Question</h2>
-    <a name="Why Do Tests Using Non-ASCII Characters Fail?"></a><div class="section"><h2>Why Do Tests Using Non-ASCII Characters Fail?</h2>
-        <p>
-SIEVE specifies that <a href="http://ietf.org/rfc/rfc2278.txt">UTF-8</a> encoding is used for scripts.
-This format is an international standard and has wide support but not
-all platforms use this encoding by default. 
-        </p>
-        <p>
-By default, JSieve expects that scripts are encoding using <code>UTF-8</code>.
-Either set the encoding programmatically or ensure that the script is encoded using
-<code>UTF-8</code>.
-        </p>
-    </div>
-</div>
-</div>
-
 
       </div>
     </div>
@@ -398,7 +230,7 @@ Either set the encoding programmatically or ensure that the script is encoded us
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2004-2007
+          2004-2008
     
           The Apache Software Foundation
           

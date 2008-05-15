@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>jSieve - Overview</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="jSieve Project" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="images/james-jsieve-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 05/11/2008
+                      </div>
+            <div class="xright">      <a href="../index.html">JAMES Project</a>
+          |
+          <a href="../server/index.html">Server</a>
+          |
+          <a href="../mailet/index.html">Mailet API</a>
+          |
+          <a href="../jspf/index.html">jSPF</a>
+          |
+          <a href="../mime4j/index.html">Mime4J</a>
+          |
+          <a href="index.html">JSieve</a>
+          |
+          <a href="../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>jSieve</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="features.html">Sieve Features</a>
+        </li>
+              
+    <li class="none">
+              <strong>Getting Started</strong>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="../downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="Getting_Started"></a>
+Getting Started</h2>
+<p>Until these pages are fleshed out, the best way to understand jSieve is read the 
+<a href="apidocs/index.html">Javadocs</a>
+ 
+and look at the <a href="xref/index.html">source code</a>
+. 
+The jUnit tests illustrate many aspects
+of the implementation.
+</p>
+<div class="section"><h3><a name="Using_jSieve"></a>
+Using jSieve</h3>
+<div class="section"><h3><a name="Standalone"></a>
+Standalone</h3>
+<p><a href="xref/org/apache/jsieve/SieveFactory.html"><code>org.apache.jsieve.SieveFactory</code></a>
+ is the primary invocation
+point for all Sieve operations. The API is clean and simple.
+See the 
+<a href="apidocs/index.html">javadocs</a>
+ for more details.
+</p>
+</div>
+<div class="section"><h3><a name="In_JAMES"></a>
+In JAMES</h3>
+<p>
+The <code>SieveToMultiMailbox</code> mailet is included in JAMES.
+It is integrated with the message delivery spool and provides per-user 
+Sieve scripting using jSieve. 
+</p>
+</div>
+</div>
+<div class="section"><h3><a name="Implementing_A_Mail_Adapter"></a>
+Implementing A Mail Adapter</h3>
+<p><a href="xref/org/apache/jsieve/mail/MailAdapter.html"><code>org.apache.jsieve.mail.MailAdapter</code></a>
+ is the interface API used
+by jSieve to interact with a mail server. 
+</p>
+<p>
+The mail adapter wraps an email
+and supplies information (required by the script) about the email. It is 
+responsible for accumulating <code>Action</code>s during the parsing of a
+script and for executing them once the parsing is complete.
+</p>
+<p>
+See the 
+<a href="apidocs/index.html">javadocs</a>
+ for more details and this
+<a href="xref/org/apache/jsieve/samples/james/SieveMailAdapter.html">sample</a>
+.
+</p>
+</div>
+<div class="section"><h3><a name="Creating_A_Custom_Extension_Command"></a>
+Creating A Custom Extension Command</h3>
+<p><a href="xref/org/apache/jsieve/commands/extensions/Log.html"><code>org.apache.jsieve.commands.extensions.Log</code></a>
+ is an example
+of a custom extension command. It is recommended that custom commands
+extend <a href="xref/org/apache/jsieve/commands/AbstractCommand.html"><code>AbstractCommand</code></a>
+. See the 
+<a href="apidocs/index.html">javadocs</a>
+ for more details.
+</p>
+<p>
+Custom commands need to be registered with 
+<a href="xref/org/apache/jsieve/ConfigurationManager.html"><code>ConfigurationManager</code></a>
+ before they can be used. This
+may be done programmatically but the recommended method is by altering
+the <code>sieveConfig.xml</code> configuration file. 
+</p>
+</div>
+<div class="section"><h3><a name="Building_jSieve"></a>
+Building jSieve</h3>
+<p>
+jSieve uses <a href="http://ant.apache.org" class="externalLink">Ant</a>
+. <code>ant -projecthelp</code>
+describes appropriate targets. <code>ant</code> runs the default target.
+</p>
+</div>
+</div>
+<div class="section"><h2><a name="Comments_Questions_and_Issues"></a>
+Comments, Questions and Issues</h2>
+<p>jSieve is a sub-project of Apache James. Please direct your comments and questions
+to the relevant James list.
+</p>
+<p>To report issues, such as bugs, go to the
+<a href="https://issues.apache.org/jira/browse/JSIEVE" class="externalLink">jSieve Issue Tracker</a>
+.
+As jSieve comes with a fairly extensive suite of jUnit Tests, it would be most 
+helpful for bug reports to be accompanied by an illustrative jUnit test case.
+</p>
+<div class="section"><h2><a name="Frequently_Asked_Question"></a>
+Frequently Asked Question</h2>
+<div class="section"><h2><a name="Why_Do_Tests_Using_Non-ASCII_Characters_Fail"></a>
+Why Do Tests Using Non-ASCII Characters Fail?</h2>
+<p><code>SIEVE</code> specifies that <a href="http://ietf.org/rfc/rfc2278.txt" class="externalLink">UTF-8</a>
+ 
+encoding is used for scripts. This format is an international standard and has wide 
+support but not all platforms use this encoding by default. 
+        </p>
+<p>
+By default, JSieve expects that scripts are encoding using <code>UTF-8</code>.
+Either set the encoding programmatically or ensure that the script is encoded using
+<code>UTF-8</code>.
+        </p>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2004-2008
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>

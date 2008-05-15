@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>jSieve - Overview</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="jSieve Project" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../" id="bannerLeft">
+    
+                                            <img src="images/james-jsieve-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 05/11/2008
+                      </div>
+            <div class="xright">      <a href="../index.html">JAMES Project</a>
+          |
+          <a href="../server/index.html">Server</a>
+          |
+          <a href="../mailet/index.html">Mailet API</a>
+          |
+          <a href="../jspf/index.html">jSPF</a>
+          |
+          <a href="../mime4j/index.html">Mime4J</a>
+          |
+          <a href="index.html">JSieve</a>
+          |
+          <a href="../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>jSieve</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <strong>Sieve Features</strong>
+        </li>
+              
+    <li class="none">
+              <a href="start.html">Getting Started</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="../downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="jSieve_Features"></a>
+jSieve Features</h2>
+<div class="section"><h3><a name="Sieve_Features_Supported_By_jSieve"></a>
+Sieve Features Supported By jSieve</h3>
+<p>
+jSieve is limited only by the platform on which it runs.
+</p>
+<table class="bodyTable"><tr class="a"><th>Limits</th>
+<th></th>
+</tr>
+<tr class="b"><td>Maximum Number Of Actions</td>
+<td>No intrinsic limit</td>
+</tr>
+<tr class="a"><td>Maximum Number Of Nested Blocks</td>
+<td>No intrinsic limit</td>
+</tr>
+<tr class="b"><td>Maximum Number Of Nested Test Lists</td>
+<td>No intrinsic limit</td>
+</tr>
+</table>
+<p>
+jSieve supports the standard control commands specified in RFC 3028.
+</p>
+<table class="bodyTable"><tr class="a"><th>Control Command</th>
+<th>Specification</th>
+<th>Supported</th>
+</tr>
+<tr class="b"><td>If</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<td>Require</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+<tr class="a"><td>Stop</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+</table>
+<p>
+jSieve supports all action commands (both required and optional) 
+specified in RFC 3028. 
+</p>
+<p><strong>Note</strong> that jSieve uses a pluggable 
+<code>MailAdapter</code> as an interface to the mail server.
+Not all implementations may fully support all actions.
+</p>
+<table class="bodyTable"><tr class="b"><th>Action Command</th>
+<th>Specification</th>
+<th>Supported</th>
+</tr>
+<tr class="a"><td>reject</td>
+<td>RFC 3028 (OPTIONAL)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>fileinto</td>
+<td>RFC 3028 (OPTIONAL)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>redirect</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>keep</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>discard</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+</table>
+<p>
+jSieve supports all tests commands specified in RFC 3028.
+</p>
+<table class="bodyTable"><tr class="b"><th>Test Command</th>
+<th>Specification</th>
+<th>Supported</th>
+</tr>
+<tr class="a"><td>address</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>allof</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>anyof</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>envelope</td>
+<td>RFC 3028 (OPTIONAL)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>exists</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>false</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>header</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>not</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>size</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="b"><td>true</td>
+<td>RFC 3028 (REQUIRED)</td>
+<td>yes</td>
+</tr>
+<tr class="a"><td>body</td>
+<td><a href="http://tools.ietf.org/html/draft-ietf-sieve-body-00" class="externalLink">SIEVE body extension</a>
+</td>
+<td>partial</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="jSieve_Extension_Commands"></a>
+jSieve Extension Commands</h3>
+<p>
+jSieve allows extension commands to be developed
+and plugged in at run time.
+The following extension commands ship with jSieve:
+</p>
+<table class="bodyTable"><tr class="b"><th>Name</th>
+<th>Function</th>
+</tr>
+<tr class="a"><td>Log</td>
+<td>Logs messages</td>
+</tr>
+</table>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2004-2008
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>

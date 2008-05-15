@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 09/18/2007
+        Last Published: 05/11/2008
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -57,7 +57,7 @@
           |
           <a href="../mime4j/index.html">Mime4J</a>
           |
-          <a href="../jsieve/index.html">JSieve</a>
+          <a href="index.html">JSieve</a>
           |
           <a href="../postage/index.html">Postage</a>
           
@@ -89,19 +89,27 @@
         </li>
               
     <li class="none">
-              <a href="rfc2234.txt">RFC 2234 (ABNF)</a>
+              <a href="features.html">Sieve Features</a>
         </li>
               
     <li class="none">
-              <a href="rfc2244.txt">RFC 2244 (ACAP)</a>
+              <a href="start.html">Getting Started</a>
         </li>
               
     <li class="none">
-              <a href="rfc2298.txt">RFC 2298 (MDN)</a>
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
         </li>
               
     <li class="none">
-              <a href="rfc3028.txt">RFC 3028 (Sieve)</a>
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
         </li>
           </ul>
           <h5>Project Documentation</h5>
@@ -140,6 +148,8 @@
       
             
       
+            
+      
               
             <li class="expanded">
               <a href="project-reports.html">Project Reports</a>
@@ -155,6 +165,10 @@
                   
     <li class="none">
               <a href="pmd.html">PMD Report</a>
+        </li>
+                  
+    <li class="none">
+              <a href="rat-report.html">RAT Report</a>
         </li>
                   
     <li class="none">
@@ -196,7 +210,57 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>CPD Results</h2><p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html">CPD</a> 3.9.</p></div><div class="section"><h2>Duplications</h2>CPD found no problems in your source code.</div>
+        <div class="section"><h2>CPD Results</h2>
+<p>The following document contains the results of PMD's  <a href="http://pmd.sourceforge.net/cpd.html" class="externalLink">CPD</a>
+ 3.9.</p>
+</div>
+<div class="section"><h2>Duplications</h2>
+<p><table class="bodyTable"><tr class="a"><th>File</th>
+<th>Line</th>
+</tr>
+<tr class="b"><td>org/apache/jsieve/ComparatorManager.java</td>
+<td><a href="./xref/org/apache/jsieve/ComparatorManager.html#139">139</a>
+</td>
+</tr>
+<tr class="a"><td>org/apache/jsieve/TestManager.java</td>
+<td><a href="./xref/org/apache/jsieve/TestManager.html#139">139</a>
+</td>
+</tr>
+<tr class="b"><td colspan='2'><div class="source"><pre>            return (ExecutableTest) lookup(name).newInstance();
+        } catch (InstantiationException e) {
+            throw new LookupException(e.getMessage());
+        } catch (IllegalAccessException e) {
+            throw new LookupException(e.getMessage());
+        }
+    }
+
+    /**
+     * &lt;p&gt;
+     * Method getClassName answers the name of the class to which a Test name is
+     * mapped.
+     * &lt;/p&gt;
+     * 
+     * @param name -
+     *                The name of the Test
+     * @return String - The name of the class
+     * @throws LookupException
+     */
+    protected String getClassName(String name) throws LookupException {
+        String className;
+        try {
+            className = (String) getClassNameMap().get(name.toLowerCase());
+        } catch (SieveConfigurationException e) {
+            throw new LookupException(
+                    &quot;Lookup failed due to a Configuration Exception: &quot;
+                            + e.getMessage());
+        }
+        if (null == className)
+            throw new LookupException(&quot;Test named '&quot; + name + &quot;' not mapped.&quot;);</pre>
+</div>
+</td></tr>
+<table class="bodyTable"></p>
+</div>
+
       </div>
     </div>
     <div class="clear">
@@ -204,7 +268,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2004-2007
+          2004-2008
     
           The Apache Software Foundation
           
