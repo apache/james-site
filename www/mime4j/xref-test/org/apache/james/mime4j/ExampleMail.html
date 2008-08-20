@@ -1,0 +1,706 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<title>ExampleMail xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<pre>
+
+<a name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
+<a name="2" href="#2">2</a>   <em class="jxr_comment"> * Licensed to the Apache Software Foundation (ASF) under one</em>
+<a name="3" href="#3">3</a>   <em class="jxr_comment"> * or more contributor license agreements.  See the NOTICE file</em>
+<a name="4" href="#4">4</a>   <em class="jxr_comment"> * distributed with this work for additional information</em>
+<a name="5" href="#5">5</a>   <em class="jxr_comment"> * regarding copyright ownership.  The ASF licenses this file</em>
+<a name="6" href="#6">6</a>   <em class="jxr_comment"> * to you under the Apache License, Version 2.0 (the</em>
+<a name="7" href="#7">7</a>   <em class="jxr_comment"> * "License"); you may not use this file except in compliance</em>
+<a name="8" href="#8">8</a>   <em class="jxr_comment"> * with the License.  You may obtain a copy of the License at</em>
+<a name="9" href="#9">9</a>   <em class="jxr_comment"> *</em>
+<a name="10" href="#10">10</a>  <em class="jxr_comment"> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a name="11" href="#11">11</a>  <em class="jxr_comment"> *</em>
+<a name="12" href="#12">12</a>  <em class="jxr_comment"> * Unless required by applicable law or agreed to in writing,</em>
+<a name="13" href="#13">13</a>  <em class="jxr_comment"> * software distributed under the License is distributed on an</em>
+<a name="14" href="#14">14</a>  <em class="jxr_comment"> * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</em>
+<a name="15" href="#15">15</a>  <em class="jxr_comment"> * KIND, either express or implied.  See the License for the</em>
+<a name="16" href="#16">16</a>  <em class="jxr_comment"> * specific language governing permissions and limitations</em>
+<a name="17" href="#17">17</a>  <em class="jxr_comment"> * under the License.</em>
+<a name="18" href="#18">18</a>  <em class="jxr_comment"> */</em>
+<a name="19" href="#19">19</a>  <strong class="jxr_keyword">package</strong> org.apache.james.mime4j;
+<a name="20" href="#20">20</a>  
+<a name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.Charset;
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
+<a name="23" href="#23">23</a>  
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/apache/james/mime4j/ExampleMail.html">ExampleMail</a> {
+<a name="25" href="#25">25</a>      
+<a name="26" href="#26">26</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MULTIPART_EMBEDDED_MESSAGES_INNER_MULTIPART_MIXED = <span class="jxr_string">"--4.66920160910299\r\n"</span> + 
+<a name="27" href="#27">27</a>              <span class="jxr_string">"Content-Type: image/gif\r\n"</span> + 
+<a name="28" href="#28">28</a>              <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> + 
+<a name="29" href="#29">29</a>              <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> + 
+<a name="30" href="#30">30</a>              <span class="jxr_string">"Content-ID: 238478934723847238947892374\r\n"</span> + 
+<a name="31" href="#31">31</a>              <span class="jxr_string">"Content-Description: Bogus Image Data\r\n"</span> + 
+<a name="32" href="#32">32</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="33" href="#33">33</a>              <span class="jxr_string">"ABCDFEGHIJKLMNO\r\n"</span> + 
+<a name="34" href="#34">34</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="35" href="#35">35</a>              <span class="jxr_string">"--4.66920160910299\r\n"</span> + 
+<a name="36" href="#36">36</a>              <span class="jxr_string">"Content-Type: message/rfc822\r\n"</span> + 
+<a name="37" href="#37">37</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="38" href="#38">38</a>              <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> + 
+<a name="39" href="#39">39</a>              <span class="jxr_string">"To: John Smith &lt;john@example.org&gt;\r\n"</span> + 
+<a name="40" href="#40">40</a>              <span class="jxr_string">"Date: Sat, 16 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> + 
+<a name="41" href="#41">41</a>              <span class="jxr_string">"Subject: Another Example Email\r\n"</span> + 
+<a name="42" href="#42">42</a>              <span class="jxr_string">"Content-Type: multipart/mixed;boundary=2.50290787509\r\n"</span> + 
+<a name="43" href="#43">43</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="44" href="#44">44</a>              <span class="jxr_string">"Yet another preamble\r\n"</span> + 
+<a name="45" href="#45">45</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="46" href="#46">46</a>              <span class="jxr_string">"--2.50290787509\r\n"</span> + 
+<a name="47" href="#47">47</a>              <span class="jxr_string">"Content-Type: text/plain\r\n"</span> + 
+<a name="48" href="#48">48</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="49" href="#49">49</a>              <span class="jxr_string">"Rhubard AND Custard!\r\n"</span> + 
+<a name="50" href="#50">50</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="51" href="#51">51</a>              <span class="jxr_string">"--2.50290787509\r\n"</span> + 
+<a name="52" href="#52">52</a>              <span class="jxr_string">"Content-Type: multipart/alternative;boundary=3.243F6A8885A308D3\r\n"</span> + 
+<a name="53" href="#53">53</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="54" href="#54">54</a>              <span class="jxr_string">"--3.243F6A8885A308D3\r\n"</span> + 
+<a name="55" href="#55">55</a>              <span class="jxr_string">"Content-Type: text/plain\r\n"</span> + 
+<a name="56" href="#56">56</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="57" href="#57">57</a>              <span class="jxr_string">"Rhubard?Custard?\r\n"</span> + 
+<a name="58" href="#58">58</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="59" href="#59">59</a>              <span class="jxr_string">"--3.243F6A8885A308D3\r\n"</span> + 
+<a name="60" href="#60">60</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="61" href="#61">61</a>              <span class="jxr_string">"Content-Type: text/richtext\r\n"</span> + 
+<a name="62" href="#62">62</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="63" href="#63">63</a>              <span class="jxr_string">"Rhubard?Custard?\r\n"</span> + 
+<a name="64" href="#64">64</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="65" href="#65">65</a>              <span class="jxr_string">"--3.243F6A8885A308D3--\r\n"</span> + 
+<a name="66" href="#66">66</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="67" href="#67">67</a>              <span class="jxr_string">"--2.50290787509--\r\n"</span> + 
+<a name="68" href="#68">68</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="69" href="#69">69</a>              <span class="jxr_string">"--4.66920160910299--"</span>;
+<a name="70" href="#70">70</a>  
+<a name="71" href="#71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MULTIPART_EMBEDDED_MESSAGES_INNER_MAIL = <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> + 
+<a name="72" href="#72">72</a>              <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> + 
+<a name="73" href="#73">73</a>              <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> + 
+<a name="74" href="#74">74</a>              <span class="jxr_string">"Subject: A Multipart Alternative Email\r\n"</span> + 
+<a name="75" href="#75">75</a>              <span class="jxr_string">"Content-Type: multipart/alternative;boundary=42\r\n"</span> + 
+<a name="76" href="#76">76</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="77" href="#77">77</a>              <span class="jxr_string">"This message has a premable\r\n"</span> + 
+<a name="78" href="#78">78</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="79" href="#79">79</a>              <span class="jxr_string">"--42\r\n"</span> + 
+<a name="80" href="#80">80</a>              <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> + 
+<a name="81" href="#81">81</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="82" href="#82">82</a>              <span class="jxr_string">"Custard!\r\n"</span> + 
+<a name="83" href="#83">83</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="84" href="#84">84</a>              <span class="jxr_string">"--42\r\n"</span> + 
+<a name="85" href="#85">85</a>              <span class="jxr_string">"Content-Type: application/octet-stream\r\n"</span> + 
+<a name="86" href="#86">86</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="87" href="#87">87</a>              <span class="jxr_string">"CUSTARDCUSTARDCUSTARD\r\n"</span> + 
+<a name="88" href="#88">88</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="89" href="#89">89</a>              <span class="jxr_string">"--42--\r\n"</span>;
+<a name="90" href="#90">90</a>  
+<a name="91" href="#91">91</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MULTIPART_EMBEDDED_MESSAGES_BODY = <span class="jxr_string">"Start with a preamble\r\n"</span> + 
+<a name="92" href="#92">92</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="93" href="#93">93</a>              <span class="jxr_string">"--1729\r\n"</span> + 
+<a name="94" href="#94">94</a>              <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> + 
+<a name="95" href="#95">95</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="96" href="#96">96</a>              <span class="jxr_string">"Rhubarb!\r\n"</span> + 
+<a name="97" href="#97">97</a>              <span class="jxr_string">"\r\n"</span> + 
+<a name="98" href="#98">98</a>              <span class="jxr_string">"--1729\r\n"</span> + 
+<a name="99" href="#99">99</a>              <span class="jxr_string">"Content-Type: application/octet-stream\r\n"</span> + 
+<a name="100" href="#100">100</a>             <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> + 
+<a name="101" href="#101">101</a>             <span class="jxr_string">"\r\n"</span> + 
+<a name="102" href="#102">102</a>             <span class="jxr_string">"987654321AHPLA\r\n"</span> + 
+<a name="103" href="#103">103</a>             <span class="jxr_string">"\r\n"</span> + 
+<a name="104" href="#104">104</a>             <span class="jxr_string">"--1729\r\n"</span> + 
+<a name="105" href="#105">105</a>             <span class="jxr_string">"Content-Type: message/rfc822\r\n"</span> + 
+<a name="106" href="#106">106</a>             <span class="jxr_string">"\r\n"</span> + 
+<a name="107" href="#107">107</a>             MIME_MULTIPART_EMBEDDED_MESSAGES_INNER_MAIL + 
+<a name="108" href="#108">108</a>             <span class="jxr_string">"\r\n"</span> + 
+<a name="109" href="#109">109</a>             <span class="jxr_string">"--1729\r\n"</span> + 
+<a name="110" href="#110">110</a>             <span class="jxr_string">"Content-Type: multipart/mixed; boundary=4.66920160910299\r\n"</span> + 
+<a name="111" href="#111">111</a>             <span class="jxr_string">"\r\n"</span> + 
+<a name="112" href="#112">112</a>             MIME_MULTIPART_EMBEDDED_MESSAGES_INNER_MULTIPART_MIXED + <span class="jxr_string">"\r\n"</span> +
+<a name="113" href="#113">113</a>             <span class="jxr_string">"--1729--\r\n"</span> + 
+<a name="114" href="#114">114</a>             <span class="jxr_string">"\r\n"</span>;
+<a name="115" href="#115">115</a>     
+<a name="116" href="#116">116</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MD5_CONTENT = <span class="jxr_string">"Q2hlY2sgSW50ZWdyaXR5IQ=="</span>;
+<a name="117" href="#117">117</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CONTENT_DESCRIPTION = <span class="jxr_string">"Blah blah blah"</span>;
+<a name="118" href="#118">118</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CONTENT_ID = <span class="jxr_string">"&lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;"</span>;
+<a name="119" href="#119">119</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Charset US_ASCII = Charset.forName(<span class="jxr_string">"US-ASCII"</span>);
+<a name="120" href="#120">120</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Charset LATIN1 = Charset.forName(<span class="jxr_string">"ISO-8859-1"</span>);
+<a name="121" href="#121">121</a>     
+<a name="122" href="#122">122</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MULTIPART_EMBEDDED_MESSAGES = 
+<a name="123" href="#123">123</a>         <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> + 
+<a name="124" href="#124">124</a>         <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> + 
+<a name="125" href="#125">125</a>         <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> + 
+<a name="126" href="#126">126</a>         <span class="jxr_string">"Subject: A Multipart Email\r\n"</span> + 
+<a name="127" href="#127">127</a>         <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> + 
+<a name="128" href="#128">128</a>         <span class="jxr_string">"\r\n"</span> + 
+<a name="129" href="#129">129</a>         MIME_MULTIPART_EMBEDDED_MESSAGES_BODY; 
+<a name="130" href="#130">130</a> 
+<a name="131" href="#131">131</a>     
+<a name="132" href="#132">132</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MULTIPART_WITH_CONTENT_LOCATION = 
+<a name="133" href="#133">133</a>         <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> +
+<a name="134" href="#134">134</a>         <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> +
+<a name="135" href="#135">135</a>         <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> +
+<a name="136" href="#136">136</a>         <span class="jxr_string">"Subject: A Multipart Email With Content-Location\r\n"</span> +
+<a name="137" href="#137">137</a>         <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n\r\n"</span> +
+<a name="138" href="#138">138</a>         <span class="jxr_string">"Start with a preamble\r\n"</span> +
+<a name="139" href="#139">139</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="140" href="#140">140</a>         <span class="jxr_string">"Content-Type: application/xhtml+xml\r\n"</span> +
+<a name="141" href="#141">141</a>         <span class="jxr_string">"Content-Location: relative/url\r\n\r\n"</span> +
+<a name="142" href="#142">142</a>         <span class="jxr_string">"&lt;!DOCTYPE html\r\n"</span> +
+<a name="143" href="#143">143</a>         <span class="jxr_string">"PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Strict//EN\&quot;\r\n"</span> +
+<a name="144" href="#144">144</a>         <span class="jxr_string">"\&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\&quot;&gt;\r\n"</span> +
+<a name="145" href="#145">145</a>         <span class="jxr_string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Rhubarb&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Rhubarb!&lt;/body&gt;&lt;/html&gt;\r\n"</span> +
+<a name="146" href="#146">146</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="147" href="#147">147</a>         <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="148" href="#148">148</a>         <span class="jxr_string">"Content-Location: http://www.example.org/absolute/rhubard.txt\r\n\r\n"</span> +
+<a name="149" href="#149">149</a>         <span class="jxr_string">"Rhubarb!\r\n"</span> +
+<a name="150" href="#150">150</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="151" href="#151">151</a>         <span class="jxr_string">"Content-Type: text/html; charset=US-ASCII\r\n\r\n"</span> +
+<a name="152" href="#152">152</a>         <span class="jxr_string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Rhubarb&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Rhubarb!&lt;/body&gt;&lt;/html&gt;\r\n"</span> +
+<a name="153" href="#153">153</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="154" href="#154">154</a>         <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="155" href="#155">155</a>         <span class="jxr_string">"Content-Location: (Some comment) \&quot;http://www.example.org/absolute/comments/rhubard.txt\&quot;(Another comment)\r\n\r\n"</span> +
+<a name="156" href="#156">156</a>         <span class="jxr_string">"Rhubarb!\r\n"</span> +
+<a name="157" href="#157">157</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="158" href="#158">158</a>         <span class="jxr_string">"Content-Type: text/html; charset=US-ASCII\r\n"</span> +
+<a name="159" href="#159">159</a>         <span class="jxr_string">"Content-Location:\&quot;http://www.example.org/this/\r\n"</span> +
+<a name="160" href="#160">160</a>         <span class="jxr_string">"          is/a/very/long/url/split/\r\n"</span> +
+<a name="161" href="#161">161</a>         <span class="jxr_string">"          over/two/lines/\&quot;\r\n\r\n"</span> +
+<a name="162" href="#162">162</a>         <span class="jxr_string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Rhubarb&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Rhubarb!&lt;/body&gt;&lt;/html&gt;\r\n"</span> +
+<a name="163" href="#163">163</a>         <span class="jxr_string">"\r\n--1729--\r\n"</span> +
+<a name="164" href="#164">164</a>         <span class="jxr_string">"This is the epilogue\r\n"</span>;
+<a name="165" href="#165">165</a>     
+<a name="166" href="#166">166</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MULTIPART_WITH_BINARY_ATTACHMENTS = 
+<a name="167" href="#167">167</a>         <span class="jxr_string">"Return-Path: &lt;robertburrelldonkin@blueyonder.co.uk&gt;\r\n"</span> +
+<a name="168" href="#168">168</a>         <span class="jxr_string">"Received: (qmail 18554 invoked from network); 25 May 2008 14:38:53 -0000\r\n"</span> +
+<a name="169" href="#169">169</a>         <span class="jxr_string">"Received: from unknown (HELO p3presmtp01-16.prod.phx3.secureserver.net)\r\n"</span> +
+<a name="170" href="#170">170</a>         <span class="jxr_string">"        ([208.109.80.165]) (envelope-sender &lt;rdonkin-owner@locus.apache.org&gt;) by\r\n"</span> +
+<a name="171" href="#171">171</a>         <span class="jxr_string">"        smtp20-01.prod.mesa1.secureserver.net (qmail-1.03) with SMTP for\r\n"</span> +
+<a name="172" href="#172">172</a>         <span class="jxr_string">"        &lt;asf@xmlmapt.org&gt;; 25 May 2008 14:38:53 -0000\r\n"</span> +
+<a name="173" href="#173">173</a>         <span class="jxr_string">"Received: (qmail 9751 invoked from network); 25 May 2008 14:38:53 -0000\r\n"</span> +
+<a name="174" href="#174">174</a>         <span class="jxr_string">"Received: from minotaur.apache.org ([140.211.11.9]) (envelope-sender\r\n"</span> +
+<a name="175" href="#175">175</a>         <span class="jxr_string">"        &lt;rdonkin-owner@locus.apache.org&gt;) by\r\n"</span> +
+<a name="176" href="#176">176</a>         <span class="jxr_string">"        p3presmtp01-16.prod.phx3.secureserver.net (qmail-ldap-1.03) with SMTP for\r\n"</span> +
+<a name="177" href="#177">177</a>         <span class="jxr_string">"        &lt;asf@xmlmapt.org&gt;; 25 May 2008 14:38:50 -0000\r\n"</span> +
+<a name="178" href="#178">178</a>         <span class="jxr_string">"Received: (qmail 46768 invoked by uid 1289); 25 May 2008 14:38:46 -0000\r\n"</span> +
+<a name="179" href="#179">179</a>         <span class="jxr_string">"Delivered-To: rdonkin@locus.apache.org\r\n"</span> +
+<a name="180" href="#180">180</a>         <span class="jxr_string">"Received: (qmail 46763 invoked from network); 25 May 2008 14:38:46 -0000\r\n"</span> +
+<a name="181" href="#181">181</a>         <span class="jxr_string">"Received: from hermes.apache.org (HELO mail.apache.org) (140.211.11.2) by\r\n"</span> +
+<a name="182" href="#182">182</a>         <span class="jxr_string">"        minotaur.apache.org with SMTP; 25 May 2008 14:38:46 -0000\r\n"</span> +
+<a name="183" href="#183">183</a>         <span class="jxr_string">"Received: (qmail 61275 invoked by uid 500); 25 May 2008 14:38:48 -0000\r\n"</span> +
+<a name="184" href="#184">184</a>         <span class="jxr_string">"Delivered-To: apmail-rdonkin@apache.org\r\n"</span> +
+<a name="185" href="#185">185</a>         <span class="jxr_string">"Delivered-To: rob@localhost\r\n"</span> +
+<a name="186" href="#186">186</a>         <span class="jxr_string">"Delivered-To: rob@localhost\r\n"</span> +
+<a name="187" href="#187">187</a>         <span class="jxr_string">"Received: (qmail 61272 invoked by uid 99); 25 May 2008 14:38:48 -0000\r\n"</span> +
+<a name="188" href="#188">188</a>         <span class="jxr_string">"Received: from athena.apache.org (HELO athena.apache.org) (140.211.11.136)\r\n"</span> +
+<a name="189" href="#189">189</a>         <span class="jxr_string">"        by apache.org (qpsmtpd/0.29) with ESMTP; Sun, 25 May 2008 07:38:48 -0700\r\n"</span> +
+<a name="190" href="#190">190</a>         <span class="jxr_string">"X-ASF-Spam-Status: No, hits=-0.0 required=10.0 tests=SPF_PASS\r\n"</span> +
+<a name="191" href="#191">191</a>         <span class="jxr_string">"X-Spam-Check-By: apache.org\r\n"</span> +
+<a name="192" href="#192">192</a>         <span class="jxr_string">"Received-SPF: pass (athena.apache.org: domain of\r\n"</span> +
+<a name="193" href="#193">193</a>         <span class="jxr_string">"        robertburrelldonkin@blueyonder.co.uk designates 195.188.213.5 as permitted\r\n"</span> +
+<a name="194" href="#194">194</a>         <span class="jxr_string">"        sender)\r\n"</span> +
+<a name="195" href="#195">195</a>         <span class="jxr_string">"Received: from [195.188.213.5] (HELO smtp-out2.blueyonder.co.uk)\r\n"</span> +
+<a name="196" href="#196">196</a>         <span class="jxr_string">"        (195.188.213.5) by apache.org (qpsmtpd/0.29) with ESMTP; Sun, 25 May 2008\r\n"</span> +
+<a name="197" href="#197">197</a>         <span class="jxr_string">"        14:38:00 +0000\r\n"</span> +
+<a name="198" href="#198">198</a>         <span class="jxr_string">"Received: from [172.23.170.140] (helo=anti-virus02-07) by\r\n"</span> +
+<a name="199" href="#199">199</a>         <span class="jxr_string">"        smtp-out2.blueyonder.co.uk with smtp (Exim 4.52) id 1K0HMV-00087e-HY for\r\n"</span> +
+<a name="200" href="#200">200</a>         <span class="jxr_string">"        rdonkin@apache.org; Sun, 25 May 2008 15:38:15 +0100\r\n"</span> +
+<a name="201" href="#201">201</a>         <span class="jxr_string">"Received: from [82.38.65.6] (helo=[10.0.0.27]) by\r\n"</span> +
+<a name="202" href="#202">202</a>         <span class="jxr_string">"        asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52) id 1K0HMU-0001A2-3q for\r\n"</span> +
+<a name="203" href="#203">203</a>         <span class="jxr_string">"        rdonkin@apache.org; Sun, 25 May 2008 15:38:14 +0100\r\n"</span> +
+<a name="204" href="#204">204</a>         <span class="jxr_string">"Subject: This is an example of a multipart mixed email with image content\r\n"</span> +
+<a name="205" href="#205">205</a>         <span class="jxr_string">"From: Robert Burrell Donkin &lt;robertburrelldonkin@blueyonder.co.uk&gt;\r\n"</span> +
+<a name="206" href="#206">206</a>         <span class="jxr_string">"To: Robert Burrell Donkin &lt;rdonkin@apache.org&gt;\r\n"</span> +
+<a name="207" href="#207">207</a>         <span class="jxr_string">"Content-Type: multipart/mixed; boundary=\&quot;=-tIdGYVstQJghyEDATnJ+\&quot;\r\n"</span> +
+<a name="208" href="#208">208</a>         <span class="jxr_string">"Date: Sun, 25 May 2008 15:38:13 +0100\r\n"</span> +
+<a name="209" href="#209">209</a>         <span class="jxr_string">"Message-Id: &lt;1211726293.5772.10.camel@localhost&gt;\r\n"</span> +
+<a name="210" href="#210">210</a>         <span class="jxr_string">"Mime-Version: 1.0\r\n"</span> +
+<a name="211" href="#211">211</a>         <span class="jxr_string">"X-Mailer: Evolution 2.12.3 \r\n"</span> +
+<a name="212" href="#212">212</a>         <span class="jxr_string">"X-Virus-Checked: Checked by ClamAV on apache.org\r\n"</span> +
+<a name="213" href="#213">213</a>         <span class="jxr_string">"X-Nonspam: None\r\n"</span> +
+<a name="214" href="#214">214</a>         <span class="jxr_string">"X-fetched-from: mail.xmlmapt.org\r\n"</span> +
+<a name="215" href="#215">215</a>         <span class="jxr_string">"X-Evolution-Source: imap://rob@thebes/\r\n"</span> +
+<a name="216" href="#216">216</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="217" href="#217">217</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="218" href="#218">218</a>         <span class="jxr_string">"--=-tIdGYVstQJghyEDATnJ+\r\n"</span> +
+<a name="219" href="#219">219</a>         <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="220" href="#220">220</a>         <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n"</span> +
+<a name="221" href="#221">221</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="222" href="#222">222</a>         <span class="jxr_string">"Licensed to the Apache Software Foundation (ASF) under one\r\n"</span> +
+<a name="223" href="#223">223</a>         <span class="jxr_string">"or more contributor license agreements.  See the NOTICE file\r\n"</span> +
+<a name="224" href="#224">224</a>         <span class="jxr_string">"distributed with this work for additional information\r\n"</span> +
+<a name="225" href="#225">225</a>         <span class="jxr_string">"regarding copyright ownership.  The ASF licenses this file\r\n"</span> +
+<a name="226" href="#226">226</a>         <span class="jxr_string">"to you under the Apache License, Version 2.0 (the\r\n"</span> +
+<a name="227" href="#227">227</a>         <span class="jxr_string">"\&quot;License\&quot;); you may not use this file except in compliance\r\n"</span> +
+<a name="228" href="#228">228</a>         <span class="jxr_string">"with the License.  You may obtain a copy of the License at\r\n"</span> +
+<a name="229" href="#229">229</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="230" href="#230">230</a>         <span class="jxr_string">"    http://www.apache.org/licenses/LICENSE-2.0\r\n"</span> +
+<a name="231" href="#231">231</a>         <span class="jxr_string">" \r\n"</span> +
+<a name="232" href="#232">232</a>         <span class="jxr_string">"Unless required by applicable law or agreed to in writing,\r\n"</span> +
+<a name="233" href="#233">233</a>         <span class="jxr_string">"software distributed under the License is distributed on an\r\n"</span> +
+<a name="234" href="#234">234</a>         <span class="jxr_string">"\&quot;AS IS\&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\r\n"</span> +
+<a name="235" href="#235">235</a>         <span class="jxr_string">"KIND, either express or implied.  See the License for the\r\n"</span> +
+<a name="236" href="#236">236</a>         <span class="jxr_string">"specific language governing permissions and limitations\r\n"</span> +
+<a name="237" href="#237">237</a>         <span class="jxr_string">"under the License.\r\n"</span> +
+<a name="238" href="#238">238</a>         <span class="jxr_string">" \r\n"</span> +
+<a name="239" href="#239">239</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="240" href="#240">240</a>         <span class="jxr_string">"--=-tIdGYVstQJghyEDATnJ+\r\n"</span> +
+<a name="241" href="#241">241</a>         <span class="jxr_string">"Content-Disposition: attachment; filename=blob.png;\r\n   modification-date=\&quot;Sun, 21 Jun 2008 15:32:18 +0000\&quot;; "</span> +
+<a name="242" href="#242">242</a>         <span class="jxr_string">"creation-date=\&quot;Sat, 20 Jun 2008 10:15:09 +0000\&quot;; read-date=\&quot;Mon, 22 Jun 2008 12:08:56 +0000\&quot;;size=10234;\r\n"</span> +
+<a name="243" href="#243">243</a>         <span class="jxr_string">"Content-Type: image/png; name=blob.png\r\n"</span> +
+<a name="244" href="#244">244</a>         <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> +
+<a name="245" href="#245">245</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="246" href="#246">246</a>         <span class="jxr_string">"iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAL\r\n"</span> +
+<a name="247" href="#247">247</a>         <span class="jxr_string">"EwAACxMBAJqcGAAAAAd0SU1FB9gFGQ4iJ99ufcYAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRo\r\n"</span> +
+<a name="248" href="#248">248</a>         <span class="jxr_string">"IEdJTVBXgQ4XAAAA0ElEQVQY02XMwUrDQBhF4XsnkyYhjWJaCloEN77/a/gERVwJLQiiNjYmbTqZ\r\n"</span> +
+<a name="249" href="#249">249</a>         <span class="jxr_string">"/7qIG/VsPziMTw+23Wj/ovZdMQJgViCvWNVusfa23djuUf2nugbnI2RynkWF5a2Fwdvrs7q9vhqE\r\n"</span> +
+<a name="250" href="#250">250</a>         <span class="jxr_string">"E2QAEIO6BhZBerUf6luMw49NyTR0OLw5kJD9sqk4Ipwc6GAREv5n5piXTDOQfy1JMSs8ZgXKq2kF\r\n"</span> +
+<a name="251" href="#251">251</a>         <span class="jxr_string">"iwDgEriEecnLlefFEmGAIvqD4ggJJNMM85qLtXfX9xYGuEQ+4/kIi0g88zlXd66++QaQDG5GPZyp\r\n"</span> +
+<a name="252" href="#252">252</a>         <span class="jxr_string">"rQAAAABJRU5ErkJggg==\r\n"</span> +
+<a name="253" href="#253">253</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="254" href="#254">254</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="255" href="#255">255</a>         <span class="jxr_string">"--=-tIdGYVstQJghyEDATnJ+\r\n"</span> +
+<a name="256" href="#256">256</a>         <span class="jxr_string">"Content-Disposition: attachment; filename=blob.png\r\n"</span> +
+<a name="257" href="#257">257</a>         <span class="jxr_string">"Content-Type: image/png; name=blob.png\r\n"</span> +
+<a name="258" href="#258">258</a>         <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> +
+<a name="259" href="#259">259</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="260" href="#260">260</a>         <span class="jxr_string">"iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAL\r\n"</span> +
+<a name="261" href="#261">261</a>         <span class="jxr_string">"EwAACxMBAJqcGAAAAAd0SU1FB9gFGQ4iJ99ufcYAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRo\r\n"</span> +
+<a name="262" href="#262">262</a>         <span class="jxr_string">"IEdJTVBXgQ4XAAAA0ElEQVQY02XMwUrDQBhF4XsnkyYhjWJaCloEN77/a/gERVwJLQiiNjYmbTqZ\r\n"</span> +
+<a name="263" href="#263">263</a>         <span class="jxr_string">"/7qIG/VsPziMTw+23Wj/ovZdMQJgViCvWNVusfa23djuUf2nugbnI2RynkWF5a2Fwdvrs7q9vhqE\r\n"</span> +
+<a name="264" href="#264">264</a>         <span class="jxr_string">"E2QAEIO6BhZBerUf6luMw49NyTR0OLw5kJD9sqk4Ipwc6GAREv5n5piXTDOQfy1JMSs8ZgXKq2kF\r\n"</span> +
+<a name="265" href="#265">265</a>         <span class="jxr_string">"iwDgEriEecnLlefFEmGAIvqD4ggJJNMM85qLtXfX9xYGuEQ+4/kIi0g88zlXd66++QaQDG5GPZyp\r\n"</span> +
+<a name="266" href="#266">266</a>         <span class="jxr_string">"rQAAAABJRU5ErkJggg==\r\n"</span> +
+<a name="267" href="#267">267</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="268" href="#268">268</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="269" href="#269">269</a>         <span class="jxr_string">"--=-tIdGYVstQJghyEDATnJ+\r\n"</span> +
+<a name="270" href="#270">270</a>         <span class="jxr_string">"Content-Disposition: attachment; filename=rhubarb.txt\r\n"</span> +
+<a name="271" href="#271">271</a>         <span class="jxr_string">"Content-Type: text/plain; name=rhubarb.txt; charset=us-ascii\r\n"</span> +
+<a name="272" href="#272">272</a>         <span class="jxr_string">"Content-Language: en, en-US, en-CA\r\n"</span> +
+<a name="273" href="#273">273</a>         <span class="jxr_string">"Content-Transfer-Encoding: quoted-printable\r\n"</span> +
+<a name="274" href="#274">274</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="275" href="#275">275</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhu=\r\n"</span> +
+<a name="276" href="#276">276</a>         <span class="jxr_string">"barb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubar=\r\n"</span> +
+<a name="277" href="#277">277</a>         <span class="jxr_string">"b Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb R=\r\n"</span> +
+<a name="278" href="#278">278</a>         <span class="jxr_string">"hubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhub=\r\n"</span> +
+<a name="279" href="#279">279</a>         <span class="jxr_string">"arb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb=\r\n"</span> +
+<a name="280" href="#280">280</a>         <span class="jxr_string">" Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rh=\r\n"</span> +
+<a name="281" href="#281">281</a>         <span class="jxr_string">"ubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhuba=\r\n"</span> +
+<a name="282" href="#282">282</a>         <span class="jxr_string">"rb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb =\r\n"</span> +
+<a name="283" href="#283">283</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhu=\r\n"</span> +
+<a name="284" href="#284">284</a>         <span class="jxr_string">"barb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubar=\r\n"</span> +
+<a name="285" href="#285">285</a>         <span class="jxr_string">"b Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb R=\r\n"</span> +
+<a name="286" href="#286">286</a>         <span class="jxr_string">"hubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhub=\r\n"</span> +
+<a name="287" href="#287">287</a>         <span class="jxr_string">"arb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb=\r\n"</span> +
+<a name="288" href="#288">288</a>         <span class="jxr_string">" Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rh=\r\n"</span> +
+<a name="289" href="#289">289</a>         <span class="jxr_string">"ubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhuba=\r\n"</span> +
+<a name="290" href="#290">290</a>         <span class="jxr_string">"rb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb =\r\n"</span> +
+<a name="291" href="#291">291</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhu=\r\n"</span> +
+<a name="292" href="#292">292</a>         <span class="jxr_string">"barb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubar=\r\n"</span> +
+<a name="293" href="#293">293</a>         <span class="jxr_string">"b Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb R=\r\n"</span> +
+<a name="294" href="#294">294</a>         <span class="jxr_string">"hubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhub=\r\n"</span> +
+<a name="295" href="#295">295</a>         <span class="jxr_string">"arb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb=\r\n"</span> +
+<a name="296" href="#296">296</a>         <span class="jxr_string">" Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rh=\r\n"</span> +
+<a name="297" href="#297">297</a>         <span class="jxr_string">"ubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhuba=\r\n"</span> +
+<a name="298" href="#298">298</a>         <span class="jxr_string">"rb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb =\r\n"</span> +
+<a name="299" href="#299">299</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhu=\r\n"</span> +
+<a name="300" href="#300">300</a>         <span class="jxr_string">"barb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubar=\r\n"</span> +
+<a name="301" href="#301">301</a>         <span class="jxr_string">"b Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb R=\r\n"</span> +
+<a name="302" href="#302">302</a>         <span class="jxr_string">"hubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhub=\r\n"</span> +
+<a name="303" href="#303">303</a>         <span class="jxr_string">"arb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb=\r\n"</span> +
+<a name="304" href="#304">304</a>         <span class="jxr_string">" Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rh=\r\n"</span> +
+<a name="305" href="#305">305</a>         <span class="jxr_string">"ubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhuba=\r\n"</span> +
+<a name="306" href="#306">306</a>         <span class="jxr_string">"rb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb =\r\n"</span> +
+<a name="307" href="#307">307</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhu=\r\n"</span> +
+<a name="308" href="#308">308</a>         <span class="jxr_string">"barb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubar=\r\n"</span> +
+<a name="309" href="#309">309</a>         <span class="jxr_string">"b Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb R=\r\n"</span> +
+<a name="310" href="#310">310</a>         <span class="jxr_string">"hubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhub=\r\n"</span> +
+<a name="311" href="#311">311</a>         <span class="jxr_string">"arb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb=\r\n"</span> +
+<a name="312" href="#312">312</a>         <span class="jxr_string">" Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rh=\r\n"</span> +
+<a name="313" href="#313">313</a>         <span class="jxr_string">"ubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhuba=\r\n"</span> +
+<a name="314" href="#314">314</a>         <span class="jxr_string">"rb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb =\r\n"</span> +
+<a name="315" href="#315">315</a>         <span class="jxr_string">"Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb Rhubarb\r\n"</span> +
+<a name="316" href="#316">316</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="317" href="#317">317</a>         <span class="jxr_string">"--=-tIdGYVstQJghyEDATnJ+--\r\n"</span>;
+<a name="318" href="#318">318</a>     
+<a name="319" href="#319">319</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_ASCII_BODY = <span class="jxr_string">"A single part MIME mail.\r\n"</span>;
+<a name="320" href="#320">320</a> 
+<a name="321" href="#321">321</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String RFC822_SIMPLE_BODY = <span class="jxr_string">"This is a very simple email.\r\n"</span>;
+<a name="322" href="#322">322</a>     
+<a name="323" href="#323">323</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_8859_BODY = <span class="jxr_string">"M\u00F6nchengladbach\r\n"</span>;
+<a name="324" href="#324">324</a>     
+<a name="325" href="#325">325</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_BASE64_LATIN1_BODY = <span class="jxr_string">"Hello Mo\u00F6nchengladbach\r\n"</span>;
+<a name="326" href="#326">326</a>     
+<a name="327" href="#327">327</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_QUOTED_PRINTABLE_ASCII_BODY = <span class="jxr_string">"Sonnet LXXXI By William Shakespeare\r\n"</span> +
+<a name="328" href="#328">328</a>             <span class="jxr_string">"Or I shall live your epitaph to make,\r\n"</span> +
+<a name="329" href="#329">329</a>             <span class="jxr_string">"Or you survive when I in earth am rotten;\r\n"</span> +
+<a name="330" href="#330">330</a>             <span class="jxr_string">"From hence your memory death cannot take,\r\n"</span> +
+<a name="331" href="#331">331</a>             <span class="jxr_string">"Although in me each part will be forgotten.\r\n"</span> +
+<a name="332" href="#332">332</a>             <span class="jxr_string">"Your name from hence immortal life shall have,\r\n"</span> +
+<a name="333" href="#333">333</a>             <span class="jxr_string">"Though I, once gone, to all the world must die:\r\n"</span> +
+<a name="334" href="#334">334</a>             <span class="jxr_string">"The earth can yield me but a common grave,\r\n"</span> +
+<a name="335" href="#335">335</a>             <span class="jxr_string">"When you entombed in men's eyes shall lie.\r\n"</span> +
+<a name="336" href="#336">336</a>             <span class="jxr_string">"Your monument shall be my gentle verse,\r\n"</span> +
+<a name="337" href="#337">337</a>             <span class="jxr_string">"Which eyes not yet created shall o'er-read;\r\n"</span> +
+<a name="338" href="#338">338</a>             <span class="jxr_string">"And tongues to be, your being shall rehearse,\r\n"</span> +
+<a name="339" href="#339">339</a>             <span class="jxr_string">"When all the breathers of this world are dead;\r\n"</span> +
+<a name="340" href="#340">340</a>             <span class="jxr_string">"  You still shall live,--such virtue hath my pen,--\r\n"</span> +
+<a name="341" href="#341">341</a>             <span class="jxr_string">"  Where breath most breathes, even in the mouths of men.\r\n"</span>; 
+<a name="342" href="#342">342</a>     
+<a name="343" href="#343">343</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_BASE64_LATIN1_ENCODED = EncodeUtils.toBase64(latin1(ONE_PART_MIME_BASE64_LATIN1_BODY));
+<a name="344" href="#344">344</a>     
+<a name="345" href="#345">345</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_BASE64_ASCII_BODY = <span class="jxr_string">"Hello, World!\r\n"</span>;
+<a name="346" href="#346">346</a>     
+<a name="347" href="#347">347</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_WITH_CONTENT_DISPOSITION_PARAMETERS =
+<a name="348" href="#348">348</a>         <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="349" href="#349">349</a>         <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="350" href="#350">350</a>         <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="351" href="#351">351</a>         <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="352" href="#352">352</a>         <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="353" href="#353">353</a>         <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="354" href="#354">354</a>         <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="355" href="#355">355</a>         <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n"</span> +
+<a name="356" href="#356">356</a>         <span class="jxr_string">"Content-Disposition: inline; foo=bar; one=1; param=value;\r\n"</span> +
+<a name="357" href="#357">357</a>         <span class="jxr_string">"Content-MD5: "</span> + MD5_CONTENT + <span class="jxr_string">"\r\n"</span> +
+<a name="358" href="#358">358</a>         <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="359" href="#359">359</a>         <span class="jxr_string">"\r\n"</span> +
+<a name="360" href="#360">360</a>         ONE_PART_MIME_ASCII_BODY;
+<a name="361" href="#361">361</a> 
+<a name="362" href="#362">362</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_BASE64_ASCII_ENCODED = EncodeUtils.toBase64(ascii(ONE_PART_MIME_BASE64_ASCII_BODY));
+<a name="363" href="#363">363</a> 
+<a name="364" href="#364">364</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_ASCII = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="365" href="#365">365</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="366" href="#366">366</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="367" href="#367">367</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="368" href="#368">368</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="369" href="#369">369</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="370" href="#370">370</a>     <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="371" href="#371">371</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="372" href="#372">372</a>     <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n"</span> +
+<a name="373" href="#373">373</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="374" href="#374">374</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="375" href="#375">375</a>     <span class="jxr_string">"\r\n"</span> +
+<a name="376" href="#376">376</a>     ONE_PART_MIME_ASCII_BODY;
+<a name="377" href="#377">377</a>     
+<a name="378" href="#378">378</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_ASCII_COMMENT_IN_MIME_VERSION = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="379" href="#379">379</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="380" href="#380">380</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="381" href="#381">381</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="382" href="#382">382</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="383" href="#383">383</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="384" href="#384">384</a>     <span class="jxr_string">"MIME-Version: 2.(This is a comment)4\r\n"</span> +
+<a name="385" href="#385">385</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="386" href="#386">386</a>     <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n"</span> +
+<a name="387" href="#387">387</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="388" href="#388">388</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="389" href="#389">389</a>     <span class="jxr_string">"\r\n"</span> + ONE_PART_MIME_ASCII_BODY;
+<a name="390" href="#390">390</a>     
+<a name="391" href="#391">391</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_ASCII_MIME_VERSION_SPANS_TWO_LINES = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="392" href="#392">392</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="393" href="#393">393</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="394" href="#394">394</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="395" href="#395">395</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="396" href="#396">396</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="397" href="#397">397</a>     <span class="jxr_string">"MIME-Version: 4.   \r\n"</span> +
+<a name="398" href="#398">398</a>     <span class="jxr_string">"  1\r\n"</span> +
+<a name="399" href="#399">399</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="400" href="#400">400</a>     <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n"</span> +
+<a name="401" href="#401">401</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="402" href="#402">402</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="403" href="#403">403</a>     <span class="jxr_string">"\r\n"</span> + ONE_PART_MIME_ASCII_BODY;
+<a name="404" href="#404">404</a>     
+<a name="405" href="#405">405</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String INNER_MAIL = <span class="jxr_string">"From: Timothy Tayler &lt;tim@example.org&gt;\r\n"</span> +
+<a name="406" href="#406">406</a>     <span class="jxr_string">"To: Joshua Tetley &lt;joshua@example.org&gt;\r\n"</span> +
+<a name="407" href="#407">407</a>     <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="408" href="#408">408</a>     <span class="jxr_string">"Subject: Multipart Without RFC822 Part\r\n"</span> +
+<a name="409" href="#409">409</a>     <span class="jxr_string">"Content-Type: multipart/mixed;boundary=42\r\n\r\n"</span> +
+<a name="410" href="#410">410</a>     <span class="jxr_string">"--42\r\n"</span> +
+<a name="411" href="#411">411</a>     <span class="jxr_string">"Content-Type:text/plain; charset=US-ASCII\r\n\r\n"</span> +
+<a name="412" href="#412">412</a>     <span class="jxr_string">"First part of this mail\r\n"</span> +
+<a name="413" href="#413">413</a>     <span class="jxr_string">"--42\r\n"</span> +
+<a name="414" href="#414">414</a>     <span class="jxr_string">"Content-Type:text/plain; charset=US-ASCII\r\n\r\n"</span> +
+<a name="415" href="#415">415</a>     <span class="jxr_string">"Second part of this mail\r\n"</span> +
+<a name="416" href="#416">416</a>     <span class="jxr_string">"--42--\r\n"</span>;
+<a name="417" href="#417">417</a> 
+<a name="418" href="#418">418</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MAIL_WITH_RFC822_PART = <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="419" href="#419">419</a>     <span class="jxr_string">"From: Timothy Tayler &lt;tim@example.org&gt;\r\n"</span> +
+<a name="420" href="#420">420</a>     <span class="jxr_string">"To: Joshua Tetley &lt;joshua@example.org&gt;\r\n"</span> +
+<a name="421" href="#421">421</a>     <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="422" href="#422">422</a>     <span class="jxr_string">"Subject: Multipart With RFC822 Part\r\n"</span> +
+<a name="423" href="#423">423</a>     <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n\r\n"</span> +
+<a name="424" href="#424">424</a>     <span class="jxr_string">"A short premable\r\n"</span> +
+<a name="425" href="#425">425</a>     <span class="jxr_string">"--1729\r\n\r\n"</span> +
+<a name="426" href="#426">426</a>     <span class="jxr_string">"First part has no headers\r\n"</span> +
+<a name="427" href="#427">427</a>     <span class="jxr_string">"--1729\r\n"</span> +
+<a name="428" href="#428">428</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n\r\n"</span> +
+<a name="429" href="#429">429</a>     <span class="jxr_string">"Second part is plain text\r\n"</span> +
+<a name="430" href="#430">430</a>     <span class="jxr_string">"--1729\r\n"</span> +
+<a name="431" href="#431">431</a>     <span class="jxr_string">"Content-Type: message/rfc822\r\n\r\n"</span> +
+<a name="432" href="#432">432</a>     INNER_MAIL +
+<a name="433" href="#433">433</a>     <span class="jxr_string">"--1729\r\n"</span> +
+<a name="434" href="#434">434</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n\r\n"</span> +
+<a name="435" href="#435">435</a>     <span class="jxr_string">"Last part is plain text\r\n"</span> +
+<a name="436" href="#436">436</a>     <span class="jxr_string">"--1729--\r\n"</span> +
+<a name="437" href="#437">437</a>     <span class="jxr_string">"The End"</span>;
+<a name="438" href="#438">438</a>         
+<a name="439" href="#439">439</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_8859 = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="440" href="#440">440</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="441" href="#441">441</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="442" href="#442">442</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="443" href="#443">443</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="444" href="#444">444</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="445" href="#445">445</a>     <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="446" href="#446">446</a>     <span class="jxr_string">"Content-Type: text/plain; charset=ISO-8859-1\r\n"</span> +
+<a name="447" href="#447">447</a>     <span class="jxr_string">"Content-Transfer-Encoding: 8bit\r\n"</span> +
+<a name="448" href="#448">448</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="449" href="#449">449</a>     <span class="jxr_string">"Content-ID: "</span> + CONTENT_ID + <span class="jxr_string">"\r\n"</span> +
+<a name="450" href="#450">450</a>     <span class="jxr_string">"Content-Description: "</span> + CONTENT_DESCRIPTION + <span class="jxr_string">"\r\n"</span> +
+<a name="451" href="#451">451</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="452" href="#452">452</a>     <span class="jxr_string">"\r\n"</span> +
+<a name="453" href="#453">453</a>     ONE_PART_MIME_8859_BODY;
+<a name="454" href="#454">454</a>     
+<a name="455" href="#455">455</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_BASE64_ASCII_HEADERS = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="456" href="#456">456</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="457" href="#457">457</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="458" href="#458">458</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="459" href="#459">459</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="460" href="#460">460</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="461" href="#461">461</a>     <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="462" href="#462">462</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="463" href="#463">463</a>     <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> +
+<a name="464" href="#464">464</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="465" href="#465">465</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="466" href="#466">466</a>     <span class="jxr_string">"\r\n"</span>;
+<a name="467" href="#467">467</a>     
+<a name="468" href="#468">468</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_BASE64_LATIN1_HEADERS = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="469" href="#469">469</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="470" href="#470">470</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="471" href="#471">471</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="472" href="#472">472</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="473" href="#473">473</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="474" href="#474">474</a>     <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="475" href="#475">475</a>     <span class="jxr_string">"Content-Type: text/plain; charset=ISO-8859-1\r\n"</span> +
+<a name="476" href="#476">476</a>     <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n"</span> +
+<a name="477" href="#477">477</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="478" href="#478">478</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="479" href="#479">479</a>     <span class="jxr_string">"\r\n"</span>;
+<a name="480" href="#480">480</a>     
+<a name="481" href="#481">481</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ONE_PART_MIME_QUOTED_PRINTABLE_ASCII = <span class="jxr_string">"Received: by 10.114.126.16 with HTTP; Thu, 6 Mar 2008 10:02:03 -0800 (PST)\r\n"</span> +
+<a name="482" href="#482">482</a>     <span class="jxr_string">"Message-ID: &lt;f470f68e0803061002n22bc4124he14015a4b6d6327f@mail.gmail.com&gt;\r\n"</span> +
+<a name="483" href="#483">483</a>     <span class="jxr_string">"Date: Thu, 6 Mar 2008 18:02:03 +0000\r\n"</span> +
+<a name="484" href="#484">484</a>     <span class="jxr_string">"From: \&quot;Robert Burrell Donkin\&quot; &lt;robertburrelldonkin@gmail.com&gt;\r\n"</span> +
+<a name="485" href="#485">485</a>     <span class="jxr_string">"To: \&quot;James Developers List\&quot; &lt;server-dev@james.apache.org&gt;\r\n"</span> +
+<a name="486" href="#486">486</a>     <span class="jxr_string">"Subject: [Mime4J] getReader\r\n"</span> +
+<a name="487" href="#487">487</a>     <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="488" href="#488">488</a>     <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="489" href="#489">489</a>     <span class="jxr_string">"Content-Transfer-Encoding: Quoted-Printable\r\n"</span> +
+<a name="490" href="#490">490</a>     <span class="jxr_string">"Content-Disposition: inline\r\n"</span> +
+<a name="491" href="#491">491</a>     <span class="jxr_string">"Delivered-To: robertburrelldonkin@gmail.com\r\n"</span> +
+<a name="492" href="#492">492</a>     <span class="jxr_string">"\r\n"</span> + breakLines(ONE_PART_MIME_QUOTED_PRINTABLE_ASCII_BODY.replaceAll(<span class="jxr_string">"\r\n"</span>, <span class="jxr_string">"=0D=0A"</span>));
+<a name="493" href="#493">493</a>     
+<a name="494" href="#494">494</a>     
+<a name="495" href="#495">495</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String RFC_SIMPLE = 
+<a name="496" href="#496">496</a>             <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> +
+<a name="497" href="#497">497</a>             <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> +
+<a name="498" href="#498">498</a>             <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> +
+<a name="499" href="#499">499</a>             <span class="jxr_string">"Subject: A Simple Email\r\n"</span> +
+<a name="500" href="#500">500</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="501" href="#501">501</a>             RFC822_SIMPLE_BODY;
+<a name="502" href="#502">502</a> 
+<a name="503" href="#503">503</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_RFC822_SIMPLE = 
+<a name="504" href="#504">504</a>         <span class="jxr_string">"From: Samual Smith &lt;sam@example.org&gt;\r\n"</span> +
+<a name="505" href="#505">505</a>         <span class="jxr_string">"To: Joshua Tetley &lt;josh@example.org&gt;\r\n"</span> +
+<a name="506" href="#506">506</a>         <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:30:00 +0000 (GMT)\r\n"</span> +
+<a name="507" href="#507">507</a>         <span class="jxr_string">"Subject: FW: A Simple Email\r\n"</span> +
+<a name="508" href="#508">508</a>         <span class="jxr_string">"MIME-Version: 1.0\r\n"</span> +
+<a name="509" href="#509">509</a>         <span class="jxr_string">"Content-Type: message/rfc822\r\n"</span> +
+<a name="510" href="#510">510</a>         <span class="jxr_string">"\r\n"</span> + RFC_SIMPLE;
+<a name="511" href="#511">511</a>     
+<a name="512" href="#512">512</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_7BIT = <span class="jxr_string">"Sonnet XXXIII By William Shakespeare\r\n"</span> +
+<a name="513" href="#513">513</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="514" href="#514">514</a>             <span class="jxr_string">"Full many a glorious morning have I seen\r\n"</span> +
+<a name="515" href="#515">515</a>             <span class="jxr_string">"Flatter the mountain tops with sovereign eye,\r\n"</span> +
+<a name="516" href="#516">516</a>             <span class="jxr_string">"Kissing with golden face the meadows green,\r\n"</span> +
+<a name="517" href="#517">517</a>             <span class="jxr_string">"Gilding pale streams with heavenly alchemy;\r\n"</span> +
+<a name="518" href="#518">518</a>             <span class="jxr_string">"Anon permit the basest clouds to ride\r\n"</span> +
+<a name="519" href="#519">519</a>             <span class="jxr_string">"With ugly rack on his celestial face,\r\n"</span> +
+<a name="520" href="#520">520</a>             <span class="jxr_string">"And from the forlorn world his visage hide,\r\n"</span> +
+<a name="521" href="#521">521</a>             <span class="jxr_string">"Stealing unseen to west with this disgrace:\r\n"</span> +
+<a name="522" href="#522">522</a>             <span class="jxr_string">"Even so my sun one early morn did shine,\r\n"</span> +
+<a name="523" href="#523">523</a>             <span class="jxr_string">"With all triumphant splendour on my brow;\r\n"</span> +
+<a name="524" href="#524">524</a>             <span class="jxr_string">"But out! alack! he was but one hour mine,\r\n"</span> +
+<a name="525" href="#525">525</a>             <span class="jxr_string">"The region cloud hath mask'd him from me now.\r\n"</span> +
+<a name="526" href="#526">526</a>             <span class="jxr_string">"  Yet him for this my love no whit disdaineth;\r\n"</span> +
+<a name="527" href="#527">527</a>             <span class="jxr_string">"  Suns of the world may stain when heaven's sun staineth.\r\n"</span>;
+<a name="528" href="#528">528</a>             
+<a name="529" href="#529">529</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_QUOTED_PRINTABLE = <span class="jxr_string">"Sonnet XXXV By William Shakespeare\r\n"</span> +
+<a name="530" href="#530">530</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="531" href="#531">531</a>             <span class="jxr_string">"No more be griev'd at that which thou hast done:\r\n"</span> +
+<a name="532" href="#532">532</a>             <span class="jxr_string">"Roses have thorns, and silver fountains mud:\r\n"</span> +
+<a name="533" href="#533">533</a>             <span class="jxr_string">"Clouds and eclipses stain both moon and sun,\r\n"</span> +
+<a name="534" href="#534">534</a>             <span class="jxr_string">"And loathsome canker lives in sweetest bud.\r\n"</span> +
+<a name="535" href="#535">535</a>             <span class="jxr_string">"All men make faults, and even I in this,\r\n"</span> +
+<a name="536" href="#536">536</a>             <span class="jxr_string">"Authorizing thy trespass with compare,\r\n"</span> +
+<a name="537" href="#537">537</a>             <span class="jxr_string">"Myself corrupting, salving thy amiss,\r\n"</span> +
+<a name="538" href="#538">538</a>             <span class="jxr_string">"Excusing thy sins more than thy sins are;\r\n"</span> +
+<a name="539" href="#539">539</a>             <span class="jxr_string">"For to thy sensual fault I bring in sense,--\r\n"</span> +
+<a name="540" href="#540">540</a>             <span class="jxr_string">"Thy adverse party is thy advocate,--\r\n"</span> +
+<a name="541" href="#541">541</a>             <span class="jxr_string">"And 'gainst myself a lawful plea commence:\r\n"</span> +
+<a name="542" href="#542">542</a>             <span class="jxr_string">"Such civil war is in my love and hate,\r\n"</span> +
+<a name="543" href="#543">543</a>             <span class="jxr_string">"  That I an accessary needs must be,\r\n"</span> +
+<a name="544" href="#544">544</a>             <span class="jxr_string">"  To that sweet thief which sourly robs from me.\r\n"</span>; 
+<a name="545" href="#545">545</a>     
+<a name="546" href="#546">546</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_BASE64 = <span class="jxr_string">"Sonnet XXXVIII By William Shakespeare\r\n"</span> +
+<a name="547" href="#547">547</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="548" href="#548">548</a>             <span class="jxr_string">"How can my muse want subject to invent,\r\n"</span> +
+<a name="549" href="#549">549</a>             <span class="jxr_string">"While thou dost breathe, that pour'st into my verse\r\n"</span> +
+<a name="550" href="#550">550</a>             <span class="jxr_string">"Thine own sweet argument, too excellent\r\n"</span> +
+<a name="551" href="#551">551</a>             <span class="jxr_string">"For every vulgar paper to rehearse?\r\n"</span> +
+<a name="552" href="#552">552</a>             <span class="jxr_string">"O! give thy self the thanks, if aught in me\r\n"</span> +
+<a name="553" href="#553">553</a>             <span class="jxr_string">"Worthy perusal stand against thy sight;\r\n"</span> +
+<a name="554" href="#554">554</a>             <span class="jxr_string">"For who's so dumb that cannot write to thee,\r\n"</span> +
+<a name="555" href="#555">555</a>             <span class="jxr_string">"When thou thy self dost give invention light?\r\n"</span> +
+<a name="556" href="#556">556</a>             <span class="jxr_string">"Be thou the tenth Muse, ten times more in worth\r\n"</span> +
+<a name="557" href="#557">557</a>             <span class="jxr_string">"Than those old nine which rhymers invocate;\r\n"</span> +
+<a name="558" href="#558">558</a>             <span class="jxr_string">"And he that calls on thee, let him bring forth\r\n"</span> +
+<a name="559" href="#559">559</a>             <span class="jxr_string">"Eternal numbers to outlive long date.\r\n"</span> +
+<a name="560" href="#560">560</a>             <span class="jxr_string">"  If my slight muse do please these curious days,\r\n"</span> +
+<a name="561" href="#561">561</a>             <span class="jxr_string">"  The pain be mine, but thine shall be the praise.\r\n"</span>;
+<a name="562" href="#562">562</a>         
+<a name="563" href="#563">563</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_ONE = 
+<a name="564" href="#564">564</a>             <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> +
+<a name="565" href="#565">565</a>             <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> +
+<a name="566" href="#566">566</a>             <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> +
+<a name="567" href="#567">567</a>             <span class="jxr_string">"Subject: A Multipart Email\r\n"</span> +
+<a name="568" href="#568">568</a>             <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> +
+<a name="569" href="#569">569</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="570" href="#570">570</a>             <span class="jxr_string">"Start with a preamble\r\n"</span> +
+<a name="571" href="#571">571</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="572" href="#572">572</a>             <span class="jxr_string">"--1729\r\n"</span> +
+<a name="573" href="#573">573</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="574" href="#574">574</a>             <span class="jxr_string">"Content-Transfer-Encoding: 7bit\r\n\r\n"</span>;
+<a name="575" href="#575">575</a>     
+<a name="576" href="#576">576</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_TWO = 
+<a name="577" href="#577">577</a>             <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="578" href="#578">578</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="579" href="#579">579</a>             <span class="jxr_string">"Content-Transfer-Encoding: Quoted-Printable\r\n\r\n"</span>;
+<a name="580" href="#580">580</a>     
+<a name="581" href="#581">581</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_THREE = 
+<a name="582" href="#582">582</a>             <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="583" href="#583">583</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="584" href="#584">584</a>             <span class="jxr_string">"Content-Transfer-Encoding: base64\r\n\r\n"</span>;
+<a name="585" href="#585">585</a>             
+<a name="586" href="#586">586</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_END = 
+<a name="587" href="#587">587</a>             <span class="jxr_string">"\r\n--1729--\r\n"</span>;
+<a name="588" href="#588">588</a>     
+<a name="589" href="#589">589</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String MIME_MULTIPART_ALTERNATIVE = 
+<a name="590" href="#590">590</a>         <span class="jxr_string">"From: Timothy Tayler &lt;timothy@example.org&gt;\r\n"</span> +
+<a name="591" href="#591">591</a>         <span class="jxr_string">"To: Samual Smith &lt;samual@example.org&gt;\r\n"</span> +
+<a name="592" href="#592">592</a>         <span class="jxr_string">"Date: Thu, 14 Feb 2008 12:00:00 +0000 (GMT)\r\n"</span> +
+<a name="593" href="#593">593</a>         <span class="jxr_string">"Subject: A Multipart Email\r\n"</span> +
+<a name="594" href="#594">594</a>         <span class="jxr_string">"Content-Type: multipart/alternative;boundary=1729\r\n\r\n"</span> +
+<a name="595" href="#595">595</a>         <span class="jxr_string">"Start with a preamble\r\n"</span> +
+<a name="596" href="#596">596</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="597" href="#597">597</a>         <span class="jxr_string">"Content-Type: application/xhtml+xml\r\n\r\n"</span> +
+<a name="598" href="#598">598</a>         <span class="jxr_string">"&lt;!DOCTYPE html\r\n"</span> +
+<a name="599" href="#599">599</a>         <span class="jxr_string">"PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Strict//EN\&quot;\r\n"</span> +
+<a name="600" href="#600">600</a>         <span class="jxr_string">"\&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\&quot;&gt;\r\n"</span> +
+<a name="601" href="#601">601</a>         <span class="jxr_string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Rhubarb&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Rhubarb!&lt;/body&gt;&lt;/html&gt;\r\n"</span> +
+<a name="602" href="#602">602</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="603" href="#603">603</a>         <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n\r\n"</span> +
+<a name="604" href="#604">604</a>         <span class="jxr_string">"Rhubarb!\r\n"</span> +
+<a name="605" href="#605">605</a>         <span class="jxr_string">"\r\n--1729\r\n"</span> +
+<a name="606" href="#606">606</a>         <span class="jxr_string">"Content-Type: text/html; charset=US-ASCII\r\n\r\n"</span> +
+<a name="607" href="#607">607</a>         <span class="jxr_string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Rhubarb&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Rhubarb!&lt;/body&gt;&lt;/html&gt;\r\n"</span> +
+<a name="608" href="#608">608</a>         <span class="jxr_string">"\r\n--1729--\r\n"</span> +
+<a name="609" href="#609">609</a>         <span class="jxr_string">"This is the epilogue\r\n"</span>;
+<a name="610" href="#610">610</a>     
+<a name="611" href="#611">611</a>     
+<a name="612" href="#612">612</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[][] MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_BYTE_ARRAYS = {
+<a name="613" href="#613">613</a>         ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_ONE),
+<a name="614" href="#614">614</a>         ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_7BIT),
+<a name="615" href="#615">615</a>         ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_TWO),
+<a name="616" href="#616">616</a>         ascii(breakLines(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_QUOTED_PRINTABLE.replaceAll(<span class="jxr_string">"\r\n"</span>, <span class="jxr_string">"=0D=0A"</span>))),
+<a name="617" href="#617">617</a>         ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_THREE),
+<a name="618" href="#618">618</a>         EncodeUtils.toBase64(ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_BASE64)),
+<a name="619" href="#619">619</a>         ascii(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_END),
+<a name="620" href="#620">620</a>     };
+<a name="621" href="#621">621</a>     
+<a name="622" href="#622">622</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MIME_RFC822_SIMPLE_BYTES = ascii(MIME_RFC822_SIMPLE);
+<a name="623" href="#623">623</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MULTIPART_WITH_CONTENT_LOCATION_BYTES = ascii(MULTIPART_WITH_CONTENT_LOCATION);
+<a name="624" href="#624">624</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_WITH_CONTENT_DISPOSITION_PARAMETERS_BYTES = ascii(ONE_PART_MIME_WITH_CONTENT_DISPOSITION_PARAMETERS);
+<a name="625" href="#625">625</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MIME_MULTIPART_ALTERNATIVE_BYTES = ascii(MIME_MULTIPART_ALTERNATIVE);
+<a name="626" href="#626">626</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_BYTES = join(MIME_MIXED_MULTIPART_VARIOUS_ENCODINGS_BYTE_ARRAYS);
+<a name="627" href="#627">627</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_QUOTED_PRINTABLE_ASCII_BYTES = ascii(ONE_PART_MIME_QUOTED_PRINTABLE_ASCII);
+<a name="628" href="#628">628</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_BASE64_LATIN1_UPPERCASE_BYTES = join(ascii(ONE_PART_MIME_BASE64_LATIN1_HEADERS.toUpperCase(Locale.UK)), ONE_PART_MIME_BASE64_LATIN1_ENCODED);
+<a name="629" href="#629">629</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_BASE64_LATIN1_BYTES = join(ascii(ONE_PART_MIME_BASE64_LATIN1_HEADERS), ONE_PART_MIME_BASE64_LATIN1_ENCODED);
+<a name="630" href="#630">630</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_BASE64_ASCII_BYTES = join(ascii(ONE_PART_MIME_BASE64_ASCII_HEADERS), ONE_PART_MIME_BASE64_ASCII_ENCODED);
+<a name="631" href="#631">631</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] RFC822_SIMPLE_BYTES = US_ASCII.encode(RFC_SIMPLE).array();
+<a name="632" href="#632">632</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_ASCII_BYTES = US_ASCII.encode(ONE_PART_MIME_ASCII).array();
+<a name="633" href="#633">633</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_8859_BYTES = LATIN1.encode(ONE_PART_MIME_8859).array();
+<a name="634" href="#634">634</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES = US_ASCII.encode(MULTIPART_WITH_BINARY_ATTACHMENTS).array();
+<a name="635" href="#635">635</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_ASCII_COMMENT_IN_MIME_VERSION_BYTES = US_ASCII.encode(ONE_PART_MIME_ASCII_COMMENT_IN_MIME_VERSION).array();
+<a name="636" href="#636">636</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ONE_PART_MIME_ASCII_MIME_VERSION_SPANS_TWO_LINES_BYTES = US_ASCII.encode(ONE_PART_MIME_ASCII_MIME_VERSION_SPANS_TWO_LINES).array();
+<a name="637" href="#637">637</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MAIL_WITH_RFC822_PART_BYTES = ascii(MAIL_WITH_RFC822_PART);
+<a name="638" href="#638">638</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] MIME_MULTIPART_EMBEDDED_MESSAGES_BYTES = ascii(MIME_MULTIPART_EMBEDDED_MESSAGES);
+<a name="639" href="#639">639</a>     
+<a name="640" href="#640">640</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] ascii(String text) {
+<a name="641" href="#641">641</a>         
+<a name="642" href="#642">642</a>         <strong class="jxr_keyword">return</strong> US_ASCII.encode(text).array();
+<a name="643" href="#643">643</a>     }
+<a name="644" href="#644">644</a>     
+<a name="645" href="#645">645</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] latin1(String text) {
+<a name="646" href="#646">646</a>         
+<a name="647" href="#647">647</a>         <strong class="jxr_keyword">return</strong> LATIN1.encode(text).array();
+<a name="648" href="#648">648</a>     }
+<a name="649" href="#649">649</a>         
+<a name="650" href="#650">650</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] join(byte[] one, byte[] two) {
+<a name="651" href="#651">651</a>         byte[] results = <strong class="jxr_keyword">new</strong> byte[one.length + two.length];
+<a name="652" href="#652">652</a>         System.arraycopy(one, 0, results, 0, one.length);
+<a name="653" href="#653">653</a>         System.arraycopy(two, 0, results, one.length, two.length);
+<a name="654" href="#654">654</a>         <strong class="jxr_keyword">return</strong> results;
+<a name="655" href="#655">655</a>     }
+<a name="656" href="#656">656</a>     
+<a name="657" href="#657">657</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> byte[] join(byte[][] byteArrays) {
+<a name="658" href="#658">658</a>         <strong class="jxr_keyword">int</strong> length = 0;
+<a name="659" href="#659">659</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; byteArrays.length; i++) {
+<a name="660" href="#660">660</a>             byte[] bytes = byteArrays[i];
+<a name="661" href="#661">661</a>             length += bytes.length;
+<a name="662" href="#662">662</a>         }
+<a name="663" href="#663">663</a>         byte[] results = <strong class="jxr_keyword">new</strong> byte[length];
+<a name="664" href="#664">664</a>         <strong class="jxr_keyword">int</strong> count = 0;
+<a name="665" href="#665">665</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; byteArrays.length; i++) {
+<a name="666" href="#666">666</a>             byte[] bytes = byteArrays[i];
+<a name="667" href="#667">667</a>             System.arraycopy(bytes, 0, results, count, bytes.length);
+<a name="668" href="#668">668</a>             count += bytes.length;
+<a name="669" href="#669">669</a>         }
+<a name="670" href="#670">670</a>         <strong class="jxr_keyword">return</strong> results;
+<a name="671" href="#671">671</a>     }
+<a name="672" href="#672">672</a>     
+<a name="673" href="#673">673</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String breakLines(String original) {
+<a name="674" href="#674">674</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer(original);
+<a name="675" href="#675">675</a>         <strong class="jxr_keyword">int</strong> count = 76;
+<a name="676" href="#676">676</a>         <strong class="jxr_keyword">while</strong>(count &lt; buffer.length()) {
+<a name="677" href="#677">677</a>             <strong class="jxr_keyword">if</strong> (buffer.charAt(count) == '=') {
+<a name="678" href="#678">678</a>                 count = count - 1;
+<a name="679" href="#679">679</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (buffer.charAt(count-1) == '=') {
+<a name="680" href="#680">680</a>                 count = count - 4;                
+<a name="681" href="#681">681</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (buffer.charAt(count-2) == '=') {
+<a name="682" href="#682">682</a>                 count = count - 3;
+<a name="683" href="#683">683</a>             }    
+<a name="684" href="#684">684</a>             buffer.insert(count, '\n');
+<a name="685" href="#685">685</a>             buffer.insert(count, '\r');
+<a name="686" href="#686">686</a>             buffer.insert(count, '=');
+<a name="687" href="#687">687</a>             count += 79;
+<a name="688" href="#688">688</a>         }
+<a name="689" href="#689">689</a>         <strong class="jxr_keyword">final</strong> String result = buffer.toString();
+<a name="690" href="#690">690</a>         <strong class="jxr_keyword">return</strong> result;
+<a name="691" href="#691">691</a>     }
+<a name="692" href="#692">692</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

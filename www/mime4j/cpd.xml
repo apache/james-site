@@ -1,7 +1,8 @@
-<?xml version="1.0"  encoding="UTF-8"?><pmd-cpd>
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
 <duplication lines="5" tokens="198">
-<file line="134" path="C:\Lab\VOID\projects\james-mime4j\src\main\java\org\apache\james\mime4j\decoder\Base64InputStream.java"/>
-<file line="138" path="C:\Lab\VOID\projects\james-mime4j\src\main\java\org\apache\james\mime4j\decoder\Base64InputStream.java"/>
+<file line="134" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/decoder/Base64InputStream.java"/>
+<file line="138" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/decoder/Base64InputStream.java"/>
 <codefragment>
 <![CDATA[
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 0xB0 */
@@ -12,15 +13,68 @@
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="20" tokens="132">
+<file line="44" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/util/ByteArrayBuffer.java"/>
+<file line="46" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/util/CharArrayBuffer.java"/>
+<codefragment>
+<![CDATA[
+    public void append(final char[] b, int off, int len) {
+        if (b == null) {
+            return;
+        }
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+                ((off + len) < 0) || ((off + len) > b.length)) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (len == 0) {
+            return;
+        }
+        int newlen = this.len + len;
+        if (newlen > this.buffer.length) {
+            expand(newlen);
+        }
+        System.arraycopy(b, off, this.buffer, this.len, len);
+        this.len = newlen;
+    }
+    
+    public void append(String str) {
+]]>
+</codefragment>
+</duplication>
 <duplication lines="4" tokens="129">
-<file line="127" path="C:\Lab\VOID\projects\james-mime4j\src\main\java\org\apache\james\mime4j\decoder\Base64InputStream.java"/>
-<file line="134" path="C:\Lab\VOID\projects\james-mime4j\src\main\java\org\apache\james\mime4j\decoder\Base64InputStream.java"/>
+<file line="127" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/decoder/Base64InputStream.java"/>
+<file line="134" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/decoder/Base64InputStream.java"/>
 <codefragment>
 <![CDATA[
         41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, /* 0x70 */
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 0x80 */
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 0x90 */
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, /* 0xA0 */
+]]>
+</codefragment>
+</duplication>
+<duplication lines="17" tokens="128">
+<file line="72" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/util/ByteArrayBuffer.java"/>
+<file line="101" path="/home/oleg/temp/apache-mime4j-0.4/src/main/java/org/apache/james/mime4j/util/CharArrayBuffer.java"/>
+<codefragment>
+<![CDATA[
+    public void append(final byte[] b, int off, int len) {
+        if (b == null) {
+            return;
+        }
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+                ((off + len) < 0) || ((off + len) > b.length)) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (len == 0) {
+            return;
+        }
+        int oldlen = this.len;
+        int newlen = oldlen + len;
+        if (newlen > this.buffer.length) {
+            expand(newlen);
+        }
+        for (int i1 = off, i2 = oldlen; i2 < newlen; i1++, i2++) {
 ]]>
 </codefragment>
 </duplication>

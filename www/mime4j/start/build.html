@@ -11,8 +11,7 @@
 
 <html>
   <head>
-    <title>James mime4j - 
-        Building mime4j</title>
+    <title>James mime4j - Building mime4j</title>
     <style type="text/css" media="all">
       @import url("../css/maven-base.css");
       @import url("../css/maven-theme.css");
@@ -46,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 04/10/2008
+        Last Published: 08/20/2008
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -56,7 +55,7 @@
           |
           <a href="../../jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="../index.html">Mime4J</a>
           |
           <a href="../../jsieve/index.html">JSieve</a>
           |
@@ -90,7 +89,7 @@
         </li>
               
     <li class="none">
-              <a href="../status.html">News and Status</a>
+              <a href="../status.html">Status</a>
         </li>
               
     <li class="none">
@@ -163,6 +162,10 @@
       
             
       
+            
+      
+            
+      
               
         <li class="collapsed">
               <a href="../project-reports.html">Project Reports</a>
@@ -204,31 +207,32 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
-    
-    
-        <a name="Building mime4j"></a><div class="section"><h2>Building mime4j</h2>
-            <a name="Using a Stable Release"></a><div class="section"><h3>Using a Stable Release</h3>
-            <p> Go to the <a href="http://james.apache.org/download.cgi">download 
-              pages</a> and download the most recent
+        <div class="section"><h2><a name="Building_mime4j"></a>
+Building mime4j</h2>
+<div class="section"><h3><a name="Using_a_Stable_Release"></a>
+Using a Stable Release</h3>
+<p> Go to the <a class="externalLink" href="http://james.apache.org/download.cgi">download 
+              pages</a>
+ and download the most recent
                 release in your preferred format, either
                 <code>james-mime4j-x.y-src.tar.gz</code> or <code>james-mime4j-x.y-src.zip</code>.
                 Extracting the archived sources will create the directory
                 <code>james-mime4j-x.y/</code>.</p>
-            </div>
-            <a name="Checking Out From Subversion"></a><div class="section"><h3>Checking Out From Subversion</h3>
-                <p>
+</div>
+<div class="section"><h3><a name="Checking_Out_From_Subversion"></a>
+Checking Out From Subversion</h3>
+<p>
                     Issue the following commands in a shell:
-                    <blockquote>
-                        <code>svn checkout http://svn.apache.org/repos/asf/james/mime4j/trunk james-mime4j</code><br></br>
-                    </blockquote>
-                </p>
-            </div>
-            <a name="Download and Install Maven"></a><div class="section"><h3>Download and Install Maven</h3>
-                <p> You will need to download and install <a href="http://maven.apache.org/">Maven</a> before building
+                    <blockquote><code>svn checkout http://svn.apache.org/repos/asf/james/mime4j/trunk james-mime4j</code><br />
+</blockquote></p>
+</div>
+<div class="section"><h3><a name="Download_and_Install_Maven"></a>
+Download and Install Maven</h3>
+<p> You will need to download and install <a class="externalLink" href="http://maven.apache.org/">Maven</a>
+ before building
                     the sources. The build has been tested with version 2.0 of
                     Maven so use this or a later version if possible. </p>
-                <p> One of the main differences between Maven and plain ant is
+<p> One of the main differences between Maven and plain ant is
                     that Maven manages external dependencies for your projects
                     and (at least in theory) you should no longer have to store
                     third-party jar files in your source code tree. It maintains a local
@@ -238,26 +242,22 @@
                     repository at www.ibiblio.org/maven. So to use the Maven
                     build, you need to have a network connection available for
                     the inital download of the project dependencies. </p>
-            </div>
-            <a name="Building the mime4j Jar"></a><div class="section"><h3>Building the mime4j Jar</h3>
-                <p> Once Maven has been installed, building the project should
-                    be as simple as typing <blockquote>
-                        <code>cd james-mime4j-x.y/ (cd james-mime4j/ if sources come from
-                            Subversion)<br></br>mvn package</code>
-                    </blockquote> from the command line. Maven will
+</div>
+<div class="section"><h3><a name="Building_the_mime4j_Jar"></a>
+Building the mime4j Jar</h3>
+<p> Once Maven has been installed, building the project should
+                    be as simple as typing <blockquote><code>cd james-mime4j-x.y/ (cd james-mime4j/ if sources come from
+                            Subversion)<br />
+mvn package</code></blockquote> from the command line. Maven will
                     automatically run all test cases for you and create the
                     jar file in the <code>target</code> directory. 
                 </p>
-                <p>
-                    To install the jar into your local Maven repository run <blockquote>
-                        <code>mvn install</code></blockquote>
-                </p>
-                <p>
-                    To generate an Eclipse project from the sources run <blockquote>
-                        <code>mvn eclipse:eclipse</code></blockquote>
-                </p>
-                <p>
-                  <strong>NOTE!</strong> Mime4j uses <a href="https://javacc.dev.java.net/">JavaCC</a> to generate parsers for
+<p>
+                    To install the jar into your local Maven repository run <blockquote><code>mvn install</code></blockquote></p>
+<p>
+                    To generate an Eclipse project from the sources run <blockquote><code>mvn eclipse:eclipse</code></blockquote></p>
+<p><strong>NOTE!</strong> Mime4j uses <a class="externalLink" href="https://javacc.dev.java.net/">JavaCC</a>
+ to generate parsers for
                   header fields. <code>mvn eclipse:eclipse</code> currently has problems with 
                   generating proper source folders for the JavaCC generated code.
                   After running <code>mvn eclipse:eclipse</code> you must manually
@@ -265,12 +265,12 @@
                   <code>target/generated-sources/jjtree</code> as source folders
                   under <em>Project -&gt; Properties</em> in Eclipse.
                 </p>
-                <p>
+<p>
                     For more information on using
-                    Maven, have a look at the <a href="http://maven.apache.org/">Maven web site</a>. </p>
-            </div>
-        </div>
-    
+                    Maven, have a look at the <a class="externalLink" href="http://maven.apache.org/">Maven web site</a>
+. </p>
+</div>
+</div>
 
       </div>
     </div>

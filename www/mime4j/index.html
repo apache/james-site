@@ -11,8 +11,7 @@
 
 <html>
   <head>
-    <title>James mime4j - 
-        Mime4j</title>
+    <title>James mime4j - Mime4j</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -46,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 04/10/2008
+        Last Published: 08/20/2008
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -56,7 +55,7 @@
           |
           <a href="../jspf/index.html">jSPF</a>
           |
-          <a href="../mime4j/index.html">Mime4J</a>
+          <a href="index.html">Mime4J</a>
           |
           <a href="../jsieve/index.html">JSieve</a>
           |
@@ -90,7 +89,7 @@
         </li>
               
     <li class="none">
-              <a href="status.html">News and Status</a>
+              <a href="status.html">Status</a>
         </li>
               
     <li class="none">
@@ -153,6 +152,10 @@
       
             
       
+            
+      
+            
+      
               
         <li class="collapsed">
               <a href="project-reports.html">Project Reports</a>
@@ -194,25 +197,24 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
-    
-    
-        <a name="Mime4j"></a><div class="section"><h2>Mime4j</h2>
-            <p>
-                <strong>NOTE:</strong> mime4j is a subproject of 
-                <a href="http://james.apache.org/">Apache James</a>. Please use
-                the <a href="http://james.apache.org/mail.html">James mailing list</a> 
+        <div class="section"><h2><a name="Mime4j"></a>
+Mime4j</h2>
+<p><strong>NOTE:</strong> mime4j is a subproject of 
+                <a class="externalLink" href="http://james.apache.org/">Apache James</a>
+. Please use
+                the <a class="externalLink" href="http://james.apache.org/mail.html">James mailing list</a>
+ 
                 for mime4j related questions.
             </p>
-            <p> mime4j provides a parser, 
-                <a href="apidocs/org/mime4j/MimeStreamParser.html">
-                    <code>MimeStreamParser</code>
-                </a>, for e-mail message streams in plain rfc822 and MIME
+<p> mime4j provides a parser, 
+                <a href="apidocs/org/apache/james/mime4j/parser/MimeStreamParser.html"><code>MimeStreamParser</code></a>
+, for e-mail message streams in plain rfc822 and MIME
                 format. The parser uses a callback mechanism to report parsing
                 events such as the start of an entity header, the start of a
-                body, etc. If you are familiar with the <a href="http://www.saxproject.org/">SAX</a> XML parser interface
+                body, etc. If you are familiar with the <a class="externalLink" href="http://www.saxproject.org/">SAX</a>
+ XML parser interface
                 you should have no problem getting started with mime4j. </p>
-            <p> The parser only deals with the structure of the message stream.
+<p> The parser only deals with the structure of the message stream.
                 It won't do any decoding of base64 or quoted-printable encoded
                 header fields and bodies. This is intentional - the parser
                 should only provide the most basic functionality needed to build
@@ -220,25 +222,24 @@
                 decode bodies and fields and the <code>Message</code> class
                 described below handles decoding of fields and bodies
                 transparently. </p>
-            <p> The parser has been designed to be extremely tolerant against
+<p> The parser has been designed to be extremely tolerant against
                 messages violating the standards. It has been tested using a
                 large corpus (&gt;5000) of e-mail messages. As a benchmark
-                the widely used perl <a href="http://www.mimedefang.org/node.php?id=48">MIME::Tools</a>
+                the widely used perl <a class="externalLink" href="http://www.mimedefang.org/node.php?id=48">MIME::Tools</a>
+
                 parser has been used. mime4j and MIME:Tools rarely differ
                 (&lt;25 in those 5000). When they do (which only occurs
                 for illegally formatted spam messages) we think mime4j does a
                 better job. </p>
-            <p> mime4j can also be used to build a tree representation of an
+<p> mime4j can also be used to build a tree representation of an
                 e-mail message using the 
-                <a href="apidocs/org/mime4j/message/Message.html">
-                    <code>Message</code>
-                </a> class. Using this facility mime4j automatically handles the
+                <a href="apidocs/org/apache/james/mime4j/message/Message.html"><code>Message</code></a>
+ class. Using this facility mime4j automatically handles the
                 decoding of fields and bodies and uses temporary files for large
                 attachments. This representation is similar to the
                 representation constructed by the JavaMail API:s but is more
                 tolerant to messages violating the standards. </p>
-        </div>
-    
+</div>
 
       </div>
     </div>
