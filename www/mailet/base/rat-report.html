@@ -22,7 +22,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../mailets/basic/index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/mailets/basic/index.html" id="bannerLeft">
     
                                             <img src="images/james-mailet-base-logo.gif" alt="" />
     
@@ -51,7 +51,7 @@
           |
           <a href="../../server/index.html">Server</a>
           |
-          <a href="../index.html">Mailet API</a>
+          <a href="../../mailet/index.html">Mailets</a>
           |
           <a href="../../jspf/index.html">jSPF</a>
           |
@@ -92,7 +92,7 @@
         <ul>
               
     <li class="none">
-              <a href="../api">API</a>
+              <a href="http://james.apache.org/mailet/api/">API</a>
         </li>
               
     <li class="none">
@@ -100,11 +100,11 @@
         </li>
               
     <li class="none">
-              <a href="../standard">Standard</a>
+              <a href="http://james.apache.org/mailet/standard/">Standard</a>
         </li>
               
     <li class="none">
-              <a href="../crypto">Crypto</a>
+              <a href="http://james.apache.org/mailet/crypto/">Crypto</a>
         </li>
           </ul>
           <h5>Project Documentation</h5>
@@ -112,6 +112,10 @@
               
                 
               
+      
+            
+      
+            
       
             
       
@@ -213,14 +217,12 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>RAT (Release Audit Tool) results</h2>
-<p>The following document contains the results of <a href="http://code.google.com/p/arat/" class="externalLink">RAT (Release Audit Tool)</a>.</p>
-<p><div class="source"><pre>
+        <div class="section"><h2>RAT (Release Audit Tool) results</h2><p>The following document contains the results of <a href="http://code.google.com/p/arat/">RAT (Release Audit Tool)</a>.</p><p><div class="source"><pre>
 *****************************************************
 Summary
 -------
 Notes: 3
-Binaries: 21
+Binaries: 2
 Archives: 6
 Standards: 41
 
@@ -236,178 +238,77 @@ Generated files do not required license headers
 
 Archives (+ indicates readable, $ unreadable): 
 
- + stage/javax.activation/jars/activation-1.1.1.jar
- + stage/junit/jars/junit-3.8.1.jar
- + stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
- + stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
- + stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
- + stage/javax.mail/jars/mail-1.4.1.jar
+ + /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
+ + /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
+ + /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+ + /x1/home/bago/work/james-mailet/base/stage/javax.activation/jars/activation-1.1.1.jar
+ + /x1/home/bago/work/james-mailet/base/stage/junit/jars/junit-3.8.1.jar
+ + /x1/home/bago/work/james-mailet/base/stage/javax.mail/jars/mail-1.4.1.jar
  
 *****************************************************
   Files with AL headers will be marked L
   Binary files (which do not require AL headers) will be marked B
   Compressed archives will be marked A
   Notices, licenses etc will be marked N
-  N     stage/javax.activation/jars/activation.LICENSE
-  A     stage/javax.activation/jars/activation-1.1.1.jar
- !????? stage/javax.activation/poms/activation-1.1.1.pom
-  A     stage/junit/jars/junit-3.8.1.jar
-  AL    stage/junit/poms/junit-3.8.1.pom
- !????? stage/org.apache.james/xmls/james-project-1.1-site_en.xml
- !????? stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
- !????? stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
- !????? stage/org.apache.james/xmls/james-server-root-1.0-site.xml
- !????? stage/org.apache.james/xmls/james-parent-1.1-site.xml
- !????? stage/org.apache.james/xmls/james-project-1.1-site.xml
-  A     stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
-  A     stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
-  A     stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
-  AL    stage/org.apache.james/poms/apache-james-mailet-base-1.0-SNAPSHOT.pom
-  AL    stage/org.apache.james/poms/mailet-2.4-SNAPSHOT.pom
-  AL    stage/org.apache.james/poms/james-project-1.1.pom
-  AL    stage/org.apache.james/poms/james-parent-1.1.pom
-  AL    stage/org.apache.james/poms/maven-skin-1.1.pom
-  AL    stage/org.apache.james/poms/maven-skin-1.1-SNAPSHOT.pom
-  N     stage/javax.mail/jars/mail.LICENSE
-  A     stage/javax.mail/jars/mail-1.4.1.jar
- !????? stage/javax.mail/poms/mail-1.4.1.pom
-  AL    build.xml
- !????? include.properties
-  AL    pom.xml
-  N     README.txt
- !????? default.properties
-  B     bin/org/apache/mailet/RFC2822Headers.class
-  B     bin/org/apache/mailet/GenericMailet.class
-  B     bin/org/apache/mailet/GenericRecipientMatcher.class
-  B     bin/org/apache/mailet/dates/RFC2980DateFormat.class
-  B     bin/org/apache/mailet/dates/SynchronizedDateFormat.class
-  B     bin/org/apache/mailet/dates/SimplifiedDateFormat.class
-  B     bin/org/apache/mailet/dates/RFC977DateFormat.class
-  B     bin/org/apache/mailet/dates/RFC822DateFormat.class
-  B     bin/org/apache/mailet/GenericMatcher.class
-  B     bin/org/apache/james/test/mock/mailet/MockMatcherConfig.class
-  B     bin/org/apache/james/test/mock/mailet/MockMail.class
-  B     bin/org/apache/james/test/mock/mailet/MockMailetConfig.class
-  B     bin/org/apache/james/test/mock/mailet/MockMailContext.class
-  B     bin/org/apache/james/test/mock/javaxmail/MockMimeMessage.class
-  B     bin/org/apache/james/test/mock/util/MailUtil.class
-  B     bin/org/apache/james/util/mailet/FlowedMessageUtils.class
-  B     bin/org/apache/james/util/mailet/MatcherInverter.class
-  B     bin/org/apache/james/util/mailet/StringUtils.class
-  B     bin/org/apache/james/util/mailet/MailetUtil.class
-  AL    src/main/java/org/apache/mailet/GenericMatcher.java
-  AL    src/main/java/org/apache/mailet/GenericMailet.java
-  AL    src/main/java/org/apache/mailet/dates/SynchronizedDateFormat.java
-  AL    src/main/java/org/apache/mailet/dates/RFC822DateFormat.java
-  AL    src/main/java/org/apache/mailet/dates/SimplifiedDateFormat.java
-  AL    src/main/java/org/apache/mailet/dates/RFC977DateFormat.java
-  AL    src/main/java/org/apache/mailet/dates/RFC2980DateFormat.java
-  AL    src/main/java/org/apache/mailet/RFC2822Headers.java
-  AL    src/main/java/org/apache/mailet/GenericRecipientMatcher.java
-  AL    src/main/java/org/apache/james/util/mailet/MatcherInverter.java
-  AL    src/main/java/org/apache/james/util/mailet/StringUtils.java
-  AL    src/main/java/org/apache/james/util/mailet/FlowedMessageUtils.java
-  AL    src/main/java/org/apache/james/util/mailet/MailetUtil.java
-  AL    src/site/xdoc/index.xml
-  AL    src/site/site.xml
-  B     src/site/resources/images/james-mailet-base-logo.gif
-  B     src/site/resources/images/asf-logo-reduced.gif
-  AL    src/site/resources/css/site.css
-  AL    src/test/java/org/apache/james/test/mock/mailet/MockMatcherConfig.java
-  AL    src/test/java/org/apache/james/test/mock/mailet/MockMailetConfig.java
-  AL    src/test/java/org/apache/james/test/mock/mailet/MockMail.java
-  AL    src/test/java/org/apache/james/test/mock/mailet/MockMailContext.java
-  AL    src/test/java/org/apache/james/test/mock/javaxmail/MockMimeMessage.java
-  AL    src/test/java/org/apache/james/test/mock/util/MailUtil.java
+  A     /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
+  A     /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
+  A     /x1/home/bago/work/james-mailet/base/stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-project-1.1-site.xml
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-server-root-1.0-site.xml
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-project-1.1-site_en.xml
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-parent-1.1-site.xml
+ !????? /x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/maven-skin-1.1.pom
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/apache-james-mailet-base-1.0-SNAPSHOT.pom
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/mailet-2.4-SNAPSHOT.pom
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/james-project-1.1.pom
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/maven-skin-1.1-SNAPSHOT.pom
+  AL    /x1/home/bago/work/james-mailet/base/stage/org.apache.james/poms/james-parent-1.1.pom
+  N     /x1/home/bago/work/james-mailet/base/stage/javax.activation/jars/activation.LICENSE
+  A     /x1/home/bago/work/james-mailet/base/stage/javax.activation/jars/activation-1.1.1.jar
+ !????? /x1/home/bago/work/james-mailet/base/stage/javax.activation/poms/activation-1.1.1.pom
+  A     /x1/home/bago/work/james-mailet/base/stage/junit/jars/junit-3.8.1.jar
+  AL    /x1/home/bago/work/james-mailet/base/stage/junit/poms/junit-3.8.1.pom
+  N     /x1/home/bago/work/james-mailet/base/stage/javax.mail/jars/mail.LICENSE
+  A     /x1/home/bago/work/james-mailet/base/stage/javax.mail/jars/mail-1.4.1.jar
+ !????? /x1/home/bago/work/james-mailet/base/stage/javax.mail/poms/mail-1.4.1.pom
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/mailet/MockMailContext.java
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/mailet/MockMatcherConfig.java
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/mailet/MockMailetConfig.java
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/mailet/MockMail.java
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/javaxmail/MockMimeMessage.java
+  AL    /x1/home/bago/work/james-mailet/base/src/test/java/org/apache/james/test/mock/util/MailUtil.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/james/util/mailet/MatcherInverter.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/james/util/mailet/FlowedMessageUtils.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/james/util/mailet/StringUtils.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/james/util/mailet/MailetUtil.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/dates/RFC2980DateFormat.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/dates/SynchronizedDateFormat.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/dates/RFC977DateFormat.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/dates/SimplifiedDateFormat.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/dates/RFC822DateFormat.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/GenericMatcher.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/GenericRecipientMatcher.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/RFC2822Headers.java
+  AL    /x1/home/bago/work/james-mailet/base/src/main/java/org/apache/mailet/GenericMailet.java
+  B     /x1/home/bago/work/james-mailet/base/src/site/resources/images/james-mailet-base-logo.gif
+  B     /x1/home/bago/work/james-mailet/base/src/site/resources/images/asf-logo-reduced.gif
+  AL    /x1/home/bago/work/james-mailet/base/src/site/resources/css/site.css
+  AL    /x1/home/bago/work/james-mailet/base/src/site/xdoc/index.xml
+  AL    /x1/home/bago/work/james-mailet/base/src/site/site.xml
+ !????? /x1/home/bago/work/james-mailet/base/default.properties
+  AL    /x1/home/bago/work/james-mailet/base/pom.xml
+  N     /x1/home/bago/work/james-mailet/base/README.txt
+  AL    /x1/home/bago/work/james-mailet/base/build.xml
+ !????? /x1/home/bago/work/james-mailet/base/include.properties
  
  *****************************************************
  Printing headers for files without AL header...
  
  
  =======================================================================
- ==stage/javax.activation/poms/activation-1.1.1.pom
- =======================================================================
- &lt;project&gt;
-  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-  &lt;groupId&gt;javax.activation&lt;/groupId&gt;
-  &lt;artifactId&gt;activation&lt;/artifactId&gt;
-  &lt;version&gt;1.1.1&lt;/version&gt;
-&lt;/project&gt;
-
- =======================================================================
- ==stage/org.apache.james/xmls/james-project-1.1-site_en.xml
- =======================================================================
- 
- =======================================================================
- ==stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
- =======================================================================
- 
- =======================================================================
- ==stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
- =======================================================================
- 
- =======================================================================
- ==stage/org.apache.james/xmls/james-server-root-1.0-site.xml
- =======================================================================
- &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Server&quot;&gt;
-  &lt;bannerLeft&gt;
-    &lt;name&gt;James Server&lt;/name&gt;
-    &lt;src&gt;images/james-server-logo.gif&lt;/src&gt;
-    &lt;href&gt;http://james.apache.org/server/&lt;/href&gt;
-  &lt;/bannerLeft&gt;
-  &lt;bannerRight&gt;
-    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
-    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
-    &lt;href&gt;http://www.apache.org/&lt;/href&gt;
-  &lt;/bannerRight&gt;
-  &lt;body&gt;
-    &lt;menu name=&quot;James Server&quot; inherit=&quot;top&quot;&gt;
-      &lt;item name=&quot;Overview&quot; href=&quot;/index.html&quot; /&gt;
-      &lt;item name=&quot;Objectives&quot; href=&quot;/design_objectives.html&quot; /&gt;
-      &lt;item name=&quot;James FAQ&quot; href=&quot;/FAQ.html&quot;&gt;
-        &lt;item name=&quot;James and Sendmail&quot; href=&quot;/james_and_sendmail.html&quot; /&gt;
-      &lt;/item&gt;
-      &lt;item name=&quot;Wiki&quot; href=&quot;http://wiki.apache.org/james&quot; /&gt;
-      &lt;item name=&quot;Useful RFCs&quot; href=&quot;/rfclist.html&quot; /&gt;
-    &lt;/menu&gt;
-    &lt;menu name=&quot;Documentation&quot;&gt;
-      &lt;item name=&quot;Server 2.3.1&quot; href=&quot;/2.3.1/index.html&quot; /&gt;
-      &lt;item name=&quot;Server 2.3.0&quot; href=&quot;/2.3.0/index.html&quot; /&gt;
-      &lt;item name=&quot;Server 2.2.0&quot; href=&quot;/2.2.0/index.html&quot; /&gt;
-      &lt;item name=&quot;Archive&quot; href=&quot;/archive/document_archive.html&quot; /&gt;
-    &lt;/menu&gt;
-    &lt;menu name=&quot;Project&quot; inherit=&quot;bottom&quot;&gt;
-      &lt;item name=&quot;Bug Database&quot; href=&quot;http://issues.apache.org/jira/browse/JAMES&quot; /&gt;
-      &lt;item name=&quot;Source Code&quot; href=&quot;http://svn.apache.org/viewvc/james/server/&quot; /&gt;
-      &lt;item name=&quot;TODO&quot; href=&quot;/todo.html&quot; /&gt;
-    &lt;/menu&gt;
-  &lt;/body&gt;
-&lt;/project&gt;
-
- =======================================================================
- ==stage/org.apache.james/xmls/james-parent-1.1-site.xml
- =======================================================================
- &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Parent POM&quot;&gt;
-  &lt;bannerLeft&gt;
-    &lt;name&gt;James Project&lt;/name&gt;
-    &lt;src&gt;images/james-project-logo.gif&lt;/src&gt;
-    &lt;href&gt;http://james.apache.org/index.html&lt;/href&gt;
-  &lt;/bannerLeft&gt;
-  &lt;bannerRight&gt;
-    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
-    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
-    &lt;href&gt;http://www.apache.org/index.html&lt;/href&gt;
-  &lt;/bannerRight&gt;
-  &lt;skin&gt;
-    &lt;groupId&gt;org.apache.maven.skins&lt;/groupId&gt;
-    &lt;artifactId&gt;maven-default-skin&lt;/artifactId&gt;
-    &lt;version&gt;1.0&lt;/version&gt;
-  &lt;/skin&gt;
-  &lt;body /&gt;
-&lt;/project&gt;
-
- =======================================================================
- ==stage/org.apache.james/xmls/james-project-1.1-site.xml
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-project-1.1-site.xml
  =======================================================================
  &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Project&quot;&gt;
   &lt;bannerLeft&gt;
@@ -461,7 +362,89 @@ Archives (+ indicates readable, $ unreadable):
     &lt;/menu&gt;
 
  =======================================================================
- ==stage/javax.mail/poms/mail-1.4.1.pom
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-server-root-1.0-site.xml
+ =======================================================================
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Server&quot;&gt;
+  &lt;bannerLeft&gt;
+    &lt;name&gt;James Server&lt;/name&gt;
+    &lt;src&gt;images/james-server-logo.gif&lt;/src&gt;
+    &lt;href&gt;http://james.apache.org/server/&lt;/href&gt;
+  &lt;/bannerLeft&gt;
+  &lt;bannerRight&gt;
+    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
+    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
+    &lt;href&gt;http://www.apache.org/&lt;/href&gt;
+  &lt;/bannerRight&gt;
+  &lt;body&gt;
+    &lt;menu name=&quot;James Server&quot; inherit=&quot;top&quot;&gt;
+      &lt;item name=&quot;Overview&quot; href=&quot;/index.html&quot; /&gt;
+      &lt;item name=&quot;Objectives&quot; href=&quot;/design_objectives.html&quot; /&gt;
+      &lt;item name=&quot;James FAQ&quot; href=&quot;/FAQ.html&quot;&gt;
+        &lt;item name=&quot;James and Sendmail&quot; href=&quot;/james_and_sendmail.html&quot; /&gt;
+      &lt;/item&gt;
+      &lt;item name=&quot;Wiki&quot; href=&quot;http://wiki.apache.org/james&quot; /&gt;
+      &lt;item name=&quot;Useful RFCs&quot; href=&quot;/rfclist.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;Documentation&quot;&gt;
+      &lt;item name=&quot;Server 2.3.1&quot; href=&quot;/2.3.1/index.html&quot; /&gt;
+      &lt;item name=&quot;Server 2.3.0&quot; href=&quot;/2.3.0/index.html&quot; /&gt;
+      &lt;item name=&quot;Server 2.2.0&quot; href=&quot;/2.2.0/index.html&quot; /&gt;
+      &lt;item name=&quot;Archive&quot; href=&quot;/archive/document_archive.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;Project&quot; inherit=&quot;bottom&quot;&gt;
+      &lt;item name=&quot;Bug Database&quot; href=&quot;http://issues.apache.org/jira/browse/JAMES&quot; /&gt;
+      &lt;item name=&quot;Source Code&quot; href=&quot;http://svn.apache.org/viewvc/james/server/&quot; /&gt;
+      &lt;item name=&quot;TODO&quot; href=&quot;/todo.html&quot; /&gt;
+    &lt;/menu&gt;
+  &lt;/body&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-project-1.1-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-parent-1.1-site.xml
+ =======================================================================
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Parent POM&quot;&gt;
+  &lt;bannerLeft&gt;
+    &lt;name&gt;James Project&lt;/name&gt;
+    &lt;src&gt;images/james-project-logo.gif&lt;/src&gt;
+    &lt;href&gt;http://james.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerLeft&gt;
+  &lt;bannerRight&gt;
+    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
+    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
+    &lt;href&gt;http://www.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerRight&gt;
+  &lt;skin&gt;
+    &lt;groupId&gt;org.apache.maven.skins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-default-skin&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/skin&gt;
+  &lt;body /&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/javax.activation/poms/activation-1.1.1.pom
+ =======================================================================
+ &lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;javax.activation&lt;/groupId&gt;
+  &lt;artifactId&gt;activation&lt;/artifactId&gt;
+  &lt;version&gt;1.1.1&lt;/version&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/stage/javax.mail/poms/mail-1.4.1.pom
  =======================================================================
  &lt;project&gt;
   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
@@ -478,47 +461,7 @@ Archives (+ indicates readable, $ unreadable):
 &lt;/project&gt;
 
  =======================================================================
- ==include.properties
- =======================================================================
- # -------------------------------------------------------------------
-# I N C L U D E   P R O P E R T I E S
-# -------------------------------------------------------------------
-# Specifies the location of jar files to include in the classpath
-
-
-#
-# the relative base directory
-#
-
-mailet.dir = ${basedir}
-
-#
-#  third party binary directories
-#
-
-lib.dir = ${mailet.dir}/lib
-
-# --------------------------------------------------
-#                REQUIRED LIBRARIES
-# --------------------------------------------------
-
-# ----- Javax mail -----
-javamail.id=mail-1.4.1
-javax-mail.jar=stage/javax.mail/jars/${javamail.id}.jar
-
-# ----- Activation -----
-activation.id=activation-1.1.1
-javax-activation.jar=stage/javax.activation/jars/${activation.id}.jar
-
-# ----- Mailet -----
-mailet.jar=stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
-mailet-tests.jar=stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
-
-# ----- JUnit ------
-junit.jar=stage/junit/jars/junit-3.8.1.jar
-
- =======================================================================
- ==default.properties
+ ==/x1/home/bago/work/james-mailet/base/default.properties
  =======================================================================
  # -------------------------------------------------------------------
 # B U I L D  P R O P E R T I E S
@@ -570,10 +513,47 @@ deprecation = on
 
 #
 #  location of intermediate products
-</pre>
-</div>
-</p>
 
+ =======================================================================
+ ==/x1/home/bago/work/james-mailet/base/include.properties
+ =======================================================================
+ # -------------------------------------------------------------------
+# I N C L U D E   P R O P E R T I E S
+# -------------------------------------------------------------------
+# Specifies the location of jar files to include in the classpath
+
+
+#
+# the relative base directory
+#
+
+mailet.dir = ${basedir}
+
+#
+#  third party binary directories
+#
+
+lib.dir = ${mailet.dir}/lib
+
+# --------------------------------------------------
+#                REQUIRED LIBRARIES
+# --------------------------------------------------
+
+# ----- Javax mail -----
+javamail.id=mail-1.4.1
+javax-mail.jar=stage/javax.mail/jars/${javamail.id}.jar
+
+# ----- Activation -----
+activation.id=activation-1.1.1
+javax-activation.jar=stage/javax.activation/jars/${activation.id}.jar
+
+# ----- Mailet -----
+mailet.jar=stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+mailet-tests.jar=stage/org.apache.james/jars/mailet-2.4-SNAPSHOT-tests.jar
+
+# ----- JUnit ------
+junit.jar=stage/junit/jars/junit-3.8.1.jar
+</pre></div></p>
       </div>
     </div>
     <div class="clear">

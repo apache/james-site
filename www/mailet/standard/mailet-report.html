@@ -11,7 +11,7 @@
 
 <html>
   <head>
-    <title>Apache JAMES Standard Mailets - TITLE</title>
+    <title>Apache JAMES Standard Mailets - Mailet and Matchers Reference</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +22,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../mailets/standard/index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/mailets/standard/index.html" id="bannerLeft">
     
                                             <img src="images/james-standard-mailets-logo.gif" alt="" />
     
@@ -51,7 +51,7 @@
           |
           <a href="../../server/index.html">Server</a>
           |
-          <a href="../index.html">Mailet API</a>
+          <a href="../../mailet/index.html">Mailets</a>
           |
           <a href="../../jspf/index.html">jSPF</a>
           |
@@ -91,16 +91,20 @@
     <li class="none">
               <a href="conf.html">Configuration</a>
         </li>
+              
+    <li class="none">
+              <strong>Catalog</strong>
+        </li>
           </ul>
           <h5>Mailets</h5>
         <ul>
               
     <li class="none">
-              <a href="../api">API</a>
+              <a href="http://james.apache.org/mailet/api/">API</a>
         </li>
               
     <li class="none">
-              <a href="../base">Basic Toolkit</a>
+              <a href="http://james.apache.org/mailet/base/">Basic Toolkit</a>
         </li>
               
     <li class="none">
@@ -108,7 +112,7 @@
         </li>
               
     <li class="none">
-              <a href="../crypto">Crypto</a>
+              <a href="http://james.apache.org/mailet/crypto/">Crypto</a>
         </li>
           </ul>
           <h5>Project Documentation</h5>
@@ -116,6 +120,10 @@
               
                 
               
+      
+            
+      
+            
       
             
       
@@ -223,49 +231,42 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Mailets and Matchers</h2>
-<div class="section"><h3>AbstractQuotaMatcher</h3>
-<p><P>Abstract matcher checking whether a recipient has exceeded a maximum allowed quota.</P>
-<P>"Quota" at this level is an abstraction whose specific interpretation
-will be done by subclasses.</P>
-<P>Although extending GenericMatcher, its logic is recipient oriented.</P></p>
-</div>
-<div class="section"><h3>RemoveMimeHeader</h3>
-<p>Mailet Info: <b>RemoveMimeHeader Mailet</b></p>
-<p>Remove mime headers
+        <div class="section"><h2>Mailets and Matchers Reference</h2></div><table class="bodyTable"><tr class="a"><td><div class="section"><h3>Matchers</h3><ul><li><a href="All">All</a></li><li><a href="AttachmentFileNameIs">AttachmentFileNameIs</a></li><li><a href="CommandForListserv">CommandForListserv</a></li><li><a href="CommandListservMatcher">CommandListservMatcher</a></li><li><a href="CompareNumericHeaderValue">CompareNumericHeaderValue</a></li><li><a href="FetchedFrom">FetchedFrom</a></li><li><a href="HasAttachment">HasAttachment</a></li><li><a href="HasHabeasWarrantMark">HasHabeasWarrantMark</a></li><li><a href="HasHeader">HasHeader</a></li><li><a href="HasMailAttribute">HasMailAttribute</a></li><li><a href="HasMailAttributeWithValue">HasMailAttributeWithValue</a></li><li><a href="HostIs">HostIs</a></li><li><a href="HostIsLocal">HostIsLocal</a></li><li><a href="IsSingleRecipient">IsSingleRecipient</a></li><li><a href="RecipientIs">RecipientIs</a></li><li><a href="RecipientIsLocal">RecipientIsLocal</a></li><li><a href="RelayLimit">RelayLimit</a></li><li><a href="SMTPAuthSuccessful">SMTPAuthSuccessful</a></li><li><a href="SMTPAuthUserIs">SMTPAuthUserIs</a></li><li><a href="SMTPIsAuthNetwork">SMTPIsAuthNetwork</a></li><li><a href="SenderHostIs">SenderHostIs</a></li><li><a href="SenderHostIsLocal">SenderHostIsLocal</a></li><li><a href="SenderIs">SenderIs</a></li><li><a href="SenderIsNull">SenderIsNull</a></li><li><a href="SizeGreaterThan">SizeGreaterThan</a></li><li><a href="SubjectIs">SubjectIs</a></li><li><a href="SubjectStartsWith">SubjectStartsWith</a></li><li><a href="UserIs">UserIs</a></li></ul></div></td><td><div class="section"><h3>Mailets</h3><ul><li><a href="AddFooter">AddFooter</a></li><li><a href="AddHabeasWarrantMark">AddHabeasWarrantMark</a></li><li><a href="AddSubjectPrefix">AddSubjectPrefix</a></li><li><a href="ClamAVScan">ClamAVScan</a></li><li><a href="Counter">Counter</a></li><li><a href="DumpSystemErr">DumpSystemErr</a></li><li><a href="ExceptionThrowingMailet">ExceptionThrowingMailet</a></li><li><a href="Identity">Identity</a></li><li><a href="LogMessage">LogMessage</a></li><li><a href="MailAttributesToMimeHeaders">MailAttributesToMimeHeaders</a></li><li><a href="Null">Null</a></li><li><a href="OnlyText">OnlyText</a></li><li><a href="PostmasterAlias">PostmasterAlias</a></li><li><a href="RemoveAllMailAttributes">RemoveAllMailAttributes</a></li><li><a href="RemoveMailAttribute">RemoveMailAttribute</a></li><li><a href="RemoveMimeHeader">RemoveMimeHeader</a></li><li><a href="ReplaceContent">ReplaceContent</a></li><li><a href="ServerTime">ServerTime</a></li><li><a href="SetMailAttribute">SetMailAttribute</a></li><li><a href="SetMimeHeader">SetMimeHeader</a></li><li><a href="ToProcessor">ToProcessor</a></li><li><a href="UnwrapText">UnwrapText</a></li><li><a href="UseHeaderRecipients">UseHeaderRecipients</a></li><li><a href="WrapText">WrapText</a></li></ul></div></td></tr></table><div class="section"><h2>Matchers</h2><div class="section"><h3><a name="All">All</a></h3>Info: <b></b>Matches all mail.</div><div class="section"><h3><a name="AttachmentFileNameIs">AttachmentFileNameIs</a></h3>Info: <b></b><P>Checks if at least one attachment has a file name which matches any
+element of a comma-separated or space-separated list of file name masks.</P>
+<P>Syntax: <CODE>match="AttachmentFileNameIs=[-d] [-z] <I>masks</I>"</CODE></P>
+<P>The match is case insensitive.</P>
+<P>File name masks may start with a wildcard '*'.</P>
+<P>Multiple file name masks can be specified, e.g.: '*.scr,*.bat'.</P>
+<P>If '<CODE>-d</CODE>' is coded, some debug info will be logged.</P>
+<P>If '<CODE>-z</CODE>' is coded, the check will be non-recursively applied
+to the contents of any attached '*.zip' file.</P></div><div class="section"><h3><a name="CommandForListserv">CommandForListserv</a></h3>Info: <b></b>Returns positive if the recipient is a command for a listserv. For example,
+if my listserv is james@list.working-dogs.com, this matcher will return true
+for james-on@list.working-dogs.com and james-off@list.working-dogs.com.</div><div class="section"><h3><a name="CommandListservMatcher">CommandListservMatcher</a></h3>Info: <b></b>CommandListservMatcher is the matcher that pairs with the {@link org.apache.james.transport.mailets.CommandListservManager}
+It checks to see if the request is intended for the ListservManager, but doesn't guarantee that it is a valid command.
+<br />
+To configure, insert this into the config.xml inside of the root processor block.
+<pre>
+&lt;mailet match="CommandListservMatcher=announce@localhost" class="CommandListservManager"&gt;
+...
+&lt;/mailet&gt;
+</pre></div><div class="section"><h3><a name="CompareNumericHeaderValue">CompareNumericHeaderValue</a></h3>Info: <b></b><P>Matches mails containing a header with a numeric value whose comparison with the specified value is true.
+If the header is missing in the message, there will be <I>no match</I></P>
+<P>Configuration string: The headerName, a comparison operator and the numeric headerValue
+to compare with, <I>space or tab delimited</I>.</P>
+<P>The comparison operators are: <CODE>&lt, &lt=, ==, &gt=, &gt</CODE>;
+another set of operators is: <CODE>LT, LE, EQ, GE, GT</CODE>.
+Also the following operators are accepted: <CODE>=&lt, =, =&gt</CODE>.</P>
+<P>Example:</P>
+<PRE><CODE>
+&lt;mailet match="CompareNumericHeaderValue=X-MessageIsSpamProbability > 0.9" class="ToProcessor"&gt;
+&lt;processor&gt; spam &lt;/processor&gt;
+&lt;/mailet&gt;
+</CODE></PRE></div><div class="section"><h3><a name="FetchedFrom">FetchedFrom</a></h3>Info: <b></b>Matches mail with a header set by Fetchpop X-fetched-from <br>
+fetchpop sets X-fetched-by to the "name" of the fetchpop fetch task.<br>
+This is used to match all mail fetched from a specific pop account.
+Once the condition is met the header is stripped from the message to prevent looping if the mail is re-inserted into the spool.
 
-Sample configuration:
-
-&lt;mailet match="All" class="RemoveMimeHeader"&gt;
-&lt;name&gt;header1&lt;/name&gt;
-&lt;name&gt;header2&lt;/name&gt;
-&lt;/mailet&gt;</p>
-</div>
-<div class="section"><h3>Identity</h3>
-<p>Mailet Info: <b>Identity Mailet</b></p>
-<p>Opposite of Null Mailet. It let any incoming mail untouched. Used only for
-debugging.</p>
-</div>
-<div class="section"><h3>AbstractAddFooter</h3>
-<p>An abstract implementation of a mailet that add a Footer to an email</p>
-</div>
-<div class="section"><h3>ToProcessor</h3>
-<p>Mailet Info: <b>ToProcessor Mailet</b></p>
-<p>This mailet redirects the mail to the named processor
-
-Sample configuration:
-<mailet match="All" class="ToProcessor">
-<processor>spam</processor>
-<notice>Notice attached to the message (optional)</notice>
-</mailet></p>
-</div>
-<div class="section"><h3>Null</h3>
-<p>Mailet Info: <b>Null Mailet</b></p>
-<p>Simplest Mailet which destroys any incoming messages.</p>
-</div>
-<div class="section"><h3>HasHabeasWarrantMark</h3>
-<p>Matcher Info: <b>Habeas Warrant Mark Matcher (see http://www.habeas.com for details).</b></p>
-<p>This matcher tests for the Hebeas Warrant Mark.
+$Id: FetchedFrom.java 426098 2006-07-27 15:10:07Z norman $</div><div class="section"><h3><a name="HasAttachment">HasAttachment</a></h3>Info: <b></b>Checks whether this message has an attachment</div><div class="section"><h3><a name="HasHabeasWarrantMark">HasHabeasWarrantMark</a></h3>Info: <b>Habeas Warrant Mark Matcher (see http://www.habeas.com for details).</b>This matcher tests for the Hebeas Warrant Mark.
 For details see: http://www.hebeas.com
 
 Usage: Place this matcher
@@ -298,163 +299,79 @@ I can hereby confirm to you that there is no license necessary in
 order to use the Habeas mark for filtering. That said, however, we
 do insist that it not ever be used as a basis for rejecting email which
 bears the Habeas mark.
------------------------------------</p>
-</div>
-<div class="section"><h3>IsSingleRecipient</h3>
-<p>Matches mail where the number of recipiants is exactly one.</p>
-</div>
-<div class="section"><h3>MailAttributesToMimeHeaders</h3>
-<p>Convert attributes to headers
+-----------------------------------</div><div class="section"><h3><a name="HasHeader">HasHeader</a></h3>Info: <b></b>use: <mailet match="{<header>[=value]}+" class="..." />
+
+This matcher checks if the header named is present. If complements the
+AddHeader mailet.</div><div class="section"><h3><a name="HasMailAttribute">HasMailAttribute</a></h3>Info: <b>Has Mail Attribute Matcher</b><P>This Matcher determines if the mail contains the attribute specified in the
+condition, and returns all recipients if it is the case.</P>
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="HasMailAttribute=whatever" class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE></div><div class="section"><h3><a name="HasMailAttributeWithValue">HasMailAttributeWithValue</a></h3>Info: <b>Has Mail Attribute With Value Matcher</b><p>This Matcher determines if the mail contains the attribute specified in
+the condition and if the value answered when the method toString() is
+invoked on the attribute is equal to the String value specified in the
+condition. If both tests are true, all recipients are returned, else null.
+</p>
+
+<p>Notes:</p>
+<p>The current matcher implementation expects a single String value to match
+on. This matcher requires two values, the attribute name and attribute
+value. This requires some implicit rules to govern how the single value
+supplied to the matcher is parsed into two values.</p>
+<ul>
+<li>In the match condition, the split between the attribute name and the
+attribute value is made at the first comma. Attribute names that include
+a comma will parse incorrectly and therefore are not supported by this
+matcher.
+</li>
+<li>Leading and trailing spaces are removed from both the attribute name and
+attribute value specified in the condition and the tested attribute value in
+the mail prior to matching. Therefore, "abc" , " abc", "abc " and " abc "
+are considered equivalent.
+</li>
+<li>To test for an empty string, do not specify an attribute value after the
+comma.
+</li>
+</ul>
+
+<p>Sample configuration:</p>
+<pre><code>
+&lt;mailet match="HasMailAttributeWithValue=name, value" class=&quot;&lt;any-class&gt;&quot;&gt;
+</code></pre></div><div class="section"><h3><a name="HostIs">HostIs</a></h3>Info: <b></b>Matches mail from given hosts.</div><div class="section"><h3><a name="HostIsLocal">HostIsLocal</a></h3>Info: <b></b>Matches mail from localhost.</div><div class="section"><h3><a name="IsSingleRecipient">IsSingleRecipient</a></h3>Info: <b></b>Matches mail where the number of recipiants is exactly one.</div><div class="section"><h3><a name="RecipientIs">RecipientIs</a></h3>Info: <b></b>Matches mail where the recipent is one of a configurable list.</div><div class="section"><h3><a name="RecipientIsLocal">RecipientIsLocal</a></h3>Info: <b></b>Matches mail where the recipient is local.</div><div class="section"><h3><a name="RelayLimit">RelayLimit</a></h3>Info: <b></b>Matches mail which has been relayed more than a given number of times.</div><div class="section"><h3><a name="SMTPAuthSuccessful">SMTPAuthSuccessful</a></h3>Info: <b></b><P>Matches mails that are sent by an SMTP authenticated user.</P>
+<P>If the sender was not authenticated it will not match.</P>
+<PRE><CODE>
+&lt;mailet match=&quot;SMTPAuthSuccessful&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE></div><div class="section"><h3><a name="SMTPAuthUserIs">SMTPAuthUserIs</a></h3>Info: <b></b><P>Matches mails that are sent by an SMTP authenticated user present in a supplied list.</P>
+<P>If the sender was not authenticated it will not match.</P>
+<P>Configuration string: a comma, tab or space separated list of James users.</P>
+<PRE><CODE>
+&lt;mailet match=&quot;SMTPAuthUserIs=&lt;list-of-user-names&gt;&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE></div><div class="section"><h3><a name="SMTPIsAuthNetwork">SMTPIsAuthNetwork</a></h3>Info: <b></b><P>
+Matches mails that are sent by an client which is allowed to relay.
+</P>
+
+<PRE><CODE> &lt;mailet match=&quot;SMTPIsAuthNetwork&quot;
+class=&quot;&lt;any-class&gt;&quot;&gt; </CODE></PRE></div><div class="section"><h3><a name="SenderHostIs">SenderHostIs</a></h3>Info: <b></b>Checkes the sender's displayed domain name against a supplied list.
 
 Sample configuration:
 
-&lt;mailet match="All" class="MailAttributesToMimeHeaders"&gt;
-&lt;simplemapping&gt;org.apache.james.attribute1;
-headerName1&lt;/simplemapping&gt;
-&lt;simplemapping&gt;org.apache.james.attribute2;
-headerName2&lt;/simplemapping&gt; &lt;/mailet&gt;</p>
-</div>
-<div class="section"><h3>SizeGreaterThan</h3>
-<p>Checks whether the message (entire message, not just content) is greater
-than a certain number of bytes. You can use 'k' and 'm' as optional postfixes.
-In other words, "1m" is the same as writing "1024k", which is the same as
-"1048576".</p>
-</div>
-<div class="section"><h3>ExceptionThrowingMailet</h3>
-<p>Mailet Info: <b>ExceptionThrowingMailet Mailet</b></p>
-<p>Debugging purpose Mailet. Just throws an exception.</p>
-</div>
-<div class="section"><h3>All</h3>
-<p>Matches all mail.</p>
-</div>
-<div class="section"><h3>CommandListservMatcher</h3>
-<p>CommandListservMatcher is the matcher that pairs with the {@link org.apache.james.transport.mailets.CommandListservManager}
-It checks to see if the request is intended for the ListservManager, but doesn't guarantee that it is a valid command.
-<br />
-To configure, insert this into the config.xml inside of the root processor block.
-<pre>
-&lt;mailet match="CommandListservMatcher=announce@localhost" class="CommandListservManager"&gt;
-...
-&lt;/mailet&gt;
-</pre></p>
-</div>
-<div class="section"><h3>SetMailAttribute</h3>
-<p>Mailet Info: <b>Set Mail Attribute Mailet</b></p>
-<p>This mailet sets attributes on the Mail.
-
-Sample configuration:
-&lt;mailet match="All" class="SetMailAttribute"&gt;
-&lt;name1&gt;value1&lt;/name1&gt;
-&lt;name2&gt;value2&lt;/name2&gt;
-&lt;/mailet&gt;</p>
-</div>
-<div class="section"><h3>SenderHostIsLocal</h3>
-<p>Checks the sender's displayed domain name against a the hosts serviced by
+<mailet match="SenderHostIs=domain.com" class="ToProcessor">
+<processor> spam </processor>
+</mailet></div><div class="section"><h3><a name="SenderHostIsLocal">SenderHostIsLocal</a></h3>Info: <b></b>Checks the sender's displayed domain name against a the hosts serviced by
 this mail context. <br>
 <br>
 Sample Configuration: <br>
 <br>
 &lt;mailet match="SenderHostIsLocal" class="SpamAssassin"&gt; &lt;/mailet&gt;
 <br>
-<br></p>
-</div>
-<div class="section"><h3>UseHeaderRecipients</h3>
-<p>Mailet Info: <b>UseHeaderRecipients Mailet</b></p>
-<p><p>Mailet designed to process the recipients from the mail headers rather
-than the recipients specified in the SMTP message header. This can be
-useful if your mail is redirected on-route by a mail server that
-substitutes a fixed recipient address for the original.</p>
-
-<p>To use this, match against the redirection address using the
-<code>RecipientIs</code> matcher and set the mailet 'class' to
-<code>UseHeaderRecipients</code>. This will cause the email to be
-re-injected into the root process with the recipient substituted
-by all the recipients in the Mail-For, To and Cc headers
-of the message.</p>
-
-<p>e.g.</p>
-<pre>
-<mailet match="RecipientIs=forwarded@myhost"
-class="UseHeaderRecipients">
-</mailet>
-</pre></p>
-</div>
-<div class="section"><h3>SenderHostIs</h3>
-<p>Checkes the sender's displayed domain name against a supplied list.
-
-Sample configuration:
-
-<mailet match="SenderHostIs=domain.com" class="ToProcessor">
-<processor> spam </processor>
-</mailet></p>
-</div>
-<div class="section"><h3>SenderIsNull</h3>
-<p><P>Matches mails that are sent by a null sender.</P>
+<br></div><div class="section"><h3><a name="SenderIs">SenderIs</a></h3>Info: <b></b>Matches mail where the sender is contained in a configurable list.</div><div class="section"><h3><a name="SenderIsNull">SenderIsNull</a></h3>Info: <b></b><P>Matches mails that are sent by a null sender.</P>
 <PRE><CODE>
 &lt;mailet match=&quot;SenderIsNull&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>HostIs</h3>
-<p>Matches mail from given hosts.</p>
-</div>
-<div class="section"><h3>HasHeader</h3>
-<p>use: <mailet match="{<header>[=value]}+" class="..." />
-
-This matcher checks if the header named is present. If complements the
-AddHeader mailet.</p>
-</div>
-<div class="section"><h3>SMTPAuthSuccessful</h3>
-<p><P>Matches mails that are sent by an SMTP authenticated user.</P>
-<P>If the sender was not authenticated it will not match.</P>
-<PRE><CODE>
-&lt;mailet match=&quot;SMTPAuthSuccessful&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>RelayLimit</h3>
-<p>Matches mail which has been relayed more than a given number of times.</p>
-</div>
-<div class="section"><h3>SetMimeHeader</h3>
-<p>Mailet Info: <b>SetMimeHeader Mailet</b></p>
-<p>Adds a specified header and value to the message.
-
-Sample configuration:
-
-<mailet match="All" class="AddHeader">
-<name>X-MailetHeader</name>
-<value>TheHeaderValue</value>
-</mailet></p>
-</div>
-<div class="section"><h3>AttachmentFileNameIs</h3>
-<p><P>Checks if at least one attachment has a file name which matches any
-element of a comma-separated or space-separated list of file name masks.</P>
-<P>Syntax: <CODE>match="AttachmentFileNameIs=[-d] [-z] <I>masks</I>"</CODE></P>
-<P>The match is case insensitive.</P>
-<P>File name masks may start with a wildcard '*'.</P>
-<P>Multiple file name masks can be specified, e.g.: '*.scr,*.bat'.</P>
-<P>If '<CODE>-d</CODE>' is coded, some debug info will be logged.</P>
-<P>If '<CODE>-z</CODE>' is coded, the check will be non-recursively applied
-to the contents of any attached '*.zip' file.</P></p>
-</div>
-<div class="section"><h3>RecipientIs</h3>
-<p>Matches mail where the recipent is one of a configurable list.</p>
-</div>
-<div class="section"><h3>Mask</h3>
-<p>represents a single parsed file name mask.</p>
-</div>
-<div class="section"><h3>HasAttachment</h3>
-<p>Checks whether this message has an attachment</p>
-</div>
-<div class="section"><h3>SMTPIsAuthNetwork</h3>
-<p><P>
-Matches mails that are sent by an client which is allowed to relay.
-</P>
-
-<PRE><CODE> &lt;mailet match=&quot;SMTPIsAuthNetwork&quot;
-class=&quot;&lt;any-class&gt;&quot;&gt; </CODE></PRE></p>
-</div>
-<div class="section"><h3>AddHabeasWarrantMark</h3>
-<p>Mailet Info: <b>Add Habeas Warrant Mark.  Must be used in accordance with a license from Habeas (see http://www.habeas.com for details).</b></p>
-<p>This matcher adds the Hebeas Warrant Mark to a message.
+</CODE></PRE></div><div class="section"><h3><a name="SizeGreaterThan">SizeGreaterThan</a></h3>Info: <b></b>Checks whether the message (entire message, not just content) is greater
+than a certain number of bytes. You can use 'k' and 'm' as optional postfixes.
+In other words, "1m" is the same as writing "1024k", which is the same as
+"1048576".</div><div class="section"><h3><a name="SubjectIs">SubjectIs</a></h3>Info: <b></b>Matches mail where the subject is contained in a configurable list.</div><div class="section"><h3><a name="SubjectStartsWith">SubjectStartsWith</a></h3><p>Info: <b></b></p><p>Matches mail where the subject starts with a given phrase.</p></div><div class="section"><h3><a name="UserIs">UserIs</a></h3><p>Info: <b></b></p><p>Matches mail where the user is contained in a configurable list.</p></div></div><div class="section"><h2>Mailets</h2><div class="section"><h3><a name="AddFooter">AddFooter</a></h3><p>Mailet Info: <b>AddFooter Mailet</b></p><p>This mailet will attach text to the end of the message (like a footer). Right
+now it only supports simple messages without multiple parts.</p></div><div class="section"><h3><a name="AddHabeasWarrantMark">AddHabeasWarrantMark</a></h3><p>Mailet Info: <b>Add Habeas Warrant Mark.  Must be used in accordance with a license from Habeas (see http://www.habeas.com for details).</b></p><p>This matcher adds the Hebeas Warrant Mark to a message.
 For details see: http://www.hebeas.com
 
 Usage: <mailet match="<suitable-matcher>" class="AddHabeasWarrantMark" />
@@ -498,19 +415,14 @@ formal, and I can try to have something faxed to you.
 > to your licensing terms.
 
 That's absolutely perfect!
------------------------------------</p>
-</div>
-<div class="section"><h3>Counter</h3>
-<p>Mailet Info: <b>Counter Mailet</b></p>
-<p>A simple in memory counter. Designed to count messages sent to this recipient
-for debugging purposes.</p>
-</div>
-<div class="section"><h3>SubjectIs</h3>
-<p>Matches mail where the subject is contained in a configurable list.</p>
-</div>
-<div class="section"><h3>ClamAVScan</h3>
-<p>Mailet Info: <b>Antivirus Check using ClamAV (CLAMD)</b></p>
-<p><P>Does an antivirus scan check using a ClamAV daemon (CLAMD)</P>
+-----------------------------------</p></div><div class="section"><h3><a name="AddSubjectPrefix">AddSubjectPrefix</a></h3><p>Mailet Info: <b>AddSubjectPrefix Mailet</b></p><p>Add an prefix (tag) to the subject of a message <br>
+<br>
+
+Sample Configuration: <br>
+<br>
+&lt;mailet match="RecipientIs=robot@james.apache.org" class="TagMessage"&gt;
+&lt;subjectPrefix&gt;[robot]&lt;/subjectPrefix&gt; &lt;/mailet&gt; <br>
+<br></p></div><div class="section"><h3><a name="ClamAVScan">ClamAVScan</a></h3><p>Mailet Info: <b>Antivirus Check using ClamAV (CLAMD)</b></p><p><P>Does an antivirus scan check using a ClamAV daemon (CLAMD)</P>
 
 <P> Interacts directly with the daemon using the "stream" method,
 which should have the lowest possible overhead.</P>
@@ -634,99 +546,43 @@ and handling the infected messages:</P>
 
 &lt;mailet match="All" class="Null" /&gt;
 &lt;/processor&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>FetchedFrom</h3>
-<p>Matches mail with a header set by Fetchpop X-fetched-from <br>
-fetchpop sets X-fetched-by to the "name" of the fetchpop fetch task.<br>
-This is used to match all mail fetched from a specific pop account.
-Once the condition is met the header is stripped from the message to prevent looping if the mail is re-inserted into the spool.
+</CODE></PRE></p></div><div class="section"><h3><a name="Counter">Counter</a></h3><p>Mailet Info: <b>Counter Mailet</b></p><p>A simple in memory counter. Designed to count messages sent to this recipient
+for debugging purposes.</p></div><div class="section"><h3><a name="DumpSystemErr">DumpSystemErr</a></h3><p>Mailet Info: <b>Dumps message to System.err</b></p><p>Debugging purpose Mailet. Sends the message to System.err</p></div><div class="section"><h3><a name="ExceptionThrowingMailet">ExceptionThrowingMailet</a></h3><p>Mailet Info: <b>ExceptionThrowingMailet Mailet</b></p><p>Debugging purpose Mailet. Just throws an exception.</p></div><div class="section"><h3><a name="Identity">Identity</a></h3><p>Mailet Info: <b>Identity Mailet</b></p><p>Opposite of Null Mailet. It let any incoming mail untouched. Used only for
+debugging.</p></div><div class="section"><h3><a name="LogMessage">LogMessage</a></h3><p>Mailet Info: <b>LogHeaders Mailet</b></p><p>Logs Message Headers and/or Body.
+If the "passThrough" in confs is true the mail will be left untouched in
+the pipe. If false will be destroyed. Default is true.</p></div><div class="section"><h3><a name="MailAttributesToMimeHeaders">MailAttributesToMimeHeaders</a></h3><p>Mailet Info: <b></b></p><p>Convert attributes to headers
 
-$Id: FetchedFrom.java 426098 2006-07-27 15:10:07Z norman $</p>
-</div>
-<div class="section"><h3>CompareNumericHeaderValue</h3>
-<p><P>Matches mails containing a header with a numeric value whose comparison with the specified value is true.
-If the header is missing in the message, there will be <I>no match</I></P>
-<P>Configuration string: The headerName, a comparison operator and the numeric headerValue
-to compare with, <I>space or tab delimited</I>.</P>
-<P>The comparison operators are: <CODE>&lt, &lt=, ==, &gt=, &gt</CODE>;
-another set of operators is: <CODE>LT, LE, EQ, GE, GT</CODE>.
-Also the following operators are accepted: <CODE>=&lt, =, =&gt</CODE>.</P>
-<P>Example:</P>
-<PRE><CODE>
-&lt;mailet match="CompareNumericHeaderValue=X-MessageIsSpamProbability > 0.9" class="ToProcessor"&gt;
-&lt;processor&gt; spam &lt;/processor&gt;
-&lt;/mailet&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>RemoveMailAttribute</h3>
-<p>Mailet Info: <b>Remove Mail Attribute Mailet</b></p>
-<p>This mailet sets attributes on the Mail.
+Sample configuration:
+
+&lt;mailet match="All" class="MailAttributesToMimeHeaders"&gt;
+&lt;simplemapping&gt;org.apache.james.attribute1;
+headerName1&lt;/simplemapping&gt;
+&lt;simplemapping&gt;org.apache.james.attribute2;
+headerName2&lt;/simplemapping&gt; &lt;/mailet&gt;</p></div><div class="section"><h3><a name="Null">Null</a></h3><p>Mailet Info: <b>Null Mailet</b></p><p>Simplest Mailet which destroys any incoming messages.</p></div><div class="section"><h3><a name="OnlyText">OnlyText</a></h3><p>Mailet Info: <b>OnlyText</b></p><p>Keep only the text part of a message.
+<p>If the message is text only then it doesn't touch it, if it is a multipart it
+transform it a in plain text message with the first text part found.
+- text/plain
+- text/html => with a conversion to text only
+- text/* as is.</p></p></div><div class="section"><h3><a name="PostmasterAlias">PostmasterAlias</a></h3><p>Mailet Info: <b>Postmaster aliasing mailet</b></p><p>Rewrites recipient addresses to make sure email for the postmaster is
+always handled. This mailet is silently inserted at the top of the root
+spool processor. All recipients mapped to postmaster@<servernames> are
+changed to the postmaster account as specified in the server conf.</p></div><div class="section"><h3><a name="RemoveAllMailAttributes">RemoveAllMailAttributes</a></h3><p>Mailet Info: <b>Remove All Mail Attributes Mailet</b></p><p>This mailet sets removes all attributes set on the Mail instance
+
+Sample configuration:
+&lt;mailet match="All" class="RemoveAllMailAttributes"/&gt;</p></div><div class="section"><h3><a name="RemoveMailAttribute">RemoveMailAttribute</a></h3><p>Mailet Info: <b>Remove Mail Attribute Mailet</b></p><p>This mailet sets attributes on the Mail.
 
 Sample configuration:
 &lt;mailet match="All" class="RemoveMailAttribute"&gt;
 &lt;name&gt;attribute_name1&lt;/name&gt;
 &lt;name&gt;attribute_name2&lt;/name&gt;
-&lt;/mailet&gt;</p>
-</div>
-<div class="section"><h3>ServerTime</h3>
-<p>Mailet Info: <b>ServerTime Mailet</b></p>
-<p>Returns the current time for the mail server. Sample configuration:
-<mailet match="RecipientIs=time@cadenza.lokitech.com" class="ServerTime">
-</mailet></p>
-</div>
-<div class="section"><h3>HasMailAttributeWithValue</h3>
-<p>Matcher Info: <b>Has Mail Attribute With Value Matcher</b></p>
-<p><p>This Matcher determines if the mail contains the attribute specified in
-the condition and if the value answered when the method toString() is
-invoked on the attribute is equal to the String value specified in the
-condition. If both tests are true, all recipients are returned, else null.
-</p>
+&lt;/mailet&gt;</p></div><div class="section"><h3><a name="RemoveMimeHeader">RemoveMimeHeader</a></h3><p>Mailet Info: <b>RemoveMimeHeader Mailet</b></p><p>Remove mime headers
 
-<p>Notes:</p>
-<p>The current matcher implementation expects a single String value to match
-on. This matcher requires two values, the attribute name and attribute
-value. This requires some implicit rules to govern how the single value
-supplied to the matcher is parsed into two values.</p>
-<ul>
-<li>In the match condition, the split between the attribute name and the
-attribute value is made at the first comma. Attribute names that include
-a comma will parse incorrectly and therefore are not supported by this
-matcher.
-</li>
-<li>Leading and trailing spaces are removed from both the attribute name and
-attribute value specified in the condition and the tested attribute value in
-the mail prior to matching. Therefore, "abc" , " abc", "abc " and " abc "
-are considered equivalent.
-</li>
-<li>To test for an empty string, do not specify an attribute value after the
-comma.
-</li>
-</ul>
+Sample configuration:
 
-<p>Sample configuration:</p>
-<pre><code>
-&lt;mailet match="HasMailAttributeWithValue=name, value" class=&quot;&lt;any-class&gt;&quot;&gt;
-</code></pre></p>
-</div>
-<div class="section"><h3>OnlyText</h3>
-<p>Mailet Info: <b>OnlyText</b></p>
-<p>Keep only the text part of a message.
-<p>If the message is text only then it doesn't touch it, if it is a multipart it
-transform it a in plain text message with the first text part found.
-- text/plain
-- text/html => with a conversion to text only
-- text/* as is.</p></p>
-</div>
-<div class="section"><h3>SubjectStartsWith</h3>
-<p>Matches mail where the subject starts with a given phrase.</p>
-</div>
-<div class="section"><h3>RecipientIsLocal</h3>
-<p>Matches mail where the recipient is local.</p>
-</div>
-<div class="section"><h3>ReplaceContent</h3>
-<p>Mailet Info: <b>ReplaceContent</b></p>
-<p>Replace text contents
+&lt;mailet match="All" class="RemoveMimeHeader"&gt;
+&lt;name&gt;header1&lt;/name&gt;
+&lt;name&gt;header2&lt;/name&gt;
+&lt;/mailet&gt;</p></div><div class="section"><h3><a name="ReplaceContent">ReplaceContent</a></h3><p>Mailet Info: <b>ReplaceContent</b></p><p>Replace text contents
 <p>This mailet allow to specific regular expression to replace text in subject and content.
 
 Each expression is defined as:
@@ -760,18 +616,28 @@ e.g: "/\//-//" replaces "/" with "-"
 - when the rules are specified using &lt;subjectPattern&gt; or &lt;bodyPattern&gt; and
 "/,/" has to be used in a pattern string it must be prefixed with a "\".
 E.g: "/\/\/,//" replaces "/" with "," (the rule would be "/\//,//" but the "/,/" must
-be escaped.</p>
-</div>
-<div class="section"><h3>WrapText</h3>
-<p>Mailet Info: <b>WrapText</b></p>
-<p>Convert a message to format=flowed</p>
-</div>
-<div class="section"><h3>UserIs</h3>
-<p>Matches mail where the user is contained in a configurable list.</p>
-</div>
-<div class="section"><h3>UnwrapText</h3>
-<p>Mailet Info: <b>UnwrapText</b></p>
-<p>Remove (best effort to) the hardcoded wrapping from a message.
+be escaped.</p></div><div class="section"><h3><a name="ServerTime">ServerTime</a></h3><p>Mailet Info: <b>ServerTime Mailet</b></p><p>Returns the current time for the mail server. Sample configuration:
+<mailet match="RecipientIs=time@cadenza.lokitech.com" class="ServerTime">
+</mailet></p></div><div class="section"><h3><a name="SetMailAttribute">SetMailAttribute</a></h3><p>Mailet Info: <b>Set Mail Attribute Mailet</b></p><p>This mailet sets attributes on the Mail.
+
+Sample configuration:
+&lt;mailet match="All" class="SetMailAttribute"&gt;
+&lt;name1&gt;value1&lt;/name1&gt;
+&lt;name2&gt;value2&lt;/name2&gt;
+&lt;/mailet&gt;</p></div><div class="section"><h3><a name="SetMimeHeader">SetMimeHeader</a></h3><p>Mailet Info: <b>SetMimeHeader Mailet</b></p><p>Adds a specified header and value to the message.
+
+Sample configuration:
+
+<mailet match="All" class="AddHeader">
+<name>X-MailetHeader</name>
+<value>TheHeaderValue</value>
+</mailet></p></div><div class="section"><h3><a name="ToProcessor">ToProcessor</a></h3><p>Mailet Info: <b>ToProcessor Mailet</b></p><p>This mailet redirects the mail to the named processor
+
+Sample configuration:
+<mailet match="All" class="ToProcessor">
+<processor>spam</processor>
+<notice>Notice attached to the message (optional)</notice>
+</mailet></p></div><div class="section"><h3><a name="UnwrapText">UnwrapText</a></h3><p>Mailet Info: <b>UnwrapText</b></p><p>Remove (best effort to) the hardcoded wrapping from a message.
 <p>If the text is "format=flowed" then deflows the text.
 <p>Otherwise it forces a dewrap of the text.
 <p>Parameters: quotewidth - when we try to dewrap e quoted text it helps knowing the original
@@ -787,78 +653,24 @@ like 10 (-10)
 In summary, if the original wrap is known (for example 76, for flowed messages)
 quotewidth = 78
 Otherwise
-quotewidth = -10</p>
-</div>
-<div class="section"><h3>CommandForListserv</h3>
-<p>Returns positive if the recipient is a command for a listserv. For example,
-if my listserv is james@list.working-dogs.com, this matcher will return true
-for james-on@list.working-dogs.com and james-off@list.working-dogs.com.</p>
-</div>
-<div class="section"><h3>RemoveAllMailAttributes</h3>
-<p>Mailet Info: <b>Remove All Mail Attributes Mailet</b></p>
-<p>This mailet sets removes all attributes set on the Mail instance
+quotewidth = -10</p></div><div class="section"><h3><a name="UseHeaderRecipients">UseHeaderRecipients</a></h3><p>Mailet Info: <b>UseHeaderRecipients Mailet</b></p><p><p>Mailet designed to process the recipients from the mail headers rather
+than the recipients specified in the SMTP message header. This can be
+useful if your mail is redirected on-route by a mail server that
+substitutes a fixed recipient address for the original.</p>
 
-Sample configuration:
-&lt;mailet match="All" class="RemoveAllMailAttributes"/&gt;</p>
-</div>
-<div class="section"><h3>SMTPAuthUserIs</h3>
-<p><P>Matches mails that are sent by an SMTP authenticated user present in a supplied list.</P>
-<P>If the sender was not authenticated it will not match.</P>
-<P>Configuration string: a comma, tab or space separated list of James users.</P>
-<PRE><CODE>
-&lt;mailet match=&quot;SMTPAuthUserIs=&lt;list-of-user-names&gt;&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>HostIsLocal</h3>
-<p>Matches mail from localhost.</p>
-</div>
-<div class="section"><h3>DumpSystemErr</h3>
-<p>Mailet Info: <b>Dumps message to System.err</b></p>
-<p>Debugging purpose Mailet. Sends the message to System.err</p>
-</div>
-<div class="section"><h3>PostmasterAlias</h3>
-<p>Mailet Info: <b>Postmaster aliasing mailet</b></p>
-<p>Rewrites recipient addresses to make sure email for the postmaster is
-always handled. This mailet is silently inserted at the top of the root
-spool processor. All recipients mapped to postmaster@<servernames> are
-changed to the postmaster account as specified in the server conf.</p>
-</div>
-<div class="section"><h3>AddSubjectPrefix</h3>
-<p>Mailet Info: <b>AddSubjectPrefix Mailet</b></p>
-<p>Add an prefix (tag) to the subject of a message <br>
-<br>
+<p>To use this, match against the redirection address using the
+<code>RecipientIs</code> matcher and set the mailet 'class' to
+<code>UseHeaderRecipients</code>. This will cause the email to be
+re-injected into the root process with the recipient substituted
+by all the recipients in the Mail-For, To and Cc headers
+of the message.</p>
 
-Sample Configuration: <br>
-<br>
-&lt;mailet match="RecipientIs=robot@james.apache.org" class="TagMessage"&gt;
-&lt;subjectPrefix&gt;[robot]&lt;/subjectPrefix&gt; &lt;/mailet&gt; <br>
-<br></p>
-</div>
-<div class="section"><h3>AddFooter</h3>
-<p>Mailet Info: <b>AddFooter Mailet</b></p>
-<p>This mailet will attach text to the end of the message (like a footer). Right
-now it only supports simple messages without multiple parts.</p>
-</div>
-<div class="section"><h3>HasMailAttribute</h3>
-<p>Matcher Info: <b>Has Mail Attribute Matcher</b></p>
-<p><P>This Matcher determines if the mail contains the attribute specified in the
-condition, and returns all recipients if it is the case.</P>
-<P>Sample configuration:</P>
-<PRE><CODE>
-&lt;mailet match="HasMailAttribute=whatever" class=&quot;&lt;any-class&gt;&quot;&gt;
-</CODE></PRE></p>
-</div>
-<div class="section"><h3>SenderIs</h3>
-<p>Matches mail where the sender is contained in a configurable list.</p>
-</div>
-<div class="section"><h3>LogMessage</h3>
-<p>Mailet Info: <b>LogHeaders Mailet</b></p>
-<p>Logs Message Headers and/or Body.
-If the "passThrough" in confs is true the mail will be left untouched in
-the pipe. If false will be destroyed. Default is true.</p>
-</div>
-</div>
-
+<p>e.g.</p>
+<pre>
+<mailet match="RecipientIs=forwarded@myhost"
+class="UseHeaderRecipients">
+</mailet>
+</pre></p></div><div class="section"><h3><a name="WrapText">WrapText</a></h3><p>Mailet Info: <b>WrapText</b></p><p>Convert a message to format=flowed</p></div></div>
       </div>
     </div>
     <div class="clear">
