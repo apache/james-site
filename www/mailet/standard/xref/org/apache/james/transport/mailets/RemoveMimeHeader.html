@@ -46,62 +46,64 @@
 <a name="36" href="#36">36</a>  <em class="jxr_javadoccomment"> * </em>
 <a name="37" href="#37">37</a>  <em class="jxr_javadoccomment"> * Sample configuration:</em>
 <a name="38" href="#38">38</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="39" href="#39">39</a>  <em class="jxr_javadoccomment"> * &amp;lt;mailet match="All" class="RemoveMimeHeader"&amp;gt;</em>
-<a name="40" href="#40">40</a>  <em class="jxr_javadoccomment"> * &amp;lt;name&amp;gt;header1&amp;lt;/name&amp;gt;</em>
-<a name="41" href="#41">41</a>  <em class="jxr_javadoccomment"> * &amp;lt;name&amp;gt;header2&amp;lt;/name&amp;gt;</em>
-<a name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * &amp;lt;/mailet&amp;gt;</em>
-<a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> */</em>
-<a name="45" href="#45">45</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/transport/mailets/RemoveMimeHeader.html">RemoveMimeHeader</a> <strong class="jxr_keyword">extends</strong> GenericMailet {
-<a name="46" href="#46">46</a>      
-<a name="47" href="#47">47</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="48" href="#48">48</a>  <em class="jxr_javadoccomment">     * Arraylist which holds the headers which should be removed</em>
-<a name="49" href="#49">49</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="50" href="#50">50</a>      ArrayList headers = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="51" href="#51">51</a>  
-<a name="52" href="#52">52</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="53" href="#53">53</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#init()</em>
-<a name="54" href="#54">54</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="55" href="#55">55</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="56" href="#56">56</a>          String header = getInitParameter(<span class="jxr_string">"name"</span>);
-<a name="57" href="#57">57</a>          <strong class="jxr_keyword">if</strong> (header != <strong class="jxr_keyword">null</strong>) {
-<a name="58" href="#58">58</a>              StringTokenizer st = <strong class="jxr_keyword">new</strong> StringTokenizer(header, <span class="jxr_string">","</span>);
-<a name="59" href="#59">59</a>              <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
-<a name="60" href="#60">60</a>                  headers.add(st.nextToken());
-<a name="61" href="#61">61</a>              }
-<a name="62" href="#62">62</a>          } <strong class="jxr_keyword">else</strong> {
-<a name="63" href="#63">63</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(
-<a name="64" href="#64">64</a>                      <span class="jxr_string">"Invalid config. Please specify atleast one name"</span>);
-<a name="65" href="#65">65</a>          }
-<a name="66" href="#66">66</a>      }
-<a name="67" href="#67">67</a>      
-<a name="68" href="#68">68</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="69" href="#69">69</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#service(Mail)</em>
-<a name="70" href="#70">70</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="71" href="#71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) {
-<a name="72" href="#72">72</a>          <strong class="jxr_keyword">try</strong> {
-<a name="73" href="#73">73</a>              MimeMessage  message = mail.getMessage();
-<a name="74" href="#74">74</a>          
-<a name="75" href="#75">75</a>              <em class="jxr_comment">// loop through the headers</em>
-<a name="76" href="#76">76</a>              <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; headers.size(); i++) {
-<a name="77" href="#77">77</a>                  message.removeHeader((String) headers.get(i));
-<a name="78" href="#78">78</a>              }
-<a name="79" href="#79">79</a>              
-<a name="80" href="#80">80</a>              message.saveChanges();
-<a name="81" href="#81">81</a>  
-<a name="82" href="#82">82</a>          } <strong class="jxr_keyword">catch</strong> (MessagingException e) {
-<a name="83" href="#83">83</a>              <em class="jxr_comment">// just log the exception</em>
-<a name="84" href="#84">84</a>              log(<span class="jxr_string">"Unable to remove headers: "</span> + e.getMessage());
-<a name="85" href="#85">85</a>          }
-<a name="86" href="#86">86</a>      }
-<a name="87" href="#87">87</a>      
-<a name="88" href="#88">88</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="89" href="#89">89</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#getMailetInfo()</em>
-<a name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="91" href="#91">91</a>      <strong class="jxr_keyword">public</strong> String getMailetInfo() {
-<a name="92" href="#92">92</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"RemoveMimeHeader Mailet"</span>;
-<a name="93" href="#93">93</a>      }
-<a name="94" href="#94">94</a>  }
+<a name="39" href="#39">39</a>  <em class="jxr_javadoccomment"> * &lt;pre&gt;&lt;code&gt;</em>
+<a name="40" href="#40">40</a>  <em class="jxr_javadoccomment"> * &amp;lt;mailet match="All" class="RemoveMimeHeader"&amp;gt;</em>
+<a name="41" href="#41">41</a>  <em class="jxr_javadoccomment"> * &amp;lt;name&amp;gt;header1&amp;lt;/name&amp;gt;</em>
+<a name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * &amp;lt;name&amp;gt;header2&amp;lt;/name&amp;gt;</em>
+<a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * &amp;lt;/mailet&amp;gt;</em>
+<a name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> * &lt;/code&gt;&lt;/pre&gt;</em>
+<a name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> */</em>
+<a name="47" href="#47">47</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/transport/mailets/RemoveMimeHeader.html">RemoveMimeHeader</a> <strong class="jxr_keyword">extends</strong> GenericMailet {
+<a name="48" href="#48">48</a>      
+<a name="49" href="#49">49</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="50" href="#50">50</a>  <em class="jxr_javadoccomment">     * Arraylist which holds the headers which should be removed</em>
+<a name="51" href="#51">51</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="52" href="#52">52</a>      ArrayList headers = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="53" href="#53">53</a>  
+<a name="54" href="#54">54</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="55" href="#55">55</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#init()</em>
+<a name="56" href="#56">56</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="57" href="#57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="58" href="#58">58</a>          String header = getInitParameter(<span class="jxr_string">"name"</span>);
+<a name="59" href="#59">59</a>          <strong class="jxr_keyword">if</strong> (header != <strong class="jxr_keyword">null</strong>) {
+<a name="60" href="#60">60</a>              StringTokenizer st = <strong class="jxr_keyword">new</strong> StringTokenizer(header, <span class="jxr_string">","</span>);
+<a name="61" href="#61">61</a>              <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
+<a name="62" href="#62">62</a>                  headers.add(st.nextToken());
+<a name="63" href="#63">63</a>              }
+<a name="64" href="#64">64</a>          } <strong class="jxr_keyword">else</strong> {
+<a name="65" href="#65">65</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(
+<a name="66" href="#66">66</a>                      <span class="jxr_string">"Invalid config. Please specify atleast one name"</span>);
+<a name="67" href="#67">67</a>          }
+<a name="68" href="#68">68</a>      }
+<a name="69" href="#69">69</a>      
+<a name="70" href="#70">70</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="71" href="#71">71</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#service(Mail)</em>
+<a name="72" href="#72">72</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="73" href="#73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) {
+<a name="74" href="#74">74</a>          <strong class="jxr_keyword">try</strong> {
+<a name="75" href="#75">75</a>              MimeMessage  message = mail.getMessage();
+<a name="76" href="#76">76</a>          
+<a name="77" href="#77">77</a>              <em class="jxr_comment">// loop through the headers</em>
+<a name="78" href="#78">78</a>              <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; headers.size(); i++) {
+<a name="79" href="#79">79</a>                  message.removeHeader((String) headers.get(i));
+<a name="80" href="#80">80</a>              }
+<a name="81" href="#81">81</a>              
+<a name="82" href="#82">82</a>              message.saveChanges();
+<a name="83" href="#83">83</a>  
+<a name="84" href="#84">84</a>          } <strong class="jxr_keyword">catch</strong> (MessagingException e) {
+<a name="85" href="#85">85</a>              <em class="jxr_comment">// just log the exception</em>
+<a name="86" href="#86">86</a>              log(<span class="jxr_string">"Unable to remove headers: "</span> + e.getMessage());
+<a name="87" href="#87">87</a>          }
+<a name="88" href="#88">88</a>      }
+<a name="89" href="#89">89</a>      
+<a name="90" href="#90">90</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     * @see org.apache.mailet.GenericMailet#getMailetInfo()</em>
+<a name="92" href="#92">92</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="93" href="#93">93</a>      <strong class="jxr_keyword">public</strong> String getMailetInfo() {
+<a name="94" href="#94">94</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"RemoveMimeHeader Mailet"</span>;
+<a name="95" href="#95">95</a>      }
+<a name="96" href="#96">96</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

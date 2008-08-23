@@ -219,7 +219,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Mailets and Matchers Reference</h2></div><table class="bodyTable"><tr class="a"><td><div class="section"><h3>Matchers</h3><ul><li><a href="IsSMIMEEncrypted">IsSMIMEEncrypted</a></li><li><a href="IsSMIMESigned">IsSMIMESigned</a></li><li><a href="IsX509CertificateSubject">IsX509CertificateSubject</a></li></ul></div></td><td><div class="section"><h3>Mailets</h3><ul><li><a href="SMIMECheckSignature">SMIMECheckSignature</a></li><li><a href="SMIMEDecrypt">SMIMEDecrypt</a></li><li><a href="SMIMESign">SMIMESign</a></li><li><a href="Sign">Sign</a></li></ul></div></td></tr></table><div class="section"><h2>Matchers</h2><div class="section"><h3><a name="IsSMIMEEncrypted">IsSMIMEEncrypted</a></h3>Info: <b></b>Checks if a mail is smime encrypted.</div><div class="section"><h3><a name="IsSMIMESigned">IsSMIMESigned</a></h3>Info: <b></b>checks if a mail is smime signed.</div><div class="section"><h3><a name="IsX509CertificateSubject">IsX509CertificateSubject</a></h3>Info: <b></b><p>
+        <div class="section"><h2>Mailets and Matchers Reference</h2></div><table class="bodyTable"><tr class="a"><td><div class="section"><h3>Matchers</h3><ul><li><a href="#IsSMIMEEncrypted">IsSMIMEEncrypted</a></li><li><a href="#IsSMIMESigned">IsSMIMESigned</a></li><li><a href="#IsX509CertificateSubject">IsX509CertificateSubject</a></li></ul></div></td><td><div class="section"><h3>Mailets</h3><ul><li><a href="#SMIMECheckSignature">SMIMECheckSignature</a></li><li><a href="#SMIMEDecrypt">SMIMEDecrypt</a></li><li><a href="#SMIMESign">SMIMESign</a></li><li><a href="#Sign">Sign</a></li></ul></div></td></tr></table><div class="section"><h2>Matchers</h2><div class="section"><h3><a name="IsSMIMEEncrypted">IsSMIMEEncrypted</a></h3>Checks if a mail is smime encrypted.</div><div class="section"><h3><a name="IsSMIMESigned">IsSMIMESigned</a></h3>checks if a mail is smime signed.</div><div class="section"><h3><a name="IsX509CertificateSubject">IsX509CertificateSubject</a></h3><p>
 Checks if the subject of a X509Certificate contains the supplied string. The
 certificate is read from the specified mail attribute.
 </p><p>
@@ -230,7 +230,7 @@ least one of the certificates contains the given string.
 Configuration string:
 <ul>
 <li>mailAttribute;string</li>
-</ul></div></div><div class="section"><h2>Mailets</h2><div class="section"><h3><a name="SMIMECheckSignature">SMIMECheckSignature</a></h3>Mailet Info: <b></b><p><p>
+</ul></div></div><div class="section"><h2>Mailets</h2><div class="section"><h3><a name="SMIMECheckSignature">SMIMECheckSignature</a></h3><p>
 Verifies the s/mime signature of a message. The s/mime signing ensure that
 the private key owner is the real sender of the message. To be checked by
 this mailet the s/mime signature must contain the actual signature, the
@@ -284,7 +284,7 @@ considered by this mailet as authentic must be valid and trusted. Setting
 this mailet parameter to "false" the last condition is relaxed and also
 "untrusted" signature are considered will be considered as authentic.
 </ul>
-</p></p></div><div class="section"><h3><a name="SMIMEDecrypt">SMIMEDecrypt</a></h3><p>Mailet Info: <b></b></p><p>This mailet decrypts a s/mime encrypted message. It takes as input an
+</p></div><div class="section"><h3><a name="SMIMEDecrypt">SMIMEDecrypt</a></h3>This mailet decrypts a s/mime encrypted message. It takes as input an
 encrypted message and it tries to dechiper it using the key specified in its
 configuration. If the decryption is successful the mail will be changed and
 it will contain the decrypted message. The mail attribute
@@ -305,7 +305,7 @@ contains more than one key).
 <ul>
 <li>keyAlias: private key alias.</li>
 <li>keyPass: private key password</li>
-</ul></p></div><div class="section"><h3><a name="SMIMESign">SMIMESign</a></h3><p>Mailet Info: <b>SMIME Signature Mailet</b></p><p><p>Puts a <I>server-side</I> SMIME signature on a message.<br>
+</ul></div><div class="section"><h3><a name="SMIMESign">SMIMESign</a></h3>Mailet Info: <b>SMIME Signature Mailet</b><br /><p>Puts a <I>server-side</I> SMIME signature on a message.<br>
 It is a concrete subclass of {@link Sign}, with very few modifications to it,
 to specialize for SMIME.</p>
 
@@ -322,7 +322,7 @@ to specialize for SMIME.</p>
 <li>&lt;signerName&gt;.</li>
 <li>&lt;explanationText&gt;. There is a default explanation string template in English,
 displaying also all the headers of the original message (see {@link #getExplanationText}).</li>
-</ul></p></div><div class="section"><h3><a name="Sign">Sign</a></h3><p>Mailet Info: <b>Signature Mailet</b></p><p><p>Puts a <I>server-side</I> signature on a message.<br>
+</ul></div><div class="section"><h3><a name="Sign">Sign</a></h3><p>Mailet Info: <b>Signature Mailet</b><br /></p><p><p>Puts a <I>server-side</I> signature on a message.<br>
 It is a concrete subclass of {@link AbstractSign}, with very few modifications to it.</p>
 <p>A text file with an explanation text is attached to the original message,
 and the resulting message with all its attachments is signed.

@@ -52,300 +52,312 @@
 <a name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * Replace text contents</em>
 <a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;This mailet allow to specific regular expression to replace text in subject and content.</em>
 <a name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * Each expression is defined as:</em>
-<a name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * /REGEX_PATTERN/SUBSTITUTION_PATTERN/FLAGS/</em>
-<a name="47" href="#47">47</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="48" href="#48">48</a>  <em class="jxr_javadoccomment"> * - REGEX_PATTERN is a regex used for the match</em>
-<a name="49" href="#49">49</a>  <em class="jxr_javadoccomment"> * - SUBSTITUTION_PATTERN is a substitution pattern</em>
-<a name="50" href="#50">50</a>  <em class="jxr_javadoccomment"> * - FLAGS flags supported for the pattern:</em>
-<a name="51" href="#51">51</a>  <em class="jxr_javadoccomment"> *   i: case insensitive</em>
-<a name="52" href="#52">52</a>  <em class="jxr_javadoccomment"> *   m: multi line</em>
-<a name="53" href="#53">53</a>  <em class="jxr_javadoccomment"> *   x: extended (N/A)</em>
-<a name="54" href="#54">54</a>  <em class="jxr_javadoccomment"> *   r: repeat - keep matching until a substitution is possible</em>
-<a name="55" href="#55">55</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="56" href="#56">56</a>  <em class="jxr_javadoccomment"> * To identify subject and body pattern we use the tags &amp;lt;subjectPattern&amp;gt; and &amp;lt;bodyPattern&amp;gt;</em>
-<a name="57" href="#57">57</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="58" href="#58">58</a>  <em class="jxr_javadoccomment"> * Rules can be specified in external files.</em>
-<a name="59" href="#59">59</a>  <em class="jxr_javadoccomment"> * Lines must be CRLF terminated and lines starting with # are considered commments.</em>
-<a name="60" href="#60">60</a>  <em class="jxr_javadoccomment"> * Tags used to include external files are &amp;lt;subjectPatternFile&amp;gt; and </em>
-<a name="61" href="#61">61</a>  <em class="jxr_javadoccomment"> * &amp;lt;bodyPatternFile&amp;gt;</em>
-<a name="62" href="#62">62</a>  <em class="jxr_javadoccomment"> * If file path starts with # then the file is loaded as a reasource.</em>
-<a name="63" href="#63">63</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="64" href="#64">64</a>  <em class="jxr_javadoccomment"> * Use of both files and direct patterns at the same time is allowed.</em>
-<a name="65" href="#65">65</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="66" href="#66">66</a>  <em class="jxr_javadoccomment"> * This mailet allow also to enforce the resulting charset for messages processed.</em>
-<a name="67" href="#67">67</a>  <em class="jxr_javadoccomment"> * To do that the tag &amp;lt;charset&amp;gt; must be specified.</em>
-<a name="68" href="#68">68</a>  <em class="jxr_javadoccomment"> * </em>
-<a name="69" href="#69">69</a>  <em class="jxr_javadoccomment"> * NOTE:</em>
-<a name="70" href="#70">70</a>  <em class="jxr_javadoccomment"> * Regexp rules must be escaped by regexp excaping rules and applying this 2 additional rules:</em>
-<a name="71" href="#71">71</a>  <em class="jxr_javadoccomment"> * - "/" char inside an expression must be prefixed with "\&quot;:</em>
-<a name="72" href="#72">72</a>  <em class="jxr_javadoccomment"> *   e.g: "/\//-//" replaces "/" with "-"</em>
-<a name="73" href="#73">73</a>  <em class="jxr_javadoccomment"> * - when the rules are specified using &amp;lt;subjectPattern&amp;gt; or &amp;lt;bodyPattern&amp;gt; and</em>
-<a name="74" href="#74">74</a>  <em class="jxr_javadoccomment"> *   "/,/" has to be used in a pattern string it must be prefixed with a "\&quot;.</em>
-<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment"> *   E.g: "/\/\/,//" replaces "/" with "," (the rule would be "/\//,//" but the "/,/" must</em>
-<a name="76" href="#76">76</a>  <em class="jxr_javadoccomment"> *   be escaped.</em>
-<a name="77" href="#77">77</a>  <em class="jxr_javadoccomment"> */</em>
-<a name="78" href="#78">78</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/transport/mailets/ReplaceContent.html">ReplaceContent</a> <strong class="jxr_keyword">extends</strong> GenericMailet {
-<a name="79" href="#79">79</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_SUBJECT_PATTERN = <span class="jxr_string">"subjectPattern"</span>;
-<a name="80" href="#80">80</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_BODY_PATTERN = <span class="jxr_string">"bodyPattern"</span>;
-<a name="81" href="#81">81</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_SUBJECT_PATTERNFILE = <span class="jxr_string">"subjectPatternFile"</span>;
-<a name="82" href="#82">82</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_BODY_PATTERNFILE = <span class="jxr_string">"bodyPatternFile"</span>;
-<a name="83" href="#83">83</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_CHARSET = <span class="jxr_string">"charset"</span>;
-<a name="84" href="#84">84</a>      
-<a name="85" href="#85">85</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> FLAG_REPEAT = 1;
-<a name="86" href="#86">86</a>      
-<a name="87" href="#87">87</a>      <strong class="jxr_keyword">private</strong> Pattern[] subjectPatterns;
-<a name="88" href="#88">88</a>      <strong class="jxr_keyword">private</strong> String[] subjectSubstitutions;
-<a name="89" href="#89">89</a>      <strong class="jxr_keyword">private</strong> Integer[] subjectFlags;
-<a name="90" href="#90">90</a>      <strong class="jxr_keyword">private</strong> Pattern[] bodyPatterns;
-<a name="91" href="#91">91</a>      <strong class="jxr_keyword">private</strong> String[] bodySubstitutions;
-<a name="92" href="#92">92</a>      <strong class="jxr_keyword">private</strong> Integer[] bodyFlags;
-<a name="93" href="#93">93</a>      <strong class="jxr_keyword">private</strong> String charset;
-<a name="94" href="#94">94</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> debug = 0;
-<a name="95" href="#95">95</a>      
-<a name="96" href="#96">96</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * returns a String describing this mailet.</em>
-<a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * </em>
-<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * @return A desciption of this mailet</em>
-<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     */</em>
-<a name="101" href="#101">101</a>     <strong class="jxr_keyword">public</strong> String getMailetInfo() {
-<a name="102" href="#102">102</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"ReplaceContent"</span>;
-<a name="103" href="#103">103</a>     }
-<a name="104" href="#104">104</a> 
-<a name="105" href="#105">105</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     * @return an array containing Pattern and Substitution of the input stream</em>
-<a name="107" href="#107">107</a> <em class="jxr_javadoccomment">     * @throws MailetException </em>
-<a name="108" href="#108">108</a> <em class="jxr_javadoccomment">     */</em>
-<a name="109" href="#109">109</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> Object[] getPattern(String line) <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="110" href="#110">110</a>         String[] pieces = StringUtils.split(line, <span class="jxr_string">"/"</span>);
-<a name="111" href="#111">111</a>         <strong class="jxr_keyword">if</strong> (pieces.length &lt; 3) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid expression: "</span> + line);
-<a name="112" href="#112">112</a>         <strong class="jxr_keyword">int</strong> options = 0;
-<a name="113" href="#113">113</a>         <em class="jxr_comment">//if (pieces[2].indexOf('x') &gt;= 0) options += Pattern.EXTENDED;</em>
-<a name="114" href="#114">114</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('i') &gt;= 0) options += Pattern.CASE_INSENSITIVE;
-<a name="115" href="#115">115</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('m') &gt;= 0) options += Pattern.MULTILINE;
-<a name="116" href="#116">116</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('s') &gt;= 0) options += Pattern.DOTALL;
-<a name="117" href="#117">117</a>         
-<a name="118" href="#118">118</a>         <strong class="jxr_keyword">int</strong> flags = 0;
-<a name="119" href="#119">119</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('r') &gt;= 0) flags += FLAG_REPEAT;
-<a name="120" href="#120">120</a>         
-<a name="121" href="#121">121</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;r"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;r"</span>, <span class="jxr_string">"\r"</span>);
-<a name="122" href="#122">122</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;n"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;n"</span>, <span class="jxr_string">"\n"</span>);
-<a name="123" href="#123">123</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;t"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;t"</span>, <span class="jxr_string">"\t"</span>);
-<a name="124" href="#124">124</a>         
-<a name="125" href="#125">125</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[] {Pattern.compile(pieces[0], options), pieces[1] , <strong class="jxr_keyword">new</strong> Integer(flags)};
-<a name="126" href="#126">126</a>     }
-<a name="127" href="#127">127</a>     
-<a name="128" href="#128">128</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> List[] getPatternsFromString(String pattern) <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="129" href="#129">129</a>         pattern = pattern.trim();
-<a name="130" href="#130">130</a>         <strong class="jxr_keyword">if</strong> (pattern.length() &lt; 2 &amp;&amp; !pattern.startsWith(<span class="jxr_string">"/"</span>) &amp;&amp; !pattern.endsWith(<span class="jxr_string">"/"</span>)) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid parameter value: "</span> + PARAMETER_NAME_SUBJECT_PATTERN);
-<a name="131" href="#131">131</a>         pattern = pattern.substring(1, pattern.length() - 1);
-<a name="132" href="#132">132</a>         String[] patternArray = StringUtils.split(pattern, <span class="jxr_string">"/,/"</span>);
-<a name="133" href="#133">133</a>         
-<a name="134" href="#134">134</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="135" href="#135">135</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="136" href="#136">136</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="137" href="#137">137</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; patternArray.length; i++) {
-<a name="138" href="#138">138</a>             Object[] o = getPattern(patternArray[i]);
-<a name="139" href="#139">139</a>             patterns.add(o[0]);
-<a name="140" href="#140">140</a>             substitutions.add(o[1]);
-<a name="141" href="#141">141</a>             flags.add(o[2]);
-<a name="142" href="#142">142</a>         }
-<a name="143" href="#143">143</a>         
-<a name="144" href="#144">144</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
-<a name="145" href="#145">145</a>     }
-<a name="146" href="#146">146</a> 
-<a name="147" href="#147">147</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> List[] getPatternsFromStream(InputStream stream, String charset) <strong class="jxr_keyword">throws</strong> MailetException, IOException {
-<a name="148" href="#148">148</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="149" href="#149">149</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="150" href="#150">150</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="151" href="#151">151</a>         BufferedReader reader = <strong class="jxr_keyword">new</strong> BufferedReader(charset != <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> InputStreamReader(stream, charset) : <strong class="jxr_keyword">new</strong> InputStreamReader(stream));
-<a name="152" href="#152">152</a>         <em class="jxr_comment">//BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("q:&#92;&#92;correzioniout"), "utf-8"));</em>
-<a name="153" href="#153">153</a>         
-<a name="154" href="#154">154</a>         String line;
-<a name="155" href="#155">155</a>         <strong class="jxr_keyword">while</strong> ((line = reader.readLine()) != <strong class="jxr_keyword">null</strong>) {
-<a name="156" href="#156">156</a>             line = line.trim();
-<a name="157" href="#157">157</a>             <strong class="jxr_keyword">if</strong> (line.length() &gt; 0 &amp;&amp; !line.startsWith(<span class="jxr_string">"#"</span>)) {
-<a name="158" href="#158">158</a>                 <strong class="jxr_keyword">if</strong> (line.length() &lt; 2 &amp;&amp; !line.startsWith(<span class="jxr_string">"/"</span>) &amp;&amp; !line.endsWith(<span class="jxr_string">"/"</span>)) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid expression: "</span> + line);
-<a name="159" href="#159">159</a>                 Object[] o = getPattern(line.substring(1, line.length() - 1));
-<a name="160" href="#160">160</a>                 patterns.add(o[0]);
-<a name="161" href="#161">161</a>                 substitutions.add(o[1]);
-<a name="162" href="#162">162</a>                 flags.add(o[2]);
-<a name="163" href="#163">163</a>             }
-<a name="164" href="#164">164</a>         }
-<a name="165" href="#165">165</a>         reader.close();
-<a name="166" href="#166">166</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
-<a name="167" href="#167">167</a>     }
-<a name="168" href="#168">168</a>     
-<a name="169" href="#169">169</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="170" href="#170">170</a> <em class="jxr_javadoccomment">     * @param filepar File path list (or resources if the path starts with #) comma separated</em>
-<a name="171" href="#171">171</a> <em class="jxr_javadoccomment">     */</em>
-<a name="172" href="#172">172</a>     <strong class="jxr_keyword">private</strong> List[] getPatternsFromFileList(String filepar) <strong class="jxr_keyword">throws</strong> MailetException, IOException {
-<a name="173" href="#173">173</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="174" href="#174">174</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="175" href="#175">175</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="176" href="#176">176</a>         String[] files = filepar.split(<span class="jxr_string">","</span>);
-<a name="177" href="#177">177</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; files.length; i++) {
-<a name="178" href="#178">178</a>             files[i] = files[i].trim();
-<a name="179" href="#179">179</a>             <strong class="jxr_keyword">if</strong> (debug &gt; 0) log(<span class="jxr_string">"Loading patterns from: "</span> + files[i]);
-<a name="180" href="#180">180</a>             String charset = <strong class="jxr_keyword">null</strong>;
-<a name="181" href="#181">181</a>             <strong class="jxr_keyword">int</strong> pc = files[i].lastIndexOf('?');
-<a name="182" href="#182">182</a>             <strong class="jxr_keyword">if</strong> (pc &gt;= 0) {
-<a name="183" href="#183">183</a>                 charset = files[i].substring(pc + 1);
-<a name="184" href="#184">184</a>                 files[i] = files[i].substring(0, pc);
-<a name="185" href="#185">185</a>             }
-<a name="186" href="#186">186</a>             InputStream is = <strong class="jxr_keyword">null</strong>;
-<a name="187" href="#187">187</a>             <strong class="jxr_keyword">if</strong> (files[i].startsWith(<span class="jxr_string">"#"</span>)) is = getClass().getResourceAsStream(files[i].substring(1));
-<a name="188" href="#188">188</a>             <strong class="jxr_keyword">else</strong> {
-<a name="189" href="#189">189</a>                 File f = <strong class="jxr_keyword">new</strong> File(files[i]);
-<a name="190" href="#190">190</a>                 <strong class="jxr_keyword">if</strong> (f.isFile()) is = <strong class="jxr_keyword">new</strong> FileInputStream(f);
-<a name="191" href="#191">191</a>             }
-<a name="192" href="#192">192</a>             <strong class="jxr_keyword">if</strong> (is != <strong class="jxr_keyword">null</strong>) {
-<a name="193" href="#193">193</a>                 List[] o = getPatternsFromStream(is, charset);
-<a name="194" href="#194">194</a>                 patterns.addAll(o[0]);
-<a name="195" href="#195">195</a>                 substitutions.addAll(o[1]);
-<a name="196" href="#196">196</a>                 flags.addAll(o[2]);
-<a name="197" href="#197">197</a>                 is.close();
-<a name="198" href="#198">198</a>             }
-<a name="199" href="#199">199</a>         }
-<a name="200" href="#200">200</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
-<a name="201" href="#201">201</a>     }
-<a name="202" href="#202">202</a>     
-<a name="203" href="#203">203</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> String applyPatterns(Pattern[] patterns, String[] substitutions, Integer[] pflags, String text, <strong class="jxr_keyword">int</strong> debug, GenericMailet logOwner) {
-<a name="204" href="#204">204</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; patterns.length; i ++) {
-<a name="205" href="#205">205</a>             <strong class="jxr_keyword">int</strong> flags = pflags[i].intValue();
-<a name="206" href="#206">206</a>             <strong class="jxr_keyword">boolean</strong> changed = false;
-<a name="207" href="#207">207</a>             <strong class="jxr_keyword">do</strong> {
-<a name="208" href="#208">208</a>                 changed = false;
-<a name="209" href="#209">209</a>                 String replaced = patterns[i].matcher(text).replaceAll(substitutions[i]);
-<a name="210" href="#210">210</a>                 <strong class="jxr_keyword">if</strong> (!replaced.equals(text)) {
-<a name="211" href="#211">211</a>                     <strong class="jxr_keyword">if</strong> (debug &gt; 0) logOwner.log(<span class="jxr_string">"Subject rule match: "</span> + patterns[i].pattern());
-<a name="212" href="#212">212</a>                     text = replaced;
-<a name="213" href="#213">213</a>                     changed = <strong class="jxr_keyword">true</strong>;
-<a name="214" href="#214">214</a>                 }
-<a name="215" href="#215">215</a>             } <strong class="jxr_keyword">while</strong> ((flags &amp; FLAG_REPEAT) &gt; 0 &amp;&amp; changed);
-<a name="216" href="#216">216</a>         }
-<a name="217" href="#217">217</a>         
-<a name="218" href="#218">218</a>         <strong class="jxr_keyword">return</strong> text;
-<a name="219" href="#219">219</a>     }
-<a name="220" href="#220">220</a>     
-<a name="221" href="#221">221</a> 
-<a name="222" href="#222">222</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="223" href="#223">223</a>         charset = getInitParameter(PARAMETER_NAME_CHARSET);
-<a name="224" href="#224">224</a>         debug = Integer.parseInt(getInitParameter(<span class="jxr_string">"debug"</span>, <span class="jxr_string">"0"</span>));
-<a name="225" href="#225">225</a>     }
-<a name="226" href="#226">226</a>     
-<a name="227" href="#227">227</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initPatterns() <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="228" href="#228">228</a>         <strong class="jxr_keyword">try</strong> {
-<a name="229" href="#229">229</a>             List bodyPatternsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="230" href="#230">230</a>             List bodySubstitutionsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="231" href="#231">231</a>             List bodyFlagsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="232" href="#232">232</a>             List subjectPatternsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="233" href="#233">233</a>             List subjectSubstitutionsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="234" href="#234">234</a>             List subjectFlagsList = <strong class="jxr_keyword">new</strong> ArrayList();
-<a name="235" href="#235">235</a> 
-<a name="236" href="#236">236</a>             String pattern = getInitParameter(PARAMETER_NAME_SUBJECT_PATTERN);
-<a name="237" href="#237">237</a>             <strong class="jxr_keyword">if</strong> (pattern != <strong class="jxr_keyword">null</strong>) {
-<a name="238" href="#238">238</a>                 List[] o = getPatternsFromString(pattern);
-<a name="239" href="#239">239</a>                 subjectPatternsList.addAll(o[0]);
-<a name="240" href="#240">240</a>                 subjectSubstitutionsList.addAll(o[1]);
-<a name="241" href="#241">241</a>                 subjectFlagsList.addAll(o[2]);
-<a name="242" href="#242">242</a>             }
-<a name="243" href="#243">243</a>             
-<a name="244" href="#244">244</a>             pattern = getInitParameter(PARAMETER_NAME_BODY_PATTERN);
-<a name="245" href="#245">245</a>             <strong class="jxr_keyword">if</strong> (pattern != <strong class="jxr_keyword">null</strong>) {
-<a name="246" href="#246">246</a>                 List[] o = getPatternsFromString(pattern);
-<a name="247" href="#247">247</a>                 bodyPatternsList.addAll(o[0]);
-<a name="248" href="#248">248</a>                 bodySubstitutionsList.addAll(o[1]);
-<a name="249" href="#249">249</a>                 bodyFlagsList.addAll(o[2]);
-<a name="250" href="#250">250</a>             }
-<a name="251" href="#251">251</a>             
-<a name="252" href="#252">252</a>             String filepar = getInitParameter(PARAMETER_NAME_SUBJECT_PATTERNFILE);
-<a name="253" href="#253">253</a>             <strong class="jxr_keyword">if</strong> (filepar != <strong class="jxr_keyword">null</strong>) {
-<a name="254" href="#254">254</a>                 List[] o = getPatternsFromFileList(filepar);
-<a name="255" href="#255">255</a>                 subjectPatternsList.addAll(o[0]);
-<a name="256" href="#256">256</a>                 subjectSubstitutionsList.addAll(o[1]);
-<a name="257" href="#257">257</a>                 subjectFlagsList.addAll(o[2]);
-<a name="258" href="#258">258</a>             }
-<a name="259" href="#259">259</a>         
-<a name="260" href="#260">260</a>             filepar = getInitParameter(PARAMETER_NAME_BODY_PATTERNFILE);
-<a name="261" href="#261">261</a>             <strong class="jxr_keyword">if</strong> (filepar != <strong class="jxr_keyword">null</strong>) {
-<a name="262" href="#262">262</a>                 List[] o = getPatternsFromFileList(filepar);
-<a name="263" href="#263">263</a>                 bodyPatternsList.addAll(o[0]);
-<a name="264" href="#264">264</a>                 bodySubstitutionsList.addAll(o[1]);
-<a name="265" href="#265">265</a>                 bodyFlagsList.addAll(o[2]);
-<a name="266" href="#266">266</a>             }
-<a name="267" href="#267">267</a>             
-<a name="268" href="#268">268</a>             subjectPatterns = (Pattern[]) subjectPatternsList.toArray(<strong class="jxr_keyword">new</strong> Pattern[0]);
-<a name="269" href="#269">269</a>             subjectSubstitutions = (String[]) subjectSubstitutionsList.toArray(<strong class="jxr_keyword">new</strong> String[0]);
-<a name="270" href="#270">270</a>             subjectFlags = (Integer[]) subjectFlagsList.toArray(<strong class="jxr_keyword">new</strong> Integer[0]);
-<a name="271" href="#271">271</a>             bodyPatterns = (Pattern[]) bodyPatternsList.toArray(<strong class="jxr_keyword">new</strong> Pattern[0]);
-<a name="272" href="#272">272</a>             bodySubstitutions = (String[]) bodySubstitutionsList.toArray(<strong class="jxr_keyword">new</strong> String[0]);
-<a name="273" href="#273">273</a>             bodyFlags = (Integer[]) bodyFlagsList.toArray(<strong class="jxr_keyword">new</strong> Integer[0]);
-<a name="274" href="#274">274</a>             
-<a name="275" href="#275">275</a>         } <strong class="jxr_keyword">catch</strong> (FileNotFoundException e) {
-<a name="276" href="#276">276</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
-<a name="277" href="#277">277</a>             
-<a name="278" href="#278">278</a>         } <strong class="jxr_keyword">catch</strong> (MailetException e) {
-<a name="279" href="#279">279</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
-<a name="280" href="#280">280</a>             
-<a name="281" href="#281">281</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a name="282" href="#282">282</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
-<a name="283" href="#283">283</a>             
-<a name="284" href="#284">284</a>         }
-<a name="285" href="#285">285</a>     }
-<a name="286" href="#286">286</a> 
-<a name="287" href="#287">287</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MailetException {
-<a name="288" href="#288">288</a>         initPatterns();
-<a name="289" href="#289">289</a>         
-<a name="290" href="#290">290</a>         <strong class="jxr_keyword">try</strong> {
-<a name="291" href="#291">291</a>             <strong class="jxr_keyword">boolean</strong> mod = false;
-<a name="292" href="#292">292</a>             <strong class="jxr_keyword">boolean</strong> contentChanged = false;
-<a name="293" href="#293">293</a>             
-<a name="294" href="#294">294</a>             <strong class="jxr_keyword">if</strong> (subjectPatterns != <strong class="jxr_keyword">null</strong> &amp;&amp; subjectPatterns.length &gt; 0) {
-<a name="295" href="#295">295</a>                 String subject = mail.getMessage().getSubject();
-<a name="296" href="#296">296</a>                 <strong class="jxr_keyword">if</strong> (subject == <strong class="jxr_keyword">null</strong>) subject = <span class="jxr_string">""</span>;
-<a name="297" href="#297">297</a>                 subject = applyPatterns(subjectPatterns, subjectSubstitutions, subjectFlags, subject, debug, <strong class="jxr_keyword">this</strong>);
-<a name="298" href="#298">298</a>                 <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong>) mail.getMessage().setSubject(subject, charset);
-<a name="299" href="#299">299</a>                 <strong class="jxr_keyword">else</strong> mail.getMessage().setSubject(subject);
-<a name="300" href="#300">300</a>                 mod = <strong class="jxr_keyword">true</strong>;
-<a name="301" href="#301">301</a>             }
-<a name="302" href="#302">302</a>             
-<a name="303" href="#303">303</a>             <strong class="jxr_keyword">if</strong> (bodyPatterns != <strong class="jxr_keyword">null</strong> &amp;&amp; bodyPatterns.length &gt; 0) {
-<a name="304" href="#304">304</a>                 Object bodyObj = mail.getMessage().getContent();
-<a name="305" href="#305">305</a>                 <strong class="jxr_keyword">if</strong> (bodyObj == <strong class="jxr_keyword">null</strong>) bodyObj = <span class="jxr_string">""</span>;
-<a name="306" href="#306">306</a>                 <strong class="jxr_keyword">if</strong> (bodyObj instanceof String) {
-<a name="307" href="#307">307</a>                     String body = (String) bodyObj;
-<a name="308" href="#308">308</a>                     body = applyPatterns(bodyPatterns, bodySubstitutions, bodyFlags, body, debug, <strong class="jxr_keyword">this</strong>);
-<a name="309" href="#309">309</a>                     String contentType = mail.getMessage().getContentType();
-<a name="310" href="#310">310</a>                     <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong>) {
-<a name="311" href="#311">311</a>                         ContentType ct = <strong class="jxr_keyword">new</strong> ContentType(contentType);
-<a name="312" href="#312">312</a>                         ct.setParameter(<span class="jxr_string">"charset"</span>, charset);
-<a name="313" href="#313">313</a>                         contentType = ct.toString();
-<a name="314" href="#314">314</a>                     }
-<a name="315" href="#315">315</a>                     mail.getMessage().setContent(body, contentType);
-<a name="316" href="#316">316</a>                     mod = <strong class="jxr_keyword">true</strong>;
-<a name="317" href="#317">317</a>                     contentChanged = <strong class="jxr_keyword">true</strong>;
-<a name="318" href="#318">318</a>                 }
-<a name="319" href="#319">319</a>             }
-<a name="320" href="#320">320</a>             
-<a name="321" href="#321">321</a>             <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong> &amp;&amp; !contentChanged) {
-<a name="322" href="#322">322</a>                 ContentType ct = <strong class="jxr_keyword">new</strong> ContentType(mail.getMessage().getContentType());
-<a name="323" href="#323">323</a>                 ct.setParameter(<span class="jxr_string">"charset"</span>, charset);
-<a name="324" href="#324">324</a>                 String contentType = mail.getMessage().getContentType();
-<a name="325" href="#325">325</a>                 mail.getMessage().setContent(mail.getMessage().getContent(), contentType);
-<a name="326" href="#326">326</a>             }
-<a name="327" href="#327">327</a>             
-<a name="328" href="#328">328</a>             <strong class="jxr_keyword">if</strong> (mod) mail.getMessage().saveChanges();
-<a name="329" href="#329">329</a>             
-<a name="330" href="#330">330</a>         } <strong class="jxr_keyword">catch</strong> (MessagingException e) {
-<a name="331" href="#331">331</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Error in replace"</span>, e);
+<a name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * Each expression is defined as:</em>
+<a name="47" href="#47">47</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;/REGEX_PATTERN/SUBSTITUTION_PATTERN/FLAGS/&lt;/code&gt;</em>
+<a name="48" href="#48">48</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="49" href="#49">49</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="50" href="#50">50</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="51" href="#51">51</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;REGEX_PATTERN&lt;/code&gt; is a regex used for the match&lt;br&gt;</em>
+<a name="52" href="#52">52</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;SUBSTITUTION_PATTERN&lt;/code&gt; is a substitution pattern&lt;br&gt;</em>
+<a name="53" href="#53">53</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;FLAGS&lt;/code&gt; flags supported for the pattern:&lt;br&gt;</em>
+<a name="54" href="#54">54</a>  <em class="jxr_javadoccomment"> *   i: case insensitive&lt;br&gt;</em>
+<a name="55" href="#55">55</a>  <em class="jxr_javadoccomment"> *   m: multi line&lt;br&gt;</em>
+<a name="56" href="#56">56</a>  <em class="jxr_javadoccomment"> *   x: extended (N/A)&lt;br&gt;</em>
+<a name="57" href="#57">57</a>  <em class="jxr_javadoccomment"> *   r: repeat - keep matching until a substitution is possible&lt;br&gt;</em>
+<a name="58" href="#58">58</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="59" href="#59">59</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="60" href="#60">60</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;To identify subject and body pattern we use the tags &amp;lt;subjectPattern&amp;gt; and &amp;lt;bodyPattern&amp;gt;&lt;/p&gt;</em>
+<a name="61" href="#61">61</a>  <em class="jxr_javadoccomment"> *</em>
+<a name="62" href="#62">62</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="63" href="#63">63</a>  <em class="jxr_javadoccomment"> * Rules can be specified in external files.</em>
+<a name="64" href="#64">64</a>  <em class="jxr_javadoccomment"> * Lines must be CRLF terminated and lines starting with # are considered commments.</em>
+<a name="65" href="#65">65</a>  <em class="jxr_javadoccomment"> * Tags used to include external files are &amp;lt;subjectPatternFile&amp;gt; and </em>
+<a name="66" href="#66">66</a>  <em class="jxr_javadoccomment"> * &amp;lt;bodyPatternFile&amp;gt;</em>
+<a name="67" href="#67">67</a>  <em class="jxr_javadoccomment"> * If file path starts with # then the file is loaded as a reasource.</em>
+<a name="68" href="#68">68</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="69" href="#69">69</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="70" href="#70">70</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="71" href="#71">71</a>  <em class="jxr_javadoccomment"> * Use of both files and direct patterns at the same time is allowed.</em>
+<a name="72" href="#72">72</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="73" href="#73">73</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="74" href="#74">74</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment"> * This mailet allow also to enforce the resulting charset for messages processed.</em>
+<a name="76" href="#76">76</a>  <em class="jxr_javadoccomment"> * To do that the tag &amp;lt;charset&amp;gt; must be specified.</em>
+<a name="77" href="#77">77</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="78" href="#78">78</a>  <em class="jxr_javadoccomment"> * </em>
+<a name="79" href="#79">79</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a name="80" href="#80">80</a>  <em class="jxr_javadoccomment"> * NOTE:</em>
+<a name="81" href="#81">81</a>  <em class="jxr_javadoccomment"> * Regexp rules must be escaped by regexp excaping rules and applying this 2 additional rules:&lt;br&gt;</em>
+<a name="82" href="#82">82</a>  <em class="jxr_javadoccomment"> * - "/" char inside an expression must be prefixed with "\&quot;:</em>
+<a name="83" href="#83">83</a>  <em class="jxr_javadoccomment"> *   e.g: "/\//-//" replaces "/" with "-"&lt;br&gt;</em>
+<a name="84" href="#84">84</a>  <em class="jxr_javadoccomment"> * - when the rules are specified using &amp;lt;subjectPattern&amp;gt; or &amp;lt;bodyPattern&amp;gt; and</em>
+<a name="85" href="#85">85</a>  <em class="jxr_javadoccomment"> *   "/,/" has to be used in a pattern string it must be prefixed with a "\&quot;.</em>
+<a name="86" href="#86">86</a>  <em class="jxr_javadoccomment"> *   E.g: "/\/\/,//" replaces "/" with "," (the rule would be "/\//,//" but the "/,/" must</em>
+<a name="87" href="#87">87</a>  <em class="jxr_javadoccomment"> *   be escaped.&lt;br&gt;</em>
+<a name="88" href="#88">88</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a name="89" href="#89">89</a>  <em class="jxr_javadoccomment"> */</em>
+<a name="90" href="#90">90</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/transport/mailets/ReplaceContent.html">ReplaceContent</a> <strong class="jxr_keyword">extends</strong> GenericMailet {
+<a name="91" href="#91">91</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_SUBJECT_PATTERN = <span class="jxr_string">"subjectPattern"</span>;
+<a name="92" href="#92">92</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_BODY_PATTERN = <span class="jxr_string">"bodyPattern"</span>;
+<a name="93" href="#93">93</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_SUBJECT_PATTERNFILE = <span class="jxr_string">"subjectPatternFile"</span>;
+<a name="94" href="#94">94</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_BODY_PATTERNFILE = <span class="jxr_string">"bodyPatternFile"</span>;
+<a name="95" href="#95">95</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String PARAMETER_NAME_CHARSET = <span class="jxr_string">"charset"</span>;
+<a name="96" href="#96">96</a>      
+<a name="97" href="#97">97</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> FLAG_REPEAT = 1;
+<a name="98" href="#98">98</a>      
+<a name="99" href="#99">99</a>      <strong class="jxr_keyword">private</strong> Pattern[] subjectPatterns;
+<a name="100" href="#100">100</a>     <strong class="jxr_keyword">private</strong> String[] subjectSubstitutions;
+<a name="101" href="#101">101</a>     <strong class="jxr_keyword">private</strong> Integer[] subjectFlags;
+<a name="102" href="#102">102</a>     <strong class="jxr_keyword">private</strong> Pattern[] bodyPatterns;
+<a name="103" href="#103">103</a>     <strong class="jxr_keyword">private</strong> String[] bodySubstitutions;
+<a name="104" href="#104">104</a>     <strong class="jxr_keyword">private</strong> Integer[] bodyFlags;
+<a name="105" href="#105">105</a>     <strong class="jxr_keyword">private</strong> String charset;
+<a name="106" href="#106">106</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> debug = 0;
+<a name="107" href="#107">107</a>     
+<a name="108" href="#108">108</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="109" href="#109">109</a> <em class="jxr_javadoccomment">     * returns a String describing this mailet.</em>
+<a name="110" href="#110">110</a> <em class="jxr_javadoccomment">     * </em>
+<a name="111" href="#111">111</a> <em class="jxr_javadoccomment">     * @return A desciption of this mailet</em>
+<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     */</em>
+<a name="113" href="#113">113</a>     <strong class="jxr_keyword">public</strong> String getMailetInfo() {
+<a name="114" href="#114">114</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"ReplaceContent"</span>;
+<a name="115" href="#115">115</a>     }
+<a name="116" href="#116">116</a> 
+<a name="117" href="#117">117</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * @return an array containing Pattern and Substitution of the input stream</em>
+<a name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * @throws MailetException </em>
+<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     */</em>
+<a name="121" href="#121">121</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> Object[] getPattern(String line) <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="122" href="#122">122</a>         String[] pieces = StringUtils.split(line, <span class="jxr_string">"/"</span>);
+<a name="123" href="#123">123</a>         <strong class="jxr_keyword">if</strong> (pieces.length &lt; 3) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid expression: "</span> + line);
+<a name="124" href="#124">124</a>         <strong class="jxr_keyword">int</strong> options = 0;
+<a name="125" href="#125">125</a>         <em class="jxr_comment">//if (pieces[2].indexOf('x') &gt;= 0) options += Pattern.EXTENDED;</em>
+<a name="126" href="#126">126</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('i') &gt;= 0) options += Pattern.CASE_INSENSITIVE;
+<a name="127" href="#127">127</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('m') &gt;= 0) options += Pattern.MULTILINE;
+<a name="128" href="#128">128</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('s') &gt;= 0) options += Pattern.DOTALL;
+<a name="129" href="#129">129</a>         
+<a name="130" href="#130">130</a>         <strong class="jxr_keyword">int</strong> flags = 0;
+<a name="131" href="#131">131</a>         <strong class="jxr_keyword">if</strong> (pieces[2].indexOf('r') &gt;= 0) flags += FLAG_REPEAT;
+<a name="132" href="#132">132</a>         
+<a name="133" href="#133">133</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;r"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;r"</span>, <span class="jxr_string">"\r"</span>);
+<a name="134" href="#134">134</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;n"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;n"</span>, <span class="jxr_string">"\n"</span>);
+<a name="135" href="#135">135</a>         <strong class="jxr_keyword">if</strong> (pieces[1].indexOf(<span class="jxr_string">"&#92;&#92;t"</span>) &gt;= 0) pieces[1] = pieces[1].replaceAll(<span class="jxr_string">"&#92;&#92;&#92;&#92;t"</span>, <span class="jxr_string">"\t"</span>);
+<a name="136" href="#136">136</a>         
+<a name="137" href="#137">137</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Object[] {Pattern.compile(pieces[0], options), pieces[1] , <strong class="jxr_keyword">new</strong> Integer(flags)};
+<a name="138" href="#138">138</a>     }
+<a name="139" href="#139">139</a>     
+<a name="140" href="#140">140</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> List[] getPatternsFromString(String pattern) <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="141" href="#141">141</a>         pattern = pattern.trim();
+<a name="142" href="#142">142</a>         <strong class="jxr_keyword">if</strong> (pattern.length() &lt; 2 &amp;&amp; !pattern.startsWith(<span class="jxr_string">"/"</span>) &amp;&amp; !pattern.endsWith(<span class="jxr_string">"/"</span>)) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid parameter value: "</span> + PARAMETER_NAME_SUBJECT_PATTERN);
+<a name="143" href="#143">143</a>         pattern = pattern.substring(1, pattern.length() - 1);
+<a name="144" href="#144">144</a>         String[] patternArray = StringUtils.split(pattern, <span class="jxr_string">"/,/"</span>);
+<a name="145" href="#145">145</a>         
+<a name="146" href="#146">146</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="147" href="#147">147</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="148" href="#148">148</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="149" href="#149">149</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; patternArray.length; i++) {
+<a name="150" href="#150">150</a>             Object[] o = getPattern(patternArray[i]);
+<a name="151" href="#151">151</a>             patterns.add(o[0]);
+<a name="152" href="#152">152</a>             substitutions.add(o[1]);
+<a name="153" href="#153">153</a>             flags.add(o[2]);
+<a name="154" href="#154">154</a>         }
+<a name="155" href="#155">155</a>         
+<a name="156" href="#156">156</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
+<a name="157" href="#157">157</a>     }
+<a name="158" href="#158">158</a> 
+<a name="159" href="#159">159</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> List[] getPatternsFromStream(InputStream stream, String charset) <strong class="jxr_keyword">throws</strong> MailetException, IOException {
+<a name="160" href="#160">160</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="161" href="#161">161</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="162" href="#162">162</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="163" href="#163">163</a>         BufferedReader reader = <strong class="jxr_keyword">new</strong> BufferedReader(charset != <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> InputStreamReader(stream, charset) : <strong class="jxr_keyword">new</strong> InputStreamReader(stream));
+<a name="164" href="#164">164</a>         <em class="jxr_comment">//BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("q:&#92;&#92;correzioniout"), "utf-8"));</em>
+<a name="165" href="#165">165</a>         
+<a name="166" href="#166">166</a>         String line;
+<a name="167" href="#167">167</a>         <strong class="jxr_keyword">while</strong> ((line = reader.readLine()) != <strong class="jxr_keyword">null</strong>) {
+<a name="168" href="#168">168</a>             line = line.trim();
+<a name="169" href="#169">169</a>             <strong class="jxr_keyword">if</strong> (line.length() &gt; 0 &amp;&amp; !line.startsWith(<span class="jxr_string">"#"</span>)) {
+<a name="170" href="#170">170</a>                 <strong class="jxr_keyword">if</strong> (line.length() &lt; 2 &amp;&amp; !line.startsWith(<span class="jxr_string">"/"</span>) &amp;&amp; !line.endsWith(<span class="jxr_string">"/"</span>)) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Invalid expression: "</span> + line);
+<a name="171" href="#171">171</a>                 Object[] o = getPattern(line.substring(1, line.length() - 1));
+<a name="172" href="#172">172</a>                 patterns.add(o[0]);
+<a name="173" href="#173">173</a>                 substitutions.add(o[1]);
+<a name="174" href="#174">174</a>                 flags.add(o[2]);
+<a name="175" href="#175">175</a>             }
+<a name="176" href="#176">176</a>         }
+<a name="177" href="#177">177</a>         reader.close();
+<a name="178" href="#178">178</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
+<a name="179" href="#179">179</a>     }
+<a name="180" href="#180">180</a>     
+<a name="181" href="#181">181</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * @param filepar File path list (or resources if the path starts with #) comma separated</em>
+<a name="183" href="#183">183</a> <em class="jxr_javadoccomment">     */</em>
+<a name="184" href="#184">184</a>     <strong class="jxr_keyword">private</strong> List[] getPatternsFromFileList(String filepar) <strong class="jxr_keyword">throws</strong> MailetException, IOException {
+<a name="185" href="#185">185</a>         List patterns = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="186" href="#186">186</a>         List substitutions = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="187" href="#187">187</a>         List flags = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="188" href="#188">188</a>         String[] files = filepar.split(<span class="jxr_string">","</span>);
+<a name="189" href="#189">189</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; files.length; i++) {
+<a name="190" href="#190">190</a>             files[i] = files[i].trim();
+<a name="191" href="#191">191</a>             <strong class="jxr_keyword">if</strong> (debug &gt; 0) log(<span class="jxr_string">"Loading patterns from: "</span> + files[i]);
+<a name="192" href="#192">192</a>             String charset = <strong class="jxr_keyword">null</strong>;
+<a name="193" href="#193">193</a>             <strong class="jxr_keyword">int</strong> pc = files[i].lastIndexOf('?');
+<a name="194" href="#194">194</a>             <strong class="jxr_keyword">if</strong> (pc &gt;= 0) {
+<a name="195" href="#195">195</a>                 charset = files[i].substring(pc + 1);
+<a name="196" href="#196">196</a>                 files[i] = files[i].substring(0, pc);
+<a name="197" href="#197">197</a>             }
+<a name="198" href="#198">198</a>             InputStream is = <strong class="jxr_keyword">null</strong>;
+<a name="199" href="#199">199</a>             <strong class="jxr_keyword">if</strong> (files[i].startsWith(<span class="jxr_string">"#"</span>)) is = getClass().getResourceAsStream(files[i].substring(1));
+<a name="200" href="#200">200</a>             <strong class="jxr_keyword">else</strong> {
+<a name="201" href="#201">201</a>                 File f = <strong class="jxr_keyword">new</strong> File(files[i]);
+<a name="202" href="#202">202</a>                 <strong class="jxr_keyword">if</strong> (f.isFile()) is = <strong class="jxr_keyword">new</strong> FileInputStream(f);
+<a name="203" href="#203">203</a>             }
+<a name="204" href="#204">204</a>             <strong class="jxr_keyword">if</strong> (is != <strong class="jxr_keyword">null</strong>) {
+<a name="205" href="#205">205</a>                 List[] o = getPatternsFromStream(is, charset);
+<a name="206" href="#206">206</a>                 patterns.addAll(o[0]);
+<a name="207" href="#207">207</a>                 substitutions.addAll(o[1]);
+<a name="208" href="#208">208</a>                 flags.addAll(o[2]);
+<a name="209" href="#209">209</a>                 is.close();
+<a name="210" href="#210">210</a>             }
+<a name="211" href="#211">211</a>         }
+<a name="212" href="#212">212</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> List[] {patterns, substitutions, flags};
+<a name="213" href="#213">213</a>     }
+<a name="214" href="#214">214</a>     
+<a name="215" href="#215">215</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> String applyPatterns(Pattern[] patterns, String[] substitutions, Integer[] pflags, String text, <strong class="jxr_keyword">int</strong> debug, GenericMailet logOwner) {
+<a name="216" href="#216">216</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; patterns.length; i ++) {
+<a name="217" href="#217">217</a>             <strong class="jxr_keyword">int</strong> flags = pflags[i].intValue();
+<a name="218" href="#218">218</a>             <strong class="jxr_keyword">boolean</strong> changed = false;
+<a name="219" href="#219">219</a>             <strong class="jxr_keyword">do</strong> {
+<a name="220" href="#220">220</a>                 changed = false;
+<a name="221" href="#221">221</a>                 String replaced = patterns[i].matcher(text).replaceAll(substitutions[i]);
+<a name="222" href="#222">222</a>                 <strong class="jxr_keyword">if</strong> (!replaced.equals(text)) {
+<a name="223" href="#223">223</a>                     <strong class="jxr_keyword">if</strong> (debug &gt; 0) logOwner.log(<span class="jxr_string">"Subject rule match: "</span> + patterns[i].pattern());
+<a name="224" href="#224">224</a>                     text = replaced;
+<a name="225" href="#225">225</a>                     changed = <strong class="jxr_keyword">true</strong>;
+<a name="226" href="#226">226</a>                 }
+<a name="227" href="#227">227</a>             } <strong class="jxr_keyword">while</strong> ((flags &amp; FLAG_REPEAT) &gt; 0 &amp;&amp; changed);
+<a name="228" href="#228">228</a>         }
+<a name="229" href="#229">229</a>         
+<a name="230" href="#230">230</a>         <strong class="jxr_keyword">return</strong> text;
+<a name="231" href="#231">231</a>     }
+<a name="232" href="#232">232</a>     
+<a name="233" href="#233">233</a> 
+<a name="234" href="#234">234</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="235" href="#235">235</a>         charset = getInitParameter(PARAMETER_NAME_CHARSET);
+<a name="236" href="#236">236</a>         debug = Integer.parseInt(getInitParameter(<span class="jxr_string">"debug"</span>, <span class="jxr_string">"0"</span>));
+<a name="237" href="#237">237</a>     }
+<a name="238" href="#238">238</a>     
+<a name="239" href="#239">239</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initPatterns() <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="240" href="#240">240</a>         <strong class="jxr_keyword">try</strong> {
+<a name="241" href="#241">241</a>             List bodyPatternsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="242" href="#242">242</a>             List bodySubstitutionsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="243" href="#243">243</a>             List bodyFlagsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="244" href="#244">244</a>             List subjectPatternsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="245" href="#245">245</a>             List subjectSubstitutionsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="246" href="#246">246</a>             List subjectFlagsList = <strong class="jxr_keyword">new</strong> ArrayList();
+<a name="247" href="#247">247</a> 
+<a name="248" href="#248">248</a>             String pattern = getInitParameter(PARAMETER_NAME_SUBJECT_PATTERN);
+<a name="249" href="#249">249</a>             <strong class="jxr_keyword">if</strong> (pattern != <strong class="jxr_keyword">null</strong>) {
+<a name="250" href="#250">250</a>                 List[] o = getPatternsFromString(pattern);
+<a name="251" href="#251">251</a>                 subjectPatternsList.addAll(o[0]);
+<a name="252" href="#252">252</a>                 subjectSubstitutionsList.addAll(o[1]);
+<a name="253" href="#253">253</a>                 subjectFlagsList.addAll(o[2]);
+<a name="254" href="#254">254</a>             }
+<a name="255" href="#255">255</a>             
+<a name="256" href="#256">256</a>             pattern = getInitParameter(PARAMETER_NAME_BODY_PATTERN);
+<a name="257" href="#257">257</a>             <strong class="jxr_keyword">if</strong> (pattern != <strong class="jxr_keyword">null</strong>) {
+<a name="258" href="#258">258</a>                 List[] o = getPatternsFromString(pattern);
+<a name="259" href="#259">259</a>                 bodyPatternsList.addAll(o[0]);
+<a name="260" href="#260">260</a>                 bodySubstitutionsList.addAll(o[1]);
+<a name="261" href="#261">261</a>                 bodyFlagsList.addAll(o[2]);
+<a name="262" href="#262">262</a>             }
+<a name="263" href="#263">263</a>             
+<a name="264" href="#264">264</a>             String filepar = getInitParameter(PARAMETER_NAME_SUBJECT_PATTERNFILE);
+<a name="265" href="#265">265</a>             <strong class="jxr_keyword">if</strong> (filepar != <strong class="jxr_keyword">null</strong>) {
+<a name="266" href="#266">266</a>                 List[] o = getPatternsFromFileList(filepar);
+<a name="267" href="#267">267</a>                 subjectPatternsList.addAll(o[0]);
+<a name="268" href="#268">268</a>                 subjectSubstitutionsList.addAll(o[1]);
+<a name="269" href="#269">269</a>                 subjectFlagsList.addAll(o[2]);
+<a name="270" href="#270">270</a>             }
+<a name="271" href="#271">271</a>         
+<a name="272" href="#272">272</a>             filepar = getInitParameter(PARAMETER_NAME_BODY_PATTERNFILE);
+<a name="273" href="#273">273</a>             <strong class="jxr_keyword">if</strong> (filepar != <strong class="jxr_keyword">null</strong>) {
+<a name="274" href="#274">274</a>                 List[] o = getPatternsFromFileList(filepar);
+<a name="275" href="#275">275</a>                 bodyPatternsList.addAll(o[0]);
+<a name="276" href="#276">276</a>                 bodySubstitutionsList.addAll(o[1]);
+<a name="277" href="#277">277</a>                 bodyFlagsList.addAll(o[2]);
+<a name="278" href="#278">278</a>             }
+<a name="279" href="#279">279</a>             
+<a name="280" href="#280">280</a>             subjectPatterns = (Pattern[]) subjectPatternsList.toArray(<strong class="jxr_keyword">new</strong> Pattern[0]);
+<a name="281" href="#281">281</a>             subjectSubstitutions = (String[]) subjectSubstitutionsList.toArray(<strong class="jxr_keyword">new</strong> String[0]);
+<a name="282" href="#282">282</a>             subjectFlags = (Integer[]) subjectFlagsList.toArray(<strong class="jxr_keyword">new</strong> Integer[0]);
+<a name="283" href="#283">283</a>             bodyPatterns = (Pattern[]) bodyPatternsList.toArray(<strong class="jxr_keyword">new</strong> Pattern[0]);
+<a name="284" href="#284">284</a>             bodySubstitutions = (String[]) bodySubstitutionsList.toArray(<strong class="jxr_keyword">new</strong> String[0]);
+<a name="285" href="#285">285</a>             bodyFlags = (Integer[]) bodyFlagsList.toArray(<strong class="jxr_keyword">new</strong> Integer[0]);
+<a name="286" href="#286">286</a>             
+<a name="287" href="#287">287</a>         } <strong class="jxr_keyword">catch</strong> (FileNotFoundException e) {
+<a name="288" href="#288">288</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
+<a name="289" href="#289">289</a>             
+<a name="290" href="#290">290</a>         } <strong class="jxr_keyword">catch</strong> (MailetException e) {
+<a name="291" href="#291">291</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
+<a name="292" href="#292">292</a>             
+<a name="293" href="#293">293</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a name="294" href="#294">294</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Failed initialization"</span>, e);
+<a name="295" href="#295">295</a>             
+<a name="296" href="#296">296</a>         }
+<a name="297" href="#297">297</a>     }
+<a name="298" href="#298">298</a> 
+<a name="299" href="#299">299</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MailetException {
+<a name="300" href="#300">300</a>         initPatterns();
+<a name="301" href="#301">301</a>         
+<a name="302" href="#302">302</a>         <strong class="jxr_keyword">try</strong> {
+<a name="303" href="#303">303</a>             <strong class="jxr_keyword">boolean</strong> mod = false;
+<a name="304" href="#304">304</a>             <strong class="jxr_keyword">boolean</strong> contentChanged = false;
+<a name="305" href="#305">305</a>             
+<a name="306" href="#306">306</a>             <strong class="jxr_keyword">if</strong> (subjectPatterns != <strong class="jxr_keyword">null</strong> &amp;&amp; subjectPatterns.length &gt; 0) {
+<a name="307" href="#307">307</a>                 String subject = mail.getMessage().getSubject();
+<a name="308" href="#308">308</a>                 <strong class="jxr_keyword">if</strong> (subject == <strong class="jxr_keyword">null</strong>) subject = <span class="jxr_string">""</span>;
+<a name="309" href="#309">309</a>                 subject = applyPatterns(subjectPatterns, subjectSubstitutions, subjectFlags, subject, debug, <strong class="jxr_keyword">this</strong>);
+<a name="310" href="#310">310</a>                 <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong>) mail.getMessage().setSubject(subject, charset);
+<a name="311" href="#311">311</a>                 <strong class="jxr_keyword">else</strong> mail.getMessage().setSubject(subject);
+<a name="312" href="#312">312</a>                 mod = <strong class="jxr_keyword">true</strong>;
+<a name="313" href="#313">313</a>             }
+<a name="314" href="#314">314</a>             
+<a name="315" href="#315">315</a>             <strong class="jxr_keyword">if</strong> (bodyPatterns != <strong class="jxr_keyword">null</strong> &amp;&amp; bodyPatterns.length &gt; 0) {
+<a name="316" href="#316">316</a>                 Object bodyObj = mail.getMessage().getContent();
+<a name="317" href="#317">317</a>                 <strong class="jxr_keyword">if</strong> (bodyObj == <strong class="jxr_keyword">null</strong>) bodyObj = <span class="jxr_string">""</span>;
+<a name="318" href="#318">318</a>                 <strong class="jxr_keyword">if</strong> (bodyObj instanceof String) {
+<a name="319" href="#319">319</a>                     String body = (String) bodyObj;
+<a name="320" href="#320">320</a>                     body = applyPatterns(bodyPatterns, bodySubstitutions, bodyFlags, body, debug, <strong class="jxr_keyword">this</strong>);
+<a name="321" href="#321">321</a>                     String contentType = mail.getMessage().getContentType();
+<a name="322" href="#322">322</a>                     <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong>) {
+<a name="323" href="#323">323</a>                         ContentType ct = <strong class="jxr_keyword">new</strong> ContentType(contentType);
+<a name="324" href="#324">324</a>                         ct.setParameter(<span class="jxr_string">"charset"</span>, charset);
+<a name="325" href="#325">325</a>                         contentType = ct.toString();
+<a name="326" href="#326">326</a>                     }
+<a name="327" href="#327">327</a>                     mail.getMessage().setContent(body, contentType);
+<a name="328" href="#328">328</a>                     mod = <strong class="jxr_keyword">true</strong>;
+<a name="329" href="#329">329</a>                     contentChanged = <strong class="jxr_keyword">true</strong>;
+<a name="330" href="#330">330</a>                 }
+<a name="331" href="#331">331</a>             }
 <a name="332" href="#332">332</a>             
-<a name="333" href="#333">333</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a name="334" href="#334">334</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Error in replace"</span>, e);
-<a name="335" href="#335">335</a>         }
-<a name="336" href="#336">336</a>     }
-<a name="337" href="#337">337</a> 
-<a name="338" href="#338">338</a> }
+<a name="333" href="#333">333</a>             <strong class="jxr_keyword">if</strong> (charset != <strong class="jxr_keyword">null</strong> &amp;&amp; !contentChanged) {
+<a name="334" href="#334">334</a>                 ContentType ct = <strong class="jxr_keyword">new</strong> ContentType(mail.getMessage().getContentType());
+<a name="335" href="#335">335</a>                 ct.setParameter(<span class="jxr_string">"charset"</span>, charset);
+<a name="336" href="#336">336</a>                 String contentType = mail.getMessage().getContentType();
+<a name="337" href="#337">337</a>                 mail.getMessage().setContent(mail.getMessage().getContent(), contentType);
+<a name="338" href="#338">338</a>             }
+<a name="339" href="#339">339</a>             
+<a name="340" href="#340">340</a>             <strong class="jxr_keyword">if</strong> (mod) mail.getMessage().saveChanges();
+<a name="341" href="#341">341</a>             
+<a name="342" href="#342">342</a>         } <strong class="jxr_keyword">catch</strong> (MessagingException e) {
+<a name="343" href="#343">343</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Error in replace"</span>, e);
+<a name="344" href="#344">344</a>             
+<a name="345" href="#345">345</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a name="346" href="#346">346</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Error in replace"</span>, e);
+<a name="347" href="#347">347</a>         }
+<a name="348" href="#348">348</a>     }
+<a name="349" href="#349">349</a> 
+<a name="350" href="#350">350</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
