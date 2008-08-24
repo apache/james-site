@@ -103,7 +103,7 @@
 <a name="94" href="#94">94</a>          MimeMessage mmCreated = <strong>new</strong> MimeMessage(Session.getDefaultInstance(<strong>new</strong> Properties()));
 <a name="95" href="#95">95</a>          mmCreated.setSubject(<span class="string">"test"</span>);
 <a name="96" href="#96">96</a>          MimeMultipart mm = <strong>new</strong> MimeMultipart(<span class="string">"alternative"</span>);
-<a name="97" href="#97">97</a>          mm.addBodyPart(<strong>new</strong> MimeBodyPart(<strong>new</strong> InternetHeaders(<strong>new</strong> ByteArrayInputStream(<span class="string">"X-header: test1\r\nContent-Type: text/plain; charset=Cp1252\r\n"</span>.getBytes())),<span class="string">"first part тащ"</span>.getBytes()));
+<a name="97" href="#97">97</a>          mm.addBodyPart(<strong>new</strong> MimeBodyPart(<strong>new</strong> InternetHeaders(<strong>new</strong> ByteArrayInputStream(<span class="string">"X-header: test1\r\nContent-Type: text/plain; charset=Cp1252\r\n"</span>.getBytes())),<span class="string">"first part ???"</span>.getBytes()));
 <a name="98" href="#98">98</a>          mm.addBodyPart(<strong>new</strong> MimeBodyPart(<strong>new</strong> InternetHeaders(<strong>new</strong> ByteArrayInputStream(<span class="string">"X-header: test2\r\nContent-Type: text/plain; charset=Cp1252\r\nContent-Transfer-Encoding: quoted-printable\r\n"</span>.getBytes())),<span class="string">"second part =E8=E8"</span>.getBytes()));
 <a name="99" href="#99">99</a>          mmCreated.setContent(mm);
 <a name="100" href="#100">100</a>         mmCreated.saveChanges();
