@@ -1,0 +1,773 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Apache JAMES Standard Mailets - RAT (Release Audit Tool) results</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="index.html" id="bannerLeft">
+    
+                                            <img src="images/james-standard-mailets-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 08/31/2008
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../mailet/index.html">Mailets</a>
+          |
+          <a href="../../jspf/index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Standard Mailets</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="conf.html">Configuration</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet-report.html">Catalog</a>
+        </li>
+              
+    <li class="none">
+              <a href="doap_standard-mailets.rdf">DOAP</a>
+        </li>
+          </ul>
+          <h5>Mailet</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/api">API</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/base">Basic Toolkit</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/crypto">Crypto</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/maven-mailetdocs-plugin">MailetDocs</a>
+        </li>
+              
+    <li class="none">
+              <a href="">Standard</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+            
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+            <li class="expanded">
+              <a href="project-reports.html">Project Reports</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="apidocs/index.html">JavaDocs</a>
+        </li>
+                  
+    <li class="none">
+              <a href="mailet-report.html">Mailet Reference</a>
+        </li>
+                  
+    <li class="none">
+              <strong>RAT Report</strong>
+        </li>
+                  
+    <li class="none">
+              <a href="xref/index.html">Source Xref</a>
+        </li>
+                  
+    <li class="none">
+              <a href="surefire-report.html">Surefire Report</a>
+        </li>
+                  
+    <li class="none">
+              <a href="taglist.html">Tag List</a>
+        </li>
+                  
+    <li class="none">
+              <a href="testapidocs/index.html">Test JavaDocs</a>
+        </li>
+                  
+    <li class="none">
+              <a href="xref-test/index.html">Test Source Xref</a>
+        </li>
+              </ul>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="../../downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>RAT (Release Audit Tool) results</h2><p>The following document contains the results of <a href="http://code.google.com/p/arat/">RAT (Release Audit Tool)</a>.</p><p><div class="source"><pre>
+*****************************************************
+Summary
+-------
+Notes: 3
+Binaries: 91
+Archives: 7
+Standards: 116
+
+Apache Licensed: 106
+Generated Documents: 0
+
+JavaDocs are generated and so license header is optional
+Generated files do not required license headers
+
+10 Unknown Licenses
+
+*******************************
+
+Archives (+ indicates readable, $ unreadable): 
+
+ + stage/javax.activation/jars/activation-1.1.1.jar
+ + stage/junit/jars/junit-3.8.1.jar
+ + stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
+ + stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT-tests.jar
+ + stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+ + stage/org.apache.james/maven-plugins/maven-mailetdocs-plugin-1.0-SNAPSHOT.jar
+ + stage/javax.mail/jars/mail-1.4.1.jar
+ 
+*****************************************************
+  Files with AL headers will be marked L
+  Binary files (which do not require AL headers) will be marked B
+  Compressed archives will be marked A
+  Notices, licenses etc will be marked N
+  N     stage/javax.activation/jars/activation.LICENSE
+  A     stage/javax.activation/jars/activation-1.1.1.jar
+ !????? stage/javax.activation/poms/activation-1.1.1.pom
+  A     stage/junit/jars/junit-3.8.1.jar
+  AL    stage/junit/poms/junit-3.8.1.pom
+ !????? stage/org.apache.james/xmls/james-project-1.1-site_en.xml
+ !????? stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
+ !????? stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
+ !????? stage/org.apache.james/xmls/james-server-root-1.0-site.xml
+ !????? stage/org.apache.james/xmls/james-parent-1.1-site.xml
+ !????? stage/org.apache.james/xmls/james-project-1.1-site.xml
+  A     stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
+  A     stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT-tests.jar
+  A     stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+  AL    stage/org.apache.james/poms/apache-james-mailet-base-1.0-SNAPSHOT.pom
+  AL    stage/org.apache.james/poms/mailet-2.4-SNAPSHOT.pom
+  AL    stage/org.apache.james/poms/james-project-1.1.pom
+  AL    stage/org.apache.james/poms/james-parent-1.1.pom
+  AL    stage/org.apache.james/poms/maven-skin-1.1.pom
+  AL    stage/org.apache.james/poms/maven-skin-1.1-SNAPSHOT.pom
+  AL    stage/org.apache.james/poms/maven-mailetdocs-plugin-1.0-SNAPSHOT.pom
+  A     stage/org.apache.james/maven-plugins/maven-mailetdocs-plugin-1.0-SNAPSHOT.jar
+  N     stage/javax.mail/jars/mail.LICENSE
+  A     stage/javax.mail/jars/mail-1.4.1.jar
+ !????? stage/javax.mail/poms/mail-1.4.1.pom
+  AL    build.xml
+ !????? include.properties
+  AL    pom.xml
+  N     README.txt
+ !????? default.properties
+  B     bin/org/apache/james/transport/matchers/CommandForListserv.class
+  B     bin/org/apache/james/transport/matchers/SMTPAuthSuccessful.class
+  B     bin/org/apache/james/transport/matchers/HostIsLocalTest.class
+  B     bin/org/apache/james/transport/matchers/SubjectIsTest.class
+  B     bin/org/apache/james/transport/matchers/AbstractSenderIsTest$1.class
+  B     bin/org/apache/james/transport/matchers/All.class
+  B     bin/org/apache/james/transport/matchers/AbstractQuotaMatcher.class
+  B     bin/org/apache/james/transport/matchers/HasMailAttributeTest.class
+  B     bin/org/apache/james/transport/matchers/SenderIsNull.class
+  B     bin/org/apache/james/transport/matchers/HostIsLocalTest$1.class
+  B     bin/org/apache/james/transport/matchers/RecipientIsLocal.class
+  B     bin/org/apache/james/transport/matchers/SenderIsTest.class
+  B     bin/org/apache/james/transport/matchers/IsSingleRecipientTest.class
+  B     bin/org/apache/james/transport/matchers/FetchedFrom.class
+  B     bin/org/apache/james/transport/matchers/RecipientIsTest.class
+  B     bin/org/apache/james/transport/matchers/SubjectStartsWith.class
+  B     bin/org/apache/james/transport/matchers/HostIsTest.class
+  AL    bin/org/apache/james/transport/matchers/package.html
+  B     bin/org/apache/james/transport/matchers/AbstractHasMailAttributeTest.class
+  B     bin/org/apache/james/transport/matchers/SizeGreaterThan.class
+  B     bin/org/apache/james/transport/matchers/HasMailAttribute.class
+  B     bin/org/apache/james/transport/matchers/SMTPIsAuthNetwork.class
+  B     bin/org/apache/james/transport/matchers/AllTest.class
+  B     bin/org/apache/james/transport/matchers/SMTPIsAuthNetworkTest.class
+  B     bin/org/apache/james/transport/matchers/HasHabeasWarrantMark.class
+  B     bin/org/apache/james/transport/matchers/HasMailAttributeWithValue.class
+  B     bin/org/apache/james/transport/matchers/SenderHostIs.class
+  B     bin/org/apache/james/transport/matchers/SubjectStartsWithTest.class
+  B     bin/org/apache/james/transport/matchers/UserIsTest.class
+  B     bin/org/apache/james/transport/matchers/HasAttachment.class
+  B     bin/org/apache/james/transport/matchers/HostIs.class
+  B     bin/org/apache/james/transport/matchers/SMTPAuthSuccessfulTest.class
+  B     bin/org/apache/james/transport/matchers/IsSingleRecipient.class
+  B     bin/org/apache/james/transport/matchers/AttachmentFileNameIs.class
+  B     bin/org/apache/james/transport/matchers/SenderIsNullTest.class
+  B     bin/org/apache/james/transport/matchers/AttachmentFileNameIs$Mask.class
+  B     bin/org/apache/james/transport/matchers/SenderIs.class
+  B     bin/org/apache/james/transport/matchers/AbstractRecipientIsTest.class
+  B     bin/org/apache/james/transport/matchers/RelayLimit.class
+  B     bin/org/apache/james/transport/matchers/AbstractSubjectIsTest.class
+  B     bin/org/apache/james/transport/matchers/SMTPAuthUserIs.class
+  B     bin/org/apache/james/transport/matchers/FetchedFromTest.class
+  B     bin/org/apache/james/transport/matchers/HasHeaderTest.class
+  B     bin/org/apache/james/transport/matchers/AbstractSenderIsTest.class
+  B     bin/org/apache/james/transport/matchers/SenderHostIsLocal.class
+  B     bin/org/apache/james/transport/matchers/HasMailAttributeWithValueTest.class
+  B     bin/org/apache/james/transport/matchers/CompareNumericHeaderValue.class
+  B     bin/org/apache/james/transport/matchers/SMTPAuthUserIsTest.class
+  B     bin/org/apache/james/transport/matchers/UserIs.class
+  B     bin/org/apache/james/transport/matchers/SubjectIs.class
+  B     bin/org/apache/james/transport/matchers/CommandListservMatcher.class
+  B     bin/org/apache/james/transport/matchers/HasHeader.class
+  B     bin/org/apache/james/transport/matchers/RecipientIs.class
+  B     bin/org/apache/james/transport/matchers/SizeGreaterThanTest.class
+  B     bin/org/apache/james/transport/matchers/HostIsLocal.class
+  B     bin/org/apache/james/transport/mailets/AddHabeasWarrantMark.class
+  B     bin/org/apache/james/transport/mailets/debug/ExceptionThrowingMailet.class
+  AL    bin/org/apache/james/transport/mailets/debug/package.html
+  B     bin/org/apache/james/transport/mailets/debug/Counter.class
+  B     bin/org/apache/james/transport/mailets/debug/Identity.class
+  B     bin/org/apache/james/transport/mailets/debug/DumpSystemErr.class
+  B     bin/org/apache/james/transport/mailets/RemoveMimeHeader.class
+  B     bin/org/apache/james/transport/mailets/OnlyText.class
+  B     bin/org/apache/james/transport/mailets/RemoveMailAttributeTest.class
+  B     bin/org/apache/james/transport/mailets/PostmasterAlias.class
+  B     bin/org/apache/james/transport/mailets/SetMailAttribute.class
+  B     bin/org/apache/james/transport/mailets/RemoveMimeHeaderTest.class
+  AL    bin/org/apache/james/transport/mailets/package.html
+  B     bin/org/apache/james/transport/mailets/UnwrapText.class
+  B     bin/org/apache/james/transport/mailets/NullTest.class
+  B     bin/org/apache/james/transport/mailets/AddFooter.class
+  B     bin/org/apache/james/transport/mailets/SetMailAttributeTest.class
+  B     bin/org/apache/james/transport/mailets/MailAttributesToMimeHeaders.class
+  B     bin/org/apache/james/transport/mailets/LogMessage.class
+  B     bin/org/apache/james/transport/mailets/AddSubjectPrefixTest.class
+  B     bin/org/apache/james/transport/mailets/MailAttributesToMimeHeadersTest.class
+  B     bin/org/apache/james/transport/mailets/UseHeaderRecipients.class
+  B     bin/org/apache/james/transport/mailets/AddFooterTest.class
+  B     bin/org/apache/james/transport/mailets/SetMimeHeader.class
+  B     bin/org/apache/james/transport/mailets/RemoveMailAttribute.class
+  B     bin/org/apache/james/transport/mailets/AddSubjectPrefix.class
+  B     bin/org/apache/james/transport/mailets/ReplaceContent.class
+  B     bin/org/apache/james/transport/mailets/ClamAVScan.class
+  B     bin/org/apache/james/transport/mailets/SetMimeHeaderTest.class
+  B     bin/org/apache/james/transport/mailets/WrapText.class
+  B     bin/org/apache/james/transport/mailets/RemoveAllMailAttributes.class
+  B     bin/org/apache/james/transport/mailets/ServerTime.class
+  B     bin/org/apache/james/transport/mailets/ToProcessor.class
+  B     bin/org/apache/james/transport/mailets/ToProcessorTest.class
+  B     bin/org/apache/james/transport/mailets/Null.class
+  B     bin/org/apache/james/transport/mailets/RemoveAllMailAttributesTest.class
+  B     bin/org/apache/james/transport/mailets/AbstractAddFooter.class
+  AL    src/main/java/org/apache/james/transport/matchers/SenderHostIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/SMTPAuthUserIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/SenderIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/AttachmentFileNameIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/SenderIsNull.java
+  AL    src/main/java/org/apache/james/transport/matchers/SubjectStartsWith.java
+  AL    src/main/java/org/apache/james/transport/matchers/SizeGreaterThan.java
+  AL    src/main/java/org/apache/james/transport/matchers/HasHabeasWarrantMark.java
+  AL    src/main/java/org/apache/james/transport/matchers/package.html
+  AL    src/main/java/org/apache/james/transport/matchers/AbstractQuotaMatcher.java
+  AL    src/main/java/org/apache/james/transport/matchers/HasMailAttribute.java
+  AL    src/main/java/org/apache/james/transport/matchers/SMTPIsAuthNetwork.java
+  AL    src/main/java/org/apache/james/transport/matchers/HasAttachment.java
+  AL    src/main/java/org/apache/james/transport/matchers/IsSingleRecipient.java
+  AL    src/main/java/org/apache/james/transport/matchers/SubjectIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/UserIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/SMTPAuthSuccessful.java
+  AL    src/main/java/org/apache/james/transport/matchers/HostIsLocal.java
+  AL    src/main/java/org/apache/james/transport/matchers/FetchedFrom.java
+  AL    src/main/java/org/apache/james/transport/matchers/CommandForListserv.java
+  AL    src/main/java/org/apache/james/transport/matchers/HostIs.java
+  AL    src/main/java/org/apache/james/transport/matchers/RecipientIsLocal.java
+  AL    src/main/java/org/apache/james/transport/matchers/HasHeader.java
+  AL    src/main/java/org/apache/james/transport/matchers/CommandListservMatcher.java
+  AL    src/main/java/org/apache/james/transport/matchers/CompareNumericHeaderValue.java
+  AL    src/main/java/org/apache/james/transport/matchers/All.java
+  AL    src/main/java/org/apache/james/transport/matchers/SenderHostIsLocal.java
+  AL    src/main/java/org/apache/james/transport/matchers/RelayLimit.java
+  AL    src/main/java/org/apache/james/transport/matchers/HasMailAttributeWithValue.java
+  AL    src/main/java/org/apache/james/transport/matchers/RecipientIs.java
+  AL    src/main/java/org/apache/james/transport/mailets/debug/package.html
+  AL    src/main/java/org/apache/james/transport/mailets/debug/Identity.java
+  AL    src/main/java/org/apache/james/transport/mailets/debug/ExceptionThrowingMailet.java
+  AL    src/main/java/org/apache/james/transport/mailets/debug/Counter.java
+  AL    src/main/java/org/apache/james/transport/mailets/debug/DumpSystemErr.java
+  AL    src/main/java/org/apache/james/transport/mailets/WrapText.java
+  AL    src/main/java/org/apache/james/transport/mailets/UseHeaderRecipients.java
+  AL    src/main/java/org/apache/james/transport/mailets/RemoveAllMailAttributes.java
+  AL    src/main/java/org/apache/james/transport/mailets/PostmasterAlias.java
+  AL    src/main/java/org/apache/james/transport/mailets/package.html
+  AL    src/main/java/org/apache/james/transport/mailets/OnlyText.java
+  AL    src/main/java/org/apache/james/transport/mailets/ToProcessor.java
+  AL    src/main/java/org/apache/james/transport/mailets/AddHabeasWarrantMark.java
+  AL    src/main/java/org/apache/james/transport/mailets/RemoveMailAttribute.java
+  AL    src/main/java/org/apache/james/transport/mailets/SetMimeHeader.java
+  AL    src/main/java/org/apache/james/transport/mailets/Null.java
+  AL    src/main/java/org/apache/james/transport/mailets/AddSubjectPrefix.java
+  AL    src/main/java/org/apache/james/transport/mailets/ServerTime.java
+  AL    src/main/java/org/apache/james/transport/mailets/AddFooter.java
+  AL    src/main/java/org/apache/james/transport/mailets/MailAttributesToMimeHeaders.java
+  AL    src/main/java/org/apache/james/transport/mailets/LogMessage.java
+  AL    src/main/java/org/apache/james/transport/mailets/ReplaceContent.java
+  AL    src/main/java/org/apache/james/transport/mailets/ClamAVScan.java
+  AL    src/main/java/org/apache/james/transport/mailets/SetMailAttribute.java
+  AL    src/main/java/org/apache/james/transport/mailets/UnwrapText.java
+  AL    src/main/java/org/apache/james/transport/mailets/AbstractAddFooter.java
+  AL    src/main/java/org/apache/james/transport/mailets/RemoveMimeHeader.java
+  AL    src/site/xdoc/conf.xml
+  AL    src/site/xdoc/index.xml
+  AL    src/site/site.xml
+  B     src/site/resources/images/james-standard-mailets-logo.gif
+  B     src/site/resources/images/asf-logo-reduced.gif
+  AL    src/site/resources/css/site.css
+  AL    src/test/java/org/apache/james/transport/matchers/SMTPIsAuthNetworkTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/HostIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/AbstractSubjectIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SMTPAuthUserIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/AbstractHasMailAttributeTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/IsSingleRecipientTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/RecipientIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/HasHeaderTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/HasMailAttributeTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SenderIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/FetchedFromTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/UserIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/AbstractSenderIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SubjectIsTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/HasMailAttributeWithValueTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/HostIsLocalTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SMTPAuthSuccessfulTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/AllTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SizeGreaterThanTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SenderIsNullTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/SubjectStartsWithTest.java
+  AL    src/test/java/org/apache/james/transport/matchers/AbstractRecipientIsTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/SetMimeHeaderTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/RemoveAllMailAttributesTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/MailAttributesToMimeHeadersTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/RemoveMimeHeaderTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/SetMailAttributeTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/RemoveMailAttributeTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/AddFooterTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/AddSubjectPrefixTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/ToProcessorTest.java
+  AL    src/test/java/org/apache/james/transport/mailets/NullTest.java
+ 
+ *****************************************************
+ Printing headers for files without AL header...
+ 
+ 
+ =======================================================================
+ ==stage/javax.activation/poms/activation-1.1.1.pom
+ =======================================================================
+ &lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;javax.activation&lt;/groupId&gt;
+  &lt;artifactId&gt;activation&lt;/artifactId&gt;
+  &lt;version&gt;1.1.1&lt;/version&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-project-1.1-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-parent-1.1-site_en.xml
+ =======================================================================
+ 
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-server-root-1.0-site.xml
+ =======================================================================
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Server&quot;&gt;
+  &lt;bannerLeft&gt;
+    &lt;name&gt;James Server&lt;/name&gt;
+    &lt;src&gt;images/james-server-logo.gif&lt;/src&gt;
+    &lt;href&gt;http://james.apache.org/server/&lt;/href&gt;
+  &lt;/bannerLeft&gt;
+  &lt;bannerRight&gt;
+    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
+    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
+    &lt;href&gt;http://www.apache.org/&lt;/href&gt;
+  &lt;/bannerRight&gt;
+  &lt;body&gt;
+    &lt;menu name=&quot;James Server&quot; inherit=&quot;top&quot;&gt;
+      &lt;item name=&quot;Overview&quot; href=&quot;/index.html&quot; /&gt;
+      &lt;item name=&quot;Objectives&quot; href=&quot;/design_objectives.html&quot; /&gt;
+      &lt;item name=&quot;James FAQ&quot; href=&quot;/FAQ.html&quot;&gt;
+        &lt;item name=&quot;James and Sendmail&quot; href=&quot;/james_and_sendmail.html&quot; /&gt;
+      &lt;/item&gt;
+      &lt;item name=&quot;Wiki&quot; href=&quot;http://wiki.apache.org/james&quot; /&gt;
+      &lt;item name=&quot;Useful RFCs&quot; href=&quot;/rfclist.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;Documentation&quot;&gt;
+      &lt;item name=&quot;Server 2.3.1&quot; href=&quot;/2.3.1/index.html&quot; /&gt;
+      &lt;item name=&quot;Server 2.3.0&quot; href=&quot;/2.3.0/index.html&quot; /&gt;
+      &lt;item name=&quot;Server 2.2.0&quot; href=&quot;/2.2.0/index.html&quot; /&gt;
+      &lt;item name=&quot;Archive&quot; href=&quot;/archive/document_archive.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;Project&quot; inherit=&quot;bottom&quot;&gt;
+      &lt;item name=&quot;Bug Database&quot; href=&quot;http://issues.apache.org/jira/browse/JAMES&quot; /&gt;
+      &lt;item name=&quot;Source Code&quot; href=&quot;http://svn.apache.org/viewvc/james/server/&quot; /&gt;
+      &lt;item name=&quot;TODO&quot; href=&quot;/todo.html&quot; /&gt;
+    &lt;/menu&gt;
+  &lt;/body&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-parent-1.1-site.xml
+ =======================================================================
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Parent POM&quot;&gt;
+  &lt;bannerLeft&gt;
+    &lt;name&gt;James Project&lt;/name&gt;
+    &lt;src&gt;images/james-project-logo.gif&lt;/src&gt;
+    &lt;href&gt;http://james.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerLeft&gt;
+  &lt;bannerRight&gt;
+    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
+    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
+    &lt;href&gt;http://www.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerRight&gt;
+  &lt;skin&gt;
+    &lt;groupId&gt;org.apache.maven.skins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-default-skin&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+  &lt;/skin&gt;
+  &lt;body /&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==stage/org.apache.james/xmls/james-project-1.1-site.xml
+ =======================================================================
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;&lt;project name=&quot;James Project&quot;&gt;
+  &lt;bannerLeft&gt;
+    &lt;name&gt;James Project&lt;/name&gt;
+    &lt;src&gt;images/james-project-logo.gif&lt;/src&gt;
+    &lt;href&gt;http://james.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerLeft&gt;
+  &lt;bannerRight&gt;
+    &lt;name&gt;The Apache Software Foundation&lt;/name&gt;
+    &lt;src&gt;images/asf-logo-reduced.gif&lt;/src&gt;
+    &lt;href&gt;http://www.apache.org/index.html&lt;/href&gt;
+  &lt;/bannerRight&gt;
+  &lt;skin&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-skin&lt;/artifactId&gt;
+    &lt;version&gt;1.1-SNAPSHOT&lt;/version&gt;
+  &lt;/skin&gt;
+  &lt;body&gt;
+    &lt;links&gt;
+      &lt;item name=&quot;JAMES Project&quot; href=&quot;/index.html&quot; /&gt;
+      &lt;item name=&quot;Server&quot; href=&quot;/server/index.html&quot; /&gt;
+      &lt;item name=&quot;Mailet API&quot; href=&quot;/mailet/index.html&quot; /&gt;
+      &lt;item name=&quot;jSPF&quot; href=&quot;/jspf/index.html&quot; /&gt;
+      &lt;item name=&quot;Mime4J&quot; href=&quot;/mime4j/index.html&quot; /&gt;
+      &lt;item name=&quot;JSieve&quot; href=&quot;/jsieve/index.html&quot; /&gt;
+      &lt;item name=&quot;Postage&quot; href=&quot;/postage/index.html&quot; /&gt;
+    &lt;/links&gt;
+    &lt;menu name=&quot;Sub Projects&quot;&gt;
+      &lt;item name=&quot;Server&quot; href=&quot;/server/index.html&quot; /&gt;
+      &lt;item name=&quot;Mailet API&quot; href=&quot;/mailet/index.html&quot; /&gt;
+      &lt;item name=&quot;jSPF&quot; href=&quot;/jspf/index.html&quot; /&gt;
+      &lt;item name=&quot;Mime4J&quot; href=&quot;/mime4j/index.html&quot; /&gt;
+      &lt;item name=&quot;JSieve&quot; href=&quot;/jsieve/index.html&quot; /&gt;
+      &lt;item name=&quot;Postage&quot; href=&quot;/postage/index.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;About&quot;&gt;
+      &lt;item name=&quot;News&quot; href=&quot;/newsarchive.html&quot; /&gt;
+      &lt;item name=&quot;Overview&quot; href=&quot;/index.html&quot; /&gt;
+      &lt;item name=&quot;Mailing Lists&quot; href=&quot;/mail.html&quot; /&gt;
+      &lt;item name=&quot;Project Guidelines&quot; href=&quot;/guidelines.html&quot; /&gt;
+      &lt;item name=&quot;Wiki&quot; href=&quot;http://wiki.apache.org/james&quot; /&gt;
+      &lt;item name=&quot;Who We Are&quot; href=&quot;/weare.html&quot; /&gt;
+      &lt;item name=&quot;Contributing&quot; href=&quot;/contribute.html&quot; /&gt;
+      &lt;item name=&quot;Standards&quot; href=&quot;/code-standards.html&quot; /&gt;
+      &lt;item name=&quot;License&quot; href=&quot;/license.html&quot; /&gt;
+    &lt;/menu&gt;
+    &lt;menu name=&quot;Downloads&quot; inherit=&quot;bottom&quot;&gt;
+      &lt;item name=&quot;Stable releases&quot; href=&quot;/download.cgi&quot; /&gt;
+      &lt;item name=&quot;Unstable releases&quot; href=&quot;/downloadunstable.cgi&quot; /&gt;
+      &lt;item name=&quot;Nightly builds&quot; href=&quot;http://people.apache.org/builds/james/nightly/&quot; /&gt;
+    &lt;/menu&gt;
+
+ =======================================================================
+ ==stage/javax.mail/poms/mail-1.4.1.pom
+ =======================================================================
+ &lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;javax.mail&lt;/groupId&gt;
+  &lt;artifactId&gt;mail&lt;/artifactId&gt;
+  &lt;version&gt;1.4.1&lt;/version&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.activation&lt;/groupId&gt;
+      &lt;artifactId&gt;activation&lt;/artifactId&gt;
+      &lt;version&gt;1.1&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;
+
+ =======================================================================
+ ==include.properties
+ =======================================================================
+ # -------------------------------------------------------------------
+# I N C L U D E   P R O P E R T I E S
+# -------------------------------------------------------------------
+# Specifies the location of jar files to include in the classpath
+
+
+#
+# the relative base directory
+#
+
+mailet.dir = ${basedir}
+
+#
+#  third party binary directories
+#
+
+lib.dir = ${mailet.dir}/lib
+
+# --------------------------------------------------
+#                REQUIRED LIBRARIES
+# --------------------------------------------------
+
+# ----- Javax mail -----
+javamail.id=mail-1.4.1
+javax-mail.jar=stage/javax.mail/jars/${javamail.id}.jar
+
+# ----- Activation -----
+activation.id=activation-1.1.1
+javax-activation.jar=stage/javax.activation/jars/${activation.id}.jar
+
+# ----- Mailet -----
+mailet.jar=stage/org.apache.james/jars/mailet-2.4-SNAPSHOT.jar
+mailet-base.jar=stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
+mailet-base-tests.jar=stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT-tests.jar
+
+# ----- JUnit ------
+junit.jar=stage/junit/jars/junit-3.8.1.jar
+
+ =======================================================================
+ ==default.properties
+ =======================================================================
+ # -------------------------------------------------------------------
+# B U I L D  P R O P E R T I E S
+# -------------------------------------------------------------------
+# Specifies default property values
+# Overridden by ../default.properties and all ant.properties
+# Not user-editable; use ant.properties files instead
+# See also: include.properties
+
+project=apache-james
+name=standard-mailets
+Name=Standard Mailets
+version=1.0-SNAPSHOT
+manifestVersion=3.0
+year=2008
+extension.name=org.apache.james
+vendor=The Apache Software Foundation
+vendor.id=org.apache
+creator=James Project Of The Apache Software Foundation
+title.spec=Apache Standard Mailets API
+title.impl=Apache Standard Mailets
+
+#
+# compiler options
+# (There should be no need to override default compiler but need to change
+# javac task to run without this}
+
+build.compiler = modern
+jdk.source = 1.4
+jdk.target = 1.4
+
+#
+# compiler switches
+# (these are here only for those who use jikes compiler)
+#
+
+build.compiler.emacs = on
+build.compiler.pedantic = true
+build.compiler.depend = true
+build.compiler.fulldepend = true
+
+#
+# standard compiler switches
+#
+
+debug = on
+optimize = on
+deprecation = on
+
+#
+#  location of intermediate products
+</pre></div></p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2008
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
