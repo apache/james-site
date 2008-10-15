@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 08/20/2008
+        Last Published: 10/15/2008
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -240,7 +240,7 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section"><h2>RAT (Release Audit Tool) results</h2>
-<p>The following document contains the results of <a class="externalLink" href="http://code.google.com/p/arat/">RAT (Release Audit Tool)</a>
+<p>The following document contains the results of <a href="http://code.google.com/p/arat/" class="externalLink">RAT (Release Audit Tool)</a>
 .</p>
 <p><div class="source"><pre>
 *****************************************************
@@ -249,9 +249,9 @@ Summary
 Notes: 4
 Binaries: 2
 Archives: 6
-Standards: 170
+Standards: 182
 
-Apache Licensed: 170
+Apache Licensed: 182
 Generated Documents: 0
 
 JavaDocs are generated and so license header is optional
@@ -302,12 +302,6 @@ Archives (+ indicates readable, $ unreadable):
   AL    src/test/java/org/apache/james/mime4j/util/TestCharArrayBuffer.java
   AL    src/test/java/org/apache/james/mime4j/util/StringArrayMapTest.java
   AL    src/test/java/org/apache/james/mime4j/util/MessageUtilsTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/RootInputStreamTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/BufferedLineReaderInputStreamBufferTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/EOLConvertingInputStreamTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/LineReaderInputStreamAdaptorTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/MimeBoundaryInputStreamTest.java
-  AL    src/test/java/org/apache/james/mime4j/stream/BufferedLineReaderInputStreamTest.java
   AL    src/test/java/org/apache/james/mime4j/parser/MimeTokenNoRecurseTest.java
   AL    src/test/java/org/apache/james/mime4j/parser/MimeTokenStreamTest.java
   AL    src/test/java/org/apache/james/mime4j/parser/MimeStreamParserTest.java
@@ -323,6 +317,7 @@ Archives (+ indicates readable, $ unreadable):
   AL    src/test/java/org/apache/james/mime4j/parser/MimeTokenStreamReaderTest.java
   AL    src/test/java/org/apache/james/mime4j/EncodeUtils.java
   AL    src/test/java/org/apache/james/mime4j/TestUtil.java
+  AL    src/test/java/org/apache/james/mime4j/decoder/QuotedPrintableOutputStreamTest.java
   AL    src/test/java/org/apache/james/mime4j/decoder/QuotedPrintableInputStreamTest.java
   AL    src/test/java/org/apache/james/mime4j/decoder/DecoderUtilTest.java
   AL    src/test/java/org/apache/james/mime4j/decoder/QuotedPrintableTextEncodeTest.java
@@ -331,6 +326,14 @@ Archives (+ indicates readable, $ unreadable):
   AL    src/test/java/org/apache/james/mime4j/decoder/Base64OutputStreamTest.java
   AL    src/test/java/org/apache/james/mime4j/decoder/QuotedPrintableEncodeTest.java
   AL    src/test/java/org/apache/james/mime4j/decoder/CodecUtilTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/RootInputStreamTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/LimitedInputStreamTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/BufferedLineReaderInputStreamBufferTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/EOLConvertingInputStreamTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/LineReaderInputStreamAdaptorTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/MimeBoundaryInputStreamTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/PositionInputStreamTest.java
+  AL    src/test/java/org/apache/james/mime4j/io/BufferedLineReaderInputStreamTest.java
   B     src/site/resources/images/asf-logo-reduced.gif
   B     src/site/resources/images/james-mime4j-logo.gif
   AL    src/site/apt/usage.apt
@@ -378,11 +381,13 @@ Archives (+ indicates readable, $ unreadable):
   AL    src/main/java/org/apache/james/mime4j/message/TempFileBinaryBody.java
   AL    src/main/java/org/apache/james/mime4j/message/AbstractBody.java
   AL    src/main/java/org/apache/james/mime4j/message/BinaryBody.java
+  AL    src/main/java/org/apache/james/mime4j/message/MessageBuilder.java
   AL    src/main/java/org/apache/james/mime4j/message/TextBody.java
   AL    src/main/java/org/apache/james/mime4j/message/TempFileTextBody.java
   AL    src/main/java/org/apache/james/mime4j/message/Entity.java
   AL    src/main/java/org/apache/james/mime4j/message/Message.java
   AL    src/main/java/org/apache/james/mime4j/message/Multipart.java
+  AL    src/main/java/org/apache/james/mime4j/message/Disposable.java
   AL    src/main/java/org/apache/james/mime4j/message/storage/TempFile.java
   AL    src/main/java/org/apache/james/mime4j/message/storage/SimpleTempStorage.java
   AL    src/main/java/org/apache/james/mime4j/message/storage/TempPath.java
@@ -404,27 +409,34 @@ Archives (+ indicates readable, $ unreadable):
   AL    src/main/java/org/apache/james/mime4j/parser/ContentHandler.java
   AL    src/main/java/org/apache/james/mime4j/parser/MimeTokenStream.java
   AL    src/main/java/org/apache/james/mime4j/parser/RecursionMode.java
+  AL    src/main/java/org/apache/james/mime4j/parser/MimeEntityConfig.java
   AL    src/main/java/org/apache/james/mime4j/parser/RawEntity.java
   AL    src/main/java/org/apache/james/mime4j/parser/AbstractContentHandler.java
   AL    src/main/java/org/apache/james/mime4j/parser/MimeStreamParser.java
+  AL    src/main/java/org/apache/james/mime4j/decoder/Base64Encoder.java
+  AL    src/main/java/org/apache/james/mime4j/decoder/QuotedPrintableOutputStream.java
   AL    src/main/java/org/apache/james/mime4j/decoder/LineBreakingOutputStream.java
   AL    src/main/java/org/apache/james/mime4j/decoder/UnboundedFifoByteBuffer.java
   AL    src/main/java/org/apache/james/mime4j/decoder/QuotedPrintableInputStream.java
   AL    src/main/java/org/apache/james/mime4j/decoder/Base64InputStream.java
   AL    src/main/java/org/apache/james/mime4j/decoder/ByteQueue.java
   AL    src/main/java/org/apache/james/mime4j/decoder/Base64OutputStream.java
+  AL    src/main/java/org/apache/james/mime4j/decoder/QuotedPrintableEncoder.java
   AL    src/main/java/org/apache/james/mime4j/decoder/CodecUtil.java
   AL    src/main/java/org/apache/james/mime4j/decoder/DecoderUtil.java
   AL    src/main/java/org/apache/james/mime4j/MimeException.java
   AL    src/main/java/org/apache/james/mime4j/io/PartialInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/RootInputStream.java
+  AL    src/main/java/org/apache/james/mime4j/io/MaxHeaderLimitException.java
   AL    src/main/java/org/apache/james/mime4j/io/EOLConvertingInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/PositionInputStream.java
+  AL    src/main/java/org/apache/james/mime4j/io/LimitedInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/LineReaderInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/LineReaderInputStreamAdaptor.java
   AL    src/main/java/org/apache/james/mime4j/io/CloseShieldInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/MimeBoundaryInputStream.java
   AL    src/main/java/org/apache/james/mime4j/io/BufferedLineReaderInputStream.java
+  AL    src/main/java/org/apache/james/mime4j/io/MaxLineLimitException.java
   AL    src/main/appended-resources/supplemental-models.xml
   AL    src/main/javacc/org/apache/james/mime4j/field/contenttype/ParseException.java
   AL    src/main/javacc/org/apache/james/mime4j/field/contenttype/ContentTypeParser.jj

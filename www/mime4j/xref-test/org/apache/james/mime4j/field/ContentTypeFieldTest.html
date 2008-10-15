@@ -48,14 +48,14 @@
 <a name="38" href="#38">38</a>          BasicConfigurator.configure();
 <a name="39" href="#39">39</a>      }
 <a name="40" href="#40">40</a>      
-<a name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMimeTypeWithSemiColonNoParams() {
+<a name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMimeTypeWithSemiColonNoParams() <strong class="jxr_keyword">throws</strong> Exception  {
 <a name="42" href="#42">42</a>          ContentTypeField f = <strong class="jxr_keyword">null</strong>;
 <a name="43" href="#43">43</a>          
 <a name="44" href="#44">44</a>          f = (ContentTypeField) Field.parse(<span class="jxr_string">"Content-Type: text/html;"</span>);
 <a name="45" href="#45">45</a>          assertEquals(<span class="jxr_string">"text/html"</span>, f.getMimeType());
 <a name="46" href="#46">46</a>      }
 <a name="47" href="#47">47</a>      
-<a name="48" href="#48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetMimeType() {
+<a name="48" href="#48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetMimeType() <strong class="jxr_keyword">throws</strong> Exception {
 <a name="49" href="#49">49</a>          ContentTypeField f = <strong class="jxr_keyword">null</strong>;
 <a name="50" href="#50">50</a>          
 <a name="51" href="#51">51</a>          f = (ContentTypeField) Field.parse(<span class="jxr_string">"Content-Type: text/PLAIN"</span>);
@@ -72,7 +72,7 @@
 <a name="62" href="#62">62</a>          assertEquals(<span class="jxr_string">""</span>, f.getMimeType());
 <a name="63" href="#63">63</a>      }
 <a name="64" href="#64">64</a>      
-<a name="65" href="#65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetMimeTypeStatic() {
+<a name="65" href="#65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetMimeTypeStatic() <strong class="jxr_keyword">throws</strong> Exception {
 <a name="66" href="#66">66</a>          ContentTypeField child = <strong class="jxr_keyword">null</strong>;
 <a name="67" href="#67">67</a>          ContentTypeField parent = <strong class="jxr_keyword">null</strong>;
 <a name="68" href="#68">68</a>          
@@ -93,7 +93,7 @@
 <a name="83" href="#83">83</a>          assertEquals(<span class="jxr_string">"message/rfc822"</span>, ContentTypeField.getMimeType(child, parent));
 <a name="84" href="#84">84</a>      }
 <a name="85" href="#85">85</a>      
-<a name="86" href="#86">86</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetCharsetStatic() {
+<a name="86" href="#86">86</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetCharsetStatic() <strong class="jxr_keyword">throws</strong> Exception {
 <a name="87" href="#87">87</a>          ContentTypeField f = <strong class="jxr_keyword">null</strong>;
 <a name="88" href="#88">88</a>          
 <a name="89" href="#89">89</a>          f = (ContentTypeField) Field.parse(<span class="jxr_string">"Content-Type: some/type; charset=iso8859-1"</span>);
@@ -103,7 +103,7 @@
 <a name="93" href="#93">93</a>          assertEquals(<span class="jxr_string">"us-ascii"</span>, ContentTypeField.getCharset(f));
 <a name="94" href="#94">94</a>      }
 <a name="95" href="#95">95</a>      
-<a name="96" href="#96">96</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetParameter() {
+<a name="96" href="#96">96</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetParameter() <strong class="jxr_keyword">throws</strong> Exception {
 <a name="97" href="#97">97</a>          ContentTypeField f = <strong class="jxr_keyword">null</strong>;
 <a name="98" href="#98">98</a>          
 <a name="99" href="#99">99</a>          f = (ContentTypeField) Field.parse(<span class="jxr_string">"CONTENT-TYPE:   text / html ;"</span>

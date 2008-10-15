@@ -30,316 +30,528 @@
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.james.mime4j.parser;
 <a name="21" href="#21">21</a>  
 <a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.io.ByteArrayInputStream;
-<a name="23" href="#23">23</a>  
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.IOUtils;
-<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.BufferedLineReaderInputStream;
-<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.RootInputStream;
-<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.EntityStateMachine;
-<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.EntityStates;
-<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.MimeEntity;
-<a name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.RecursionMode;
-<a name="31" href="#31">31</a>  
-<a name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
-<a name="33" href="#33">33</a>  
-<a name="34" href="#34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeEntityTest.html">MimeEntityTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
-<a name="35" href="#35">35</a>  
-<a name="36" href="#36">36</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleEntity() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="37" href="#37">37</a>          String message = 
-<a name="38" href="#38">38</a>              <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
-<a name="39" href="#39">39</a>              <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
-<a name="40" href="#40">40</a>              <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
-<a name="41" href="#41">41</a>              <span class="jxr_string">"Subject: Mail\r\n"</span> +
-<a name="42" href="#42">42</a>              <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
-<a name="43" href="#43">43</a>              <span class="jxr_string">"\r\n"</span> +
-<a name="44" href="#44">44</a>              <span class="jxr_string">"a very important message"</span>;
-<a name="45" href="#45">45</a>          byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
-<a name="46" href="#46">46</a>          ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
-<a name="47" href="#47">47</a>          RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
-<a name="48" href="#48">48</a>          BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
-<a name="49" href="#49">49</a>          
-<a name="50" href="#50">50</a>          MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
-<a name="51" href="#51">51</a>                  rootStream,
-<a name="52" href="#52">52</a>                  rawstream,
-<a name="53" href="#53">53</a>                  <strong class="jxr_keyword">null</strong>,
-<a name="54" href="#54">54</a>                  EntityStates.T_START_MESSAGE,
-<a name="55" href="#55">55</a>                  EntityStates.T_END_MESSAGE);
-<a name="56" href="#56">56</a>          
-<a name="57" href="#57">57</a>          
-<a name="58" href="#58">58</a>          assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
-<a name="59" href="#59">59</a>          entity.advance();
-<a name="60" href="#60">60</a>          assertEquals(EntityStates.T_START_HEADER, entity.getState());
-<a name="61" href="#61">61</a>          entity.advance();
-<a name="62" href="#62">62</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="63" href="#63">63</a>          assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
-<a name="64" href="#64">64</a>          assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
-<a name="65" href="#65">65</a>          entity.advance();
-<a name="66" href="#66">66</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="67" href="#67">67</a>          assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
-<a name="68" href="#68">68</a>          assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
-<a name="69" href="#69">69</a>          entity.advance();
-<a name="70" href="#70">70</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="71" href="#71">71</a>          assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
-<a name="72" href="#72">72</a>          assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
-<a name="73" href="#73">73</a>          entity.advance();
-<a name="74" href="#74">74</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="75" href="#75">75</a>          assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
-<a name="76" href="#76">76</a>          assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
-<a name="77" href="#77">77</a>          entity.advance();
-<a name="78" href="#78">78</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="79" href="#79">79</a>          assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
-<a name="80" href="#80">80</a>          assertEquals(<span class="jxr_string">" text/plain"</span>, entity.getFieldValue());
-<a name="81" href="#81">81</a>          entity.advance();
-<a name="82" href="#82">82</a>          assertEquals(EntityStates.T_END_HEADER, entity.getState());
-<a name="83" href="#83">83</a>          <strong class="jxr_keyword">try</strong> {
-<a name="84" href="#84">84</a>              entity.getFieldName();
-<a name="85" href="#85">85</a>              fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
-<a name="86" href="#86">86</a>          } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
-<a name="87" href="#87">87</a>          }
-<a name="88" href="#88">88</a>          <strong class="jxr_keyword">try</strong> {
-<a name="89" href="#89">89</a>              entity.getFieldValue();
-<a name="90" href="#90">90</a>              fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
-<a name="91" href="#91">91</a>          } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
-<a name="92" href="#92">92</a>          }
-<a name="93" href="#93">93</a>          
-<a name="94" href="#94">94</a>          entity.advance();
-<a name="95" href="#95">95</a>          assertEquals(EntityStates.T_BODY, entity.getState());
-<a name="96" href="#96">96</a>          assertEquals(<span class="jxr_string">"a very important message"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a name="24" href="#24">24</a>  
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.IOUtils;
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.BufferedLineReaderInputStream;
+<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.MaxHeaderLimitException;
+<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.MaxLineLimitException;
+<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.io.RootInputStream;
+<a name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.EntityStateMachine;
+<a name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.EntityStates;
+<a name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.MimeEntity;
+<a name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.RecursionMode;
+<a name="34" href="#34">34</a>  
+<a name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
+<a name="36" href="#36">36</a>  
+<a name="37" href="#37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeEntityTest.html">MimeEntityTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
+<a name="38" href="#38">38</a>  
+<a name="39" href="#39">39</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleEntity() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="40" href="#40">40</a>          String message = 
+<a name="41" href="#41">41</a>              <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="42" href="#42">42</a>              <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="43" href="#43">43</a>              <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="44" href="#44">44</a>              <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="45" href="#45">45</a>              <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="46" href="#46">46</a>              <span class="jxr_string">"\r\n"</span> +
+<a name="47" href="#47">47</a>              <span class="jxr_string">"a very important message"</span>;
+<a name="48" href="#48">48</a>          byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="49" href="#49">49</a>          ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="50" href="#50">50</a>          RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="51" href="#51">51</a>          BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
+<a name="52" href="#52">52</a>          
+<a name="53" href="#53">53</a>          MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="54" href="#54">54</a>                  rootStream,
+<a name="55" href="#55">55</a>                  rawstream,
+<a name="56" href="#56">56</a>                  <strong class="jxr_keyword">null</strong>,
+<a name="57" href="#57">57</a>                  EntityStates.T_START_MESSAGE,
+<a name="58" href="#58">58</a>                  EntityStates.T_END_MESSAGE);
+<a name="59" href="#59">59</a>          
+<a name="60" href="#60">60</a>          
+<a name="61" href="#61">61</a>          assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="62" href="#62">62</a>          entity.advance();
+<a name="63" href="#63">63</a>          assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="64" href="#64">64</a>          entity.advance();
+<a name="65" href="#65">65</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="66" href="#66">66</a>          assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
+<a name="67" href="#67">67</a>          assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
+<a name="68" href="#68">68</a>          entity.advance();
+<a name="69" href="#69">69</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="70" href="#70">70</a>          assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
+<a name="71" href="#71">71</a>          assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
+<a name="72" href="#72">72</a>          entity.advance();
+<a name="73" href="#73">73</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="74" href="#74">74</a>          assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
+<a name="75" href="#75">75</a>          assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
+<a name="76" href="#76">76</a>          entity.advance();
+<a name="77" href="#77">77</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="78" href="#78">78</a>          assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
+<a name="79" href="#79">79</a>          assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
+<a name="80" href="#80">80</a>          entity.advance();
+<a name="81" href="#81">81</a>          assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="82" href="#82">82</a>          assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
+<a name="83" href="#83">83</a>          assertEquals(<span class="jxr_string">" text/plain"</span>, entity.getFieldValue());
+<a name="84" href="#84">84</a>          entity.advance();
+<a name="85" href="#85">85</a>          assertEquals(EntityStates.T_END_HEADER, entity.getState());
+<a name="86" href="#86">86</a>          <strong class="jxr_keyword">try</strong> {
+<a name="87" href="#87">87</a>              entity.getFieldName();
+<a name="88" href="#88">88</a>              fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
+<a name="89" href="#89">89</a>          } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
+<a name="90" href="#90">90</a>          }
+<a name="91" href="#91">91</a>          <strong class="jxr_keyword">try</strong> {
+<a name="92" href="#92">92</a>              entity.getFieldValue();
+<a name="93" href="#93">93</a>              fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
+<a name="94" href="#94">94</a>          } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
+<a name="95" href="#95">95</a>          }
+<a name="96" href="#96">96</a>          
 <a name="97" href="#97">97</a>          entity.advance();
-<a name="98" href="#98">98</a>          assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
-<a name="99" href="#99">99</a>          <strong class="jxr_keyword">try</strong> {
-<a name="100" href="#100">100</a>             entity.getContentStream();
-<a name="101" href="#101">101</a>             fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
-<a name="102" href="#102">102</a>         } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
-<a name="103" href="#103">103</a>         }
-<a name="104" href="#104">104</a>         entity.advance();
-<a name="105" href="#105">105</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
-<a name="106" href="#106">106</a>         <strong class="jxr_keyword">try</strong> {
-<a name="107" href="#107">107</a>             entity.advance();
-<a name="108" href="#108">108</a>             fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
-<a name="109" href="#109">109</a>         } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
-<a name="110" href="#110">110</a>         }
-<a name="111" href="#111">111</a>     }
-<a name="112" href="#112">112</a> 
-<a name="113" href="#113">113</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMultipartEntity() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="114" href="#114">114</a>         String message = 
-<a name="115" href="#115">115</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
-<a name="116" href="#116">116</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
-<a name="117" href="#117">117</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
-<a name="118" href="#118">118</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
-<a name="119" href="#119">119</a>             <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> +
-<a name="120" href="#120">120</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="121" href="#121">121</a>             <span class="jxr_string">"Hello!\r\n"</span> +
-<a name="122" href="#122">122</a>             <span class="jxr_string">"--1729\r\n"</span> +
-<a name="123" href="#123">123</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="124" href="#124">124</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="125" href="#125">125</a>             <span class="jxr_string">"blah blah blah\r\n"</span> +
-<a name="126" href="#126">126</a>             <span class="jxr_string">"--1729\r\n"</span> +
-<a name="127" href="#127">127</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="128" href="#128">128</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="129" href="#129">129</a>             <span class="jxr_string">"yada yada yada\r\n"</span> +
-<a name="130" href="#130">130</a>             <span class="jxr_string">"--1729--\r\n"</span> +
-<a name="131" href="#131">131</a>             <span class="jxr_string">"Goodbye!"</span>;
-<a name="132" href="#132">132</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
-<a name="133" href="#133">133</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
-<a name="134" href="#134">134</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
-<a name="135" href="#135">135</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 24); 
-<a name="136" href="#136">136</a>         
-<a name="137" href="#137">137</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
-<a name="138" href="#138">138</a>                 rootStream,
-<a name="139" href="#139">139</a>                 rawstream,
-<a name="140" href="#140">140</a>                 <strong class="jxr_keyword">null</strong>,
-<a name="141" href="#141">141</a>                 EntityStates.T_START_MESSAGE,
-<a name="142" href="#142">142</a>                 EntityStates.T_END_MESSAGE);
-<a name="143" href="#143">143</a>         
-<a name="144" href="#144">144</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
-<a name="145" href="#145">145</a>         entity.advance();
-<a name="146" href="#146">146</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
-<a name="147" href="#147">147</a>         entity.advance();
-<a name="148" href="#148">148</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="149" href="#149">149</a>         assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
-<a name="150" href="#150">150</a>         assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
-<a name="151" href="#151">151</a>         entity.advance();
-<a name="152" href="#152">152</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="153" href="#153">153</a>         assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
-<a name="154" href="#154">154</a>         assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
-<a name="155" href="#155">155</a>         entity.advance();
-<a name="156" href="#156">156</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="157" href="#157">157</a>         assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
-<a name="158" href="#158">158</a>         assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
-<a name="159" href="#159">159</a>         entity.advance();
-<a name="160" href="#160">160</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="161" href="#161">161</a>         assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
-<a name="162" href="#162">162</a>         assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
-<a name="163" href="#163">163</a>         entity.advance();
-<a name="164" href="#164">164</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="165" href="#165">165</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
-<a name="166" href="#166">166</a>         assertEquals(<span class="jxr_string">" multipart/mixed;boundary=1729"</span>, entity.getFieldValue());
-<a name="167" href="#167">167</a>         entity.advance();
-<a name="168" href="#168">168</a>         assertEquals(EntityStates.T_END_HEADER, entity.getState());
-<a name="169" href="#169">169</a>         entity.advance();
-<a name="170" href="#170">170</a>         assertEquals(EntityStates.T_START_MULTIPART, entity.getState());
-<a name="171" href="#171">171</a>         entity.advance();
-<a name="172" href="#172">172</a>         assertEquals(EntityStates.T_PREAMBLE, entity.getState());
-<a name="173" href="#173">173</a>         assertEquals(<span class="jxr_string">"Hello!"</span>, IOUtils.toString(entity.getContentStream()));
-<a name="174" href="#174">174</a>         
-<a name="175" href="#175">175</a>         EntityStateMachine p1 = entity.advance();
-<a name="176" href="#176">176</a>         assertNotNull(p1);
+<a name="98" href="#98">98</a>          assertEquals(EntityStates.T_BODY, entity.getState());
+<a name="99" href="#99">99</a>          assertEquals(<span class="jxr_string">"a very important message"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="100" href="#100">100</a>         entity.advance();
+<a name="101" href="#101">101</a>         assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
+<a name="102" href="#102">102</a>         <strong class="jxr_keyword">try</strong> {
+<a name="103" href="#103">103</a>             entity.getContentStream();
+<a name="104" href="#104">104</a>             fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
+<a name="105" href="#105">105</a>         } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
+<a name="106" href="#106">106</a>         }
+<a name="107" href="#107">107</a>         entity.advance();
+<a name="108" href="#108">108</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
+<a name="109" href="#109">109</a>         <strong class="jxr_keyword">try</strong> {
+<a name="110" href="#110">110</a>             entity.advance();
+<a name="111" href="#111">111</a>             fail(<span class="jxr_string">"IllegalStateException should have been thrown"</span>);
+<a name="112" href="#112">112</a>         } <strong class="jxr_keyword">catch</strong> (IllegalStateException expected) {
+<a name="113" href="#113">113</a>         }
+<a name="114" href="#114">114</a>     }
+<a name="115" href="#115">115</a> 
+<a name="116" href="#116">116</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMultipartEntity() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="117" href="#117">117</a>         String message = 
+<a name="118" href="#118">118</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="119" href="#119">119</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="120" href="#120">120</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="121" href="#121">121</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="122" href="#122">122</a>             <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> +
+<a name="123" href="#123">123</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="124" href="#124">124</a>             <span class="jxr_string">"Hello!\r\n"</span> +
+<a name="125" href="#125">125</a>             <span class="jxr_string">"--1729\r\n"</span> +
+<a name="126" href="#126">126</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="127" href="#127">127</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="128" href="#128">128</a>             <span class="jxr_string">"blah blah blah\r\n"</span> +
+<a name="129" href="#129">129</a>             <span class="jxr_string">"--1729\r\n"</span> +
+<a name="130" href="#130">130</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="131" href="#131">131</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="132" href="#132">132</a>             <span class="jxr_string">"yada yada yada\r\n"</span> +
+<a name="133" href="#133">133</a>             <span class="jxr_string">"--1729--\r\n"</span> +
+<a name="134" href="#134">134</a>             <span class="jxr_string">"Goodbye!"</span>;
+<a name="135" href="#135">135</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="136" href="#136">136</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="137" href="#137">137</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="138" href="#138">138</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 24); 
+<a name="139" href="#139">139</a>         
+<a name="140" href="#140">140</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="141" href="#141">141</a>                 rootStream,
+<a name="142" href="#142">142</a>                 rawstream,
+<a name="143" href="#143">143</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="144" href="#144">144</a>                 EntityStates.T_START_MESSAGE,
+<a name="145" href="#145">145</a>                 EntityStates.T_END_MESSAGE);
+<a name="146" href="#146">146</a>         
+<a name="147" href="#147">147</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="148" href="#148">148</a>         entity.advance();
+<a name="149" href="#149">149</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="150" href="#150">150</a>         entity.advance();
+<a name="151" href="#151">151</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="152" href="#152">152</a>         assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
+<a name="153" href="#153">153</a>         assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
+<a name="154" href="#154">154</a>         entity.advance();
+<a name="155" href="#155">155</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="156" href="#156">156</a>         assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
+<a name="157" href="#157">157</a>         assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
+<a name="158" href="#158">158</a>         entity.advance();
+<a name="159" href="#159">159</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="160" href="#160">160</a>         assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
+<a name="161" href="#161">161</a>         assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
+<a name="162" href="#162">162</a>         entity.advance();
+<a name="163" href="#163">163</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="164" href="#164">164</a>         assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
+<a name="165" href="#165">165</a>         assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
+<a name="166" href="#166">166</a>         entity.advance();
+<a name="167" href="#167">167</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="168" href="#168">168</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
+<a name="169" href="#169">169</a>         assertEquals(<span class="jxr_string">" multipart/mixed;boundary=1729"</span>, entity.getFieldValue());
+<a name="170" href="#170">170</a>         entity.advance();
+<a name="171" href="#171">171</a>         assertEquals(EntityStates.T_END_HEADER, entity.getState());
+<a name="172" href="#172">172</a>         entity.advance();
+<a name="173" href="#173">173</a>         assertEquals(EntityStates.T_START_MULTIPART, entity.getState());
+<a name="174" href="#174">174</a>         entity.advance();
+<a name="175" href="#175">175</a>         assertEquals(EntityStates.T_PREAMBLE, entity.getState());
+<a name="176" href="#176">176</a>         assertEquals(<span class="jxr_string">"Hello!"</span>, IOUtils.toString(entity.getContentStream()));
 <a name="177" href="#177">177</a>         
-<a name="178" href="#178">178</a>         assertEquals(EntityStates.T_START_BODYPART, p1.getState());
-<a name="179" href="#179">179</a>         p1.advance();
-<a name="180" href="#180">180</a>         assertEquals(EntityStates.T_START_HEADER, p1.getState());
-<a name="181" href="#181">181</a>         p1.advance();
-<a name="182" href="#182">182</a>         assertEquals(EntityStates.T_FIELD, p1.getState());
-<a name="183" href="#183">183</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, p1.getFieldName());
-<a name="184" href="#184">184</a>         assertEquals(<span class="jxr_string">" text/plain; charset=US-ASCII"</span>, p1.getFieldValue());
-<a name="185" href="#185">185</a>         p1.advance();
-<a name="186" href="#186">186</a>         assertEquals(EntityStates.T_END_HEADER, p1.getState());
-<a name="187" href="#187">187</a>         p1.advance();
-<a name="188" href="#188">188</a>         assertEquals(EntityStates.T_BODY, p1.getState());
-<a name="189" href="#189">189</a>         assertEquals(<span class="jxr_string">"blah blah blah"</span>, IOUtils.toString(p1.getContentStream()));
+<a name="178" href="#178">178</a>         EntityStateMachine p1 = entity.advance();
+<a name="179" href="#179">179</a>         assertNotNull(p1);
+<a name="180" href="#180">180</a>         
+<a name="181" href="#181">181</a>         assertEquals(EntityStates.T_START_BODYPART, p1.getState());
+<a name="182" href="#182">182</a>         p1.advance();
+<a name="183" href="#183">183</a>         assertEquals(EntityStates.T_START_HEADER, p1.getState());
+<a name="184" href="#184">184</a>         p1.advance();
+<a name="185" href="#185">185</a>         assertEquals(EntityStates.T_FIELD, p1.getState());
+<a name="186" href="#186">186</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, p1.getFieldName());
+<a name="187" href="#187">187</a>         assertEquals(<span class="jxr_string">" text/plain; charset=US-ASCII"</span>, p1.getFieldValue());
+<a name="188" href="#188">188</a>         p1.advance();
+<a name="189" href="#189">189</a>         assertEquals(EntityStates.T_END_HEADER, p1.getState());
 <a name="190" href="#190">190</a>         p1.advance();
-<a name="191" href="#191">191</a>         assertEquals(EntityStates.T_END_BODYPART, p1.getState());
-<a name="192" href="#192">192</a>         p1.advance();
-<a name="193" href="#193">193</a>         assertEquals(EntityStates.T_END_OF_STREAM, p1.getState());
-<a name="194" href="#194">194</a> 
-<a name="195" href="#195">195</a>         EntityStateMachine p2 = entity.advance();
-<a name="196" href="#196">196</a>         assertNotNull(p2);
-<a name="197" href="#197">197</a>         
-<a name="198" href="#198">198</a>         assertEquals(EntityStates.T_START_BODYPART, p2.getState());
-<a name="199" href="#199">199</a>         p2.advance();
-<a name="200" href="#200">200</a>         assertEquals(EntityStates.T_START_HEADER, p2.getState());
-<a name="201" href="#201">201</a>         p2.advance();
-<a name="202" href="#202">202</a>         assertEquals(EntityStates.T_FIELD, p2.getState());
-<a name="203" href="#203">203</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, p2.getFieldName());
-<a name="204" href="#204">204</a>         assertEquals(<span class="jxr_string">" text/plain; charset=US-ASCII"</span>, p2.getFieldValue());
-<a name="205" href="#205">205</a>         p2.advance();
-<a name="206" href="#206">206</a>         assertEquals(EntityStates.T_END_HEADER, p2.getState());
-<a name="207" href="#207">207</a>         p2.advance();
-<a name="208" href="#208">208</a>         assertEquals(EntityStates.T_BODY, p2.getState());
-<a name="209" href="#209">209</a>         assertEquals(<span class="jxr_string">"yada yada yada"</span>, IOUtils.toString(p2.getContentStream()));
+<a name="191" href="#191">191</a>         assertEquals(EntityStates.T_BODY, p1.getState());
+<a name="192" href="#192">192</a>         assertEquals(<span class="jxr_string">"blah blah blah"</span>, IOUtils.toString(p1.getContentStream()));
+<a name="193" href="#193">193</a>         p1.advance();
+<a name="194" href="#194">194</a>         assertEquals(EntityStates.T_END_BODYPART, p1.getState());
+<a name="195" href="#195">195</a>         p1.advance();
+<a name="196" href="#196">196</a>         assertEquals(EntityStates.T_END_OF_STREAM, p1.getState());
+<a name="197" href="#197">197</a> 
+<a name="198" href="#198">198</a>         EntityStateMachine p2 = entity.advance();
+<a name="199" href="#199">199</a>         assertNotNull(p2);
+<a name="200" href="#200">200</a>         
+<a name="201" href="#201">201</a>         assertEquals(EntityStates.T_START_BODYPART, p2.getState());
+<a name="202" href="#202">202</a>         p2.advance();
+<a name="203" href="#203">203</a>         assertEquals(EntityStates.T_START_HEADER, p2.getState());
+<a name="204" href="#204">204</a>         p2.advance();
+<a name="205" href="#205">205</a>         assertEquals(EntityStates.T_FIELD, p2.getState());
+<a name="206" href="#206">206</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, p2.getFieldName());
+<a name="207" href="#207">207</a>         assertEquals(<span class="jxr_string">" text/plain; charset=US-ASCII"</span>, p2.getFieldValue());
+<a name="208" href="#208">208</a>         p2.advance();
+<a name="209" href="#209">209</a>         assertEquals(EntityStates.T_END_HEADER, p2.getState());
 <a name="210" href="#210">210</a>         p2.advance();
-<a name="211" href="#211">211</a>         assertEquals(EntityStates.T_END_BODYPART, p2.getState());
-<a name="212" href="#212">212</a>         p2.advance();
-<a name="213" href="#213">213</a>         assertEquals(EntityStates.T_END_OF_STREAM, p2.getState());
-<a name="214" href="#214">214</a> 
-<a name="215" href="#215">215</a>         entity.advance();
-<a name="216" href="#216">216</a>         assertEquals(EntityStates.T_EPILOGUE, entity.getState());
-<a name="217" href="#217">217</a>         assertEquals(<span class="jxr_string">"Goodbye!"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="211" href="#211">211</a>         assertEquals(EntityStates.T_BODY, p2.getState());
+<a name="212" href="#212">212</a>         assertEquals(<span class="jxr_string">"yada yada yada"</span>, IOUtils.toString(p2.getContentStream()));
+<a name="213" href="#213">213</a>         p2.advance();
+<a name="214" href="#214">214</a>         assertEquals(EntityStates.T_END_BODYPART, p2.getState());
+<a name="215" href="#215">215</a>         p2.advance();
+<a name="216" href="#216">216</a>         assertEquals(EntityStates.T_END_OF_STREAM, p2.getState());
+<a name="217" href="#217">217</a> 
 <a name="218" href="#218">218</a>         entity.advance();
-<a name="219" href="#219">219</a>         assertEquals(EntityStates.T_END_MULTIPART, entity.getState());
-<a name="220" href="#220">220</a>         entity.advance();
-<a name="221" href="#221">221</a>         assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
-<a name="222" href="#222">222</a>         entity.advance();
-<a name="223" href="#223">223</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
-<a name="224" href="#224">224</a>     }
-<a name="225" href="#225">225</a>     
-<a name="226" href="#226">226</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRawEntity() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="227" href="#227">227</a>         String message = 
-<a name="228" href="#228">228</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
-<a name="229" href="#229">229</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
-<a name="230" href="#230">230</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
-<a name="231" href="#231">231</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
-<a name="232" href="#232">232</a>             <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> +
-<a name="233" href="#233">233</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="234" href="#234">234</a>             <span class="jxr_string">"Hello!\r\n"</span> +
-<a name="235" href="#235">235</a>             <span class="jxr_string">"--1729\r\n"</span> +
-<a name="236" href="#236">236</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="237" href="#237">237</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="238" href="#238">238</a>             <span class="jxr_string">"blah blah blah\r\n"</span> +
-<a name="239" href="#239">239</a>             <span class="jxr_string">"--1729\r\n"</span> +
-<a name="240" href="#240">240</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="241" href="#241">241</a>             <span class="jxr_string">"\r\n"</span> +
-<a name="242" href="#242">242</a>             <span class="jxr_string">"yada yada yada\r\n"</span> +
-<a name="243" href="#243">243</a>             <span class="jxr_string">"--1729--\r\n"</span> +
-<a name="244" href="#244">244</a>             <span class="jxr_string">"Goodbye!"</span>;
-<a name="245" href="#245">245</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
-<a name="246" href="#246">246</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
-<a name="247" href="#247">247</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
-<a name="248" href="#248">248</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 24); 
-<a name="249" href="#249">249</a>         
-<a name="250" href="#250">250</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
-<a name="251" href="#251">251</a>                 rootStream,
-<a name="252" href="#252">252</a>                 rawstream,
-<a name="253" href="#253">253</a>                 <strong class="jxr_keyword">null</strong>,
-<a name="254" href="#254">254</a>                 EntityStates.T_START_MESSAGE,
-<a name="255" href="#255">255</a>                 EntityStates.T_END_MESSAGE);
-<a name="256" href="#256">256</a>         
-<a name="257" href="#257">257</a>         entity.setRecursionMode(RecursionMode.M_RAW);
-<a name="258" href="#258">258</a>         
-<a name="259" href="#259">259</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
-<a name="260" href="#260">260</a>         entity.advance();
-<a name="261" href="#261">261</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
-<a name="262" href="#262">262</a>         entity.advance();
-<a name="263" href="#263">263</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="264" href="#264">264</a>         assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
-<a name="265" href="#265">265</a>         assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
-<a name="266" href="#266">266</a>         entity.advance();
-<a name="267" href="#267">267</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="268" href="#268">268</a>         assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
-<a name="269" href="#269">269</a>         assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
-<a name="270" href="#270">270</a>         entity.advance();
-<a name="271" href="#271">271</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="272" href="#272">272</a>         assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
-<a name="273" href="#273">273</a>         assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
-<a name="274" href="#274">274</a>         entity.advance();
-<a name="275" href="#275">275</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="276" href="#276">276</a>         assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
-<a name="277" href="#277">277</a>         assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
-<a name="278" href="#278">278</a>         entity.advance();
-<a name="279" href="#279">279</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
-<a name="280" href="#280">280</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
-<a name="281" href="#281">281</a>         assertEquals(<span class="jxr_string">" multipart/mixed;boundary=1729"</span>, entity.getFieldValue());
-<a name="282" href="#282">282</a>         entity.advance();
-<a name="283" href="#283">283</a>         assertEquals(EntityStates.T_END_HEADER, entity.getState());
-<a name="284" href="#284">284</a>         entity.advance();
-<a name="285" href="#285">285</a>         assertEquals(EntityStates.T_START_MULTIPART, entity.getState());
-<a name="286" href="#286">286</a>         
+<a name="219" href="#219">219</a>         assertEquals(EntityStates.T_EPILOGUE, entity.getState());
+<a name="220" href="#220">220</a>         assertEquals(<span class="jxr_string">"Goodbye!"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="221" href="#221">221</a>         entity.advance();
+<a name="222" href="#222">222</a>         assertEquals(EntityStates.T_END_MULTIPART, entity.getState());
+<a name="223" href="#223">223</a>         entity.advance();
+<a name="224" href="#224">224</a>         assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
+<a name="225" href="#225">225</a>         entity.advance();
+<a name="226" href="#226">226</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
+<a name="227" href="#227">227</a>     }
+<a name="228" href="#228">228</a>     
+<a name="229" href="#229">229</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRawEntity() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="230" href="#230">230</a>         String message = 
+<a name="231" href="#231">231</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="232" href="#232">232</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="233" href="#233">233</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="234" href="#234">234</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="235" href="#235">235</a>             <span class="jxr_string">"Content-Type: multipart/mixed;boundary=1729\r\n"</span> +
+<a name="236" href="#236">236</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="237" href="#237">237</a>             <span class="jxr_string">"Hello!\r\n"</span> +
+<a name="238" href="#238">238</a>             <span class="jxr_string">"--1729\r\n"</span> +
+<a name="239" href="#239">239</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="240" href="#240">240</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="241" href="#241">241</a>             <span class="jxr_string">"blah blah blah\r\n"</span> +
+<a name="242" href="#242">242</a>             <span class="jxr_string">"--1729\r\n"</span> +
+<a name="243" href="#243">243</a>             <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="244" href="#244">244</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="245" href="#245">245</a>             <span class="jxr_string">"yada yada yada\r\n"</span> +
+<a name="246" href="#246">246</a>             <span class="jxr_string">"--1729--\r\n"</span> +
+<a name="247" href="#247">247</a>             <span class="jxr_string">"Goodbye!"</span>;
+<a name="248" href="#248">248</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="249" href="#249">249</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="250" href="#250">250</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="251" href="#251">251</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 24); 
+<a name="252" href="#252">252</a>         
+<a name="253" href="#253">253</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="254" href="#254">254</a>                 rootStream,
+<a name="255" href="#255">255</a>                 rawstream,
+<a name="256" href="#256">256</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="257" href="#257">257</a>                 EntityStates.T_START_MESSAGE,
+<a name="258" href="#258">258</a>                 EntityStates.T_END_MESSAGE);
+<a name="259" href="#259">259</a>         
+<a name="260" href="#260">260</a>         entity.setRecursionMode(RecursionMode.M_RAW);
+<a name="261" href="#261">261</a>         
+<a name="262" href="#262">262</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="263" href="#263">263</a>         entity.advance();
+<a name="264" href="#264">264</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="265" href="#265">265</a>         entity.advance();
+<a name="266" href="#266">266</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="267" href="#267">267</a>         assertEquals(<span class="jxr_string">"To"</span>, entity.getFieldName());
+<a name="268" href="#268">268</a>         assertEquals(<span class="jxr_string">" Road Runner &lt;runner@example.org&gt;"</span>, entity.getFieldValue());
+<a name="269" href="#269">269</a>         entity.advance();
+<a name="270" href="#270">270</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="271" href="#271">271</a>         assertEquals(<span class="jxr_string">"From"</span>, entity.getFieldName());
+<a name="272" href="#272">272</a>         assertEquals(<span class="jxr_string">" Wile E. Cayote &lt;wile@example.org&gt;"</span>, entity.getFieldValue());
+<a name="273" href="#273">273</a>         entity.advance();
+<a name="274" href="#274">274</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="275" href="#275">275</a>         assertEquals(<span class="jxr_string">"Date"</span>, entity.getFieldName());
+<a name="276" href="#276">276</a>         assertEquals(<span class="jxr_string">" Tue, 12 Feb 2008 17:34:09 +0000 (GMT)"</span>, entity.getFieldValue());
+<a name="277" href="#277">277</a>         entity.advance();
+<a name="278" href="#278">278</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="279" href="#279">279</a>         assertEquals(<span class="jxr_string">"Subject"</span>, entity.getFieldName());
+<a name="280" href="#280">280</a>         assertEquals(<span class="jxr_string">" Mail"</span>, entity.getFieldValue());
+<a name="281" href="#281">281</a>         entity.advance();
+<a name="282" href="#282">282</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="283" href="#283">283</a>         assertEquals(<span class="jxr_string">"Content-Type"</span>, entity.getFieldName());
+<a name="284" href="#284">284</a>         assertEquals(<span class="jxr_string">" multipart/mixed;boundary=1729"</span>, entity.getFieldValue());
+<a name="285" href="#285">285</a>         entity.advance();
+<a name="286" href="#286">286</a>         assertEquals(EntityStates.T_END_HEADER, entity.getState());
 <a name="287" href="#287">287</a>         entity.advance();
-<a name="288" href="#288">288</a>         assertEquals(EntityStates.T_PREAMBLE, entity.getState());
-<a name="289" href="#289">289</a>         assertEquals(<span class="jxr_string">"Hello!"</span>, IOUtils.toString(entity.getContentStream()));
-<a name="290" href="#290">290</a>         
-<a name="291" href="#291">291</a>         EntityStateMachine p1 = entity.advance();
-<a name="292" href="#292">292</a>         assertNotNull(p1);
+<a name="288" href="#288">288</a>         assertEquals(EntityStates.T_START_MULTIPART, entity.getState());
+<a name="289" href="#289">289</a>         
+<a name="290" href="#290">290</a>         entity.advance();
+<a name="291" href="#291">291</a>         assertEquals(EntityStates.T_PREAMBLE, entity.getState());
+<a name="292" href="#292">292</a>         assertEquals(<span class="jxr_string">"Hello!"</span>, IOUtils.toString(entity.getContentStream()));
 <a name="293" href="#293">293</a>         
-<a name="294" href="#294">294</a>         assertEquals(EntityStates.T_RAW_ENTITY, p1.getState());
-<a name="295" href="#295">295</a>         assertNull(p1.getBodyDescriptor());
-<a name="296" href="#296">296</a>         assertNull(p1.getField());
-<a name="297" href="#297">297</a>         assertNull(p1.getFieldName());
-<a name="298" href="#298">298</a>         assertNull(p1.getFieldValue());
-<a name="299" href="#299">299</a>         assertEquals(
-<a name="300" href="#300">300</a>                 <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="301" href="#301">301</a>                 <span class="jxr_string">"\r\n"</span> +
-<a name="302" href="#302">302</a>                 <span class="jxr_string">"blah blah blah"</span>, IOUtils.toString(p1.getContentStream()));
-<a name="303" href="#303">303</a>         p1.advance();
-<a name="304" href="#304">304</a>         assertEquals(EntityStates.T_END_OF_STREAM, p1.getState());
-<a name="305" href="#305">305</a> 
-<a name="306" href="#306">306</a>         EntityStateMachine p2 = entity.advance();
-<a name="307" href="#307">307</a>         assertNotNull(p2);
-<a name="308" href="#308">308</a>         
-<a name="309" href="#309">309</a>         assertEquals(EntityStates.T_RAW_ENTITY, p2.getState());
-<a name="310" href="#310">310</a>         assertNull(p2.getBodyDescriptor());
-<a name="311" href="#311">311</a>         assertNull(p2.getField());
-<a name="312" href="#312">312</a>         assertNull(p2.getFieldName());
-<a name="313" href="#313">313</a>         assertNull(p2.getFieldValue());
-<a name="314" href="#314">314</a>         assertEquals(
-<a name="315" href="#315">315</a>                 <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
-<a name="316" href="#316">316</a>                 <span class="jxr_string">"\r\n"</span> +
-<a name="317" href="#317">317</a>                 <span class="jxr_string">"yada yada yada"</span>, IOUtils.toString(p2.getContentStream()));
-<a name="318" href="#318">318</a>         p2.advance();
-<a name="319" href="#319">319</a>         assertEquals(EntityStates.T_END_OF_STREAM, p2.getState());
-<a name="320" href="#320">320</a> 
-<a name="321" href="#321">321</a>         entity.advance();
-<a name="322" href="#322">322</a>         assertEquals(EntityStates.T_EPILOGUE, entity.getState());
-<a name="323" href="#323">323</a>         assertEquals(<span class="jxr_string">"Goodbye!"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="294" href="#294">294</a>         EntityStateMachine p1 = entity.advance();
+<a name="295" href="#295">295</a>         assertNotNull(p1);
+<a name="296" href="#296">296</a>         
+<a name="297" href="#297">297</a>         assertEquals(EntityStates.T_RAW_ENTITY, p1.getState());
+<a name="298" href="#298">298</a>         assertNull(p1.getBodyDescriptor());
+<a name="299" href="#299">299</a>         assertNull(p1.getField());
+<a name="300" href="#300">300</a>         assertNull(p1.getFieldName());
+<a name="301" href="#301">301</a>         assertNull(p1.getFieldValue());
+<a name="302" href="#302">302</a>         assertEquals(
+<a name="303" href="#303">303</a>                 <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="304" href="#304">304</a>                 <span class="jxr_string">"\r\n"</span> +
+<a name="305" href="#305">305</a>                 <span class="jxr_string">"blah blah blah"</span>, IOUtils.toString(p1.getContentStream()));
+<a name="306" href="#306">306</a>         p1.advance();
+<a name="307" href="#307">307</a>         assertEquals(EntityStates.T_END_OF_STREAM, p1.getState());
+<a name="308" href="#308">308</a> 
+<a name="309" href="#309">309</a>         EntityStateMachine p2 = entity.advance();
+<a name="310" href="#310">310</a>         assertNotNull(p2);
+<a name="311" href="#311">311</a>         
+<a name="312" href="#312">312</a>         assertEquals(EntityStates.T_RAW_ENTITY, p2.getState());
+<a name="313" href="#313">313</a>         assertNull(p2.getBodyDescriptor());
+<a name="314" href="#314">314</a>         assertNull(p2.getField());
+<a name="315" href="#315">315</a>         assertNull(p2.getFieldName());
+<a name="316" href="#316">316</a>         assertNull(p2.getFieldValue());
+<a name="317" href="#317">317</a>         assertEquals(
+<a name="318" href="#318">318</a>                 <span class="jxr_string">"Content-Type: text/plain; charset=US-ASCII\r\n"</span> +
+<a name="319" href="#319">319</a>                 <span class="jxr_string">"\r\n"</span> +
+<a name="320" href="#320">320</a>                 <span class="jxr_string">"yada yada yada"</span>, IOUtils.toString(p2.getContentStream()));
+<a name="321" href="#321">321</a>         p2.advance();
+<a name="322" href="#322">322</a>         assertEquals(EntityStates.T_END_OF_STREAM, p2.getState());
+<a name="323" href="#323">323</a> 
 <a name="324" href="#324">324</a>         entity.advance();
-<a name="325" href="#325">325</a>         assertEquals(EntityStates.T_END_MULTIPART, entity.getState());
-<a name="326" href="#326">326</a>         entity.advance();
-<a name="327" href="#327">327</a>         assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
-<a name="328" href="#328">328</a>         entity.advance();
-<a name="329" href="#329">329</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
-<a name="330" href="#330">330</a>     }
-<a name="331" href="#331">331</a> 
-<a name="332" href="#332">332</a> }
+<a name="325" href="#325">325</a>         assertEquals(EntityStates.T_EPILOGUE, entity.getState());
+<a name="326" href="#326">326</a>         assertEquals(<span class="jxr_string">"Goodbye!"</span>, IOUtils.toString(entity.getContentStream()));
+<a name="327" href="#327">327</a>         entity.advance();
+<a name="328" href="#328">328</a>         assertEquals(EntityStates.T_END_MULTIPART, entity.getState());
+<a name="329" href="#329">329</a>         entity.advance();
+<a name="330" href="#330">330</a>         assertEquals(EntityStates.T_END_MESSAGE, entity.getState());
+<a name="331" href="#331">331</a>         entity.advance();
+<a name="332" href="#332">332</a>         assertEquals(EntityStates.T_END_OF_STREAM, entity.getState());
+<a name="333" href="#333">333</a>     }
+<a name="334" href="#334">334</a> 
+<a name="335" href="#335">335</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMaxLineLimitCheck() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="336" href="#336">336</a>         String message = 
+<a name="337" href="#337">337</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="338" href="#338">338</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="339" href="#339">339</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="340" href="#340">340</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="341" href="#341">341</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="342" href="#342">342</a>             <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="343" href="#343">343</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="344" href="#344">344</a>             <span class="jxr_string">"a very important message"</span>;
+<a name="345" href="#345">345</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="346" href="#346">346</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="347" href="#347">347</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="348" href="#348">348</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
+<a name="349" href="#349">349</a>         
+<a name="350" href="#350">350</a>         MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
+<a name="351" href="#351">351</a>         config.setMaxLineLen(50);
+<a name="352" href="#352">352</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="353" href="#353">353</a>                 rootStream,
+<a name="354" href="#354">354</a>                 rawstream,
+<a name="355" href="#355">355</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="356" href="#356">356</a>                 EntityStates.T_START_MESSAGE,
+<a name="357" href="#357">357</a>                 EntityStates.T_END_MESSAGE,
+<a name="358" href="#358">358</a>                 config);
+<a name="359" href="#359">359</a>         
+<a name="360" href="#360">360</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="361" href="#361">361</a>         entity.advance();
+<a name="362" href="#362">362</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="363" href="#363">363</a>         entity.advance();
+<a name="364" href="#364">364</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="365" href="#365">365</a>         entity.advance();
+<a name="366" href="#366">366</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="367" href="#367">367</a>         entity.advance();
+<a name="368" href="#368">368</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="369" href="#369">369</a>         entity.advance();
+<a name="370" href="#370">370</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="371" href="#371">371</a>         <strong class="jxr_keyword">try</strong> {
+<a name="372" href="#372">372</a>             entity.advance();
+<a name="373" href="#373">373</a>             fail(<span class="jxr_string">"MaxLineLimitException should have been thrown"</span>);
+<a name="374" href="#374">374</a>         } <strong class="jxr_keyword">catch</strong> (MaxLineLimitException expected) {
+<a name="375" href="#375">375</a>         }
+<a name="376" href="#376">376</a>     }
+<a name="377" href="#377">377</a>     
+<a name="378" href="#378">378</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMaxLineLimitCheckFoldedLines() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="379" href="#379">379</a>         String message = 
+<a name="380" href="#380">380</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="381" href="#381">381</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="382" href="#382">382</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="383" href="#383">383</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="384" href="#384">384</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="385" href="#385">385</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="386" href="#386">386</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="387" href="#387">387</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="388" href="#388">388</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="389" href="#389">389</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="390" href="#390">390</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="391" href="#391">391</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="392" href="#392">392</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="393" href="#393">393</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="394" href="#394">394</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="395" href="#395">395</a>             <span class="jxr_string">"    xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="396" href="#396">396</a>             <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="397" href="#397">397</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="398" href="#398">398</a>             <span class="jxr_string">"a very important message"</span>;
+<a name="399" href="#399">399</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="400" href="#400">400</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="401" href="#401">401</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="402" href="#402">402</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
+<a name="403" href="#403">403</a>         
+<a name="404" href="#404">404</a>         MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
+<a name="405" href="#405">405</a>         config.setMaxLineLen(50);
+<a name="406" href="#406">406</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="407" href="#407">407</a>                 rootStream,
+<a name="408" href="#408">408</a>                 rawstream,
+<a name="409" href="#409">409</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="410" href="#410">410</a>                 EntityStates.T_START_MESSAGE,
+<a name="411" href="#411">411</a>                 EntityStates.T_END_MESSAGE,
+<a name="412" href="#412">412</a>                 config);
+<a name="413" href="#413">413</a>         
+<a name="414" href="#414">414</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="415" href="#415">415</a>         entity.advance();
+<a name="416" href="#416">416</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="417" href="#417">417</a>         entity.advance();
+<a name="418" href="#418">418</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="419" href="#419">419</a>         entity.advance();
+<a name="420" href="#420">420</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="421" href="#421">421</a>         entity.advance();
+<a name="422" href="#422">422</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="423" href="#423">423</a>         entity.advance();
+<a name="424" href="#424">424</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="425" href="#425">425</a>         <strong class="jxr_keyword">try</strong> {
+<a name="426" href="#426">426</a>             entity.advance();
+<a name="427" href="#427">427</a>             fail(<span class="jxr_string">"MaxLineLimitException should have been thrown"</span>);
+<a name="428" href="#428">428</a>         } <strong class="jxr_keyword">catch</strong> (MaxLineLimitException expected) {
+<a name="429" href="#429">429</a>         }
+<a name="430" href="#430">430</a>     }
+<a name="431" href="#431">431</a> 
+<a name="432" href="#432">432</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMaxHeaderCount() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="433" href="#433">433</a>         String message = 
+<a name="434" href="#434">434</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="435" href="#435">435</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="436" href="#436">436</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="437" href="#437">437</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="438" href="#438">438</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="439" href="#439">439</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="440" href="#440">440</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="441" href="#441">441</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="442" href="#442">442</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="443" href="#443">443</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="444" href="#444">444</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="445" href="#445">445</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="446" href="#446">446</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="447" href="#447">447</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="448" href="#448">448</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="449" href="#449">449</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="450" href="#450">450</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="451" href="#451">451</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="452" href="#452">452</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="453" href="#453">453</a>             <span class="jxr_string">"DoS: xxxxxxxxxxxxxxxxxxxxx\r\n"</span> +
+<a name="454" href="#454">454</a>             <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="455" href="#455">455</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="456" href="#456">456</a>             <span class="jxr_string">"a very important message"</span>;
+<a name="457" href="#457">457</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="458" href="#458">458</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="459" href="#459">459</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="460" href="#460">460</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
+<a name="461" href="#461">461</a>         
+<a name="462" href="#462">462</a>         MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
+<a name="463" href="#463">463</a>         config.setMaxHeaderCount(20);
+<a name="464" href="#464">464</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="465" href="#465">465</a>                 rootStream,
+<a name="466" href="#466">466</a>                 rawstream,
+<a name="467" href="#467">467</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="468" href="#468">468</a>                 EntityStates.T_START_MESSAGE,
+<a name="469" href="#469">469</a>                 EntityStates.T_END_MESSAGE,
+<a name="470" href="#470">470</a>                 config);
+<a name="471" href="#471">471</a>         
+<a name="472" href="#472">472</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="473" href="#473">473</a>         entity.advance();
+<a name="474" href="#474">474</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="475" href="#475">475</a>         
+<a name="476" href="#476">476</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; 20; i++) {
+<a name="477" href="#477">477</a>             entity.advance();
+<a name="478" href="#478">478</a>             assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="479" href="#479">479</a>         }
+<a name="480" href="#480">480</a>         <strong class="jxr_keyword">try</strong> {
+<a name="481" href="#481">481</a>             entity.advance();
+<a name="482" href="#482">482</a>             fail(<span class="jxr_string">"MaxHeaderLimitException should have been thrown"</span>);
+<a name="483" href="#483">483</a>         } <strong class="jxr_keyword">catch</strong> (MaxHeaderLimitException expected) {
+<a name="484" href="#484">484</a>         }
+<a name="485" href="#485">485</a>     }
+<a name="486" href="#486">486</a> 
+<a name="487" href="#487">487</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMaxContentLimitCheck() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="488" href="#488">488</a>         String message = 
+<a name="489" href="#489">489</a>             <span class="jxr_string">"To: Road Runner &lt;runner@example.org&gt;\r\n"</span> +
+<a name="490" href="#490">490</a>             <span class="jxr_string">"From: Wile E. Cayote &lt;wile@example.org&gt;\r\n"</span> +
+<a name="491" href="#491">491</a>             <span class="jxr_string">"Date: Tue, 12 Feb 2008 17:34:09 +0000 (GMT)\r\n"</span> +
+<a name="492" href="#492">492</a>             <span class="jxr_string">"Subject: Mail\r\n"</span> +
+<a name="493" href="#493">493</a>             <span class="jxr_string">"Content-Type: text/plain\r\n"</span> +
+<a name="494" href="#494">494</a>             <span class="jxr_string">"\r\n"</span> +
+<a name="495" href="#495">495</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="496" href="#496">496</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="497" href="#497">497</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="498" href="#498">498</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="499" href="#499">499</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="500" href="#500">500</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="501" href="#501">501</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="502" href="#502">502</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="503" href="#503">503</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span> +
+<a name="504" href="#504">504</a>             <span class="jxr_string">"DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS DoS\r\n"</span>;
+<a name="505" href="#505">505</a>         byte[] raw = message.getBytes(<span class="jxr_string">"US-ASCII"</span>);
+<a name="506" href="#506">506</a>         ByteArrayInputStream instream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(raw);
+<a name="507" href="#507">507</a>         RootInputStream rootStream = <strong class="jxr_keyword">new</strong> RootInputStream(instream); 
+<a name="508" href="#508">508</a>         BufferedLineReaderInputStream rawstream = <strong class="jxr_keyword">new</strong> BufferedLineReaderInputStream(rootStream, 12); 
+<a name="509" href="#509">509</a>         
+<a name="510" href="#510">510</a>         MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
+<a name="511" href="#511">511</a>         config.setMaxContentLen(100);
+<a name="512" href="#512">512</a>         MimeEntity entity = <strong class="jxr_keyword">new</strong> MimeEntity(
+<a name="513" href="#513">513</a>                 rootStream,
+<a name="514" href="#514">514</a>                 rawstream,
+<a name="515" href="#515">515</a>                 <strong class="jxr_keyword">null</strong>,
+<a name="516" href="#516">516</a>                 EntityStates.T_START_MESSAGE,
+<a name="517" href="#517">517</a>                 EntityStates.T_END_MESSAGE,
+<a name="518" href="#518">518</a>                 config);
+<a name="519" href="#519">519</a>         
+<a name="520" href="#520">520</a>         assertEquals(EntityStates.T_START_MESSAGE, entity.getState());
+<a name="521" href="#521">521</a>         entity.advance();
+<a name="522" href="#522">522</a>         assertEquals(EntityStates.T_START_HEADER, entity.getState());
+<a name="523" href="#523">523</a>         entity.advance();
+<a name="524" href="#524">524</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="525" href="#525">525</a>         entity.advance();
+<a name="526" href="#526">526</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="527" href="#527">527</a>         entity.advance();
+<a name="528" href="#528">528</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="529" href="#529">529</a>         entity.advance();
+<a name="530" href="#530">530</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="531" href="#531">531</a>         entity.advance();
+<a name="532" href="#532">532</a>         assertEquals(EntityStates.T_FIELD, entity.getState());
+<a name="533" href="#533">533</a>         entity.advance();
+<a name="534" href="#534">534</a>         assertEquals(EntityStates.T_END_HEADER, entity.getState());
+<a name="535" href="#535">535</a>         entity.advance();
+<a name="536" href="#536">536</a>         assertEquals(EntityStates.T_BODY, entity.getState());
+<a name="537" href="#537">537</a>         <strong class="jxr_keyword">try</strong> {
+<a name="538" href="#538">538</a>             IOUtils.toByteArray(entity.getContentStream());
+<a name="539" href="#539">539</a>             fail(<span class="jxr_string">"IOException should have been thrown"</span>);
+<a name="540" href="#540">540</a>         } <strong class="jxr_keyword">catch</strong> (IOException expected) {
+<a name="541" href="#541">541</a>         }
+<a name="542" href="#542">542</a>     }
+<a name="543" href="#543">543</a>     
+<a name="544" href="#544">544</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
