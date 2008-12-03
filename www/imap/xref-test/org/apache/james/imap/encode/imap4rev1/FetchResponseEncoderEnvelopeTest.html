@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<title>FetchResponseEncoderEnvelopeTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
+</head>
+<body>
+<pre>
+
+<a name="1" href="#1">1</a>   <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">**************************************************************</em>
+<a name="2" href="#2">2</a>   <em class="jxr_javadoccomment"> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
+<a name="3" href="#3">3</a>   <em class="jxr_javadoccomment"> * or more contributor license agreements.  See the NOTICE file *</em>
+<a name="4" href="#4">4</a>   <em class="jxr_javadoccomment"> * distributed with this work for additional information        *</em>
+<a name="5" href="#5">5</a>   <em class="jxr_javadoccomment"> * regarding copyright ownership.  The ASF licenses this file   *</em>
+<a name="6" href="#6">6</a>   <em class="jxr_javadoccomment"> * to you under the Apache License, Version 2.0 (the            *</em>
+<a name="7" href="#7">7</a>   <em class="jxr_javadoccomment"> * "License"); you may not use this file except in compliance   *</em>
+<a name="8" href="#8">8</a>   <em class="jxr_javadoccomment"> * with the License.  You may obtain a copy of the License at   *</em>
+<a name="9" href="#9">9</a>   <em class="jxr_javadoccomment"> *                                                              *</em>
+<a name="10" href="#10">10</a>  <em class="jxr_javadoccomment"> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                 *</em>
+<a name="11" href="#11">11</a>  <em class="jxr_javadoccomment"> *                                                              *</em>
+<a name="12" href="#12">12</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing,   *</em>
+<a name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * software distributed under the License is distributed on an  *</em>
+<a name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *</em>
+<a name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * KIND, either express or implied.  See the License for the    *</em>
+<a name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> * specific language governing permissions and limitations      *</em>
+<a name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * under the License.                                           *</em>
+<a name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> ****************************************************************/</em>
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.james.imap.encode.imap4rev1;
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> javax.mail.Flags;
+<a name="23" href="#23">23</a>  
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.imap.ImapCommand;
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.james.imap.encode.ImapEncoder;
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.james.imap.encode.ImapResponseComposer;
+<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.james.imap.encode.imap4rev1.FetchResponseEncoder;
+<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.james.imap.message.response.imap4rev1.FetchResponse;
+<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.james.imap.message.response.imap4rev1.FetchResponse.Envelope.Address;
+<a name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.jmock.Mock;
+<a name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.jmock.MockObjectTestCase;
+<a name="32" href="#32">32</a>  
+<a name="33" href="#33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/apache/james/imap/encode/imap4rev1/FetchResponseEncoderEnvelopeTest.html">FetchResponseEncoderEnvelopeTest</a> <strong class="jxr_keyword">extends</strong> MockObjectTestCase {
+<a name="34" href="#34">34</a>  
+<a name="35" href="#35">35</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_ONE_HOST = <span class="jxr_string">"HOST"</span>;
+<a name="36" href="#36">36</a>  
+<a name="37" href="#37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_ONE_MAILBOX = <span class="jxr_string">"MAILBOX"</span>;
+<a name="38" href="#38">38</a>  
+<a name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_ONE_DOMAIN_LIST = <span class="jxr_string">"DOMAIN LIST"</span>;
+<a name="40" href="#40">40</a>  
+<a name="41" href="#41">41</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_ONE_NAME = <span class="jxr_string">"NAME"</span>;
+<a name="42" href="#42">42</a>  
+<a name="43" href="#43">43</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_TWO_HOST = <span class="jxr_string">"2HOST"</span>;
+<a name="44" href="#44">44</a>  
+<a name="45" href="#45">45</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_TWO_MAILBOX = <span class="jxr_string">"2MAILBOX"</span>;
+<a name="46" href="#46">46</a>  
+<a name="47" href="#47">47</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_TWO_DOMAIN_LIST = <span class="jxr_string">"2DOMAIN LIST"</span>;
+<a name="48" href="#48">48</a>  
+<a name="49" href="#49">49</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String ADDRESS_TWO_NAME = <span class="jxr_string">"2NAME"</span>;
+<a name="50" href="#50">50</a>  
+<a name="51" href="#51">51</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> MSN = 100;
+<a name="52" href="#52">52</a>  
+<a name="53" href="#53">53</a>      Flags flags;
+<a name="54" href="#54">54</a>  
+<a name="55" href="#55">55</a>      ImapResponseComposer composer;
+<a name="56" href="#56">56</a>  
+<a name="57" href="#57">57</a>      Mock mockComposer;
+<a name="58" href="#58">58</a>  
+<a name="59" href="#59">59</a>      Mock mockNextEncoder;
+<a name="60" href="#60">60</a>  
+<a name="61" href="#61">61</a>      FetchResponseEncoder encoder;
+<a name="62" href="#62">62</a>  
+<a name="63" href="#63">63</a>      Mock mockCommand;
+<a name="64" href="#64">64</a>  
+<a name="65" href="#65">65</a>      FetchResponse message;
+<a name="66" href="#66">66</a>  
+<a name="67" href="#67">67</a>      Mock envelope;
+<a name="68" href="#68">68</a>  
+<a name="69" href="#69">69</a>      Address[] bcc;
+<a name="70" href="#70">70</a>  
+<a name="71" href="#71">71</a>      Address[] cc;
+<a name="72" href="#72">72</a>  
+<a name="73" href="#73">73</a>      String date;
+<a name="74" href="#74">74</a>  
+<a name="75" href="#75">75</a>      Address[] from;
+<a name="76" href="#76">76</a>  
+<a name="77" href="#77">77</a>      String inReplyTo;
+<a name="78" href="#78">78</a>  
+<a name="79" href="#79">79</a>      String messageId;
+<a name="80" href="#80">80</a>  
+<a name="81" href="#81">81</a>      Address[] replyTo;
+<a name="82" href="#82">82</a>  
+<a name="83" href="#83">83</a>      Address[] sender;
+<a name="84" href="#84">84</a>  
+<a name="85" href="#85">85</a>      String subject;
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>      Address[] to;
+<a name="88" href="#88">88</a>  
+<a name="89" href="#89">89</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="90" href="#90">90</a>          <strong class="jxr_keyword">super</strong>.setUp();
+<a name="91" href="#91">91</a>          envelope = mock(FetchResponse.Envelope.<strong class="jxr_keyword">class</strong>);
+<a name="92" href="#92">92</a>  
+<a name="93" href="#93">93</a>          bcc = <strong class="jxr_keyword">null</strong>;
+<a name="94" href="#94">94</a>          cc = <strong class="jxr_keyword">null</strong>;
+<a name="95" href="#95">95</a>          date = <strong class="jxr_keyword">null</strong>;
+<a name="96" href="#96">96</a>          from = <strong class="jxr_keyword">null</strong>;
+<a name="97" href="#97">97</a>          inReplyTo = <strong class="jxr_keyword">null</strong>;
+<a name="98" href="#98">98</a>          messageId = <strong class="jxr_keyword">null</strong>;
+<a name="99" href="#99">99</a>          replyTo = <strong class="jxr_keyword">null</strong>;
+<a name="100" href="#100">100</a>         sender = <strong class="jxr_keyword">null</strong>;
+<a name="101" href="#101">101</a>         subject = <strong class="jxr_keyword">null</strong>;
+<a name="102" href="#102">102</a>         to = <strong class="jxr_keyword">null</strong>;
+<a name="103" href="#103">103</a> 
+<a name="104" href="#104">104</a>         message = <strong class="jxr_keyword">new</strong> FetchResponse(MSN, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>,
+<a name="105" href="#105">105</a>                 (FetchResponse.Envelope) envelope.proxy(), <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
+<a name="106" href="#106">106</a>         mockComposer = mock(ImapResponseComposer.<strong class="jxr_keyword">class</strong>);
+<a name="107" href="#107">107</a>         composer = (ImapResponseComposer) mockComposer.proxy();
+<a name="108" href="#108">108</a>         mockNextEncoder = mock(ImapEncoder.<strong class="jxr_keyword">class</strong>);
+<a name="109" href="#109">109</a>         encoder = <strong class="jxr_keyword">new</strong> FetchResponseEncoder((ImapEncoder) mockNextEncoder
+<a name="110" href="#110">110</a>                 .proxy());
+<a name="111" href="#111">111</a>         mockCommand = mock(ImapCommand.<strong class="jxr_keyword">class</strong>);
+<a name="112" href="#112">112</a>         flags = <strong class="jxr_keyword">new</strong> Flags(Flags.Flag.DELETED);
+<a name="113" href="#113">113</a>     }
+<a name="114" href="#114">114</a> 
+<a name="115" href="#115">115</a>     <strong class="jxr_keyword">private</strong> Address[] mockOneAddress() {
+<a name="116" href="#116">116</a>         Address[] one = { mockAddress(ADDRESS_ONE_NAME,
+<a name="117" href="#117">117</a>                 ADDRESS_ONE_DOMAIN_LIST, ADDRESS_ONE_MAILBOX, ADDRESS_ONE_HOST) };
+<a name="118" href="#118">118</a>         <strong class="jxr_keyword">return</strong> one;
+<a name="119" href="#119">119</a>     }
+<a name="120" href="#120">120</a> 
+<a name="121" href="#121">121</a>     <strong class="jxr_keyword">private</strong> Address[] mockManyAddresses() {
+<a name="122" href="#122">122</a>         Address[] many = {
+<a name="123" href="#123">123</a>                 mockAddress(ADDRESS_ONE_NAME, ADDRESS_ONE_DOMAIN_LIST,
+<a name="124" href="#124">124</a>                         ADDRESS_ONE_MAILBOX, ADDRESS_ONE_HOST),
+<a name="125" href="#125">125</a>                 mockAddress(ADDRESS_TWO_NAME, ADDRESS_TWO_DOMAIN_LIST,
+<a name="126" href="#126">126</a>                         ADDRESS_TWO_MAILBOX, ADDRESS_TWO_HOST) };
+<a name="127" href="#127">127</a>         <strong class="jxr_keyword">return</strong> many;
+<a name="128" href="#128">128</a>     }
+<a name="129" href="#129">129</a> 
+<a name="130" href="#130">130</a>     <strong class="jxr_keyword">private</strong> Address mockAddress(<strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String domainList,
+<a name="131" href="#131">131</a>             <strong class="jxr_keyword">final</strong> String mailbox, <strong class="jxr_keyword">final</strong> String host) {
+<a name="132" href="#132">132</a>         Mock address = mock(Address.<strong class="jxr_keyword">class</strong>);
+<a name="133" href="#133">133</a>         address.expects(once()).method(<span class="jxr_string">"getPersonalName"</span>).will(
+<a name="134" href="#134">134</a>                 returnValue(name));
+<a name="135" href="#135">135</a>         address.expects(once()).method(<span class="jxr_string">"getAtDomainList"</span>).will(
+<a name="136" href="#136">136</a>                 returnValue(domainList));
+<a name="137" href="#137">137</a>         address.expects(once()).method(<span class="jxr_string">"getMailboxName"</span>).will(
+<a name="138" href="#138">138</a>                 returnValue(mailbox));
+<a name="139" href="#139">139</a>         address.expects(once()).method(<span class="jxr_string">"getHostName"</span>).will(returnValue(host));
+<a name="140" href="#140">140</a>         <strong class="jxr_keyword">return</strong> (Address) address.proxy();
+<a name="141" href="#141">141</a>     }
+<a name="142" href="#142">142</a> 
+<a name="143" href="#143">143</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> envelopExpects() {
+<a name="144" href="#144">144</a>         envelope.expects(once()).method(<span class="jxr_string">"getBcc"</span>).will(returnValue(bcc)).id(
+<a name="145" href="#145">145</a>                 <span class="jxr_string">"bcc"</span>);
+<a name="146" href="#146">146</a>         envelope.expects(once()).method(<span class="jxr_string">"getCc"</span>).will(returnValue(cc)).id(<span class="jxr_string">"cc"</span>);
+<a name="147" href="#147">147</a>         envelope.expects(once()).method(<span class="jxr_string">"getDate"</span>).will(returnValue(date)).id(
+<a name="148" href="#148">148</a>                 <span class="jxr_string">"date"</span>);
+<a name="149" href="#149">149</a>         envelope.expects(once()).method(<span class="jxr_string">"getFrom"</span>).will(returnValue(from)).id(
+<a name="150" href="#150">150</a>                 <span class="jxr_string">"from"</span>);
+<a name="151" href="#151">151</a>         envelope.expects(once()).method(<span class="jxr_string">"getInReplyTo"</span>).will(
+<a name="152" href="#152">152</a>                 returnValue(inReplyTo)).id(<span class="jxr_string">"inreplyto"</span>);
+<a name="153" href="#153">153</a>         envelope.expects(once()).method(<span class="jxr_string">"getMessageId"</span>).will(
+<a name="154" href="#154">154</a>                 returnValue(messageId)).id(<span class="jxr_string">"messageid"</span>);
+<a name="155" href="#155">155</a>         envelope.expects(once()).method(<span class="jxr_string">"getReplyTo"</span>)
+<a name="156" href="#156">156</a>                 .will(returnValue(replyTo)).id(<span class="jxr_string">"replyto"</span>);
+<a name="157" href="#157">157</a>         envelope.expects(once()).method(<span class="jxr_string">"getSender"</span>).will(returnValue(sender))
+<a name="158" href="#158">158</a>                 .id(<span class="jxr_string">"sender"</span>);
+<a name="159" href="#159">159</a>         envelope.expects(once()).method(<span class="jxr_string">"getSubject"</span>)
+<a name="160" href="#160">160</a>                 .will(returnValue(subject)).id(<span class="jxr_string">"subject"</span>);
+<a name="161" href="#161">161</a>         envelope.expects(once()).method(<span class="jxr_string">"getTo"</span>).will(returnValue(to)).id(<span class="jxr_string">"to"</span>);
+<a name="162" href="#162">162</a>     }
+<a name="163" href="#163">163</a> 
+<a name="164" href="#164">164</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> tearDown() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="165" href="#165">165</a>         <strong class="jxr_keyword">super</strong>.tearDown();
+<a name="166" href="#166">166</a>     }
+<a name="167" href="#167">167</a> 
+<a name="168" href="#168">168</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldNilAllNullProperties() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="169" href="#169">169</a>         envelopExpects();
+<a name="170" href="#170">170</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="171" href="#171">171</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="172" href="#172">172</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="173" href="#173">173</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="174" href="#174">174</a>         mockComposer.expects(exactly(6)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="175" href="#175">175</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="176" href="#176">176</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL, NULL)
+<a name="177" href="#177">177</a>                 .after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="178" href="#178">178</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="179" href="#179">179</a> 
+<a name="180" href="#180">180</a>         encoder.doEncode(message, composer);
+<a name="181" href="#181">181</a>     }
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeDate() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="184" href="#184">184</a>         date = <span class="jxr_string">"a date"</span>;
+<a name="185" href="#185">185</a>         envelopExpects();
+<a name="186" href="#186">186</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="187" href="#187">187</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="188" href="#188">188</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(eq(date),
+<a name="189" href="#189">189</a>                 NULL, eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="190" href="#190">190</a>         mockComposer.expects(exactly(6)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="191" href="#191">191</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="192" href="#192">192</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL, NULL)
+<a name="193" href="#193">193</a>                 .after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="194" href="#194">194</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="195" href="#195">195</a> 
+<a name="196" href="#196">196</a>         encoder.doEncode(message, composer);
+<a name="197" href="#197">197</a>     }
+<a name="198" href="#198">198</a> 
+<a name="199" href="#199">199</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeSubject() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="200" href="#200">200</a>         subject = <span class="jxr_string">"some subject"</span>;
+<a name="201" href="#201">201</a>         envelopExpects();
+<a name="202" href="#202">202</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="203" href="#203">203</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="204" href="#204">204</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL,
+<a name="205" href="#205">205</a>                 eq(subject), eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="206" href="#206">206</a>         mockComposer.expects(exactly(6)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="207" href="#207">207</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="208" href="#208">208</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL, NULL)
+<a name="209" href="#209">209</a>                 .after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="210" href="#210">210</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="211" href="#211">211</a> 
+<a name="212" href="#212">212</a>         encoder.doEncode(message, composer);
+<a name="213" href="#213">213</a>     }
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeInReplyTo() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="216" href="#216">216</a>         inReplyTo = <span class="jxr_string">"some reply to"</span>;
+<a name="217" href="#217">217</a>         envelopExpects();
+<a name="218" href="#218">218</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="219" href="#219">219</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="220" href="#220">220</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="221" href="#221">221</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="222" href="#222">222</a>         mockComposer.expects(exactly(6)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="223" href="#223">223</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="224" href="#224">224</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(eq(inReplyTo),
+<a name="225" href="#225">225</a>                 NULL).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="226" href="#226">226</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="227" href="#227">227</a> 
+<a name="228" href="#228">228</a>         encoder.doEncode(message, composer);
+<a name="229" href="#229">229</a>     }
+<a name="230" href="#230">230</a> 
+<a name="231" href="#231">231</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeMessageId() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="232" href="#232">232</a>         messageId = <span class="jxr_string">"some message id"</span>;
+<a name="233" href="#233">233</a>         envelopExpects();
+<a name="234" href="#234">234</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="235" href="#235">235</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="236" href="#236">236</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="237" href="#237">237</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="238" href="#238">238</a>         mockComposer.expects(exactly(6)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="239" href="#239">239</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="240" href="#240">240</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="241" href="#241">241</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="242" href="#242">242</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="243" href="#243">243</a> 
+<a name="244" href="#244">244</a>         encoder.doEncode(message, composer);
+<a name="245" href="#245">245</a>     }
+<a name="246" href="#246">246</a> 
+<a name="247" href="#247">247</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneFromAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="248" href="#248">248</a>         from = mockOneAddress();
+<a name="249" href="#249">249</a>         envelopExpects();
+<a name="250" href="#250">250</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="251" href="#251">251</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="252" href="#252">252</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="253" href="#253">253</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="254" href="#254">254</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="255" href="#255">255</a>                 .id(<span class="jxr_string">"start-from"</span>);
+<a name="256" href="#256">256</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="257" href="#257">257</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="258" href="#258">258</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="259" href="#259">259</a>                 <span class="jxr_string">"start-from"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="260" href="#260">260</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="261" href="#261">261</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"from"</span>);
+<a name="262" href="#262">262</a>         mockComposer.expects(exactly(5)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"from"</span>).id(<span class="jxr_string">"last"</span>);
+<a name="263" href="#263">263</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="264" href="#264">264</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="265" href="#265">265</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="266" href="#266">266</a> 
+<a name="267" href="#267">267</a>         encoder.doEncode(message, composer);
+<a name="268" href="#268">268</a>     }
+<a name="269" href="#269">269</a> 
+<a name="270" href="#270">270</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManyFromAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="271" href="#271">271</a>         from = mockManyAddresses();
+<a name="272" href="#272">272</a>         envelopExpects();
+<a name="273" href="#273">273</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="274" href="#274">274</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="275" href="#275">275</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="276" href="#276">276</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="277" href="#277">277</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"start"</span>)
+<a name="278" href="#278">278</a>                 .id(<span class="jxr_string">"start-from"</span>);
+<a name="279" href="#279">279</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="280" href="#280">280</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="281" href="#281">281</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="282" href="#282">282</a>                 <span class="jxr_string">"start-from"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="283" href="#283">283</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="284" href="#284">284</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="285" href="#285">285</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="286" href="#286">286</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="287" href="#287">287</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="288" href="#288">288</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"from"</span>);
+<a name="289" href="#289">289</a>         mockComposer.expects(exactly(5)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"from"</span>).id(<span class="jxr_string">"last"</span>);
+<a name="290" href="#290">290</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="291" href="#291">291</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="292" href="#292">292</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="293" href="#293">293</a> 
+<a name="294" href="#294">294</a>         encoder.doEncode(message, composer);
+<a name="295" href="#295">295</a>     }
+<a name="296" href="#296">296</a> 
+<a name="297" href="#297">297</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneSenderAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="298" href="#298">298</a>         sender = mockOneAddress();
+<a name="299" href="#299">299</a>         envelopExpects();
+<a name="300" href="#300">300</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="301" href="#301">301</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="302" href="#302">302</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="303" href="#303">303</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="304" href="#304">304</a>         mockComposer.expects(exactly(1)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="305" href="#305">305</a>                 <span class="jxr_string">"before"</span>);
+<a name="306" href="#306">306</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="307" href="#307">307</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="308" href="#308">308</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="309" href="#309">309</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="310" href="#310">310</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="311" href="#311">311</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="312" href="#312">312</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="313" href="#313">313</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="314" href="#314">314</a>         mockComposer.expects(exactly(4)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="315" href="#315">315</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="316" href="#316">316</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="317" href="#317">317</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="318" href="#318">318</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="319" href="#319">319</a> 
+<a name="320" href="#320">320</a>         encoder.doEncode(message, composer);
+<a name="321" href="#321">321</a>     }
+<a name="322" href="#322">322</a> 
+<a name="323" href="#323">323</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManySenderAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="324" href="#324">324</a>         sender = mockManyAddresses();
+<a name="325" href="#325">325</a>         envelopExpects();
+<a name="326" href="#326">326</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="327" href="#327">327</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="328" href="#328">328</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="329" href="#329">329</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="330" href="#330">330</a>         mockComposer.expects(exactly(1)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="331" href="#331">331</a>                 <span class="jxr_string">"before"</span>);
+<a name="332" href="#332">332</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="333" href="#333">333</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="334" href="#334">334</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="335" href="#335">335</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="336" href="#336">336</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="337" href="#337">337</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="338" href="#338">338</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="339" href="#339">339</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="340" href="#340">340</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="341" href="#341">341</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="342" href="#342">342</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="343" href="#343">343</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="344" href="#344">344</a>         mockComposer.expects(exactly(4)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="345" href="#345">345</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="346" href="#346">346</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="347" href="#347">347</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="348" href="#348">348</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="349" href="#349">349</a> 
+<a name="350" href="#350">350</a>         encoder.doEncode(message, composer);
+<a name="351" href="#351">351</a>     }
+<a name="352" href="#352">352</a> 
+<a name="353" href="#353">353</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneReplyToAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="354" href="#354">354</a>         replyTo = mockOneAddress();
+<a name="355" href="#355">355</a>         envelopExpects();
+<a name="356" href="#356">356</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="357" href="#357">357</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="358" href="#358">358</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="359" href="#359">359</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="360" href="#360">360</a>         mockComposer.expects(exactly(2)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="361" href="#361">361</a>                 <span class="jxr_string">"before"</span>);
+<a name="362" href="#362">362</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="363" href="#363">363</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="364" href="#364">364</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="365" href="#365">365</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="366" href="#366">366</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="367" href="#367">367</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="368" href="#368">368</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="369" href="#369">369</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="370" href="#370">370</a>         mockComposer.expects(exactly(3)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="371" href="#371">371</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="372" href="#372">372</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="373" href="#373">373</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="374" href="#374">374</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="375" href="#375">375</a> 
+<a name="376" href="#376">376</a>         encoder.doEncode(message, composer);
+<a name="377" href="#377">377</a>     }
+<a name="378" href="#378">378</a> 
+<a name="379" href="#379">379</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManyReplyToAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="380" href="#380">380</a>         replyTo = mockManyAddresses();
+<a name="381" href="#381">381</a>         envelopExpects();
+<a name="382" href="#382">382</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="383" href="#383">383</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="384" href="#384">384</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="385" href="#385">385</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="386" href="#386">386</a>         mockComposer.expects(exactly(2)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="387" href="#387">387</a>                 <span class="jxr_string">"before"</span>);
+<a name="388" href="#388">388</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="389" href="#389">389</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="390" href="#390">390</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="391" href="#391">391</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="392" href="#392">392</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="393" href="#393">393</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="394" href="#394">394</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="395" href="#395">395</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="396" href="#396">396</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="397" href="#397">397</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="398" href="#398">398</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="399" href="#399">399</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="400" href="#400">400</a>         mockComposer.expects(exactly(3)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="401" href="#401">401</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="402" href="#402">402</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="403" href="#403">403</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="404" href="#404">404</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="405" href="#405">405</a> 
+<a name="406" href="#406">406</a>         encoder.doEncode(message, composer);
+<a name="407" href="#407">407</a>     }
+<a name="408" href="#408">408</a> 
+<a name="409" href="#409">409</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneToAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="410" href="#410">410</a>         to = mockOneAddress();
+<a name="411" href="#411">411</a>         envelopExpects();
+<a name="412" href="#412">412</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="413" href="#413">413</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="414" href="#414">414</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="415" href="#415">415</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="416" href="#416">416</a>         mockComposer.expects(exactly(3)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="417" href="#417">417</a>                 <span class="jxr_string">"before"</span>);
+<a name="418" href="#418">418</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="419" href="#419">419</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="420" href="#420">420</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="421" href="#421">421</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="422" href="#422">422</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="423" href="#423">423</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="424" href="#424">424</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="425" href="#425">425</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="426" href="#426">426</a>         mockComposer.expects(exactly(2)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="427" href="#427">427</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="428" href="#428">428</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="429" href="#429">429</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="430" href="#430">430</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="431" href="#431">431</a> 
+<a name="432" href="#432">432</a>         encoder.doEncode(message, composer);
+<a name="433" href="#433">433</a>     }
+<a name="434" href="#434">434</a> 
+<a name="435" href="#435">435</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManyToAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="436" href="#436">436</a>         to = mockManyAddresses();
+<a name="437" href="#437">437</a>         envelopExpects();
+<a name="438" href="#438">438</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="439" href="#439">439</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="440" href="#440">440</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="441" href="#441">441</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="442" href="#442">442</a>         mockComposer.expects(exactly(3)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="443" href="#443">443</a>                 <span class="jxr_string">"before"</span>);
+<a name="444" href="#444">444</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="445" href="#445">445</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="446" href="#446">446</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="447" href="#447">447</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="448" href="#448">448</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="449" href="#449">449</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="450" href="#450">450</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="451" href="#451">451</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="452" href="#452">452</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="453" href="#453">453</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="454" href="#454">454</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="455" href="#455">455</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="456" href="#456">456</a>         mockComposer.expects(exactly(2)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="457" href="#457">457</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="458" href="#458">458</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="459" href="#459">459</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="460" href="#460">460</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="461" href="#461">461</a> 
+<a name="462" href="#462">462</a>         encoder.doEncode(message, composer);
+<a name="463" href="#463">463</a>     }
+<a name="464" href="#464">464</a> 
+<a name="465" href="#465">465</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneCcAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="466" href="#466">466</a>         cc = mockOneAddress();
+<a name="467" href="#467">467</a>         envelopExpects();
+<a name="468" href="#468">468</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="469" href="#469">469</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="470" href="#470">470</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="471" href="#471">471</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="472" href="#472">472</a>         mockComposer.expects(exactly(4)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="473" href="#473">473</a>                 <span class="jxr_string">"before"</span>);
+<a name="474" href="#474">474</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="475" href="#475">475</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="476" href="#476">476</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="477" href="#477">477</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="478" href="#478">478</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="479" href="#479">479</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="480" href="#480">480</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="481" href="#481">481</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="482" href="#482">482</a>         mockComposer.expects(exactly(1)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="483" href="#483">483</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="484" href="#484">484</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="485" href="#485">485</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="486" href="#486">486</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="487" href="#487">487</a> 
+<a name="488" href="#488">488</a>         encoder.doEncode(message, composer);
+<a name="489" href="#489">489</a>     }
+<a name="490" href="#490">490</a> 
+<a name="491" href="#491">491</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManyCcAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="492" href="#492">492</a>         cc = mockManyAddresses();
+<a name="493" href="#493">493</a>         envelopExpects();
+<a name="494" href="#494">494</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="495" href="#495">495</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="496" href="#496">496</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="497" href="#497">497</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="498" href="#498">498</a>         mockComposer.expects(exactly(4)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="499" href="#499">499</a>                 <span class="jxr_string">"before"</span>);
+<a name="500" href="#500">500</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="501" href="#501">501</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="502" href="#502">502</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="503" href="#503">503</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="504" href="#504">504</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="505" href="#505">505</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="506" href="#506">506</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="507" href="#507">507</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="508" href="#508">508</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="509" href="#509">509</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="510" href="#510">510</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="511" href="#511">511</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="512" href="#512">512</a>         mockComposer.expects(exactly(1)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"end-addresses"</span>)
+<a name="513" href="#513">513</a>                 .id(<span class="jxr_string">"last"</span>);
+<a name="514" href="#514">514</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="515" href="#515">515</a>                 eq(messageId)).after(<span class="jxr_string">"last"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="516" href="#516">516</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="517" href="#517">517</a> 
+<a name="518" href="#518">518</a>         encoder.doEncode(message, composer);
+<a name="519" href="#519">519</a>     }
+<a name="520" href="#520">520</a> 
+<a name="521" href="#521">521</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeOneBccAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="522" href="#522">522</a>         bcc = mockOneAddress();
+<a name="523" href="#523">523</a>         envelopExpects();
+<a name="524" href="#524">524</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="525" href="#525">525</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="526" href="#526">526</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="527" href="#527">527</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="528" href="#528">528</a>         mockComposer.expects(exactly(5)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="529" href="#529">529</a>                 <span class="jxr_string">"before"</span>);
+<a name="530" href="#530">530</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="531" href="#531">531</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="532" href="#532">532</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="533" href="#533">533</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="534" href="#534">534</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="535" href="#535">535</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="536" href="#536">536</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="537" href="#537">537</a>                 .after(<span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="538" href="#538">538</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="539" href="#539">539</a>                 eq(messageId)).after(<span class="jxr_string">"end-addresses"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="540" href="#540">540</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="541" href="#541">541</a> 
+<a name="542" href="#542">542</a>         encoder.doEncode(message, composer);
+<a name="543" href="#543">543</a>     }
+<a name="544" href="#544">544</a> 
+<a name="545" href="#545">545</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShouldComposeManyBccAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="546" href="#546">546</a>         bcc = mockManyAddresses();
+<a name="547" href="#547">547</a>         envelopExpects();
+<a name="548" href="#548">548</a>         mockComposer.expects(once()).method(<span class="jxr_string">"openFetchResponse"</span>).with(
+<a name="549" href="#549">549</a>                 eq((<strong class="jxr_keyword">long</strong>) MSN)).id(<span class="jxr_string">"open"</span>);
+<a name="550" href="#550">550</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startEnvelope"</span>).with(NULL, NULL,
+<a name="551" href="#551">551</a>                 eq(<strong class="jxr_keyword">true</strong>)).after(<span class="jxr_string">"open"</span>).id(<span class="jxr_string">"start"</span>);
+<a name="552" href="#552">552</a>         mockComposer.expects(exactly(5)).method(<span class="jxr_string">"nil"</span>).after(<span class="jxr_string">"start"</span>).id(
+<a name="553" href="#553">553</a>                 <span class="jxr_string">"before"</span>);
+<a name="554" href="#554">554</a>         mockComposer.expects(once()).method(<span class="jxr_string">"startAddresses"</span>).after(<span class="jxr_string">"before"</span>)
+<a name="555" href="#555">555</a>                 .id(<span class="jxr_string">"start-addresses"</span>);
+<a name="556" href="#556">556</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="557" href="#557">557</a>                 eq(ADDRESS_ONE_NAME), eq(ADDRESS_ONE_DOMAIN_LIST),
+<a name="558" href="#558">558</a>                 eq(ADDRESS_ONE_MAILBOX), eq(ADDRESS_ONE_HOST)).after(
+<a name="559" href="#559">559</a>                 <span class="jxr_string">"start-addresses"</span>).id(<span class="jxr_string">"address-one"</span>);
+<a name="560" href="#560">560</a>         mockComposer.expects(once()).method(<span class="jxr_string">"address"</span>).with(
+<a name="561" href="#561">561</a>                 eq(ADDRESS_TWO_NAME), eq(ADDRESS_TWO_DOMAIN_LIST),
+<a name="562" href="#562">562</a>                 eq(ADDRESS_TWO_MAILBOX), eq(ADDRESS_TWO_HOST)).after(
+<a name="563" href="#563">563</a>                 <span class="jxr_string">"address-one"</span>).id(<span class="jxr_string">"address-two"</span>);
+<a name="564" href="#564">564</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endAddresses"</span>)
+<a name="565" href="#565">565</a>                 .after(<span class="jxr_string">"address-two"</span>).id(<span class="jxr_string">"end-addresses"</span>);
+<a name="566" href="#566">566</a>         mockComposer.expects(once()).method(<span class="jxr_string">"endEnvelope"</span>).with(NULL,
+<a name="567" href="#567">567</a>                 eq(messageId)).after(<span class="jxr_string">"end-addresses"</span>).id(<span class="jxr_string">"end"</span>);
+<a name="568" href="#568">568</a>         mockComposer.expects(once()).method(<span class="jxr_string">"closeFetchResponse"</span>).after(<span class="jxr_string">"end"</span>);
+<a name="569" href="#569">569</a> 
+<a name="570" href="#570">570</a>         encoder.doEncode(message, composer);
+<a name="571" href="#571">571</a>     }
+<a name="572" href="#572">572</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

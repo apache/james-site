@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="92" tokens="270">
+<file line="116" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="250" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlags.java"/>
+<file line="170" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeader.java"/>
+<codefragment>
+<![CDATA[
+            this.value = v;
+            setModified(true);
+        }
+
+    }
+
+    private MessageRow aMessageRow;
+
+    /**
+     * Declares an association between this object and a MessageRow object
+     * 
+     * @param v
+     *            MessageRow
+     * @throws TorqueException
+     */
+    public void setMessageRow(MessageRow v) throws TorqueException {
+        if (v == null) {
+            setMailboxId(0);
+        } else {
+            setMailboxId(v.getMailboxId());
+        }
+        if (v == null) {
+            setUid(0);
+        } else {
+            setUid(v.getUid());
+        }
+        aMessageRow = v;
+    }
+
+    /**
+     * Returns the associated MessageRow object. If it was not retrieved before,
+     * the object is retrieved from the database
+     * 
+     * @return the associated MessageRow object
+     * @throws TorqueException
+     */
+    public MessageRow getMessageRow() throws TorqueException {
+        if (aMessageRow == null && (this.mailboxId != 0 && this.uid != 0)) {
+            aMessageRow = MessageRowPeer.retrieveByPK(this.mailboxId, this.uid);
+        }
+        return aMessageRow;
+    }
+
+    /**
+     * Return the associated MessageRow object If it was not retrieved before,
+     * the object is retrieved from the database using the passed connection
+     * 
+     * @param connection
+     *            the connection used to retrieve the associated object from the
+     *            database, if it was not retrieved before
+     * @return the associated MessageRow object
+     * @throws TorqueException
+     */
+    public MessageRow getMessageRow(Connection connection)
+            throws TorqueException {
+        if (aMessageRow == null && (this.mailboxId != 0 && this.uid != 0)) {
+            aMessageRow = MessageRowPeer.retrieveByPK(this.mailboxId, this.uid,
+                    connection);
+        }
+        return aMessageRow;
+    }
+
+    /**
+     * Provides convenient way to set a relationship based on a ObjectKey, for
+     * example <code>bar.setFooKey(foo.getPrimaryKey())</code>
+     * 
+     * Note: It is important that the xml schema used to create this class
+     * maintains consistency in the order of related columns between
+     * message_header and message. If for some reason this is impossible, this
+     * method should be overridden in <code>MessageHeader</code>.
+     */
+    public void setMessageRowKey(ObjectKey key) throws TorqueException {
+        SimpleKey[] keys = (SimpleKey[]) key.getValue();
+
+        setMailboxId(((NumberKey) keys[0]).longValue());
+
+        setUid(((NumberKey) keys[1]).longValue());
+    }
+
+    private static List fieldNames = null;
+
+    /**
+     * Generate a list of field names.
+     * 
+     * @return a list of field names
+     */
+    public static synchronized List getFieldNames() {
+        if (fieldNames == null) {
+            fieldNames = new ArrayList();
+            fieldNames.add("MailboxId");
+            fieldNames.add("Uid");
+            fieldNames.add("LineNumber");
+]]>
+</codefragment>
+</duplication>
+<duplication lines="68" tokens="218">
+<file line="680" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<file line="721" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<file line="690" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRowPeer.java"/>
+<codefragment>
+<![CDATA[
+            return (MessageRow) v.get(0);
+        }
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks) throws TorqueException {
+        Connection db = null;
+        List retVal = null;
+        try {
+            db = Torque.getConnection(DATABASE_NAME);
+            retVal = retrieveByPKs(pks, db);
+        } finally {
+            Torque.closeConnection(db);
+        }
+        return retVal;
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @param dbcon
+     *            the connection to use
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks, Connection dbcon)
+            throws TorqueException {
+        List objs = null;
+        if (pks == null || pks.size() == 0) {
+            objs = new LinkedList();
+        } else {
+            Criteria criteria = new Criteria();
+            Iterator iter = pks.iterator();
+            while (iter.hasNext()) {
+                ObjectKey pk = (ObjectKey) iter.next();
+                SimpleKey[] keys = (SimpleKey[]) pk.getValue();
+                Criteria.Criterion c0 = criteria.getNewCriterion(MAILBOX_ID,
+                        keys[0], Criteria.EQUAL);
+                Criteria.Criterion c1 = criteria.getNewCriterion(UID, keys[1],
+                        Criteria.EQUAL);
+                c0.and(c1);
+                criteria.or(c0);
+            }
+            objs = doSelect(criteria, dbcon);
+        }
+        return objs;
+    }
+
+    /**
+     * retrieve object using using pk values.
+     * 
+     * @param mailboxId
+     *            long
+     * @param uid
+     *            long
+     */
+    public static MessageRow retrieveByPK(long mailboxId, long uid)
+]]>
+</codefragment>
+</duplication>
+<duplication lines="37" tokens="204">
+<file line="63" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/map/MessageBodyMapBuilder.java"/>
+<file line="63" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/map/MessageFlagsMapBuilder.java"/>
+<file line="63" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/map/MessageHeaderMapBuilder.java"/>
+<codefragment>
+<![CDATA[
+                .setPeerClass(org.apache.james.mailboxmanager.torque.om.MessageHeaderPeer.class);
+        tMap.setPrimaryKeyMethod("none");
+
+        ColumnMap cMap = null;
+
+        // ------------- Column: mailbox_id --------------------
+        cMap = new ColumnMap("mailbox_id", tMap);
+        cMap.setType(new Long(0));
+        cMap.setTorqueType("BIGINT");
+        cMap.setUsePrimitive(true);
+        cMap.setPrimaryKey(true);
+        cMap.setNotNull(true);
+        cMap.setJavaName("MailboxId");
+        cMap.setAutoIncrement(false);
+        cMap.setProtected(false);
+        cMap.setDescription("Mailbox Id");
+        cMap.setInheritance("false");
+        cMap.setForeignKey("message", "mailbox_id");
+        cMap.setPosition(1);
+        tMap.addColumn(cMap);
+        // ------------- Column: uid --------------------
+        cMap = new ColumnMap("uid", tMap);
+        cMap.setType(new Long(0));
+        cMap.setTorqueType("BIGINT");
+        cMap.setUsePrimitive(true);
+        cMap.setPrimaryKey(true);
+        cMap.setNotNull(true);
+        cMap.setJavaName("Uid");
+        cMap.setAutoIncrement(false);
+        cMap.setProtected(false);
+        cMap.setDescription("");
+        cMap.setInheritance("false");
+        cMap.setForeignKey("message", "uid");
+        cMap.setPosition(2);
+        tMap.addColumn(cMap);
+        // ------------- Column: line_number --------------------
+        cMap = new ColumnMap("line_number", tMap);
+]]>
+</codefragment>
+</duplication>
+<duplication lines="52" tokens="197">
+<file line="680" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<file line="700" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeaderPeer.java"/>
+<codefragment>
+<![CDATA[
+            return (MessageHeader) v.get(0);
+        }
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks) throws TorqueException {
+        Connection db = null;
+        List retVal = null;
+        try {
+            db = Torque.getConnection(DATABASE_NAME);
+            retVal = retrieveByPKs(pks, db);
+        } finally {
+            Torque.closeConnection(db);
+        }
+        return retVal;
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @param dbcon
+     *            the connection to use
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks, Connection dbcon)
+            throws TorqueException {
+        List objs = null;
+        if (pks == null || pks.size() == 0) {
+            objs = new LinkedList();
+        } else {
+            Criteria criteria = new Criteria();
+            Iterator iter = pks.iterator();
+            while (iter.hasNext()) {
+                ObjectKey pk = (ObjectKey) iter.next();
+                SimpleKey[] keys = (SimpleKey[]) pk.getValue();
+                Criteria.Criterion c0 = criteria.getNewCriterion(MAILBOX_ID,
+                        keys[0], Criteria.EQUAL);
+                Criteria.Criterion c1 = criteria.getNewCriterion(UID, keys[1],
+                        Criteria.EQUAL);
+                c0.and(c1);
+]]>
+</codefragment>
+</duplication>
+<duplication lines="75" tokens="179">
+<file line="101" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMailboxRowPeer.java"/>
+<file line="89" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<file line="109" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<file line="97" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeaderPeer.java"/>
+<file line="94" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRowPeer.java"/>
+<codefragment>
+<![CDATA[
+    protected static final Class CLASS_DEFAULT = initClass(CLASSNAME_DEFAULT);
+
+    /**
+     * Class object initialization method.
+     * 
+     * @param className
+     *            name of the class to initialize
+     * @return the initialized class
+     */
+    private static Class initClass(String className) {
+        Class c = null;
+        try {
+            c = Class.forName(className);
+        } catch (Throwable t) {
+            log
+                    .error(
+                            "A FATAL ERROR has occurred which should not "
+                                    + "have happened under any circumstance.  Please notify "
+                                    + "the Torque developers <torque-dev@db.apache.org> "
+                                    + "and give as many details as possible (including the error "
+                                    + "stack trace).", t);
+
+            // Error objects should always be propogated.
+            if (t instanceof Error) {
+                throw (Error) t.fillInStackTrace();
+            }
+        }
+        return c;
+    }
+
+    /**
+     * Get the list of objects for a ResultSet. Please not that your resultset
+     * MUST return columns in the right order. You can use getFieldNames() in
+     * BaseObject to get the correct sequence.
+     * 
+     * @param results
+     *            the ResultSet
+     * @return the list of objects
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List resultSet2Objects(java.sql.ResultSet results)
+            throws TorqueException {
+        try {
+            QueryDataSet qds = null;
+            List rows = null;
+            try {
+                qds = new QueryDataSet(results);
+                rows = getSelectResults(qds);
+            } finally {
+                if (qds != null) {
+                    qds.close();
+                }
+            }
+
+            return populateObjects(rows);
+        } catch (SQLException e) {
+            throw new TorqueException(e);
+        } catch (DataSetException e) {
+            throw new TorqueException(e);
+        }
+    }
+
+    /**
+     * Method to do inserts.
+     * 
+     * @param criteria
+     *            object used to create the INSERT statement.
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static ObjectKey doInsert(Criteria criteria) throws TorqueException {
+        return BaseMessageRowPeer.doInsert(criteria, (Connection) null);
+]]>
+</codefragment>
+</duplication>
+<duplication lines="58" tokens="169">
+<file line="432" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="685" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlags.java"/>
+<codefragment>
+<![CDATA[
+                    MessageFlagsPeer.doUpdate((MessageFlags) this, con);
+                }
+            }
+
+            alreadyInSave = false;
+        }
+    }
+
+    private final SimpleKey[] pks = new SimpleKey[2];
+
+    private final ComboKey comboPK = new ComboKey(pks);
+
+    /**
+     * Set the PrimaryKey with an ObjectKey
+     * 
+     * @param key
+     */
+    public void setPrimaryKey(ObjectKey key) throws TorqueException {
+        SimpleKey[] keys = (SimpleKey[]) key.getValue();
+        setMailboxId(((NumberKey) keys[0]).longValue());
+        setUid(((NumberKey) keys[1]).longValue());
+    }
+
+    /**
+     * Set the PrimaryKey using SimpleKeys.
+     * 
+     * @param mailboxId
+     *            long
+     * @param uid
+     *            long
+     */
+    public void setPrimaryKey(long mailboxId, long uid) throws TorqueException {
+        setMailboxId(mailboxId);
+        setUid(uid);
+    }
+
+    /**
+     * Set the PrimaryKey using a String.
+     */
+    public void setPrimaryKey(String key) throws TorqueException {
+        setPrimaryKey(new ComboKey(key));
+    }
+
+    /**
+     * returns an id that differentiates this object from others of its class.
+     */
+    public ObjectKey getPrimaryKey() {
+        pks[0] = SimpleKey.keyFor(getMailboxId());
+        pks[1] = SimpleKey.keyFor(getUid());
+        return comboPK;
+    }
+
+    /**
+     * Makes a copy of this object. It creates a new object filling in the
+     * simple attributes. It then fills all the association collections and sets
+     * the related objects to isNew=true.
+     */
+    public MessageFlags copy() throws TorqueException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="57" tokens="166">
+<file line="432" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="1048" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRow.java"/>
+<codefragment>
+<![CDATA[
+                    ((MessageBody) collMessageBodys.get(i)).save(con);
+                }
+            }
+            alreadyInSave = false;
+        }
+    }
+
+    private final SimpleKey[] pks = new SimpleKey[2];
+
+    private final ComboKey comboPK = new ComboKey(pks);
+
+    /**
+     * Set the PrimaryKey with an ObjectKey
+     * 
+     * @param key
+     */
+    public void setPrimaryKey(ObjectKey key) throws TorqueException {
+        SimpleKey[] keys = (SimpleKey[]) key.getValue();
+        setMailboxId(((NumberKey) keys[0]).longValue());
+        setUid(((NumberKey) keys[1]).longValue());
+    }
+
+    /**
+     * Set the PrimaryKey using SimpleKeys.
+     * 
+     * @param mailboxId
+     *            long
+     * @param uid
+     *            long
+     */
+    public void setPrimaryKey(long mailboxId, long uid) throws TorqueException {
+        setMailboxId(mailboxId);
+        setUid(uid);
+    }
+
+    /**
+     * Set the PrimaryKey using a String.
+     */
+    public void setPrimaryKey(String key) throws TorqueException {
+        setPrimaryKey(new ComboKey(key));
+    }
+
+    /**
+     * returns an id that differentiates this object from others of its class.
+     */
+    public ObjectKey getPrimaryKey() {
+        pks[0] = SimpleKey.keyFor(getMailboxId());
+        pks[1] = SimpleKey.keyFor(getUid());
+        return comboPK;
+    }
+
+    /**
+     * Makes a copy of this object. It creates a new object filling in the
+     * simple attributes. It then fills all the association collections and sets
+     * the related objects to isNew=true.
+     */
+    public MessageRow copy() throws TorqueException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="49" tokens="137">
+<file line="333" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMailboxRowPeer.java"/>
+<file line="315" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<file line="345" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<file line="327" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeaderPeer.java"/>
+<file line="322" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRowPeer.java"/>
+<codefragment>
+<![CDATA[
+        return BaseMessageRowPeer.doSelectVillageRecords(criteria,
+                (Connection) null);
+    }
+
+    /**
+     * Grabs the raw Village records to be formed into objects. This method
+     * should be used for transactions
+     * 
+     * @param criteria
+     *            object used to create the SELECT statement.
+     * @param con
+     *            the connection to use
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List doSelectVillageRecords(Criteria criteria, Connection con)
+            throws TorqueException {
+        if (criteria.getSelectColumns().size() == 0) {
+            addSelectColumns(criteria);
+        }
+        correctBooleans(criteria);
+
+        setDbName(criteria);
+
+        // BasePeer returns a List of Value (Village) arrays. The array
+        // order follows the order columns were placed in the Select clause.
+        if (con == null) {
+            return BasePeer.doSelect(criteria);
+        } else {
+            return BasePeer.doSelect(criteria, con);
+        }
+    }
+
+    /**
+     * The returned List will contain objects of the default type or objects
+     * that inherit from the default.
+     * 
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List populateObjects(List records) throws TorqueException {
+        List results = new ArrayList(records.size());
+
+        // populate the object(s)
+        for (int i = 0; i < records.size(); i++) {
+            Record row = (Record) records.get(i);
+            results.add(MessageRowPeer.row2Object(row, 1, MessageRowPeer
+]]>
+</codefragment>
+</duplication>
+<duplication lines="38" tokens="132">
+<file line="383" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlags.java"/>
+<file line="807" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRow.java"/>
+<codefragment>
+<![CDATA[
+            return new Integer(getSize());
+        }
+        return null;
+    }
+
+    /**
+     * Set a field in the object by field (Java) name.
+     * 
+     * @param name
+     *            field name
+     * @param value
+     *            field value
+     * @return True if value was set, false if not (invalid name / protected
+     *         field).
+     * @throws IllegalArgumentException
+     *             if object type of value does not match field object type.
+     * @throws TorqueException
+     *             If a problem occures with the set[Field] method.
+     */
+    public boolean setByName(String name, Object value) throws TorqueException,
+            IllegalArgumentException {
+        if (name.equals("MailboxId")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setMailboxId(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("Uid")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setUid(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("InternalDate")) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="38" tokens="131">
+<file line="229" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="291" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeader.java"/>
+<codefragment>
+<![CDATA[
+            return getValue();
+        }
+        return null;
+    }
+
+    /**
+     * Set a field in the object by field (Java) name.
+     * 
+     * @param name
+     *            field name
+     * @param value
+     *            field value
+     * @return True if value was set, false if not (invalid name / protected
+     *         field).
+     * @throws IllegalArgumentException
+     *             if object type of value does not match field object type.
+     * @throws TorqueException
+     *             If a problem occures with the set[Field] method.
+     */
+    public boolean setByName(String name, Object value) throws TorqueException,
+            IllegalArgumentException {
+        if (name.equals("MailboxId")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setMailboxId(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("Uid")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setUid(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("LineNumber")) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="38" tokens="130">
+<file line="229" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="383" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlags.java"/>
+<codefragment>
+<![CDATA[
+            return Boolean.valueOf(getSeen());
+        }
+        return null;
+    }
+
+    /**
+     * Set a field in the object by field (Java) name.
+     * 
+     * @param name
+     *            field name
+     * @param value
+     *            field value
+     * @return True if value was set, false if not (invalid name / protected
+     *         field).
+     * @throws IllegalArgumentException
+     *             if object type of value does not match field object type.
+     * @throws TorqueException
+     *             If a problem occures with the set[Field] method.
+     */
+    public boolean setByName(String name, Object value) throws TorqueException,
+            IllegalArgumentException {
+        if (name.equals("MailboxId")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setMailboxId(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("Uid")) {
+            if (value == null || !(Long.class.isInstance(value))) {
+                throw new IllegalArgumentException(
+                        "setByName: value parameter was null or not a Long object.");
+            }
+            setUid(((Long) value).longValue());
+            return true;
+        }
+        if (name.equals("Answered")) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="57" tokens="123">
+<file line="47" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBody.java"/>
+<file line="61" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlags.java"/>
+<file line="53" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageHeader.java"/>
+<codefragment>
+<![CDATA[
+    public long getMailboxId() {
+        return mailboxId;
+    }
+
+    /**
+     * Set the value of MailboxId
+     * 
+     * @param v
+     *            new value
+     */
+    public void setMailboxId(long v) throws TorqueException {
+
+        if (this.mailboxId != v) {
+            this.mailboxId = v;
+            setModified(true);
+        }
+
+        if (aMessageRow != null && !(aMessageRow.getMailboxId() == v)) {
+            aMessageRow = null;
+        }
+
+    }
+
+    /**
+     * Get the Uid
+     * 
+     * @return long
+     */
+    public long getUid() {
+        return uid;
+    }
+
+    /**
+     * Set the value of Uid
+     * 
+     * @param v
+     *            new value
+     */
+    public void setUid(long v) throws TorqueException {
+
+        if (this.uid != v) {
+            this.uid = v;
+            setModified(true);
+        }
+
+        if (aMessageRow != null && !(aMessageRow.getUid() == v)) {
+            aMessageRow = null;
+        }
+
+    }
+
+    /**
+     * Get the LineNumber
+     * 
+     * @return int
+     */
+    public int getLineNumber() {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="38" tokens="116">
+<file line="1047" path="/opt/development/james/protocols/current/imap/mailbox/src/main/java/org/apache/james/mailboxmanager/SearchQuery.java"/>
+<file line="1136" path="/opt/development/james/protocols/current/imap/mailbox/src/main/java/org/apache/james/mailboxmanager/SearchQuery.java"/>
+<codefragment>
+<![CDATA[
+        public final Flag getFlag() {
+            return flag;
+        }
+
+        /**
+         * Gets the test to be preformed.
+         * 
+         * @return the <code>BooleanOperator</code>, not null
+         */
+        public final BooleanOperator getOperator() {
+            return operator;
+        }
+
+        /**
+         * @see java.lang.Object#hashCode()
+         */
+        // @Override
+        public int hashCode() {
+            final int PRIME = 31;
+            int result = 1;
+            result = PRIME * result + ((flag == null) ? 0 : flag.hashCode());
+            result = PRIME * result
+                    + ((operator == null) ? 0 : operator.hashCode());
+            return result;
+        }
+
+        /**
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        // @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            final FlagCriterion other = (FlagCriterion) obj;
+]]>
+</codefragment>
+</duplication>
+<duplication lines="27" tokens="114">
+<file line="641" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<file line="658" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<codefragment>
+<![CDATA[
+    public static Criteria buildSelectCriteria(MessageFlags obj) {
+        Criteria criteria = new Criteria(DATABASE_NAME);
+        criteria.add(MAILBOX_ID, obj.getMailboxId());
+        criteria.add(UID, obj.getUid());
+        criteria.add(ANSWERED, obj.getAnswered());
+        criteria.add(DELETED, obj.getDeleted());
+        criteria.add(DRAFT, obj.getDraft());
+        criteria.add(FLAGGED, obj.getFlagged());
+        criteria.add(RECENT, obj.getRecent());
+        criteria.add(SEEN, obj.getSeen());
+        return criteria;
+    }
+
+    /**
+     * Retrieve a single object by pk
+     * 
+     * @param pk
+     *            the primary key
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     * @throws NoRowsException
+     *             Primary key was not found in database.
+     * @throws TooManyRowsException
+     *             Primary key was not found in database.
+     */
+    public static MessageFlags retrieveByPK(ObjectKey pk)
+]]>
+</codefragment>
+</duplication>
+<duplication lines="45" tokens="110">
+<file line="392" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<file line="422" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageFlagsPeer.java"/>
+<file line="399" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageRowPeer.java"/>
+<codefragment>
+<![CDATA[
+        BaseMessageRowPeer.doUpdate(criteria, (Connection) null);
+    }
+
+    /**
+     * Method to do updates. This method is to be used during a transaction,
+     * otherwise use the doUpdate(Criteria) method. It will take care of the
+     * connection details internally.
+     * 
+     * @param criteria
+     *            object containing data that is used to create the UPDATE
+     *            statement.
+     * @param con
+     *            the connection to use
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static void doUpdate(Criteria criteria, Connection con)
+            throws TorqueException {
+        Criteria selectCriteria = new Criteria(DATABASE_NAME, 2);
+        correctBooleans(criteria);
+
+        selectCriteria.put(MAILBOX_ID, criteria.remove(MAILBOX_ID));
+
+        selectCriteria.put(UID, criteria.remove(UID));
+
+        setDbName(criteria);
+
+        if (con == null) {
+            BasePeer.doUpdate(selectCriteria, criteria);
+        } else {
+            BasePeer.doUpdate(selectCriteria, criteria, con);
+        }
+    }
+
+    /**
+     * Method to do deletes.
+     * 
+     * @param criteria
+     *            object containing data that is used DELETE from database.
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static void doDelete(Criteria criteria) throws TorqueException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="43" tokens="108">
+<file line="742" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMailboxRowPeer.java"/>
+<file line="680" path="/opt/development/james/protocols/current/imap/torque/src/main/java/org/apache/james/mailboxmanager/torque/om/BaseMessageBodyPeer.java"/>
+<codefragment>
+<![CDATA[
+            return (MessageBody) v.get(0);
+        }
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks) throws TorqueException {
+        Connection db = null;
+        List retVal = null;
+        try {
+            db = Torque.getConnection(DATABASE_NAME);
+            retVal = retrieveByPKs(pks, db);
+        } finally {
+            Torque.closeConnection(db);
+        }
+        return retVal;
+    }
+
+    /**
+     * Retrieve a multiple objects by pk
+     * 
+     * @param pks
+     *            List of primary keys
+     * @param dbcon
+     *            the connection to use
+     * @throws TorqueException
+     *             Any exceptions caught during processing will be rethrown
+     *             wrapped into a TorqueException.
+     */
+    public static List retrieveByPKs(List pks, Connection dbcon)
+            throws TorqueException {
+        List objs = null;
+        if (pks == null || pks.size() == 0) {
+            objs = new LinkedList();
+        } else {
+            Criteria criteria = new Criteria();
+]]>
+</codefragment>
+</duplication>
+<duplication lines="15" tokens="100">
+<file line="72" path="/opt/development/james/protocols/current/imap/processor/src/main/java/org/apache/james/imap/processor/imap4rev1/CopyProcessor.java"/>
+<file line="75" path="/opt/development/james/protocols/current/imap/processor/src/main/java/org/apache/james/imap/processor/imap4rev1/fetch/FetchProcessor.java"/>
+<codefragment>
+<![CDATA[
+                final long highVal;
+                final long lowVal;
+                if (useUids) {
+                    highVal = idSet[i].getHighVal();
+                    lowVal = idSet[i].getLowVal();
+                } else {
+                    highVal = session.getSelected().uid(
+                            (int) idSet[i].getHighVal());
+                    lowVal = session.getSelected().uid(
+                            (int) idSet[i].getLowVal());
+                }
+                MessageRange messageSet = MessageRangeImpl.uidRange(lowVal,
+                        highVal);
+                final MailboxSession mailboxSession = ImapSessionUtils
+                        .getMailboxSession(session);
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>
