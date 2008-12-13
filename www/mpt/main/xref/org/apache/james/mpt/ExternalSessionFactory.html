@@ -51,36 +51,37 @@
 <a name="42" href="#42">42</a>      }
 <a name="43" href="#43">43</a>  
 <a name="44" href="#44">44</a>      <strong>public</strong> <a href="../../../../org/apache/james/mpt/Session.html">Session</a> newSession(Continuation continuation) throws Exception {
-<a name="45" href="#45">45</a>          <strong>final</strong> SocketChannel channel = SocketChannel.open(address);
-<a name="46" href="#46">46</a>          channel.configureBlocking(false);
-<a name="47" href="#47">47</a>          <strong>final</strong> <a href="../../../../org/apache/james/mpt/ExternalSession.html">ExternalSession</a> result = <strong>new</strong> <a href="../../../../org/apache/james/mpt/ExternalSession.html">ExternalSession</a>(channel, monitor, shabang);
-<a name="48" href="#48">48</a>          <strong>return</strong> result;
-<a name="49" href="#49">49</a>      }
-<a name="50" href="#50">50</a>  
-<a name="51" href="#51">51</a>      <strong>public</strong> <strong>void</strong> reset() throws Exception {
-<a name="52" href="#52">52</a>          monitor.note(<span class="string">"Please reset system."</span>);
-<a name="53" href="#53">53</a>      }
-<a name="54" href="#54">54</a>  
-<a name="55" href="#55">55</a>      <em>/**<em>*</em></em>
-<a name="56" href="#56">56</a>  <em>     * Constructs a &lt;code>String&lt;/code> with all attributes</em>
-<a name="57" href="#57">57</a>  <em>     * in name = value format.</em>
-<a name="58" href="#58">58</a>  <em>     *</em>
-<a name="59" href="#59">59</a>  <em>     * @return a &lt;code>String&lt;/code> representation </em>
-<a name="60" href="#60">60</a>  <em>     * of this object.</em>
-<a name="61" href="#61">61</a>  <em>     */</em>
-<a name="62" href="#62">62</a>      <strong>public</strong> String toString()
-<a name="63" href="#63">63</a>      {
-<a name="64" href="#64">64</a>          <strong>final</strong> String TAB = <span class="string">" "</span>;
-<a name="65" href="#65">65</a>  
-<a name="66" href="#66">66</a>          String retValue = <span class="string">"ExternalSessionFactory ( "</span>
-<a name="67" href="#67">67</a>              + <span class="string">"address = "</span> + <strong>this</strong>.address + TAB
-<a name="68" href="#68">68</a>              + <span class="string">"monitor = "</span> + <strong>this</strong>.monitor + TAB
-<a name="69" href="#69">69</a>              + <span class="string">"shabang = "</span> + <strong>this</strong>.shabang + TAB
-<a name="70" href="#70">70</a>              + <span class="string">" )"</span>;
-<a name="71" href="#71">71</a>  
-<a name="72" href="#72">72</a>          <strong>return</strong> retValue;
-<a name="73" href="#73">73</a>      }
-<a name="74" href="#74">74</a>  }
+<a name="45" href="#45">45</a>          monitor.note(<span class="string">"Connecting to "</span> + address.getHostName() + <span class="string">":"</span> + address.getPort());
+<a name="46" href="#46">46</a>          <strong>final</strong> SocketChannel channel = SocketChannel.open(address);
+<a name="47" href="#47">47</a>          channel.configureBlocking(false);
+<a name="48" href="#48">48</a>          <strong>final</strong> <a href="../../../../org/apache/james/mpt/ExternalSession.html">ExternalSession</a> result = <strong>new</strong> <a href="../../../../org/apache/james/mpt/ExternalSession.html">ExternalSession</a>(channel, monitor, shabang);
+<a name="49" href="#49">49</a>          <strong>return</strong> result;
+<a name="50" href="#50">50</a>      }
+<a name="51" href="#51">51</a>  
+<a name="52" href="#52">52</a>      <strong>public</strong> <strong>void</strong> reset() throws Exception {
+<a name="53" href="#53">53</a>          monitor.note(<span class="string">"Please reset system."</span>);
+<a name="54" href="#54">54</a>      }
+<a name="55" href="#55">55</a>  
+<a name="56" href="#56">56</a>      <em>/**<em>*</em></em>
+<a name="57" href="#57">57</a>  <em>     * Constructs a &lt;code>String&lt;/code> with all attributes</em>
+<a name="58" href="#58">58</a>  <em>     * in name = value format.</em>
+<a name="59" href="#59">59</a>  <em>     *</em>
+<a name="60" href="#60">60</a>  <em>     * @return a &lt;code>String&lt;/code> representation </em>
+<a name="61" href="#61">61</a>  <em>     * of this object.</em>
+<a name="62" href="#62">62</a>  <em>     */</em>
+<a name="63" href="#63">63</a>      <strong>public</strong> String toString()
+<a name="64" href="#64">64</a>      {
+<a name="65" href="#65">65</a>          <strong>final</strong> String TAB = <span class="string">" "</span>;
+<a name="66" href="#66">66</a>  
+<a name="67" href="#67">67</a>          String retValue = <span class="string">"ExternalSessionFactory ( "</span>
+<a name="68" href="#68">68</a>              + <span class="string">"address = "</span> + <strong>this</strong>.address + TAB
+<a name="69" href="#69">69</a>              + <span class="string">"monitor = "</span> + <strong>this</strong>.monitor + TAB
+<a name="70" href="#70">70</a>              + <span class="string">"shabang = "</span> + <strong>this</strong>.shabang + TAB
+<a name="71" href="#71">71</a>              + <span class="string">" )"</span>;
+<a name="72" href="#72">72</a>  
+<a name="73" href="#73">73</a>          <strong>return</strong> retValue;
+<a name="74" href="#74">74</a>      }
+<a name="75" href="#75">75</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
