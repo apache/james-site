@@ -513,48 +513,48 @@ import junit.framework.TestCase;
 
 public class MailetUtilTest extends TestCase {
 
-	private static final String A_PARAMETER = &quot;aParameter&quot;;
+    private static final String A_PARAMETER = &quot;aParameter&quot;;
 
-	MockMailetConfig config;
-	
-	protected void setUp() throws Exception {
-		super.setUp();
-		config = new MockMailetConfig();
-	}
+    MockMailetConfig config;
+    
+    protected void setUp() throws Exception {
+        super.setUp();
+        config = new MockMailetConfig();
+    }
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
 
-	public void testGetInitParameterParameterIsTrue() {
-		assertTrue(getParameterValued(&quot;true&quot;, true));
-		assertTrue(getParameterValued(&quot;true&quot;, false));
-		assertTrue(getParameterValued(&quot;TRUE&quot;, true));
-		assertTrue(getParameterValued(&quot;TRUE&quot;, false));
-		assertTrue(getParameterValued(&quot;trUE&quot;, true));
-		assertTrue(getParameterValued(&quot;trUE&quot;, false));
-	}
+    public void testGetInitParameterParameterIsTrue() {
+        assertTrue(getParameterValued(&quot;true&quot;, true));
+        assertTrue(getParameterValued(&quot;true&quot;, false));
+        assertTrue(getParameterValued(&quot;TRUE&quot;, true));
+        assertTrue(getParameterValued(&quot;TRUE&quot;, false));
+        assertTrue(getParameterValued(&quot;trUE&quot;, true));
+        assertTrue(getParameterValued(&quot;trUE&quot;, false));
+    }
 
-	public void testGetInitParameterParameterIsFalse() {
-		assertFalse(getParameterValued(&quot;false&quot;, true));
-		assertFalse(getParameterValued(&quot;false&quot;, false));
-		assertFalse(getParameterValued(&quot;FALSE&quot;, true));
-		assertFalse(getParameterValued(&quot;FALSE&quot;, false));
-		assertFalse(getParameterValued(&quot;fALSe&quot;, true));
-		assertFalse(getParameterValued(&quot;fALSe&quot;, false));
-	}
-	
-	public void testGetInitParameterParameterDefaultsToTrue() {
-		assertTrue(getParameterValued(&quot;fals&quot;, true));
-		assertTrue(getParameterValued(&quot;TRU&quot;, true));
-		assertTrue(getParameterValued(&quot;FALSEest&quot;, true));
-		assertTrue(getParameterValued(&quot;&quot;, true));
-		assertTrue(getParameterValued(&quot;gubbins&quot;, true));
-	}
-	
-	public void testGetInitParameterParameterDefaultsToFalse() {
-		assertFalse(getParameterValued(&quot;fals&quot;, false));
-		assertFalse(getParameterValued(&quot;TRU&quot;, false));
+    public void testGetInitParameterParameterIsFalse() {
+        assertFalse(getParameterValued(&quot;false&quot;, true));
+        assertFalse(getParameterValued(&quot;false&quot;, false));
+        assertFalse(getParameterValued(&quot;FALSE&quot;, true));
+        assertFalse(getParameterValued(&quot;FALSE&quot;, false));
+        assertFalse(getParameterValued(&quot;fALSe&quot;, true));
+        assertFalse(getParameterValued(&quot;fALSe&quot;, false));
+    }
+    
+    public void testGetInitParameterParameterDefaultsToTrue() {
+        assertTrue(getParameterValued(&quot;fals&quot;, true));
+        assertTrue(getParameterValued(&quot;TRU&quot;, true));
+        assertTrue(getParameterValued(&quot;FALSEest&quot;, true));
+        assertTrue(getParameterValued(&quot;&quot;, true));
+        assertTrue(getParameterValued(&quot;gubbins&quot;, true));
+    }
+    
+    public void testGetInitParameterParameterDefaultsToFalse() {
+        assertFalse(getParameterValued(&quot;fals&quot;, false));
+        assertFalse(getParameterValued(&quot;TRU&quot;, false));
 
  =======================================================================
  ==/opt/development/workspace/mailet-site/base/include.properties
