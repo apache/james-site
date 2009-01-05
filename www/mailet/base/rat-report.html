@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 12/03/2008
+        Last Published: 01/05/2009
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -236,7 +236,7 @@ Summary
 Notes: 4
 Binaries: 2
 Archives: 6
-Standards: 69
+Standards: 70
 
 Apache Licensed: 59
 Generated Documents: 0
@@ -244,14 +244,14 @@ Generated Documents: 0
 JavaDocs are generated and so license header is optional
 Generated files do not required license headers
 
-10 Unknown Licenses
+11 Unknown Licenses
 
 *******************************
 
 Archives (+ indicates readable, $ unreadable): 
 
  + /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
- + /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-mailet-2.4-SNAPSHOT.jar
+ + /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-mailet-2.4.jar
  + /opt/development/workspace/mailet-site/base/stage/javax.activation/jars/activation-1.1.1.jar
  + /opt/development/workspace/mailet-site/base/stage/biz.aQute/jars/bnd-0.0.249.jar
  + /opt/development/workspace/mailet-site/base/stage/javax.mail/jars/mail-1.4.1.jar
@@ -264,13 +264,13 @@ Archives (+ indicates readable, $ unreadable):
   Notices, licenses etc will be marked N
   AL    /opt/development/workspace/mailet-site/base/pom.xml
   A     /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-james-mailet-base-1.0-SNAPSHOT.jar
-  A     /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-mailet-2.4-SNAPSHOT.jar
+  A     /opt/development/workspace/mailet-site/base/stage/org.apache.james/jars/apache-mailet-2.4.jar
   AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/james-parent-1.1.pom
   AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/apache-james-mailet-base-1.0-SNAPSHOT.pom
-  AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/apache-mailet-2.4-SNAPSHOT.pom
   AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/maven-skin-1.1-SNAPSHOT.pom
   AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/maven-skin-1.1.pom
   AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/james-project-1.1.pom
+  AL    /opt/development/workspace/mailet-site/base/stage/org.apache.james/poms/apache-mailet-2.4.pom
  !????? /opt/development/workspace/mailet-site/base/stage/org.apache.james/xmls/james-server-root-1.0-site.xml
  !????? /opt/development/workspace/mailet-site/base/stage/org.apache.james/xmls/james-server-root-1.0-site_en.xml
  !????? /opt/development/workspace/mailet-site/base/stage/org.apache.james/xmls/james-project-1.1-site.xml
@@ -333,6 +333,7 @@ Archives (+ indicates readable, $ unreadable):
   AL    /opt/development/workspace/mailet-site/base/src/main/java/org/apache/mailet/base/mail/mdn/ModifierMailboxTerminated.java
   AL    /opt/development/workspace/mailet-site/base/src/main/java/org/apache/mailet/base/RFC2980DateFormat.java
   AL    /opt/development/workspace/mailet-site/base/src/main/java/org/apache/mailet/base/RFC977DateFormat.java
+ !????? /opt/development/workspace/mailet-site/base/src/test/java/org/apache/mailet/base/MailetUtilTest.java
   AL    /opt/development/workspace/mailet-site/base/src/test/java/org/apache/mailet/base/test/MockMailContext.java
   AL    /opt/development/workspace/mailet-site/base/src/test/java/org/apache/mailet/base/test/MockMail.java
   AL    /opt/development/workspace/mailet-site/base/src/test/java/org/apache/mailet/base/test/MailUtil.java
@@ -502,6 +503,60 @@ Archives (+ indicates readable, $ unreadable):
 &lt;/project&gt;
 
  =======================================================================
+ ==/opt/development/workspace/mailet-site/base/src/test/java/org/apache/mailet/base/MailetUtilTest.java
+ =======================================================================
+ package org.apache.mailet.base;
+
+import org.apache.mailet.base.test.MockMailetConfig;
+
+import junit.framework.TestCase;
+
+public class MailetUtilTest extends TestCase {
+
+	private static final String A_PARAMETER = &quot;aParameter&quot;;
+
+	MockMailetConfig config;
+	
+	protected void setUp() throws Exception {
+		super.setUp();
+		config = new MockMailetConfig();
+	}
+
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
+	public void testGetInitParameterParameterIsTrue() {
+		assertTrue(getParameterValued(&quot;true&quot;, true));
+		assertTrue(getParameterValued(&quot;true&quot;, false));
+		assertTrue(getParameterValued(&quot;TRUE&quot;, true));
+		assertTrue(getParameterValued(&quot;TRUE&quot;, false));
+		assertTrue(getParameterValued(&quot;trUE&quot;, true));
+		assertTrue(getParameterValued(&quot;trUE&quot;, false));
+	}
+
+	public void testGetInitParameterParameterIsFalse() {
+		assertFalse(getParameterValued(&quot;false&quot;, true));
+		assertFalse(getParameterValued(&quot;false&quot;, false));
+		assertFalse(getParameterValued(&quot;FALSE&quot;, true));
+		assertFalse(getParameterValued(&quot;FALSE&quot;, false));
+		assertFalse(getParameterValued(&quot;fALSe&quot;, true));
+		assertFalse(getParameterValued(&quot;fALSe&quot;, false));
+	}
+	
+	public void testGetInitParameterParameterDefaultsToTrue() {
+		assertTrue(getParameterValued(&quot;fals&quot;, true));
+		assertTrue(getParameterValued(&quot;TRU&quot;, true));
+		assertTrue(getParameterValued(&quot;FALSEest&quot;, true));
+		assertTrue(getParameterValued(&quot;&quot;, true));
+		assertTrue(getParameterValued(&quot;gubbins&quot;, true));
+	}
+	
+	public void testGetInitParameterParameterDefaultsToFalse() {
+		assertFalse(getParameterValued(&quot;fals&quot;, false));
+		assertFalse(getParameterValued(&quot;TRU&quot;, false));
+
+ =======================================================================
  ==/opt/development/workspace/mailet-site/base/include.properties
  =======================================================================
  # -------------------------------------------------------------------
@@ -535,7 +590,7 @@ activation.id=activation-1.1.1
 javax-activation.jar=stage/javax.activation/jars/${activation.id}.jar
 
 # ----- Mailet -----
-mailet.jar=stage/org.apache.james/jars/apache-mailet-2.4-SNAPSHOT.jar
+mailet.jar=stage/org.apache.james/jars/apache-mailet-2.4.jar
 
 # ----- JUnit ------
 junit.jar=stage/junit/jars/junit-3.8.1.jar
@@ -604,7 +659,7 @@ deprecation = on
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2008-2009
     
           The Apache Software Foundation
           
