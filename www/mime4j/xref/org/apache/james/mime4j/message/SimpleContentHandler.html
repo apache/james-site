@@ -30,8 +30,8 @@
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.james.mime4j.message;
 <a name="21" href="#21">21</a>  
 <a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.MimeException;
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.decoder.Base64InputStream;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.decoder.QuotedPrintableInputStream;
+<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.codec.Base64InputStream;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.codec.QuotedPrintableInputStream;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.descriptor.BodyDescriptor;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.field.Field;
 <a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.AbstractContentHandler;
@@ -76,41 +76,45 @@
 <a name="66" href="#66">66</a>      <em class="jxr_javadoccomment">/**</em>
 <a name="67" href="#67">67</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#startHeader()</em>
 <a name="68" href="#68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="69" href="#69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> startHeader() {
-<a name="70" href="#70">70</a>          currHeader = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/message/Header.html">Header</a>();
-<a name="71" href="#71">71</a>      }
-<a name="72" href="#72">72</a>  
-<a name="73" href="#73">73</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="74" href="#74">74</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#field(java.lang.String)</em>
-<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="76" href="#76">76</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> field(String fieldData) <strong class="jxr_keyword">throws</strong> MimeException {
-<a name="77" href="#77">77</a>          currHeader.addField(Field.parse(fieldData));
-<a name="78" href="#78">78</a>      }
-<a name="79" href="#79">79</a>  
-<a name="80" href="#80">80</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#endHeader()</em>
-<a name="82" href="#82">82</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="83" href="#83">83</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> endHeader() {
-<a name="84" href="#84">84</a>          <a href="../../../../../org/apache/james/mime4j/message/Header.html">Header</a> tmp = currHeader;
-<a name="85" href="#85">85</a>          currHeader = <strong class="jxr_keyword">null</strong>;
-<a name="86" href="#86">86</a>          headers(tmp);
-<a name="87" href="#87">87</a>      }
-<a name="88" href="#88">88</a>  
-<a name="89" href="#89">89</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#body(org.apache.james.mime4j.descriptor.BodyDescriptor, java.io.InputStream)</em>
-<a name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="92" href="#92">92</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> body(<a href="../../../../../org/apache/james/mime4j/descriptor/BodyDescriptor.html">BodyDescriptor</a> bd, InputStream is) <strong class="jxr_keyword">throws</strong> IOException {
-<a name="93" href="#93">93</a>          <strong class="jxr_keyword">if</strong> (MimeUtil.isBase64Encoding(bd.getTransferEncoding())) {
-<a name="94" href="#94">94</a>              bodyDecoded(bd, <strong class="jxr_keyword">new</strong> Base64InputStream(is));
-<a name="95" href="#95">95</a>          }
-<a name="96" href="#96">96</a>          <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (MimeUtil.isQuotedPrintableEncoded(bd.getTransferEncoding())) {
-<a name="97" href="#97">97</a>              bodyDecoded(bd, <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/decoder/QuotedPrintableInputStream.html">QuotedPrintableInputStream</a>(is));
-<a name="98" href="#98">98</a>          }
-<a name="99" href="#99">99</a>          <strong class="jxr_keyword">else</strong> {
-<a name="100" href="#100">100</a>             bodyDecoded(bd, is);
-<a name="101" href="#101">101</a>         }
-<a name="102" href="#102">102</a>     }
-<a name="103" href="#103">103</a> }
+<a name="69" href="#69">69</a>      @Override
+<a name="70" href="#70">70</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> startHeader() {
+<a name="71" href="#71">71</a>          currHeader = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/message/Header.html">Header</a>();
+<a name="72" href="#72">72</a>      }
+<a name="73" href="#73">73</a>  
+<a name="74" href="#74">74</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#field(java.lang.String)</em>
+<a name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="77" href="#77">77</a>      @Override
+<a name="78" href="#78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> field(String fieldData) <strong class="jxr_keyword">throws</strong> MimeException {
+<a name="79" href="#79">79</a>          currHeader.addField(Field.parse(fieldData));
+<a name="80" href="#80">80</a>      }
+<a name="81" href="#81">81</a>  
+<a name="82" href="#82">82</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#endHeader()</em>
+<a name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="85" href="#85">85</a>      @Override
+<a name="86" href="#86">86</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> endHeader() {
+<a name="87" href="#87">87</a>          <a href="../../../../../org/apache/james/mime4j/message/Header.html">Header</a> tmp = currHeader;
+<a name="88" href="#88">88</a>          currHeader = <strong class="jxr_keyword">null</strong>;
+<a name="89" href="#89">89</a>          headers(tmp);
+<a name="90" href="#90">90</a>      }
+<a name="91" href="#91">91</a>  
+<a name="92" href="#92">92</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="93" href="#93">93</a>  <em class="jxr_javadoccomment">     * @see org.apache.james.mime4j.parser.AbstractContentHandler#body(org.apache.james.mime4j.descriptor.BodyDescriptor, java.io.InputStream)</em>
+<a name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="95" href="#95">95</a>      @Override
+<a name="96" href="#96">96</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> body(<a href="../../../../../org/apache/james/mime4j/descriptor/BodyDescriptor.html">BodyDescriptor</a> bd, InputStream is) <strong class="jxr_keyword">throws</strong> IOException {
+<a name="97" href="#97">97</a>          <strong class="jxr_keyword">if</strong> (MimeUtil.isBase64Encoding(bd.getTransferEncoding())) {
+<a name="98" href="#98">98</a>              bodyDecoded(bd, <strong class="jxr_keyword">new</strong> Base64InputStream(is));
+<a name="99" href="#99">99</a>          }
+<a name="100" href="#100">100</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (MimeUtil.isQuotedPrintableEncoded(bd.getTransferEncoding())) {
+<a name="101" href="#101">101</a>             bodyDecoded(bd, <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/codec/QuotedPrintableInputStream.html">QuotedPrintableInputStream</a>(is));
+<a name="102" href="#102">102</a>         }
+<a name="103" href="#103">103</a>         <strong class="jxr_keyword">else</strong> {
+<a name="104" href="#104">104</a>             bodyDecoded(bd, is);
+<a name="105" href="#105">105</a>         }
+<a name="106" href="#106">106</a>     }
+<a name="107" href="#107">107</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

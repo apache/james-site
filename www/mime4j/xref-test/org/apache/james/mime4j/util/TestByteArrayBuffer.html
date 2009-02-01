@@ -143,8 +143,8 @@
 <a name="133" href="#133">133</a>         assertEquals(4, buffer.capacity()); 
 <a name="134" href="#134">134</a>         
 <a name="135" href="#135">135</a>         byte[] tmp = <strong class="jxr_keyword">new</strong> byte[] { 1, 127, -1, -128, 1, -2};
-<a name="136" href="#136">136</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; tmp.length; i++) {
-<a name="137" href="#137">137</a>             buffer.append(tmp[i]);
+<a name="136" href="#136">136</a>         <strong class="jxr_keyword">for</strong> (byte b : tmp) {
+<a name="137" href="#137">137</a>             buffer.append(b);
 <a name="138" href="#138">138</a>         }
 <a name="139" href="#139">139</a>         assertEquals(8, buffer.capacity()); 
 <a name="140" href="#140">140</a>         assertEquals(6, buffer.length());

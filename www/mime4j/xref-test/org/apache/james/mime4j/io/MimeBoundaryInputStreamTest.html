@@ -174,7 +174,7 @@
 <a name="164" href="#164">164</a>     }
 <a name="165" href="#165">165</a>     
 <a name="166" href="#166">166</a>     <strong class="jxr_keyword">private</strong> String readByOneByte(InputStream is) <strong class="jxr_keyword">throws</strong> IOException {
-<a name="167" href="#167">167</a>         StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
+<a name="167" href="#167">167</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a name="168" href="#168">168</a>         <strong class="jxr_keyword">int</strong> b = 0;
 <a name="169" href="#169">169</a>         <strong class="jxr_keyword">while</strong> ((b = is.read()) != -1) {
 <a name="170" href="#170">170</a>             sb.append((<strong class="jxr_keyword">char</strong>) b);
@@ -183,7 +183,7 @@
 <a name="173" href="#173">173</a>     }
 <a name="174" href="#174">174</a> 
 <a name="175" href="#175">175</a>     <strong class="jxr_keyword">private</strong> String read(InputStream is, <strong class="jxr_keyword">int</strong> bufsize) <strong class="jxr_keyword">throws</strong> IOException {
-<a name="176" href="#176">176</a>         StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
+<a name="176" href="#176">176</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a name="177" href="#177">177</a>         <strong class="jxr_keyword">int</strong> l;
 <a name="178" href="#178">178</a>         byte[] tmp = <strong class="jxr_keyword">new</strong> byte[bufsize];
 <a name="179" href="#179">179</a>         <strong class="jxr_keyword">while</strong> ((l = is.read(tmp)) != -1) {
@@ -257,7 +257,7 @@
 <a name="247" href="#247">247</a>         teststrs[0] = <span class="jxr_string">"Hello\r\n"</span>;
 <a name="248" href="#248">248</a>         teststrs[1] = <span class="jxr_string">"This string should be much longer than the size of the input buffer "</span> +
 <a name="249" href="#249">249</a>                 <span class="jxr_string">"which is only 20 bytes for this test\r\n"</span>;
-<a name="250" href="#250">250</a>         StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
+<a name="250" href="#250">250</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a name="251" href="#251">251</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; 15; i++) {
 <a name="252" href="#252">252</a>             sb.append(<span class="jxr_string">"123456789 "</span>);
 <a name="253" href="#253">253</a>         }
@@ -270,8 +270,8 @@
 <a name="260" href="#260">260</a>         
 <a name="261" href="#261">261</a>         ByteArrayOutputStream outstream = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
 <a name="262" href="#262">262</a>         
-<a name="263" href="#263">263</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; teststrs.length; i++) {
-<a name="264" href="#264">264</a>             outstream.write(teststrs[i].getBytes(<span class="jxr_string">"US-ASCII"</span>));
+<a name="263" href="#263">263</a>         <strong class="jxr_keyword">for</strong> (String teststr : teststrs) {
+<a name="264" href="#264">264</a>             outstream.write(teststr.getBytes(<span class="jxr_string">"US-ASCII"</span>));
 <a name="265" href="#265">265</a>         }
 <a name="266" href="#266">266</a>         outstream.write(term.getBytes(<span class="jxr_string">"US-ASCII"</span>));
 <a name="267" href="#267">267</a>         byte[] raw = outstream.toByteArray();
@@ -280,11 +280,11 @@
 <a name="270" href="#270">270</a>         LineReaderInputStream instream = <strong class="jxr_keyword">new</strong> MimeBoundaryInputStream(inbuffer, <span class="jxr_string">"1234"</span>); 
 <a name="271" href="#271">271</a>         
 <a name="272" href="#272">272</a>         ByteArrayBuffer linebuf = <strong class="jxr_keyword">new</strong> ByteArrayBuffer(8); 
-<a name="273" href="#273">273</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; teststrs.length; i++) {
+<a name="273" href="#273">273</a>         <strong class="jxr_keyword">for</strong> (String teststr : teststrs) {
 <a name="274" href="#274">274</a>             linebuf.clear();
 <a name="275" href="#275">275</a>             instream.readLine(linebuf);
 <a name="276" href="#276">276</a>             String s = <strong class="jxr_keyword">new</strong> String(linebuf.toByteArray(), <span class="jxr_string">"US-ASCII"</span>);
-<a name="277" href="#277">277</a>             assertEquals(teststrs[i], s);
+<a name="277" href="#277">277</a>             assertEquals(teststr, s);
 <a name="278" href="#278">278</a>         }
 <a name="279" href="#279">279</a>         assertEquals(-1, instream.readLine(linebuf));
 <a name="280" href="#280">280</a>         assertEquals(-1, instream.readLine(linebuf));

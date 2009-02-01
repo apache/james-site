@@ -61,56 +61,56 @@
 <a name="51" href="#51">51</a>          <strong class="jxr_keyword">this</strong>.file = testFile;
 <a name="52" href="#52">52</a>      }
 <a name="53" href="#53">53</a>  
-<a name="54" href="#54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setUp() {
-<a name="55" href="#55">55</a>          BasicConfigurator.resetConfiguration();
-<a name="56" href="#56">56</a>          BasicConfigurator.configure();
-<a name="57" href="#57">57</a>      }
-<a name="58" href="#58">58</a>     
-<a name="59" href="#59">59</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> runTest() <strong class="jxr_keyword">throws</strong> Throwable {
-<a name="60" href="#60">60</a>          MimeStreamParser parser = <strong class="jxr_keyword">null</strong>;
-<a name="61" href="#61">61</a>          <a href="../../../../../org/apache/james/mime4j/parser/TestHandler.html">TestHandler</a> handler = <strong class="jxr_keyword">null</strong>;
-<a name="62" href="#62">62</a>          MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
-<a name="63" href="#63">63</a>          config.setMaxLineLen(-1);
-<a name="64" href="#64">64</a>          parser = <strong class="jxr_keyword">new</strong> MimeStreamParser(config);
-<a name="65" href="#65">65</a>          handler = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/parser/TestHandler.html">TestHandler</a>();
-<a name="66" href="#66">66</a>          
-<a name="67" href="#67">67</a>          System.out.println(<span class="jxr_string">"Parsing "</span> + file.getName());
-<a name="68" href="#68">68</a>          parser.setContentHandler(handler);
-<a name="69" href="#69">69</a>          parser.parse(<strong class="jxr_keyword">new</strong> FileInputStream(file));
-<a name="70" href="#70">70</a>          
-<a name="71" href="#71">71</a>          String result = handler.sb.toString();
-<a name="72" href="#72">72</a>          String xmlFile = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf('.')) + <span class="jxr_string">".xml"</span>;
-<a name="73" href="#73">73</a>          String xmlFileMime4j = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf('.')) + <span class="jxr_string">".mime4j.xml"</span>;
-<a name="74" href="#74">74</a>          
-<a name="75" href="#75">75</a>          <strong class="jxr_keyword">try</strong> {
-<a name="76" href="#76">76</a>              String expected = IOUtils.toString(<strong class="jxr_keyword">new</strong> FileInputStream(xmlFile), <span class="jxr_string">"ISO8859-1"</span>);
-<a name="77" href="#77">77</a>              assertEquals(<span class="jxr_string">"Error parsing "</span> + file.getName(), expected, result);
-<a name="78" href="#78">78</a>          } <strong class="jxr_keyword">catch</strong> (FileNotFoundException e) {
-<a name="79" href="#79">79</a>              FileOutputStream fos = <strong class="jxr_keyword">new</strong> FileOutputStream(xmlFileMime4j);
-<a name="80" href="#80">80</a>              fos.write(result.getBytes());
-<a name="81" href="#81">81</a>              fos.flush();
-<a name="82" href="#82">82</a>              fos.close();
-<a name="83" href="#83">83</a>              fail(<span class="jxr_string">"XML file not found: generated a file with the expected result!"</span>);
-<a name="84" href="#84">84</a>          }
-<a name="85" href="#85">85</a>      }
-<a name="86" href="#86">86</a>  
-<a name="87" href="#87">87</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Test suite() <strong class="jxr_keyword">throws</strong> IOException {
-<a name="88" href="#88">88</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a>();
-<a name="89" href="#89">89</a>      }
-<a name="90" href="#90">90</a>  
-<a name="91" href="#91">91</a>      
-<a name="92" href="#92">92</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a> <strong class="jxr_keyword">extends</strong> TestSuite {
-<a name="93" href="#93">93</a>  
-<a name="94" href="#94">94</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> File TESTS_FOLDER = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/resources/testmsgs"</span>);
+<a name="54" href="#54">54</a>      @Override
+<a name="55" href="#55">55</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setUp() {
+<a name="56" href="#56">56</a>          BasicConfigurator.resetConfiguration();
+<a name="57" href="#57">57</a>          BasicConfigurator.configure();
+<a name="58" href="#58">58</a>      }
+<a name="59" href="#59">59</a>     
+<a name="60" href="#60">60</a>      @Override
+<a name="61" href="#61">61</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> runTest() <strong class="jxr_keyword">throws</strong> Throwable {
+<a name="62" href="#62">62</a>          MimeStreamParser parser = <strong class="jxr_keyword">null</strong>;
+<a name="63" href="#63">63</a>          <a href="../../../../../org/apache/james/mime4j/parser/TestHandler.html">TestHandler</a> handler = <strong class="jxr_keyword">null</strong>;
+<a name="64" href="#64">64</a>          MimeEntityConfig config = <strong class="jxr_keyword">new</strong> MimeEntityConfig();
+<a name="65" href="#65">65</a>          config.setMaxLineLen(-1);
+<a name="66" href="#66">66</a>          parser = <strong class="jxr_keyword">new</strong> MimeStreamParser(config);
+<a name="67" href="#67">67</a>          handler = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/parser/TestHandler.html">TestHandler</a>();
+<a name="68" href="#68">68</a>          
+<a name="69" href="#69">69</a>          System.out.println(<span class="jxr_string">"Parsing "</span> + file.getName());
+<a name="70" href="#70">70</a>          parser.setContentHandler(handler);
+<a name="71" href="#71">71</a>          parser.parse(<strong class="jxr_keyword">new</strong> FileInputStream(file));
+<a name="72" href="#72">72</a>          
+<a name="73" href="#73">73</a>          String result = handler.sb.toString();
+<a name="74" href="#74">74</a>          String xmlFile = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf('.')) + <span class="jxr_string">".xml"</span>;
+<a name="75" href="#75">75</a>          String xmlFileMime4j = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf('.')) + <span class="jxr_string">".mime4j.xml"</span>;
+<a name="76" href="#76">76</a>          
+<a name="77" href="#77">77</a>          <strong class="jxr_keyword">try</strong> {
+<a name="78" href="#78">78</a>              String expected = IOUtils.toString(<strong class="jxr_keyword">new</strong> FileInputStream(xmlFile), <span class="jxr_string">"ISO8859-1"</span>);
+<a name="79" href="#79">79</a>              assertEquals(<span class="jxr_string">"Error parsing "</span> + file.getName(), expected, result);
+<a name="80" href="#80">80</a>          } <strong class="jxr_keyword">catch</strong> (FileNotFoundException e) {
+<a name="81" href="#81">81</a>              FileOutputStream fos = <strong class="jxr_keyword">new</strong> FileOutputStream(xmlFileMime4j);
+<a name="82" href="#82">82</a>              fos.write(result.getBytes());
+<a name="83" href="#83">83</a>              fos.flush();
+<a name="84" href="#84">84</a>              fos.close();
+<a name="85" href="#85">85</a>              fail(<span class="jxr_string">"XML file not found: generated a file with the expected result!"</span>);
+<a name="86" href="#86">86</a>          }
+<a name="87" href="#87">87</a>      }
+<a name="88" href="#88">88</a>  
+<a name="89" href="#89">89</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Test suite() <strong class="jxr_keyword">throws</strong> IOException {
+<a name="90" href="#90">90</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a>();
+<a name="91" href="#91">91</a>      }
+<a name="92" href="#92">92</a>  
+<a name="93" href="#93">93</a>      
+<a name="94" href="#94">94</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a> <strong class="jxr_keyword">extends</strong> TestSuite {
 <a name="95" href="#95">95</a>  
-<a name="96" href="#96">96</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a>() <strong class="jxr_keyword">throws</strong> IOException {
-<a name="97" href="#97">97</a>              <strong class="jxr_keyword">super</strong>();
-<a name="98" href="#98">98</a>              File dir = TESTS_FOLDER;
-<a name="99" href="#99">99</a>              File[] files = dir.listFiles();
-<a name="100" href="#100">100</a>             
-<a name="101" href="#101">101</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; files.length; i++) {
-<a name="102" href="#102">102</a>                 File f = files[i];
-<a name="103" href="#103">103</a>                 
+<a name="96" href="#96">96</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> File TESTS_FOLDER = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/resources/testmsgs"</span>);
+<a name="97" href="#97">97</a>  
+<a name="98" href="#98">98</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTestSuite</a>() <strong class="jxr_keyword">throws</strong> IOException {
+<a name="99" href="#99">99</a>              <strong class="jxr_keyword">super</strong>();
+<a name="100" href="#100">100</a>             File dir = TESTS_FOLDER;
+<a name="101" href="#101">101</a>             File[] files = dir.listFiles();
+<a name="102" href="#102">102</a>             
+<a name="103" href="#103">103</a>             <strong class="jxr_keyword">for</strong> (File f : files) {
 <a name="104" href="#104">104</a>                 <strong class="jxr_keyword">if</strong> (f.getName().toLowerCase().endsWith(<span class="jxr_string">".msg"</span>)) {
 <a name="105" href="#105">105</a>                     addTest(<strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/parser/MimeStreamParserExampleMessagesTest.html">MimeStreamParserExampleMessagesTest</a>(f.getName().substring(0, f.getName().length()-4), f));
 <a name="106" href="#106">106</a>                 }
