@@ -50,8 +50,8 @@
 <a name="40" href="#40">40</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"MockMailUtil-ID-"</span> + m_counter;
 <a name="41" href="#41">41</a>      }
 <a name="42" href="#42">42</a>      
-<a name="43" href="#43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMail.html">MockMail</a> createMockMail2Recipients(MimeMessage m) <strong class="jxr_keyword">throws</strong> ParseException {
-<a name="44" href="#44">44</a>          <a href="../../../../../org/apache/mailet/base/test/MockMail.html">MockMail</a> mockedMail = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/mailet/base/test/MockMail.html">MockMail</a>();
+<a name="43" href="#43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMail.html">FakeMail</a> createMockMail2Recipients(MimeMessage m) <strong class="jxr_keyword">throws</strong> ParseException {
+<a name="44" href="#44">44</a>          <a href="../../../../../org/apache/mailet/base/test/FakeMail.html">FakeMail</a> mockedMail = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMail.html">FakeMail</a>();
 <a name="45" href="#45">45</a>          mockedMail.setName(newId());
 <a name="46" href="#46">46</a>          mockedMail.setMessage(m);
 <a name="47" href="#47">47</a>          mockedMail.setRecipients(Arrays.asList(<strong class="jxr_keyword">new</strong> MailAddress[] {
@@ -60,27 +60,27 @@
 <a name="50" href="#50">50</a>          <strong class="jxr_keyword">return</strong> mockedMail;
 <a name="51" href="#51">51</a>      }
 <a name="52" href="#52">52</a>  
-<a name="53" href="#53">53</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> createMimeMessage() <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="53" href="#53">53</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> createMimeMessage() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="54" href="#54">54</a>          <strong class="jxr_keyword">return</strong> createMimeMessage(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>);
 <a name="55" href="#55">55</a>      }
 <a name="56" href="#56">56</a>      
-<a name="57" href="#57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> createMimeMessageWithSubject(String subject) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="57" href="#57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> createMimeMessageWithSubject(String subject) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="58" href="#58">58</a>          <strong class="jxr_keyword">return</strong> createMimeMessage(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, subject, 0);
 <a name="59" href="#59">59</a>      }
 <a name="60" href="#60">60</a>      
-<a name="61" href="#61">61</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> createMimeMessage(String subject, <strong class="jxr_keyword">int</strong> number) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="61" href="#61">61</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> createMimeMessage(String subject, <strong class="jxr_keyword">int</strong> number) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="62" href="#62">62</a>          <strong class="jxr_keyword">return</strong> createMimeMessage(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, subject, number);
 <a name="63" href="#63">63</a>      }
 <a name="64" href="#64">64</a>      
-<a name="65" href="#65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> createMimeMessage(String headerName, String headerValue) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="65" href="#65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> createMimeMessage(String headerName, String headerValue) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="66" href="#66">66</a>          <strong class="jxr_keyword">return</strong> createMimeMessage(headerName, headerValue, <span class="jxr_string">"testmail"</span>, 0);
 <a name="67" href="#67">67</a>      }
 <a name="68" href="#68">68</a>      
-<a name="69" href="#69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> createMimeMessage(String headerName, String headerValue, String subject, <strong class="jxr_keyword">int</strong> number) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="69" href="#69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> createMimeMessage(String headerName, String headerValue, String subject, <strong class="jxr_keyword">int</strong> number) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="70" href="#70">70</a>          String sender = <span class="jxr_string">"test@james.apache.org"</span>;
 <a name="71" href="#71">71</a>          String rcpt = <span class="jxr_string">"test2@james.apache.org"</span>;
 <a name="72" href="#72">72</a>  
-<a name="73" href="#73">73</a>          <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a> mockedMimeMessage = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/mailet/base/test/MockMimeMessage.html">MockMimeMessage</a>(number);
+<a name="73" href="#73">73</a>          <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a> mockedMimeMessage = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/mailet/base/test/FakeMimeMessage.html">FakeMimeMessage</a>(number);
 <a name="74" href="#74">74</a>          mockedMimeMessage.setFrom(<strong class="jxr_keyword">new</strong> InternetAddress(sender));
 <a name="75" href="#75">75</a>          mockedMimeMessage.setRecipients(MimeMessage.RecipientType.TO, rcpt);
 <a name="76" href="#76">76</a>          <strong class="jxr_keyword">if</strong> (headerName != <strong class="jxr_keyword">null</strong>) mockedMimeMessage.setHeader(headerName, headerValue);
