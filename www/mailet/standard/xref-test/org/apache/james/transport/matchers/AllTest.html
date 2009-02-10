@@ -30,9 +30,9 @@
 <a name="20" href="#20">20</a>  
 <a name="21" href="#21">21</a>  <strong class="jxr_keyword">package</strong> org.apache.james.transport.matchers;
 <a name="22" href="#22">22</a>  
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMatcherConfig;
+<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMatcherConfig;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MailUtil;
 <a name="27" href="#27">27</a>  
 <a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Matcher;
@@ -46,7 +46,7 @@
 <a name="36" href="#36">36</a>  
 <a name="37" href="#37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/transport/matchers/AllTest.html">AllTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
 <a name="38" href="#38">38</a>  
-<a name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> MockMail mockedMail;
+<a name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> FakeMail mockedMail;
 <a name="40" href="#40">40</a>  
 <a name="41" href="#41">41</a>      <strong class="jxr_keyword">private</strong> Matcher matcher;
 <a name="42" href="#42">42</a>  
@@ -56,8 +56,8 @@
 <a name="46" href="#46">46</a>  
 <a name="47" href="#47">47</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setupMatcher() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="48" href="#48">48</a>          matcher = <strong class="jxr_keyword">new</strong> All();
-<a name="49" href="#49">49</a>          MockMatcherConfig mci = <strong class="jxr_keyword">new</strong> MockMatcherConfig(<span class="jxr_string">"All"</span>,
-<a name="50" href="#50">50</a>                  <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="49" href="#49">49</a>          FakeMatcherConfig mci = <strong class="jxr_keyword">new</strong> FakeMatcherConfig(<span class="jxr_string">"All"</span>,
+<a name="50" href="#50">50</a>                  <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="51" href="#51">51</a>          matcher.init(mci);
 <a name="52" href="#52">52</a>      }
 <a name="53" href="#53">53</a>  

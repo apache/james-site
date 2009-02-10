@@ -31,9 +31,9 @@
 <a name="21" href="#21">21</a>  <strong class="jxr_keyword">package</strong> org.apache.james.transport.matchers;
 <a name="22" href="#22">22</a>  
 <a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMatcherConfig;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMatcherConfig;
 <a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MailUtil;
 <a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Matcher;
 <a name="29" href="#29">29</a>  
@@ -47,7 +47,7 @@
 <a name="37" href="#37">37</a>  
 <a name="38" href="#38">38</a>      <strong class="jxr_keyword">private</strong> MimeMessage mockedMimeMessage;
 <a name="39" href="#39">39</a>  
-<a name="40" href="#40">40</a>      <strong class="jxr_keyword">private</strong> MockMail mockedMail;
+<a name="40" href="#40">40</a>      <strong class="jxr_keyword">private</strong> FakeMail mockedMail;
 <a name="41" href="#41">41</a>  
 <a name="42" href="#42">42</a>      <strong class="jxr_keyword">private</strong> Matcher matcher;
 <a name="43" href="#43">43</a>  
@@ -82,8 +82,8 @@
 <a name="72" href="#72">72</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setupMatcher() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="73" href="#73">73</a>          setupMockedMimeMessage();
 <a name="74" href="#74">74</a>          matcher = <strong class="jxr_keyword">new</strong> FetchedFrom();
-<a name="75" href="#75">75</a>          MockMatcherConfig mci = <strong class="jxr_keyword">new</strong> MockMatcherConfig(<span class="jxr_string">"FetchedFrom="</span>
-<a name="76" href="#76">76</a>                  + HEADER_VALUE, <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="75" href="#75">75</a>          FakeMatcherConfig mci = <strong class="jxr_keyword">new</strong> FakeMatcherConfig(<span class="jxr_string">"FetchedFrom="</span>
+<a name="76" href="#76">76</a>                  + HEADER_VALUE, <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="77" href="#77">77</a>          matcher.init(mci);
 <a name="78" href="#78">78</a>      }
 <a name="79" href="#79">79</a>  

@@ -31,9 +31,9 @@
 <a name="21" href="#21">21</a>  <strong class="jxr_keyword">package</strong> org.apache.james.transport.mailets;
 <a name="22" href="#22">22</a>  
 <a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailetConfig;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailetConfig;
 <a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MailUtil;
 <a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mailet;
 <a name="29" href="#29">29</a>  
@@ -67,8 +67,8 @@
 <a name="57" href="#57">57</a>  
 <a name="58" href="#58">58</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setupMailet() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="59" href="#59">59</a>          mailet = <strong class="jxr_keyword">new</strong> SetMimeHeader();
-<a name="60" href="#60">60</a>          MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,
-<a name="61" href="#61">61</a>                  <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="60" href="#60">60</a>          FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,
+<a name="61" href="#61">61</a>                  <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="62" href="#62">62</a>          mci.setProperty(<span class="jxr_string">"name"</span>, HEADER_NAME);
 <a name="63" href="#63">63</a>          mci.setProperty(<span class="jxr_string">"value"</span>, HEADER_VALUE);
 <a name="64" href="#64">64</a>  
@@ -78,7 +78,7 @@
 <a name="68" href="#68">68</a>      <em class="jxr_comment">// test if the Header was add</em>
 <a name="69" href="#69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testHeaderIsPresent() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="70" href="#70">70</a>          MimeMessage mockedMimeMessage = MailUtil.createMimeMessage(headerName, headerValue);
-<a name="71" href="#71">71</a>          MockMail mockedMail = MailUtil.createMockMail2Recipients(mockedMimeMessage);
+<a name="71" href="#71">71</a>          FakeMail mockedMail = MailUtil.createMockMail2Recipients(mockedMimeMessage);
 <a name="72" href="#72">72</a>          setupMailet();
 <a name="73" href="#73">73</a>  
 <a name="74" href="#74">74</a>          mailet.service(mockedMail);
@@ -94,7 +94,7 @@
 <a name="84" href="#84">84</a>          setHeaderValue(headerValue);
 <a name="85" href="#85">85</a>  
 <a name="86" href="#86">86</a>          MimeMessage mockedMimeMessage = MailUtil.createMimeMessage(headerName, headerValue);
-<a name="87" href="#87">87</a>          MockMail mockedMail = MailUtil.createMockMail2Recipients(mockedMimeMessage);
+<a name="87" href="#87">87</a>          FakeMail mockedMail = MailUtil.createMockMail2Recipients(mockedMimeMessage);
 <a name="88" href="#88">88</a>          setupMailet();
 <a name="89" href="#89">89</a>  
 <a name="90" href="#90">90</a>          mailet.service(mockedMail);

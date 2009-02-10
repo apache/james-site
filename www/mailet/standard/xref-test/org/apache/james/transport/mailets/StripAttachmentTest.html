@@ -29,9 +29,9 @@
 <a name="19" href="#19">19</a>  
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.james.transport.mailets;
 <a name="21" href="#21">21</a>  
-<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailetConfig;
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailetConfig;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mailet;
 <a name="27" href="#27">27</a>  
@@ -84,7 +84,7 @@
 <a name="74" href="#74">74</a>          message.setContent(mm);
 <a name="75" href="#75">75</a>          message.saveChanges();
 <a name="76" href="#76">76</a>  
-<a name="77" href="#77">77</a>          Mail mail = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="77" href="#77">77</a>          Mail mail = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="78" href="#78">78</a>          mail.setMessage(message);
 <a name="79" href="#79">79</a>  
 <a name="80" href="#80">80</a>          mailet.service(mail);
@@ -125,8 +125,8 @@
 <a name="115" href="#115">115</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleAttachment2() <strong class="jxr_keyword">throws</strong> MessagingException, IOException {
 <a name="116" href="#116">116</a>         Mailet mailet = <strong class="jxr_keyword">new</strong> StripAttachment();
 <a name="117" href="#117">117</a> 
-<a name="118" href="#118">118</a>         MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,
-<a name="119" href="#119">119</a>                 <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="118" href="#118">118</a>         FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,
+<a name="119" href="#119">119</a>                 <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="120" href="#120">120</a>         mci.setProperty(<span class="jxr_string">"directory"</span>, <span class="jxr_string">"./"</span>);
 <a name="121" href="#121">121</a>         mci.setProperty(<span class="jxr_string">"remove"</span>, <span class="jxr_string">"all"</span>);
 <a name="122" href="#122">122</a>         mci.setProperty(<span class="jxr_string">"notpattern"</span>, <span class="jxr_string">"^(winmail&#92;&#92;.dat$)"</span>);
@@ -155,7 +155,7 @@
 <a name="145" href="#145">145</a>         message.setContent(mm);
 <a name="146" href="#146">146</a>         message.saveChanges();
 <a name="147" href="#147">147</a> 
-<a name="148" href="#148">148</a>         Mail mail = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="148" href="#148">148</a>         Mail mail = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="149" href="#149">149</a>         mail.setMessage(message);
 <a name="150" href="#150">150</a> 
 <a name="151" href="#151">151</a>         mailet.service(mail);
@@ -215,7 +215,7 @@
 <a name="205" href="#205">205</a>         <em class="jxr_comment">// message.writeTo(System.out);</em>
 <a name="206" href="#206">206</a>         <em class="jxr_comment">// System.out.println("--------------------------\n\n\n");</em>
 <a name="207" href="#207">207</a> 
-<a name="208" href="#208">208</a>         Mail mail = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="208" href="#208">208</a>         Mail mail = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="209" href="#209">209</a>         mail.setMessage(message);
 <a name="210" href="#210">210</a> 
 <a name="211" href="#211">211</a>         mailet.service(mail);
@@ -250,21 +250,21 @@
 <a name="240" href="#240">240</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testToAndFromAttributes() <strong class="jxr_keyword">throws</strong> MessagingException,
 <a name="241" href="#241">241</a>             IOException {
 <a name="242" href="#242">242</a>         Mailet strip = <strong class="jxr_keyword">new</strong> StripAttachment();
-<a name="243" href="#243">243</a>         MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,
-<a name="244" href="#244">244</a>                 <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="243" href="#243">243</a>         FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,
+<a name="244" href="#244">244</a>                 <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="245" href="#245">245</a>         mci.setProperty(<span class="jxr_string">"attribute"</span>, <span class="jxr_string">"my.attribute"</span>);
 <a name="246" href="#246">246</a>         mci.setProperty(<span class="jxr_string">"remove"</span>, <span class="jxr_string">"all"</span>);
 <a name="247" href="#247">247</a>         mci.setProperty(<span class="jxr_string">"notpattern"</span>, <span class="jxr_string">".*&#92;&#92;.tmp.*"</span>);
 <a name="248" href="#248">248</a>         strip.init(mci);
 <a name="249" href="#249">249</a> 
 <a name="250" href="#250">250</a>         Mailet recover = <strong class="jxr_keyword">new</strong> RecoverAttachment();
-<a name="251" href="#251">251</a>         MockMailetConfig mci2 = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,
-<a name="252" href="#252">252</a>                 <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="251" href="#251">251</a>         FakeMailetConfig mci2 = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,
+<a name="252" href="#252">252</a>                 <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="253" href="#253">253</a>         mci2.setProperty(<span class="jxr_string">"attribute"</span>, <span class="jxr_string">"my.attribute"</span>);
 <a name="254" href="#254">254</a>         recover.init(mci2);
 <a name="255" href="#255">255</a> 
 <a name="256" href="#256">256</a>         Mailet onlyText = <strong class="jxr_keyword">new</strong> OnlyText();
-<a name="257" href="#257">257</a>         onlyText.init(<strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>, <strong class="jxr_keyword">new</strong> MockMailContext()));
+<a name="257" href="#257">257</a>         onlyText.init(<strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>, <strong class="jxr_keyword">new</strong> FakeMailContext()));
 <a name="258" href="#258">258</a> 
 <a name="259" href="#259">259</a>         MimeMessage message = <strong class="jxr_keyword">new</strong> MimeMessage(Session
 <a name="260" href="#260">260</a>                 .getDefaultInstance(<strong class="jxr_keyword">new</strong> Properties()));
@@ -289,7 +289,7 @@
 <a name="279" href="#279">279</a>         message.setSubject(<span class="jxr_string">"test"</span>);
 <a name="280" href="#280">280</a>         message.setContent(mm);
 <a name="281" href="#281">281</a>         message.saveChanges();
-<a name="282" href="#282">282</a>         Mail mail = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="282" href="#282">282</a>         Mail mail = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="283" href="#283">283</a>         mail.setMessage(message);
 <a name="284" href="#284">284</a> 
 <a name="285" href="#285">285</a>         assertTrue(mail.getMessage().getContent() instanceof MimeMultipart);
@@ -338,8 +338,8 @@
 <a name="328" href="#328">328</a>     <strong class="jxr_keyword">private</strong> Mailet initMailet() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="329" href="#329">329</a>         Mailet mailet = <strong class="jxr_keyword">new</strong> StripAttachment();
 <a name="330" href="#330">330</a> 
-<a name="331" href="#331">331</a>         MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,
-<a name="332" href="#332">332</a>                 <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="331" href="#331">331</a>         FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,
+<a name="332" href="#332">332</a>                 <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="333" href="#333">333</a>         mci.setProperty(<span class="jxr_string">"directory"</span>, <span class="jxr_string">"./"</span>);
 <a name="334" href="#334">334</a>         mci.setProperty(<span class="jxr_string">"remove"</span>, <span class="jxr_string">"all"</span>);
 <a name="335" href="#335">335</a>         mci.setProperty(<span class="jxr_string">"pattern"</span>, <span class="jxr_string">".*&#92;&#92;.tmp"</span>);

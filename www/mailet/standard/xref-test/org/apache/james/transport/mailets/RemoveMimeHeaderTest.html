@@ -34,9 +34,9 @@
 <a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> javax.mail.MessagingException;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> javax.mail.internet.MimeMessage;
 <a name="26" href="#26">26</a>  
-<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailetConfig;
+<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailetConfig;
 <a name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MailUtil;
 <a name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.GenericMailet;
 <a name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
@@ -51,7 +51,7 @@
 <a name="41" href="#41">41</a>      
 <a name="42" href="#42">42</a>      <strong class="jxr_keyword">private</strong> GenericMailet setupMockedMailet(String name1,String name2) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="43" href="#43">43</a>          GenericMailet mailet = <strong class="jxr_keyword">new</strong> RemoveMimeHeader();
-<a name="44" href="#44">44</a>          MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>, <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="44" href="#44">44</a>          FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>, <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="45" href="#45">45</a>          <strong class="jxr_keyword">if</strong> (name1 != <strong class="jxr_keyword">null</strong>) mci.setProperty(<span class="jxr_string">"name"</span>, name1);
 <a name="46" href="#46">46</a>          <strong class="jxr_keyword">if</strong> (name2 != <strong class="jxr_keyword">null</strong>) mci.setProperty(<span class="jxr_string">"name"</span>, name2);
 <a name="47" href="#47">47</a>  
@@ -68,7 +68,7 @@
 <a name="58" href="#58">58</a>      }
 <a name="59" href="#59">59</a>      
 <a name="60" href="#60">60</a>      <strong class="jxr_keyword">private</strong> Mail getMockedMail(MimeMessage message) {
-<a name="61" href="#61">61</a>          Mail m = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="61" href="#61">61</a>          Mail m = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="62" href="#62">62</a>          m.setMessage(message);
 <a name="63" href="#63">63</a>          <strong class="jxr_keyword">return</strong> m;
 <a name="64" href="#64">64</a>      }

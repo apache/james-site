@@ -43,8 +43,8 @@
 <a name="33" href="#33">33</a>  
 <a name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
 <a name="35" href="#35">35</a>  
-<a name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMatcherConfig;
+<a name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMatcherConfig;
 <a name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
 <a name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.MailAddress;
 <a name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Matcher;
@@ -190,8 +190,8 @@
 <a name="180" href="#180">180</a> 
 <a name="181" href="#181">181</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setupMatcher() <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="182" href="#182">182</a>         matcher = createMatcher();
-<a name="183" href="#183">183</a>         MockMatcherConfig mci = <strong class="jxr_keyword">new</strong> MockMatcherConfig(getConfigOption()
-<a name="184" href="#184">184</a>                 + getConfigValue(), <strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="183" href="#183">183</a>         FakeMatcherConfig mci = <strong class="jxr_keyword">new</strong> FakeMatcherConfig(getConfigOption()
+<a name="184" href="#184">184</a>                 + getConfigValue(), <strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="185" href="#185">185</a>         matcher.init(mci);
 <a name="186" href="#186">186</a>     }
 <a name="187" href="#187">187</a> 

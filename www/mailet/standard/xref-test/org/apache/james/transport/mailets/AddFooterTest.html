@@ -29,9 +29,9 @@
 <a name="19" href="#19">19</a>  
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.james.transport.mailets;
 <a name="21" href="#21">21</a>  
-<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMail;
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailContext;
-<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.MockMailetConfig;
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMail;
+<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailContext;
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.test.FakeMailetConfig;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mailet;
 <a name="27" href="#27">27</a>  
@@ -298,12 +298,12 @@
 <a name="288" href="#288">288</a>             <strong class="jxr_keyword">throws</strong> MessagingException, IOException {
 <a name="289" href="#289">289</a>         Mailet mailet = <strong class="jxr_keyword">new</strong> AddFooter();
 <a name="290" href="#290">290</a> 
-<a name="291" href="#291">291</a>         MockMailetConfig mci = <strong class="jxr_keyword">new</strong> MockMailetConfig(<span class="jxr_string">"Test"</span>,<strong class="jxr_keyword">new</strong> MockMailContext());
+<a name="291" href="#291">291</a>         FakeMailetConfig mci = <strong class="jxr_keyword">new</strong> FakeMailetConfig(<span class="jxr_string">"Test"</span>,<strong class="jxr_keyword">new</strong> FakeMailContext());
 <a name="292" href="#292">292</a>         mci.setProperty(<span class="jxr_string">"text"</span>,footer);
 <a name="293" href="#293">293</a> 
 <a name="294" href="#294">294</a>         mailet.init(mci);
 <a name="295" href="#295">295</a> 
-<a name="296" href="#296">296</a>         Mail mail = <strong class="jxr_keyword">new</strong> MockMail();
+<a name="296" href="#296">296</a>         Mail mail = <strong class="jxr_keyword">new</strong> FakeMail();
 <a name="297" href="#297">297</a>         mail.setMessage(<strong class="jxr_keyword">new</strong> MimeMessage(Session
 <a name="298" href="#298">298</a>                 .getDefaultInstance(<strong class="jxr_keyword">new</strong> Properties()),
 <a name="299" href="#299">299</a>                 <strong class="jxr_keyword">new</strong> ByteArrayInputStream(asciisource.getBytes())));
