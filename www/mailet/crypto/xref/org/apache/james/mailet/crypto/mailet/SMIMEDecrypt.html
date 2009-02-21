@@ -111,66 +111,67 @@
 <a name="101" href="#101">101</a> 
 <a name="102" href="#102">102</a>         
 <a name="103" href="#103">103</a>     }
-<a name="104" href="#104">104</a>     <em class="jxr_comment">/*<em class="jxr_comment"> (non-Javadoc)</em></em>
-<a name="105" href="#105">105</a> <em class="jxr_comment">     * @see org.apache.mailet.Mailet#service(org.apache.mailet.Mail)</em>
-<a name="106" href="#106">106</a> <em class="jxr_comment">     */</em>
-<a name="107" href="#107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="108" href="#108">108</a>         MimeMessage message = mail.getMessage();
-<a name="109" href="#109">109</a>         Part strippedMessage = <strong class="jxr_keyword">null</strong>;
-<a name="110" href="#110">110</a>         log(<span class="jxr_string">"Starting message decryption.."</span>);
-<a name="111" href="#111">111</a>         <strong class="jxr_keyword">if</strong> (message.isMimeType(<span class="jxr_string">"application/x-pkcs7-mime"</span>) || message.isMimeType(<span class="jxr_string">"application/pkcs7-mime"</span>)) {
-<a name="112" href="#112">112</a>             <strong class="jxr_keyword">try</strong> {
-<a name="113" href="#113">113</a>                 SMIMEEnveloped env = <strong class="jxr_keyword">new</strong> SMIMEEnveloped(message);
-<a name="114" href="#114">114</a>                 Collection recipients = env.getRecipientInfos().getRecipients();
-<a name="115" href="#115">115</a>                 <strong class="jxr_keyword">for</strong> (Iterator iter = recipients.iterator();iter.hasNext();) {
-<a name="116" href="#116">116</a>                     RecipientInformation info = (RecipientInformation) iter.next();
-<a name="117" href="#117">117</a>                     RecipientId id = info.getRID();
-<a name="118" href="#118">118</a>                     <strong class="jxr_keyword">if</strong> (id.match(keyHolder.getCertificate())) {
-<a name="119" href="#119">119</a>                         <strong class="jxr_keyword">try</strong> {
-<a name="120" href="#120">120</a>                             MimeBodyPart part = SMIMEUtil.toMimeBodyPart(info.getContent(keyHolder.getPrivateKey(), <span class="jxr_string">"BC"</span>));
-<a name="121" href="#121">121</a>                             <em class="jxr_comment">// strippedMessage contains the decrypted message.</em>
-<a name="122" href="#122">122</a>                             strippedMessage = part;
-<a name="123" href="#123">123</a>                             log(<span class="jxr_string">"Encrypted message decrypted"</span>);
-<a name="124" href="#124">124</a>                         } <strong class="jxr_keyword">catch</strong> (Exception e) { 
-<a name="125" href="#125">125</a>                             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the decryption of the message"</span>, e); }
-<a name="126" href="#126">126</a>                     } <strong class="jxr_keyword">else</strong> {
-<a name="127" href="#127">127</a>                         log(<span class="jxr_string">"Found an encrypted message but it isn't encrypted for the supplied key"</span>);
-<a name="128" href="#128">128</a>                     }
-<a name="129" href="#129">129</a>                 }
-<a name="130" href="#130">130</a>             } <strong class="jxr_keyword">catch</strong> (CMSException e) { <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the decryption of the message"</span>,e); }
-<a name="131" href="#131">131</a>         }
-<a name="132" href="#132">132</a>         
-<a name="133" href="#133">133</a>         <em class="jxr_comment">// if the decryption has been successful..</em>
-<a name="134" href="#134">134</a>         <strong class="jxr_keyword">if</strong> (strippedMessage != <strong class="jxr_keyword">null</strong>) {
-<a name="135" href="#135">135</a>             <em class="jxr_comment">// I put the private key's public certificate as a mailattribute.</em>
-<a name="136" href="#136">136</a>             <em class="jxr_comment">// I create a list of certificate because I want to minic the</em>
-<a name="137" href="#137">137</a>             <em class="jxr_comment">// behavior of the SMIMEVerifySignature mailet. In that way</em>
-<a name="138" href="#138">138</a>             <em class="jxr_comment">// it is possible to reuse the same matchers to analyze</em>
-<a name="139" href="#139">139</a>             <em class="jxr_comment">// the result of the operation.</em>
-<a name="140" href="#140">140</a>             ArrayList list = <strong class="jxr_keyword">new</strong> ArrayList(1);
-<a name="141" href="#141">141</a>             list.add(keyHolder.getCertificate());
-<a name="142" href="#142">142</a>             mail.setAttribute(mailAttribute, list);
-<a name="143" href="#143">143</a> 
-<a name="144" href="#144">144</a>             <em class="jxr_comment">// I start the message stripping.</em>
-<a name="145" href="#145">145</a>             <strong class="jxr_keyword">try</strong> {
-<a name="146" href="#146">146</a>                 MimeMessage newmex = <strong class="jxr_keyword">new</strong> MimeMessage(message);
-<a name="147" href="#147">147</a>                 Object obj = strippedMessage.getContent();
-<a name="148" href="#148">148</a>                 <strong class="jxr_keyword">if</strong> (obj instanceof Multipart) {
-<a name="149" href="#149">149</a>                     log(<span class="jxr_string">"The message is multipart, content type "</span>+((Multipart)obj).getContentType());
-<a name="150" href="#150">150</a>                     newmex.setContent((Multipart)obj);
-<a name="151" href="#151">151</a>                 } <strong class="jxr_keyword">else</strong> {
-<a name="152" href="#152">152</a>                     newmex.setContent(obj, strippedMessage.getContentType());
-<a name="153" href="#153">153</a>                     newmex.setDisposition(<strong class="jxr_keyword">null</strong>);
-<a name="154" href="#154">154</a>                 }
-<a name="155" href="#155">155</a>                 newmex.saveChanges();
-<a name="156" href="#156">156</a>                 mail.setMessage(newmex);
-<a name="157" href="#157">157</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) { 
-<a name="158" href="#158">158</a>                 log(<span class="jxr_string">"Error during the strip of the encrypted message"</span>);
-<a name="159" href="#159">159</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the stripping of the encrypted message"</span>,e);
-<a name="160" href="#160">160</a>             }
-<a name="161" href="#161">161</a>         }
-<a name="162" href="#162">162</a>     }
-<a name="163" href="#163">163</a> }
+<a name="104" href="#104">104</a>     
+<a name="105" href="#105">105</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.Mailet#service(org.apache.mailet.Mail)</em>
+<a name="107" href="#107">107</a> <em class="jxr_javadoccomment">     */</em>
+<a name="108" href="#108">108</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="109" href="#109">109</a>         MimeMessage message = mail.getMessage();
+<a name="110" href="#110">110</a>         Part strippedMessage = <strong class="jxr_keyword">null</strong>;
+<a name="111" href="#111">111</a>         log(<span class="jxr_string">"Starting message decryption.."</span>);
+<a name="112" href="#112">112</a>         <strong class="jxr_keyword">if</strong> (message.isMimeType(<span class="jxr_string">"application/x-pkcs7-mime"</span>) || message.isMimeType(<span class="jxr_string">"application/pkcs7-mime"</span>)) {
+<a name="113" href="#113">113</a>             <strong class="jxr_keyword">try</strong> {
+<a name="114" href="#114">114</a>                 SMIMEEnveloped env = <strong class="jxr_keyword">new</strong> SMIMEEnveloped(message);
+<a name="115" href="#115">115</a>                 Collection recipients = env.getRecipientInfos().getRecipients();
+<a name="116" href="#116">116</a>                 <strong class="jxr_keyword">for</strong> (Iterator iter = recipients.iterator();iter.hasNext();) {
+<a name="117" href="#117">117</a>                     RecipientInformation info = (RecipientInformation) iter.next();
+<a name="118" href="#118">118</a>                     RecipientId id = info.getRID();
+<a name="119" href="#119">119</a>                     <strong class="jxr_keyword">if</strong> (id.match(keyHolder.getCertificate())) {
+<a name="120" href="#120">120</a>                         <strong class="jxr_keyword">try</strong> {
+<a name="121" href="#121">121</a>                             MimeBodyPart part = SMIMEUtil.toMimeBodyPart(info.getContent(keyHolder.getPrivateKey(), <span class="jxr_string">"BC"</span>));
+<a name="122" href="#122">122</a>                             <em class="jxr_comment">// strippedMessage contains the decrypted message.</em>
+<a name="123" href="#123">123</a>                             strippedMessage = part;
+<a name="124" href="#124">124</a>                             log(<span class="jxr_string">"Encrypted message decrypted"</span>);
+<a name="125" href="#125">125</a>                         } <strong class="jxr_keyword">catch</strong> (Exception e) { 
+<a name="126" href="#126">126</a>                             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the decryption of the message"</span>, e); }
+<a name="127" href="#127">127</a>                     } <strong class="jxr_keyword">else</strong> {
+<a name="128" href="#128">128</a>                         log(<span class="jxr_string">"Found an encrypted message but it isn't encrypted for the supplied key"</span>);
+<a name="129" href="#129">129</a>                     }
+<a name="130" href="#130">130</a>                 }
+<a name="131" href="#131">131</a>             } <strong class="jxr_keyword">catch</strong> (CMSException e) { <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the decryption of the message"</span>,e); }
+<a name="132" href="#132">132</a>         }
+<a name="133" href="#133">133</a>         
+<a name="134" href="#134">134</a>         <em class="jxr_comment">// if the decryption has been successful..</em>
+<a name="135" href="#135">135</a>         <strong class="jxr_keyword">if</strong> (strippedMessage != <strong class="jxr_keyword">null</strong>) {
+<a name="136" href="#136">136</a>             <em class="jxr_comment">// I put the private key's public certificate as a mailattribute.</em>
+<a name="137" href="#137">137</a>             <em class="jxr_comment">// I create a list of certificate because I want to minic the</em>
+<a name="138" href="#138">138</a>             <em class="jxr_comment">// behavior of the SMIMEVerifySignature mailet. In that way</em>
+<a name="139" href="#139">139</a>             <em class="jxr_comment">// it is possible to reuse the same matchers to analyze</em>
+<a name="140" href="#140">140</a>             <em class="jxr_comment">// the result of the operation.</em>
+<a name="141" href="#141">141</a>             ArrayList list = <strong class="jxr_keyword">new</strong> ArrayList(1);
+<a name="142" href="#142">142</a>             list.add(keyHolder.getCertificate());
+<a name="143" href="#143">143</a>             mail.setAttribute(mailAttribute, list);
+<a name="144" href="#144">144</a> 
+<a name="145" href="#145">145</a>             <em class="jxr_comment">// I start the message stripping.</em>
+<a name="146" href="#146">146</a>             <strong class="jxr_keyword">try</strong> {
+<a name="147" href="#147">147</a>                 MimeMessage newmex = <strong class="jxr_keyword">new</strong> MimeMessage(message);
+<a name="148" href="#148">148</a>                 Object obj = strippedMessage.getContent();
+<a name="149" href="#149">149</a>                 <strong class="jxr_keyword">if</strong> (obj instanceof Multipart) {
+<a name="150" href="#150">150</a>                     log(<span class="jxr_string">"The message is multipart, content type "</span>+((Multipart)obj).getContentType());
+<a name="151" href="#151">151</a>                     newmex.setContent((Multipart)obj);
+<a name="152" href="#152">152</a>                 } <strong class="jxr_keyword">else</strong> {
+<a name="153" href="#153">153</a>                     newmex.setContent(obj, strippedMessage.getContentType());
+<a name="154" href="#154">154</a>                     newmex.setDisposition(<strong class="jxr_keyword">null</strong>);
+<a name="155" href="#155">155</a>                 }
+<a name="156" href="#156">156</a>                 newmex.saveChanges();
+<a name="157" href="#157">157</a>                 mail.setMessage(newmex);
+<a name="158" href="#158">158</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) { 
+<a name="159" href="#159">159</a>                 log(<span class="jxr_string">"Error during the strip of the encrypted message"</span>);
+<a name="160" href="#160">160</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Error during the stripping of the encrypted message"</span>,e);
+<a name="161" href="#161">161</a>             }
+<a name="162" href="#162">162</a>         }
+<a name="163" href="#163">163</a>     }
+<a name="164" href="#164">164</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
