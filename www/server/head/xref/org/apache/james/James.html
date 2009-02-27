@@ -1,0 +1,1041 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<title>James xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../../../workspace-seda-imap/target/site/apidocs/org/apache/james/James.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">**************************************************************</em>
+<a name="2" href="#2">2</a>   <em class="jxr_javadoccomment"> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
+<a name="3" href="#3">3</a>   <em class="jxr_javadoccomment"> * or more contributor license agreements.  See the NOTICE file *</em>
+<a name="4" href="#4">4</a>   <em class="jxr_javadoccomment"> * distributed with this work for additional information        *</em>
+<a name="5" href="#5">5</a>   <em class="jxr_javadoccomment"> * regarding copyright ownership.  The ASF licenses this file   *</em>
+<a name="6" href="#6">6</a>   <em class="jxr_javadoccomment"> * to you under the Apache License, Version 2.0 (the            *</em>
+<a name="7" href="#7">7</a>   <em class="jxr_javadoccomment"> * "License"); you may not use this file except in compliance   *</em>
+<a name="8" href="#8">8</a>   <em class="jxr_javadoccomment"> * with the License.  You may obtain a copy of the License at   *</em>
+<a name="9" href="#9">9</a>   <em class="jxr_javadoccomment"> *                                                              *</em>
+<a name="10" href="#10">10</a>  <em class="jxr_javadoccomment"> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                 *</em>
+<a name="11" href="#11">11</a>  <em class="jxr_javadoccomment"> *                                                              *</em>
+<a name="12" href="#12">12</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing,   *</em>
+<a name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * software distributed under the License is distributed on an  *</em>
+<a name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *</em>
+<a name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * KIND, either express or implied.  See the License for the    *</em>
+<a name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> * specific language governing permissions and limitations      *</em>
+<a name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * under the License.                                           *</em>
+<a name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> ****************************************************************/</em>
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">package</strong> org.apache.james;
+<a name="23" href="#23">23</a>  
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.cornerstone.services.store.Store;
+<a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.activity.Initializable;
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.configuration.Configurable;
+<a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.configuration.Configuration;
+<a name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.configuration.ConfigurationException;
+<a name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.configuration.DefaultConfiguration;
+<a name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.container.ContainerUtil;
+<a name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.logger.AbstractLogEnabled;
+<a name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.logger.Logger;
+<a name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.service.DefaultServiceManager;
+<a name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.service.ServiceException;
+<a name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.service.ServiceManager;
+<a name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.avalon.framework.service.Serviceable;
+<a name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.collections.map.ReferenceMap;
+<a name="38" href="#38">38</a>  
+<a name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.dnsservice.DNSService;
+<a name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.dnsservice.TemporaryResolutionException;
+<a name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.domainlist.DomainList;
+<a name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.domainlist.ManageableDomainList;
+<a name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.user.UsersRepository;
+<a name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.apache.james.api.user.UsersStore;
+<a name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.apache.james.core.MailHeaders;
+<a name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.apache.james.core.MailImpl;
+<a name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.apache.james.impl.jamesuser.JamesUsersRepository;
+<a name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.apache.james.services.FileSystem;
+<a name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.apache.james.services.MailRepository;
+<a name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.apache.james.services.MailServer;
+<a name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.apache.james.services.SpoolRepository;
+<a name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.apache.james.transport.MailetConfigImpl;
+<a name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.apache.james.transport.mailets.LocalDelivery;
+<a name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
+<a name="55" href="#55">55</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.MailAddress;
+<a name="56" href="#56">56</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mailet;
+<a name="57" href="#57">57</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.MailetContext;
+<a name="58" href="#58">58</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.RFC2822Headers;
+<a name="59" href="#59">59</a>  
+<a name="60" href="#60">60</a>  <strong class="jxr_keyword">import</strong> javax.mail.Address;
+<a name="61" href="#61">61</a>  <strong class="jxr_keyword">import</strong> javax.mail.Message;
+<a name="62" href="#62">62</a>  <strong class="jxr_keyword">import</strong> javax.mail.MessagingException;
+<a name="63" href="#63">63</a>  <strong class="jxr_keyword">import</strong> javax.mail.internet.InternetAddress;
+<a name="64" href="#64">64</a>  <strong class="jxr_keyword">import</strong> javax.mail.internet.MimeMessage;
+<a name="65" href="#65">65</a>  <strong class="jxr_keyword">import</strong> javax.mail.internet.ParseException;
+<a name="66" href="#66">66</a>  
+<a name="67" href="#67">67</a>  <strong class="jxr_keyword">import</strong> java.io.ByteArrayInputStream;
+<a name="68" href="#68">68</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a name="69" href="#69">69</a>  <strong class="jxr_keyword">import</strong> java.io.SequenceInputStream;
+<a name="70" href="#70">70</a>  <strong class="jxr_keyword">import</strong> java.net.UnknownHostException;
+<a name="71" href="#71">71</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a name="72" href="#72">72</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
+<a name="73" href="#73">73</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
+<a name="74" href="#74">74</a>  <strong class="jxr_keyword">import</strong> java.util.Date;
+<a name="75" href="#75">75</a>  <strong class="jxr_keyword">import</strong> java.util.Enumeration;
+<a name="76" href="#76">76</a>  <strong class="jxr_keyword">import</strong> java.util.HashSet;
+<a name="77" href="#77">77</a>  <strong class="jxr_keyword">import</strong> java.util.Hashtable;
+<a name="78" href="#78">78</a>  <strong class="jxr_keyword">import</strong> java.util.Iterator;
+<a name="79" href="#79">79</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a name="80" href="#80">80</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
+<a name="81" href="#81">81</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a name="82" href="#82">82</a>  <strong class="jxr_keyword">import</strong> java.util.Vector;
+<a name="83" href="#83">83</a>  
+<a name="84" href="#84">84</a>  <em class="jxr_javadoccomment">/**</em>
+<a name="85" href="#85">85</a>  <em class="jxr_javadoccomment"> * Core class for JAMES. Provides three primary services:</em>
+<a name="86" href="#86">86</a>  <em class="jxr_javadoccomment"> * &lt;br&gt; 1) Instantiates resources, such as user repository, and protocol</em>
+<a name="87" href="#87">87</a>  <em class="jxr_javadoccomment"> * handlers</em>
+<a name="88" href="#88">88</a>  <em class="jxr_javadoccomment"> * &lt;br&gt; 2) Handles interactions between components</em>
+<a name="89" href="#89">89</a>  <em class="jxr_javadoccomment"> * &lt;br&gt; 3) Provides container services for Mailets</em>
+<a name="90" href="#90">90</a>  <em class="jxr_javadoccomment"> *</em>
+<a name="91" href="#91">91</a>  <em class="jxr_javadoccomment"> *</em>
+<a name="92" href="#92">92</a>  <em class="jxr_javadoccomment"> * @version This is $Revision: 722820 $</em>
+<a name="93" href="#93">93</a>  
+<a name="94" href="#94">94</a>  <em class="jxr_javadoccomment"> */</em>
+<a name="95" href="#95">95</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/apache/james/James.html">James</a>
+<a name="96" href="#96">96</a>      <strong class="jxr_keyword">extends</strong> AbstractLogEnabled
+<a name="97" href="#97">97</a>      implements Serviceable, Configurable, Initializable, MailServer, MailetContext {
+<a name="98" href="#98">98</a>  
+<a name="99" href="#99">99</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * The software name and version</em>
+<a name="101" href="#101">101</a> <em class="jxr_javadoccomment">     */</em>
+<a name="102" href="#102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">static</strong> String SOFTWARE_NAME_VERSION = Constants.SOFTWARE_NAME + <span class="jxr_string">" "</span> + Constants.SOFTWARE_VERSION;
+<a name="103" href="#103">103</a> 
+<a name="104" href="#104">104</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * The component manager used both internally by James and by Mailets.</em>
+<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     */</em>
+<a name="107" href="#107">107</a>     <strong class="jxr_keyword">private</strong> DefaultServiceManager compMgr; <em class="jxr_comment">//Components shared</em>
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="110" href="#110">110</a> <em class="jxr_javadoccomment">     * The top level configuration object for this server.</em>
+<a name="111" href="#111">111</a> <em class="jxr_javadoccomment">     */</em>
+<a name="112" href="#112">112</a>     <strong class="jxr_keyword">private</strong> Configuration conf = <strong class="jxr_keyword">null</strong>;
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * The logger used by the Mailet API.</em>
+<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     */</em>
+<a name="117" href="#117">117</a>     <strong class="jxr_keyword">private</strong> Logger mailetLogger = <strong class="jxr_keyword">null</strong>;
+<a name="118" href="#118">118</a> 
+<a name="119" href="#119">119</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * The mail store containing the inbox repository and the spool.</em>
+<a name="121" href="#121">121</a> <em class="jxr_javadoccomment">     */</em>
+<a name="122" href="#122">122</a>     <strong class="jxr_keyword">private</strong> Store store;
+<a name="123" href="#123">123</a> 
+<a name="124" href="#124">124</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="125" href="#125">125</a> <em class="jxr_javadoccomment">     * The spool used for processing mail handled by this server.</em>
+<a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     */</em>
+<a name="127" href="#127">127</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spool;
+<a name="128" href="#128">128</a> 
+<a name="129" href="#129">129</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="130" href="#130">130</a> <em class="jxr_javadoccomment">     * The root URL used to get mailboxes from the repository</em>
+<a name="131" href="#131">131</a> <em class="jxr_javadoccomment">     */</em>
+<a name="132" href="#132">132</a>     <strong class="jxr_keyword">private</strong> String inboxRootURL;
+<a name="133" href="#133">133</a> 
+<a name="134" href="#134">134</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * The user repository for this mail server.  Contains all the users with inboxes</em>
+<a name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * on this server.</em>
+<a name="137" href="#137">137</a> <em class="jxr_javadoccomment">     */</em>
+<a name="138" href="#138">138</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/apache/james/api/user/UsersRepository.html">UsersRepository</a> localusers;
+<a name="139" href="#139">139</a> 
+<a name="140" href="#140">140</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * The collection of domain/server names for which this instance of James</em>
+<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">     * will receive and process mail.</em>
+<a name="143" href="#143">143</a> <em class="jxr_javadoccomment">     */</em>
+<a name="144" href="#144">144</a>     <strong class="jxr_keyword">private</strong> Collection serverNames;
+<a name="145" href="#145">145</a> 
+<a name="146" href="#146">146</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="147" href="#147">147</a> <em class="jxr_javadoccomment">     * The number of mails generated.  Access needs to be synchronized for</em>
+<a name="148" href="#148">148</a> <em class="jxr_javadoccomment">     * thread safety and to ensure that all threads see the latest value.</em>
+<a name="149" href="#149">149</a> <em class="jxr_javadoccomment">     */</em>
+<a name="150" href="#150">150</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> count = 0;
+<a name="151" href="#151">151</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Object countLock = <strong class="jxr_keyword">new</strong> Object();
+<a name="152" href="#152">152</a> 
+<a name="153" href="#153">153</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="154" href="#154">154</a> <em class="jxr_javadoccomment">     * The address of the postmaster for this server</em>
+<a name="155" href="#155">155</a> <em class="jxr_javadoccomment">     */</em>
+<a name="156" href="#156">156</a>     <strong class="jxr_keyword">private</strong> MailAddress postmaster;
+<a name="157" href="#157">157</a> 
+<a name="158" href="#158">158</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="159" href="#159">159</a> <em class="jxr_javadoccomment">     * A map used to store mailboxes and reduce the cost of lookup of individual</em>
+<a name="160" href="#160">160</a> <em class="jxr_javadoccomment">     * mailboxes.</em>
+<a name="161" href="#161">161</a> <em class="jxr_javadoccomment">     */</em>
+<a name="162" href="#162">162</a>     <strong class="jxr_keyword">private</strong> Map mailboxes; <em class="jxr_comment">//Not to be shared!</em>
+<a name="163" href="#163">163</a> 
+<a name="164" href="#164">164</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="165" href="#165">165</a> <em class="jxr_javadoccomment">     * A hash table of server attributes</em>
+<a name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * These are the MailetContext attributes</em>
+<a name="167" href="#167">167</a> <em class="jxr_javadoccomment">     */</em>
+<a name="168" href="#168">168</a>     <strong class="jxr_keyword">private</strong> Hashtable attributes = <strong class="jxr_keyword">new</strong> Hashtable();
+<a name="169" href="#169">169</a> 
+<a name="170" href="#170">170</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="171" href="#171">171</a> <em class="jxr_javadoccomment">     * Currently used by storeMail to avoid code duplication (we moved store logic to that mailet).</em>
+<a name="172" href="#172">172</a> <em class="jxr_javadoccomment">     * TODO We should remove this and its initialization when we remove storeMail method.</em>
+<a name="173" href="#173">173</a> <em class="jxr_javadoccomment">     */</em>
+<a name="174" href="#174">174</a>     <strong class="jxr_keyword">protected</strong> Mailet localDeliveryMailet;
+<a name="175" href="#175">175</a> 
+<a name="176" href="#176">176</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/apache/james/services/FileSystem.html">FileSystem</a> fileSystem;
+<a name="177" href="#177">177</a> 
+<a name="178" href="#178">178</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/apache/james/api/domainlist/DomainList.html">DomainList</a> domains;
+<a name="179" href="#179">179</a>     
+<a name="180" href="#180">180</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> virtualHosting = false;
+<a name="181" href="#181">181</a>     
+<a name="182" href="#182">182</a>     <strong class="jxr_keyword">private</strong> String defaultDomain = <strong class="jxr_keyword">null</strong>;
+<a name="183" href="#183">183</a>     
+<a name="184" href="#184">184</a>     <strong class="jxr_keyword">private</strong> String helloName = <strong class="jxr_keyword">null</strong>;
+<a name="185" href="#185">185</a> 
+<a name="186" href="#186">186</a> 
+<a name="187" href="#187">187</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * @see org.apache.avalon.framework.service.Serviceable#service(ServiceManager)</em>
+<a name="189" href="#189">189</a> <em class="jxr_javadoccomment">     */</em>
+<a name="190" href="#190">190</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(ServiceManager comp) <strong class="jxr_keyword">throws</strong> ServiceException {
+<a name="191" href="#191">191</a>         compMgr = <strong class="jxr_keyword">new</strong> DefaultServiceManager(comp);
+<a name="192" href="#192">192</a>         mailboxes = <strong class="jxr_keyword">new</strong> ReferenceMap();
+<a name="193" href="#193">193</a>         setFileSystem((FileSystem) comp.lookup(FileSystem.ROLE));
+<a name="194" href="#194">194</a>         domains = (DomainList) comp.lookup(DomainList.ROLE);
+<a name="195" href="#195">195</a>     }
+<a name="196" href="#196">196</a> 
+<a name="197" href="#197">197</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="198" href="#198">198</a> <em class="jxr_javadoccomment">     * Sets the fileSystem service</em>
+<a name="199" href="#199">199</a> <em class="jxr_javadoccomment">     * </em>
+<a name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * @param system the new service</em>
+<a name="201" href="#201">201</a> <em class="jxr_javadoccomment">     */</em>
+<a name="202" href="#202">202</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setFileSystem(<a href="../../../org/apache/james/services/FileSystem.html">FileSystem</a> system) {
+<a name="203" href="#203">203</a>         <strong class="jxr_keyword">this</strong>.fileSystem = system;
+<a name="204" href="#204">204</a>     }
+<a name="205" href="#205">205</a> 
+<a name="206" href="#206">206</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">     * @see org.apache.avalon.framework.configuration.Configurable#configure(Configuration)</em>
+<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">     */</em>
+<a name="209" href="#209">209</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> configure(Configuration conf) {
+<a name="210" href="#210">210</a>         <strong class="jxr_keyword">this</strong>.conf = conf;
+<a name="211" href="#211">211</a>     }
+<a name="212" href="#212">212</a> 
+<a name="213" href="#213">213</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * @see org.apache.avalon.framework.activity.Initializable#initialize()</em>
+<a name="215" href="#215">215</a> <em class="jxr_javadoccomment">     */</em>
+<a name="216" href="#216">216</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialize() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="217" href="#217">217</a> 
+<a name="218" href="#218">218</a>         <strong class="jxr_keyword">final</strong> Logger logger = getLogger();
+<a name="219" href="#219">219</a>         logger.info(<span class="jxr_string">"JAMES init..."</span>);
+<a name="220" href="#220">220</a> 
+<a name="221" href="#221">221</a>         initializeServices();
+<a name="222" href="#222">222</a> 
+<a name="223" href="#223">223</a>         Configuration userNamesConf = conf.getChild(<span class="jxr_string">"usernames"</span>);
+<a name="224" href="#224">224</a>         <strong class="jxr_keyword">if</strong> (userNamesConf != <strong class="jxr_keyword">null</strong>) {
+<a name="225" href="#225">225</a>             <strong class="jxr_keyword">if</strong> (localusers instanceof JamesUsersRepository) {
+<a name="226" href="#226">226</a>                 logger.warn(<span class="jxr_string">"&lt;usernames&gt; parameter in James block is deprecated. Please configure this data in UsersRepository block: configuration injected for backward compatibility"</span>);
+<a name="227" href="#227">227</a>                 ((<a href="../../../org/apache/james/impl/jamesuser/JamesUsersRepository.html">JamesUsersRepository</a>) localusers).setIgnoreCase(userNamesConf.getAttributeAsBoolean(<span class="jxr_string">"ignoreCase"</span>, false));
+<a name="228" href="#228">228</a>                 ((<a href="../../../org/apache/james/impl/jamesuser/JamesUsersRepository.html">JamesUsersRepository</a>) localusers).setEnableAliases(userNamesConf.getAttributeAsBoolean(<span class="jxr_string">"enableAliases"</span>, false));
+<a name="229" href="#229">229</a>                 ((<a href="../../../org/apache/james/impl/jamesuser/JamesUsersRepository.html">JamesUsersRepository</a>) localusers).setEnableForwarding(userNamesConf.getAttributeAsBoolean(<span class="jxr_string">"enableForwarding"</span>, false));
+<a name="230" href="#230">230</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="231" href="#231">231</a>                 logger.error(<span class="jxr_string">"&lt;usernames&gt; parameter is no more supported. Backward compatibility is provided when using an AbstractUsersRepository but this repository is a "</span>+localusers.getClass().toString());
+<a name="232" href="#232">232</a>             }
+<a name="233" href="#233">233</a>         }
+<a name="234" href="#234">234</a>         
+<a name="235" href="#235">235</a>         Configuration serverConf = conf.getChild(<span class="jxr_string">"servernames"</span>);
+<a name="236" href="#236">236</a>         <strong class="jxr_keyword">if</strong> (serverConf != <strong class="jxr_keyword">null</strong>) {
+<a name="237" href="#237">237</a>             <strong class="jxr_keyword">if</strong> (domains instanceof ManageableDomainList) {
+<a name="238" href="#238">238</a>                 logger.warn(<span class="jxr_string">"&lt;servernames&gt; parameter in James block is deprecated. Please configure this data in domainlist block: configuration injected for backward compatibility"</span>);
+<a name="239" href="#239">239</a>                 <a href="../../../org/apache/james/api/domainlist/ManageableDomainList.html">ManageableDomainList</a> dom = (ManageableDomainList) domains;
+<a name="240" href="#240">240</a>                 dom.setAutoDetect(serverConf.getAttributeAsBoolean(<span class="jxr_string">"autodetect"</span>,<strong class="jxr_keyword">true</strong>));    
+<a name="241" href="#241">241</a>                 dom.setAutoDetectIP(serverConf.getAttributeAsBoolean(<span class="jxr_string">"autodetectIP"</span>, <strong class="jxr_keyword">true</strong>));
+<a name="242" href="#242">242</a>             
+<a name="243" href="#243">243</a>                 Configuration[] serverNameConfs = serverConf.getChildren( <span class="jxr_string">"servername"</span> );
+<a name="244" href="#244">244</a>                 <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; serverNameConfs.length; i++ ) {
+<a name="245" href="#245">245</a>                     dom.addDomain( serverNameConfs[i].getValue().toLowerCase(Locale.US));
+<a name="246" href="#246">246</a>                 }
+<a name="247" href="#247">247</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="248" href="#248">248</a>                 logger.error(<span class="jxr_string">"&lt;servernames&gt; parameter is no more supported. Backward compatibility is provided when using an XMLDomainList"</span>);
+<a name="249" href="#249">249</a>             }
+<a name="250" href="#250">250</a>         }
+<a name="251" href="#251">251</a> 
+<a name="252" href="#252">252</a>         initializeServernamesAndPostmaster();
+<a name="253" href="#253">253</a> 
+<a name="254" href="#254">254</a>         <em class="jxr_comment">// We don't need this. UsersRepository.ROLE is already in the compMgr we received</em>
+<a name="255" href="#255">255</a>         <em class="jxr_comment">// We've just looked up it from the cmpManager</em>
+<a name="256" href="#256">256</a>         <em class="jxr_comment">// compMgr.put( UsersRepository.ROLE, localusers);</em>
+<a name="257" href="#257">257</a>         <em class="jxr_comment">// getLogger().info("Local users repository opened");</em>
+<a name="258" href="#258">258</a> 
+<a name="259" href="#259">259</a>         inboxRootURL = conf.getChild(<span class="jxr_string">"inboxRepository"</span>).getChild(<span class="jxr_string">"repository"</span>).getAttribute(<span class="jxr_string">"destinationURL"</span>);
+<a name="260" href="#260">260</a> 
+<a name="261" href="#261">261</a>         logger.info(<span class="jxr_string">"Private Repository LocalInbox opened"</span>);
+<a name="262" href="#262">262</a>         
+<a name="263" href="#263">263</a>         Configuration virtualHostingConfig = conf.getChild(<span class="jxr_string">"enableVirtualHosting"</span>);
+<a name="264" href="#264">264</a>         <strong class="jxr_keyword">if</strong> (virtualHostingConfig != <strong class="jxr_keyword">null</strong> ) {
+<a name="265" href="#265">265</a>             virtualHosting = virtualHostingConfig.getValueAsBoolean(false);
+<a name="266" href="#266">266</a>         }
+<a name="267" href="#267">267</a>         
+<a name="268" href="#268">268</a>         logger.info(<span class="jxr_string">"VirtualHosting supported: "</span> + virtualHosting);
+<a name="269" href="#269">269</a>         
+<a name="270" href="#270">270</a>         Configuration defaultDomainConfig = conf.getChild(<span class="jxr_string">"defaultDomain"</span>);
+<a name="271" href="#271">271</a>         <strong class="jxr_keyword">if</strong> (defaultDomainConfig != <strong class="jxr_keyword">null</strong> ) {
+<a name="272" href="#272">272</a>             defaultDomain = defaultDomainConfig.getValue(<strong class="jxr_keyword">null</strong>);
+<a name="273" href="#273">273</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (virtualHosting) {
+<a name="274" href="#274">274</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> ConfigurationException(<span class="jxr_string">"Please configure a defaultDomain if using VirtualHosting"</span>);
+<a name="275" href="#275">275</a>         }
+<a name="276" href="#276">276</a>         
+<a name="277" href="#277">277</a>         logger.info(<span class="jxr_string">"Defaultdomain: "</span> + defaultDomain);
+<a name="278" href="#278">278</a>         
+<a name="279" href="#279">279</a>         Configuration helloNameConfig = conf.getChild(<span class="jxr_string">"helloName"</span>);
+<a name="280" href="#280">280</a>         <strong class="jxr_keyword">if</strong> (helloNameConfig != <strong class="jxr_keyword">null</strong>) {
+<a name="281" href="#281">281</a>             <strong class="jxr_keyword">boolean</strong> autodetect = helloNameConfig.getAttributeAsBoolean(<span class="jxr_string">"autodetect"</span>, <strong class="jxr_keyword">true</strong>);
+<a name="282" href="#282">282</a>             <strong class="jxr_keyword">if</strong> (autodetect) {
+<a name="283" href="#283">283</a>                 <strong class="jxr_keyword">try</strong> {
+<a name="284" href="#284">284</a>                     helloName = lookupDNSServer().getHostName(lookupDNSServer().getLocalHost());
+<a name="285" href="#285">285</a>                 } <strong class="jxr_keyword">catch</strong> (UnknownHostException e) {
+<a name="286" href="#286">286</a>                     helloName = <span class="jxr_string">"localhost"</span>;
+<a name="287" href="#287">287</a>                 }
+<a name="288" href="#288">288</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="289" href="#289">289</a>                 <em class="jxr_comment">// Should we use the defaultdomain here ?</em>
+<a name="290" href="#290">290</a>                 helloName = helloNameConfig.getValue(defaultDomain);
+<a name="291" href="#291">291</a>             }
+<a name="292" href="#292">292</a>             attributes.put(Constants.HELLO_NAME, helloName);
+<a name="293" href="#293">293</a>         }
+<a name="294" href="#294">294</a> 
+<a name="295" href="#295">295</a>         <em class="jxr_comment">// Add this to comp</em>
+<a name="296" href="#296">296</a>         compMgr.put( MailServer.ROLE, <strong class="jxr_keyword">this</strong>);
+<a name="297" href="#297">297</a> 
+<a name="298" href="#298">298</a>         <em class="jxr_comment">// For mailet engine provide MailetContext</em>
+<a name="299" href="#299">299</a>         <em class="jxr_comment">//compMgr.put("org.apache.mailet.MailetContext", this);</em>
+<a name="300" href="#300">300</a>         <em class="jxr_comment">// For AVALON aware mailets and matchers, we put the Component object as</em>
+<a name="301" href="#301">301</a>         <em class="jxr_comment">// an attribute</em>
+<a name="302" href="#302">302</a>         attributes.put(Constants.AVALON_COMPONENT_MANAGER, compMgr);
+<a name="303" href="#303">303</a> 
+<a name="304" href="#304">304</a>         <em class="jxr_comment">//Temporary get out to allow complex mailet config files to stop blocking sergei sozonoff's work on bouce processing</em>
+<a name="305" href="#305">305</a>         String confDir;
+<a name="306" href="#306">306</a>         <strong class="jxr_keyword">try</strong> {
+<a name="307" href="#307">307</a>             confDir = conf.getChild(<span class="jxr_string">"configuration-directory"</span>).getValue();
+<a name="308" href="#308">308</a>         } <strong class="jxr_keyword">catch</strong> (ConfigurationException e) {
+<a name="309" href="#309">309</a>             <strong class="jxr_keyword">if</strong> (logger.isInfoEnabled()) {
+<a name="310" href="#310">310</a>                 logger.info(<span class="jxr_string">"Failed to read configuration directory configuration. Will continue using default."</span>);
+<a name="311" href="#311">311</a>             }
+<a name="312" href="#312">312</a>             logger.debug(<span class="jxr_string">"Failed to read configuration directory configuration"</span>, e);
+<a name="313" href="#313">313</a>             confDir = <strong class="jxr_keyword">null</strong>;
+<a name="314" href="#314">314</a>         }
+<a name="315" href="#315">315</a>         <em class="jxr_comment">// defaults to the old behaviour</em>
+<a name="316" href="#316">316</a>         <strong class="jxr_keyword">if</strong> (confDir == <strong class="jxr_keyword">null</strong>) confDir = <span class="jxr_string">"file://conf/"</span>;
+<a name="317" href="#317">317</a>         java.io.File configDir = fileSystem.getFile(confDir);
+<a name="318" href="#318">318</a>         attributes.put(<span class="jxr_string">"confDir"</span>, configDir.getCanonicalPath());
+<a name="319" href="#319">319</a> 
+<a name="320" href="#320">320</a>         <strong class="jxr_keyword">try</strong> {
+<a name="321" href="#321">321</a>             attributes.put(Constants.HOSTADDRESS, lookupDNSServer().getLocalHost().getHostAddress());
+<a name="322" href="#322">322</a>             attributes.put(Constants.HOSTNAME, lookupDNSServer().getLocalHost().getHostName());
+<a name="323" href="#323">323</a>         } <strong class="jxr_keyword">catch</strong> (java.net.UnknownHostException _) {
+<a name="324" href="#324">324</a>             attributes.put(Constants.HOSTADDRESS, <span class="jxr_string">"127.0.0.1"</span>);
+<a name="325" href="#325">325</a>             attributes.put(Constants.HOSTNAME, <span class="jxr_string">"localhost"</span>);
+<a name="326" href="#326">326</a>         }
+<a name="327" href="#327">327</a>         
+<a name="328" href="#328">328</a>         initializeLocalDeliveryMailet();
+<a name="329" href="#329">329</a> 
+<a name="330" href="#330">330</a>         System.out.println(SOFTWARE_NAME_VERSION);
+<a name="331" href="#331">331</a>         logger.info(<span class="jxr_string">"JAMES ...init end"</span>);
+<a name="332" href="#332">332</a>     }
+<a name="333" href="#333">333</a> 
+<a name="334" href="#334">334</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initializeServices() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="335" href="#335">335</a>         <em class="jxr_comment">// TODO: This should retrieve a more specific named thread pool from</em>
+<a name="336" href="#336">336</a>         <em class="jxr_comment">// Context that is set up in server.xml</em>
+<a name="337" href="#337">337</a>         <strong class="jxr_keyword">try</strong> {
+<a name="338" href="#338">338</a>             Store store = (Store) compMgr.lookup( Store.ROLE );
+<a name="339" href="#339">339</a>             setStore(store);
+<a name="340" href="#340">340</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="341" href="#341">341</a>                 getLogger().debug(<span class="jxr_string">"Using Store: "</span> + store.toString());
+<a name="342" href="#342">342</a>             }
+<a name="343" href="#343">343</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="344" href="#344">344</a>             <strong class="jxr_keyword">if</strong> (getLogger().isWarnEnabled()) {
+<a name="345" href="#345">345</a>                 getLogger().warn(<span class="jxr_string">"Can't get Store: "</span> + e);
+<a name="346" href="#346">346</a>             }
+<a name="347" href="#347">347</a>         }
+<a name="348" href="#348">348</a> 
+<a name="349" href="#349">349</a>         <strong class="jxr_keyword">try</strong> {
+<a name="350" href="#350">350</a>             <a href="../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spool = (SpoolRepository) compMgr.lookup(SpoolRepository.ROLE);
+<a name="351" href="#351">351</a>             setSpool(spool);
+<a name="352" href="#352">352</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="353" href="#353">353</a>                 getLogger().debug(<span class="jxr_string">"Using SpoolRepository: "</span> + spool.toString());
+<a name="354" href="#354">354</a>             }
+<a name="355" href="#355">355</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="356" href="#356">356</a>             <strong class="jxr_keyword">if</strong> (getLogger().isWarnEnabled()) {
+<a name="357" href="#357">357</a>                 getLogger().warn(<span class="jxr_string">"Can't get spoolRepository: "</span> + e);
+<a name="358" href="#358">358</a>             }
+<a name="359" href="#359">359</a>         }
+<a name="360" href="#360">360</a> 
+<a name="361" href="#361">361</a>         <strong class="jxr_keyword">try</strong> {
+<a name="362" href="#362">362</a>             <em class="jxr_comment">// lookup the usersStore.</em>
+<a name="363" href="#363">363</a>             <em class="jxr_comment">// This is not used by James itself, but we check we received it here</em>
+<a name="364" href="#364">364</a>             <em class="jxr_comment">// because mailets will try to lookup this later.</em>
+<a name="365" href="#365">365</a>             <a href="../../../org/apache/james/api/user/UsersStore.html">UsersStore</a> usersStore = (UsersStore) compMgr.lookup( UsersStore.ROLE );
+<a name="366" href="#366">366</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="367" href="#367">367</a>                 getLogger().debug(<span class="jxr_string">"Using UsersStore: "</span> + usersStore.toString());
+<a name="368" href="#368">368</a>             }
+<a name="369" href="#369">369</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="370" href="#370">370</a>             <strong class="jxr_keyword">if</strong> (getLogger().isWarnEnabled()) {
+<a name="371" href="#371">371</a>                 getLogger().warn(<span class="jxr_string">"Can't get Store: "</span> + e);
+<a name="372" href="#372">372</a>             }
+<a name="373" href="#373">373</a>         }
+<a name="374" href="#374">374</a> 
+<a name="375" href="#375">375</a>         <strong class="jxr_keyword">try</strong> {
+<a name="376" href="#376">376</a>             <a href="../../../org/apache/james/api/user/UsersRepository.html">UsersRepository</a> localusers = (UsersRepository) compMgr.lookup(UsersRepository.ROLE);
+<a name="377" href="#377">377</a>             setLocalusers(localusers);
+<a name="378" href="#378">378</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="379" href="#379">379</a>                 getLogger().debug(<span class="jxr_string">"Using LocalUsersRepository: "</span> + localusers.toString());
+<a name="380" href="#380">380</a>             }
+<a name="381" href="#381">381</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="382" href="#382">382</a>             getLogger().error(<span class="jxr_string">"Cannot open private UserRepository"</span>);
+<a name="383" href="#383">383</a>             <strong class="jxr_keyword">throw</strong> e;
+<a name="384" href="#384">384</a>         }
+<a name="385" href="#385">385</a>     }
+<a name="386" href="#386">386</a> 
+<a name="387" href="#387">387</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initializeServernamesAndPostmaster() <strong class="jxr_keyword">throws</strong> ConfigurationException, ParseException {
+<a name="388" href="#388">388</a>         String defaultDomain = getDefaultDomain();
+<a name="389" href="#389">389</a>         <strong class="jxr_keyword">if</strong> (domains.containsDomain(defaultDomain) == false) {
+<a name="390" href="#390">390</a>             <strong class="jxr_keyword">if</strong> (domains instanceof ManageableDomainList) {
+<a name="391" href="#391">391</a>                 <strong class="jxr_keyword">if</strong>(((ManageableDomainList) domains).addDomain(defaultDomain) != false) {
+<a name="392" href="#392">392</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> ConfigurationException(<span class="jxr_string">"Configured defaultdomain could not get added to DomainList"</span>);
+<a name="393" href="#393">393</a>                 }
+<a name="394" href="#394">394</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="395" href="#395">395</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> ConfigurationException(<span class="jxr_string">"Configured defaultDomain not exist in DomainList"</span>);
+<a name="396" href="#396">396</a>             }
+<a name="397" href="#397">397</a>         }
+<a name="398" href="#398">398</a>         serverNames = domains.getDomains();
+<a name="399" href="#399">399</a> 
+<a name="400" href="#400">400</a>         <strong class="jxr_keyword">if</strong> (serverNames == <strong class="jxr_keyword">null</strong> || serverNames.size() == 0) <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> ConfigurationException(<span class="jxr_string">"No domainnames configured"</span>);
+<a name="401" href="#401">401</a>         
+<a name="402" href="#402">402</a>         <em class="jxr_comment">// used by RemoteDelivery for HELO</em>
+<a name="403" href="#403">403</a>         attributes.put(Constants.DEFAULT_DOMAIN, defaultDomain);
+<a name="404" href="#404">404</a> 
+<a name="405" href="#405">405</a>         <em class="jxr_comment">// Get postmaster</em>
+<a name="406" href="#406">406</a>         String postMasterAddress = conf.getChild(<span class="jxr_string">"postmaster"</span>).getValue(<span class="jxr_string">"postmaster"</span>).toLowerCase(Locale.US);
+<a name="407" href="#407">407</a>         <em class="jxr_comment">// if there is no @domain part, then add the first one from the</em>
+<a name="408" href="#408">408</a>         <em class="jxr_comment">// list of supported domains that isn't localhost.  If that</em>
+<a name="409" href="#409">409</a>         <em class="jxr_comment">// doesn't work, use the hostname, even if it is localhost.</em>
+<a name="410" href="#410">410</a>         <strong class="jxr_keyword">if</strong> (postMasterAddress.indexOf('@') &lt; 0) {
+<a name="411" href="#411">411</a>             String domainName = <strong class="jxr_keyword">null</strong>;    <em class="jxr_comment">// the domain to use</em>
+<a name="412" href="#412">412</a>             <em class="jxr_comment">// loop through candidate domains until we find one or exhaust the list</em>
+<a name="413" href="#413">413</a>             Iterator i = serverNames.iterator();
+<a name="414" href="#414">414</a>             <strong class="jxr_keyword">while</strong> (i.hasNext()) {
+<a name="415" href="#415">415</a>                 String serverName = i.next().toString().toLowerCase(Locale.US);
+<a name="416" href="#416">416</a>                 <strong class="jxr_keyword">if</strong> (!(<span class="jxr_string">"localhost"</span>.equals(serverName))) {
+<a name="417" href="#417">417</a>                     domainName = serverName; <em class="jxr_comment">// ok, not localhost, so use it</em>
+<a name="418" href="#418">418</a>                     <strong class="jxr_keyword">continue</strong>;
+<a name="419" href="#419">419</a>                 }
+<a name="420" href="#420">420</a>             }
+<a name="421" href="#421">421</a>             <em class="jxr_comment">// if we found a suitable domain, use it.  Otherwise fallback to the host name.</em>
+<a name="422" href="#422">422</a>             postMasterAddress = postMasterAddress + <span class="jxr_string">"@"</span> + (domainName != <strong class="jxr_keyword">null</strong> ? domainName : defaultDomain);
+<a name="423" href="#423">423</a>         }
+<a name="424" href="#424">424</a>         <strong class="jxr_keyword">this</strong>.postmaster = <strong class="jxr_keyword">new</strong> MailAddress( postMasterAddress );
+<a name="425" href="#425">425</a> 
+<a name="426" href="#426">426</a>         <strong class="jxr_keyword">if</strong> (!isLocalServer(postmaster.getHost())) {
+<a name="427" href="#427">427</a>             StringBuffer warnBuffer
+<a name="428" href="#428">428</a>                     = <strong class="jxr_keyword">new</strong> StringBuffer(320)
+<a name="429" href="#429">429</a>                     .append(<span class="jxr_string">"The specified postmaster address ( "</span>)
+<a name="430" href="#430">430</a>                     .append(postmaster)
+<a name="431" href="#431">431</a>                     .append(<span class="jxr_string">" ) is not a local address.  This is not necessarily a problem, but it does mean that emails addressed to the postmaster will be routed to another server.  For some configurations this may cause problems."</span>);
+<a name="432" href="#432">432</a>             getLogger().warn(warnBuffer.toString());
+<a name="433" href="#433">433</a>         }
+<a name="434" href="#434">434</a>     }
+<a name="435" href="#435">435</a> 
+<a name="436" href="#436">436</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> initializeLocalDeliveryMailet() <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="437" href="#437">437</a>         <em class="jxr_comment">// We can safely remove this and the localDeliveryField when we </em>
+<a name="438" href="#438">438</a>         <em class="jxr_comment">// remove the storeMail method from James and from the MailetContext</em>
+<a name="439" href="#439">439</a>         DefaultConfiguration conf = <strong class="jxr_keyword">new</strong> DefaultConfiguration(<span class="jxr_string">"mailet"</span>, <span class="jxr_string">"generated:James.initialize()"</span>);
+<a name="440" href="#440">440</a>         <a href="../../../org/apache/james/transport/MailetConfigImpl.html">MailetConfigImpl</a> configImpl = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/transport/MailetConfigImpl.html">MailetConfigImpl</a>();
+<a name="441" href="#441">441</a>         configImpl.setMailetName(<span class="jxr_string">"LocalDelivery"</span>);
+<a name="442" href="#442">442</a>         configImpl.setConfiguration(conf);
+<a name="443" href="#443">443</a>         configImpl.setMailetContext(<strong class="jxr_keyword">this</strong>);
+<a name="444" href="#444">444</a>         localDeliveryMailet = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/transport/mailets/LocalDelivery.html">LocalDelivery</a>();
+<a name="445" href="#445">445</a>         localDeliveryMailet.init(configImpl);
+<a name="446" href="#446">446</a>     }
+<a name="447" href="#447">447</a> 
+<a name="448" href="#448">448</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="449" href="#449">449</a> <em class="jxr_javadoccomment">     * Set Store to use</em>
+<a name="450" href="#450">450</a> <em class="jxr_javadoccomment">     * </em>
+<a name="451" href="#451">451</a> <em class="jxr_javadoccomment">     * @param store the Store to use</em>
+<a name="452" href="#452">452</a> <em class="jxr_javadoccomment">     */</em>
+<a name="453" href="#453">453</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setStore(Store store) {
+<a name="454" href="#454">454</a>         <strong class="jxr_keyword">this</strong>.store = store;
+<a name="455" href="#455">455</a>     }
+<a name="456" href="#456">456</a> 
+<a name="457" href="#457">457</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="458" href="#458">458</a> <em class="jxr_javadoccomment">     * Set the SpoolRepository to use</em>
+<a name="459" href="#459">459</a> <em class="jxr_javadoccomment">     * </em>
+<a name="460" href="#460">460</a> <em class="jxr_javadoccomment">     * @param spool the SpoleRepository to use</em>
+<a name="461" href="#461">461</a> <em class="jxr_javadoccomment">     */</em>
+<a name="462" href="#462">462</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setSpool(<a href="../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spool) {
+<a name="463" href="#463">463</a>         <strong class="jxr_keyword">this</strong>.spool = spool;
+<a name="464" href="#464">464</a>     }
+<a name="465" href="#465">465</a> 
+<a name="466" href="#466">466</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="467" href="#467">467</a> <em class="jxr_javadoccomment">     * Set the UsersRepository to use</em>
+<a name="468" href="#468">468</a> <em class="jxr_javadoccomment">     * </em>
+<a name="469" href="#469">469</a> <em class="jxr_javadoccomment">     * @param localusers the UserRepository to use</em>
+<a name="470" href="#470">470</a> <em class="jxr_javadoccomment">     */</em>
+<a name="471" href="#471">471</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setLocalusers(<a href="../../../org/apache/james/api/user/UsersRepository.html">UsersRepository</a> localusers) {
+<a name="472" href="#472">472</a>         <strong class="jxr_keyword">this</strong>.localusers = localusers;
+<a name="473" href="#473">473</a>     }
+<a name="474" href="#474">474</a> 
+<a name="475" href="#475">475</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="476" href="#476">476</a> <em class="jxr_javadoccomment">     * Place a mail on the spool for processing</em>
+<a name="477" href="#477">477</a> <em class="jxr_javadoccomment">     *</em>
+<a name="478" href="#478">478</a> <em class="jxr_javadoccomment">     * @param message the message to send</em>
+<a name="479" href="#479">479</a> <em class="jxr_javadoccomment">     *</em>
+<a name="480" href="#480">480</a> <em class="jxr_javadoccomment">     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="481" href="#481">481</a> <em class="jxr_javadoccomment">     *                            on the spool</em>
+<a name="482" href="#482">482</a> <em class="jxr_javadoccomment">     */</em>
+<a name="483" href="#483">483</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sendMail(MimeMessage message) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="484" href="#484">484</a>         MailAddress sender = <strong class="jxr_keyword">new</strong> MailAddress((InternetAddress)message.getFrom()[0]);
+<a name="485" href="#485">485</a>         Collection recipients = <strong class="jxr_keyword">new</strong> HashSet();
+<a name="486" href="#486">486</a>         Address addresses[] = message.getAllRecipients();
+<a name="487" href="#487">487</a>         <strong class="jxr_keyword">if</strong> (addresses != <strong class="jxr_keyword">null</strong>) {
+<a name="488" href="#488">488</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; addresses.length; i++) {
+<a name="489" href="#489">489</a>                 <em class="jxr_comment">// Javamail treats the "newsgroups:" header field as a</em>
+<a name="490" href="#490">490</a>                 <em class="jxr_comment">// recipient, so we want to filter those out.</em>
+<a name="491" href="#491">491</a>                 <strong class="jxr_keyword">if</strong> ( addresses[i] instanceof InternetAddress ) {
+<a name="492" href="#492">492</a>                     recipients.add(<strong class="jxr_keyword">new</strong> MailAddress((InternetAddress)addresses[i]));
+<a name="493" href="#493">493</a>                 }
+<a name="494" href="#494">494</a>             }
+<a name="495" href="#495">495</a>         }
+<a name="496" href="#496">496</a>         sendMail(sender, recipients, message);
+<a name="497" href="#497">497</a>     }
+<a name="498" href="#498">498</a> 
+<a name="499" href="#499">499</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="500" href="#500">500</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#sendMail(MailAddress, Collection, MimeMessage)</em>
+<a name="501" href="#501">501</a> <em class="jxr_javadoccomment">     */</em>
+<a name="502" href="#502">502</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage message)
+<a name="503" href="#503">503</a>             <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="504" href="#504">504</a>         sendMail(sender, recipients, message, Mail.DEFAULT);
+<a name="505" href="#505">505</a>     }
+<a name="506" href="#506">506</a> 
+<a name="507" href="#507">507</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="508" href="#508">508</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#sendMail(MailAddress, Collection, MimeMessage, String)</em>
+<a name="509" href="#509">509</a> <em class="jxr_javadoccomment">     */</em>
+<a name="510" href="#510">510</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sendMail(MailAddress sender, Collection recipients, MimeMessage message, String state)
+<a name="511" href="#511">511</a>             <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="512" href="#512">512</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> mail = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(), sender, recipients, message);
+<a name="513" href="#513">513</a>         <strong class="jxr_keyword">try</strong> {
+<a name="514" href="#514">514</a>             mail.setState(state);
+<a name="515" href="#515">515</a>             sendMail(mail);
+<a name="516" href="#516">516</a>         } <strong class="jxr_keyword">finally</strong> {
+<a name="517" href="#517">517</a>             ContainerUtil.dispose(mail);
+<a name="518" href="#518">518</a>         }
+<a name="519" href="#519">519</a>     }
+<a name="520" href="#520">520</a> 
+<a name="521" href="#521">521</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="522" href="#522">522</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#sendMail(MailAddress, Collection, InputStream)</em>
+<a name="523" href="#523">523</a> <em class="jxr_javadoccomment">     */</em>
+<a name="524" href="#524">524</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sendMail(MailAddress sender, Collection recipients, InputStream msg)
+<a name="525" href="#525">525</a>             <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="526" href="#526">526</a>         <em class="jxr_comment">// parse headers</em>
+<a name="527" href="#527">527</a>         <a href="../../../org/apache/james/core/MailHeaders.html">MailHeaders</a> headers = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/core/MailHeaders.html">MailHeaders</a>(msg);
+<a name="528" href="#528">528</a> 
+<a name="529" href="#529">529</a>         <em class="jxr_comment">// if headers do not contains minimum REQUIRED headers fields throw Exception</em>
+<a name="530" href="#530">530</a>         <strong class="jxr_keyword">if</strong> (!headers.isValid()) {
+<a name="531" href="#531">531</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Some REQURED header field is missing. Invalid Message"</span>);
+<a name="532" href="#532">532</a>         }
+<a name="533" href="#533">533</a>         ByteArrayInputStream headersIn = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(headers.toByteArray());
+<a name="534" href="#534">534</a>         sendMail(<strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(), sender, recipients, <strong class="jxr_keyword">new</strong> SequenceInputStream(headersIn, msg)));
+<a name="535" href="#535">535</a>     }
+<a name="536" href="#536">536</a> 
+<a name="537" href="#537">537</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="538" href="#538">538</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#sendMail(Mail)</em>
+<a name="539" href="#539">539</a> <em class="jxr_javadoccomment">     */</em>
+<a name="540" href="#540">540</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sendMail(Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="541" href="#541">541</a>         <strong class="jxr_keyword">try</strong> {
+<a name="542" href="#542">542</a>             spool.store(mail);
+<a name="543" href="#543">543</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="544" href="#544">544</a>             getLogger().error(<span class="jxr_string">"Error storing message: "</span> + e.getMessage(),e);
+<a name="545" href="#545">545</a>             <strong class="jxr_keyword">try</strong> {
+<a name="546" href="#546">546</a>                 spool.remove(mail);
+<a name="547" href="#547">547</a>             } <strong class="jxr_keyword">catch</strong> (Exception ignored) {
+<a name="548" href="#548">548</a>                 getLogger().error(<span class="jxr_string">"Error removing message after an error storing it: "</span> + e.getMessage(),e);
+<a name="549" href="#549">549</a>             }
+<a name="550" href="#550">550</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MessagingException(<span class="jxr_string">"Exception spooling message: "</span> + e.getMessage(), e);
+<a name="551" href="#551">551</a>         }
+<a name="552" href="#552">552</a>         <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="553" href="#553">553</a>             StringBuffer logBuffer =
+<a name="554" href="#554">554</a>                 <strong class="jxr_keyword">new</strong> StringBuffer(64)
+<a name="555" href="#555">555</a>                         .append(<span class="jxr_string">"Mail "</span>)
+<a name="556" href="#556">556</a>                         .append(mail.getName())
+<a name="557" href="#557">557</a>                         .append(<span class="jxr_string">" pushed in spool"</span>);
+<a name="558" href="#558">558</a>             getLogger().debug(logBuffer.toString());
+<a name="559" href="#559">559</a>         }
+<a name="560" href="#560">560</a>     }
+<a name="561" href="#561">561</a> 
+<a name="562" href="#562">562</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="563" href="#563">563</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#getUserInbox(java.lang.String)</em>
+<a name="564" href="#564">564</a> <em class="jxr_javadoccomment">     */</em>
+<a name="565" href="#565">565</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">synchronized</strong> <a href="../../../org/apache/james/services/MailRepository.html">MailRepository</a> getUserInbox(String userName) {
+<a name="566" href="#566">566</a>         <a href="../../../org/apache/james/services/MailRepository.html">MailRepository</a> userInbox = <strong class="jxr_keyword">null</strong>;
+<a name="567" href="#567">567</a>         
+<a name="568" href="#568">568</a>         <strong class="jxr_keyword">if</strong> (virtualHosting == false &amp;&amp; (userName.indexOf(<span class="jxr_string">"@"</span>) &lt; 0) == false) {
+<a name="569" href="#569">569</a>             userName = userName.split(<span class="jxr_string">"@"</span>)[0];
+<a name="570" href="#570">570</a>         }
+<a name="571" href="#571">571</a> 
+<a name="572" href="#572">572</a>         userInbox = (MailRepository) mailboxes.get(userName);
+<a name="573" href="#573">573</a> 
+<a name="574" href="#574">574</a>         <strong class="jxr_keyword">if</strong> (userInbox != <strong class="jxr_keyword">null</strong>) {
+<a name="575" href="#575">575</a>             <strong class="jxr_keyword">return</strong> userInbox;
+<a name="576" href="#576">576</a>         <em class="jxr_comment">/*</em>
+<a name="577" href="#577">577</a> <em class="jxr_comment">         * we're using a ReferenceMap with HARD keys and SOFT values</em>
+<a name="578" href="#578">578</a> <em class="jxr_comment">         * so it could happen to find a null value after a second pass</em>
+<a name="579" href="#579">579</a> <em class="jxr_comment">         * of a full GC and we should simply lookup it again</em>
+<a name="580" href="#580">580</a> <em class="jxr_comment">         */</em>
+<a name="581" href="#581">581</a> <em class="jxr_comment">//        } else if (mailboxes.containsKey(userName)) {</em>
+<a name="582" href="#582">582</a> <em class="jxr_comment">//            // we have a problem</em>
+<a name="583" href="#583">583</a> <em class="jxr_comment">//            getLogger().error("Null mailbox for non-null key");</em>
+<a name="584" href="#584">584</a> <em class="jxr_comment">//            throw new RuntimeException("Error in getUserInbox.");</em>
+<a name="585" href="#585">585</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="586" href="#586">586</a>             <em class="jxr_comment">// need mailbox object</em>
+<a name="587" href="#587">587</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="588" href="#588">588</a>                 getLogger().debug(<span class="jxr_string">"Retrieving and caching inbox for "</span> + userName );
+<a name="589" href="#589">589</a>             }
+<a name="590" href="#590">590</a> 
+<a name="591" href="#591">591</a>             StringBuffer destinationBuffer = <strong class="jxr_keyword">new</strong> StringBuffer(192);
+<a name="592" href="#592">592</a>                   
+<a name="593" href="#593">593</a>             <strong class="jxr_keyword">if</strong> (virtualHosting == <strong class="jxr_keyword">true</strong> &amp;&amp; inboxRootURL.startsWith(<span class="jxr_string">"file://"</span>) &amp;&amp; !(userName.indexOf(<span class="jxr_string">"@"</span>) &lt; 0)) {
+<a name="594" href="#594">594</a>                 String userArgs[] = userName.split(<span class="jxr_string">"@"</span>);
+<a name="595" href="#595">595</a>                             
+<a name="596" href="#596">596</a>                 <em class="jxr_comment">// build the url like : file://var/mail/inboxes/domain/username/</em>
+<a name="597" href="#597">597</a>                 destinationBuffer.append(inboxRootURL).append(userArgs[1]).append(<span class="jxr_string">"/"</span>).append(userArgs[0]).append(<span class="jxr_string">"/"</span>);
+<a name="598" href="#598">598</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="599" href="#599">599</a>                 destinationBuffer.append(inboxRootURL).append(userName).append(<span class="jxr_string">"/"</span>);
+<a name="600" href="#600">600</a>             }
+<a name="601" href="#601">601</a>                  
+<a name="602" href="#602">602</a>             String destination = destinationBuffer.toString();
+<a name="603" href="#603">603</a>             <strong class="jxr_keyword">try</strong> {
+<a name="604" href="#604">604</a>                 <em class="jxr_comment">// Copy the inboxRepository configuration and modify the destinationURL</em>
+<a name="605" href="#605">605</a>                 DefaultConfiguration mboxConf = <strong class="jxr_keyword">new</strong> DefaultConfiguration(conf
+<a name="606" href="#606">606</a>                         .getChild(<span class="jxr_string">"inboxRepository"</span>).getChild(<span class="jxr_string">"repository"</span>));
+<a name="607" href="#607">607</a>                 mboxConf.setAttribute(<span class="jxr_string">"destinationURL"</span>, destination);
+<a name="608" href="#608">608</a> 
+<a name="609" href="#609">609</a>                 userInbox = (MailRepository) store.select(mboxConf);
+<a name="610" href="#610">610</a>                 <strong class="jxr_keyword">if</strong> (userInbox!=<strong class="jxr_keyword">null</strong>) {
+<a name="611" href="#611">611</a>                     mailboxes.put(userName, userInbox);
+<a name="612" href="#612">612</a>                 }
+<a name="613" href="#613">613</a>             } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="614" href="#614">614</a>                 <strong class="jxr_keyword">if</strong> (getLogger().isErrorEnabled()) {
+<a name="615" href="#615">615</a>                     getLogger().error(<span class="jxr_string">"Cannot open user Mailbox"</span>,e);
+<a name="616" href="#616">616</a>                 }
+<a name="617" href="#617">617</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"Error in getUserInbox."</span>,e);
+<a name="618" href="#618">618</a>             }
+<a name="619" href="#619">619</a>             <strong class="jxr_keyword">return</strong> userInbox;
+<a name="620" href="#620">620</a>         }
+<a name="621" href="#621">621</a>     }
+<a name="622" href="#622">622</a> 
+<a name="623" href="#623">623</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="624" href="#624">624</a> <em class="jxr_javadoccomment">     * &lt;p&gt;Note that this method ensures that James cannot be run in a distributed</em>
+<a name="625" href="#625">625</a> <em class="jxr_javadoccomment">     * fashion.&lt;/p&gt;</em>
+<a name="626" href="#626">626</a> <em class="jxr_javadoccomment">     * &lt;p&gt;Two instances may return the same ID. </em>
+<a name="627" href="#627">627</a> <em class="jxr_javadoccomment">     * There are various ways that this could be fixed. </em>
+<a name="628" href="#628">628</a> <em class="jxr_javadoccomment">     * The most obvious would be to add a unique prefix. </em>
+<a name="629" href="#629">629</a> <em class="jxr_javadoccomment">     * The best approach would be for each instance to be configured</em>
+<a name="630" href="#630">630</a> <em class="jxr_javadoccomment">     * with a name which would then be combined with the network</em>
+<a name="631" href="#631">631</a> <em class="jxr_javadoccomment">     * address (for example, james.name@mail.example.org) to create a</em>
+<a name="632" href="#632">632</a> <em class="jxr_javadoccomment">     * unique James instance identifier.</em>
+<a name="633" href="#633">633</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;&lt;p&gt; </em>
+<a name="634" href="#634">634</a> <em class="jxr_javadoccomment">     * Alternatively, using a data store backed identifier (for example, from a sequence</em>
+<a name="635" href="#635">635</a> <em class="jxr_javadoccomment">     * when DB backed) should be enough to gaurantee uniqueness. This would imply</em>
+<a name="636" href="#636">636</a> <em class="jxr_javadoccomment">     * that the Mail interface or the spool store should be responsible for creating</em>
+<a name="637" href="#637">637</a> <em class="jxr_javadoccomment">     * new Mail implementations with ID preassigned. </em>
+<a name="638" href="#638">638</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;&lt;p&gt;</em>
+<a name="639" href="#639">639</a> <em class="jxr_javadoccomment">     * It would be useful for each </em>
+<a name="640" href="#640">640</a> <em class="jxr_javadoccomment">     * James cluster to have a unique name. Perhaps a random number could be generated by </em>
+<a name="641" href="#641">641</a> <em class="jxr_javadoccomment">     * the spool store upon first initialisation.</em>
+<a name="642" href="#642">642</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;&lt;p&gt;</em>
+<a name="643" href="#643">643</a> <em class="jxr_javadoccomment">     * This ID is most likely</em>
+<a name="644" href="#644">644</a> <em class="jxr_javadoccomment">     * to be used as message ID so this is probably useful in any case.</em>
+<a name="645" href="#645">645</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="646" href="#646">646</a> <em class="jxr_javadoccomment">     * </em>
+<a name="647" href="#647">647</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#getId()</em>
+<a name="648" href="#648">648</a> <em class="jxr_javadoccomment">     */</em>
+<a name="649" href="#649">649</a>     <strong class="jxr_keyword">public</strong> String getId() {
+<a name="650" href="#650">650</a>         
+<a name="651" href="#651">651</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> localCount;
+<a name="652" href="#652">652</a>         <strong class="jxr_keyword">synchronized</strong> (countLock) {
+<a name="653" href="#653">653</a>             localCount = count++;
+<a name="654" href="#654">654</a>         }
+<a name="655" href="#655">655</a>         StringBuffer idBuffer =
+<a name="656" href="#656">656</a>             <strong class="jxr_keyword">new</strong> StringBuffer(64)
+<a name="657" href="#657">657</a>                     .append(<span class="jxr_string">"Mail"</span>)
+<a name="658" href="#658">658</a>                     .append(System.currentTimeMillis())
+<a name="659" href="#659">659</a>                     .append(<span class="jxr_string">"-"</span>)
+<a name="660" href="#660">660</a>                     .append(localCount);
+<a name="661" href="#661">661</a>         <strong class="jxr_keyword">return</strong> idBuffer.toString();
+<a name="662" href="#662">662</a>     }
+<a name="663" href="#663">663</a> 
+<a name="664" href="#664">664</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="665" href="#665">665</a> <em class="jxr_javadoccomment">     * The main method.  Should never be invoked, as James must be called</em>
+<a name="666" href="#666">666</a> <em class="jxr_javadoccomment">     * from within an Avalon framework container.</em>
+<a name="667" href="#667">667</a> <em class="jxr_javadoccomment">     *</em>
+<a name="668" href="#668">668</a> <em class="jxr_javadoccomment">     * @param args the command line arguments</em>
+<a name="669" href="#669">669</a> <em class="jxr_javadoccomment">     */</em>
+<a name="670" href="#670">670</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(String[] args) {
+<a name="671" href="#671">671</a>         System.out.println(<span class="jxr_string">"ERROR!"</span>);
+<a name="672" href="#672">672</a>         System.out.println(<span class="jxr_string">"Cannot execute James as a stand alone application."</span>);
+<a name="673" href="#673">673</a>         System.out.println(<span class="jxr_string">"To run James, you need to have the Avalon framework installed."</span>);
+<a name="674" href="#674">674</a>         System.out.println(<span class="jxr_string">"Please refer to the Readme file to know how to run James."</span>);
+<a name="675" href="#675">675</a>     }
+<a name="676" href="#676">676</a> 
+<a name="677" href="#677">677</a>     <em class="jxr_comment">//Methods for MailetContext</em>
+<a name="678" href="#678">678</a> 
+<a name="679" href="#679">679</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="680" href="#680">680</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getMailServers(String)</em>
+<a name="681" href="#681">681</a> <em class="jxr_javadoccomment">     */</em>
+<a name="682" href="#682">682</a>     <strong class="jxr_keyword">public</strong> Collection getMailServers(String host) {
+<a name="683" href="#683">683</a>         <strong class="jxr_keyword">try</strong> {
+<a name="684" href="#684">684</a>             <strong class="jxr_keyword">return</strong> lookupDNSServer().findMXRecords(host);
+<a name="685" href="#685">685</a>         } <strong class="jxr_keyword">catch</strong> (TemporaryResolutionException e) {
+<a name="686" href="#686">686</a>             <em class="jxr_comment">//TODO: We only do this to not break backward compatiblity. Should fixed later</em>
+<a name="687" href="#687">687</a>             <strong class="jxr_keyword">return</strong> Collections.unmodifiableCollection(<strong class="jxr_keyword">new</strong> ArrayList(0));
+<a name="688" href="#688">688</a>         }
+<a name="689" href="#689">689</a>     }
+<a name="690" href="#690">690</a> 
+<a name="691" href="#691">691</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="692" href="#692">692</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getAttribute(java.lang.String)</em>
+<a name="693" href="#693">693</a> <em class="jxr_javadoccomment">     */</em>
+<a name="694" href="#694">694</a>     <strong class="jxr_keyword">public</strong> Object getAttribute(String key) {
+<a name="695" href="#695">695</a>         <strong class="jxr_keyword">return</strong> attributes.get(key);
+<a name="696" href="#696">696</a>     }
+<a name="697" href="#697">697</a> 
+<a name="698" href="#698">698</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="699" href="#699">699</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#setAttribute(java.lang.String, java.lang.Object)</em>
+<a name="700" href="#700">700</a> <em class="jxr_javadoccomment">     */</em>
+<a name="701" href="#701">701</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setAttribute(String key, Object object) {
+<a name="702" href="#702">702</a>         attributes.put(key, object);
+<a name="703" href="#703">703</a>     }
+<a name="704" href="#704">704</a> 
+<a name="705" href="#705">705</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="706" href="#706">706</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#removeAttribute(java.lang.String)</em>
+<a name="707" href="#707">707</a> <em class="jxr_javadoccomment">     */</em>
+<a name="708" href="#708">708</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> removeAttribute(String key) {
+<a name="709" href="#709">709</a>         attributes.remove(key);
+<a name="710" href="#710">710</a>     }
+<a name="711" href="#711">711</a> 
+<a name="712" href="#712">712</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="713" href="#713">713</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getAttributeNames()</em>
+<a name="714" href="#714">714</a> <em class="jxr_javadoccomment">     */</em>
+<a name="715" href="#715">715</a>     <strong class="jxr_keyword">public</strong> Iterator getAttributeNames() {
+<a name="716" href="#716">716</a>         Vector names = <strong class="jxr_keyword">new</strong> Vector();
+<a name="717" href="#717">717</a>         <strong class="jxr_keyword">for</strong> (Enumeration e = attributes.keys(); e.hasMoreElements(); ) {
+<a name="718" href="#718">718</a>             names.add(e.nextElement());
+<a name="719" href="#719">719</a>         }
+<a name="720" href="#720">720</a>         <strong class="jxr_keyword">return</strong> names.iterator();
+<a name="721" href="#721">721</a>     }
+<a name="722" href="#722">722</a> 
+<a name="723" href="#723">723</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="724" href="#724">724</a> <em class="jxr_javadoccomment">     * This generates a response to the Return-Path address, or the address of</em>
+<a name="725" href="#725">725</a> <em class="jxr_javadoccomment">     * the message's sender if the Return-Path is not available.  Note that</em>
+<a name="726" href="#726">726</a> <em class="jxr_javadoccomment">     * this is different than a mail-client's reply, which would use the</em>
+<a name="727" href="#727">727</a> <em class="jxr_javadoccomment">     * Reply-To or From header. This will send the bounce with the server's</em>
+<a name="728" href="#728">728</a> <em class="jxr_javadoccomment">     * postmaster as the sender.</em>
+<a name="729" href="#729">729</a> <em class="jxr_javadoccomment">     * </em>
+<a name="730" href="#730">730</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#bounce(Mail, String)</em>
+<a name="731" href="#731">731</a> <em class="jxr_javadoccomment">     */</em>
+<a name="732" href="#732">732</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> bounce(Mail mail, String message) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="733" href="#733">733</a>         bounce(mail, message, getPostmaster());
+<a name="734" href="#734">734</a>     }
+<a name="735" href="#735">735</a> 
+<a name="736" href="#736">736</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="737" href="#737">737</a> <em class="jxr_javadoccomment">     * This generates a response to the Return-Path address, or the</em>
+<a name="738" href="#738">738</a> <em class="jxr_javadoccomment">     * address of the message's sender if the Return-Path is not</em>
+<a name="739" href="#739">739</a> <em class="jxr_javadoccomment">     * available.  Note that this is different than a mail-client's</em>
+<a name="740" href="#740">740</a> <em class="jxr_javadoccomment">     * reply, which would use the Reply-To or From header.</em>
+<a name="741" href="#741">741</a> <em class="jxr_javadoccomment">     *</em>
+<a name="742" href="#742">742</a> <em class="jxr_javadoccomment">     * Bounced messages are attached in their entirety (headers and</em>
+<a name="743" href="#743">743</a> <em class="jxr_javadoccomment">     * content) and the resulting MIME part type is "message/rfc822".</em>
+<a name="744" href="#744">744</a> <em class="jxr_javadoccomment">     *</em>
+<a name="745" href="#745">745</a> <em class="jxr_javadoccomment">     * The attachment to the subject of the original message (or "No</em>
+<a name="746" href="#746">746</a> <em class="jxr_javadoccomment">     * Subject" if there is no subject in the original message)</em>
+<a name="747" href="#747">747</a> <em class="jxr_javadoccomment">     *</em>
+<a name="748" href="#748">748</a> <em class="jxr_javadoccomment">     * There are outstanding issues with this implementation revolving</em>
+<a name="749" href="#749">749</a> <em class="jxr_javadoccomment">     * around handling of the return-path header.</em>
+<a name="750" href="#750">750</a> <em class="jxr_javadoccomment">     *</em>
+<a name="751" href="#751">751</a> <em class="jxr_javadoccomment">     * MIME layout of the bounce message:</em>
+<a name="752" href="#752">752</a> <em class="jxr_javadoccomment">     *</em>
+<a name="753" href="#753">753</a> <em class="jxr_javadoccomment">     * multipart (mixed)/</em>
+<a name="754" href="#754">754</a> <em class="jxr_javadoccomment">     *     contentPartRoot (body) = mpContent (alternative)/</em>
+<a name="755" href="#755">755</a> <em class="jxr_javadoccomment">     *           part (body) = message</em>
+<a name="756" href="#756">756</a> <em class="jxr_javadoccomment">     *     part (body) = original</em>
+<a name="757" href="#757">757</a> <em class="jxr_javadoccomment">     *</em>
+<a name="758" href="#758">758</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#bounce(Mail, String, MailAddress) </em>
+<a name="759" href="#759">759</a> <em class="jxr_javadoccomment">     */</em>
+<a name="760" href="#760">760</a> 
+<a name="761" href="#761">761</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> bounce(Mail mail, String message, MailAddress bouncer) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="762" href="#762">762</a>         <strong class="jxr_keyword">if</strong> (mail.getSender() == <strong class="jxr_keyword">null</strong>) {
+<a name="763" href="#763">763</a>             <strong class="jxr_keyword">if</strong> (getLogger().isInfoEnabled())
+<a name="764" href="#764">764</a>                 getLogger().info(<span class="jxr_string">"Mail to be bounced contains a null (&lt;&gt;) reverse path.  No bounce will be sent."</span>);
+<a name="765" href="#765">765</a>             <strong class="jxr_keyword">return</strong>;
+<a name="766" href="#766">766</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="767" href="#767">767</a>             <em class="jxr_comment">// Bounce message goes to the reverse path, not to the Reply-To address</em>
+<a name="768" href="#768">768</a>             <strong class="jxr_keyword">if</strong> (getLogger().isInfoEnabled())
+<a name="769" href="#769">769</a>                 getLogger().info(<span class="jxr_string">"Processing a bounce request for a message with a reverse path of "</span> + mail.getSender().toString());
+<a name="770" href="#770">770</a>         }
+<a name="771" href="#771">771</a> 
+<a name="772" href="#772">772</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> reply = rawBounce(mail,message);
+<a name="773" href="#773">773</a>         <em class="jxr_comment">//Change the sender...</em>
+<a name="774" href="#774">774</a>         reply.getMessage().setFrom(bouncer.toInternetAddress());
+<a name="775" href="#775">775</a>         reply.getMessage().saveChanges();
+<a name="776" href="#776">776</a>         <em class="jxr_comment">//Send it off ... with null reverse-path</em>
+<a name="777" href="#777">777</a>         reply.setSender(<strong class="jxr_keyword">null</strong>);
+<a name="778" href="#778">778</a>         sendMail(reply);
+<a name="779" href="#779">779</a>         ContainerUtil.dispose(reply);
+<a name="780" href="#780">780</a>     }
+<a name="781" href="#781">781</a> 
+<a name="782" href="#782">782</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="783" href="#783">783</a> <em class="jxr_javadoccomment">     * Generates a bounce mail that is a bounce of the original message.</em>
+<a name="784" href="#784">784</a> <em class="jxr_javadoccomment">     *</em>
+<a name="785" href="#785">785</a> <em class="jxr_javadoccomment">     * @param bounceText the text to be prepended to the message to describe the bounce condition</em>
+<a name="786" href="#786">786</a> <em class="jxr_javadoccomment">     *</em>
+<a name="787" href="#787">787</a> <em class="jxr_javadoccomment">     * @return the bounce mail</em>
+<a name="788" href="#788">788</a> <em class="jxr_javadoccomment">     *</em>
+<a name="789" href="#789">789</a> <em class="jxr_javadoccomment">     * @throws MessagingException if the bounce mail could not be created</em>
+<a name="790" href="#790">790</a> <em class="jxr_javadoccomment">     */</em>
+<a name="791" href="#791">791</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> rawBounce(Mail mail, String bounceText) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="792" href="#792">792</a>         <em class="jxr_comment">//This sends a message to the james component that is a bounce of the sent message</em>
+<a name="793" href="#793">793</a>         MimeMessage original = mail.getMessage();
+<a name="794" href="#794">794</a>         MimeMessage reply = (MimeMessage) original.reply(false);
+<a name="795" href="#795">795</a>         reply.setSubject(<span class="jxr_string">"Re: "</span> + original.getSubject());
+<a name="796" href="#796">796</a>         reply.setSentDate(<strong class="jxr_keyword">new</strong> Date());
+<a name="797" href="#797">797</a>         Collection recipients = <strong class="jxr_keyword">new</strong> HashSet();
+<a name="798" href="#798">798</a>         recipients.add(mail.getSender());
+<a name="799" href="#799">799</a>         InternetAddress addr[] = { <strong class="jxr_keyword">new</strong> InternetAddress(mail.getSender().toString())};
+<a name="800" href="#800">800</a>         reply.setRecipients(Message.RecipientType.TO, addr);
+<a name="801" href="#801">801</a>         reply.setFrom(<strong class="jxr_keyword">new</strong> InternetAddress(mail.getRecipients().iterator().next().toString()));
+<a name="802" href="#802">802</a>         reply.setText(bounceText);
+<a name="803" href="#803">803</a>         reply.setHeader(RFC2822Headers.MESSAGE_ID, <span class="jxr_string">"replyTo-"</span> + mail.getName());
+<a name="804" href="#804">804</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(
+<a name="805" href="#805">805</a>             <span class="jxr_string">"replyTo-"</span> + mail.getName(),
+<a name="806" href="#806">806</a>             <strong class="jxr_keyword">new</strong> MailAddress(mail.getRecipients().iterator().next().toString()),
+<a name="807" href="#807">807</a>             recipients,
+<a name="808" href="#808">808</a>             reply);
+<a name="809" href="#809">809</a>     }
+<a name="810" href="#810">810</a> 
+<a name="811" href="#811">811</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="812" href="#812">812</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#isLocalUser(String)</em>
+<a name="813" href="#813">813</a> <em class="jxr_javadoccomment">     */</em>
+<a name="814" href="#814">814</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isLocalUser(String name) {
+<a name="815" href="#815">815</a>         <strong class="jxr_keyword">if</strong> (name == <strong class="jxr_keyword">null</strong>) {
+<a name="816" href="#816">816</a>             <strong class="jxr_keyword">return</strong> false;
+<a name="817" href="#817">817</a>         }
+<a name="818" href="#818">818</a>         <strong class="jxr_keyword">try</strong> {
+<a name="819" href="#819">819</a>             <strong class="jxr_keyword">if</strong> (name.indexOf(<span class="jxr_string">"@"</span>) == -1) {
+<a name="820" href="#820">820</a>                 <strong class="jxr_keyword">return</strong> isLocalEmail(<strong class="jxr_keyword">new</strong> MailAddress(name,<span class="jxr_string">"localhost"</span>));
+<a name="821" href="#821">821</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="822" href="#822">822</a>                 <strong class="jxr_keyword">return</strong> isLocalEmail(<strong class="jxr_keyword">new</strong> MailAddress(name));
+<a name="823" href="#823">823</a>             }
+<a name="824" href="#824">824</a>         } <strong class="jxr_keyword">catch</strong> (ParseException e) {
+<a name="825" href="#825">825</a>             log(<span class="jxr_string">"Error checking isLocalUser for user "</span>+name);
+<a name="826" href="#826">826</a>             <strong class="jxr_keyword">return</strong> false;
+<a name="827" href="#827">827</a>         }
+<a name="828" href="#828">828</a>     }
+<a name="829" href="#829">829</a>     
+<a name="830" href="#830">830</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="831" href="#831">831</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#isLocalEmail(org.apache.mailet.MailAddress)</em>
+<a name="832" href="#832">832</a> <em class="jxr_javadoccomment">     */</em>
+<a name="833" href="#833">833</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isLocalEmail(MailAddress mailAddress) {
+<a name="834" href="#834">834</a>     String userName = mailAddress.toString();
+<a name="835" href="#835">835</a>         <strong class="jxr_keyword">if</strong> (!isLocalServer(mailAddress.getHost())) {
+<a name="836" href="#836">836</a>             <strong class="jxr_keyword">return</strong> false;
+<a name="837" href="#837">837</a>         }
+<a name="838" href="#838">838</a>         <strong class="jxr_keyword">if</strong> (virtualHosting == false) {
+<a name="839" href="#839">839</a>             userName = mailAddress.getUser();
+<a name="840" href="#840">840</a>         }
+<a name="841" href="#841">841</a>         <strong class="jxr_keyword">return</strong> localusers.contains(userName);
+<a name="842" href="#842">842</a>     }
+<a name="843" href="#843">843</a> 
+<a name="844" href="#844">844</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="845" href="#845">845</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getPostmaster()</em>
+<a name="846" href="#846">846</a> <em class="jxr_javadoccomment">     */</em>
+<a name="847" href="#847">847</a>     <strong class="jxr_keyword">public</strong> MailAddress getPostmaster() {
+<a name="848" href="#848">848</a>         <strong class="jxr_keyword">return</strong> postmaster;
+<a name="849" href="#849">849</a>     }
+<a name="850" href="#850">850</a> 
+<a name="851" href="#851">851</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="852" href="#852">852</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getMajorVersion()</em>
+<a name="853" href="#853">853</a> <em class="jxr_javadoccomment">     */</em>
+<a name="854" href="#854">854</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getMajorVersion() {
+<a name="855" href="#855">855</a>         <strong class="jxr_keyword">return</strong> 2;
+<a name="856" href="#856">856</a>     }
+<a name="857" href="#857">857</a> 
+<a name="858" href="#858">858</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="859" href="#859">859</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getMinorVersion()</em>
+<a name="860" href="#860">860</a> <em class="jxr_javadoccomment">     */</em>
+<a name="861" href="#861">861</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getMinorVersion() {
+<a name="862" href="#862">862</a>         <strong class="jxr_keyword">return</strong> 4;
+<a name="863" href="#863">863</a>     }
+<a name="864" href="#864">864</a> 
+<a name="865" href="#865">865</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="866" href="#866">866</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#isLocalServer(java.lang.String)</em>
+<a name="867" href="#867">867</a> <em class="jxr_javadoccomment">     */</em>
+<a name="868" href="#868">868</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isLocalServer( <strong class="jxr_keyword">final</strong> String serverName ) {
+<a name="869" href="#869">869</a>         String lowercase = serverName.toLowerCase(Locale.US);
+<a name="870" href="#870">870</a>        
+<a name="871" href="#871">871</a>         <em class="jxr_comment">// Check if the serverName is localhost or the DomainList implementation contains the serverName. This</em>
+<a name="872" href="#872">872</a>         <em class="jxr_comment">// allow some implementations to act more dynamic</em>
+<a name="873" href="#873">873</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"localhost"</span>.equals(serverName) || domains.containsDomain(lowercase)){
+<a name="874" href="#874">874</a>             <strong class="jxr_keyword">return</strong>  <strong class="jxr_keyword">true</strong>;
+<a name="875" href="#875">875</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="876" href="#876">876</a>             <strong class="jxr_keyword">return</strong> false;
+<a name="877" href="#877">877</a>         }
+<a name="878" href="#878">878</a>     }
+<a name="879" href="#879">879</a> 
+<a name="880" href="#880">880</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="881" href="#881">881</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#getServerInfo()</em>
+<a name="882" href="#882">882</a> <em class="jxr_javadoccomment">     */</em>
+<a name="883" href="#883">883</a>     <strong class="jxr_keyword">public</strong> String getServerInfo() {
+<a name="884" href="#884">884</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Apache JAMES"</span>;
+<a name="885" href="#885">885</a>     }
+<a name="886" href="#886">886</a> 
+<a name="887" href="#887">887</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="888" href="#888">888</a> <em class="jxr_javadoccomment">     * Return the logger for the Mailet API</em>
+<a name="889" href="#889">889</a> <em class="jxr_javadoccomment">     *</em>
+<a name="890" href="#890">890</a> <em class="jxr_javadoccomment">     * @return the logger for the Mailet API</em>
+<a name="891" href="#891">891</a> <em class="jxr_javadoccomment">     */</em>
+<a name="892" href="#892">892</a>     <strong class="jxr_keyword">private</strong> Logger getMailetLogger() {
+<a name="893" href="#893">893</a>         <strong class="jxr_keyword">if</strong> (mailetLogger == <strong class="jxr_keyword">null</strong>) {
+<a name="894" href="#894">894</a>             mailetLogger = getLogger().getChildLogger(<span class="jxr_string">"Mailet"</span>);
+<a name="895" href="#895">895</a>         }
+<a name="896" href="#896">896</a>         <strong class="jxr_keyword">return</strong> mailetLogger;
+<a name="897" href="#897">897</a>     }
+<a name="898" href="#898">898</a> 
+<a name="899" href="#899">899</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="900" href="#900">900</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#log(java.lang.String)</em>
+<a name="901" href="#901">901</a> <em class="jxr_javadoccomment">     */</em>
+<a name="902" href="#902">902</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> log(String message) {
+<a name="903" href="#903">903</a>         getMailetLogger().info(message);
+<a name="904" href="#904">904</a>     }
+<a name="905" href="#905">905</a> 
+<a name="906" href="#906">906</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="907" href="#907">907</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#log(java.lang.String, java.lang.Throwable)</em>
+<a name="908" href="#908">908</a> <em class="jxr_javadoccomment">     */</em>
+<a name="909" href="#909">909</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> log(String message, Throwable t) {
+<a name="910" href="#910">910</a>         getMailetLogger().info(message,t);
+<a name="911" href="#911">911</a>     }
+<a name="912" href="#912">912</a> 
+<a name="913" href="#913">913</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="914" href="#914">914</a> <em class="jxr_javadoccomment">     * Adds a user to this mail server. Currently just adds user to a</em>
+<a name="915" href="#915">915</a> <em class="jxr_javadoccomment">     * UsersRepository.</em>
+<a name="916" href="#916">916</a> <em class="jxr_javadoccomment">     *</em>
+<a name="917" href="#917">917</a> <em class="jxr_javadoccomment">     * @param userName String representing user name, that is the portion of</em>
+<a name="918" href="#918">918</a> <em class="jxr_javadoccomment">     * an email address before the '@&lt;domain&gt;'.</em>
+<a name="919" href="#919">919</a> <em class="jxr_javadoccomment">     * @param password String plaintext password</em>
+<a name="920" href="#920">920</a> <em class="jxr_javadoccomment">     * @return boolean true if user added succesfully, else false.</em>
+<a name="921" href="#921">921</a> <em class="jxr_javadoccomment">     * </em>
+<a name="922" href="#922">922</a> <em class="jxr_javadoccomment">     * @deprecated we deprecated this in the MailServer interface and this is an implementation</em>
+<a name="923" href="#923">923</a> <em class="jxr_javadoccomment">     * this component depends already depends on a UsersRepository: clients could directly </em>
+<a name="924" href="#924">924</a> <em class="jxr_javadoccomment">     * use the addUser of the usersRepository.</em>
+<a name="925" href="#925">925</a> <em class="jxr_javadoccomment">     */</em>
+<a name="926" href="#926">926</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addUser(String userName, String password) {
+<a name="927" href="#927">927</a>         <strong class="jxr_keyword">return</strong> localusers.addUser(userName, password);
+<a name="928" href="#928">928</a>     }
+<a name="929" href="#929">929</a> 
+<a name="930" href="#930">930</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="931" href="#931">931</a> <em class="jxr_javadoccomment">     * Performs DNS lookups as needed to find servers which should or might</em>
+<a name="932" href="#932">932</a> <em class="jxr_javadoccomment">     * support SMTP.</em>
+<a name="933" href="#933">933</a> <em class="jxr_javadoccomment">     * Returns an Iterator over HostAddress, a specialized subclass of</em>
+<a name="934" href="#934">934</a> <em class="jxr_javadoccomment">     * javax.mail.URLName, which provides location information for</em>
+<a name="935" href="#935">935</a> <em class="jxr_javadoccomment">     * servers that are specified as mail handlers for the given</em>
+<a name="936" href="#936">936</a> <em class="jxr_javadoccomment">     * hostname.  This is done using MX records, and the HostAddress</em>
+<a name="937" href="#937">937</a> <em class="jxr_javadoccomment">     * instances are returned sorted by MX priority.  If no host is</em>
+<a name="938" href="#938">938</a> <em class="jxr_javadoccomment">     * found for domainName, the Iterator returned will be empty and the</em>
+<a name="939" href="#939">939</a> <em class="jxr_javadoccomment">     * first call to hasNext() will return false.</em>
+<a name="940" href="#940">940</a> <em class="jxr_javadoccomment">     *</em>
+<a name="941" href="#941">941</a> <em class="jxr_javadoccomment">     * @see org.apache.james.api.dnsservice.DNSService#getSMTPHostAddresses(String)</em>
+<a name="942" href="#942">942</a> <em class="jxr_javadoccomment">     * @since Mailet API v2.2.0a16-unstable</em>
+<a name="943" href="#943">943</a> <em class="jxr_javadoccomment">     * @param domainName - the domain for which to find mail servers</em>
+<a name="944" href="#944">944</a> <em class="jxr_javadoccomment">     * @return an Iterator over HostAddress instances, sorted by priority</em>
+<a name="945" href="#945">945</a> <em class="jxr_javadoccomment">     */</em>
+<a name="946" href="#946">946</a>     <strong class="jxr_keyword">public</strong> Iterator getSMTPHostAddresses(String domainName) {
+<a name="947" href="#947">947</a>         <strong class="jxr_keyword">try</strong> {
+<a name="948" href="#948">948</a>             <strong class="jxr_keyword">return</strong> lookupDNSServer().getSMTPHostAddresses(domainName);
+<a name="949" href="#949">949</a>         } <strong class="jxr_keyword">catch</strong> (TemporaryResolutionException e) {
+<a name="950" href="#950">950</a>             <em class="jxr_comment">//TODO: We only do this to not break backward compatiblity. Should fixed later</em>
+<a name="951" href="#951">951</a>             <strong class="jxr_keyword">return</strong> Collections.unmodifiableCollection(<strong class="jxr_keyword">new</strong> ArrayList(0)).iterator();
+<a name="952" href="#952">952</a>         }
+<a name="953" href="#953">953</a>     }
+<a name="954" href="#954">954</a> 
+<a name="955" href="#955">955</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../org/apache/james/api/dnsservice/DNSService.html">DNSService</a> lookupDNSServer() {
+<a name="956" href="#956">956</a>         <a href="../../../org/apache/james/api/dnsservice/DNSService.html">DNSService</a> dnsServer;
+<a name="957" href="#957">957</a>         <strong class="jxr_keyword">try</strong> {
+<a name="958" href="#958">958</a>             dnsServer = (DNSService) compMgr.lookup( DNSService.ROLE );
+<a name="959" href="#959">959</a>         } <strong class="jxr_keyword">catch</strong> ( <strong class="jxr_keyword">final</strong> ServiceException cme ) {
+<a name="960" href="#960">960</a>             getLogger().error(<span class="jxr_string">"Fatal configuration error - DNS Servers lost!"</span>, cme );
+<a name="961" href="#961">961</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"Fatal configuration error - DNS Servers lost!"</span>);
+<a name="962" href="#962">962</a>         }
+<a name="963" href="#963">963</a>         <strong class="jxr_keyword">return</strong> dnsServer;
+<a name="964" href="#964">964</a>     }
+<a name="965" href="#965">965</a> 
+<a name="966" href="#966">966</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="967" href="#967">967</a> <em class="jxr_javadoccomment">     * This method has been moved to LocalDelivery (the only client of the method).</em>
+<a name="968" href="#968">968</a> <em class="jxr_javadoccomment">     * Now we can safely remove it from the Mailet API and from this implementation of MailetContext.</em>
+<a name="969" href="#969">969</a> <em class="jxr_javadoccomment">     *</em>
+<a name="970" href="#970">970</a> <em class="jxr_javadoccomment">     * The local field localDeliveryMailet will be removed when we remove the storeMail method.</em>
+<a name="971" href="#971">971</a> <em class="jxr_javadoccomment">     * </em>
+<a name="972" href="#972">972</a> <em class="jxr_javadoccomment">     * @deprecated since 2.2.0 look at the LocalDelivery code to find out how to do the local delivery.</em>
+<a name="973" href="#973">973</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.MailetContext#storeMail(org.apache.mailet.MailAddress, org.apache.mailet.MailAddress, javax.mail.internet.MimeMessage)</em>
+<a name="974" href="#974">974</a> <em class="jxr_javadoccomment">     */</em>
+<a name="975" href="#975">975</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> storeMail(MailAddress sender, MailAddress recipient, MimeMessage msg) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="976" href="#976">976</a>         <strong class="jxr_keyword">if</strong> (recipient == <strong class="jxr_keyword">null</strong>) {
+<a name="977" href="#977">977</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Recipient for mail to be spooled cannot be null."</span>);
+<a name="978" href="#978">978</a>         }
+<a name="979" href="#979">979</a>         <strong class="jxr_keyword">if</strong> (msg == <strong class="jxr_keyword">null</strong>) {
+<a name="980" href="#980">980</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Mail message to be spooled cannot be null."</span>);
+<a name="981" href="#981">981</a>         }
+<a name="982" href="#982">982</a>         Collection recipients = <strong class="jxr_keyword">new</strong> HashSet();
+<a name="983" href="#983">983</a>         recipients.add(recipient);
+<a name="984" href="#984">984</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> m = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(),sender,recipients,msg);
+<a name="985" href="#985">985</a>         localDeliveryMailet.service(m);
+<a name="986" href="#986">986</a>         ContainerUtil.dispose(m);
+<a name="987" href="#987">987</a>     }
+<a name="988" href="#988">988</a>    
+<a name="989" href="#989">989</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="990" href="#990">990</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#supportVirtualHosting()</em>
+<a name="991" href="#991">991</a> <em class="jxr_javadoccomment">     */</em>
+<a name="992" href="#992">992</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> supportVirtualHosting() {
+<a name="993" href="#993">993</a>         <strong class="jxr_keyword">return</strong> virtualHosting;
+<a name="994" href="#994">994</a>     }
+<a name="995" href="#995">995</a> 
+<a name="996" href="#996">996</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="997" href="#997">997</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#getDefaultDomain()</em>
+<a name="998" href="#998">998</a> <em class="jxr_javadoccomment">     */</em>
+<a name="999" href="#999">999</a>     <strong class="jxr_keyword">public</strong> String getDefaultDomain() {
+<a name="1000" href="#1000">1000</a>         <strong class="jxr_keyword">if</strong> (defaultDomain == <strong class="jxr_keyword">null</strong>) {
+<a name="1001" href="#1001">1001</a>             List domainList = domains.getDomains();
+<a name="1002" href="#1002">1002</a>             <strong class="jxr_keyword">if</strong> (domainList == <strong class="jxr_keyword">null</strong> || domainList.isEmpty()) {
+<a name="1003" href="#1003">1003</a>                 <strong class="jxr_keyword">return</strong> <span class="jxr_string">"localhost"</span>;
+<a name="1004" href="#1004">1004</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="1005" href="#1005">1005</a>                 <strong class="jxr_keyword">return</strong> (String) domainList.get(0);
+<a name="1006" href="#1006">1006</a>             }  
+<a name="1007" href="#1007">1007</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="1008" href="#1008">1008</a>             <strong class="jxr_keyword">return</strong> defaultDomain;
+<a name="1009" href="#1009">1009</a>         }
+<a name="1010" href="#1010">1010</a>     }
+<a name="1011" href="#1011">1011</a> 
+<a name="1012" href="#1012">1012</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1013" href="#1013">1013</a> <em class="jxr_javadoccomment">     * @see org.apache.james.services.MailServer#getHelloName()</em>
+<a name="1014" href="#1014">1014</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1015" href="#1015">1015</a>     <strong class="jxr_keyword">public</strong> String getHelloName() {
+<a name="1016" href="#1016">1016</a>         <strong class="jxr_keyword">if</strong> (helloName != <strong class="jxr_keyword">null</strong>) {
+<a name="1017" href="#1017">1017</a>             <strong class="jxr_keyword">return</strong> helloName;
+<a name="1018" href="#1018">1018</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="1019" href="#1019">1019</a>             String hello = (String) getAttribute(Constants.HELLO_NAME);   
+<a name="1020" href="#1020">1020</a>             <strong class="jxr_keyword">if</strong> (hello == <strong class="jxr_keyword">null</strong>) {
+<a name="1021" href="#1021">1021</a>                 <strong class="jxr_keyword">return</strong> defaultDomain;
+<a name="1022" href="#1022">1022</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="1023" href="#1023">1023</a>                 <strong class="jxr_keyword">return</strong> hello;
+<a name="1024" href="#1024">1024</a>             }
+<a name="1025" href="#1025">1025</a>         }
+<a name="1026" href="#1026">1026</a>     }
+<a name="1027" href="#1027">1027</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

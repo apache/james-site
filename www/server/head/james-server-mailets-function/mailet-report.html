@@ -1,0 +1,1521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>James Server - Mailet and Matchers Reference</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-server-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 02/27/2009
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="http://james.apache.org/server/index.html">Server</a>
+          |
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>James Server</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/design_objectives.html">Objectives</a>
+        </li>
+              
+          
+              
+      
+              
+        <li class="expanded">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/FAQ.html">James FAQ</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/james_and_sendmail.html">James and Sendmail</a>
+        </li>
+              </ul>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Concepts</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="summary.html">Summary</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="repositories.html">Repositories</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailet_api.html">The Mailet API</a>
+        </li>
+          </ul>
+          <h5>How to...</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="build_instructions.html">Build James</a>
+        </li>
+              
+    <li class="none">
+              <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Configuration</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="dns_configuration.html">DNS Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="pop3_configuration.html">POP3 Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="smtp_configuration.html">SMTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="nntp_configuration.html">NNTP Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="fetchmail_configuration.html">FetchMail</a>
+        </li>
+              
+    <li class="none">
+              <a href="remotemanager_configuration.html">RemoteManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="spoolmanager_configuration.html">SpoolManager</a>
+        </li>
+              
+    <li class="none">
+              <a href="serverwide_configuration.html">Server-wide</a>
+        </li>
+              
+    <li class="none">
+              <a href="adding_users.html">Adding Users</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_matchers.html">Provided Matchers</a>
+        </li>
+              
+    <li class="none">
+              <a href="provided_mailets.html">Provided Mailets</a>
+        </li>
+          </ul>
+          <h5>Common Configurations</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="smtp_auth.html">Using SMTP AUTH</a>
+        </li>
+              
+    <li class="none">
+              <a href="using_database.html">Using a Database with James</a>
+        </li>
+              
+    <li class="none">
+              <a href="usingTLS.html">Using TLS/SSL</a>
+        </li>
+              
+    <li class="none">
+              <a href="mailing_lists.html">Creating Mailing Lists</a>
+        </li>
+          </ul>
+          <h5>Customization</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="custom_matcher.html">How to write a custom Matcher</a>
+        </li>
+              
+    <li class="none">
+              <a href="custom_mailet.html">How to write a custom Mailet</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="jira-report.html">Changes</a>
+        </li>
+              
+    <li class="none">
+              <a href="changelog.html">Release Notes</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+            
+              
+            <li class="expanded">
+              <a href="project-reports.html">Project Reports</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="jira-report.html">JIRA Report</a>
+        </li>
+                  
+    <li class="none">
+              <strong>Mailet Reference</strong>
+        </li>
+              </ul>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../../../../../people.apache.org/www/james.apache.org/server/todo.html">TODO</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Mailets and Matchers Reference</h2></div><table class="bodyTable"><tr class="a"><td><div class="section"><h3>Matchers</h3><ul><li><a href="#FileRegexMatcher">FileRegexMatcher</a></li><li><a href="#HasMailAttributeWithValueRegex">HasMailAttributeWithValueRegex</a></li><li><a href="#InSpammerBlacklist">InSpammerBlacklist</a></li><li><a href="#IsInWhiteList">IsInWhiteList</a></li><li><a href="#NESSpamCheck">NESSpamCheck</a></li><li><a href="#RecipientIsOverFixedQuota">RecipientIsOverFixedQuota</a></li><li><a href="#RecipientIsRegex">RecipientIsRegex</a></li><li><a href="#RemoteAddrInNetwork">RemoteAddrInNetwork</a></li><li><a href="#RemoteAddrNotInNetwork">RemoteAddrNotInNetwork</a></li><li><a href="#SenderInFakeDomain">SenderInFakeDomain</a></li><li><a href="#SenderIsRegex">SenderIsRegex</a></li></ul></div></td><td><div class="section"><h3>Mailets</h3><ul><li><a href="#AvalonListserv">AvalonListserv</a></li><li><a href="#AvalonListservManager">AvalonListservManager</a></li><li><a href="#BayesianAnalysis">BayesianAnalysis</a></li><li><a href="#BayesianAnalysisFeeder">BayesianAnalysisFeeder</a></li><li><a href="#Bounce">Bounce</a></li><li><a href="#CommandListservManager">CommandListservManager</a></li><li><a href="#CommandListservProcessor">CommandListservProcessor</a></li><li><a href="#DSNBounce">DSNBounce</a></li><li><a href="#Forward">Forward</a></li><li><a href="#FromRepository">FromRepository</a></li><li><a href="#JDBCAlias">JDBCAlias</a></li><li><a href="#JDBCListserv">JDBCListserv</a></li><li><a href="#JDBCVirtualUserTable">JDBCVirtualUserTable</a></li><li><a href="#NotifyPostmaster">NotifyPostmaster</a></li><li><a href="#NotifySender">NotifySender</a></li><li><a href="#Redirect">Redirect</a></li><li><a href="#RemoteDelivery">RemoteDelivery</a></li><li><a href="#Resend">Resend</a></li><li><a href="#Retry">Retry</a></li><li><a href="#SPF">SPF</a></li><li><a href="#SpamAssassin">SpamAssassin</a></li><li><a href="#ToRepository">ToRepository</a></li><li><a href="#WhiteListManager">WhiteListManager</a></li><li><a href="#XMLVirtualUserTable">XMLVirtualUserTable</a></li></ul></div></td></tr></table><div class="section"><h2>Matchers</h2><div class="section"><h3><a name="FileRegexMatcher">FileRegexMatcher</a></h3>Initializes RegexMatcher with regular expressions from a file.</div><div class="section"><h3><a name="HasMailAttributeWithValueRegex">HasMailAttributeWithValueRegex</a></h3>Matcher Info: <b>Has Mail Attribute Value Matcher</b><br /><P>This Matcher determines if the mail contains the attribute specified in the
+condition and that attribute matches the supplied regular expression,
+it returns all recipients if that is the case.</P>
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="HasMailAttributeWithValueRegex=whatever,<regex>" class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE>
+Note: as it is not possible to put arbitrary objects in the configuration,
+toString() is called on the attribute value, and that is the value matched against.</div><div class="section"><h3><a name="InSpammerBlacklist">InSpammerBlacklist</a></h3>Checks the network IP address of the sending server against a
+blacklist of spammers. There are 3 lists that support this...
+<ul>
+<li><b>blackholes.mail-abuse.org</b>: Rejected - see http://www.mail-abuse.org/rbl/
+<li><b>dialups.mail-abuse.org</b>: Dialup - see http://www.mail-abuse.org/dul/
+<li><b>relays.mail-abuse.org</b>: Open spam relay - see http://www.mail-abuse.org/rss/
+</ul>
+
+Example:
+&lt;mailet match="InSpammerBlacklist=blackholes.mail-abuse.org." class="ToProcessor"&gt;
+&lt;processor&gt;spam&lt;/processor&gt;
+&lt;/mailet&gt;</div><div class="section"><h3><a name="IsInWhiteList">IsInWhiteList</a></h3><P>Matches recipients having the mail sender in the recipient's private whitelist .</P>
+<P> The recipient name is always converted to its primary name (handling aliases).</P>
+<P>Configuration string: The database name containing the white list table.</P>
+<P>Example:</P>
+<PRE><CODE>
+&lt;mailet match="IsInWhiteList=db://maildb" class="ToProcessor"&gt;
+&lt;processor&gt; transport &lt;/processor&gt;
+&lt;/mailet&gt;
+</CODE></PRE></div><div class="section"><h3><a name="NESSpamCheck">NESSpamCheck</a></h3>This is based on a sample filter.cfg for a Netscape Mail Server to stop
+spam.</div><div class="section"><h3><a name="RecipientIsOverFixedQuota">RecipientIsOverFixedQuota</a></h3><P>Experimental: Checks whether a recipient has exceeded a maximum allowed quota for messages
+standing in his inbox. Such quota is <I>the same</I> for all users.</P>
+<P>Will check if the total size of all his messages in the inbox are greater
+than a certain number of bytes. You can use 'k' and 'm' as optional postfixes.
+In other words, "1m" is the same as writing "1024k", which is the same as
+"1048576".</P>
+<P>Here follows an example of a config.xml definition:</P>
+<PRE><CODE>
+&lt;processor name="transport"&gt;
+.
+.
+.
+&lt;mailet match=match="RecipientIsOverFixedQuota=40M" class="ToProcessor"&gt;
+&lt;processor&gt; error &lt;/processor&gt;
+&lt;notice&gt;The recipient has exceeded maximum allowed size quota&lt;/notice&gt;
+&lt;/mailet&gt;
+.
+.
+.
+&lt;/processor&gt;
+</CODE></PRE>
+
+<P>This matcher need to calculate the mailbox size everytime it is called. This can slow down things if there are many mails in
+the mailbox. Some users also report big problems with the matcher if a JDBC based mailrepository is used. </P></div><div class="section"><h3><a name="RecipientIsRegex">RecipientIsRegex</a></h3><P>Matches recipients whose address matches a regular expression.</P>
+<P>Is equivalent to the {@link SenderIsRegex} matcher but matching on the recipient.</P>
+<P>Configuration string: a regular expression.</P>
+<PRE><CODE>
+&lt;mailet match=&quot;RecipientIsRegex=&lt;regular-expression&gt;&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE>
+<P>The example below will match any recipient in the format user@log.anything</P>
+<PRE><CODE>
+&lt;mailet match=&quot;RecipientIsRegex=(.*)@log\.(.*)&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+&lt;/mailet&gt;
+</CODE></PRE></div><div class="section"><h3><a name="RemoteAddrInNetwork">RemoteAddrInNetwork</a></h3>Checks the IP address of the sending server against a comma-
+delimited list of IP addresses, domain names or sub-nets.
+
+<p>See AbstractNetworkMatcher for details on how to specify
+entries.</p></div><div class="section"><h3><a name="RemoteAddrNotInNetwork">RemoteAddrNotInNetwork</a></h3>Checks the IP address of the sending server against a comma-
+delimited list of IP addresses, domain names or sub-nets.
+
+<p>See AbstractNetworkMatcher for details on how to specify
+entries.</p></div><div class="section"><h3><a name="SenderInFakeDomain">SenderInFakeDomain</a></h3>Does a DNS lookup (MX and A/CNAME records) on the sender's domain. If
+there are no entries, the domain is considered fake and the match is
+successful.</div><div class="section"><h3><a name="SenderIsRegex">SenderIsRegex</a></h3><P>Matches mails that are sent by a sender whose address matches a regular expression.</P>
+<P>Is equivalent to the {@link RecipientIsRegex} matcher but matching on the sender.</P>
+<P>Configuration string: a regular expression.</P>
+<PRE><CODE>
+&lt;mailet match=&quot;SenderIsRegex=&lt;regular-expression&gt;&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+</CODE></PRE>
+<P>The example below will match any sender in the format user@log.anything</P>
+<PRE><CODE>
+&lt;mailet match=&quot;SenderIsRegex=(.*)@log\.(.*)&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P>Another example below will match any sender having some variations of the string
+<I>mp3</I> inside the username part.</P>
+<PRE><CODE>
+&lt;mailet match=&quot;SenderIsRegex=(.*)(mp3|emmepitre)(.*)@&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+&lt;/mailet&gt;
+</CODE></PRE></div></div><div class="section"><h2>Mailets</h2><div class="section"><h3><a name="AvalonListserv">AvalonListserv</a></h3>Mailet Info: <b>AvalonListserv Mailet</b><br />MailingListServer capability.
+
+<p>Requires a configuration element in the config.xml file of the form:
+<br> &lt;mailet match="RecipientIs=LIST-ADDRESS" class="AvalonListserv"&gt;
+<br> &lt;repositoryName&gt;LIST-NAME&lt;/repositoryName&gt;
+<br> &lt;membersonly&gt;[true|false]&lt;/membersonly&gt;
+<br> &lt;attachmentsallowed&gt;[true|false]&lt;/attachmentsallowed&gt;
+<br> &lt;replytolist&gt;[true|false]&lt;/replytolist&gt;
+<br> &lt;autobracket&gt;[true|false]&lt;/autobracket&gt;
+<br> &lt;subjectprefix [xml:space="preserve"]&gt;SUBJECT-PREFIX&lt;/subjectprefix&gt;
+<br> &lt;/mailet&gt;
+<p>repositoryName - the name of a user repository configured in the
+UsersStore block, e.g.,
+<br> &lt;repository name="list-name" class="org.apache.james.userrepository.ListUsersJdbcRepository" destinationURL="db://maildb/lists/list-name"&gt;
+<br> &lt;sqlFile&gt;file://conf/sqlResources.xml&lt;/sqlFile&gt;
+<br> &lt;/repository&gt;
+<p>or
+<br> &lt;repository name="list-name" class="org.apache.james.userrepository.UsersFileRepository"&gt;
+<br> &lt;destination URL="file://var/lists/list-name/"/&gt;
+<br> &lt;/repository&gt;
+<p>membersonly - if true only members can post to the list
+<p>attachmentsallowed - if false attachments are not allowed
+<p>replytolist - if true, replies go back to the list address; if
+false they go to the sender.
+<p>subjectprefix - a prefix that will be inserted at the front of
+the subject. If autobracketing is disabled (see below), the
+xml:space="preserve" attribute can be used to precisely control the
+prefix.
+<p>autobracket - if true the subject prefix will be rendered as
+"[PREFIX] ", if false, the prefix will be used literally.</div><div class="section"><h3><a name="AvalonListservManager">AvalonListservManager</a></h3>Mailet Info: <b>AvalonListservManager Mailet</b><br />Adds or removes an email address to a listserv.
+
+<p>Sample configuration:
+<br>&lt;mailet match="CommandForListserv=james@list.working-dogs.com" class="AvalonListservManager"&gt;
+<br>&lt;repositoryName&gt;name of user repository configured in UsersStore block &lt;/repositoryName&gt;
+<br>&lt;/mailet&gt;</div><div class="section"><h3><a name="BayesianAnalysis">BayesianAnalysis</a></h3>Mailet Info: <b>BayesianAnalysis Mailet</b><br /><P>Spam detection mailet using bayesian analysis techniques.</P>
+
+<P>Sets an email message header indicating the
+probability that an email message is SPAM.</P>
+
+<P>Based upon the principals described in:
+<a href="http://www.paulgraham.com/spam.html">A Plan For Spam</a>
+by Paul Graham.
+Extended to Paul Grahams' <a href="http://paulgraham.com/better.html">Better Bayesian Filtering</a>.</P>
+
+<P>The analysis capabilities are based on token frequencies (the <I>Corpus</I>)
+learned through a training process (see {@link BayesianAnalysisFeeder})
+and stored in a JDBC database.
+After a training session, the Corpus must be rebuilt from the database in order to
+acquire the new frequencies.
+Every 10 minutes a special thread in this mailet will check if any
+change was made to the database by the feeder, and rebuild the corpus if necessary.</p>
+
+<p>A <CODE>org.apache.james.spam.probability</CODE> mail attribute will be created
+containing the computed spam probability as a {@link java.lang.Double}.
+The <CODE>headerName</CODE> message header string will be created containing such
+probability in floating point representation.</p>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="BayesianAnalysis"&gt;
+&lt;repositoryPath&gt;db://maildb&lt;/repositoryPath&gt;
+&lt;!--
+Set this to the header name to add with the spam probability
+(default is "X-MessageIsSpamProbability").
+--&gt;
+&lt;headerName&gt;X-MessageIsSpamProbability&lt;/headerName&gt;
+&lt;!--
+Set this to true if you want to ignore messages coming from local senders
+(default is false).
+By local sender we mean a return-path with a local server part (server listed
+in &lt;servernames&gt; in config.xml).
+--&gt;
+&lt;ignoreLocalSender&gt;true&lt;/ignoreLocalSender&gt;
+&lt;!--
+Set this to the maximum message size (in bytes) that a message may have
+to be considered spam (default is 100000).
+--&gt;
+&lt;maxSize&gt;100000&lt;/maxSize&gt;
+&lt;!--
+Set this to false if you not want to tag the message if spam is detected (Default is true).
+--&gt;
+&lt;tagSubject&gt;true&lt;/tagSubject&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The probability of being spam is pre-pended to the subject if
+it is &gt; 0.1 (10%).</P>
+
+<P>The required tables are automatically created if not already there (see sqlResources.xml).
+The token field in both the ham and spam tables is <B>case sensitive</B>.</P></div><div class="section"><h3><a name="BayesianAnalysisFeeder">BayesianAnalysisFeeder</a></h3>Mailet Info: <b>BayesianAnalysisFeeder Mailet</b><br /><P>Feeds ham OR spam messages to train the {@link BayesianAnalysis} mailet.</P>
+
+<P>The new token frequencies will be stored in a JDBC database.</P>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;processor name="root"&gt;
+
+&lt;mailet match="RecipientIs=not.spam@thisdomain.com" class="BayesianAnalysisFeeder"&gt;
+&lt;repositoryPath&gt; db://maildb &lt;/repositoryPath&gt;
+&lt;feedType&gt;ham&lt;/feedType&gt;
+&lt;!--
+Set this to the maximum message size (in bytes) that a message may have
+to be analyzed (default is 100000).
+--&gt;
+&lt;maxSize&gt;100000&lt;/maxSize&gt;
+&lt;/mailet&gt;
+
+&lt;mailet match="RecipientIs=spam@thisdomain.com" class="BayesianAnalysisFeeder"&gt;
+&lt;repositoryPath&gt; db://maildb &lt;/repositoryPath&gt;
+&lt;feedType&gt;spam&lt;/feedType&gt;
+&lt;!--
+Set this to the maximum message size (in bytes) that a message may have
+to be analyzed (default is 100000).
+--&gt;
+&lt;maxSize&gt;100000&lt;/maxSize&gt;
+&lt;/mailet&gt;
+
+&lt;processor&gt;
+</CODE></PRE>
+
+<P>The previous example will allow the user to send messages to the server
+and use the recipient email address as the indicator for whether the message
+is ham or spam.</P>
+
+<P>Using the example above, send good messages (ham not spam) to the email
+address "not.spam@thisdomain.com" to pump good messages into the feeder,
+and send spam messages (spam not ham) to the email
+address "spam@thisdomain.com" to pump spam messages into the feeder.</P>
+
+<p>The bayesian database tables will be updated during the training reflecting
+the new data</p>
+
+<P>At the end the mail will be destroyed (ghosted).</P>
+
+<P><B>The correct approach is to send the original ham/spam message as an attachment
+to another message sent to the feeder; all the headers of the enveloping message
+will be removed and only the original message's tokens will be analyzed.</B></P>
+
+<p>After a training session, the frequency <i>Corpus</i> used by <CODE>BayesianAnalysis</CODE>
+must be rebuilt from the database, in order to take advantage of the new token frequencies.
+Every 10 minutes a special thread in the <CODE>BayesianAnalysis</CODE> mailet will check if any
+change was made to the database, and rebuild the corpus if necessary.</p>
+
+<p>Only one message at a time is scanned (the database update activity is <I>synchronized</I>)
+in order to avoid too much database locking,
+as thousands of rows may be updated just for one message fed.</p></div><div class="section"><h3><a name="Bounce">Bounce</a></h3>Mailet Info: <b>Bounce Mailet</b><br /><P>Generates a response to the reverse-path address.
+Note that this is different than a mail-client's
+reply, which would use the Reply-To or From header.</P>
+<P>Bounced messages are attached in their entirety (headers and
+content) and the resulting MIME part type is "message/rfc822".<BR>
+The reverse-path and the Return-Path header of the response is set to "null" ("<>"),
+meaning that no reply should be sent.</P>
+<P>A sender of the notification message can optionally be specified.
+If one is not specified, the postmaster's address will be used.<BR>
+A notice text can be specified, and in such case will be inserted into the
+notification inline text.<BR>
+If the notified message has an "error message" set, it will be inserted into the
+notification inline text. If the <CODE>attachStackTrace</CODE> init parameter
+is set to true, such error message will be attached to the notification message.<BR>
+<P>Supports the <CODE>passThrough</CODE> init parameter (true if missing).</P>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Bounce">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered, default=postmaster</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false, default=false</I>&lt;/attachError&gt;
+&lt;message&gt;<I>notice attached to the original message text (optional)</I>&lt;/message&gt;
+&lt;prefix&gt;<I>optional subject prefix prepended to the original message</I>&lt;/prefix&gt;
+&lt;inline&gt;<I>see {@link Resend}, default=none</I>&lt;/inline&gt;
+&lt;attachment&gt;<I>see {@link Resend}, default=message</I>&lt;/attachment&gt;
+&lt;passThrough&gt;<I>true or false, default=true</I>&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false, default=true</I>&lt;/fakeDomainCheck&gt;
+&lt;debug&gt;<I>true or false, default=false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The behaviour of this mailet is equivalent to using Resend with the following
+configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Resend">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false</I>&lt;/attachError&gt;
+&lt;message&gt;<I><B>dynamically built</B></I>&lt;/message&gt;
+&lt;prefix&gt;<I>a string</I>&lt;/prefix&gt;
+&lt;passThrough&gt;true or false&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false</I>&lt;/fakeDomainCheck&gt;
+&lt;recipients&gt;<B>sender</B>&lt;/recipients&gt;
+&lt;reversePath&gt;null&lt;/reversePath&gt;
+&lt;inline&gt;see {@link Resend}&lt;/inline&gt;
+&lt;attachment&gt;see {@link Resend}&lt;/attachment&gt;
+&lt;isReply&gt;true&lt;/isReply&gt;
+&lt;debug&gt;<I>true or false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P><I>notice</I> and <I>sendingAddress</I> can be used instead of
+<I>message</I> and <I>sender</I>; such names are kept for backward compatibility.</P></div><div class="section"><h3><a name="CommandListservManager">CommandListservManager</a></h3>CommandListservManager is the default implementation of {@link ICommandListservManager}.
+It loads all the configured {@link IListServCommand}s and delegates to them at runtime.
+<br />
+
+It isn't responsible for procesing messages sent to the main mailing list, but is responsible for
+individual commands sent by users, such as: info, subscribe, etc...
+<br />
+
+Requests sent to the CommandListservManager take the form of:
+<pre>
+&lt;listName&gt;-&lt;commandName&gt;@domain
+</pre>
+
+If the command isn't recognized an error will be sent using {@link #onError}.
+<br />
+<br />
+
+The configuration for this mailet sould be in the 'root' processor block.
+<pre>
+&lt;mailet match="CommandListservMatcher=announce@localhost" class="CommandListservManager"&gt;
+&lt;listName&gt;announce&lt;/listName&gt;
+&lt;displayName&gt;Announce mailing list&lt;/displayName&gt;
+&lt;listOwner&gt;owner@localhost&lt;/listOwner&gt;
+&lt;repositoryName&gt;list-announce&lt;/repositoryName&gt;
+&lt;listDomain&gt;localhost&lt;/listDomain&gt;
+
+&lt;commandpackages&gt;
+&lt;commandpackage&gt;org.apache.james.transport.mailets.listservcommands&lt;/commandpackage&gt;
+&lt;/commandpackages&gt;
+
+&lt;commands&gt;
+&lt;command name="subscribe" class="Subscribe"/&gt;
+&lt;command name="subscribe-confirm" class="SubscribeConfirm"/&gt;
+&lt;command name="unsubscribe" class="UnSubscribe"/&gt;
+&lt;command name="unsubscribe-confirm" class="UnSubscribeConfirm"/&gt;
+&lt;command name="error" class="ErrorCommand"/&gt;
+&lt;command name="owner" class="Owner"/&gt;
+&lt;command name="info" class="Info"/&gt;
+&lt;/commands&gt;
+&lt;/mailet&gt;
+</pre>
+
+<br />
+<br />
+Todo: refine the command matching so we can have more sophistciated commands such as:
+<pre>
+&lt;listName&gt;-&lt;commandName&gt;-&lt;optCommandParam&gt;@domain
+</pre></div><div class="section"><h3><a name="CommandListservProcessor">CommandListservProcessor</a></h3>CommandListservProcessor processes messages intended for the list serv mailing list.
+For command handling, see {@link CommandListservManager} <br />
+
+This class is based on the existing list serv processor shipped with James.
+<br />
+<br />
+
+To configure the CommandListservProcessor place this configuratin in the root processor:
+<pre>
+&lt;mailet match="RecipientIs=announce@localhost" class="CommandListservProcessor"&gt;
+&lt;membersonly&gt;false&lt;/membersonly&gt;
+&lt;attachmentsallowed&gt;true&lt;/attachmentsallowed&gt;
+&lt;replytolist&gt;true&lt;/replytolist&gt;
+&lt;repositoryName&gt;list-announce&lt;/repositoryName&gt;
+&lt;subjectprefix&gt;Announce&lt;/subjectprefix&gt;
+&lt;autobracket&gt;true&lt;/autobracket&gt;
+&lt;listOwner&gt;owner@localhost&lt;/listOwner&gt;
+&lt;listName&gt;announce&lt;/listName&gt;
+&lt;addFooter&gt;true&lt;/addFooter&gt;
+&lt;/mailet&gt;
+
+</pre></div><div class="section"><h3><a name="DSNBounce">DSNBounce</a></h3>Mailet Info: <b>DSNBounce Mailet</b><br /><P>Generates a Delivery Status Notification (DSN)
+Note that this is different than a mail-client's
+reply, which would use the Reply-To or From header.</P>
+<P>Bounced messages are attached in their entirety (headers and
+content) and the resulting MIME part type is "message/rfc822".<BR>
+The reverse-path and the Return-Path header of the response is set to "null" ("<>"),
+meaning that no reply should be sent.</P>
+<P>A sender of the notification message can optionally be specified.
+If one is not specified, the postmaster's address will be used.<BR>
+<P>Supports the <CODE>passThrough</CODE> init parameter (true if missing).</P>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="DSNBounce">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered,
+default=postmaster</I>&lt;/sender&gt;
+&lt;prefix&gt;<I>optional subject prefix prepended to the original
+message</I>&lt;/prefix&gt;
+&lt;attachment&gt;<I>message, heads or none, default=message</I>&lt;/attachment&gt;
+&lt;messageString&gt;<I>the message sent in the bounce, the first occurrence of the pattern [machine] is replaced with the name of the executing machine, default=Hi. This is the James mail server at [machine] ... </I>&lt;/messageString&gt;
+&lt;passThrough&gt;<I>true or false, default=true</I>&lt;/passThrough&gt;
+&lt;debug&gt;<I>true or false, default=false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE></div><div class="section"><h3><a name="Forward">Forward</a></h3>Mailet Info: <b>Forward Mailet</b><br /><P>Replaces incoming recipients with those specified, and resends the message unaltered.</P>
+<P>Can be totally replaced by an equivalent usage of {@link Resend} (see below),
+simply replacing <I>&lt;forwardto&gt;</I> with <I>&lt;recipients&gt</I>.
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Forward">
+&lt;forwardTo&gt;<I>comma delimited list of email addresses</I>&lt;/forwardTo&gt;
+&lt;passThrough&gt;<I>true or false, default=false</I>&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false, default=true</I>&lt;/fakeDomainCheck&gt;
+&lt;debug&gt;<I>true or false, default=false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The behaviour of this mailet is equivalent to using Resend with the following
+configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Resend">
+&lt;recipients&gt;comma delimited list of email addresses&lt;/recipients&gt;
+&lt;passThrough&gt;true or false&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false</I>&lt;/fakeDomainCheck&gt;
+&lt;debug&gt;<I>true or false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P><I>forwardto</I> can be used instead of
+<I>forwardTo</I>; such name is kept for backward compatibility.</P></div><div class="section"><h3><a name="FromRepository">FromRepository</a></h3>Mailet Info: <b>FromRepository Mailet</b><br />Re-spools Mail found in the specified Repository.
+
+&lt;mailet match="RecipientIs=respool@localhost" class="FromRepository"&gt;
+&lt;repositoryPath&gt; <i>repository path</i> &lt;/repositoryPath&gt;
+&lt;processor&gt; <i>target processor</i> &lt;/repositoryPath&gt;
+&lt;delete&t; [true|<b>false</b>] &lt;/delete&gt;
+&lt;/mailet&gt;</div><div class="section"><h3><a name="JDBCAlias">JDBCAlias</a></h3>Mailet Info: <b>JDBC aliasing mailet</b><br />Rewrites recipient addresses based on a database table. The connection
+is configured by passing the URL to a conn definition. You need to set
+the table name to check (or view) along with the source and target columns
+to use. For example,
+&lt;mailet match="All" class="JDBCAlias"&gt;
+&lt;mappings&gt;db://maildb/Aliases&lt;/mappings&gt;
+&lt;source_column&gt;source_email_address&lt;/source_column&gt;
+&lt;target_column&gt;target_email_address&lt;/target_column&gt;
+&lt;/mailet&gt;</div><div class="section"><h3><a name="JDBCListserv">JDBCListserv</a></h3>Mailet Info: <b>JDBC listserv mailet</b><br />Rewrites recipient addresses based on a database table. The connection
+is configured by passing the URL to a conn definition. You need to set
+the table name to check (or view) along with the source and target columns
+to use. For example,
+&lt;mailet match="All" class="JDBCListserv"&gt;
+&lt;data_source&gt;maildb&lt;/datasource&gt;
+&lt;listserv_id&gt;mylistserv&lt;/listserv_id&gt;
+&lt;listserv_table&gt;source_email_address&lt;/listserv_table&gt;
+&lt;members_table&gt;target_email_address&lt;/members_table&gt;
+&lt;/mailet&gt;
+
+This mailet will cache the settings available when first initialized. If you wish
+it to reload for each message, add the init parameter
+&lt;cache_settings&gt;false&lt;/cache_settings&gt;</div><div class="section"><h3><a name="JDBCVirtualUserTable">JDBCVirtualUserTable</a></h3>Mailet Info: <b>JDBC Virtual User Table mailet</b><br /><p>Implements a Virtual User Table for JAMES. Derived from the
+JDBCAlias mailet, but whereas that mailet uses a simple map from a
+source address to a destination address, this handles simple
+wildcard selection, verifies that a catchall address is for a domain
+in the Virtual User Table, and handles forwarding.
+
+JDBCVirtualUserTable does not provide any administation tools.
+You'll have to create the VirtualUserTable yourself. The standard
+configuration is as follows:
+
+CREATE TABLE VirtualUserTable
+(
+user varchar(64) NOT NULL default '',
+domain varchar(255) NOT NULL default '',
+target_address varchar(255) NOT NULL default '',
+PRIMARY KEY (user,domain)
+);
+
+The user column specifies the username of the virtual recipient, the domain
+column the domain of the virtual recipient, and the target_address column
+the email address of the real recipient. The target_address column can contain
+just the username in the case of a local user, and multiple recipients can be
+specified in a list separated by commas, semi-colons or colons.
+
+The standard query used with VirtualUserTable is:
+
+select VirtualUserTable.target_address from VirtualUserTable, VirtualUserTable as VUTDomains
+where (VirtualUserTable.user like ? or VirtualUserTable.user like "\%")
+and (VirtualUserTable.domain like ?
+or (VirtualUserTable.domain like "\%" and VUTDomains.domain like ?))
+order by concat(VirtualUserTable.user,'@',VirtualUserTable.domain) desc limit 1
+
+For a given [user, domain, domain] used with the query, this will
+match as follows (in precedence order):
+
+1. user@domain - explicit mapping for user@domain
+2. user@% - catchall mapping for user anywhere
+3. %@domain - catchall mapping for anyone at domain
+4. null - no valid mapping
+
+You need to set the connection. At the moment, there is a limit to
+what you can change regarding the SQL Query, because there isn't a
+means to specify where in the query to replace parameters. [TODO]
+
+&lt;mailet match="All" class="JDBCVirtualUserTable"&gt;
+&lt;table&gt;db://maildb/VirtualUserTable&lt;/table&gt;
+&lt;sqlquery&gt;sqlquery&lt;/sqlquery&gt;
+&lt;/mailet&gt;</p></div><div class="section"><h3><a name="NotifyPostmaster">NotifyPostmaster</a></h3><p>Mailet Info: <b>NotifyPostmaster Mailet</b><br /></p><p><P>Sends a notification message to the Postmaster.</P>
+<P>A sender of the notification message can optionally be specified.
+If one is not specified, the postmaster's address will be used.<BR>
+The "To:" header of the notification message can be set to "unaltered";
+if missing will be set to the postmaster.<BR>
+A notice text can be specified, and in such case will be inserted into the
+notification inline text.<BR>
+If the notified message has an "error message" set, it will be inserted into the
+notification inline text. If the <CODE>attachStackTrace</CODE> init parameter
+is set to true, such error message will be attached to the notification message.<BR>
+The notified messages are attached in their entirety (headers and
+content) and the resulting MIME part type is "message/rfc822".</P>
+<P>Supports the <CODE>passThrough</CODE> init parameter (true if missing).</P>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="NotifyPostmaster">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered, default=postmaster</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false, default=false</I>&lt;/attachError&gt;
+&lt;message&gt;<I>notice attached to the original message text (optional)</I>&lt;/message&gt;
+&lt;prefix&gt;<I>optional subject prefix prepended to the original message, default="Re:"</I>&lt;/prefix&gt;
+&lt;inline&gt;<I>see {@link Resend}, default=none</I>&lt;/inline&gt;
+&lt;attachment&gt;<I>see {@link Resend}, default=message</I>&lt;/attachment&gt;
+&lt;passThrough&gt;<I>true or false, default=true</I>&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false, default=true</I>&lt;/fakeDomainCheck&gt;
+&lt;to&gt;<I>unaltered (optional, defaults to postmaster)</I>&lt;/to&gt;
+&lt;debug&gt;<I>true or false, default=false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The behaviour of this mailet is equivalent to using Resend with the following
+configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Resend">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false</I>&lt;/attachError&gt;
+&lt;message&gt;<I><B>dynamically built</B></I>&lt;/message&gt;
+&lt;prefix&gt;<I>a string</I>&lt;/prefix&gt;
+&lt;passThrough&gt;<I>true or false</I>&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false</I>&lt;/fakeDomainCheck&gt;
+&lt;to&gt;<I><B>unaltered or postmaster</B></I>&lt;/to&gt;
+&lt;recipients&gt;<B>postmaster</B>&lt;/recipients&gt;
+&lt;inline&gt;see {@link Resend}&lt;/inline&gt;
+&lt;attachment&gt;see {@link Resend}&lt;/attachment&gt;
+&lt;isReply&gt;true&lt;/isReply&gt;
+&lt;debug&gt;<I>true or false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P><I>notice</I>, <I>sendingAddress</I> and <I>attachStackTrace</I> can be used instead of
+<I>message</I>, <I>sender</I> and <I>attachError</I>; such names are kept for backward compatibility.</P></p></div><div class="section"><h3><a name="NotifySender">NotifySender</a></h3><p>Mailet Info: <b>NotifySender Mailet</b><br /></p><p><P>Sends a notification message to the sender of a message.</P>
+<P>A sender of the notification message can optionally be specified.
+If one is not specified, the postmaster's address will be used.<BR>
+The "To:" header of the notification message can be set to "unaltered";
+if missing will be set to the sender of the notified message.<BR>
+A notice text can be specified, and in such case will be inserted into the
+notification inline text.<BR>
+If the notified message has an "error message" set, it will be inserted into the
+notification inline text. If the <CODE>attachStackTrace</CODE> init parameter
+is set to true, such error message will be attached to the notification message.<BR>
+The notified messages are attached in their entirety (headers and
+content) and the resulting MIME part type is "message/rfc822".</P>
+<P>Supports the <CODE>passThrough</CODE> init parameter (true if missing).</P>
+
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="NotifySender">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered, default=postmaster</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false, default=false</I>&lt;/attachError&gt;
+&lt;prefix&gt;<I>optional subject prefix prepended to the original message</I>&lt;/prefix&gt;
+&lt;inline&gt;<I>see {@link Resend}, default=none</I>&lt;/inline&gt;
+&lt;attachment&gt;<I>see {@link Resend}, default=message</I>&lt;/attachment&gt;
+&lt;passThrough&gt;<I>true or false, default=true</I>&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false, default=true</I>&lt;/fakeDomainCheck&gt;
+&lt;to&gt;<I>unaltered or sender or from(optional, defaults to sender)</I>&lt;/to&gt;
+&lt;debug&gt;<I>true or false, default=false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The behaviour of this mailet is equivalent to using Resend with the following
+configuration:</P>
+<PRE><CODE>
+&lt;mailet match="All" class="Resend">
+&lt;sender&gt;<I>an address or postmaster or sender or unaltered</I>&lt;/sender&gt;
+&lt;attachError&gt;<I>true or false</I>&lt;/attachError&gt;
+&lt;message&gt;<I><B>dynamically built</B></I>&lt;/message&gt;
+&lt;prefix&gt;<I>a string</I>&lt;/prefix&gt;
+&lt;passThrough&gt;true&lt;/passThrough&gt;
+&lt;fakeDomainCheck&gt;<I>true or false</I>&lt;/fakeDomainCheck&gt;
+&lt;to&gt;<I>unaltered or sender or from&lt</I>;/to&gt;
+&lt;recipients&gt;<B>sender</B>&lt;/recipients&gt;
+&lt;inline&gt;none&lt;/inline&gt;
+&lt;attachment&gt;message&lt;/attachment&gt;
+&lt;isReply&gt;true&lt;/isReply&gt;
+&lt;debug&gt;<I>true or false</I>&lt;/debug&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P><I>notice</I>, <I>sendingAddress</I> and <I>attachStackTrace</I> can be used instead of
+<I>message</I>, <I>sender</I> and <I>attachError</I>; such names are kept for backward compatibility.</P></p></div><div class="section"><h3><a name="Redirect">Redirect</a></h3><p>Mailet Info: <b>Redirect Mailet</b><br /></p><p><P>A mailet providing configurable redirection services.</P>
+<P>Can produce listserver, forward and notify behaviour, with the original
+message intact, attached, appended or left out altogether.</P>
+<P>It differs from {@link Resend} because
+(i) some defaults are different,
+notably for the following parameters: <I>&lt;recipients&gt;</I>, <I>&lt;to&gt;</I>,
+<I>&lt;reversePath&gt;</I> and <I>&lt;inline&gt;</I>;
+(ii) because it allows the use of the <I>&lt;static&gt;</I> parameter;.<BR>
+Use <CODE>Resend</CODE> if you need full control, <CODE>Redirect</CODE> if
+the more automatic behaviour of some parameters is appropriate.</P>
+<P>This built in functionality is controlled by the configuration as laid out below.
+In the table please note that the parameters controlling message headers
+accept the <B>&quot;unaltered&quot;</B> value, whose meaning is to keep the associated
+header unchanged and, unless stated differently, corresponds to the assumed default
+if the parameter is missing.</P>
+<P>The configuration parameters are:</P>
+<TABLE width="75%" border="1" cellspacing="2" cellpadding="2">
+<TR valign=top>
+<TD width="20%">&lt;recipients&gt;</TD>
+<TD width="80%">
+A comma delimited list of addresses for recipients of
+this message; it will use the &quot;to&quot; list if not specified, and &quot;unaltered&quot;
+if none of the lists is specified.<BR>
+These addresses will only appear in the To: header if no &quot;to&quot; list is
+supplied.<BR>
+Such addresses can contain &quot;full names&quot;, like
+<I>Mr. John D. Smith &lt;john.smith@xyz.com&gt;</I>.<BR>
+The list can include constants &quot;sender&quot;, &quot;from&quot;, &quot;replyTo&quot;, &quot;postmaster&quot;, &quot;reversePath&quot;, &quot;recipients&quot;, &quot;to&quot;, &quot;null&quot; and &quot;unaltered&quot;;
+&quot;replyTo&quot; uses the ReplyTo header if available, otherwise the
+From header if available, otherwise the Sender header if available, otherwise the return-path;
+&quot;from&quot; is made equivalent to &quot;sender&quot;, and &quot;to&quot; is made equivalent to &quot;recipients&quot;;
+&quot;null&quot; is ignored.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;to&gt;</TD>
+<TD width="80%">
+A comma delimited list of addresses to appear in the To: header;
+the email will be delivered to any of these addresses if it is also in the recipients
+list.<BR>
+The recipients list will be used if this list is not supplied;
+if none of the lists is specified it will be &quot;unaltered&quot;.<BR>
+Such addresses can contain &quot;full names&quot;, like
+<I>Mr. John D. Smith &lt;john.smith@xyz.com&gt;</I>.<BR>
+The list can include constants &quot;sender&quot;, &quot;from&quot;, &quot;replyTo&quot;, &quot;postmaster&quot;, &quot;reversePath&quot;, &quot;recipients&quot;, &quot;to&quot;, &quot;null&quot; and &quot;unaltered&quot;;
+&quot;from&quot; uses the From header if available, otherwise the Sender header if available,
+otherwise the return-path;
+&quot;replyTo&quot; uses the ReplyTo header if available, otherwise the
+From header if available, otherwise the Sender header if available, otherwise the return-path;
+&quot;recipients&quot; is made equivalent to &quot;to&quot;;
+if &quot;null&quot; is specified alone it will remove this header.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;sender&gt;</TD>
+<TD width="80%">
+A single email address to appear in the From: and Return-Path: headers and become the sender.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; and &quot;unaltered&quot;;
+&quot;sender&quot; is equivalent to &quot;unaltered&quot;.<BR>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;message&gt;</TD>
+<TD width="80%">
+A text message to insert into the body of the email.<BR>
+Default: no message is inserted.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;inline&gt;</TD>
+<TD width="80%">
+<P>One of the following items:</P>
+<UL>
+<LI>unaltered &nbsp;&nbsp;&nbsp;&nbsp;The original message is the new
+message, for forwarding/aliasing</LI>
+<LI>heads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+headers of the original message are appended to the message</LI>
+<LI>body&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+body of the original is appended to the new message</LI>
+<LI>all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Both
+headers and body are appended</LI>
+<LI>none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neither
+body nor headers are appended</LI>
+</UL>
+Default: &quot;body&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;attachment&gt;</TD>
+<TD width="80%">
+<P>One of the following items:</P>
+<UL>
+<LI>heads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The headers of the original
+are attached as text</LI>
+<LI>body&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The body of the original
+is attached as text</LI>
+<LI>all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Both
+headers and body are attached as a single text file</LI>
+<LI>none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing is attached</LI>
+<LI>message &nbsp;The original message is attached as type message/rfc822,
+this means that it can, in many cases, be opened, resent, fw'd, replied
+to etc by email client software.</LI>
+</UL>
+Default: &quot;none&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;passThrough&gt;</TD>
+<TD width="80%">
+true or false, if true the original message continues in the
+mailet processor after this mailet is finished. False causes the original
+to be stopped.<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;fakeDomainCheck&gt;</TD>
+<TD width="80%">
+true or false, if true will check if the sender domain is valid.<BR>
+Default: true.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;attachError&gt;</TD>
+<TD width="80%">
+true or false, if true any error message available to the
+mailet is appended to the message body (except in the case of inline ==
+unaltered).<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;replyTo&gt;</TD>
+<TD width="80%">
+A single email address to appear in the Reply-To: header.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; &quot;null&quot; and &quot;unaltered&quot;;
+if &quot;null&quot; is specified it will remove this header.<BR>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;reversePath&gt;</TD>
+<TD width="80%">
+A single email address to appear in the Return-Path: header.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; and &quot;null&quot;;
+if &quot;null&quot; is specified then it will set it to <>, meaning &quot;null return path&quot;.<BR>
+Notice: the &quot;unaltered&quot; value is <I>not allowed</I>.<BR>
+Default: the value of the <I>&lt;sender&gt;</I> parameter, if set, otherwise remains unaltered.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;subject&gt;</TD>
+<TD width="80%">
+An optional string to use as the subject.<BR>
+Default: keep the original message subject.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;prefix&gt;</TD>
+<TD width="80%">
+An optional subject prefix prepended to the original message
+subject, or to a new subject specified with the <I>&lt;subject&gt;</I> parameter.<BR>
+For example: <I>[Undeliverable mail]</I>.<BR>
+Default: &quot;&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;isReply&gt;</TD>
+<TD width="80%">
+true or false, if true the IN_REPLY_TO header will be set to the
+id of the current message.<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;debug&gt;</TD>
+<TD width="80%">
+true or false. If this is true it tells the mailet to write some debugging
+information to the mailet log.<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;static&gt;</TD>
+<TD width="80%">
+true or false. If this is true it tells the mailet that it can
+reuse all the initial parameters (to, from, etc) without re-calculating
+their values. This will boost performance where a redirect task
+doesn't contain any dynamic values. If this is false, it tells the
+mailet to recalculate the values for each e-mail processed.<BR>
+Default: false.
+</TD>
+</TR>
+</TABLE>
+
+<P>Example:</P>
+<PRE><CODE>
+&lt;mailet match=&quot;RecipientIs=test@localhost&quot; class=&quot;Redirect&quot;&gt;
+&lt;recipients&gt;x@localhost, y@localhost, z@localhost&lt;/recipients&gt;
+&lt;to&gt;list@localhost&lt;/to&gt;
+&lt;sender&gt;owner@localhost&lt;/sender&gt;
+&lt;message&gt;sent on from James&lt;/message&gt;
+&lt;inline&gt;unaltered&lt;/inline&gt;
+&lt;passThrough&gt;FALSE&lt;/passThrough&gt;
+&lt;replyTo&gt;postmaster&lt;/replyTo&gt;
+&lt;prefix xml:space="preserve"&gt;[test mailing] &lt;/prefix&gt;
+&lt;!-- note the xml:space="preserve" to preserve whitespace --&gt;
+&lt;static&gt;TRUE&lt;/static&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>and:</P>
+
+<PRE><CODE>
+&lt;mailet match=&quot;All&quot; class=&quot;Redirect&quot;&gt;
+&lt;recipients&gt;x@localhost&lt;/recipients&gt;
+&lt;sender&gt;postmaster&lt;/sender&gt;
+&lt;message xml:space="preserve"&gt;Message marked as spam:&lt;/message&gt;
+&lt;inline&gt;heads&lt;/inline&gt;
+&lt;attachment&gt;message&lt;/attachment&gt;
+&lt;passThrough&gt;FALSE&lt;/passThrough&gt;
+&lt;attachError&gt;TRUE&lt;/attachError&gt;
+&lt;replyTo&gt;postmaster&lt;/replyTo&gt;
+&lt;prefix&gt;[spam notification]&lt;/prefix&gt;
+&lt;static&gt;TRUE&lt;/static&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+<P><I>replyto</I> can be used instead of
+<I>replyTo</I>; such name is kept for backward compatibility.</P></p></div><div class="section"><h3><a name="RemoteDelivery">RemoteDelivery</a></h3><p>Mailet Info: <b>RemoteDelivery Mailet</b><br /></p><p>Receives a MessageContainer from JamesSpoolManager and takes care of delivery
+the message to remote hosts. If for some reason mail can't be delivered
+store it in the "outgoing" Repository and set an Alarm. After the next "delayTime" the
+Alarm will wake the servlet that will try to send it again. After "maxRetries"
+the mail will be considered undeliverable and will be returned to sender.
+
+TO DO (in priority):
+1. Support a gateway (a single server where all mail will be delivered) (DONE)
+2. Provide better failure messages (DONE)
+3. More efficiently handle numerous recipients
+4. Migrate to use Phoenix for the delivery threads
+
+You really want to read the JavaMail documentation if you are
+working in here, and you will want to view the list of JavaMail
+attributes, which are documented here:
+
+http://java.sun.com/products/javamail/1.3/docs/javadocs/com/sun/mail/smtp/package-summary.html
+
+as well as other places.</p></div><div class="section"><h3><a name="Resend">Resend</a></h3><p>Mailet Info: <b>Redirect Mailet</b><br /></p><p><P>A mailet providing configurable redirection services.</P>
+<P>Can produce listserver, forward and notify behaviour, with the original
+message intact, attached, appended or left out altogether.
+Can be used as a replacement to {@link Redirect}, having more consistent defaults,
+and new options available.<BR>
+Use <CODE>Resend</CODE> if you need full control, <CODE>Redirect</CODE> if
+the more automatic behaviour of some parameters is appropriate.</P>
+<P>This built in functionality is controlled by the configuration as laid out below.
+In the table please note that the parameters controlling message headers
+accept the <B>&quot;unaltered&quot;</B> value, whose meaning is to keep the associated
+header unchanged and, unless stated differently, corresponds to the assumed default
+if the parameter is missing.</P>
+<P>The configuration parameters are:</P>
+<TABLE width="75%" border="1" cellspacing="2" cellpadding="2">
+<TR valign=top>
+<TD width="20%">&lt;recipients&gt;</TD>
+<TD width="80%">
+A comma delimited list of addresses for recipients of this message.<BR>
+Such addresses can contain &quot;full names&quot;, like
+<I>Mr. John D. Smith &lt;john.smith@xyz.com&gt;</I>.<BR>
+The list can include constants &quot;sender&quot;, &quot;from&quot;, &quot;replyTo&quot;, &quot;postmaster&quot;, &quot;reversePath&quot;, &quot;recipients&quot;, &quot;to&quot;, &quot;null&quot; and &quot;unaltered&quot;;
+&quot;replyTo&quot; uses the ReplyTo header if available, otherwise the
+From header if available, otherwise the Sender header if available, otherwise the return-path;
+&quot;from&quot; is made equivalent to &quot;sender&quot;, and &quot;to&quot; is made equivalent to &quot;recipients&quot;;
+&quot;null&quot; is ignored.
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;to&gt;</TD>
+<TD width="80%">
+A comma delimited list of addresses to appear in the To: header.<BR>
+Such addresses can contain &quot;full names&quot;, like
+<I>Mr. John D. Smith &lt;john.smith@xyz.com&gt;</I>.<BR>
+The list can include constants &quot;sender&quot;, &quot;from&quot;, &quot;replyTo&quot;, &quot;postmaster&quot;, &quot;reversePath&quot;, &quot;recipients&quot;, &quot;to&quot;, &quot;null&quot; and &quot;unaltered&quot;;
+&quot;from&quot; uses the From header if available, otherwise the Sender header if available,
+otherwise the return-path;
+&quot;replyTo&quot; uses the ReplyTo header if available, otherwise the
+From header if available, otherwise the Sender header if available, otherwise the return-path;
+&quot;recipients&quot; is made equivalent to &quot;to&quot;;
+if &quot;null&quot; is specified alone it will remove this header.
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;sender&gt;</TD>
+<TD width="80%">
+A single email address to appear in the From: header and become the sender.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; and &quot;unaltered&quot;;
+&quot;sender&quot; is equivalent to &quot;unaltered&quot;.<BR>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;message&gt;</TD>
+<TD width="80%">
+A text message to insert into the body of the email.<BR>
+Default: no message is inserted.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;inline&gt;</TD>
+<TD width="80%">
+<P>One of the following items:</P>
+<UL>
+<LI>unaltered &nbsp;&nbsp;&nbsp;&nbsp;The original message is the new
+message, for forwarding/aliasing</LI>
+<LI>heads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+headers of the original message are appended to the message</LI>
+<LI>body&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+body of the original is appended to the new message</LI>
+<LI>all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Both
+headers and body are appended</LI>
+<LI>none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neither
+body nor headers are appended</LI>
+</UL>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;attachment&gt;</TD>
+<TD width="80%">
+<P>One of the following items:</P>
+<UL>
+<LI>heads&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The headers of the original
+are attached as text</LI>
+<LI>body&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The body of the original
+is attached as text</LI>
+<LI>all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Both
+headers and body are attached as a single text file</LI>
+<LI>none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nothing is attached</LI>
+<LI>message &nbsp;The original message is attached as type message/rfc822,
+this means that it can, in many cases, be opened, resent, fw'd, replied
+to etc by email client software.</LI>
+</UL>
+Default: &quot;none&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;passThrough&gt;</TD>
+<TD width="80%">
+true or false, if true the original message continues in the
+mailet processor after this mailet is finished. False causes the original
+to be stopped.<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;fakeDomainCheck&gt;</TD>
+<TD width="80%">
+true or false, if true will check if the sender domain is valid.<BR>
+Default: true.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;attachError&gt;</TD>
+<TD width="80%">
+true or false, if true any error message available to the
+mailet is appended to the message body (except in the case of inline ==
+unaltered).<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;replyTo&gt;</TD>
+<TD width="80%">
+A single email address to appear in the Reply-To: header.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; &quot;null&quot; and &quot;unaltered&quot;;
+if &quot;null&quot; is specified it will remove this header.<BR>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;reversePath&gt;</TD>
+<TD width="80%">
+A single email address to appear in the Return-Path: header.<BR>
+It can include constants &quot;sender&quot;, &quot;postmaster&quot; &quot;null&quot; and &quot;unaltered&quot;;
+if &quot;null&quot; is specified then it will set it to <>, meaning &quot;null return path&quot;.<BR>
+Default: &quot;unaltered&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;subject&gt;</TD>
+<TD width="80%">
+An optional string to use as the subject.<BR>
+Default: keep the original message subject.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;prefix&gt;</TD>
+<TD width="80%">
+An optional subject prefix prepended to the original message
+subject, or to a new subject specified with the <I>&lt;subject&gt;</I> parameter.<BR>
+For example: <I>[Undeliverable mail]</I>.<BR>
+Default: &quot;&quot;.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;isReply&gt;</TD>
+<TD width="80%">
+true or false, if true the IN_REPLY_TO header will be set to the
+id of the current message.<BR>
+Default: false.
+</TD>
+</TR>
+<TR valign=top>
+<TD width="20%">&lt;debug&gt;</TD>
+<TD width="80%">
+true or false. If this is true it tells the mailet to write some debugging
+information to the mailet log.<BR>
+Default: false.
+</TD>
+</TR>
+</TABLE>
+
+<P>Example:</P>
+<PRE><CODE>
+&lt;mailet match=&quot;RecipientIs=test@localhost&quot; class=&quot;Resend&quot;&gt;
+&lt;recipients&gt;x@localhost, y@localhost, z@localhost&lt;/recipients&gt;
+&lt;to&gt;list@localhost&lt;/to&gt;
+&lt;sender&gt;owner@localhost&lt;/sender&gt;
+&lt;message&gt;sent on from James&lt;/message&gt;
+&lt;inline&gt;unaltered&lt;/inline&gt;
+&lt;passThrough&gt;FALSE&lt;/passThrough&gt;
+&lt;replyTo&gt;postmaster&lt;/replyTo&gt;
+&lt;prefix xml:space="preserve"&gt;[test mailing] &lt;/prefix&gt;
+&lt;!-- note the xml:space="preserve" to preserve whitespace --&gt;
+&lt;static&gt;TRUE&lt;/static&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>and:</P>
+
+<PRE><CODE>
+&lt;mailet match=&quot;All&quot; class=&quot;Resend&quot;&gt;
+&lt;recipients&gt;x@localhost&lt;/recipients&gt;
+&lt;sender&gt;postmaster&lt;/sender&gt;
+&lt;message xml:space="preserve"&gt;Message marked as spam:&lt;/message&gt;
+&lt;inline&gt;heads&lt;/inline&gt;
+&lt;attachment&gt;message&lt;/attachment&gt;
+&lt;passThrough&gt;FALSE&lt;/passThrough&gt;
+&lt;attachError&gt;TRUE&lt;/attachError&gt;
+&lt;replyTo&gt;postmaster&lt;/replyTo&gt;
+&lt;prefix&gt;[spam notification]&lt;/prefix&gt;
+&lt;/mailet&gt;
+</CODE></PRE>
+
+<P>The following example forwards the message without any modification, based on the defaults:</P>
+<PRE><CODE>
+&lt;mailet match=&quot;All&quot; class=&quot;Resend&quot/;&gt;
+</CODE></PRE>
+<P><I>replyto</I> can be used instead of
+<I>replyTo</I>; such name is kept for backward compatibility.</P>
+<P><B>WARNING: as the message (or a copy of it) is reinjected in the spool without any modification,
+the preceding example is very likely to cause a "configuration loop" in your system,
+unless some other mailet has previously modified something (a header for instance) that could force the resent
+message follow a different path so that it does not return here unchanged.</B></P></p></div><div class="section"><h3><a name="Retry">Retry</a></h3><p>Mailet Info: <b>Retry Mailet</b><br /></p><p>This Mailet retries delivery of a mail based on schedule specified in the
+James configuration file by the 'delayTime' attribute. The format of the
+'delayTime' attribute is: [attempts*]delay[units]
+<p>
+For example, if the delay times were specified as follows:<br>
+<delayTime> 4*15 minutes </delayTime> <delayTime> 3*1 hour </delayTime>
+<delayTime> 3*4 hours </delayTime>
+
+<maxRetries> 10 </maxRetries>
+
+after the initial failure, the message will be retried by sending it to the
+processor specified by the 'retryProcessor' attribute, as per the following
+schedule: 1) 4 attempts will be made every 15 minutes. 2) 3 attempts will be
+made every hour. 3) 3 attempts will be made every 4 hours.
+
+If the message still fails, it will be sent for error processing to the
+processor specified by the 'errorProcessor' attribute.
+
+<p>
+Following list summarizes all the attributes of this Mailet that can be
+configured:
+<ul>
+<li><b>retryRepository</b> - Spool repository where mails are stored.
+<li><b>delayTime</b> - Delay time (See description above).
+<li><b>maxRetries</b> - Maximum no. of retry attempts.
+<li><b>retryThreads</b> - No. of Threads used for retrying.
+<li><b>retryProcessor</b> - Processor used for retrying.
+<li><b>errorProcessor</b> - Error processor that will be used when all retry
+attempts fail.
+<li><b>isDebug</b> - Can be set to 'true' for debugging.
+</ul></p></div><div class="section"><h3><a name="SPF">SPF</a></h3><p>Check the ip, sender, helo against SPF.
+Add the following attributes to the mail object:
+
+org.apache.james.transport.mailets.spf.explanation
+org.apache.james.transport.mailets.spf.result
+
+Sample configuration:
+
+<mailet match="All" class="SPF">
+<addHeader>true</addHeader>
+<debug>false</debug>
+</mailet></p></div><div class="section"><h3><a name="SpamAssassin">SpamAssassin</a></h3><p>Mailet Info: <b>Checks message against SpamAssassin</b><br /></p><p>Sends the message through daemonized SpamAssassin (spamd), visit <a
+href="SpamAssassin.org">SpamAssassin.org</a> for info on configuration. The
+header X-Spam-Status is added to every message, this contains the score and
+the threshold score for spam (usually 5.0). If the message exceeds the
+threshold, the header X-Spam-Flag will be added with the value of YES. The
+default host for spamd is localhost and the default port is 783. <br>
+
+org.apache.james.spamassassin.status - Holds the status
+org.apache.james.spamassassin.flag - Holds the flag
+<br>
+Sample Configuration: <br>
+<br>
+&lt;mailet notmatch="SenderHostIsLocal" class="SpamAssassin"&gt;
+&lt;spamdHost&gt;localhost&lt;/spamdHost&gt;
+&lt;spamdPort&gt;783&lt;/spamdPort&gt; <br></p></div><div class="section"><h3><a name="ToRepository">ToRepository</a></h3><p>Mailet Info: <b>ToRepository Mailet</b><br /></p><p>Stores incoming Mail in the specified Repository.
+If the "passThrough" in confs is true the mail will be returned untouched in
+the pipe. If false will be destroyed.</p></div><div class="section"><h3><a name="WhiteListManager">WhiteListManager</a></h3><p>Mailet Info: <b>White List Manager mailet</b><br /></p><p><P>Manages for each local user a "white list" of remote addresses whose messages
+should never be blocked as spam.</P>
+<P>The normal behaviour is to check, for a local sender, if a remote recipient
+is already in the list: if not, it will be automatically inserted.
+This is under the interpretation that if a local sender <I>X</I> sends a message to a
+remote recipient <I>Y</I>, then later on if a message is sent by <I>Y</I> to <I>X</I> it should be
+considered always valid and never blocked; hence <I>Y</I> should be in the white list
+of <I>X</I>.</P>
+<P>Another mode of operations is when a local sender sends a message to <I>whitelistManagerAddress</I>
+with one of three specific values in the subject, to
+(i) send back a message displaying a list of the addresses in his own list;
+(ii) insert some new addresses in his own list;
+(iii) remove some addresses from his own list.
+In all this cases the message will be ghosted and the postmaster will reply
+to the sender.</P>
+<P> The sender name is always converted to its primary name (handling aliases).</P>
+<P>Sample configuration:</P>
+<PRE><CODE>
+&lt;mailet match="SMTPAuthSuccessful" class="WhiteListManager"&gt;
+&lt;repositoryPath&gt; db://maildb &lt;/repositoryPath&gt;
+&lt;!--
+If true automatically inserts the local sender to remote recipients entries in the whitelist (default is false).
+--&gt;
+&lt;automaticInsert&gt;true&lt;/automaticInsert&gt;
+&lt;!--
+Set this to an email address of the "whitelist manager" to send commands to (default is null).
+--&gt;
+&lt;whitelistManagerAddress&gt;whitelist.manager@xxx.yyy&lt;/whitelistManagerAddress&gt;
+&lt;!--
+Set this to a unique text that you can use (by sending a message to the "whitelist manager" above)
+to tell the mailet to send back the contents of the white list (default is null).
+--&gt;
+&lt;displayFlag&gt;display whitelist&lt;/displayFlag&gt;
+&lt;!--
+Set this to a unique text that you can use (by sending a message to the "whitelist manager" above)
+to tell the mailet to insert some new remote recipients to the white list (default is null).
+--&gt;
+&lt;insertFlag&gt;insert whitelist&lt;/insertFlag&gt;
+&lt;!--
+Set this to a unique text that you can use (by sending a message to the "whitelist manager" above)
+to tell the mailet to remove some remote recipients from the white list (default is null).
+--&gt;
+&lt;removeFlag&gt;remove whitelist&lt;/removeFlag&gt;
+&lt;/mailet&gt;
+</CODE></PRE></p></div><div class="section"><h3><a name="XMLVirtualUserTable">XMLVirtualUserTable</a></h3><p>Mailet Info: <b>XML Virtual User Table mailet</b><br /></p><p>Implements a Virtual User Table to translate virtual users
+to real users. This implementation has the same functionality
+as <code>JDBCVirtualUserTable</code>, but is configured in the
+JAMES configuration and is thus probably most suitable for smaller
+and less dynamic mapping requirements.
+
+The configuration is specified in the form:
+
+&lt;mailet match="All" class="XMLVirtualUserTable"&gt;
+&lt;mapping&gt;virtualuser@xxx=realuser[@yyy][;anotherrealuser[@zzz]]&lt;/mapping&gt;
+&lt;mapping&gt;virtualuser2@*=realuser2[@yyy][;anotherrealuser2[@zzz]]&lt;/mapping&gt;
+...
+&lt;/mailet&gt;
+
+As many &lt;mapping&gt; elements can be added as necessary. As indicated,
+wildcards are supported, and multiple recipients can be specified with a
+semicolon-separated list. The target domain does not need to be specified if
+the real user is local to the server.
+
+Matching is done in the following order:
+1. user@domain - explicit mapping for user@domain
+2. user@* - catchall mapping for user anywhere
+3. *@domain - catchall mapping for anyone at domain
+4. null - no valid mapping</p></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2002-2009
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
