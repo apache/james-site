@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 02/27/2009
+        Last Published: 02/28/2009
                       </div>
             <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
@@ -142,6 +142,41 @@
               
     <li class="none">
               <a href="installation_instructions.html">Install James</a>
+        </li>
+          </ul>
+          <h5>Mailets</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/api/index.html">API</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/base/index.html">Basic Toolkit</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/crypto/index.html">Crypto</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/standard/index.html">Sieve</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/maven-mailetdocs-plugin/index.html">MailetDocs</a>
+        </li>
+              
+    <li class="none">
+              <a href="james-server-mailets-function/mailet-report.html">Server</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mailet/standard/index.html">Standard</a>
         </li>
           </ul>
           <h5>Configuration</h5>
@@ -1130,25 +1165,26 @@ Default: false.
 &lt;/mailet&gt;
 </CODE></PRE>
 <P><I>replyto</I> can be used instead of
-<I>replyTo</I>; such name is kept for backward compatibility.</P></p></div><div class="section"><h3><a name="RemoteDelivery">RemoteDelivery</a></h3><p>Mailet Info: <b>RemoteDelivery Mailet</b><br /></p><p>Receives a MessageContainer from JamesSpoolManager and takes care of delivery
+<I>replyTo</I>; such name is kept for backward compatibility.</P></p></div><div class="section"><h3><a name="RemoteDelivery">RemoteDelivery</a></h3><p>Mailet Info: <b>RemoteDelivery Mailet</b><br /></p><p><p>Receives a MessageContainer from JamesSpoolManager and takes care of delivery
 the message to remote hosts. If for some reason mail can't be delivered
 store it in the "outgoing" Repository and set an Alarm. After the next "delayTime" the
 Alarm will wake the servlet that will try to send it again. After "maxRetries"
 the mail will be considered undeliverable and will be returned to sender.
-
+</p><p>
 TO DO (in priority):
-1. Support a gateway (a single server where all mail will be delivered) (DONE)
-2. Provide better failure messages (DONE)
-3. More efficiently handle numerous recipients
-4. Migrate to use Phoenix for the delivery threads
-
+</p>
+<ol>
+<li>Support a gateway (a single server where all mail will be delivered) (DONE)</li>
+<li>Provide better failure messages (DONE)</li>
+<li>More efficiently handle numerous recipients</li>
+<li>Migrate to use Phoenix for the delivery threads</li>
+</ol>
+<p>
 You really want to read the JavaMail documentation if you are
 working in here, and you will want to view the list of JavaMail
-attributes, which are documented here:
-
-http://java.sun.com/products/javamail/1.3/docs/javadocs/com/sun/mail/smtp/package-summary.html
-
-as well as other places.</p></div><div class="section"><h3><a name="Resend">Resend</a></h3><p>Mailet Info: <b>Redirect Mailet</b><br /></p><p><P>A mailet providing configurable redirection services.</P>
+attributes, which are documented
+<a href='http://java.sun.com/products/javamail/1.3/docs/javadocs/com/sun/mail/smtp/package-summary.html'>here</a>
+as well as other places.</p></p></div><div class="section"><h3><a name="Resend">Resend</a></h3><p>Mailet Info: <b>Redirect Mailet</b><br /></p><p><P>A mailet providing configurable redirection services.</P>
 <P>Can produce listserver, forward and notify behaviour, with the original
 message intact, attached, appended or left out altogether.
 Can be used as a replacement to {@link Redirect}, having more consistent defaults,
