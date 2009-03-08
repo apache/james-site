@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 02/01/2009
+        Last Published: 03/07/2009
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
@@ -203,25 +203,16 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Usage">Usage</a>
-</h2>
-<p>Mime4j provides two different API's: An event based API by using the <a href="apidocs/org/apache/james/mime4j/parser/MimeStreamParser.html"> MimeStreamParser</a>
-. Alternatively, you may use the iterative API, which is available through the <a href="apidocs/org/apache/james/mime4j/parser/MimeTokenStream.html"> MimeTokenStream</a>
-. In terms of speed, you should not note any differences.</p>
-<ul><li><a href="#Token Streams">Token Streams</a>
-</li>
-<li><a href="#Sample Token Stream">Sample Token Stream</a>
-</li>
-<li><a href="#Event Handlers">Event Handlers</a>
-</li>
-<li><a href="#Sample Event Stream">Sample Event Stream</a>
-</li>
+        <div class="section"><h2><a name="Usage">Usage</a></h2>
+<p>Mime4j provides two different API's: An event based API by using the <a href="apidocs/org/apache/james/mime4j/parser/MimeStreamParser.html"> MimeStreamParser</a>. Alternatively, you may use the iterative API, which is available through the <a href="apidocs/org/apache/james/mime4j/parser/MimeTokenStream.html"> MimeTokenStream</a>. In terms of speed, you should not note any differences.</p>
+<ul><li><a href="#Token Streams">Token Streams</a></li>
+<li><a href="#Sample Token Stream">Sample Token Stream</a></li>
+<li><a href="#Event Handlers">Event Handlers</a></li>
+<li><a href="#Sample Event Stream">Sample Event Stream</a></li>
 </ul>
 </div>
-<div class="section"><h2><a name="Token_Streams">Token Streams</a>
-</h2>
-<p>The iterative approach is using the class <a href="apidocs/org/apache/james/mime4j/parser/MimeTokenStream.html"> MimeTokenStream</a>
-. Here's an example, how you could use the token stream:</p>
+<div class="section"><h2><a name="Token_Streams">Token Streams</a></h2>
+<p>The iterative approach is using the class <a href="apidocs/org/apache/james/mime4j/parser/MimeTokenStream.html"> MimeTokenStream</a>. Here's an example, how you could use the token stream:</p>
 <div class="source"><pre>  MimeTokenStream stream = new MimeTokenStream();
   stream.parse(new BufferedInputStream(new FileInputStream(&quot;mime.msg&quot;)));
   for (int state = stream.getState();
@@ -243,15 +234,12 @@
           + stream.getBodyDescriptor());
       ...
     }
-  }</pre>
+  }
+</pre>
 </div>
-<p>The token stream provides a set of tokens. Tokens are identified by a state. Most states are simply event indicators, with no additional data available. However, there are some states, which provide additional data. For example, the state <tt>T_BODY</tt>
-, which indicates that an actual body is available, If you note this state, then you may ask for the bodies contents, which are provided through the <tt>getInputStream()</tt>
- method, or you might ask for the header data by invoking <tt>getBodyDescriptor()</tt>
-.</p>
+<p>The token stream provides a set of tokens. Tokens are identified by a state. Most states are simply event indicators, with no additional data available. However, there are some states, which provide additional data. For example, the state <tt>T_BODY</tt>, which indicates that an actual body is available, If you note this state, then you may ask for the bodies contents, which are provided through the <tt>getInputStream()</tt> method, or you might ask for the header data by invoking <tt>getBodyDescriptor()</tt>.</p>
 </div>
-<div class="section"><h2><a name="Sample_Token_Stream">Sample Token Stream</a>
-</h2>
+<div class="section"><h2><a name="Sample_Token_Stream">Sample Token Stream</a></h2>
 <p>The following sample should give you a rough idea of the order, in which you'll receive tokens:</p>
 <div class="source"><pre>  T_START_MESSAGE
       T_START_HEADER
@@ -279,14 +267,13 @@
           T_END_BODYPART
           T_EPILOGUE
       T_END_MULTIPART
-   T_END_MESSAGE</pre>
+   T_END_MESSAGE
+</pre>
 </div>
 <p>The example shows a multipart message with two parts.</p>
 </div>
-<div class="section"><h2><a name="Event_Handlers">Event Handlers</a>
-</h2>
-<p>The event based API requires, that you provide an event handler, which receives events. The event handler is an object, which implements the <a href="apidocs/org/apache/james/mime4j/parser/ContentHandler.html"> ContentHandler</a>
- interface. Here's an example, how you could implement an event handler:</p>
+<div class="section"><h2><a name="Event_Handlers">Event Handlers</a></h2>
+<p>The event based API requires, that you provide an event handler, which receives events. The event handler is an object, which implements the <a href="apidocs/org/apache/james/mime4j/parser/ContentHandler.html"> ContentHandler</a> interface. Here's an example, how you could implement an event handler:</p>
 <div class="source"><pre>  public class MyContentHandler extends org.apache.james.mime4j.parser.ContentHandler {
       public body(BodyDescriptor bd, InputStream is)
               throws MimeException, IOException {
@@ -302,18 +289,18 @@
               + bd);
       }
       ...
-  }</pre>
+  }
+</pre>
 </div>
-<p>A little bit of additional code allows us to create an example, which is functionally equivalent to the example from the section on <a href="#Token Streams">Token Streams</a>
-:</p>
+<p>A little bit of additional code allows us to create an example, which is functionally equivalent to the example from the section on <a href="#Token Streams">Token Streams</a>:</p>
 <div class="source"><pre>  ContentHandler handler = new MyContentHandler();
   MimeStreamParser parser = new MimeStreamParser();
   parser.setContentHandler(handler);
-  parser.parse(new BufferedInputStream(new FileInputStream(&quot;mime.msg&quot;)));</pre>
+  parser.parse(new BufferedInputStream(new FileInputStream(&quot;mime.msg&quot;)));
+</pre>
 </div>
 </div>
-<div class="section"><h2><a name="Sample_Event_Stream">Sample Event Stream</a>
-</h2>
+<div class="section"><h2><a name="Sample_Event_Stream">Sample Event Stream</a></h2>
 <p>Like above for tokens, we provide an additional example, which demonstrates the typical order of events that you have to expect:</p>
 <div class="source"><pre>  startMessage()
       startHeader()
@@ -341,7 +328,8 @@
           endBodyPart()
           epilogue(...)
       endMultipart()
-  endMessage()</pre>
+  endMessage()
+</pre>
 </div>
 </div>
 

@@ -40,8 +40,8 @@
 <a name="30" href="#30">30</a>  
 <a name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.MimeException;
 <a name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.MimeIOException;
-<a name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.field.Field;
-<a name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.AbstractContentHandler;
+<a name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.AbstractContentHandler;
+<a name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.Field;
 <a name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.parser.MimeStreamParser;
 <a name="36" href="#36">36</a>  
 <a name="37" href="#37">37</a>  <em class="jxr_javadoccomment">/**</em>
@@ -91,8 +91,8 @@
 <a name="81" href="#81">81</a>                  parser.stop();
 <a name="82" href="#82">82</a>              }
 <a name="83" href="#83">83</a>              @Override
-<a name="84" href="#84">84</a>              <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> field(String fieldData) <strong class="jxr_keyword">throws</strong> MimeException {
-<a name="85" href="#85">85</a>                  addField(Field.parse(fieldData));
+<a name="84" href="#84">84</a>              <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> field(<a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> field) <strong class="jxr_keyword">throws</strong> MimeException {
+<a name="85" href="#85">85</a>                  addField(field);
 <a name="86" href="#86">86</a>              }
 <a name="87" href="#87">87</a>          });
 <a name="88" href="#88">88</a>          <strong class="jxr_keyword">try</strong> {
@@ -107,7 +107,7 @@
 <a name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * </em>
 <a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * @param field the field to add.</em>
 <a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="100" href="#100">100</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addField(<a href="../../../../../org/apache/james/mime4j/field/Field.html">Field</a> field) {
+<a name="100" href="#100">100</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addField(<a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> field) {
 <a name="101" href="#101">101</a>         List&lt;Field&gt; values = fieldMap.get(field.getName().toLowerCase());
 <a name="102" href="#102">102</a>         <strong class="jxr_keyword">if</strong> (values == <strong class="jxr_keyword">null</strong>) {
 <a name="103" href="#103">103</a>             values = <strong class="jxr_keyword">new</strong> LinkedList&lt;Field&gt;();
@@ -134,7 +134,7 @@
 <a name="124" href="#124">124</a> <em class="jxr_javadoccomment">     * @param name the field name (e.g. From, Subject).</em>
 <a name="125" href="#125">125</a> <em class="jxr_javadoccomment">     * @return the field or &lt;code&gt;null&lt;/code&gt; if none found.</em>
 <a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     */</em>
-<a name="127" href="#127">127</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../org/apache/james/mime4j/field/Field.html">Field</a> getField(String name) {
+<a name="127" href="#127">127</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> getField(String name) {
 <a name="128" href="#128">128</a>         List&lt;Field&gt; l = fieldMap.get(name.toLowerCase());
 <a name="129" href="#129">129</a>         <strong class="jxr_keyword">if</strong> (l != <strong class="jxr_keyword">null</strong> &amp;&amp; !l.isEmpty()) {
 <a name="130" href="#130">130</a>             <strong class="jxr_keyword">return</strong> l.get(0);
@@ -183,7 +183,7 @@
 <a name="173" href="#173">173</a>             <strong class="jxr_keyword">return</strong> 0;
 <a name="174" href="#174">174</a> 
 <a name="175" href="#175">175</a>         <strong class="jxr_keyword">for</strong> (Iterator&lt;Field&gt; iterator = fields.iterator(); iterator.hasNext();) {
-<a name="176" href="#176">176</a>             <a href="../../../../../org/apache/james/mime4j/field/Field.html">Field</a> field = iterator.next();
+<a name="176" href="#176">176</a>             <a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> field = iterator.next();
 <a name="177" href="#177">177</a>             <strong class="jxr_keyword">if</strong> (field.getName().equalsIgnoreCase(name))
 <a name="178" href="#178">178</a>                 iterator.remove();
 <a name="179" href="#179">179</a>         }
@@ -203,7 +203,7 @@
 <a name="193" href="#193">193</a> <em class="jxr_javadoccomment">     * </em>
 <a name="194" href="#194">194</a> <em class="jxr_javadoccomment">     * @param field the field to set.</em>
 <a name="195" href="#195">195</a> <em class="jxr_javadoccomment">     */</em>
-<a name="196" href="#196">196</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setField(<a href="../../../../../org/apache/james/mime4j/field/Field.html">Field</a> field) {
+<a name="196" href="#196">196</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setField(<a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> field) {
 <a name="197" href="#197">197</a>         <strong class="jxr_keyword">final</strong> String lowerCaseName = field.getName().toLowerCase();
 <a name="198" href="#198">198</a>         List&lt;Field&gt; l = fieldMap.get(lowerCaseName);
 <a name="199" href="#199">199</a>         <strong class="jxr_keyword">if</strong> (l == <strong class="jxr_keyword">null</strong> || l.isEmpty()) {
@@ -217,7 +217,7 @@
 <a name="207" href="#207">207</a>         <strong class="jxr_keyword">int</strong> firstOccurrence = -1;
 <a name="208" href="#208">208</a>         <strong class="jxr_keyword">int</strong> index = 0;
 <a name="209" href="#209">209</a>         <strong class="jxr_keyword">for</strong> (Iterator&lt;Field&gt; iterator = fields.iterator(); iterator.hasNext(); index++) {
-<a name="210" href="#210">210</a>             <a href="../../../../../org/apache/james/mime4j/field/Field.html">Field</a> f = iterator.next();
+<a name="210" href="#210">210</a>             <a href="../../../../../org/apache/james/mime4j/parser/Field.html">Field</a> f = iterator.next();
 <a name="211" href="#211">211</a>             <strong class="jxr_keyword">if</strong> (f.getName().equalsIgnoreCase(field.getName())) {
 <a name="212" href="#212">212</a>                 iterator.remove();
 <a name="213" href="#213">213</a> 

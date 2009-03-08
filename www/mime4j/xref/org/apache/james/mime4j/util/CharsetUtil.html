@@ -796,492 +796,489 @@
 <a name="786" href="#786">786</a> <em class="jxr_javadoccomment"> *         &lt;td&gt;&lt;/td&gt;</em>
 <a name="787" href="#787">787</a> <em class="jxr_javadoccomment"> *     &lt;/tr&gt;</em>
 <a name="788" href="#788">788</a> <em class="jxr_javadoccomment"> * &lt;/table&gt;</em>
-<a name="789" href="#789">789</a> <em class="jxr_javadoccomment"> * </em>
-<a name="790" href="#790">790</a> <em class="jxr_javadoccomment"> * </em>
-<a name="791" href="#791">791</a> <em class="jxr_javadoccomment"> * @version $Id$</em>
-<a name="792" href="#792">792</a> <em class="jxr_javadoccomment"> */</em>
-<a name="793" href="#793">793</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">CharsetUtil</a> {
-<a name="794" href="#794">794</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Log log = LogFactory.getLog(CharsetUtil.<strong class="jxr_keyword">class</strong>);
-<a name="795" href="#795">795</a>     
-<a name="796" href="#796">796</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> implements Comparable&lt;Charset&gt; {
-<a name="797" href="#797">797</a>         <strong class="jxr_keyword">private</strong> String canonical = <strong class="jxr_keyword">null</strong>;
-<a name="798" href="#798">798</a>         <strong class="jxr_keyword">private</strong> String mime = <strong class="jxr_keyword">null</strong>;
-<a name="799" href="#799">799</a>         <strong class="jxr_keyword">private</strong> String[] aliases = <strong class="jxr_keyword">null</strong>;
-<a name="800" href="#800">800</a>         
-<a name="801" href="#801">801</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(String canonical, String mime, String[] aliases) {
-<a name="802" href="#802">802</a>             <strong class="jxr_keyword">this</strong>.canonical = canonical;
-<a name="803" href="#803">803</a>             <strong class="jxr_keyword">this</strong>.mime = mime;
-<a name="804" href="#804">804</a>             <strong class="jxr_keyword">this</strong>.aliases = aliases;
-<a name="805" href="#805">805</a>         }
-<a name="806" href="#806">806</a> 
-<a name="807" href="#807">807</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c) {
-<a name="808" href="#808">808</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.canonical.compareTo(c.canonical);
-<a name="809" href="#809">809</a>         }
-<a name="810" href="#810">810</a>     }
-<a name="811" href="#811">811</a>     
-<a name="812" href="#812">812</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>[] JAVA_CHARSETS = {
-<a name="813" href="#813">813</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_1"</span>, <span class="jxr_string">"ISO-8859-1"</span>, 
-<a name="814" href="#814">814</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-1:1987"</span>, <span class="jxr_string">"iso-ir-100"</span>, <span class="jxr_string">"ISO_8859-1"</span>, 
-<a name="815" href="#815">815</a>                                   <span class="jxr_string">"latin1"</span>, <span class="jxr_string">"l1"</span>, <span class="jxr_string">"IBM819"</span>, <span class="jxr_string">"CP819"</span>, 
-<a name="816" href="#816">816</a>                                   <span class="jxr_string">"csISOLatin1"</span>, <span class="jxr_string">"8859_1"</span>, <span class="jxr_string">"819"</span>, <span class="jxr_string">"IBM-819"</span>, 
-<a name="817" href="#817">817</a>                                   <span class="jxr_string">"ISO8859-1"</span>, <span class="jxr_string">"ISO_8859_1"</span>}),
-<a name="818" href="#818">818</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_2"</span>, <span class="jxr_string">"ISO-8859-2"</span>, 
-<a name="819" href="#819">819</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-2:1987"</span>, <span class="jxr_string">"iso-ir-101"</span>, <span class="jxr_string">"ISO_8859-2"</span>,  
-<a name="820" href="#820">820</a>                                   <span class="jxr_string">"latin2"</span>, <span class="jxr_string">"l2"</span>, <span class="jxr_string">"csISOLatin2"</span>, <span class="jxr_string">"8859_2"</span>, 
-<a name="821" href="#821">821</a>                                   <span class="jxr_string">"iso8859_2"</span>}),
-<a name="822" href="#822">822</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_3"</span>, <span class="jxr_string">"ISO-8859-3"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-3:1988"</span>, <span class="jxr_string">"iso-ir-109"</span>, <span class="jxr_string">"ISO_8859-3"</span>, <span class="jxr_string">"latin3"</span>, <span class="jxr_string">"l3"</span>, <span class="jxr_string">"csISOLatin3"</span>, <span class="jxr_string">"8859_3"</span>}),
-<a name="823" href="#823">823</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_4"</span>, <span class="jxr_string">"ISO-8859-4"</span>, 
-<a name="824" href="#824">824</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-4:1988"</span>, <span class="jxr_string">"iso-ir-110"</span>, <span class="jxr_string">"ISO_8859-4"</span>,
-<a name="825" href="#825">825</a>                                   <span class="jxr_string">"latin4"</span>, <span class="jxr_string">"l4"</span>, <span class="jxr_string">"csISOLatin4"</span>, <span class="jxr_string">"8859_4"</span>}),
-<a name="826" href="#826">826</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_5"</span>, <span class="jxr_string">"ISO-8859-5"</span>, 
-<a name="827" href="#827">827</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-5:1988"</span>, <span class="jxr_string">"iso-ir-144"</span>, <span class="jxr_string">"ISO_8859-5"</span>, 
-<a name="828" href="#828">828</a>                                   <span class="jxr_string">"cyrillic"</span>, <span class="jxr_string">"csISOLatinCyrillic"</span>, <span class="jxr_string">"8859_5"</span>}),
-<a name="829" href="#829">829</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_6"</span>, <span class="jxr_string">"ISO-8859-6"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-6:1987"</span>, <span class="jxr_string">"iso-ir-127"</span>, <span class="jxr_string">"ISO_8859-6"</span>, <span class="jxr_string">"ECMA-114"</span>, <span class="jxr_string">"ASMO-708"</span>, <span class="jxr_string">"arabic"</span>, <span class="jxr_string">"csISOLatinArabic"</span>, <span class="jxr_string">"8859_6"</span>}),
-<a name="830" href="#830">830</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_7"</span>, <span class="jxr_string">"ISO-8859-7"</span>, 
-<a name="831" href="#831">831</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-7:1987"</span>, <span class="jxr_string">"iso-ir-126"</span>, <span class="jxr_string">"ISO_8859-7"</span>, 
-<a name="832" href="#832">832</a>                                   <span class="jxr_string">"ELOT_928"</span>, <span class="jxr_string">"ECMA-118"</span>, <span class="jxr_string">"greek"</span>, <span class="jxr_string">"greek8"</span>, 
-<a name="833" href="#833">833</a>                                   <span class="jxr_string">"csISOLatinGreek"</span>, <span class="jxr_string">"8859_7"</span>, <span class="jxr_string">"sun_eu_greek"</span>}),
-<a name="834" href="#834">834</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_8"</span>, <span class="jxr_string">"ISO-8859-8"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-8:1988"</span>, <span class="jxr_string">"iso-ir-138"</span>, <span class="jxr_string">"ISO_8859-8"</span>, <span class="jxr_string">"hebrew"</span>, <span class="jxr_string">"csISOLatinHebrew"</span>, <span class="jxr_string">"8859_8"</span>}),
-<a name="835" href="#835">835</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_9"</span>, <span class="jxr_string">"ISO-8859-9"</span>, 
-<a name="836" href="#836">836</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-9:1989"</span>, <span class="jxr_string">"iso-ir-148"</span>, <span class="jxr_string">"ISO_8859-9"</span>,  
-<a name="837" href="#837">837</a>                                   <span class="jxr_string">"latin5"</span>, <span class="jxr_string">"l5"</span>, <span class="jxr_string">"csISOLatin5"</span>, <span class="jxr_string">"8859_9"</span>}),
-<a name="838" href="#838">838</a> 
-<a name="839" href="#839">839</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_13"</span>, <span class="jxr_string">"ISO-8859-13"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="840" href="#840">840</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_15"</span>, <span class="jxr_string">"ISO-8859-15"</span>, 
-<a name="841" href="#841">841</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-15"</span>, <span class="jxr_string">"Latin-9"</span>, <span class="jxr_string">"8859_15"</span>, 
-<a name="842" href="#842">842</a>                                   <span class="jxr_string">"csISOlatin9"</span>, <span class="jxr_string">"IBM923"</span>, <span class="jxr_string">"cp923"</span>, <span class="jxr_string">"923"</span>, <span class="jxr_string">"L9"</span>,
-<a name="843" href="#843">843</a>                                   <span class="jxr_string">"IBM-923"</span>, <span class="jxr_string">"ISO8859-15"</span>, <span class="jxr_string">"LATIN9"</span>, <span class="jxr_string">"LATIN0"</span>, 
-<a name="844" href="#844">844</a>                                   <span class="jxr_string">"csISOlatin0"</span>, <span class="jxr_string">"ISO8859_15_FDIS"</span>}),
-<a name="845" href="#845">845</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"KOI8_R"</span>, <span class="jxr_string">"KOI8-R"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csKOI8R"</span>, <span class="jxr_string">"koi8"</span>}),
-<a name="846" href="#846">846</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ASCII"</span>, <span class="jxr_string">"US-ASCII"</span>, 
-<a name="847" href="#847">847</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ANSI_X3.4-1968"</span>, <span class="jxr_string">"iso-ir-6"</span>, 
-<a name="848" href="#848">848</a>                                   <span class="jxr_string">"ANSI_X3.4-1986"</span>, <span class="jxr_string">"ISO_646.irv:1991"</span>, 
-<a name="849" href="#849">849</a>                                   <span class="jxr_string">"ISO646-US"</span>, <span class="jxr_string">"us"</span>, <span class="jxr_string">"IBM367"</span>, <span class="jxr_string">"cp367"</span>, 
-<a name="850" href="#850">850</a>                                   <span class="jxr_string">"csASCII"</span>, <span class="jxr_string">"ascii7"</span>, <span class="jxr_string">"646"</span>, <span class="jxr_string">"iso_646.irv:1983"</span>}),
-<a name="851" href="#851">851</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UTF8"</span>, <span class="jxr_string">"UTF-8"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="852" href="#852">852</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UTF-16"</span>, <span class="jxr_string">"UTF-16"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"UTF_16"</span>}),
-<a name="853" href="#853">853</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeBigUnmarked"</span>, <span class="jxr_string">"UTF-16BE"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"X-UTF-16BE"</span>, <span class="jxr_string">"UTF_16BE"</span>, <span class="jxr_string">"ISO-10646-UCS-2"</span>}),
-<a name="854" href="#854">854</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeLittleUnmarked"</span>, <span class="jxr_string">"UTF-16LE"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"UTF_16LE"</span>, <span class="jxr_string">"X-UTF-16LE"</span>}),
-<a name="855" href="#855">855</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5"</span>, <span class="jxr_string">"Big5"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csBig5"</span>, <span class="jxr_string">"CN-Big5"</span>, <span class="jxr_string">"BIG-FIVE"</span>, <span class="jxr_string">"BIGFIVE"</span>}),
-<a name="856" href="#856">856</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5_HKSCS"</span>, <span class="jxr_string">"Big5-HKSCS"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"big5hkscs"</span>}),
-<a name="857" href="#857">857</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP"</span>, <span class="jxr_string">"EUC-JP"</span>, 
-<a name="858" href="#858">858</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csEUCPkdFmtJapanese"</span>, 
-<a name="859" href="#859">859</a>                               <span class="jxr_string">"Extended_UNIX_Code_Packed_Format_for_Japanese"</span>,
-<a name="860" href="#860">860</a>                               <span class="jxr_string">"eucjis"</span>, <span class="jxr_string">"x-eucjp"</span>, <span class="jxr_string">"eucjp"</span>, <span class="jxr_string">"x-euc-jp"</span>}),
-<a name="861" href="#861">861</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_KR"</span>, <span class="jxr_string">"EUC-KR"</span>, 
-<a name="862" href="#862">862</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csEUCKR"</span>, <span class="jxr_string">"ksc5601"</span>, <span class="jxr_string">"5601"</span>, <span class="jxr_string">"ksc5601_1987"</span>, 
-<a name="863" href="#863">863</a>                                   <span class="jxr_string">"ksc_5601"</span>, <span class="jxr_string">"ksc5601-1987"</span>, <span class="jxr_string">"ks_c_5601-1987"</span>, 
-<a name="864" href="#864">864</a>                                   <span class="jxr_string">"euckr"</span>}),
-<a name="865" href="#865">865</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"GB18030"</span>, <span class="jxr_string">"GB18030"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"gb18030-2000"</span>}),
-<a name="866" href="#866">866</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_CN"</span>, <span class="jxr_string">"GB2312"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-EUC-CN"</span>, <span class="jxr_string">"csGB2312"</span>, <span class="jxr_string">"euccn"</span>, <span class="jxr_string">"euc-cn"</span>, <span class="jxr_string">"gb2312-80"</span>, <span class="jxr_string">"gb2312-1980"</span>, <span class="jxr_string">"CN-GB"</span>, <span class="jxr_string">"CN-GB-ISOIR165"</span>}),
-<a name="867" href="#867">867</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"GBK"</span>, <span class="jxr_string">"windows-936"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CP936"</span>, <span class="jxr_string">"MS936"</span>, <span class="jxr_string">"ms_936"</span>, <span class="jxr_string">"x-mswin-936"</span>}),
-<a name="868" href="#868">868</a> 
-<a name="869" href="#869">869</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp037"</span>, <span class="jxr_string">"IBM037"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-us"</span>, <span class="jxr_string">"ebcdic-cp-ca"</span>, <span class="jxr_string">"ebcdic-cp-wt"</span>, <span class="jxr_string">"ebcdic-cp-nl"</span>, <span class="jxr_string">"csIBM037"</span>}),
-<a name="870" href="#870">870</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp273"</span>, <span class="jxr_string">"IBM273"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csIBM273"</span>}),
-<a name="871" href="#871">871</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp277"</span>, <span class="jxr_string">"IBM277"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"EBCDIC-CP-DK"</span>, <span class="jxr_string">"EBCDIC-CP-NO"</span>, <span class="jxr_string">"csIBM277"</span>}),
-<a name="872" href="#872">872</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp278"</span>, <span class="jxr_string">"IBM278"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CP278"</span>, <span class="jxr_string">"ebcdic-cp-fi"</span>, <span class="jxr_string">"ebcdic-cp-se"</span>, <span class="jxr_string">"csIBM278"</span>}),
-<a name="873" href="#873">873</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp280"</span>, <span class="jxr_string">"IBM280"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-it"</span>, <span class="jxr_string">"csIBM280"</span>}),
-<a name="874" href="#874">874</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp284"</span>, <span class="jxr_string">"IBM284"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-es"</span>, <span class="jxr_string">"csIBM284"</span>}),
-<a name="875" href="#875">875</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp285"</span>, <span class="jxr_string">"IBM285"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-gb"</span>, <span class="jxr_string">"csIBM285"</span>}),
-<a name="876" href="#876">876</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp297"</span>, <span class="jxr_string">"IBM297"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-fr"</span>, <span class="jxr_string">"csIBM297"</span>}),
-<a name="877" href="#877">877</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp420"</span>, <span class="jxr_string">"IBM420"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-ar1"</span>, <span class="jxr_string">"csIBM420"</span>}),
-<a name="878" href="#878">878</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp424"</span>, <span class="jxr_string">"IBM424"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-he"</span>, <span class="jxr_string">"csIBM424"</span>}),
-<a name="879" href="#879">879</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp437"</span>, <span class="jxr_string">"IBM437"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"437"</span>, <span class="jxr_string">"csPC8CodePage437"</span>}),
-<a name="880" href="#880">880</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp500"</span>, <span class="jxr_string">"IBM500"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-be"</span>, <span class="jxr_string">"ebcdic-cp-ch"</span>, <span class="jxr_string">"csIBM500"</span>}),
-<a name="881" href="#881">881</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp775"</span>, <span class="jxr_string">"IBM775"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csPC775Baltic"</span>}),
-<a name="882" href="#882">882</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp838"</span>, <span class="jxr_string">"IBM-Thai"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="883" href="#883">883</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp850"</span>, <span class="jxr_string">"IBM850"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"850"</span>, <span class="jxr_string">"csPC850Multilingual"</span>}),
-<a name="884" href="#884">884</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp852"</span>, <span class="jxr_string">"IBM852"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"852"</span>, <span class="jxr_string">"csPCp852"</span>}),
-<a name="885" href="#885">885</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp855"</span>, <span class="jxr_string">"IBM855"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"855"</span>, <span class="jxr_string">"csIBM855"</span>}),
-<a name="886" href="#886">886</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp857"</span>, <span class="jxr_string">"IBM857"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"857"</span>, <span class="jxr_string">"csIBM857"</span>}),
-<a name="887" href="#887">887</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp858"</span>, <span class="jxr_string">"IBM00858"</span>, 
-<a name="888" href="#888">888</a>                 <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID00858"</span>, <span class="jxr_string">"CP00858"</span>, 
-<a name="889" href="#889">889</a>                               <span class="jxr_string">"PC-Multilingual-850+euro"</span>}),
-<a name="890" href="#890">890</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp860"</span>, <span class="jxr_string">"IBM860"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"860"</span>, <span class="jxr_string">"csIBM860"</span>}),
-<a name="891" href="#891">891</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp861"</span>, <span class="jxr_string">"IBM861"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"861"</span>, <span class="jxr_string">"cp-is"</span>, <span class="jxr_string">"csIBM861"</span>}),
-<a name="892" href="#892">892</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp862"</span>, <span class="jxr_string">"IBM862"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"862"</span>, <span class="jxr_string">"csPC862LatinHebrew"</span>}),
-<a name="893" href="#893">893</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp863"</span>, <span class="jxr_string">"IBM863"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"863"</span>, <span class="jxr_string">"csIBM863"</span>}),
-<a name="894" href="#894">894</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp864"</span>, <span class="jxr_string">"IBM864"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp864"</span>, <span class="jxr_string">"csIBM864"</span>}),
-<a name="895" href="#895">895</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp865"</span>, <span class="jxr_string">"IBM865"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"865"</span>, <span class="jxr_string">"csIBM865"</span>}),
-<a name="896" href="#896">896</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp866"</span>, <span class="jxr_string">"IBM866"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"866"</span>, <span class="jxr_string">"csIBM866"</span>}),
-<a name="897" href="#897">897</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp868"</span>, <span class="jxr_string">"IBM868"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp-ar"</span>, <span class="jxr_string">"csIBM868"</span>}),
-<a name="898" href="#898">898</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp869"</span>, <span class="jxr_string">"IBM869"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp-gr"</span>, <span class="jxr_string">"csIBM869"</span>}),
-<a name="899" href="#899">899</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp870"</span>, <span class="jxr_string">"IBM870"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-roece"</span>, <span class="jxr_string">"ebcdic-cp-yu"</span>, <span class="jxr_string">"csIBM870"</span>}),
-<a name="900" href="#900">900</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp871"</span>, <span class="jxr_string">"IBM871"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-is"</span>, <span class="jxr_string">"csIBM871"</span>}),
-<a name="901" href="#901">901</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp918"</span>, <span class="jxr_string">"IBM918"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-ar2"</span>, <span class="jxr_string">"csIBM918"</span>}),
-<a name="902" href="#902">902</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1026"</span>, <span class="jxr_string">"IBM1026"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csIBM1026"</span>}),
-<a name="903" href="#903">903</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1047"</span>, <span class="jxr_string">"IBM1047"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"IBM-1047"</span>}),
-<a name="904" href="#904">904</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1140"</span>, <span class="jxr_string">"IBM01140"</span>, 
-<a name="905" href="#905">905</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01140"</span>, <span class="jxr_string">"CP01140"</span>, 
-<a name="906" href="#906">906</a>                                   <span class="jxr_string">"ebcdic-us-37+euro"</span>}),
-<a name="907" href="#907">907</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1141"</span>, <span class="jxr_string">"IBM01141"</span>, 
-<a name="908" href="#908">908</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01141"</span>, <span class="jxr_string">"CP01141"</span>, 
-<a name="909" href="#909">909</a>                                   <span class="jxr_string">"ebcdic-de-273+euro"</span>}),
-<a name="910" href="#910">910</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1142"</span>, <span class="jxr_string">"IBM01142"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01142"</span>, <span class="jxr_string">"CP01142"</span>, <span class="jxr_string">"ebcdic-dk-277+euro"</span>, <span class="jxr_string">"ebcdic-no-277+euro"</span>}),
-<a name="911" href="#911">911</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1143"</span>, <span class="jxr_string">"IBM01143"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01143"</span>, <span class="jxr_string">"CP01143"</span>, <span class="jxr_string">"ebcdic-fi-278+euro"</span>, <span class="jxr_string">"ebcdic-se-278+euro"</span>}),
-<a name="912" href="#912">912</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1144"</span>, <span class="jxr_string">"IBM01144"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01144"</span>, <span class="jxr_string">"CP01144"</span>, <span class="jxr_string">"ebcdic-it-280+euro"</span>}),
-<a name="913" href="#913">913</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1145"</span>, <span class="jxr_string">"IBM01145"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01145"</span>, <span class="jxr_string">"CP01145"</span>, <span class="jxr_string">"ebcdic-es-284+euro"</span>}),
-<a name="914" href="#914">914</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1146"</span>, <span class="jxr_string">"IBM01146"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01146"</span>, <span class="jxr_string">"CP01146"</span>, <span class="jxr_string">"ebcdic-gb-285+euro"</span>}),
-<a name="915" href="#915">915</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1147"</span>, <span class="jxr_string">"IBM01147"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01147"</span>, <span class="jxr_string">"CP01147"</span>, <span class="jxr_string">"ebcdic-fr-297+euro"</span>}),
-<a name="916" href="#916">916</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1148"</span>, <span class="jxr_string">"IBM01148"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01148"</span>, <span class="jxr_string">"CP01148"</span>, <span class="jxr_string">"ebcdic-international-500+euro"</span>}),
-<a name="917" href="#917">917</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1149"</span>, <span class="jxr_string">"IBM01149"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01149"</span>, <span class="jxr_string">"CP01149"</span>, <span class="jxr_string">"ebcdic-is-871+euro"</span>}),
-<a name="918" href="#918">918</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1250"</span>, <span class="jxr_string">"windows-1250"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="919" href="#919">919</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1251"</span>, <span class="jxr_string">"windows-1251"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="920" href="#920">920</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1252"</span>, <span class="jxr_string">"windows-1252"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="921" href="#921">921</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1253"</span>, <span class="jxr_string">"windows-1253"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="922" href="#922">922</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1254"</span>, <span class="jxr_string">"windows-1254"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="923" href="#923">923</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1255"</span>, <span class="jxr_string">"windows-1255"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="924" href="#924">924</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1256"</span>, <span class="jxr_string">"windows-1256"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="925" href="#925">925</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1257"</span>, <span class="jxr_string">"windows-1257"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="926" href="#926">926</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1258"</span>, <span class="jxr_string">"windows-1258"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="927" href="#927">927</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022CN"</span>, <span class="jxr_string">"ISO-2022-CN"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="928" href="#928">928</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022JP"</span>, <span class="jxr_string">"ISO-2022-JP"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csISO2022JP"</span>, <span class="jxr_string">"JIS"</span>, <span class="jxr_string">"jis_encoding"</span>, <span class="jxr_string">"csjisencoding"</span>}),
-<a name="929" href="#929">929</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022KR"</span>, <span class="jxr_string">"ISO-2022-KR"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csISO2022KR"</span>}),
-<a name="930" href="#930">930</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_X0201"</span>, <span class="jxr_string">"JIS_X0201"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"X0201"</span>, <span class="jxr_string">"JIS0201"</span>, <span class="jxr_string">"csHalfWidthKatakana"</span>}),
-<a name="931" href="#931">931</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_X0212-1990"</span>, <span class="jxr_string">"JIS_X0212-1990"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"iso-ir-159"</span>, <span class="jxr_string">"x0212"</span>, <span class="jxr_string">"JIS0212"</span>, <span class="jxr_string">"csISO159JISX02121990"</span>}),
-<a name="932" href="#932">932</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_C6626-1983"</span>, <span class="jxr_string">"JIS_C6626-1983"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-JIS0208"</span>, <span class="jxr_string">"JIS0208"</span>, <span class="jxr_string">"csISO87JISX0208"</span>, <span class="jxr_string">"x0208"</span>, <span class="jxr_string">"JIS_X0208-1983"</span>, <span class="jxr_string">"iso-ir-87"</span>}),
-<a name="933" href="#933">933</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"SJIS"</span>, <span class="jxr_string">"Shift_JIS"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"MS_Kanji"</span>, <span class="jxr_string">"csShiftJIS"</span>, <span class="jxr_string">"shift-jis"</span>, <span class="jxr_string">"x-sjis"</span>, <span class="jxr_string">"pck"</span>}),
-<a name="934" href="#934">934</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"TIS620"</span>, <span class="jxr_string">"TIS-620"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="935" href="#935">935</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS932"</span>, <span class="jxr_string">"Windows-31J"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"windows-932"</span>, <span class="jxr_string">"csWindows31J"</span>, <span class="jxr_string">"x-ms-cp932"</span>}),
-<a name="936" href="#936">936</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_TW"</span>, <span class="jxr_string">"EUC-TW"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-EUC-TW"</span>, <span class="jxr_string">"cns11643"</span>, <span class="jxr_string">"euctw"</span>}),
-<a name="937" href="#937">937</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"x-Johab"</span>, <span class="jxr_string">"johab"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"johab"</span>, <span class="jxr_string">"cp1361"</span>, <span class="jxr_string">"ms1361"</span>, <span class="jxr_string">"ksc5601-1992"</span>, <span class="jxr_string">"ksc5601_1992"</span>}),
-<a name="938" href="#938">938</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS950_HKSCS"</span>, <span class="jxr_string">""</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="939" href="#939">939</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS874"</span>, <span class="jxr_string">"windows-874"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp874"</span>}),
-<a name="940" href="#940">940</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS949"</span>, <span class="jxr_string">"windows-949"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"windows949"</span>, <span class="jxr_string">"ms_949"</span>, <span class="jxr_string">"x-windows-949"</span>}),
-<a name="941" href="#941">941</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS950"</span>, <span class="jxr_string">"windows-950"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-windows-950"</span>}),
-<a name="942" href="#942">942</a> 
-<a name="943" href="#943">943</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp737"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="944" href="#944">944</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp856"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="945" href="#945">945</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp875"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="946" href="#946">946</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp921"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="947" href="#947">947</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp922"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="948" href="#948">948</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp930"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="949" href="#949">949</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp933"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="950" href="#950">950</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp935"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="951" href="#951">951</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp937"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="952" href="#952">952</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp939"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="953" href="#953">953</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp942"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="954" href="#954">954</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp942C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="955" href="#955">955</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp943"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="956" href="#956">956</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp943C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="957" href="#957">957</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp948"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="958" href="#958">958</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp949"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="959" href="#959">959</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp949C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="960" href="#960">960</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp950"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="961" href="#961">961</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp964"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="962" href="#962">962</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp970"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="963" href="#963">963</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1006"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="964" href="#964">964</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1025"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),    
-<a name="965" href="#965">965</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1046"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="966" href="#966">966</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1097"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="967" href="#967">967</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1098"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="968" href="#968">968</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1112"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="969" href="#969">969</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1122"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="970" href="#970">970</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1123"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="971" href="#971">971</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1124"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="972" href="#972">972</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1381"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="973" href="#973">973</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1383"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="974" href="#974">974</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp33722"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="975" href="#975">975</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5_Solaris"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="976" href="#976">976</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP_LINUX"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="977" href="#977">977</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP_Solaris"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="978" href="#978">978</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISCII91"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-ISCII91"</span>, <span class="jxr_string">"iscii"</span>}),
-<a name="979" href="#979">979</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022_CN_CNS"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="980" href="#980">980</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022_CN_GB"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="981" href="#981">981</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"x-iso-8859-11"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="982" href="#982">982</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JISAutoDetect"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="983" href="#983">983</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacArabic"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="984" href="#984">984</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCentralEurope"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="985" href="#985">985</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCroatian"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="986" href="#986">986</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCyrillic"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="987" href="#987">987</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacDingbat"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="988" href="#988">988</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacGreek"</span>, <span class="jxr_string">"MacGreek"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="989" href="#989">989</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacHebrew"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="990" href="#990">990</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacIceland"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="991" href="#991">991</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacRoman"</span>, <span class="jxr_string">"MacRoman"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"Macintosh"</span>, <span class="jxr_string">"MAC"</span>, <span class="jxr_string">"csMacintosh"</span>}),
-<a name="992" href="#992">992</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacRomania"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="993" href="#993">993</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacSymbol"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="994" href="#994">994</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacThai"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="995" href="#995">995</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacTurkish"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="996" href="#996">996</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacUkraine"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="997" href="#997">997</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeBig"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
-<a name="998" href="#998">998</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeLittle"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {})
-<a name="999" href="#999">999</a>     };
-<a name="1000" href="#1000">1000</a> 
-<a name="1001" href="#1001">1001</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1002" href="#1002">1002</a> <em class="jxr_javadoccomment">     * Contains the canonical names of character sets which can be used to </em>
-<a name="1003" href="#1003">1003</a> <em class="jxr_javadoccomment">     * decode bytes into Java chars.</em>
-<a name="1004" href="#1004">1004</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1005" href="#1005">1005</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> SortedSet&lt;String&gt; decodingSupported = <strong class="jxr_keyword">null</strong>;
-<a name="1006" href="#1006">1006</a>     
-<a name="1007" href="#1007">1007</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1008" href="#1008">1008</a> <em class="jxr_javadoccomment">     * Contains the canonical names of character sets which can be used to </em>
-<a name="1009" href="#1009">1009</a> <em class="jxr_javadoccomment">     * encode Java chars into bytes.</em>
-<a name="1010" href="#1010">1010</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1011" href="#1011">1011</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> SortedSet&lt;String&gt; encodingSupported = <strong class="jxr_keyword">null</strong>;
-<a name="1012" href="#1012">1012</a>     
-<a name="1013" href="#1013">1013</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1014" href="#1014">1014</a> <em class="jxr_javadoccomment">     * Maps character set names to Charset objects. All possible names of</em>
-<a name="1015" href="#1015">1015</a> <em class="jxr_javadoccomment">     * a charset will be mapped to the Charset.</em>
-<a name="1016" href="#1016">1016</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1017" href="#1017">1017</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, Charset&gt; charsetMap = <strong class="jxr_keyword">null</strong>;
-<a name="1018" href="#1018">1018</a>     
-<a name="1019" href="#1019">1019</a>     <strong class="jxr_keyword">static</strong> {
-<a name="1020" href="#1020">1020</a>         decodingSupported = <strong class="jxr_keyword">new</strong> TreeSet&lt;String&gt;();
-<a name="1021" href="#1021">1021</a>         encodingSupported = <strong class="jxr_keyword">new</strong> TreeSet&lt;String&gt;();
-<a name="1022" href="#1022">1022</a>         byte[] dummy = <strong class="jxr_keyword">new</strong> byte[] {'d', 'u', 'm', 'm', 'y'};
-<a name="1023" href="#1023">1023</a>         <strong class="jxr_keyword">for</strong> (Charset c : JAVA_CHARSETS) {
-<a name="1024" href="#1024">1024</a>             <strong class="jxr_keyword">try</strong> {
-<a name="1025" href="#1025">1025</a>                 <strong class="jxr_keyword">new</strong> String(dummy, c.canonical);
-<a name="1026" href="#1026">1026</a>                 decodingSupported.add(c.canonical.toLowerCase());
-<a name="1027" href="#1027">1027</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedOperationException e) {
-<a name="1028" href="#1028">1028</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedEncodingException e) {
-<a name="1029" href="#1029">1029</a>             }
-<a name="1030" href="#1030">1030</a>             <strong class="jxr_keyword">try</strong> {
-<a name="1031" href="#1031">1031</a>                 <span class="jxr_string">"dummy"</span>.getBytes(c.canonical);
-<a name="1032" href="#1032">1032</a>                 encodingSupported.add(c.canonical.toLowerCase());
-<a name="1033" href="#1033">1033</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedOperationException e) {
-<a name="1034" href="#1034">1034</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedEncodingException e) {
-<a name="1035" href="#1035">1035</a>             }
-<a name="1036" href="#1036">1036</a>         }
-<a name="1037" href="#1037">1037</a>         
-<a name="1038" href="#1038">1038</a>         charsetMap = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Charset&gt;();
-<a name="1039" href="#1039">1039</a>         <strong class="jxr_keyword">for</strong> (Charset c : JAVA_CHARSETS) {
-<a name="1040" href="#1040">1040</a>             charsetMap.put(c.canonical.toLowerCase(), c);
-<a name="1041" href="#1041">1041</a>             <strong class="jxr_keyword">if</strong> (c.mime != <strong class="jxr_keyword">null</strong>) {
-<a name="1042" href="#1042">1042</a>                 charsetMap.put(c.mime.toLowerCase(), c);
-<a name="1043" href="#1043">1043</a>             }
-<a name="1044" href="#1044">1044</a>             <strong class="jxr_keyword">if</strong> (c.aliases != <strong class="jxr_keyword">null</strong>) {
-<a name="1045" href="#1045">1045</a>                 <strong class="jxr_keyword">for</strong> (String str : c.aliases) {
-<a name="1046" href="#1046">1046</a>                     charsetMap.put(str.toLowerCase(), c);
-<a name="1047" href="#1047">1047</a>                 }
-<a name="1048" href="#1048">1048</a>             }
-<a name="1049" href="#1049">1049</a>         }
-<a name="1050" href="#1050">1050</a>         
-<a name="1051" href="#1051">1051</a>         <strong class="jxr_keyword">if</strong> (log.isDebugEnabled()) {
-<a name="1052" href="#1052">1052</a>             log.debug(<span class="jxr_string">"Character sets which support decoding: "</span> 
-<a name="1053" href="#1053">1053</a>                         + decodingSupported);
-<a name="1054" href="#1054">1054</a>             log.debug(<span class="jxr_string">"Character sets which support encoding: "</span> 
-<a name="1055" href="#1055">1055</a>                         + encodingSupported);
-<a name="1056" href="#1056">1056</a>         }
-<a name="1057" href="#1057">1057</a>     }
+<a name="789" href="#789">789</a> <em class="jxr_javadoccomment"> */</em>
+<a name="790" href="#790">790</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">CharsetUtil</a> {
+<a name="791" href="#791">791</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Log log = LogFactory.getLog(CharsetUtil.<strong class="jxr_keyword">class</strong>);
+<a name="792" href="#792">792</a>     
+<a name="793" href="#793">793</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> implements Comparable&lt;Charset&gt; {
+<a name="794" href="#794">794</a>         <strong class="jxr_keyword">private</strong> String canonical = <strong class="jxr_keyword">null</strong>;
+<a name="795" href="#795">795</a>         <strong class="jxr_keyword">private</strong> String mime = <strong class="jxr_keyword">null</strong>;
+<a name="796" href="#796">796</a>         <strong class="jxr_keyword">private</strong> String[] aliases = <strong class="jxr_keyword">null</strong>;
+<a name="797" href="#797">797</a>         
+<a name="798" href="#798">798</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(String canonical, String mime, String[] aliases) {
+<a name="799" href="#799">799</a>             <strong class="jxr_keyword">this</strong>.canonical = canonical;
+<a name="800" href="#800">800</a>             <strong class="jxr_keyword">this</strong>.mime = mime;
+<a name="801" href="#801">801</a>             <strong class="jxr_keyword">this</strong>.aliases = aliases;
+<a name="802" href="#802">802</a>         }
+<a name="803" href="#803">803</a> 
+<a name="804" href="#804">804</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c) {
+<a name="805" href="#805">805</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.canonical.compareTo(c.canonical);
+<a name="806" href="#806">806</a>         }
+<a name="807" href="#807">807</a>     }
+<a name="808" href="#808">808</a>     
+<a name="809" href="#809">809</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>[] JAVA_CHARSETS = {
+<a name="810" href="#810">810</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_1"</span>, <span class="jxr_string">"ISO-8859-1"</span>, 
+<a name="811" href="#811">811</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-1:1987"</span>, <span class="jxr_string">"iso-ir-100"</span>, <span class="jxr_string">"ISO_8859-1"</span>, 
+<a name="812" href="#812">812</a>                                   <span class="jxr_string">"latin1"</span>, <span class="jxr_string">"l1"</span>, <span class="jxr_string">"IBM819"</span>, <span class="jxr_string">"CP819"</span>, 
+<a name="813" href="#813">813</a>                                   <span class="jxr_string">"csISOLatin1"</span>, <span class="jxr_string">"8859_1"</span>, <span class="jxr_string">"819"</span>, <span class="jxr_string">"IBM-819"</span>, 
+<a name="814" href="#814">814</a>                                   <span class="jxr_string">"ISO8859-1"</span>, <span class="jxr_string">"ISO_8859_1"</span>}),
+<a name="815" href="#815">815</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_2"</span>, <span class="jxr_string">"ISO-8859-2"</span>, 
+<a name="816" href="#816">816</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-2:1987"</span>, <span class="jxr_string">"iso-ir-101"</span>, <span class="jxr_string">"ISO_8859-2"</span>,  
+<a name="817" href="#817">817</a>                                   <span class="jxr_string">"latin2"</span>, <span class="jxr_string">"l2"</span>, <span class="jxr_string">"csISOLatin2"</span>, <span class="jxr_string">"8859_2"</span>, 
+<a name="818" href="#818">818</a>                                   <span class="jxr_string">"iso8859_2"</span>}),
+<a name="819" href="#819">819</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_3"</span>, <span class="jxr_string">"ISO-8859-3"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-3:1988"</span>, <span class="jxr_string">"iso-ir-109"</span>, <span class="jxr_string">"ISO_8859-3"</span>, <span class="jxr_string">"latin3"</span>, <span class="jxr_string">"l3"</span>, <span class="jxr_string">"csISOLatin3"</span>, <span class="jxr_string">"8859_3"</span>}),
+<a name="820" href="#820">820</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_4"</span>, <span class="jxr_string">"ISO-8859-4"</span>, 
+<a name="821" href="#821">821</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-4:1988"</span>, <span class="jxr_string">"iso-ir-110"</span>, <span class="jxr_string">"ISO_8859-4"</span>,
+<a name="822" href="#822">822</a>                                   <span class="jxr_string">"latin4"</span>, <span class="jxr_string">"l4"</span>, <span class="jxr_string">"csISOLatin4"</span>, <span class="jxr_string">"8859_4"</span>}),
+<a name="823" href="#823">823</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_5"</span>, <span class="jxr_string">"ISO-8859-5"</span>, 
+<a name="824" href="#824">824</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-5:1988"</span>, <span class="jxr_string">"iso-ir-144"</span>, <span class="jxr_string">"ISO_8859-5"</span>, 
+<a name="825" href="#825">825</a>                                   <span class="jxr_string">"cyrillic"</span>, <span class="jxr_string">"csISOLatinCyrillic"</span>, <span class="jxr_string">"8859_5"</span>}),
+<a name="826" href="#826">826</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_6"</span>, <span class="jxr_string">"ISO-8859-6"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-6:1987"</span>, <span class="jxr_string">"iso-ir-127"</span>, <span class="jxr_string">"ISO_8859-6"</span>, <span class="jxr_string">"ECMA-114"</span>, <span class="jxr_string">"ASMO-708"</span>, <span class="jxr_string">"arabic"</span>, <span class="jxr_string">"csISOLatinArabic"</span>, <span class="jxr_string">"8859_6"</span>}),
+<a name="827" href="#827">827</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_7"</span>, <span class="jxr_string">"ISO-8859-7"</span>, 
+<a name="828" href="#828">828</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-7:1987"</span>, <span class="jxr_string">"iso-ir-126"</span>, <span class="jxr_string">"ISO_8859-7"</span>, 
+<a name="829" href="#829">829</a>                                   <span class="jxr_string">"ELOT_928"</span>, <span class="jxr_string">"ECMA-118"</span>, <span class="jxr_string">"greek"</span>, <span class="jxr_string">"greek8"</span>, 
+<a name="830" href="#830">830</a>                                   <span class="jxr_string">"csISOLatinGreek"</span>, <span class="jxr_string">"8859_7"</span>, <span class="jxr_string">"sun_eu_greek"</span>}),
+<a name="831" href="#831">831</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_8"</span>, <span class="jxr_string">"ISO-8859-8"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-8:1988"</span>, <span class="jxr_string">"iso-ir-138"</span>, <span class="jxr_string">"ISO_8859-8"</span>, <span class="jxr_string">"hebrew"</span>, <span class="jxr_string">"csISOLatinHebrew"</span>, <span class="jxr_string">"8859_8"</span>}),
+<a name="832" href="#832">832</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_9"</span>, <span class="jxr_string">"ISO-8859-9"</span>, 
+<a name="833" href="#833">833</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-9:1989"</span>, <span class="jxr_string">"iso-ir-148"</span>, <span class="jxr_string">"ISO_8859-9"</span>,  
+<a name="834" href="#834">834</a>                                   <span class="jxr_string">"latin5"</span>, <span class="jxr_string">"l5"</span>, <span class="jxr_string">"csISOLatin5"</span>, <span class="jxr_string">"8859_9"</span>}),
+<a name="835" href="#835">835</a> 
+<a name="836" href="#836">836</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_13"</span>, <span class="jxr_string">"ISO-8859-13"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="837" href="#837">837</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO8859_15"</span>, <span class="jxr_string">"ISO-8859-15"</span>, 
+<a name="838" href="#838">838</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ISO_8859-15"</span>, <span class="jxr_string">"Latin-9"</span>, <span class="jxr_string">"8859_15"</span>, 
+<a name="839" href="#839">839</a>                                   <span class="jxr_string">"csISOlatin9"</span>, <span class="jxr_string">"IBM923"</span>, <span class="jxr_string">"cp923"</span>, <span class="jxr_string">"923"</span>, <span class="jxr_string">"L9"</span>,
+<a name="840" href="#840">840</a>                                   <span class="jxr_string">"IBM-923"</span>, <span class="jxr_string">"ISO8859-15"</span>, <span class="jxr_string">"LATIN9"</span>, <span class="jxr_string">"LATIN0"</span>, 
+<a name="841" href="#841">841</a>                                   <span class="jxr_string">"csISOlatin0"</span>, <span class="jxr_string">"ISO8859_15_FDIS"</span>}),
+<a name="842" href="#842">842</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"KOI8_R"</span>, <span class="jxr_string">"KOI8-R"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csKOI8R"</span>, <span class="jxr_string">"koi8"</span>}),
+<a name="843" href="#843">843</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ASCII"</span>, <span class="jxr_string">"US-ASCII"</span>, 
+<a name="844" href="#844">844</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ANSI_X3.4-1968"</span>, <span class="jxr_string">"iso-ir-6"</span>, 
+<a name="845" href="#845">845</a>                                   <span class="jxr_string">"ANSI_X3.4-1986"</span>, <span class="jxr_string">"ISO_646.irv:1991"</span>, 
+<a name="846" href="#846">846</a>                                   <span class="jxr_string">"ISO646-US"</span>, <span class="jxr_string">"us"</span>, <span class="jxr_string">"IBM367"</span>, <span class="jxr_string">"cp367"</span>, 
+<a name="847" href="#847">847</a>                                   <span class="jxr_string">"csASCII"</span>, <span class="jxr_string">"ascii7"</span>, <span class="jxr_string">"646"</span>, <span class="jxr_string">"iso_646.irv:1983"</span>}),
+<a name="848" href="#848">848</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UTF8"</span>, <span class="jxr_string">"UTF-8"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="849" href="#849">849</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UTF-16"</span>, <span class="jxr_string">"UTF-16"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"UTF_16"</span>}),
+<a name="850" href="#850">850</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeBigUnmarked"</span>, <span class="jxr_string">"UTF-16BE"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"X-UTF-16BE"</span>, <span class="jxr_string">"UTF_16BE"</span>, <span class="jxr_string">"ISO-10646-UCS-2"</span>}),
+<a name="851" href="#851">851</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeLittleUnmarked"</span>, <span class="jxr_string">"UTF-16LE"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"UTF_16LE"</span>, <span class="jxr_string">"X-UTF-16LE"</span>}),
+<a name="852" href="#852">852</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5"</span>, <span class="jxr_string">"Big5"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csBig5"</span>, <span class="jxr_string">"CN-Big5"</span>, <span class="jxr_string">"BIG-FIVE"</span>, <span class="jxr_string">"BIGFIVE"</span>}),
+<a name="853" href="#853">853</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5_HKSCS"</span>, <span class="jxr_string">"Big5-HKSCS"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"big5hkscs"</span>}),
+<a name="854" href="#854">854</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP"</span>, <span class="jxr_string">"EUC-JP"</span>, 
+<a name="855" href="#855">855</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csEUCPkdFmtJapanese"</span>, 
+<a name="856" href="#856">856</a>                               <span class="jxr_string">"Extended_UNIX_Code_Packed_Format_for_Japanese"</span>,
+<a name="857" href="#857">857</a>                               <span class="jxr_string">"eucjis"</span>, <span class="jxr_string">"x-eucjp"</span>, <span class="jxr_string">"eucjp"</span>, <span class="jxr_string">"x-euc-jp"</span>}),
+<a name="858" href="#858">858</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_KR"</span>, <span class="jxr_string">"EUC-KR"</span>, 
+<a name="859" href="#859">859</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csEUCKR"</span>, <span class="jxr_string">"ksc5601"</span>, <span class="jxr_string">"5601"</span>, <span class="jxr_string">"ksc5601_1987"</span>, 
+<a name="860" href="#860">860</a>                                   <span class="jxr_string">"ksc_5601"</span>, <span class="jxr_string">"ksc5601-1987"</span>, <span class="jxr_string">"ks_c_5601-1987"</span>, 
+<a name="861" href="#861">861</a>                                   <span class="jxr_string">"euckr"</span>}),
+<a name="862" href="#862">862</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"GB18030"</span>, <span class="jxr_string">"GB18030"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"gb18030-2000"</span>}),
+<a name="863" href="#863">863</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_CN"</span>, <span class="jxr_string">"GB2312"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-EUC-CN"</span>, <span class="jxr_string">"csGB2312"</span>, <span class="jxr_string">"euccn"</span>, <span class="jxr_string">"euc-cn"</span>, <span class="jxr_string">"gb2312-80"</span>, <span class="jxr_string">"gb2312-1980"</span>, <span class="jxr_string">"CN-GB"</span>, <span class="jxr_string">"CN-GB-ISOIR165"</span>}),
+<a name="864" href="#864">864</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"GBK"</span>, <span class="jxr_string">"windows-936"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CP936"</span>, <span class="jxr_string">"MS936"</span>, <span class="jxr_string">"ms_936"</span>, <span class="jxr_string">"x-mswin-936"</span>}),
+<a name="865" href="#865">865</a> 
+<a name="866" href="#866">866</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp037"</span>, <span class="jxr_string">"IBM037"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-us"</span>, <span class="jxr_string">"ebcdic-cp-ca"</span>, <span class="jxr_string">"ebcdic-cp-wt"</span>, <span class="jxr_string">"ebcdic-cp-nl"</span>, <span class="jxr_string">"csIBM037"</span>}),
+<a name="867" href="#867">867</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp273"</span>, <span class="jxr_string">"IBM273"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csIBM273"</span>}),
+<a name="868" href="#868">868</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp277"</span>, <span class="jxr_string">"IBM277"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"EBCDIC-CP-DK"</span>, <span class="jxr_string">"EBCDIC-CP-NO"</span>, <span class="jxr_string">"csIBM277"</span>}),
+<a name="869" href="#869">869</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp278"</span>, <span class="jxr_string">"IBM278"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CP278"</span>, <span class="jxr_string">"ebcdic-cp-fi"</span>, <span class="jxr_string">"ebcdic-cp-se"</span>, <span class="jxr_string">"csIBM278"</span>}),
+<a name="870" href="#870">870</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp280"</span>, <span class="jxr_string">"IBM280"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-it"</span>, <span class="jxr_string">"csIBM280"</span>}),
+<a name="871" href="#871">871</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp284"</span>, <span class="jxr_string">"IBM284"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-es"</span>, <span class="jxr_string">"csIBM284"</span>}),
+<a name="872" href="#872">872</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp285"</span>, <span class="jxr_string">"IBM285"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-gb"</span>, <span class="jxr_string">"csIBM285"</span>}),
+<a name="873" href="#873">873</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp297"</span>, <span class="jxr_string">"IBM297"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-fr"</span>, <span class="jxr_string">"csIBM297"</span>}),
+<a name="874" href="#874">874</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp420"</span>, <span class="jxr_string">"IBM420"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-ar1"</span>, <span class="jxr_string">"csIBM420"</span>}),
+<a name="875" href="#875">875</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp424"</span>, <span class="jxr_string">"IBM424"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-he"</span>, <span class="jxr_string">"csIBM424"</span>}),
+<a name="876" href="#876">876</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp437"</span>, <span class="jxr_string">"IBM437"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"437"</span>, <span class="jxr_string">"csPC8CodePage437"</span>}),
+<a name="877" href="#877">877</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp500"</span>, <span class="jxr_string">"IBM500"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-be"</span>, <span class="jxr_string">"ebcdic-cp-ch"</span>, <span class="jxr_string">"csIBM500"</span>}),
+<a name="878" href="#878">878</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp775"</span>, <span class="jxr_string">"IBM775"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csPC775Baltic"</span>}),
+<a name="879" href="#879">879</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp838"</span>, <span class="jxr_string">"IBM-Thai"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="880" href="#880">880</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp850"</span>, <span class="jxr_string">"IBM850"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"850"</span>, <span class="jxr_string">"csPC850Multilingual"</span>}),
+<a name="881" href="#881">881</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp852"</span>, <span class="jxr_string">"IBM852"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"852"</span>, <span class="jxr_string">"csPCp852"</span>}),
+<a name="882" href="#882">882</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp855"</span>, <span class="jxr_string">"IBM855"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"855"</span>, <span class="jxr_string">"csIBM855"</span>}),
+<a name="883" href="#883">883</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp857"</span>, <span class="jxr_string">"IBM857"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"857"</span>, <span class="jxr_string">"csIBM857"</span>}),
+<a name="884" href="#884">884</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp858"</span>, <span class="jxr_string">"IBM00858"</span>, 
+<a name="885" href="#885">885</a>                 <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID00858"</span>, <span class="jxr_string">"CP00858"</span>, 
+<a name="886" href="#886">886</a>                               <span class="jxr_string">"PC-Multilingual-850+euro"</span>}),
+<a name="887" href="#887">887</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp860"</span>, <span class="jxr_string">"IBM860"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"860"</span>, <span class="jxr_string">"csIBM860"</span>}),
+<a name="888" href="#888">888</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp861"</span>, <span class="jxr_string">"IBM861"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"861"</span>, <span class="jxr_string">"cp-is"</span>, <span class="jxr_string">"csIBM861"</span>}),
+<a name="889" href="#889">889</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp862"</span>, <span class="jxr_string">"IBM862"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"862"</span>, <span class="jxr_string">"csPC862LatinHebrew"</span>}),
+<a name="890" href="#890">890</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp863"</span>, <span class="jxr_string">"IBM863"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"863"</span>, <span class="jxr_string">"csIBM863"</span>}),
+<a name="891" href="#891">891</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp864"</span>, <span class="jxr_string">"IBM864"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp864"</span>, <span class="jxr_string">"csIBM864"</span>}),
+<a name="892" href="#892">892</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp865"</span>, <span class="jxr_string">"IBM865"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"865"</span>, <span class="jxr_string">"csIBM865"</span>}),
+<a name="893" href="#893">893</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp866"</span>, <span class="jxr_string">"IBM866"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"866"</span>, <span class="jxr_string">"csIBM866"</span>}),
+<a name="894" href="#894">894</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp868"</span>, <span class="jxr_string">"IBM868"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp-ar"</span>, <span class="jxr_string">"csIBM868"</span>}),
+<a name="895" href="#895">895</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp869"</span>, <span class="jxr_string">"IBM869"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp-gr"</span>, <span class="jxr_string">"csIBM869"</span>}),
+<a name="896" href="#896">896</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp870"</span>, <span class="jxr_string">"IBM870"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-roece"</span>, <span class="jxr_string">"ebcdic-cp-yu"</span>, <span class="jxr_string">"csIBM870"</span>}),
+<a name="897" href="#897">897</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp871"</span>, <span class="jxr_string">"IBM871"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-is"</span>, <span class="jxr_string">"csIBM871"</span>}),
+<a name="898" href="#898">898</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp918"</span>, <span class="jxr_string">"IBM918"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"ebcdic-cp-ar2"</span>, <span class="jxr_string">"csIBM918"</span>}),
+<a name="899" href="#899">899</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1026"</span>, <span class="jxr_string">"IBM1026"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csIBM1026"</span>}),
+<a name="900" href="#900">900</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1047"</span>, <span class="jxr_string">"IBM1047"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"IBM-1047"</span>}),
+<a name="901" href="#901">901</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1140"</span>, <span class="jxr_string">"IBM01140"</span>, 
+<a name="902" href="#902">902</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01140"</span>, <span class="jxr_string">"CP01140"</span>, 
+<a name="903" href="#903">903</a>                                   <span class="jxr_string">"ebcdic-us-37+euro"</span>}),
+<a name="904" href="#904">904</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1141"</span>, <span class="jxr_string">"IBM01141"</span>, 
+<a name="905" href="#905">905</a>                     <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01141"</span>, <span class="jxr_string">"CP01141"</span>, 
+<a name="906" href="#906">906</a>                                   <span class="jxr_string">"ebcdic-de-273+euro"</span>}),
+<a name="907" href="#907">907</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1142"</span>, <span class="jxr_string">"IBM01142"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01142"</span>, <span class="jxr_string">"CP01142"</span>, <span class="jxr_string">"ebcdic-dk-277+euro"</span>, <span class="jxr_string">"ebcdic-no-277+euro"</span>}),
+<a name="908" href="#908">908</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1143"</span>, <span class="jxr_string">"IBM01143"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01143"</span>, <span class="jxr_string">"CP01143"</span>, <span class="jxr_string">"ebcdic-fi-278+euro"</span>, <span class="jxr_string">"ebcdic-se-278+euro"</span>}),
+<a name="909" href="#909">909</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1144"</span>, <span class="jxr_string">"IBM01144"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01144"</span>, <span class="jxr_string">"CP01144"</span>, <span class="jxr_string">"ebcdic-it-280+euro"</span>}),
+<a name="910" href="#910">910</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1145"</span>, <span class="jxr_string">"IBM01145"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01145"</span>, <span class="jxr_string">"CP01145"</span>, <span class="jxr_string">"ebcdic-es-284+euro"</span>}),
+<a name="911" href="#911">911</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1146"</span>, <span class="jxr_string">"IBM01146"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01146"</span>, <span class="jxr_string">"CP01146"</span>, <span class="jxr_string">"ebcdic-gb-285+euro"</span>}),
+<a name="912" href="#912">912</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1147"</span>, <span class="jxr_string">"IBM01147"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01147"</span>, <span class="jxr_string">"CP01147"</span>, <span class="jxr_string">"ebcdic-fr-297+euro"</span>}),
+<a name="913" href="#913">913</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1148"</span>, <span class="jxr_string">"IBM01148"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01148"</span>, <span class="jxr_string">"CP01148"</span>, <span class="jxr_string">"ebcdic-international-500+euro"</span>}),
+<a name="914" href="#914">914</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1149"</span>, <span class="jxr_string">"IBM01149"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"CCSID01149"</span>, <span class="jxr_string">"CP01149"</span>, <span class="jxr_string">"ebcdic-is-871+euro"</span>}),
+<a name="915" href="#915">915</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1250"</span>, <span class="jxr_string">"windows-1250"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="916" href="#916">916</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1251"</span>, <span class="jxr_string">"windows-1251"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="917" href="#917">917</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1252"</span>, <span class="jxr_string">"windows-1252"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="918" href="#918">918</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1253"</span>, <span class="jxr_string">"windows-1253"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="919" href="#919">919</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1254"</span>, <span class="jxr_string">"windows-1254"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="920" href="#920">920</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1255"</span>, <span class="jxr_string">"windows-1255"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="921" href="#921">921</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1256"</span>, <span class="jxr_string">"windows-1256"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="922" href="#922">922</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1257"</span>, <span class="jxr_string">"windows-1257"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="923" href="#923">923</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1258"</span>, <span class="jxr_string">"windows-1258"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="924" href="#924">924</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022CN"</span>, <span class="jxr_string">"ISO-2022-CN"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="925" href="#925">925</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022JP"</span>, <span class="jxr_string">"ISO-2022-JP"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csISO2022JP"</span>, <span class="jxr_string">"JIS"</span>, <span class="jxr_string">"jis_encoding"</span>, <span class="jxr_string">"csjisencoding"</span>}),
+<a name="926" href="#926">926</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022KR"</span>, <span class="jxr_string">"ISO-2022-KR"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"csISO2022KR"</span>}),
+<a name="927" href="#927">927</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_X0201"</span>, <span class="jxr_string">"JIS_X0201"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"X0201"</span>, <span class="jxr_string">"JIS0201"</span>, <span class="jxr_string">"csHalfWidthKatakana"</span>}),
+<a name="928" href="#928">928</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_X0212-1990"</span>, <span class="jxr_string">"JIS_X0212-1990"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"iso-ir-159"</span>, <span class="jxr_string">"x0212"</span>, <span class="jxr_string">"JIS0212"</span>, <span class="jxr_string">"csISO159JISX02121990"</span>}),
+<a name="929" href="#929">929</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JIS_C6626-1983"</span>, <span class="jxr_string">"JIS_C6626-1983"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-JIS0208"</span>, <span class="jxr_string">"JIS0208"</span>, <span class="jxr_string">"csISO87JISX0208"</span>, <span class="jxr_string">"x0208"</span>, <span class="jxr_string">"JIS_X0208-1983"</span>, <span class="jxr_string">"iso-ir-87"</span>}),
+<a name="930" href="#930">930</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"SJIS"</span>, <span class="jxr_string">"Shift_JIS"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"MS_Kanji"</span>, <span class="jxr_string">"csShiftJIS"</span>, <span class="jxr_string">"shift-jis"</span>, <span class="jxr_string">"x-sjis"</span>, <span class="jxr_string">"pck"</span>}),
+<a name="931" href="#931">931</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"TIS620"</span>, <span class="jxr_string">"TIS-620"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="932" href="#932">932</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS932"</span>, <span class="jxr_string">"Windows-31J"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"windows-932"</span>, <span class="jxr_string">"csWindows31J"</span>, <span class="jxr_string">"x-ms-cp932"</span>}),
+<a name="933" href="#933">933</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_TW"</span>, <span class="jxr_string">"EUC-TW"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-EUC-TW"</span>, <span class="jxr_string">"cns11643"</span>, <span class="jxr_string">"euctw"</span>}),
+<a name="934" href="#934">934</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"x-Johab"</span>, <span class="jxr_string">"johab"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"johab"</span>, <span class="jxr_string">"cp1361"</span>, <span class="jxr_string">"ms1361"</span>, <span class="jxr_string">"ksc5601-1992"</span>, <span class="jxr_string">"ksc5601_1992"</span>}),
+<a name="935" href="#935">935</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS950_HKSCS"</span>, <span class="jxr_string">""</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="936" href="#936">936</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS874"</span>, <span class="jxr_string">"windows-874"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"cp874"</span>}),
+<a name="937" href="#937">937</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS949"</span>, <span class="jxr_string">"windows-949"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"windows949"</span>, <span class="jxr_string">"ms_949"</span>, <span class="jxr_string">"x-windows-949"</span>}),
+<a name="938" href="#938">938</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MS950"</span>, <span class="jxr_string">"windows-950"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-windows-950"</span>}),
+<a name="939" href="#939">939</a> 
+<a name="940" href="#940">940</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp737"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="941" href="#941">941</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp856"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="942" href="#942">942</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp875"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="943" href="#943">943</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp921"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="944" href="#944">944</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp922"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="945" href="#945">945</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp930"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="946" href="#946">946</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp933"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="947" href="#947">947</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp935"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="948" href="#948">948</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp937"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="949" href="#949">949</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp939"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="950" href="#950">950</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp942"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="951" href="#951">951</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp942C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="952" href="#952">952</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp943"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="953" href="#953">953</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp943C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="954" href="#954">954</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp948"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="955" href="#955">955</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp949"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="956" href="#956">956</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp949C"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="957" href="#957">957</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp950"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="958" href="#958">958</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp964"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="959" href="#959">959</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp970"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="960" href="#960">960</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1006"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="961" href="#961">961</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1025"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),    
+<a name="962" href="#962">962</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1046"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="963" href="#963">963</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1097"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="964" href="#964">964</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1098"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="965" href="#965">965</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1112"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="966" href="#966">966</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1122"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="967" href="#967">967</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1123"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="968" href="#968">968</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1124"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="969" href="#969">969</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1381"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="970" href="#970">970</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp1383"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="971" href="#971">971</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Cp33722"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="972" href="#972">972</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"Big5_Solaris"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="973" href="#973">973</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP_LINUX"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="974" href="#974">974</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"EUC_JP_Solaris"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="975" href="#975">975</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISCII91"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"x-ISCII91"</span>, <span class="jxr_string">"iscii"</span>}),
+<a name="976" href="#976">976</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022_CN_CNS"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="977" href="#977">977</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"ISO2022_CN_GB"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="978" href="#978">978</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"x-iso-8859-11"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="979" href="#979">979</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"JISAutoDetect"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="980" href="#980">980</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacArabic"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="981" href="#981">981</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCentralEurope"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="982" href="#982">982</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCroatian"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="983" href="#983">983</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacCyrillic"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="984" href="#984">984</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacDingbat"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="985" href="#985">985</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacGreek"</span>, <span class="jxr_string">"MacGreek"</span>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="986" href="#986">986</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacHebrew"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="987" href="#987">987</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacIceland"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="988" href="#988">988</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacRoman"</span>, <span class="jxr_string">"MacRoman"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"Macintosh"</span>, <span class="jxr_string">"MAC"</span>, <span class="jxr_string">"csMacintosh"</span>}),
+<a name="989" href="#989">989</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacRomania"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="990" href="#990">990</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacSymbol"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="991" href="#991">991</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacThai"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="992" href="#992">992</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacTurkish"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="993" href="#993">993</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"MacUkraine"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="994" href="#994">994</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeBig"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {}),
+<a name="995" href="#995">995</a>         <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a>(<span class="jxr_string">"UnicodeLittle"</span>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">new</strong> String[] {})
+<a name="996" href="#996">996</a>     };
+<a name="997" href="#997">997</a> 
+<a name="998" href="#998">998</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="999" href="#999">999</a> <em class="jxr_javadoccomment">     * Contains the canonical names of character sets which can be used to </em>
+<a name="1000" href="#1000">1000</a> <em class="jxr_javadoccomment">     * decode bytes into Java chars.</em>
+<a name="1001" href="#1001">1001</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1002" href="#1002">1002</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> SortedSet&lt;String&gt; decodingSupported = <strong class="jxr_keyword">null</strong>;
+<a name="1003" href="#1003">1003</a>     
+<a name="1004" href="#1004">1004</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1005" href="#1005">1005</a> <em class="jxr_javadoccomment">     * Contains the canonical names of character sets which can be used to </em>
+<a name="1006" href="#1006">1006</a> <em class="jxr_javadoccomment">     * encode Java chars into bytes.</em>
+<a name="1007" href="#1007">1007</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1008" href="#1008">1008</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> SortedSet&lt;String&gt; encodingSupported = <strong class="jxr_keyword">null</strong>;
+<a name="1009" href="#1009">1009</a>     
+<a name="1010" href="#1010">1010</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1011" href="#1011">1011</a> <em class="jxr_javadoccomment">     * Maps character set names to Charset objects. All possible names of</em>
+<a name="1012" href="#1012">1012</a> <em class="jxr_javadoccomment">     * a charset will be mapped to the Charset.</em>
+<a name="1013" href="#1013">1013</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1014" href="#1014">1014</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, Charset&gt; charsetMap = <strong class="jxr_keyword">null</strong>;
+<a name="1015" href="#1015">1015</a>     
+<a name="1016" href="#1016">1016</a>     <strong class="jxr_keyword">static</strong> {
+<a name="1017" href="#1017">1017</a>         decodingSupported = <strong class="jxr_keyword">new</strong> TreeSet&lt;String&gt;();
+<a name="1018" href="#1018">1018</a>         encodingSupported = <strong class="jxr_keyword">new</strong> TreeSet&lt;String&gt;();
+<a name="1019" href="#1019">1019</a>         byte[] dummy = <strong class="jxr_keyword">new</strong> byte[] {'d', 'u', 'm', 'm', 'y'};
+<a name="1020" href="#1020">1020</a>         <strong class="jxr_keyword">for</strong> (Charset c : JAVA_CHARSETS) {
+<a name="1021" href="#1021">1021</a>             <strong class="jxr_keyword">try</strong> {
+<a name="1022" href="#1022">1022</a>                 <strong class="jxr_keyword">new</strong> String(dummy, c.canonical);
+<a name="1023" href="#1023">1023</a>                 decodingSupported.add(c.canonical.toLowerCase());
+<a name="1024" href="#1024">1024</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedOperationException e) {
+<a name="1025" href="#1025">1025</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedEncodingException e) {
+<a name="1026" href="#1026">1026</a>             }
+<a name="1027" href="#1027">1027</a>             <strong class="jxr_keyword">try</strong> {
+<a name="1028" href="#1028">1028</a>                 <span class="jxr_string">"dummy"</span>.getBytes(c.canonical);
+<a name="1029" href="#1029">1029</a>                 encodingSupported.add(c.canonical.toLowerCase());
+<a name="1030" href="#1030">1030</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedOperationException e) {
+<a name="1031" href="#1031">1031</a>             } <strong class="jxr_keyword">catch</strong> (UnsupportedEncodingException e) {
+<a name="1032" href="#1032">1032</a>             }
+<a name="1033" href="#1033">1033</a>         }
+<a name="1034" href="#1034">1034</a>         
+<a name="1035" href="#1035">1035</a>         charsetMap = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Charset&gt;();
+<a name="1036" href="#1036">1036</a>         <strong class="jxr_keyword">for</strong> (Charset c : JAVA_CHARSETS) {
+<a name="1037" href="#1037">1037</a>             charsetMap.put(c.canonical.toLowerCase(), c);
+<a name="1038" href="#1038">1038</a>             <strong class="jxr_keyword">if</strong> (c.mime != <strong class="jxr_keyword">null</strong>) {
+<a name="1039" href="#1039">1039</a>                 charsetMap.put(c.mime.toLowerCase(), c);
+<a name="1040" href="#1040">1040</a>             }
+<a name="1041" href="#1041">1041</a>             <strong class="jxr_keyword">if</strong> (c.aliases != <strong class="jxr_keyword">null</strong>) {
+<a name="1042" href="#1042">1042</a>                 <strong class="jxr_keyword">for</strong> (String str : c.aliases) {
+<a name="1043" href="#1043">1043</a>                     charsetMap.put(str.toLowerCase(), c);
+<a name="1044" href="#1044">1044</a>                 }
+<a name="1045" href="#1045">1045</a>             }
+<a name="1046" href="#1046">1046</a>         }
+<a name="1047" href="#1047">1047</a>         
+<a name="1048" href="#1048">1048</a>         <strong class="jxr_keyword">if</strong> (log.isDebugEnabled()) {
+<a name="1049" href="#1049">1049</a>             log.debug(<span class="jxr_string">"Character sets which support decoding: "</span> 
+<a name="1050" href="#1050">1050</a>                         + decodingSupported);
+<a name="1051" href="#1051">1051</a>             log.debug(<span class="jxr_string">"Character sets which support encoding: "</span> 
+<a name="1052" href="#1052">1052</a>                         + encodingSupported);
+<a name="1053" href="#1053">1053</a>         }
+<a name="1054" href="#1054">1054</a>     }
+<a name="1055" href="#1055">1055</a> 
+<a name="1056" href="#1056">1056</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> carriage return - line feed sequence */</em>
+<a name="1057" href="#1057">1057</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRLF = <span class="jxr_string">"\r\n"</span>;
 <a name="1058" href="#1058">1058</a> 
-<a name="1059" href="#1059">1059</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> carriage return - line feed sequence */</em>
-<a name="1060" href="#1060">1060</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRLF = <span class="jxr_string">"\r\n"</span>;
+<a name="1059" href="#1059">1059</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII CR, carriage return (13) */</em>
+<a name="1060" href="#1060">1060</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> CR = '\r';
 <a name="1061" href="#1061">1061</a> 
-<a name="1062" href="#1062">1062</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII CR, carriage return (13) */</em>
-<a name="1063" href="#1063">1063</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> CR = '\r';
+<a name="1062" href="#1062">1062</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII LF, line feed (10) */</em>
+<a name="1063" href="#1063">1063</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> LF = '\n';
 <a name="1064" href="#1064">1064</a> 
-<a name="1065" href="#1065">1065</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII LF, line feed (10) */</em>
-<a name="1066" href="#1066">1066</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> LF = '\n';
+<a name="1065" href="#1065">1065</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII SP, space (32) */</em>
+<a name="1066" href="#1066">1066</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> SP = ' ';
 <a name="1067" href="#1067">1067</a> 
-<a name="1068" href="#1068">1068</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII SP, space (32) */</em>
-<a name="1069" href="#1069">1069</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> SP = ' ';
+<a name="1068" href="#1068">1068</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII HT, horizontal-tab (9) */</em>
+<a name="1069" href="#1069">1069</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> HT = '\t';
 <a name="1070" href="#1070">1070</a> 
-<a name="1071" href="#1071">1071</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> US-ASCII HT, horizontal-tab (9) */</em>
-<a name="1072" href="#1072">1072</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> HT = '\t';
+<a name="1071" href="#1071">1071</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset US_ASCII = java.nio.charset.Charset
+<a name="1072" href="#1072">1072</a>             .forName(<span class="jxr_string">"US-ASCII"</span>);
 <a name="1073" href="#1073">1073</a> 
-<a name="1074" href="#1074">1074</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset US_ASCII = java.nio.charset.Charset
-<a name="1075" href="#1075">1075</a>             .forName(<span class="jxr_string">"US-ASCII"</span>);
+<a name="1074" href="#1074">1074</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset ISO_8859_1 = java.nio.charset.Charset
+<a name="1075" href="#1075">1075</a>             .forName(<span class="jxr_string">"ISO-8859-1"</span>);
 <a name="1076" href="#1076">1076</a> 
-<a name="1077" href="#1077">1077</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset ISO_8859_1 = java.nio.charset.Charset
-<a name="1078" href="#1078">1078</a>             .forName(<span class="jxr_string">"ISO-8859-1"</span>);
+<a name="1077" href="#1077">1077</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset UTF_8 = java.nio.charset.Charset
+<a name="1078" href="#1078">1078</a>             .forName(<span class="jxr_string">"UTF-8"</span>);
 <a name="1079" href="#1079">1079</a> 
-<a name="1080" href="#1080">1080</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset UTF_8 = java.nio.charset.Charset
-<a name="1081" href="#1081">1081</a>             .forName(<span class="jxr_string">"UTF-8"</span>);
-<a name="1082" href="#1082">1082</a> 
-<a name="1083" href="#1083">1083</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset DEFAULT_CHARSET = US_ASCII;
-<a name="1084" href="#1084">1084</a> 
-<a name="1085" href="#1085">1085</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1086" href="#1086">1086</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified character falls into the US</em>
-<a name="1087" href="#1087">1087</a> <em class="jxr_javadoccomment">     * ASCII character set (Unicode range 0000 to 007f).</em>
-<a name="1088" href="#1088">1088</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1089" href="#1089">1089</a> <em class="jxr_javadoccomment">     * @param ch</em>
-<a name="1090" href="#1090">1090</a> <em class="jxr_javadoccomment">     *            character to test.</em>
-<a name="1091" href="#1091">1091</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified character falls into the US</em>
-<a name="1092" href="#1092">1092</a> <em class="jxr_javadoccomment">     *         ASCII character set, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
-<a name="1093" href="#1093">1093</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1094" href="#1094">1094</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isASCII(<strong class="jxr_keyword">char</strong> ch) {
-<a name="1095" href="#1095">1095</a>         <strong class="jxr_keyword">return</strong> (0xFF80 &amp; ch) == 0;
-<a name="1096" href="#1096">1096</a>     }
-<a name="1097" href="#1097">1097</a> 
-<a name="1098" href="#1098">1098</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1099" href="#1099">1099</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
-<a name="1100" href="#1100">1100</a> <em class="jxr_javadoccomment">     * US ASCII characters.</em>
-<a name="1101" href="#1101">1101</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1102" href="#1102">1102</a> <em class="jxr_javadoccomment">     * @param s</em>
-<a name="1103" href="#1103">1103</a> <em class="jxr_javadoccomment">     *            string to test.</em>
-<a name="1104" href="#1104">1104</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
-<a name="1105" href="#1105">1105</a> <em class="jxr_javadoccomment">     *         US ASCII characters, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
-<a name="1106" href="#1106">1106</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1107" href="#1107">1107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isASCII(<strong class="jxr_keyword">final</strong> String s) {
-<a name="1108" href="#1108">1108</a>         <strong class="jxr_keyword">if</strong> (s == <strong class="jxr_keyword">null</strong>) {
-<a name="1109" href="#1109">1109</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"String may not be null"</span>);
-<a name="1110" href="#1110">1110</a>         }
-<a name="1111" href="#1111">1111</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
-<a name="1112" href="#1112">1112</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; len; i++) {
-<a name="1113" href="#1113">1113</a>             <strong class="jxr_keyword">if</strong> (!isASCII(s.charAt(i))) {
-<a name="1114" href="#1114">1114</a>                 <strong class="jxr_keyword">return</strong> false;
-<a name="1115" href="#1115">1115</a>             }
-<a name="1116" href="#1116">1116</a>         }
-<a name="1117" href="#1117">1117</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a name="1118" href="#1118">1118</a>     }
-<a name="1119" href="#1119">1119</a> 
-<a name="1120" href="#1120">1120</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1121" href="#1121">1121</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified character is a whitespace</em>
-<a name="1122" href="#1122">1122</a> <em class="jxr_javadoccomment">     * character (CR, LF, SP or HT).</em>
-<a name="1123" href="#1123">1123</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1124" href="#1124">1124</a> <em class="jxr_javadoccomment">     * @param ch</em>
-<a name="1125" href="#1125">1125</a> <em class="jxr_javadoccomment">     *            character to test.</em>
-<a name="1126" href="#1126">1126</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified character is a whitespace</em>
-<a name="1127" href="#1127">1127</a> <em class="jxr_javadoccomment">     *         character, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
-<a name="1128" href="#1128">1128</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1129" href="#1129">1129</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWhitespace(<strong class="jxr_keyword">char</strong> ch) {
-<a name="1130" href="#1130">1130</a>         <strong class="jxr_keyword">return</strong> ch == SP || ch == HT || ch == CR || ch == LF;
-<a name="1131" href="#1131">1131</a>     }
-<a name="1132" href="#1132">1132</a> 
-<a name="1133" href="#1133">1133</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1134" href="#1134">1134</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
-<a name="1135" href="#1135">1135</a> <em class="jxr_javadoccomment">     * whitespace characters.</em>
-<a name="1136" href="#1136">1136</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1137" href="#1137">1137</a> <em class="jxr_javadoccomment">     * @param s</em>
-<a name="1138" href="#1138">1138</a> <em class="jxr_javadoccomment">     *            string to test.</em>
-<a name="1139" href="#1139">1139</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
-<a name="1140" href="#1140">1140</a> <em class="jxr_javadoccomment">     *         whitespace characters, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
-<a name="1141" href="#1141">1141</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1142" href="#1142">1142</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWhitespace(<strong class="jxr_keyword">final</strong> String s) {
-<a name="1143" href="#1143">1143</a>         <strong class="jxr_keyword">if</strong> (s == <strong class="jxr_keyword">null</strong>) {
-<a name="1144" href="#1144">1144</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"String may not be null"</span>);
-<a name="1145" href="#1145">1145</a>         }
-<a name="1146" href="#1146">1146</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
-<a name="1147" href="#1147">1147</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; len; i++) {
-<a name="1148" href="#1148">1148</a>             <strong class="jxr_keyword">if</strong> (!isWhitespace(s.charAt(i))) {
-<a name="1149" href="#1149">1149</a>                 <strong class="jxr_keyword">return</strong> false;
-<a name="1150" href="#1150">1150</a>             }
-<a name="1151" href="#1151">1151</a>         }
-<a name="1152" href="#1152">1152</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a name="1153" href="#1153">1153</a>     }
-<a name="1154" href="#1154">1154</a>     
-<a name="1155" href="#1155">1155</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1156" href="#1156">1156</a> <em class="jxr_javadoccomment">     * Determines if the VM supports encoding (chars to bytes) the </em>
-<a name="1157" href="#1157">1157</a> <em class="jxr_javadoccomment">     * specified character set. NOTE: the given character set name may </em>
-<a name="1158" href="#1158">1158</a> <em class="jxr_javadoccomment">     * not be known to the VM even if this method returns &lt;code&gt;true&lt;/code&gt;.</em>
-<a name="1159" href="#1159">1159</a> <em class="jxr_javadoccomment">     * Use {@link #toJavaCharset(String)} to get the canonical Java character</em>
-<a name="1160" href="#1160">1160</a> <em class="jxr_javadoccomment">     * set name.</em>
-<a name="1161" href="#1161">1161</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1162" href="#1162">1162</a> <em class="jxr_javadoccomment">     * @param charsetName the characters set name.</em>
-<a name="1163" href="#1163">1163</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if encoding is supported, &lt;code&gt;false&lt;/code&gt;</em>
-<a name="1164" href="#1164">1164</a> <em class="jxr_javadoccomment">     *         otherwise.</em>
-<a name="1165" href="#1165">1165</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1166" href="#1166">1166</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isEncodingSupported(String charsetName) {
-<a name="1167" href="#1167">1167</a>         <strong class="jxr_keyword">return</strong> encodingSupported.contains(charsetName.toLowerCase());
-<a name="1168" href="#1168">1168</a>     }
-<a name="1169" href="#1169">1169</a>     
-<a name="1170" href="#1170">1170</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1171" href="#1171">1171</a> <em class="jxr_javadoccomment">     * Determines if the VM supports decoding (bytes to chars) the </em>
-<a name="1172" href="#1172">1172</a> <em class="jxr_javadoccomment">     * specified character set. NOTE: the given character set name may </em>
-<a name="1173" href="#1173">1173</a> <em class="jxr_javadoccomment">     * not be known to the VM even if this method returns &lt;code&gt;true&lt;/code&gt;.</em>
-<a name="1174" href="#1174">1174</a> <em class="jxr_javadoccomment">     * Use {@link #toJavaCharset(String)} to get the canonical Java character</em>
-<a name="1175" href="#1175">1175</a> <em class="jxr_javadoccomment">     * set name.</em>
-<a name="1176" href="#1176">1176</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1177" href="#1177">1177</a> <em class="jxr_javadoccomment">     * @param charsetName the characters set name.</em>
-<a name="1178" href="#1178">1178</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if decoding is supported, &lt;code&gt;false&lt;/code&gt;</em>
-<a name="1179" href="#1179">1179</a> <em class="jxr_javadoccomment">     *         otherwise.</em>
-<a name="1180" href="#1180">1180</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1181" href="#1181">1181</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isDecodingSupported(String charsetName) {
-<a name="1182" href="#1182">1182</a>         <strong class="jxr_keyword">return</strong> decodingSupported.contains(charsetName.toLowerCase());
-<a name="1183" href="#1183">1183</a>     }
-<a name="1184" href="#1184">1184</a>     
-<a name="1185" href="#1185">1185</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1186" href="#1186">1186</a> <em class="jxr_javadoccomment">     * Gets the preferred MIME character set name for the specified</em>
-<a name="1187" href="#1187">1187</a> <em class="jxr_javadoccomment">     * character set or &lt;code&gt;null&lt;/code&gt; if not known.</em>
-<a name="1188" href="#1188">1188</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1189" href="#1189">1189</a> <em class="jxr_javadoccomment">     * @param charsetName the character set name to look for.</em>
-<a name="1190" href="#1190">1190</a> <em class="jxr_javadoccomment">     * @return the MIME preferred name or &lt;code&gt;null&lt;/code&gt; if not known.</em>
-<a name="1191" href="#1191">1191</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1192" href="#1192">1192</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toMimeCharset(String charsetName) {
-<a name="1193" href="#1193">1193</a>         <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c = charsetMap.get(charsetName.toLowerCase());
-<a name="1194" href="#1194">1194</a>         <strong class="jxr_keyword">if</strong> (c != <strong class="jxr_keyword">null</strong>) {
-<a name="1195" href="#1195">1195</a>             <strong class="jxr_keyword">return</strong> c.mime;
-<a name="1196" href="#1196">1196</a>         }
-<a name="1197" href="#1197">1197</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a name="1198" href="#1198">1198</a>     }
-<a name="1199" href="#1199">1199</a>     
-<a name="1200" href="#1200">1200</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="1201" href="#1201">1201</a> <em class="jxr_javadoccomment">     * Gets the canonical Java character set name for the specified</em>
-<a name="1202" href="#1202">1202</a> <em class="jxr_javadoccomment">     * character set or &lt;code&gt;null&lt;/code&gt; if not known. This should be</em>
-<a name="1203" href="#1203">1203</a> <em class="jxr_javadoccomment">     * called before doing any conversions using the Java API. NOTE:</em>
-<a name="1204" href="#1204">1204</a> <em class="jxr_javadoccomment">     * you must use {@link #isEncodingSupported(String)} or</em>
-<a name="1205" href="#1205">1205</a> <em class="jxr_javadoccomment">     * {@link #isDecodingSupported(String)} to make sure the returned</em>
-<a name="1206" href="#1206">1206</a> <em class="jxr_javadoccomment">     * Java character set is supported by the current VM.</em>
-<a name="1207" href="#1207">1207</a> <em class="jxr_javadoccomment">     * </em>
-<a name="1208" href="#1208">1208</a> <em class="jxr_javadoccomment">     * @param charsetName the character set name to look for.</em>
-<a name="1209" href="#1209">1209</a> <em class="jxr_javadoccomment">     * @return the canonical Java name or &lt;code&gt;null&lt;/code&gt; if not known.</em>
-<a name="1210" href="#1210">1210</a> <em class="jxr_javadoccomment">     */</em>
-<a name="1211" href="#1211">1211</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toJavaCharset(String charsetName) {
-<a name="1212" href="#1212">1212</a>         <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c = charsetMap.get(charsetName.toLowerCase());
-<a name="1213" href="#1213">1213</a>         <strong class="jxr_keyword">if</strong> (c != <strong class="jxr_keyword">null</strong>) {
-<a name="1214" href="#1214">1214</a>             <strong class="jxr_keyword">return</strong> c.canonical;
-<a name="1215" href="#1215">1215</a>         }
-<a name="1216" href="#1216">1216</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a name="1217" href="#1217">1217</a>     }
-<a name="1218" href="#1218">1218</a> 
-<a name="1219" href="#1219">1219</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> java.nio.charset.Charset getCharset(String charsetName) {
-<a name="1220" href="#1220">1220</a>         String defaultCharset = <span class="jxr_string">"ISO-8859-1"</span>;
-<a name="1221" href="#1221">1221</a>         
-<a name="1222" href="#1222">1222</a>         <em class="jxr_comment">// Use the default chareset if given charset is null</em>
-<a name="1223" href="#1223">1223</a>         <strong class="jxr_keyword">if</strong>(charsetName == <strong class="jxr_keyword">null</strong>) charsetName = defaultCharset;
-<a name="1224" href="#1224">1224</a>             
-<a name="1225" href="#1225">1225</a>         <strong class="jxr_keyword">try</strong> {
-<a name="1226" href="#1226">1226</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(charsetName);
-<a name="1227" href="#1227">1227</a>         } <strong class="jxr_keyword">catch</strong> (IllegalCharsetNameException e) {
-<a name="1228" href="#1228">1228</a>             log.info(<span class="jxr_string">"Illegal charset "</span> + charsetName + <span class="jxr_string">", fallback to "</span> + defaultCharset + <span class="jxr_string">": "</span> + e);
-<a name="1229" href="#1229">1229</a>             <em class="jxr_comment">// Use default charset on exception </em>
-<a name="1230" href="#1230">1230</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(defaultCharset);
-<a name="1231" href="#1231">1231</a>         } <strong class="jxr_keyword">catch</strong> (UnsupportedCharsetException ex) {
-<a name="1232" href="#1232">1232</a>             log.info(<span class="jxr_string">"Unsupported charset "</span> + charsetName + <span class="jxr_string">", fallback to "</span> + defaultCharset + <span class="jxr_string">": "</span> + ex);
-<a name="1233" href="#1233">1233</a>             <em class="jxr_comment">// Use default charset on exception</em>
-<a name="1234" href="#1234">1234</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(defaultCharset);
-<a name="1235" href="#1235">1235</a>         }
-<a name="1236" href="#1236">1236</a>         
-<a name="1237" href="#1237">1237</a>     }
-<a name="1238" href="#1238">1238</a>     <em class="jxr_comment">/*</em>
-<a name="1239" href="#1239">1239</a> <em class="jxr_comment">     * Uncomment the code below and run the main method to regenerate the</em>
-<a name="1240" href="#1240">1240</a> <em class="jxr_comment">     * Javadoc table above when the known charsets change. </em>
-<a name="1241" href="#1241">1241</a> <em class="jxr_comment">     */</em>
-<a name="1242" href="#1242">1242</a>     
-<a name="1243" href="#1243">1243</a>     <em class="jxr_comment">/*</em>
-<a name="1244" href="#1244">1244</a> <em class="jxr_comment">    private static String dumpHtmlTable() {</em>
-<a name="1245" href="#1245">1245</a> <em class="jxr_comment">        List&lt;Charset&gt; l = new LinkedList&lt;Charset&gt;(Arrays.asList(JAVA_CHARSETS));</em>
-<a name="1246" href="#1246">1246</a> <em class="jxr_comment">        Collections.sort(l);</em>
-<a name="1247" href="#1247">1247</a> <em class="jxr_comment">        StringBuilder sb = new StringBuilder();</em>
-<a name="1248" href="#1248">1248</a> <em class="jxr_comment">        sb.append(" * &lt;table&gt;\n");</em>
-<a name="1249" href="#1249">1249</a> <em class="jxr_comment">        sb.append(" *     &lt;tr&gt;\n");</em>
-<a name="1250" href="#1250">1250</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;Canonical (Java) name&lt;/td&gt;\n");</em>
-<a name="1251" href="#1251">1251</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;MIME preferred&lt;/td&gt;\n");</em>
-<a name="1252" href="#1252">1252</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;Aliases&lt;/td&gt;\n");</em>
-<a name="1253" href="#1253">1253</a> <em class="jxr_comment">        sb.append(" *     &lt;/tr&gt;\n");</em>
-<a name="1254" href="#1254">1254</a> 
-<a name="1255" href="#1255">1255</a> <em class="jxr_comment">        for (Charset c : l) {</em>
-<a name="1256" href="#1256">1256</a> <em class="jxr_comment">            sb.append(" *     &lt;tr&gt;\n");</em>
-<a name="1257" href="#1257">1257</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;" + c.canonical + "&lt;/td&gt;\n");</em>
-<a name="1258" href="#1258">1258</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;" + (c.mime == null ? "?" : c.mime)+ "&lt;/td&gt;\n");</em>
-<a name="1259" href="#1259">1259</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;");</em>
-<a name="1260" href="#1260">1260</a> <em class="jxr_comment">            for (int i = 0; c.aliases != null &amp;&amp; i &lt; c.aliases.length; i++) {</em>
-<a name="1261" href="#1261">1261</a> <em class="jxr_comment">                sb.append(c.aliases[i] + " ");</em>
-<a name="1262" href="#1262">1262</a> <em class="jxr_comment">            }</em>
-<a name="1263" href="#1263">1263</a> <em class="jxr_comment">            sb.append("&lt;/td&gt;\n");</em>
-<a name="1264" href="#1264">1264</a> <em class="jxr_comment">            sb.append(" *     &lt;/tr&gt;\n");</em>
-<a name="1265" href="#1265">1265</a> <em class="jxr_comment">        }</em>
-<a name="1266" href="#1266">1266</a> <em class="jxr_comment">        sb.append(" * &lt;/table&gt;\n");</em>
-<a name="1267" href="#1267">1267</a> <em class="jxr_comment">        return sb.toString();</em>
-<a name="1268" href="#1268">1268</a> <em class="jxr_comment">    }</em>
-<a name="1269" href="#1269">1269</a> <em class="jxr_comment">    </em>
-<a name="1270" href="#1270">1270</a> <em class="jxr_comment">    public static void main(String[] args) {</em>
-<a name="1271" href="#1271">1271</a> <em class="jxr_comment">        System.out.println(dumpHtmlTable());</em>
-<a name="1272" href="#1272">1272</a> <em class="jxr_comment">    }</em>
-<a name="1273" href="#1273">1273</a> <em class="jxr_comment">    */</em>
-<a name="1274" href="#1274">1274</a> }
+<a name="1080" href="#1080">1080</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> java.nio.charset.Charset DEFAULT_CHARSET = US_ASCII;
+<a name="1081" href="#1081">1081</a> 
+<a name="1082" href="#1082">1082</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1083" href="#1083">1083</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified character falls into the US</em>
+<a name="1084" href="#1084">1084</a> <em class="jxr_javadoccomment">     * ASCII character set (Unicode range 0000 to 007f).</em>
+<a name="1085" href="#1085">1085</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1086" href="#1086">1086</a> <em class="jxr_javadoccomment">     * @param ch</em>
+<a name="1087" href="#1087">1087</a> <em class="jxr_javadoccomment">     *            character to test.</em>
+<a name="1088" href="#1088">1088</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified character falls into the US</em>
+<a name="1089" href="#1089">1089</a> <em class="jxr_javadoccomment">     *         ASCII character set, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
+<a name="1090" href="#1090">1090</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1091" href="#1091">1091</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isASCII(<strong class="jxr_keyword">char</strong> ch) {
+<a name="1092" href="#1092">1092</a>         <strong class="jxr_keyword">return</strong> (0xFF80 &amp; ch) == 0;
+<a name="1093" href="#1093">1093</a>     }
+<a name="1094" href="#1094">1094</a> 
+<a name="1095" href="#1095">1095</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1096" href="#1096">1096</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
+<a name="1097" href="#1097">1097</a> <em class="jxr_javadoccomment">     * US ASCII characters.</em>
+<a name="1098" href="#1098">1098</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1099" href="#1099">1099</a> <em class="jxr_javadoccomment">     * @param s</em>
+<a name="1100" href="#1100">1100</a> <em class="jxr_javadoccomment">     *            string to test.</em>
+<a name="1101" href="#1101">1101</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
+<a name="1102" href="#1102">1102</a> <em class="jxr_javadoccomment">     *         US ASCII characters, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
+<a name="1103" href="#1103">1103</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1104" href="#1104">1104</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isASCII(<strong class="jxr_keyword">final</strong> String s) {
+<a name="1105" href="#1105">1105</a>         <strong class="jxr_keyword">if</strong> (s == <strong class="jxr_keyword">null</strong>) {
+<a name="1106" href="#1106">1106</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"String may not be null"</span>);
+<a name="1107" href="#1107">1107</a>         }
+<a name="1108" href="#1108">1108</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
+<a name="1109" href="#1109">1109</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; len; i++) {
+<a name="1110" href="#1110">1110</a>             <strong class="jxr_keyword">if</strong> (!isASCII(s.charAt(i))) {
+<a name="1111" href="#1111">1111</a>                 <strong class="jxr_keyword">return</strong> false;
+<a name="1112" href="#1112">1112</a>             }
+<a name="1113" href="#1113">1113</a>         }
+<a name="1114" href="#1114">1114</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a name="1115" href="#1115">1115</a>     }
+<a name="1116" href="#1116">1116</a> 
+<a name="1117" href="#1117">1117</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1118" href="#1118">1118</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified character is a whitespace</em>
+<a name="1119" href="#1119">1119</a> <em class="jxr_javadoccomment">     * character (CR, LF, SP or HT).</em>
+<a name="1120" href="#1120">1120</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1121" href="#1121">1121</a> <em class="jxr_javadoccomment">     * @param ch</em>
+<a name="1122" href="#1122">1122</a> <em class="jxr_javadoccomment">     *            character to test.</em>
+<a name="1123" href="#1123">1123</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified character is a whitespace</em>
+<a name="1124" href="#1124">1124</a> <em class="jxr_javadoccomment">     *         character, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
+<a name="1125" href="#1125">1125</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1126" href="#1126">1126</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWhitespace(<strong class="jxr_keyword">char</strong> ch) {
+<a name="1127" href="#1127">1127</a>         <strong class="jxr_keyword">return</strong> ch == SP || ch == HT || ch == CR || ch == LF;
+<a name="1128" href="#1128">1128</a>     }
+<a name="1129" href="#1129">1129</a> 
+<a name="1130" href="#1130">1130</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1131" href="#1131">1131</a> <em class="jxr_javadoccomment">     * Returns &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
+<a name="1132" href="#1132">1132</a> <em class="jxr_javadoccomment">     * whitespace characters.</em>
+<a name="1133" href="#1133">1133</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1134" href="#1134">1134</a> <em class="jxr_javadoccomment">     * @param s</em>
+<a name="1135" href="#1135">1135</a> <em class="jxr_javadoccomment">     *            string to test.</em>
+<a name="1136" href="#1136">1136</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if the specified string consists entirely of</em>
+<a name="1137" href="#1137">1137</a> <em class="jxr_javadoccomment">     *         whitespace characters, &lt;code&gt;false&lt;/code&gt; otherwise.</em>
+<a name="1138" href="#1138">1138</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1139" href="#1139">1139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWhitespace(<strong class="jxr_keyword">final</strong> String s) {
+<a name="1140" href="#1140">1140</a>         <strong class="jxr_keyword">if</strong> (s == <strong class="jxr_keyword">null</strong>) {
+<a name="1141" href="#1141">1141</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"String may not be null"</span>);
+<a name="1142" href="#1142">1142</a>         }
+<a name="1143" href="#1143">1143</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
+<a name="1144" href="#1144">1144</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; len; i++) {
+<a name="1145" href="#1145">1145</a>             <strong class="jxr_keyword">if</strong> (!isWhitespace(s.charAt(i))) {
+<a name="1146" href="#1146">1146</a>                 <strong class="jxr_keyword">return</strong> false;
+<a name="1147" href="#1147">1147</a>             }
+<a name="1148" href="#1148">1148</a>         }
+<a name="1149" href="#1149">1149</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a name="1150" href="#1150">1150</a>     }
+<a name="1151" href="#1151">1151</a>     
+<a name="1152" href="#1152">1152</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1153" href="#1153">1153</a> <em class="jxr_javadoccomment">     * Determines if the VM supports encoding (chars to bytes) the </em>
+<a name="1154" href="#1154">1154</a> <em class="jxr_javadoccomment">     * specified character set. NOTE: the given character set name may </em>
+<a name="1155" href="#1155">1155</a> <em class="jxr_javadoccomment">     * not be known to the VM even if this method returns &lt;code&gt;true&lt;/code&gt;.</em>
+<a name="1156" href="#1156">1156</a> <em class="jxr_javadoccomment">     * Use {@link #toJavaCharset(String)} to get the canonical Java character</em>
+<a name="1157" href="#1157">1157</a> <em class="jxr_javadoccomment">     * set name.</em>
+<a name="1158" href="#1158">1158</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1159" href="#1159">1159</a> <em class="jxr_javadoccomment">     * @param charsetName the characters set name.</em>
+<a name="1160" href="#1160">1160</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if encoding is supported, &lt;code&gt;false&lt;/code&gt;</em>
+<a name="1161" href="#1161">1161</a> <em class="jxr_javadoccomment">     *         otherwise.</em>
+<a name="1162" href="#1162">1162</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1163" href="#1163">1163</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isEncodingSupported(String charsetName) {
+<a name="1164" href="#1164">1164</a>         <strong class="jxr_keyword">return</strong> encodingSupported.contains(charsetName.toLowerCase());
+<a name="1165" href="#1165">1165</a>     }
+<a name="1166" href="#1166">1166</a>     
+<a name="1167" href="#1167">1167</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1168" href="#1168">1168</a> <em class="jxr_javadoccomment">     * Determines if the VM supports decoding (bytes to chars) the </em>
+<a name="1169" href="#1169">1169</a> <em class="jxr_javadoccomment">     * specified character set. NOTE: the given character set name may </em>
+<a name="1170" href="#1170">1170</a> <em class="jxr_javadoccomment">     * not be known to the VM even if this method returns &lt;code&gt;true&lt;/code&gt;.</em>
+<a name="1171" href="#1171">1171</a> <em class="jxr_javadoccomment">     * Use {@link #toJavaCharset(String)} to get the canonical Java character</em>
+<a name="1172" href="#1172">1172</a> <em class="jxr_javadoccomment">     * set name.</em>
+<a name="1173" href="#1173">1173</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1174" href="#1174">1174</a> <em class="jxr_javadoccomment">     * @param charsetName the characters set name.</em>
+<a name="1175" href="#1175">1175</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;true&lt;/code&gt; if decoding is supported, &lt;code&gt;false&lt;/code&gt;</em>
+<a name="1176" href="#1176">1176</a> <em class="jxr_javadoccomment">     *         otherwise.</em>
+<a name="1177" href="#1177">1177</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1178" href="#1178">1178</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isDecodingSupported(String charsetName) {
+<a name="1179" href="#1179">1179</a>         <strong class="jxr_keyword">return</strong> decodingSupported.contains(charsetName.toLowerCase());
+<a name="1180" href="#1180">1180</a>     }
+<a name="1181" href="#1181">1181</a>     
+<a name="1182" href="#1182">1182</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1183" href="#1183">1183</a> <em class="jxr_javadoccomment">     * Gets the preferred MIME character set name for the specified</em>
+<a name="1184" href="#1184">1184</a> <em class="jxr_javadoccomment">     * character set or &lt;code&gt;null&lt;/code&gt; if not known.</em>
+<a name="1185" href="#1185">1185</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1186" href="#1186">1186</a> <em class="jxr_javadoccomment">     * @param charsetName the character set name to look for.</em>
+<a name="1187" href="#1187">1187</a> <em class="jxr_javadoccomment">     * @return the MIME preferred name or &lt;code&gt;null&lt;/code&gt; if not known.</em>
+<a name="1188" href="#1188">1188</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1189" href="#1189">1189</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toMimeCharset(String charsetName) {
+<a name="1190" href="#1190">1190</a>         <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c = charsetMap.get(charsetName.toLowerCase());
+<a name="1191" href="#1191">1191</a>         <strong class="jxr_keyword">if</strong> (c != <strong class="jxr_keyword">null</strong>) {
+<a name="1192" href="#1192">1192</a>             <strong class="jxr_keyword">return</strong> c.mime;
+<a name="1193" href="#1193">1193</a>         }
+<a name="1194" href="#1194">1194</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a name="1195" href="#1195">1195</a>     }
+<a name="1196" href="#1196">1196</a>     
+<a name="1197" href="#1197">1197</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="1198" href="#1198">1198</a> <em class="jxr_javadoccomment">     * Gets the canonical Java character set name for the specified</em>
+<a name="1199" href="#1199">1199</a> <em class="jxr_javadoccomment">     * character set or &lt;code&gt;null&lt;/code&gt; if not known. This should be</em>
+<a name="1200" href="#1200">1200</a> <em class="jxr_javadoccomment">     * called before doing any conversions using the Java API. NOTE:</em>
+<a name="1201" href="#1201">1201</a> <em class="jxr_javadoccomment">     * you must use {@link #isEncodingSupported(String)} or</em>
+<a name="1202" href="#1202">1202</a> <em class="jxr_javadoccomment">     * {@link #isDecodingSupported(String)} to make sure the returned</em>
+<a name="1203" href="#1203">1203</a> <em class="jxr_javadoccomment">     * Java character set is supported by the current VM.</em>
+<a name="1204" href="#1204">1204</a> <em class="jxr_javadoccomment">     * </em>
+<a name="1205" href="#1205">1205</a> <em class="jxr_javadoccomment">     * @param charsetName the character set name to look for.</em>
+<a name="1206" href="#1206">1206</a> <em class="jxr_javadoccomment">     * @return the canonical Java name or &lt;code&gt;null&lt;/code&gt; if not known.</em>
+<a name="1207" href="#1207">1207</a> <em class="jxr_javadoccomment">     */</em>
+<a name="1208" href="#1208">1208</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toJavaCharset(String charsetName) {
+<a name="1209" href="#1209">1209</a>         <a href="../../../../../org/apache/james/mime4j/util/CharsetUtil.html">Charset</a> c = charsetMap.get(charsetName.toLowerCase());
+<a name="1210" href="#1210">1210</a>         <strong class="jxr_keyword">if</strong> (c != <strong class="jxr_keyword">null</strong>) {
+<a name="1211" href="#1211">1211</a>             <strong class="jxr_keyword">return</strong> c.canonical;
+<a name="1212" href="#1212">1212</a>         }
+<a name="1213" href="#1213">1213</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a name="1214" href="#1214">1214</a>     }
+<a name="1215" href="#1215">1215</a> 
+<a name="1216" href="#1216">1216</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> java.nio.charset.Charset getCharset(String charsetName) {
+<a name="1217" href="#1217">1217</a>         String defaultCharset = <span class="jxr_string">"ISO-8859-1"</span>;
+<a name="1218" href="#1218">1218</a>         
+<a name="1219" href="#1219">1219</a>         <em class="jxr_comment">// Use the default chareset if given charset is null</em>
+<a name="1220" href="#1220">1220</a>         <strong class="jxr_keyword">if</strong>(charsetName == <strong class="jxr_keyword">null</strong>) charsetName = defaultCharset;
+<a name="1221" href="#1221">1221</a>             
+<a name="1222" href="#1222">1222</a>         <strong class="jxr_keyword">try</strong> {
+<a name="1223" href="#1223">1223</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(charsetName);
+<a name="1224" href="#1224">1224</a>         } <strong class="jxr_keyword">catch</strong> (IllegalCharsetNameException e) {
+<a name="1225" href="#1225">1225</a>             log.info(<span class="jxr_string">"Illegal charset "</span> + charsetName + <span class="jxr_string">", fallback to "</span> + defaultCharset + <span class="jxr_string">": "</span> + e);
+<a name="1226" href="#1226">1226</a>             <em class="jxr_comment">// Use default charset on exception </em>
+<a name="1227" href="#1227">1227</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(defaultCharset);
+<a name="1228" href="#1228">1228</a>         } <strong class="jxr_keyword">catch</strong> (UnsupportedCharsetException ex) {
+<a name="1229" href="#1229">1229</a>             log.info(<span class="jxr_string">"Unsupported charset "</span> + charsetName + <span class="jxr_string">", fallback to "</span> + defaultCharset + <span class="jxr_string">": "</span> + ex);
+<a name="1230" href="#1230">1230</a>             <em class="jxr_comment">// Use default charset on exception</em>
+<a name="1231" href="#1231">1231</a>             <strong class="jxr_keyword">return</strong> java.nio.charset.Charset.forName(defaultCharset);
+<a name="1232" href="#1232">1232</a>         }
+<a name="1233" href="#1233">1233</a>         
+<a name="1234" href="#1234">1234</a>     }
+<a name="1235" href="#1235">1235</a>     <em class="jxr_comment">/*</em>
+<a name="1236" href="#1236">1236</a> <em class="jxr_comment">     * Uncomment the code below and run the main method to regenerate the</em>
+<a name="1237" href="#1237">1237</a> <em class="jxr_comment">     * Javadoc table above when the known charsets change. </em>
+<a name="1238" href="#1238">1238</a> <em class="jxr_comment">     */</em>
+<a name="1239" href="#1239">1239</a>     
+<a name="1240" href="#1240">1240</a>     <em class="jxr_comment">/*</em>
+<a name="1241" href="#1241">1241</a> <em class="jxr_comment">    private static String dumpHtmlTable() {</em>
+<a name="1242" href="#1242">1242</a> <em class="jxr_comment">        List&lt;Charset&gt; l = new LinkedList&lt;Charset&gt;(Arrays.asList(JAVA_CHARSETS));</em>
+<a name="1243" href="#1243">1243</a> <em class="jxr_comment">        Collections.sort(l);</em>
+<a name="1244" href="#1244">1244</a> <em class="jxr_comment">        StringBuilder sb = new StringBuilder();</em>
+<a name="1245" href="#1245">1245</a> <em class="jxr_comment">        sb.append(" * &lt;table&gt;\n");</em>
+<a name="1246" href="#1246">1246</a> <em class="jxr_comment">        sb.append(" *     &lt;tr&gt;\n");</em>
+<a name="1247" href="#1247">1247</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;Canonical (Java) name&lt;/td&gt;\n");</em>
+<a name="1248" href="#1248">1248</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;MIME preferred&lt;/td&gt;\n");</em>
+<a name="1249" href="#1249">1249</a> <em class="jxr_comment">        sb.append(" *         &lt;td&gt;Aliases&lt;/td&gt;\n");</em>
+<a name="1250" href="#1250">1250</a> <em class="jxr_comment">        sb.append(" *     &lt;/tr&gt;\n");</em>
+<a name="1251" href="#1251">1251</a> 
+<a name="1252" href="#1252">1252</a> <em class="jxr_comment">        for (Charset c : l) {</em>
+<a name="1253" href="#1253">1253</a> <em class="jxr_comment">            sb.append(" *     &lt;tr&gt;\n");</em>
+<a name="1254" href="#1254">1254</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;" + c.canonical + "&lt;/td&gt;\n");</em>
+<a name="1255" href="#1255">1255</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;" + (c.mime == null ? "?" : c.mime)+ "&lt;/td&gt;\n");</em>
+<a name="1256" href="#1256">1256</a> <em class="jxr_comment">            sb.append(" *         &lt;td&gt;");</em>
+<a name="1257" href="#1257">1257</a> <em class="jxr_comment">            for (int i = 0; c.aliases != null &amp;&amp; i &lt; c.aliases.length; i++) {</em>
+<a name="1258" href="#1258">1258</a> <em class="jxr_comment">                sb.append(c.aliases[i] + " ");</em>
+<a name="1259" href="#1259">1259</a> <em class="jxr_comment">            }</em>
+<a name="1260" href="#1260">1260</a> <em class="jxr_comment">            sb.append("&lt;/td&gt;\n");</em>
+<a name="1261" href="#1261">1261</a> <em class="jxr_comment">            sb.append(" *     &lt;/tr&gt;\n");</em>
+<a name="1262" href="#1262">1262</a> <em class="jxr_comment">        }</em>
+<a name="1263" href="#1263">1263</a> <em class="jxr_comment">        sb.append(" * &lt;/table&gt;\n");</em>
+<a name="1264" href="#1264">1264</a> <em class="jxr_comment">        return sb.toString();</em>
+<a name="1265" href="#1265">1265</a> <em class="jxr_comment">    }</em>
+<a name="1266" href="#1266">1266</a> <em class="jxr_comment">    </em>
+<a name="1267" href="#1267">1267</a> <em class="jxr_comment">    public static void main(String[] args) {</em>
+<a name="1268" href="#1268">1268</a> <em class="jxr_comment">        System.out.println(dumpHtmlTable());</em>
+<a name="1269" href="#1269">1269</a> <em class="jxr_comment">    }</em>
+<a name="1270" href="#1270">1270</a> <em class="jxr_comment">    */</em>
+<a name="1271" href="#1271">1271</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

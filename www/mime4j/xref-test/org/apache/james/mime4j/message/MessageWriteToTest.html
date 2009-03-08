@@ -48,69 +48,37 @@
 <a name="38" href="#38">38</a>          <strong class="jxr_keyword">super</strong>.tearDown();
 <a name="39" href="#39">39</a>      }
 <a name="40" href="#40">40</a>      
-<a name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleMailStrictIgnore() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleMail() <strong class="jxr_keyword">throws</strong> Exception {
 <a name="42" href="#42">42</a>          Message message = createMessage(ExampleMail.RFC822_SIMPLE_BYTES);
 <a name="43" href="#43">43</a>          assertFalse(<span class="jxr_string">"Not multipart"</span>, message.isMultipart());
 <a name="44" href="#44">44</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="45" href="#45">45</a>          MessageWriter.STRICT_IGNORE.writeEntity(message, out);
+<a name="45" href="#45">45</a>          message.writeTo(out);
 <a name="46" href="#46">46</a>          assertEquals(out.toByteArray(), ExampleMail.RFC822_SIMPLE_BYTES);
 <a name="47" href="#47">47</a>      }
 <a name="48" href="#48">48</a>      
-<a name="49" href="#49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleMailStrictError() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="50" href="#50">50</a>          Message message = createMessage(ExampleMail.RFC822_SIMPLE_BYTES);
-<a name="51" href="#51">51</a>          assertFalse(<span class="jxr_string">"Not multipart"</span>, message.isMultipart());
-<a name="52" href="#52">52</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="53" href="#53">53</a>          MessageWriter.STRICT_ERROR.writeEntity(message, out);
-<a name="54" href="#54">54</a>          assertEquals(out.toByteArray(), ExampleMail.RFC822_SIMPLE_BYTES);
-<a name="55" href="#55">55</a>      }
-<a name="56" href="#56">56</a>      
-<a name="57" href="#57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleMailLenient() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="58" href="#58">58</a>          Message message = createMessage(ExampleMail.RFC822_SIMPLE_BYTES);
-<a name="59" href="#59">59</a>          assertFalse(<span class="jxr_string">"Not multipart"</span>, message.isMultipart());
-<a name="60" href="#60">60</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="61" href="#61">61</a>          MessageWriter.LENIENT.writeEntity(message, out);
-<a name="62" href="#62">62</a>          assertEquals(out.toByteArray(), ExampleMail.RFC822_SIMPLE_BYTES);
-<a name="63" href="#63">63</a>      }
-<a name="64" href="#64">64</a>      
-<a name="65" href="#65">65</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertEquals(byte[] expected, byte[] actual) {
-<a name="66" href="#66">66</a>          StringBuilder buffer = <strong class="jxr_keyword">new</strong> StringBuilder(expected.length);
-<a name="67" href="#67">67</a>          assertEquals(expected.length, actual.length);
-<a name="68" href="#68">68</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; actual.length; i++) {
-<a name="69" href="#69">69</a>              buffer.append((<strong class="jxr_keyword">char</strong>)actual[i]);
-<a name="70" href="#70">70</a>              assertEquals(<span class="jxr_string">"Mismatch@"</span> + i, expected[i], actual[i]);
-<a name="71" href="#71">71</a>          }
-<a name="72" href="#72">72</a>      }
-<a name="73" href="#73">73</a>      
-<a name="74" href="#74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testBinaryAttachmentLenient() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="75" href="#75">75</a>          Message message = createMessage(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES);
-<a name="76" href="#76">76</a>          assertTrue(<span class="jxr_string">"Is multipart"</span>, message.isMultipart());
-<a name="77" href="#77">77</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="78" href="#78">78</a>          MessageWriter.LENIENT.writeEntity(message, out);
-<a name="79" href="#79">79</a>          assertEquals(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES, out.toByteArray());
-<a name="80" href="#80">80</a>      }
-<a name="81" href="#81">81</a>      
-<a name="82" href="#82">82</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testBinaryAttachmentStrictError() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="83" href="#83">83</a>          Message message = createMessage(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES);
-<a name="84" href="#84">84</a>          assertTrue(<span class="jxr_string">"Is multipart"</span>, message.isMultipart());
-<a name="85" href="#85">85</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="86" href="#86">86</a>          MessageWriter.STRICT_ERROR.writeEntity(message, out);
-<a name="87" href="#87">87</a>          assertEquals(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES, out.toByteArray());
-<a name="88" href="#88">88</a>      }
-<a name="89" href="#89">89</a>      
-<a name="90" href="#90">90</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testBinaryAttachmentStrictIgnore() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="91" href="#91">91</a>          Message message = createMessage(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES);
-<a name="92" href="#92">92</a>          assertTrue(<span class="jxr_string">"Is multipart"</span>, message.isMultipart());
-<a name="93" href="#93">93</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a name="94" href="#94">94</a>          MessageWriter.STRICT_IGNORE.writeEntity(message, out);
-<a name="95" href="#95">95</a>          assertEquals(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES, out.toByteArray());
-<a name="96" href="#96">96</a>      }
-<a name="97" href="#97">97</a>      
-<a name="98" href="#98">98</a>      <strong class="jxr_keyword">private</strong> Message createMessage(byte[] octets) <strong class="jxr_keyword">throws</strong> Exception {
-<a name="99" href="#99">99</a>          ByteArrayInputStream in = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(octets);
-<a name="100" href="#100">100</a>         Message message = <strong class="jxr_keyword">new</strong> Message(in);
-<a name="101" href="#101">101</a>         <strong class="jxr_keyword">return</strong> message;
-<a name="102" href="#102">102</a>     }
-<a name="103" href="#103">103</a> }
+<a name="49" href="#49">49</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertEquals(byte[] expected, byte[] actual) {
+<a name="50" href="#50">50</a>          StringBuilder buffer = <strong class="jxr_keyword">new</strong> StringBuilder(expected.length);
+<a name="51" href="#51">51</a>          assertEquals(expected.length, actual.length);
+<a name="52" href="#52">52</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; actual.length; i++) {
+<a name="53" href="#53">53</a>              buffer.append((<strong class="jxr_keyword">char</strong>)actual[i]);
+<a name="54" href="#54">54</a>              assertEquals(<span class="jxr_string">"Mismatch@"</span> + i, expected[i], actual[i]);
+<a name="55" href="#55">55</a>          }
+<a name="56" href="#56">56</a>      }
+<a name="57" href="#57">57</a>      
+<a name="58" href="#58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testBinaryAttachment() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="59" href="#59">59</a>          Message message = createMessage(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES);
+<a name="60" href="#60">60</a>          assertTrue(<span class="jxr_string">"Is multipart"</span>, message.isMultipart());
+<a name="61" href="#61">61</a>          ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a name="62" href="#62">62</a>          message.writeTo(out);
+<a name="63" href="#63">63</a>          assertEquals(ExampleMail.MULTIPART_WITH_BINARY_ATTACHMENTS_BYTES, out.toByteArray());
+<a name="64" href="#64">64</a>      }
+<a name="65" href="#65">65</a>      
+<a name="66" href="#66">66</a>      <strong class="jxr_keyword">private</strong> Message createMessage(byte[] octets) <strong class="jxr_keyword">throws</strong> Exception {
+<a name="67" href="#67">67</a>          ByteArrayInputStream in = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(octets);
+<a name="68" href="#68">68</a>          Message message = <strong class="jxr_keyword">new</strong> Message(in);
+<a name="69" href="#69">69</a>          <strong class="jxr_keyword">return</strong> message;
+<a name="70" href="#70">70</a>      }
+<a name="71" href="#71">71</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

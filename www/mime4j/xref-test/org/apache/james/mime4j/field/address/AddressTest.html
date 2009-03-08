@@ -86,8 +86,8 @@
 <a name="76" href="#76">76</a>          assertEquals(<span class="jxr_string">"Marketing  folks"</span>, group.getName());
 <a name="77" href="#77">77</a>          assertEquals(2, group.getMailboxes().size());
 <a name="78" href="#78">78</a>  
-<a name="79" href="#79">79</a>          Mailbox mailbox1 = (Mailbox)group.getMailboxes().get(0);
-<a name="80" href="#80">80</a>          Mailbox mailbox2 = (Mailbox)group.getMailboxes().get(1);
+<a name="79" href="#79">79</a>          Mailbox mailbox1 = group.getMailboxes().get(0);
+<a name="80" href="#80">80</a>          Mailbox mailbox2 = group.getMailboxes().get(1);
 <a name="81" href="#81">81</a>  
 <a name="82" href="#82">82</a>          assertEquals(<span class="jxr_string">"Jane Smith"</span>, mailbox1.getName());
 <a name="83" href="#83">83</a>          assertEquals(<span class="jxr_string">"jane"</span>, mailbox1.getLocalPart());
@@ -413,41 +413,86 @@
 <a name="403" href="#403">403</a>         Group g = <strong class="jxr_keyword">new</strong> Group(<span class="jxr_string">"Undisclosed recipients"</span>, emptyMailboxes);
 <a name="404" href="#404">404</a>         assertEquals(<span class="jxr_string">"Undisclosed recipients:;"</span>, g.getEncodedString());
 <a name="405" href="#405">405</a>     }
-<a name="406" href="#406">406</a>     
-<a name="407" href="#407">407</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseGroup() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="408" href="#408">408</a>         Group group = Group
-<a name="409" href="#409">409</a>                 .parse(<span class="jxr_string">"group: john.doe@acme.org, Mary Smith &lt;mary@example.net&gt;;"</span>);
-<a name="410" href="#410">410</a>         assertEquals(<span class="jxr_string">"group"</span>, group.getName());
-<a name="411" href="#411">411</a> 
-<a name="412" href="#412">412</a>         MailboxList mailboxes = group.getMailboxes();
-<a name="413" href="#413">413</a>         assertEquals(2, mailboxes.size());
-<a name="414" href="#414">414</a> 
-<a name="415" href="#415">415</a>         Mailbox mailbox1 = mailboxes.get(0);
-<a name="416" href="#416">416</a>         assertNull(mailbox1.getName());
-<a name="417" href="#417">417</a>         assertEquals(<span class="jxr_string">"john.doe@acme.org"</span>, mailbox1.getAddress());
-<a name="418" href="#418">418</a> 
-<a name="419" href="#419">419</a>         Mailbox mailbox2 = mailboxes.get(1);
-<a name="420" href="#420">420</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, mailbox2.getName());
-<a name="421" href="#421">421</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, mailbox2.getAddress());
-<a name="422" href="#422">422</a>     }
-<a name="423" href="#423">423</a> 
-<a name="424" href="#424">424</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseMailbox() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="425" href="#425">425</a>         Mailbox mailbox1 = Mailbox.parse(<span class="jxr_string">"john.doe@acme.org"</span>);
-<a name="426" href="#426">426</a>         assertNull(mailbox1.getName());
-<a name="427" href="#427">427</a>         assertEquals(<span class="jxr_string">"john.doe@acme.org"</span>, mailbox1.getAddress());
-<a name="428" href="#428">428</a> 
-<a name="429" href="#429">429</a>         Mailbox mailbox2 = Mailbox.parse(<span class="jxr_string">"Mary Smith &lt;mary@example.net&gt;"</span>);
-<a name="430" href="#430">430</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, mailbox2.getName());
-<a name="431" href="#431">431</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, mailbox2.getAddress());
+<a name="406" href="#406">406</a> 
+<a name="407" href="#407">407</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseAddress() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="408" href="#408">408</a>         Address address = Address.parse(<span class="jxr_string">"Mary Smith &lt;mary@example.net&gt;"</span>);
+<a name="409" href="#409">409</a>         assertTrue(address instanceof Mailbox);
+<a name="410" href="#410">410</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, ((Mailbox) address).getName());
+<a name="411" href="#411">411</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, ((Mailbox) address).getAddress());
+<a name="412" href="#412">412</a> 
+<a name="413" href="#413">413</a>         address = Address.parse(<span class="jxr_string">"group: Mary Smith &lt;mary@example.net&gt;;"</span>);
+<a name="414" href="#414">414</a>         assertTrue(address instanceof Group);
+<a name="415" href="#415">415</a>         assertEquals(<span class="jxr_string">"group"</span>, ((Group) address).getName());
+<a name="416" href="#416">416</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, ((Group) address).getMailboxes().get(0)
+<a name="417" href="#417">417</a>                 .getName());
+<a name="418" href="#418">418</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, ((Group) address).getMailboxes()
+<a name="419" href="#419">419</a>                 .get(0).getAddress());
+<a name="420" href="#420">420</a> 
+<a name="421" href="#421">421</a>         <strong class="jxr_keyword">try</strong> {
+<a name="422" href="#422">422</a>             Group.parse(<span class="jxr_string">"john.doe@acme.org, jane.doe@acme.org"</span>);
+<a name="423" href="#423">423</a>             fail();
+<a name="424" href="#424">424</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException expected) {
+<a name="425" href="#425">425</a>         }
+<a name="426" href="#426">426</a>     }
+<a name="427" href="#427">427</a>     
+<a name="428" href="#428">428</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseGroup() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="429" href="#429">429</a>         Group group = Group
+<a name="430" href="#430">430</a>                 .parse(<span class="jxr_string">"group: john.doe@acme.org, Mary Smith &lt;mary@example.net&gt;;"</span>);
+<a name="431" href="#431">431</a>         assertEquals(<span class="jxr_string">"group"</span>, group.getName());
 <a name="432" href="#432">432</a> 
-<a name="433" href="#433">433</a>         <em class="jxr_comment">// non-ascii should be allowed in quoted strings</em>
-<a name="434" href="#434">434</a>         Mailbox mailbox3 = Mailbox
-<a name="435" href="#435">435</a>                 .parse(<span class="jxr_string">"\&quot;Hans M\374ller\&quot; &lt;hans.mueller@acme.org&gt;"</span>);
-<a name="436" href="#436">436</a>         assertEquals(<span class="jxr_string">"Hans M\374ller"</span>, mailbox3.getName());
-<a name="437" href="#437">437</a>         assertEquals(<span class="jxr_string">"hans.mueller@acme.org"</span>, mailbox3.getAddress());
-<a name="438" href="#438">438</a>     }
-<a name="439" href="#439">439</a>     
-<a name="440" href="#440">440</a> }
+<a name="433" href="#433">433</a>         MailboxList mailboxes = group.getMailboxes();
+<a name="434" href="#434">434</a>         assertEquals(2, mailboxes.size());
+<a name="435" href="#435">435</a> 
+<a name="436" href="#436">436</a>         Mailbox mailbox1 = mailboxes.get(0);
+<a name="437" href="#437">437</a>         assertNull(mailbox1.getName());
+<a name="438" href="#438">438</a>         assertEquals(<span class="jxr_string">"john.doe@acme.org"</span>, mailbox1.getAddress());
+<a name="439" href="#439">439</a> 
+<a name="440" href="#440">440</a>         Mailbox mailbox2 = mailboxes.get(1);
+<a name="441" href="#441">441</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, mailbox2.getName());
+<a name="442" href="#442">442</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, mailbox2.getAddress());
+<a name="443" href="#443">443</a> 
+<a name="444" href="#444">444</a>         <strong class="jxr_keyword">try</strong> {
+<a name="445" href="#445">445</a>             Group.parse(<span class="jxr_string">"john.doe@acme.org"</span>);
+<a name="446" href="#446">446</a>             fail();
+<a name="447" href="#447">447</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException expected) {
+<a name="448" href="#448">448</a>         }
+<a name="449" href="#449">449</a> 
+<a name="450" href="#450">450</a>         <strong class="jxr_keyword">try</strong> {
+<a name="451" href="#451">451</a>             Group.parse(<span class="jxr_string">"g1: john.doe@acme.org;, g2: mary@example.net;"</span>);
+<a name="452" href="#452">452</a>             fail();
+<a name="453" href="#453">453</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException expected) {
+<a name="454" href="#454">454</a>         }
+<a name="455" href="#455">455</a>     }
+<a name="456" href="#456">456</a> 
+<a name="457" href="#457">457</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseMailbox() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="458" href="#458">458</a>         Mailbox mailbox1 = Mailbox.parse(<span class="jxr_string">"john.doe@acme.org"</span>);
+<a name="459" href="#459">459</a>         assertNull(mailbox1.getName());
+<a name="460" href="#460">460</a>         assertEquals(<span class="jxr_string">"john.doe@acme.org"</span>, mailbox1.getAddress());
+<a name="461" href="#461">461</a> 
+<a name="462" href="#462">462</a>         Mailbox mailbox2 = Mailbox.parse(<span class="jxr_string">"Mary Smith &lt;mary@example.net&gt;"</span>);
+<a name="463" href="#463">463</a>         assertEquals(<span class="jxr_string">"Mary Smith"</span>, mailbox2.getName());
+<a name="464" href="#464">464</a>         assertEquals(<span class="jxr_string">"mary@example.net"</span>, mailbox2.getAddress());
+<a name="465" href="#465">465</a> 
+<a name="466" href="#466">466</a>         <em class="jxr_comment">// non-ascii should be allowed in quoted strings</em>
+<a name="467" href="#467">467</a>         Mailbox mailbox3 = Mailbox
+<a name="468" href="#468">468</a>                 .parse(<span class="jxr_string">"\&quot;Hans M\374ller\&quot; &lt;hans.mueller@acme.org&gt;"</span>);
+<a name="469" href="#469">469</a>         assertEquals(<span class="jxr_string">"Hans M\374ller"</span>, mailbox3.getName());
+<a name="470" href="#470">470</a>         assertEquals(<span class="jxr_string">"hans.mueller@acme.org"</span>, mailbox3.getAddress());
+<a name="471" href="#471">471</a> 
+<a name="472" href="#472">472</a>         <strong class="jxr_keyword">try</strong> {
+<a name="473" href="#473">473</a>             Mailbox.parse(<span class="jxr_string">"g: Mary Smith &lt;mary@example.net&gt;;"</span>);
+<a name="474" href="#474">474</a>             fail();
+<a name="475" href="#475">475</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException expected) {
+<a name="476" href="#476">476</a>         }
+<a name="477" href="#477">477</a> 
+<a name="478" href="#478">478</a>         <strong class="jxr_keyword">try</strong> {
+<a name="479" href="#479">479</a>             Mailbox.parse(<span class="jxr_string">"Mary Smith &lt;mary@example.net&gt;, hans.mueller@acme.org"</span>);
+<a name="480" href="#480">480</a>             fail();
+<a name="481" href="#481">481</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException expected) {
+<a name="482" href="#482">482</a>         }
+<a name="483" href="#483">483</a>     }
+<a name="484" href="#484">484</a>     
+<a name="485" href="#485">485</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

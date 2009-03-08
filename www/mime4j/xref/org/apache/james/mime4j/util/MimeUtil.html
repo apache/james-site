@@ -182,350 +182,377 @@
 <a name="172" href="#172">172</a> <em class="jxr_javadoccomment">     * @param pValue The field value to parse.</em>
 <a name="173" href="#173">173</a> <em class="jxr_javadoccomment">     * @return The result map; use the key "" to retrieve the first value.</em>
 <a name="174" href="#174">174</a> <em class="jxr_javadoccomment">     */</em>
-<a name="175" href="#175">175</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, String&gt; getHeaderParams(String pValue) {
-<a name="176" href="#176">176</a>         pValue = pValue.trim();
-<a name="177" href="#177">177</a>         
-<a name="178" href="#178">178</a>         <em class="jxr_comment">/*</em>
-<a name="179" href="#179">179</a> <em class="jxr_comment">         * Unfold Content-Type value</em>
-<a name="180" href="#180">180</a> <em class="jxr_comment">         */</em>
-<a name="181" href="#181">181</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(128);
-<a name="182" href="#182">182</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; pValue.length(); i++) {
-<a name="183" href="#183">183</a>             <strong class="jxr_keyword">char</strong> c = pValue.charAt(i);
-<a name="184" href="#184">184</a>             <strong class="jxr_keyword">if</strong> (c == '\r' || c == '\n') {
-<a name="185" href="#185">185</a>                 <strong class="jxr_keyword">continue</strong>;
-<a name="186" href="#186">186</a>             }
-<a name="187" href="#187">187</a>             sb.append(c);
-<a name="188" href="#188">188</a>         }
-<a name="189" href="#189">189</a>         pValue = sb.toString();
-<a name="190" href="#190">190</a>         
-<a name="191" href="#191">191</a>         Map&lt;String, String&gt; result = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String&gt;();
-<a name="192" href="#192">192</a> 
-<a name="193" href="#193">193</a>         <em class="jxr_comment">// split main value and parameters</em>
-<a name="194" href="#194">194</a>         String main;
-<a name="195" href="#195">195</a>         String <strong class="jxr_keyword">rest</strong>;
-<a name="196" href="#196">196</a>         <strong class="jxr_keyword">if</strong> (pValue.indexOf(<span class="jxr_string">";"</span>) == -1) {
-<a name="197" href="#197">197</a>             main = pValue;
-<a name="198" href="#198">198</a>             <strong class="jxr_keyword">rest</strong> = <strong class="jxr_keyword">null</strong>;
-<a name="199" href="#199">199</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="200" href="#200">200</a>             main = pValue.substring(0, pValue.indexOf(<span class="jxr_string">";"</span>));
-<a name="201" href="#201">201</a>             <strong class="jxr_keyword">rest</strong> = pValue.substring(main.length() + 1);
-<a name="202" href="#202">202</a>         }
-<a name="203" href="#203">203</a> 
-<a name="204" href="#204">204</a>         result.put(<span class="jxr_string">""</span>, main);
-<a name="205" href="#205">205</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">rest</strong> != <strong class="jxr_keyword">null</strong>) {
-<a name="206" href="#206">206</a>             <strong class="jxr_keyword">char</strong>[] chars = <strong class="jxr_keyword">rest</strong>.toCharArray();
-<a name="207" href="#207">207</a>             StringBuilder paramName = <strong class="jxr_keyword">new</strong> StringBuilder(64);
-<a name="208" href="#208">208</a>             StringBuilder paramValue = <strong class="jxr_keyword">new</strong> StringBuilder(64);
-<a name="209" href="#209">209</a> 
-<a name="210" href="#210">210</a>             <strong class="jxr_keyword">final</strong> byte READY_FOR_NAME = 0;
-<a name="211" href="#211">211</a>             <strong class="jxr_keyword">final</strong> byte IN_NAME = 1;
-<a name="212" href="#212">212</a>             <strong class="jxr_keyword">final</strong> byte READY_FOR_VALUE = 2;
-<a name="213" href="#213">213</a>             <strong class="jxr_keyword">final</strong> byte IN_VALUE = 3;
-<a name="214" href="#214">214</a>             <strong class="jxr_keyword">final</strong> byte IN_QUOTED_VALUE = 4;
-<a name="215" href="#215">215</a>             <strong class="jxr_keyword">final</strong> byte VALUE_DONE = 5;
-<a name="216" href="#216">216</a>             <strong class="jxr_keyword">final</strong> byte ERROR = 99;
-<a name="217" href="#217">217</a> 
-<a name="218" href="#218">218</a>             byte state = READY_FOR_NAME;
-<a name="219" href="#219">219</a>             <strong class="jxr_keyword">boolean</strong> escaped = false;
-<a name="220" href="#220">220</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">char</strong> c : chars) {
-<a name="221" href="#221">221</a>                 <strong class="jxr_keyword">switch</strong> (state) {
-<a name="222" href="#222">222</a>                     <strong class="jxr_keyword">case</strong> ERROR:
-<a name="223" href="#223">223</a>                         <strong class="jxr_keyword">if</strong> (c == ';')
-<a name="224" href="#224">224</a>                             state = READY_FOR_NAME;
-<a name="225" href="#225">225</a>                         <strong class="jxr_keyword">break</strong>;
+<a name="175" href="#175">175</a>     @SuppressWarnings(<span class="jxr_string">"fallthrough"</span>)
+<a name="176" href="#176">176</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, String&gt; getHeaderParams(String pValue) {
+<a name="177" href="#177">177</a>         pValue = pValue.trim();
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a>         pValue = unfold(pValue);
+<a name="180" href="#180">180</a>         
+<a name="181" href="#181">181</a>         Map&lt;String, String&gt; result = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String&gt;();
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>         <em class="jxr_comment">// split main value and parameters</em>
+<a name="184" href="#184">184</a>         String main;
+<a name="185" href="#185">185</a>         String <strong class="jxr_keyword">rest</strong>;
+<a name="186" href="#186">186</a>         <strong class="jxr_keyword">if</strong> (pValue.indexOf(<span class="jxr_string">";"</span>) == -1) {
+<a name="187" href="#187">187</a>             main = pValue;
+<a name="188" href="#188">188</a>             <strong class="jxr_keyword">rest</strong> = <strong class="jxr_keyword">null</strong>;
+<a name="189" href="#189">189</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="190" href="#190">190</a>             main = pValue.substring(0, pValue.indexOf(<span class="jxr_string">";"</span>));
+<a name="191" href="#191">191</a>             <strong class="jxr_keyword">rest</strong> = pValue.substring(main.length() + 1);
+<a name="192" href="#192">192</a>         }
+<a name="193" href="#193">193</a> 
+<a name="194" href="#194">194</a>         result.put(<span class="jxr_string">""</span>, main);
+<a name="195" href="#195">195</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">rest</strong> != <strong class="jxr_keyword">null</strong>) {
+<a name="196" href="#196">196</a>             <strong class="jxr_keyword">char</strong>[] chars = <strong class="jxr_keyword">rest</strong>.toCharArray();
+<a name="197" href="#197">197</a>             StringBuilder paramName = <strong class="jxr_keyword">new</strong> StringBuilder(64);
+<a name="198" href="#198">198</a>             StringBuilder paramValue = <strong class="jxr_keyword">new</strong> StringBuilder(64);
+<a name="199" href="#199">199</a> 
+<a name="200" href="#200">200</a>             <strong class="jxr_keyword">final</strong> byte READY_FOR_NAME = 0;
+<a name="201" href="#201">201</a>             <strong class="jxr_keyword">final</strong> byte IN_NAME = 1;
+<a name="202" href="#202">202</a>             <strong class="jxr_keyword">final</strong> byte READY_FOR_VALUE = 2;
+<a name="203" href="#203">203</a>             <strong class="jxr_keyword">final</strong> byte IN_VALUE = 3;
+<a name="204" href="#204">204</a>             <strong class="jxr_keyword">final</strong> byte IN_QUOTED_VALUE = 4;
+<a name="205" href="#205">205</a>             <strong class="jxr_keyword">final</strong> byte VALUE_DONE = 5;
+<a name="206" href="#206">206</a>             <strong class="jxr_keyword">final</strong> byte ERROR = 99;
+<a name="207" href="#207">207</a> 
+<a name="208" href="#208">208</a>             byte state = READY_FOR_NAME;
+<a name="209" href="#209">209</a>             <strong class="jxr_keyword">boolean</strong> escaped = false;
+<a name="210" href="#210">210</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">char</strong> c : chars) {
+<a name="211" href="#211">211</a>                 <strong class="jxr_keyword">switch</strong> (state) {
+<a name="212" href="#212">212</a>                     <strong class="jxr_keyword">case</strong> ERROR:
+<a name="213" href="#213">213</a>                         <strong class="jxr_keyword">if</strong> (c == ';')
+<a name="214" href="#214">214</a>                             state = READY_FOR_NAME;
+<a name="215" href="#215">215</a>                         <strong class="jxr_keyword">break</strong>;
+<a name="216" href="#216">216</a> 
+<a name="217" href="#217">217</a>                     <strong class="jxr_keyword">case</strong> READY_FOR_NAME:
+<a name="218" href="#218">218</a>                         <strong class="jxr_keyword">if</strong> (c == '=') {
+<a name="219" href="#219">219</a>                             log.error(<span class="jxr_string">"Expected header param name, got '='"</span>);
+<a name="220" href="#220">220</a>                             state = ERROR;
+<a name="221" href="#221">221</a>                             <strong class="jxr_keyword">break</strong>;
+<a name="222" href="#222">222</a>                         }
+<a name="223" href="#223">223</a> 
+<a name="224" href="#224">224</a>                         paramName.setLength(0);
+<a name="225" href="#225">225</a>                         paramValue.setLength(0);
 <a name="226" href="#226">226</a> 
-<a name="227" href="#227">227</a>                     <strong class="jxr_keyword">case</strong> READY_FOR_NAME:
-<a name="228" href="#228">228</a>                         <strong class="jxr_keyword">if</strong> (c == '=') {
-<a name="229" href="#229">229</a>                             log.error(<span class="jxr_string">"Expected header param name, got '='"</span>);
-<a name="230" href="#230">230</a>                             state = ERROR;
-<a name="231" href="#231">231</a>                             <strong class="jxr_keyword">break</strong>;
-<a name="232" href="#232">232</a>                         }
-<a name="233" href="#233">233</a> 
-<a name="234" href="#234">234</a>                         paramName.setLength(0);
-<a name="235" href="#235">235</a>                         paramValue.setLength(0);
-<a name="236" href="#236">236</a> 
-<a name="237" href="#237">237</a>                         state = IN_NAME;
-<a name="238" href="#238">238</a>                         <em class="jxr_comment">// fall-through</em>
-<a name="239" href="#239">239</a> 
-<a name="240" href="#240">240</a>                     <strong class="jxr_keyword">case</strong> IN_NAME:
-<a name="241" href="#241">241</a>                         <strong class="jxr_keyword">if</strong> (c == '=') {
-<a name="242" href="#242">242</a>                             <strong class="jxr_keyword">if</strong> (paramName.length() == 0)
-<a name="243" href="#243">243</a>                                 state = ERROR;
-<a name="244" href="#244">244</a>                             <strong class="jxr_keyword">else</strong>
-<a name="245" href="#245">245</a>                                 state = READY_FOR_VALUE;
-<a name="246" href="#246">246</a>                             <strong class="jxr_keyword">break</strong>;
-<a name="247" href="#247">247</a>                         }
-<a name="248" href="#248">248</a> 
-<a name="249" href="#249">249</a>                         <em class="jxr_comment">// not '='... just add to name</em>
-<a name="250" href="#250">250</a>                         paramName.append(c);
-<a name="251" href="#251">251</a>                         <strong class="jxr_keyword">break</strong>;
-<a name="252" href="#252">252</a> 
-<a name="253" href="#253">253</a>                     <strong class="jxr_keyword">case</strong> READY_FOR_VALUE:
-<a name="254" href="#254">254</a>                         <strong class="jxr_keyword">boolean</strong> fallThrough = false;
-<a name="255" href="#255">255</a>                         <strong class="jxr_keyword">switch</strong> (c) {
-<a name="256" href="#256">256</a>                             <strong class="jxr_keyword">case</strong> ' ':
-<a name="257" href="#257">257</a>                             <strong class="jxr_keyword">case</strong> '\t':
-<a name="258" href="#258">258</a>                                 <strong class="jxr_keyword">break</strong>;  <em class="jxr_comment">// ignore spaces, especially before '&quot;'</em>
-<a name="259" href="#259">259</a> 
-<a name="260" href="#260">260</a>                             <strong class="jxr_keyword">case</strong> '&quot;':
-<a name="261" href="#261">261</a>                                 state = IN_QUOTED_VALUE;
-<a name="262" href="#262">262</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="227" href="#227">227</a>                         state = IN_NAME;
+<a name="228" href="#228">228</a>                         <em class="jxr_comment">// fall-through</em>
+<a name="229" href="#229">229</a> 
+<a name="230" href="#230">230</a>                     <strong class="jxr_keyword">case</strong> IN_NAME:
+<a name="231" href="#231">231</a>                         <strong class="jxr_keyword">if</strong> (c == '=') {
+<a name="232" href="#232">232</a>                             <strong class="jxr_keyword">if</strong> (paramName.length() == 0)
+<a name="233" href="#233">233</a>                                 state = ERROR;
+<a name="234" href="#234">234</a>                             <strong class="jxr_keyword">else</strong>
+<a name="235" href="#235">235</a>                                 state = READY_FOR_VALUE;
+<a name="236" href="#236">236</a>                             <strong class="jxr_keyword">break</strong>;
+<a name="237" href="#237">237</a>                         }
+<a name="238" href="#238">238</a> 
+<a name="239" href="#239">239</a>                         <em class="jxr_comment">// not '='... just add to name</em>
+<a name="240" href="#240">240</a>                         paramName.append(c);
+<a name="241" href="#241">241</a>                         <strong class="jxr_keyword">break</strong>;
+<a name="242" href="#242">242</a> 
+<a name="243" href="#243">243</a>                     <strong class="jxr_keyword">case</strong> READY_FOR_VALUE:
+<a name="244" href="#244">244</a>                         <strong class="jxr_keyword">boolean</strong> fallThrough = false;
+<a name="245" href="#245">245</a>                         <strong class="jxr_keyword">switch</strong> (c) {
+<a name="246" href="#246">246</a>                             <strong class="jxr_keyword">case</strong> ' ':
+<a name="247" href="#247">247</a>                             <strong class="jxr_keyword">case</strong> '\t':
+<a name="248" href="#248">248</a>                                 <strong class="jxr_keyword">break</strong>;  <em class="jxr_comment">// ignore spaces, especially before '&quot;'</em>
+<a name="249" href="#249">249</a> 
+<a name="250" href="#250">250</a>                             <strong class="jxr_keyword">case</strong> '&quot;':
+<a name="251" href="#251">251</a>                                 state = IN_QUOTED_VALUE;
+<a name="252" href="#252">252</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="253" href="#253">253</a> 
+<a name="254" href="#254">254</a>                             <strong class="jxr_keyword">default</strong>:
+<a name="255" href="#255">255</a>                                 state = IN_VALUE;
+<a name="256" href="#256">256</a>                                 fallThrough = <strong class="jxr_keyword">true</strong>;
+<a name="257" href="#257">257</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="258" href="#258">258</a>                         }
+<a name="259" href="#259">259</a>                         <strong class="jxr_keyword">if</strong> (!fallThrough)
+<a name="260" href="#260">260</a>                             <strong class="jxr_keyword">break</strong>;
+<a name="261" href="#261">261</a> 
+<a name="262" href="#262">262</a>                         <em class="jxr_comment">// fall-through</em>
 <a name="263" href="#263">263</a> 
-<a name="264" href="#264">264</a>                             <strong class="jxr_keyword">default</strong>:
-<a name="265" href="#265">265</a>                                 state = IN_VALUE;
-<a name="266" href="#266">266</a>                                 fallThrough = <strong class="jxr_keyword">true</strong>;
-<a name="267" href="#267">267</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="268" href="#268">268</a>                         }
-<a name="269" href="#269">269</a>                         <strong class="jxr_keyword">if</strong> (!fallThrough)
-<a name="270" href="#270">270</a>                             <strong class="jxr_keyword">break</strong>;
-<a name="271" href="#271">271</a> 
-<a name="272" href="#272">272</a>                         <em class="jxr_comment">// fall-through</em>
-<a name="273" href="#273">273</a> 
-<a name="274" href="#274">274</a>                     <strong class="jxr_keyword">case</strong> IN_VALUE:
-<a name="275" href="#275">275</a>                         fallThrough = false;
-<a name="276" href="#276">276</a>                         <strong class="jxr_keyword">switch</strong> (c) {
-<a name="277" href="#277">277</a>                             <strong class="jxr_keyword">case</strong> ';':
-<a name="278" href="#278">278</a>                             <strong class="jxr_keyword">case</strong> ' ':
-<a name="279" href="#279">279</a>                             <strong class="jxr_keyword">case</strong> '\t':
-<a name="280" href="#280">280</a>                                 result.put(
-<a name="281" href="#281">281</a>                                    paramName.toString().trim().toLowerCase(),
-<a name="282" href="#282">282</a>                                    paramValue.toString().trim());
-<a name="283" href="#283">283</a>                                 state = VALUE_DONE;
-<a name="284" href="#284">284</a>                                 fallThrough = <strong class="jxr_keyword">true</strong>;
-<a name="285" href="#285">285</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="286" href="#286">286</a>                             <strong class="jxr_keyword">default</strong>:
-<a name="287" href="#287">287</a>                                 paramValue.append(c);
-<a name="288" href="#288">288</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="289" href="#289">289</a>                         }
-<a name="290" href="#290">290</a>                         <strong class="jxr_keyword">if</strong> (!fallThrough)
-<a name="291" href="#291">291</a>                             <strong class="jxr_keyword">break</strong>;
+<a name="264" href="#264">264</a>                     <strong class="jxr_keyword">case</strong> IN_VALUE:
+<a name="265" href="#265">265</a>                         fallThrough = false;
+<a name="266" href="#266">266</a>                         <strong class="jxr_keyword">switch</strong> (c) {
+<a name="267" href="#267">267</a>                             <strong class="jxr_keyword">case</strong> ';':
+<a name="268" href="#268">268</a>                             <strong class="jxr_keyword">case</strong> ' ':
+<a name="269" href="#269">269</a>                             <strong class="jxr_keyword">case</strong> '\t':
+<a name="270" href="#270">270</a>                                 result.put(
+<a name="271" href="#271">271</a>                                    paramName.toString().trim().toLowerCase(),
+<a name="272" href="#272">272</a>                                    paramValue.toString().trim());
+<a name="273" href="#273">273</a>                                 state = VALUE_DONE;
+<a name="274" href="#274">274</a>                                 fallThrough = <strong class="jxr_keyword">true</strong>;
+<a name="275" href="#275">275</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="276" href="#276">276</a>                             <strong class="jxr_keyword">default</strong>:
+<a name="277" href="#277">277</a>                                 paramValue.append(c);
+<a name="278" href="#278">278</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="279" href="#279">279</a>                         }
+<a name="280" href="#280">280</a>                         <strong class="jxr_keyword">if</strong> (!fallThrough)
+<a name="281" href="#281">281</a>                             <strong class="jxr_keyword">break</strong>;
+<a name="282" href="#282">282</a> 
+<a name="283" href="#283">283</a>                     <strong class="jxr_keyword">case</strong> VALUE_DONE:
+<a name="284" href="#284">284</a>                         <strong class="jxr_keyword">switch</strong> (c) {
+<a name="285" href="#285">285</a>                             <strong class="jxr_keyword">case</strong> ';':
+<a name="286" href="#286">286</a>                                 state = READY_FOR_NAME;
+<a name="287" href="#287">287</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="288" href="#288">288</a> 
+<a name="289" href="#289">289</a>                             <strong class="jxr_keyword">case</strong> ' ':
+<a name="290" href="#290">290</a>                             <strong class="jxr_keyword">case</strong> '\t':
+<a name="291" href="#291">291</a>                                 <strong class="jxr_keyword">break</strong>;
 <a name="292" href="#292">292</a> 
-<a name="293" href="#293">293</a>                     <strong class="jxr_keyword">case</strong> VALUE_DONE:
-<a name="294" href="#294">294</a>                         <strong class="jxr_keyword">switch</strong> (c) {
-<a name="295" href="#295">295</a>                             <strong class="jxr_keyword">case</strong> ';':
-<a name="296" href="#296">296</a>                                 state = READY_FOR_NAME;
-<a name="297" href="#297">297</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="298" href="#298">298</a> 
-<a name="299" href="#299">299</a>                             <strong class="jxr_keyword">case</strong> ' ':
-<a name="300" href="#300">300</a>                             <strong class="jxr_keyword">case</strong> '\t':
-<a name="301" href="#301">301</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="302" href="#302">302</a> 
-<a name="303" href="#303">303</a>                             <strong class="jxr_keyword">default</strong>:
-<a name="304" href="#304">304</a>                                 state = ERROR;
-<a name="305" href="#305">305</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="306" href="#306">306</a>                         }
-<a name="307" href="#307">307</a>                         <strong class="jxr_keyword">break</strong>;
-<a name="308" href="#308">308</a>                         
-<a name="309" href="#309">309</a>                     <strong class="jxr_keyword">case</strong> IN_QUOTED_VALUE:
-<a name="310" href="#310">310</a>                         <strong class="jxr_keyword">switch</strong> (c) {
-<a name="311" href="#311">311</a>                             <strong class="jxr_keyword">case</strong> '&quot;':
-<a name="312" href="#312">312</a>                                 <strong class="jxr_keyword">if</strong> (!escaped) {
-<a name="313" href="#313">313</a>                                     <em class="jxr_comment">// don't trim quoted strings; the spaces could be intentional.</em>
-<a name="314" href="#314">314</a>                                     result.put(
-<a name="315" href="#315">315</a>                                             paramName.toString().trim().toLowerCase(),
-<a name="316" href="#316">316</a>                                             paramValue.toString());
-<a name="317" href="#317">317</a>                                     state = VALUE_DONE;
-<a name="318" href="#318">318</a>                                 } <strong class="jxr_keyword">else</strong> {
-<a name="319" href="#319">319</a>                                     escaped = false;
-<a name="320" href="#320">320</a>                                     paramValue.append(c);                                    
-<a name="321" href="#321">321</a>                                 }
-<a name="322" href="#322">322</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="323" href="#323">323</a>                                 
-<a name="324" href="#324">324</a>                             <strong class="jxr_keyword">case</strong> '&#92;&#92;':
-<a name="325" href="#325">325</a>                                 <strong class="jxr_keyword">if</strong> (escaped) {
-<a name="326" href="#326">326</a>                                     paramValue.append('&#92;&#92;');
-<a name="327" href="#327">327</a>                                 }
-<a name="328" href="#328">328</a>                                 escaped = !escaped;
-<a name="329" href="#329">329</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="293" href="#293">293</a>                             <strong class="jxr_keyword">default</strong>:
+<a name="294" href="#294">294</a>                                 state = ERROR;
+<a name="295" href="#295">295</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="296" href="#296">296</a>                         }
+<a name="297" href="#297">297</a>                         <strong class="jxr_keyword">break</strong>;
+<a name="298" href="#298">298</a>                         
+<a name="299" href="#299">299</a>                     <strong class="jxr_keyword">case</strong> IN_QUOTED_VALUE:
+<a name="300" href="#300">300</a>                         <strong class="jxr_keyword">switch</strong> (c) {
+<a name="301" href="#301">301</a>                             <strong class="jxr_keyword">case</strong> '&quot;':
+<a name="302" href="#302">302</a>                                 <strong class="jxr_keyword">if</strong> (!escaped) {
+<a name="303" href="#303">303</a>                                     <em class="jxr_comment">// don't trim quoted strings; the spaces could be intentional.</em>
+<a name="304" href="#304">304</a>                                     result.put(
+<a name="305" href="#305">305</a>                                             paramName.toString().trim().toLowerCase(),
+<a name="306" href="#306">306</a>                                             paramValue.toString());
+<a name="307" href="#307">307</a>                                     state = VALUE_DONE;
+<a name="308" href="#308">308</a>                                 } <strong class="jxr_keyword">else</strong> {
+<a name="309" href="#309">309</a>                                     escaped = false;
+<a name="310" href="#310">310</a>                                     paramValue.append(c);                                    
+<a name="311" href="#311">311</a>                                 }
+<a name="312" href="#312">312</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="313" href="#313">313</a>                                 
+<a name="314" href="#314">314</a>                             <strong class="jxr_keyword">case</strong> '&#92;&#92;':
+<a name="315" href="#315">315</a>                                 <strong class="jxr_keyword">if</strong> (escaped) {
+<a name="316" href="#316">316</a>                                     paramValue.append('&#92;&#92;');
+<a name="317" href="#317">317</a>                                 }
+<a name="318" href="#318">318</a>                                 escaped = !escaped;
+<a name="319" href="#319">319</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="320" href="#320">320</a> 
+<a name="321" href="#321">321</a>                             <strong class="jxr_keyword">default</strong>:
+<a name="322" href="#322">322</a>                                 <strong class="jxr_keyword">if</strong> (escaped) {
+<a name="323" href="#323">323</a>                                     paramValue.append('&#92;&#92;');
+<a name="324" href="#324">324</a>                                 }
+<a name="325" href="#325">325</a>                                 escaped = false;
+<a name="326" href="#326">326</a>                                 paramValue.append(c);
+<a name="327" href="#327">327</a>                                 <strong class="jxr_keyword">break</strong>;
+<a name="328" href="#328">328</a>                         }
+<a name="329" href="#329">329</a>                         <strong class="jxr_keyword">break</strong>;
 <a name="330" href="#330">330</a> 
-<a name="331" href="#331">331</a>                             <strong class="jxr_keyword">default</strong>:
-<a name="332" href="#332">332</a>                                 <strong class="jxr_keyword">if</strong> (escaped) {
-<a name="333" href="#333">333</a>                                     paramValue.append('&#92;&#92;');
-<a name="334" href="#334">334</a>                                 }
-<a name="335" href="#335">335</a>                                 escaped = false;
-<a name="336" href="#336">336</a>                                 paramValue.append(c);
-<a name="337" href="#337">337</a>                                 <strong class="jxr_keyword">break</strong>;
-<a name="338" href="#338">338</a>                         }
-<a name="339" href="#339">339</a>                         <strong class="jxr_keyword">break</strong>;
-<a name="340" href="#340">340</a> 
-<a name="341" href="#341">341</a>                 }
-<a name="342" href="#342">342</a>             }
-<a name="343" href="#343">343</a> 
-<a name="344" href="#344">344</a>             <em class="jxr_comment">// done looping.  check if anything is left over.</em>
-<a name="345" href="#345">345</a>             <strong class="jxr_keyword">if</strong> (state == IN_VALUE) {
-<a name="346" href="#346">346</a>                 result.put(
-<a name="347" href="#347">347</a>                         paramName.toString().trim().toLowerCase(),
-<a name="348" href="#348">348</a>                         paramValue.toString().trim());
-<a name="349" href="#349">349</a>             }
-<a name="350" href="#350">350</a>         }
-<a name="351" href="#351">351</a> 
-<a name="352" href="#352">352</a>         <strong class="jxr_keyword">return</strong> result;
-<a name="353" href="#353">353</a>     }
-<a name="354" href="#354">354</a> 
-<a name="355" href="#355">355</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="356" href="#356">356</a> <em class="jxr_javadoccomment">     * Creates a new unique message boundary string that can be used as boundary</em>
-<a name="357" href="#357">357</a> <em class="jxr_javadoccomment">     * parameter for the Content-Type header field of a message.</em>
-<a name="358" href="#358">358</a> <em class="jxr_javadoccomment">     * </em>
-<a name="359" href="#359">359</a> <em class="jxr_javadoccomment">     * @return a new unique message boundary string.</em>
-<a name="360" href="#360">360</a> <em class="jxr_javadoccomment">     */</em>
-<a name="361" href="#361">361</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createUniqueBoundary() {
-<a name="362" href="#362">362</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a name="363" href="#363">363</a>         sb.append(<span class="jxr_string">"-=Part."</span>);
-<a name="364" href="#364">364</a>         sb.append(Integer.toHexString(nextCounterValue()));
-<a name="365" href="#365">365</a>         sb.append('.');
-<a name="366" href="#366">366</a>         sb.append(Long.toHexString(random.nextLong()));
-<a name="367" href="#367">367</a>         sb.append('.');
-<a name="368" href="#368">368</a>         sb.append(Long.toHexString(System.currentTimeMillis()));
-<a name="369" href="#369">369</a>         sb.append('.');
-<a name="370" href="#370">370</a>         sb.append(Long.toHexString(random.nextLong()));
-<a name="371" href="#371">371</a>         sb.append(<span class="jxr_string">"=-"</span>);
-<a name="372" href="#372">372</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a name="373" href="#373">373</a>     }
-<a name="374" href="#374">374</a> 
-<a name="375" href="#375">375</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="376" href="#376">376</a> <em class="jxr_javadoccomment">     * Creates a new unique message identifier that can be used in message</em>
-<a name="377" href="#377">377</a> <em class="jxr_javadoccomment">     * header field such as Message-ID or In-Reply-To. If the given host name is</em>
-<a name="378" href="#378">378</a> <em class="jxr_javadoccomment">     * not &lt;code&gt;null&lt;/code&gt; it will be used as suffix for the message ID</em>
-<a name="379" href="#379">379</a> <em class="jxr_javadoccomment">     * (following an at sign).</em>
-<a name="380" href="#380">380</a> <em class="jxr_javadoccomment">     * </em>
-<a name="381" href="#381">381</a> <em class="jxr_javadoccomment">     * The resulting string is enclosed in angle brackets (&amp;lt; and &amp;gt;);</em>
-<a name="382" href="#382">382</a> <em class="jxr_javadoccomment">     * </em>
-<a name="383" href="#383">383</a> <em class="jxr_javadoccomment">     * @param hostName host name to be included in the message ID or</em>
-<a name="384" href="#384">384</a> <em class="jxr_javadoccomment">     *            &lt;code&gt;null&lt;/code&gt; if no host name should be included.</em>
-<a name="385" href="#385">385</a> <em class="jxr_javadoccomment">     * @return a new unique message identifier.</em>
-<a name="386" href="#386">386</a> <em class="jxr_javadoccomment">     */</em>
-<a name="387" href="#387">387</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createUniqueMessageId(String hostName) {
-<a name="388" href="#388">388</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(<span class="jxr_string">"&lt;Mime4j."</span>);
-<a name="389" href="#389">389</a>         sb.append(Integer.toHexString(nextCounterValue()));
-<a name="390" href="#390">390</a>         sb.append('.');
-<a name="391" href="#391">391</a>         sb.append(Long.toHexString(random.nextLong()));
-<a name="392" href="#392">392</a>         sb.append('.');
-<a name="393" href="#393">393</a>         sb.append(Long.toHexString(System.currentTimeMillis()));
-<a name="394" href="#394">394</a>         <strong class="jxr_keyword">if</strong> (hostName != <strong class="jxr_keyword">null</strong>) {
-<a name="395" href="#395">395</a>             sb.append('@');
-<a name="396" href="#396">396</a>             sb.append(hostName);
-<a name="397" href="#397">397</a>         }
-<a name="398" href="#398">398</a>         sb.append('&gt;');
-<a name="399" href="#399">399</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a name="400" href="#400">400</a>     }
-<a name="401" href="#401">401</a> 
-<a name="402" href="#402">402</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="403" href="#403">403</a> <em class="jxr_javadoccomment">     * Formats the specified date into a RFC 822 date-time string.</em>
-<a name="404" href="#404">404</a> <em class="jxr_javadoccomment">     * </em>
-<a name="405" href="#405">405</a> <em class="jxr_javadoccomment">     * @param date</em>
-<a name="406" href="#406">406</a> <em class="jxr_javadoccomment">     *            date to be formatted into a string.</em>
-<a name="407" href="#407">407</a> <em class="jxr_javadoccomment">     * @param zone</em>
-<a name="408" href="#408">408</a> <em class="jxr_javadoccomment">     *            the time zone to use or &lt;code&gt;null&lt;/code&gt; to use the default</em>
-<a name="409" href="#409">409</a> <em class="jxr_javadoccomment">     *            time zone.</em>
-<a name="410" href="#410">410</a> <em class="jxr_javadoccomment">     * @return the formatted time string.</em>
-<a name="411" href="#411">411</a> <em class="jxr_javadoccomment">     */</em>
-<a name="412" href="#412">412</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String formatDate(Date date, TimeZone zone) {
-<a name="413" href="#413">413</a>         DateFormat df = RFC822_DATE_FORMAT.get();
-<a name="414" href="#414">414</a> 
-<a name="415" href="#415">415</a>         <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
-<a name="416" href="#416">416</a>             df.setTimeZone(TimeZone.getDefault());
-<a name="417" href="#417">417</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="418" href="#418">418</a>             df.setTimeZone(zone);
-<a name="419" href="#419">419</a>         }
-<a name="420" href="#420">420</a> 
-<a name="421" href="#421">421</a>         <strong class="jxr_keyword">return</strong> df.format(date);
-<a name="422" href="#422">422</a>     }
-<a name="423" href="#423">423</a> 
-<a name="424" href="#424">424</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="425" href="#425">425</a> <em class="jxr_javadoccomment">     * Splits the specified string into a multiple-line representation with</em>
-<a name="426" href="#426">426</a> <em class="jxr_javadoccomment">     * lines no longer than 76 characters (because the line might contain</em>
-<a name="427" href="#427">427</a> <em class="jxr_javadoccomment">     * encoded words; see &lt;a href='<a href="http://www.faqs.org/rfcs/rfc2047.html'&gt;RFC" target="alexandria_uri">http://www.faqs.org/rfcs/rfc2047.html'&gt;RFC</a></em>
-<a name="428" href="#428">428</a> <em class="jxr_javadoccomment">     * 2047&lt;/a&gt; section 2). If the string contains non-whitespace sequences</em>
-<a name="429" href="#429">429</a> <em class="jxr_javadoccomment">     * longer than 76 characters a line break is inserted at the whitespace</em>
-<a name="430" href="#430">430</a> <em class="jxr_javadoccomment">     * character following the sequence resulting in a line longer than 76</em>
-<a name="431" href="#431">431</a> <em class="jxr_javadoccomment">     * characters.</em>
-<a name="432" href="#432">432</a> <em class="jxr_javadoccomment">     * </em>
-<a name="433" href="#433">433</a> <em class="jxr_javadoccomment">     * @param s</em>
-<a name="434" href="#434">434</a> <em class="jxr_javadoccomment">     *            string to split.</em>
-<a name="435" href="#435">435</a> <em class="jxr_javadoccomment">     * @param usedCharacters</em>
-<a name="436" href="#436">436</a> <em class="jxr_javadoccomment">     *            number of characters already used up. Usually the number of</em>
-<a name="437" href="#437">437</a> <em class="jxr_javadoccomment">     *            characters for header field name plus colon and one space.</em>
-<a name="438" href="#438">438</a> <em class="jxr_javadoccomment">     * @return a multiple-line representation of the given string.</em>
-<a name="439" href="#439">439</a> <em class="jxr_javadoccomment">     */</em>
-<a name="440" href="#440">440</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String fold(String s, <strong class="jxr_keyword">int</strong> usedCharacters) {
-<a name="441" href="#441">441</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxCharacters = 76;
-<a name="442" href="#442">442</a> 
-<a name="443" href="#443">443</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = s.length();
-<a name="444" href="#444">444</a>         <strong class="jxr_keyword">if</strong> (usedCharacters + length &lt;= maxCharacters)
-<a name="445" href="#445">445</a>             <strong class="jxr_keyword">return</strong> s;
+<a name="331" href="#331">331</a>                 }
+<a name="332" href="#332">332</a>             }
+<a name="333" href="#333">333</a> 
+<a name="334" href="#334">334</a>             <em class="jxr_comment">// done looping.  check if anything is left over.</em>
+<a name="335" href="#335">335</a>             <strong class="jxr_keyword">if</strong> (state == IN_VALUE) {
+<a name="336" href="#336">336</a>                 result.put(
+<a name="337" href="#337">337</a>                         paramName.toString().trim().toLowerCase(),
+<a name="338" href="#338">338</a>                         paramValue.toString().trim());
+<a name="339" href="#339">339</a>             }
+<a name="340" href="#340">340</a>         }
+<a name="341" href="#341">341</a> 
+<a name="342" href="#342">342</a>         <strong class="jxr_keyword">return</strong> result;
+<a name="343" href="#343">343</a>     }
+<a name="344" href="#344">344</a> 
+<a name="345" href="#345">345</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="346" href="#346">346</a> <em class="jxr_javadoccomment">     * Creates a new unique message boundary string that can be used as boundary</em>
+<a name="347" href="#347">347</a> <em class="jxr_javadoccomment">     * parameter for the Content-Type header field of a message.</em>
+<a name="348" href="#348">348</a> <em class="jxr_javadoccomment">     * </em>
+<a name="349" href="#349">349</a> <em class="jxr_javadoccomment">     * @return a new unique message boundary string.</em>
+<a name="350" href="#350">350</a> <em class="jxr_javadoccomment">     */</em>
+<a name="351" href="#351">351</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createUniqueBoundary() {
+<a name="352" href="#352">352</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a name="353" href="#353">353</a>         sb.append(<span class="jxr_string">"-=Part."</span>);
+<a name="354" href="#354">354</a>         sb.append(Integer.toHexString(nextCounterValue()));
+<a name="355" href="#355">355</a>         sb.append('.');
+<a name="356" href="#356">356</a>         sb.append(Long.toHexString(random.nextLong()));
+<a name="357" href="#357">357</a>         sb.append('.');
+<a name="358" href="#358">358</a>         sb.append(Long.toHexString(System.currentTimeMillis()));
+<a name="359" href="#359">359</a>         sb.append('.');
+<a name="360" href="#360">360</a>         sb.append(Long.toHexString(random.nextLong()));
+<a name="361" href="#361">361</a>         sb.append(<span class="jxr_string">"=-"</span>);
+<a name="362" href="#362">362</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a name="363" href="#363">363</a>     }
+<a name="364" href="#364">364</a> 
+<a name="365" href="#365">365</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="366" href="#366">366</a> <em class="jxr_javadoccomment">     * Creates a new unique message identifier that can be used in message</em>
+<a name="367" href="#367">367</a> <em class="jxr_javadoccomment">     * header field such as Message-ID or In-Reply-To. If the given host name is</em>
+<a name="368" href="#368">368</a> <em class="jxr_javadoccomment">     * not &lt;code&gt;null&lt;/code&gt; it will be used as suffix for the message ID</em>
+<a name="369" href="#369">369</a> <em class="jxr_javadoccomment">     * (following an at sign).</em>
+<a name="370" href="#370">370</a> <em class="jxr_javadoccomment">     * </em>
+<a name="371" href="#371">371</a> <em class="jxr_javadoccomment">     * The resulting string is enclosed in angle brackets (&amp;lt; and &amp;gt;);</em>
+<a name="372" href="#372">372</a> <em class="jxr_javadoccomment">     * </em>
+<a name="373" href="#373">373</a> <em class="jxr_javadoccomment">     * @param hostName host name to be included in the message ID or</em>
+<a name="374" href="#374">374</a> <em class="jxr_javadoccomment">     *            &lt;code&gt;null&lt;/code&gt; if no host name should be included.</em>
+<a name="375" href="#375">375</a> <em class="jxr_javadoccomment">     * @return a new unique message identifier.</em>
+<a name="376" href="#376">376</a> <em class="jxr_javadoccomment">     */</em>
+<a name="377" href="#377">377</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createUniqueMessageId(String hostName) {
+<a name="378" href="#378">378</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(<span class="jxr_string">"&lt;Mime4j."</span>);
+<a name="379" href="#379">379</a>         sb.append(Integer.toHexString(nextCounterValue()));
+<a name="380" href="#380">380</a>         sb.append('.');
+<a name="381" href="#381">381</a>         sb.append(Long.toHexString(random.nextLong()));
+<a name="382" href="#382">382</a>         sb.append('.');
+<a name="383" href="#383">383</a>         sb.append(Long.toHexString(System.currentTimeMillis()));
+<a name="384" href="#384">384</a>         <strong class="jxr_keyword">if</strong> (hostName != <strong class="jxr_keyword">null</strong>) {
+<a name="385" href="#385">385</a>             sb.append('@');
+<a name="386" href="#386">386</a>             sb.append(hostName);
+<a name="387" href="#387">387</a>         }
+<a name="388" href="#388">388</a>         sb.append('&gt;');
+<a name="389" href="#389">389</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a name="390" href="#390">390</a>     }
+<a name="391" href="#391">391</a> 
+<a name="392" href="#392">392</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="393" href="#393">393</a> <em class="jxr_javadoccomment">     * Formats the specified date into a RFC 822 date-time string.</em>
+<a name="394" href="#394">394</a> <em class="jxr_javadoccomment">     * </em>
+<a name="395" href="#395">395</a> <em class="jxr_javadoccomment">     * @param date</em>
+<a name="396" href="#396">396</a> <em class="jxr_javadoccomment">     *            date to be formatted into a string.</em>
+<a name="397" href="#397">397</a> <em class="jxr_javadoccomment">     * @param zone</em>
+<a name="398" href="#398">398</a> <em class="jxr_javadoccomment">     *            the time zone to use or &lt;code&gt;null&lt;/code&gt; to use the default</em>
+<a name="399" href="#399">399</a> <em class="jxr_javadoccomment">     *            time zone.</em>
+<a name="400" href="#400">400</a> <em class="jxr_javadoccomment">     * @return the formatted time string.</em>
+<a name="401" href="#401">401</a> <em class="jxr_javadoccomment">     */</em>
+<a name="402" href="#402">402</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String formatDate(Date date, TimeZone zone) {
+<a name="403" href="#403">403</a>         DateFormat df = RFC822_DATE_FORMAT.get();
+<a name="404" href="#404">404</a> 
+<a name="405" href="#405">405</a>         <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
+<a name="406" href="#406">406</a>             df.setTimeZone(TimeZone.getDefault());
+<a name="407" href="#407">407</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="408" href="#408">408</a>             df.setTimeZone(zone);
+<a name="409" href="#409">409</a>         }
+<a name="410" href="#410">410</a> 
+<a name="411" href="#411">411</a>         <strong class="jxr_keyword">return</strong> df.format(date);
+<a name="412" href="#412">412</a>     }
+<a name="413" href="#413">413</a> 
+<a name="414" href="#414">414</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="415" href="#415">415</a> <em class="jxr_javadoccomment">     * Splits the specified string into a multiple-line representation with</em>
+<a name="416" href="#416">416</a> <em class="jxr_javadoccomment">     * lines no longer than 76 characters (because the line might contain</em>
+<a name="417" href="#417">417</a> <em class="jxr_javadoccomment">     * encoded words; see &lt;a href='<a href="http://www.faqs.org/rfcs/rfc2047.html'&gt;RFC" target="alexandria_uri">http://www.faqs.org/rfcs/rfc2047.html'&gt;RFC</a></em>
+<a name="418" href="#418">418</a> <em class="jxr_javadoccomment">     * 2047&lt;/a&gt; section 2). If the string contains non-whitespace sequences</em>
+<a name="419" href="#419">419</a> <em class="jxr_javadoccomment">     * longer than 76 characters a line break is inserted at the whitespace</em>
+<a name="420" href="#420">420</a> <em class="jxr_javadoccomment">     * character following the sequence resulting in a line longer than 76</em>
+<a name="421" href="#421">421</a> <em class="jxr_javadoccomment">     * characters.</em>
+<a name="422" href="#422">422</a> <em class="jxr_javadoccomment">     * </em>
+<a name="423" href="#423">423</a> <em class="jxr_javadoccomment">     * @param s</em>
+<a name="424" href="#424">424</a> <em class="jxr_javadoccomment">     *            string to split.</em>
+<a name="425" href="#425">425</a> <em class="jxr_javadoccomment">     * @param usedCharacters</em>
+<a name="426" href="#426">426</a> <em class="jxr_javadoccomment">     *            number of characters already used up. Usually the number of</em>
+<a name="427" href="#427">427</a> <em class="jxr_javadoccomment">     *            characters for header field name plus colon and one space.</em>
+<a name="428" href="#428">428</a> <em class="jxr_javadoccomment">     * @return a multiple-line representation of the given string.</em>
+<a name="429" href="#429">429</a> <em class="jxr_javadoccomment">     */</em>
+<a name="430" href="#430">430</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String fold(String s, <strong class="jxr_keyword">int</strong> usedCharacters) {
+<a name="431" href="#431">431</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxCharacters = 76;
+<a name="432" href="#432">432</a> 
+<a name="433" href="#433">433</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = s.length();
+<a name="434" href="#434">434</a>         <strong class="jxr_keyword">if</strong> (usedCharacters + length &lt;= maxCharacters)
+<a name="435" href="#435">435</a>             <strong class="jxr_keyword">return</strong> s;
+<a name="436" href="#436">436</a> 
+<a name="437" href="#437">437</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a name="438" href="#438">438</a> 
+<a name="439" href="#439">439</a>         <strong class="jxr_keyword">int</strong> lastLineBreak = -usedCharacters;
+<a name="440" href="#440">440</a>         <strong class="jxr_keyword">int</strong> wspIdx = indexOfWsp(s, 0);
+<a name="441" href="#441">441</a>         <strong class="jxr_keyword">while</strong> (<strong class="jxr_keyword">true</strong>) {
+<a name="442" href="#442">442</a>             <strong class="jxr_keyword">if</strong> (wspIdx == length) {
+<a name="443" href="#443">443</a>                 sb.append(s.substring(Math.max(0, lastLineBreak)));
+<a name="444" href="#444">444</a>                 <strong class="jxr_keyword">return</strong> sb.toString();
+<a name="445" href="#445">445</a>             }
 <a name="446" href="#446">446</a> 
-<a name="447" href="#447">447</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a name="447" href="#447">447</a>             <strong class="jxr_keyword">int</strong> nextWspIdx = indexOfWsp(s, wspIdx + 1);
 <a name="448" href="#448">448</a> 
-<a name="449" href="#449">449</a>         <strong class="jxr_keyword">int</strong> lastLineBreak = -usedCharacters;
-<a name="450" href="#450">450</a>         <strong class="jxr_keyword">int</strong> wspIdx = indexOfWsp(s, 0);
-<a name="451" href="#451">451</a>         <strong class="jxr_keyword">while</strong> (<strong class="jxr_keyword">true</strong>) {
-<a name="452" href="#452">452</a>             <strong class="jxr_keyword">if</strong> (wspIdx == length) {
-<a name="453" href="#453">453</a>                 sb.append(s.substring(Math.max(0, lastLineBreak)));
-<a name="454" href="#454">454</a>                 <strong class="jxr_keyword">return</strong> sb.toString();
-<a name="455" href="#455">455</a>             }
-<a name="456" href="#456">456</a> 
-<a name="457" href="#457">457</a>             <strong class="jxr_keyword">int</strong> nextWspIdx = indexOfWsp(s, wspIdx + 1);
+<a name="449" href="#449">449</a>             <strong class="jxr_keyword">if</strong> (nextWspIdx - lastLineBreak &gt; maxCharacters) {
+<a name="450" href="#450">450</a>                 sb.append(s.substring(Math.max(0, lastLineBreak), wspIdx));
+<a name="451" href="#451">451</a>                 sb.append(<span class="jxr_string">"\r\n"</span>);
+<a name="452" href="#452">452</a>                 lastLineBreak = wspIdx;
+<a name="453" href="#453">453</a>             }
+<a name="454" href="#454">454</a> 
+<a name="455" href="#455">455</a>             wspIdx = nextWspIdx;
+<a name="456" href="#456">456</a>         }
+<a name="457" href="#457">457</a>     }
 <a name="458" href="#458">458</a> 
-<a name="459" href="#459">459</a>             <strong class="jxr_keyword">if</strong> (nextWspIdx - lastLineBreak &gt; maxCharacters) {
-<a name="460" href="#460">460</a>                 sb.append(s.substring(Math.max(0, lastLineBreak), wspIdx));
-<a name="461" href="#461">461</a>                 sb.append(<span class="jxr_string">"\r\n"</span>);
-<a name="462" href="#462">462</a>                 lastLineBreak = wspIdx;
-<a name="463" href="#463">463</a>             }
-<a name="464" href="#464">464</a> 
-<a name="465" href="#465">465</a>             wspIdx = nextWspIdx;
-<a name="466" href="#466">466</a>         }
-<a name="467" href="#467">467</a>     }
-<a name="468" href="#468">468</a> 
-<a name="469" href="#469">469</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> indexOfWsp(String s, <strong class="jxr_keyword">int</strong> fromIndex) {
-<a name="470" href="#470">470</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
-<a name="471" href="#471">471</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> index = fromIndex; index &lt; len; index++) {
-<a name="472" href="#472">472</a>             <strong class="jxr_keyword">char</strong> c = s.charAt(index);
-<a name="473" href="#473">473</a>             <strong class="jxr_keyword">if</strong> (c == ' ' || c == '\t')
-<a name="474" href="#474">474</a>                 <strong class="jxr_keyword">return</strong> index;
-<a name="475" href="#475">475</a>         }
-<a name="476" href="#476">476</a>         <strong class="jxr_keyword">return</strong> len;
-<a name="477" href="#477">477</a>     }
-<a name="478" href="#478">478</a> 
-<a name="479" href="#479">479</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">synchronized</strong> <strong class="jxr_keyword">int</strong> nextCounterValue() {
-<a name="480" href="#480">480</a>         <strong class="jxr_keyword">return</strong> counter++;
-<a name="481" href="#481">481</a>     }
-<a name="482" href="#482">482</a> 
-<a name="483" href="#483">483</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ThreadLocal&lt;DateFormat&gt; RFC822_DATE_FORMAT = <strong class="jxr_keyword">new</strong> ThreadLocal&lt;DateFormat&gt;() {
-<a name="484" href="#484">484</a>         @Override
-<a name="485" href="#485">485</a>         <strong class="jxr_keyword">protected</strong> DateFormat initialValue() {
-<a name="486" href="#486">486</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Rfc822DateFormat();
-<a name="487" href="#487">487</a>         }
-<a name="488" href="#488">488</a>     };
-<a name="489" href="#489">489</a> 
-<a name="490" href="#490">490</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Rfc822DateFormat <strong class="jxr_keyword">extends</strong> SimpleDateFormat {
-<a name="491" href="#491">491</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1L;
+<a name="459" href="#459">459</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="460" href="#460">460</a> <em class="jxr_javadoccomment">     * Unfold a multiple-line representation into a single line.</em>
+<a name="461" href="#461">461</a> <em class="jxr_javadoccomment">     * </em>
+<a name="462" href="#462">462</a> <em class="jxr_javadoccomment">     * @param s</em>
+<a name="463" href="#463">463</a> <em class="jxr_javadoccomment">     *            string to unfold.</em>
+<a name="464" href="#464">464</a> <em class="jxr_javadoccomment">     * @return unfolded string.</em>
+<a name="465" href="#465">465</a> <em class="jxr_javadoccomment">     */</em>
+<a name="466" href="#466">466</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String unfold(String s) {
+<a name="467" href="#467">467</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = s.length();
+<a name="468" href="#468">468</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> idx = 0; idx &lt; length; idx++) {
+<a name="469" href="#469">469</a>             <strong class="jxr_keyword">char</strong> c = s.charAt(idx);
+<a name="470" href="#470">470</a>             <strong class="jxr_keyword">if</strong> (c == '\r' || c == '\n') {
+<a name="471" href="#471">471</a>                 <strong class="jxr_keyword">return</strong> unfold0(s, idx);
+<a name="472" href="#472">472</a>             }
+<a name="473" href="#473">473</a>         }
+<a name="474" href="#474">474</a> 
+<a name="475" href="#475">475</a>         <strong class="jxr_keyword">return</strong> s;
+<a name="476" href="#476">476</a>     }
+<a name="477" href="#477">477</a> 
+<a name="478" href="#478">478</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String unfold0(String s, <strong class="jxr_keyword">int</strong> crlfIdx) {
+<a name="479" href="#479">479</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = s.length();
+<a name="480" href="#480">480</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(length);
+<a name="481" href="#481">481</a> 
+<a name="482" href="#482">482</a>         <strong class="jxr_keyword">if</strong> (crlfIdx &gt; 0) {
+<a name="483" href="#483">483</a>             sb.append(s.substring(0, crlfIdx));
+<a name="484" href="#484">484</a>         }
+<a name="485" href="#485">485</a> 
+<a name="486" href="#486">486</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> idx = crlfIdx + 1; idx &lt; length; idx++) {
+<a name="487" href="#487">487</a>             <strong class="jxr_keyword">char</strong> c = s.charAt(idx);
+<a name="488" href="#488">488</a>             <strong class="jxr_keyword">if</strong> (c != '\r' &amp;&amp; c != '\n') {
+<a name="489" href="#489">489</a>                 sb.append(c);
+<a name="490" href="#490">490</a>             }
+<a name="491" href="#491">491</a>         }
 <a name="492" href="#492">492</a> 
-<a name="493" href="#493">493</a>         <strong class="jxr_keyword">public</strong> Rfc822DateFormat() {
-<a name="494" href="#494">494</a>             <strong class="jxr_keyword">super</strong>(<span class="jxr_string">"EEE, d MMM yyyy HH:mm:ss "</span>, Locale.US);
-<a name="495" href="#495">495</a>         }
-<a name="496" href="#496">496</a> 
-<a name="497" href="#497">497</a>         @Override
-<a name="498" href="#498">498</a>         <strong class="jxr_keyword">public</strong> StringBuffer format(Date date, StringBuffer toAppendTo,
-<a name="499" href="#499">499</a>                 FieldPosition pos) {
-<a name="500" href="#500">500</a>             StringBuffer sb = <strong class="jxr_keyword">super</strong>.format(date, toAppendTo, pos);
-<a name="501" href="#501">501</a> 
-<a name="502" href="#502">502</a>             <strong class="jxr_keyword">int</strong> zoneMillis = calendar.get(GregorianCalendar.ZONE_OFFSET);
-<a name="503" href="#503">503</a>             <strong class="jxr_keyword">int</strong> dstMillis = calendar.get(GregorianCalendar.DST_OFFSET);
-<a name="504" href="#504">504</a>             <strong class="jxr_keyword">int</strong> minutes = (zoneMillis + dstMillis) / 1000 / 60;
+<a name="493" href="#493">493</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a name="494" href="#494">494</a>     }
+<a name="495" href="#495">495</a> 
+<a name="496" href="#496">496</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> indexOfWsp(String s, <strong class="jxr_keyword">int</strong> fromIndex) {
+<a name="497" href="#497">497</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> len = s.length();
+<a name="498" href="#498">498</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> index = fromIndex; index &lt; len; index++) {
+<a name="499" href="#499">499</a>             <strong class="jxr_keyword">char</strong> c = s.charAt(index);
+<a name="500" href="#500">500</a>             <strong class="jxr_keyword">if</strong> (c == ' ' || c == '\t')
+<a name="501" href="#501">501</a>                 <strong class="jxr_keyword">return</strong> index;
+<a name="502" href="#502">502</a>         }
+<a name="503" href="#503">503</a>         <strong class="jxr_keyword">return</strong> len;
+<a name="504" href="#504">504</a>     }
 <a name="505" href="#505">505</a> 
-<a name="506" href="#506">506</a>             <strong class="jxr_keyword">if</strong> (minutes &lt; 0) {
-<a name="507" href="#507">507</a>                 sb.append('-');
-<a name="508" href="#508">508</a>                 minutes = -minutes;
-<a name="509" href="#509">509</a>             } <strong class="jxr_keyword">else</strong> {
-<a name="510" href="#510">510</a>                 sb.append('+');
-<a name="511" href="#511">511</a>             }
-<a name="512" href="#512">512</a> 
-<a name="513" href="#513">513</a>             sb.append(String.format(<span class="jxr_string">"%02d%02d"</span>, minutes / 60, minutes % 60));
-<a name="514" href="#514">514</a> 
-<a name="515" href="#515">515</a>             <strong class="jxr_keyword">return</strong> sb;
-<a name="516" href="#516">516</a>         }
-<a name="517" href="#517">517</a>     }
-<a name="518" href="#518">518</a> }
+<a name="506" href="#506">506</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">synchronized</strong> <strong class="jxr_keyword">int</strong> nextCounterValue() {
+<a name="507" href="#507">507</a>         <strong class="jxr_keyword">return</strong> counter++;
+<a name="508" href="#508">508</a>     }
+<a name="509" href="#509">509</a> 
+<a name="510" href="#510">510</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ThreadLocal&lt;DateFormat&gt; RFC822_DATE_FORMAT = <strong class="jxr_keyword">new</strong> ThreadLocal&lt;DateFormat&gt;() {
+<a name="511" href="#511">511</a>         @Override
+<a name="512" href="#512">512</a>         <strong class="jxr_keyword">protected</strong> DateFormat initialValue() {
+<a name="513" href="#513">513</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Rfc822DateFormat();
+<a name="514" href="#514">514</a>         }
+<a name="515" href="#515">515</a>     };
+<a name="516" href="#516">516</a> 
+<a name="517" href="#517">517</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Rfc822DateFormat <strong class="jxr_keyword">extends</strong> SimpleDateFormat {
+<a name="518" href="#518">518</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1L;
+<a name="519" href="#519">519</a> 
+<a name="520" href="#520">520</a>         <strong class="jxr_keyword">public</strong> Rfc822DateFormat() {
+<a name="521" href="#521">521</a>             <strong class="jxr_keyword">super</strong>(<span class="jxr_string">"EEE, d MMM yyyy HH:mm:ss "</span>, Locale.US);
+<a name="522" href="#522">522</a>         }
+<a name="523" href="#523">523</a> 
+<a name="524" href="#524">524</a>         @Override
+<a name="525" href="#525">525</a>         <strong class="jxr_keyword">public</strong> StringBuffer format(Date date, StringBuffer toAppendTo,
+<a name="526" href="#526">526</a>                 FieldPosition pos) {
+<a name="527" href="#527">527</a>             StringBuffer sb = <strong class="jxr_keyword">super</strong>.format(date, toAppendTo, pos);
+<a name="528" href="#528">528</a> 
+<a name="529" href="#529">529</a>             <strong class="jxr_keyword">int</strong> zoneMillis = calendar.get(GregorianCalendar.ZONE_OFFSET);
+<a name="530" href="#530">530</a>             <strong class="jxr_keyword">int</strong> dstMillis = calendar.get(GregorianCalendar.DST_OFFSET);
+<a name="531" href="#531">531</a>             <strong class="jxr_keyword">int</strong> minutes = (zoneMillis + dstMillis) / 1000 / 60;
+<a name="532" href="#532">532</a> 
+<a name="533" href="#533">533</a>             <strong class="jxr_keyword">if</strong> (minutes &lt; 0) {
+<a name="534" href="#534">534</a>                 sb.append('-');
+<a name="535" href="#535">535</a>                 minutes = -minutes;
+<a name="536" href="#536">536</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="537" href="#537">537</a>                 sb.append('+');
+<a name="538" href="#538">538</a>             }
+<a name="539" href="#539">539</a> 
+<a name="540" href="#540">540</a>             sb.append(String.format(<span class="jxr_string">"%02d%02d"</span>, minutes / 60, minutes % 60));
+<a name="541" href="#541">541</a> 
+<a name="542" href="#542">542</a>             <strong class="jxr_keyword">return</strong> sb;
+<a name="543" href="#543">543</a>         }
+<a name="544" href="#544">544</a>     }
+<a name="545" href="#545">545</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

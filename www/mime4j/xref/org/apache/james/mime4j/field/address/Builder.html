@@ -71,7 +71,7 @@
 <a name="61" href="#61">61</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/AddressList.html">AddressList</a>(list, <strong class="jxr_keyword">true</strong>);
 <a name="62" href="#62">62</a>      }
 <a name="63" href="#63">63</a>  
-<a name="64" href="#64">64</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Address.html">Address</a> buildAddress(ASTaddress node) {
+<a name="64" href="#64">64</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Address.html">Address</a> buildAddress(ASTaddress node) {
 <a name="65" href="#65">65</a>          <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
 <a name="66" href="#66">66</a>          Node n = it.next();
 <a name="67" href="#67">67</a>          <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec) {
@@ -107,7 +107,7 @@
 <a name="97" href="#97">97</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/MailboxList.html">MailboxList</a>(results, <strong class="jxr_keyword">true</strong>);
 <a name="98" href="#98">98</a>      }
 <a name="99" href="#99">99</a>  
-<a name="100" href="#100">100</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildMailbox(ASTmailbox node) {
+<a name="100" href="#100">100</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildMailbox(ASTmailbox node) {
 <a name="101" href="#101">101</a>         <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
 <a name="102" href="#102">102</a>         Node n = it.next();
 <a name="103" href="#103">103</a>         <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec) {
@@ -147,90 +147,91 @@
 <a name="137" href="#137">137</a>         <strong class="jxr_keyword">if</strong> (n instanceof ASTroute) {
 <a name="138" href="#138">138</a>             route = buildRoute((ASTroute) n);
 <a name="139" href="#139">139</a>             n = it.next();
-<a name="140" href="#140">140</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec)
-<a name="141" href="#141">141</a>             ; <em class="jxr_comment">// do nothing</em>
-<a name="142" href="#142">142</a>         <strong class="jxr_keyword">else</strong>
-<a name="143" href="#143">143</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
-<a name="144" href="#144">144</a> 
-<a name="145" href="#145">145</a>         <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec)
-<a name="146" href="#146">146</a>             <strong class="jxr_keyword">return</strong> buildAddrSpec(route, (ASTaddr_spec) n);
-<a name="147" href="#147">147</a>         <strong class="jxr_keyword">else</strong>
-<a name="148" href="#148">148</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
-<a name="149" href="#149">149</a>     }
-<a name="150" href="#150">150</a> 
-<a name="151" href="#151">151</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a> buildRoute(ASTroute node) {
-<a name="152" href="#152">152</a>         List&lt;String&gt; results = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(node.jjtGetNumChildren());
-<a name="153" href="#153">153</a>         <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
-<a name="154" href="#154">154</a>         <strong class="jxr_keyword">while</strong> (it.hasNext()) {
-<a name="155" href="#155">155</a>             Node n = it.next();
-<a name="156" href="#156">156</a>             <strong class="jxr_keyword">if</strong> (n instanceof ASTdomain)
-<a name="157" href="#157">157</a>                 results.add(buildString((ASTdomain) n, <strong class="jxr_keyword">true</strong>));
-<a name="158" href="#158">158</a>             <strong class="jxr_keyword">else</strong>
-<a name="159" href="#159">159</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
-<a name="160" href="#160">160</a>         }
-<a name="161" href="#161">161</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a>(results, <strong class="jxr_keyword">true</strong>);
-<a name="162" href="#162">162</a>     }
-<a name="163" href="#163">163</a> 
-<a name="164" href="#164">164</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildAddrSpec(ASTaddr_spec node) {
-<a name="165" href="#165">165</a>         <strong class="jxr_keyword">return</strong> buildAddrSpec(<strong class="jxr_keyword">null</strong>, node);
-<a name="166" href="#166">166</a>     }
-<a name="167" href="#167">167</a> 
-<a name="168" href="#168">168</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildAddrSpec(<a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a> route, ASTaddr_spec node) {
-<a name="169" href="#169">169</a>         <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
-<a name="170" href="#170">170</a>         String localPart = buildString((ASTlocal_part) it.next(), <strong class="jxr_keyword">true</strong>);
-<a name="171" href="#171">171</a>         String domain = buildString((ASTdomain) it.next(), <strong class="jxr_keyword">true</strong>);
-<a name="172" href="#172">172</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a>(route, localPart, domain);
-<a name="173" href="#173">173</a>     }
-<a name="174" href="#174">174</a> 
-<a name="175" href="#175">175</a>     <strong class="jxr_keyword">private</strong> String buildString(SimpleNode node, <strong class="jxr_keyword">boolean</strong> stripSpaces) {
-<a name="176" href="#176">176</a>         Token head = node.firstToken;
-<a name="177" href="#177">177</a>         Token tail = node.lastToken;
-<a name="178" href="#178">178</a>         StringBuilder out = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a name="179" href="#179">179</a> 
-<a name="180" href="#180">180</a>         <strong class="jxr_keyword">while</strong> (head != tail) {
-<a name="181" href="#181">181</a>             out.append(head.image);
-<a name="182" href="#182">182</a>             head = head.next;
-<a name="183" href="#183">183</a>             <strong class="jxr_keyword">if</strong> (!stripSpaces)
-<a name="184" href="#184">184</a>                 addSpecials(out, head.specialToken);
-<a name="185" href="#185">185</a>         }
-<a name="186" href="#186">186</a>         out.append(tail.image);
-<a name="187" href="#187">187</a> 
-<a name="188" href="#188">188</a>         <strong class="jxr_keyword">return</strong> out.toString();
-<a name="189" href="#189">189</a>     }
-<a name="190" href="#190">190</a> 
-<a name="191" href="#191">191</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addSpecials(StringBuilder out, Token specialToken) {
-<a name="192" href="#192">192</a>         <strong class="jxr_keyword">if</strong> (specialToken != <strong class="jxr_keyword">null</strong>) {
-<a name="193" href="#193">193</a>             addSpecials(out, specialToken.specialToken);
-<a name="194" href="#194">194</a>             out.append(specialToken.image);
-<a name="195" href="#195">195</a>         }
-<a name="196" href="#196">196</a>     }
-<a name="197" href="#197">197</a> 
-<a name="198" href="#198">198</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> implements Iterator&lt;Node&gt; {
-<a name="199" href="#199">199</a> 
-<a name="200" href="#200">200</a>         <strong class="jxr_keyword">private</strong> SimpleNode simpleNode;
-<a name="201" href="#201">201</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> index;
-<a name="202" href="#202">202</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> len;
-<a name="203" href="#203">203</a> 
-<a name="204" href="#204">204</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(SimpleNode simpleNode) {
-<a name="205" href="#205">205</a>             <strong class="jxr_keyword">this</strong>.simpleNode = simpleNode;
-<a name="206" href="#206">206</a>             <strong class="jxr_keyword">this</strong>.len = simpleNode.jjtGetNumChildren();
-<a name="207" href="#207">207</a>             <strong class="jxr_keyword">this</strong>.index = 0;
-<a name="208" href="#208">208</a>         }
-<a name="209" href="#209">209</a> 
-<a name="210" href="#210">210</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> remove() {
-<a name="211" href="#211">211</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
-<a name="212" href="#212">212</a>         }
-<a name="213" href="#213">213</a> 
-<a name="214" href="#214">214</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> hasNext() {
-<a name="215" href="#215">215</a>             <strong class="jxr_keyword">return</strong> index &lt; len;
-<a name="216" href="#216">216</a>         }
-<a name="217" href="#217">217</a> 
-<a name="218" href="#218">218</a>         <strong class="jxr_keyword">public</strong> Node next() {
-<a name="219" href="#219">219</a>             <strong class="jxr_keyword">return</strong> simpleNode.jjtGetChild(index++);
-<a name="220" href="#220">220</a>         }
-<a name="221" href="#221">221</a> 
-<a name="222" href="#222">222</a>     }
-<a name="223" href="#223">223</a> }
+<a name="140" href="#140">140</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec) {
+<a name="141" href="#141">141</a>             <em class="jxr_comment">// do nothing</em>
+<a name="142" href="#142">142</a>         }
+<a name="143" href="#143">143</a>         <strong class="jxr_keyword">else</strong>
+<a name="144" href="#144">144</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
+<a name="145" href="#145">145</a> 
+<a name="146" href="#146">146</a>         <strong class="jxr_keyword">if</strong> (n instanceof ASTaddr_spec)
+<a name="147" href="#147">147</a>             <strong class="jxr_keyword">return</strong> buildAddrSpec(route, (ASTaddr_spec) n);
+<a name="148" href="#148">148</a>         <strong class="jxr_keyword">else</strong>
+<a name="149" href="#149">149</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
+<a name="150" href="#150">150</a>     }
+<a name="151" href="#151">151</a> 
+<a name="152" href="#152">152</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a> buildRoute(ASTroute node) {
+<a name="153" href="#153">153</a>         List&lt;String&gt; results = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(node.jjtGetNumChildren());
+<a name="154" href="#154">154</a>         <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
+<a name="155" href="#155">155</a>         <strong class="jxr_keyword">while</strong> (it.hasNext()) {
+<a name="156" href="#156">156</a>             Node n = it.next();
+<a name="157" href="#157">157</a>             <strong class="jxr_keyword">if</strong> (n instanceof ASTdomain)
+<a name="158" href="#158">158</a>                 results.add(buildString((ASTdomain) n, <strong class="jxr_keyword">true</strong>));
+<a name="159" href="#159">159</a>             <strong class="jxr_keyword">else</strong>
+<a name="160" href="#160">160</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException();
+<a name="161" href="#161">161</a>         }
+<a name="162" href="#162">162</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a>(results, <strong class="jxr_keyword">true</strong>);
+<a name="163" href="#163">163</a>     }
+<a name="164" href="#164">164</a> 
+<a name="165" href="#165">165</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildAddrSpec(ASTaddr_spec node) {
+<a name="166" href="#166">166</a>         <strong class="jxr_keyword">return</strong> buildAddrSpec(<strong class="jxr_keyword">null</strong>, node);
+<a name="167" href="#167">167</a>     }
+<a name="168" href="#168">168</a> 
+<a name="169" href="#169">169</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a> buildAddrSpec(<a href="../../../../../../org/apache/james/mime4j/field/address/DomainList.html">DomainList</a> route, ASTaddr_spec node) {
+<a name="170" href="#170">170</a>         <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> it = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(node);
+<a name="171" href="#171">171</a>         String localPart = buildString((ASTlocal_part) it.next(), <strong class="jxr_keyword">true</strong>);
+<a name="172" href="#172">172</a>         String domain = buildString((ASTdomain) it.next(), <strong class="jxr_keyword">true</strong>);
+<a name="173" href="#173">173</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Mailbox.html">Mailbox</a>(route, localPart, domain);
+<a name="174" href="#174">174</a>     }
+<a name="175" href="#175">175</a> 
+<a name="176" href="#176">176</a>     <strong class="jxr_keyword">private</strong> String buildString(SimpleNode node, <strong class="jxr_keyword">boolean</strong> stripSpaces) {
+<a name="177" href="#177">177</a>         Token head = node.firstToken;
+<a name="178" href="#178">178</a>         Token tail = node.lastToken;
+<a name="179" href="#179">179</a>         StringBuilder out = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a name="180" href="#180">180</a> 
+<a name="181" href="#181">181</a>         <strong class="jxr_keyword">while</strong> (head != tail) {
+<a name="182" href="#182">182</a>             out.append(head.image);
+<a name="183" href="#183">183</a>             head = head.next;
+<a name="184" href="#184">184</a>             <strong class="jxr_keyword">if</strong> (!stripSpaces)
+<a name="185" href="#185">185</a>                 addSpecials(out, head.specialToken);
+<a name="186" href="#186">186</a>         }
+<a name="187" href="#187">187</a>         out.append(tail.image);
+<a name="188" href="#188">188</a> 
+<a name="189" href="#189">189</a>         <strong class="jxr_keyword">return</strong> out.toString();
+<a name="190" href="#190">190</a>     }
+<a name="191" href="#191">191</a> 
+<a name="192" href="#192">192</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addSpecials(StringBuilder out, Token specialToken) {
+<a name="193" href="#193">193</a>         <strong class="jxr_keyword">if</strong> (specialToken != <strong class="jxr_keyword">null</strong>) {
+<a name="194" href="#194">194</a>             addSpecials(out, specialToken.specialToken);
+<a name="195" href="#195">195</a>             out.append(specialToken.image);
+<a name="196" href="#196">196</a>         }
+<a name="197" href="#197">197</a>     }
+<a name="198" href="#198">198</a> 
+<a name="199" href="#199">199</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a> implements Iterator&lt;Node&gt; {
+<a name="200" href="#200">200</a> 
+<a name="201" href="#201">201</a>         <strong class="jxr_keyword">private</strong> SimpleNode simpleNode;
+<a name="202" href="#202">202</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> index;
+<a name="203" href="#203">203</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> len;
+<a name="204" href="#204">204</a> 
+<a name="205" href="#205">205</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../org/apache/james/mime4j/field/address/Builder.html">ChildNodeIterator</a>(SimpleNode simpleNode) {
+<a name="206" href="#206">206</a>             <strong class="jxr_keyword">this</strong>.simpleNode = simpleNode;
+<a name="207" href="#207">207</a>             <strong class="jxr_keyword">this</strong>.len = simpleNode.jjtGetNumChildren();
+<a name="208" href="#208">208</a>             <strong class="jxr_keyword">this</strong>.index = 0;
+<a name="209" href="#209">209</a>         }
+<a name="210" href="#210">210</a> 
+<a name="211" href="#211">211</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> remove() {
+<a name="212" href="#212">212</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
+<a name="213" href="#213">213</a>         }
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> hasNext() {
+<a name="216" href="#216">216</a>             <strong class="jxr_keyword">return</strong> index &lt; len;
+<a name="217" href="#217">217</a>         }
+<a name="218" href="#218">218</a> 
+<a name="219" href="#219">219</a>         <strong class="jxr_keyword">public</strong> Node next() {
+<a name="220" href="#220">220</a>             <strong class="jxr_keyword">return</strong> simpleNode.jjtGetChild(index++);
+<a name="221" href="#221">221</a>         }
+<a name="222" href="#222">222</a> 
+<a name="223" href="#223">223</a>     }
+<a name="224" href="#224">224</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

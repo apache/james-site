@@ -33,54 +33,56 @@
 <a name="23" href="#23">23</a>  
 <a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
 <a name="25" href="#25">25</a>  
-<a name="26" href="#26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/apache/james/mime4j/field/structured/StructuredFieldParserTest.html">StructuredFieldParserTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
+<a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.james.mime4j.field.structured.parser.StructuredFieldParser;
 <a name="27" href="#27">27</a>  
-<a name="28" href="#28">28</a>      @Override
-<a name="29" href="#29">29</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="30" href="#30">30</a>          <strong class="jxr_keyword">super</strong>.setUp();
-<a name="31" href="#31">31</a>      }
-<a name="32" href="#32">32</a>  
-<a name="33" href="#33">33</a>      @Override
-<a name="34" href="#34">34</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> tearDown() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="35" href="#35">35</a>          <strong class="jxr_keyword">super</strong>.tearDown();
-<a name="36" href="#36">36</a>      }
-<a name="37" href="#37">37</a>  
-<a name="38" href="#38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleField() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="39" href="#39">39</a>          <strong class="jxr_keyword">final</strong> String string = <span class="jxr_string">"Field Value"</span>;
-<a name="40" href="#40">40</a>          assertEquals(string, parse(string));
-<a name="41" href="#41">41</a>      }
-<a name="42" href="#42">42</a>      
-<a name="43" href="#43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTrim() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="44" href="#44">44</a>          <strong class="jxr_keyword">final</strong> String string = <span class="jxr_string">"Field Value"</span>;
-<a name="45" href="#45">45</a>          assertEquals(string, parse(<span class="jxr_string">"    \t\r\n"</span> + string + <span class="jxr_string">"  \t\r\n  "</span>));
-<a name="46" href="#46">46</a>      }
-<a name="47" href="#47">47</a>      
-<a name="48" href="#48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFolding() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="49" href="#49">49</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Field \t\r\n  Value"</span>));
-<a name="50" href="#50">50</a>      }
-<a name="51" href="#51">51</a>      
-<a name="52" href="#52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testQuotedString() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="53" href="#53">53</a>          assertEquals(<span class="jxr_string">"Field    Value"</span>, parse(<span class="jxr_string">"\&quot;Field    Value\&quot;"</span>));
-<a name="54" href="#54">54</a>          assertEquals(<span class="jxr_string">"Field\t\r\nValue"</span>, parse(<span class="jxr_string">"\&quot;Field\t\r\nValue\&quot;"</span>));
-<a name="55" href="#55">55</a>          assertEquals(<span class="jxr_string">"Field\t\r\nValue"</span>, parse(<span class="jxr_string">"\&quot;Field\t\r\n       \t       Value\&quot;"</span>));
-<a name="56" href="#56">56</a>      }
-<a name="57" href="#57">57</a>      
-<a name="58" href="#58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testComments() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="59" href="#59">59</a>          assertEquals(<span class="jxr_string">"Field"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld"</span>));
-<a name="60" href="#60">60</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld (A (very (nested) )comment)Value"</span>));
-<a name="61" href="#61">61</a>      }
-<a name="62" href="#62">62</a>      
-<a name="63" href="#63">63</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testQuotedInComments() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="64" href="#64">64</a>          assertEquals(<span class="jxr_string">"Fi(This is a comment)eld"</span>, parse(<span class="jxr_string">"\&quot;Fi(This is a comment)eld\&quot;"</span>));
-<a name="65" href="#65">65</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld (A (very (nested) )comment)Value"</span>));
-<a name="66" href="#66">66</a>      }
-<a name="67" href="#67">67</a>      
-<a name="68" href="#68">68</a>      <strong class="jxr_keyword">private</strong> String parse(String in) <strong class="jxr_keyword">throws</strong> Exception {
-<a name="69" href="#69">69</a>          StructuredFieldParser parser = <strong class="jxr_keyword">new</strong> StructuredFieldParser(<strong class="jxr_keyword">new</strong> StringReader(in));
-<a name="70" href="#70">70</a>          parser.setFoldingPreserved(<strong class="jxr_keyword">true</strong>);
-<a name="71" href="#71">71</a>          <strong class="jxr_keyword">return</strong> parser.parse();
-<a name="72" href="#72">72</a>      }
-<a name="73" href="#73">73</a>  }
+<a name="28" href="#28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/apache/james/mime4j/field/structured/StructuredFieldParserTest.html">StructuredFieldParserTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
+<a name="29" href="#29">29</a>  
+<a name="30" href="#30">30</a>      @Override
+<a name="31" href="#31">31</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="32" href="#32">32</a>          <strong class="jxr_keyword">super</strong>.setUp();
+<a name="33" href="#33">33</a>      }
+<a name="34" href="#34">34</a>  
+<a name="35" href="#35">35</a>      @Override
+<a name="36" href="#36">36</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> tearDown() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="37" href="#37">37</a>          <strong class="jxr_keyword">super</strong>.tearDown();
+<a name="38" href="#38">38</a>      }
+<a name="39" href="#39">39</a>  
+<a name="40" href="#40">40</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSimpleField() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="41" href="#41">41</a>          <strong class="jxr_keyword">final</strong> String string = <span class="jxr_string">"Field Value"</span>;
+<a name="42" href="#42">42</a>          assertEquals(string, parse(string));
+<a name="43" href="#43">43</a>      }
+<a name="44" href="#44">44</a>      
+<a name="45" href="#45">45</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testTrim() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="46" href="#46">46</a>          <strong class="jxr_keyword">final</strong> String string = <span class="jxr_string">"Field Value"</span>;
+<a name="47" href="#47">47</a>          assertEquals(string, parse(<span class="jxr_string">"    \t\r\n"</span> + string + <span class="jxr_string">"  \t\r\n  "</span>));
+<a name="48" href="#48">48</a>      }
+<a name="49" href="#49">49</a>      
+<a name="50" href="#50">50</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFolding() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="51" href="#51">51</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Field \t\r\n  Value"</span>));
+<a name="52" href="#52">52</a>      }
+<a name="53" href="#53">53</a>      
+<a name="54" href="#54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testQuotedString() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="55" href="#55">55</a>          assertEquals(<span class="jxr_string">"Field    Value"</span>, parse(<span class="jxr_string">"\&quot;Field    Value\&quot;"</span>));
+<a name="56" href="#56">56</a>          assertEquals(<span class="jxr_string">"Field\t\r\nValue"</span>, parse(<span class="jxr_string">"\&quot;Field\t\r\nValue\&quot;"</span>));
+<a name="57" href="#57">57</a>          assertEquals(<span class="jxr_string">"Field\t\r\nValue"</span>, parse(<span class="jxr_string">"\&quot;Field\t\r\n       \t       Value\&quot;"</span>));
+<a name="58" href="#58">58</a>      }
+<a name="59" href="#59">59</a>      
+<a name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testComments() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="61" href="#61">61</a>          assertEquals(<span class="jxr_string">"Field"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld"</span>));
+<a name="62" href="#62">62</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld (A (very (nested) )comment)Value"</span>));
+<a name="63" href="#63">63</a>      }
+<a name="64" href="#64">64</a>      
+<a name="65" href="#65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testQuotedInComments() <strong class="jxr_keyword">throws</strong> Exception {
+<a name="66" href="#66">66</a>          assertEquals(<span class="jxr_string">"Fi(This is a comment)eld"</span>, parse(<span class="jxr_string">"\&quot;Fi(This is a comment)eld\&quot;"</span>));
+<a name="67" href="#67">67</a>          assertEquals(<span class="jxr_string">"Field Value"</span>, parse(<span class="jxr_string">"Fi(This is a comment)eld (A (very (nested) )comment)Value"</span>));
+<a name="68" href="#68">68</a>      }
+<a name="69" href="#69">69</a>      
+<a name="70" href="#70">70</a>      <strong class="jxr_keyword">private</strong> String parse(String in) <strong class="jxr_keyword">throws</strong> Exception {
+<a name="71" href="#71">71</a>          StructuredFieldParser parser = <strong class="jxr_keyword">new</strong> StructuredFieldParser(<strong class="jxr_keyword">new</strong> StringReader(in));
+<a name="72" href="#72">72</a>          parser.setFoldingPreserved(<strong class="jxr_keyword">true</strong>);
+<a name="73" href="#73">73</a>          <strong class="jxr_keyword">return</strong> parser.parse();
+<a name="74" href="#74">74</a>      }
+<a name="75" href="#75">75</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
