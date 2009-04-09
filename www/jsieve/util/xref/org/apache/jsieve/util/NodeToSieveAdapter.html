@@ -163,29 +163,37 @@
 <a name="153" href="#153">153</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (value instanceof TagArgument) {
 <a name="154" href="#154">154</a>             <strong class="jxr_keyword">final</strong> TagArgument tagArgument = (TagArgument) value;
 <a name="155" href="#155">155</a>             <strong class="jxr_keyword">final</strong> String tag = tagArgument.getTag();
-<a name="156" href="#156">156</a>             handler.argument(tag);
-<a name="157" href="#157">157</a>         }
-<a name="158" href="#158">158</a>     }
-<a name="159" href="#159">159</a> 
-<a name="160" href="#160">160</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTtest node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
-<a name="161" href="#161">161</a>         <strong class="jxr_keyword">final</strong> String name = node.getName();
-<a name="162" href="#162">162</a>         handler.startTest(name);
-<a name="163" href="#163">163</a>     }
-<a name="164" href="#164">164</a> 
-<a name="165" href="#165">165</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTtest_list node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
-<a name="166" href="#166">166</a>         handler.startTestList();
-<a name="167" href="#167">167</a>     }
-<a name="168" href="#168">168</a> 
-<a name="169" href="#169">169</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTstring node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
-<a name="170" href="#170">170</a>         <strong class="jxr_keyword">final</strong> String string =(String) node.getValue();
-<a name="171" href="#171">171</a>         handler.listMember(string);
-<a name="172" href="#172">172</a>     }
-<a name="173" href="#173">173</a> 
-<a name="174" href="#174">174</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTstring_list node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
-<a name="175" href="#175">175</a>         handler.startStringListArgument();
-<a name="176" href="#176">176</a>     }
-<a name="177" href="#177">177</a> 
-<a name="178" href="#178">178</a> }
+<a name="156" href="#156">156</a>             <em class="jxr_comment">// tag = ":" identifier</em>
+<a name="157" href="#157">157</a>             <em class="jxr_comment">// handlers are only interesting in the identifier for the tag</em>
+<a name="158" href="#158">158</a>             <strong class="jxr_keyword">final</strong> String identifier;
+<a name="159" href="#159">159</a>             <strong class="jxr_keyword">if</strong> (tag.charAt(0) == ':') {
+<a name="160" href="#160">160</a>                 identifier = tag.substring(1);
+<a name="161" href="#161">161</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="162" href="#162">162</a>                 identifier = tag;
+<a name="163" href="#163">163</a>             }
+<a name="164" href="#164">164</a>             handler.argument(identifier);
+<a name="165" href="#165">165</a>         }
+<a name="166" href="#166">166</a>     }
+<a name="167" href="#167">167</a> 
+<a name="168" href="#168">168</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTtest node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
+<a name="169" href="#169">169</a>         <strong class="jxr_keyword">final</strong> String name = node.getName();
+<a name="170" href="#170">170</a>         handler.startTest(name);
+<a name="171" href="#171">171</a>     }
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTtest_list node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
+<a name="174" href="#174">174</a>         handler.startTestList();
+<a name="175" href="#175">175</a>     }
+<a name="176" href="#176">176</a> 
+<a name="177" href="#177">177</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTstring node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
+<a name="178" href="#178">178</a>         <strong class="jxr_keyword">final</strong> String string =(String) node.getValue();
+<a name="179" href="#179">179</a>         handler.listMember(string);
+<a name="180" href="#180">180</a>     }
+<a name="181" href="#181">181</a> 
+<a name="182" href="#182">182</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start(ASTstring_list node) <strong class="jxr_keyword">throws</strong> HaltTraversalException {
+<a name="183" href="#183">183</a>         handler.startStringListArgument();
+<a name="184" href="#184">184</a>     }
+<a name="185" href="#185">185</a> 
+<a name="186" href="#186">186</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

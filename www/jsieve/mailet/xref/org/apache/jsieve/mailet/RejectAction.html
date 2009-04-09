@@ -43,13 +43,13 @@
 <a name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mail.ActionReject;
 <a name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.Mail;
 <a name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.MailAddress;
-<a name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.ActionModeAutomatic;
-<a name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.Disposition;
-<a name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.DispositionModifier;
-<a name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.MDNFactory;
-<a name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.ModifierError;
-<a name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.SendingModeAutomatic;
-<a name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.apache.mailet.base.mail.mdn.TypeDeleted;
+<a name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.ActionModeAutomatic;
+<a name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.Disposition;
+<a name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.DispositionModifier;
+<a name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.MDNFactory;
+<a name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.ModifierError;
+<a name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.SendingModeAutomatic;
+<a name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.mailet.mdn.TypeDeleted;
 <a name="43" href="#43">43</a>  
 <a name="44" href="#44">44</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/apache/jsieve/mailet/RejectAction.html">RejectAction</a> implements <a href="../../../../org/apache/jsieve/mailet/MailAction.html">MailAction</a> {
 <a name="45" href="#45">45</a>  
@@ -116,9 +116,9 @@
 <a name="106" href="#106">106</a> 
 <a name="107" href="#107">107</a>         String original_message_id = aMail.getMessage().getMessageID();
 <a name="108" href="#108">108</a> 
-<a name="109" href="#109">109</a>         DispositionModifier modifiers[] = {<strong class="jxr_keyword">new</strong> ModifierError()};
-<a name="110" href="#110">110</a>         Disposition disposition = <strong class="jxr_keyword">new</strong> Disposition(<strong class="jxr_keyword">new</strong> ActionModeAutomatic(),
-<a name="111" href="#111">111</a>                 <strong class="jxr_keyword">new</strong> SendingModeAutomatic(), <strong class="jxr_keyword">new</strong> TypeDeleted(), modifiers);
+<a name="109" href="#109">109</a>         <a href="../../../../org/apache/jsieve/mailet/mdn/DispositionModifier.html">DispositionModifier</a> modifiers[] = {<strong class="jxr_keyword">new</strong> ModifierError()};
+<a name="110" href="#110">110</a>         <a href="../../../../org/apache/jsieve/mailet/mdn/Disposition.html">Disposition</a> disposition = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/mdn/Disposition.html">Disposition</a>(<strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/mdn/ActionModeAutomatic.html">ActionModeAutomatic</a>(),
+<a name="111" href="#111">111</a>                 <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/mdn/SendingModeAutomatic.html">SendingModeAutomatic</a>(), <strong class="jxr_keyword">new</strong> TypeDeleted(), modifiers);
 <a name="112" href="#112">112</a> 
 <a name="113" href="#113">113</a>         MimeMultipart multiPart = MDNFactory.create(humanText.toString(),
 <a name="114" href="#114">114</a>                 reporting_UA_name, reporting_UA_product, original_recipient,
