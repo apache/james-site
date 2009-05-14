@@ -12,7 +12,7 @@
 <html>
   <head>
     <title>Apache JAMES MailetDocs Maven Plugin - 
-    maven-mailetdocs-plugin - mailetdocs:help</title>
+    mailetdocs:help</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -46,7 +46,7 @@
   
   
             <div class="xleft">
-        Last Published: 04/01/2009
+        Last Published: 05/14/2009
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -224,13 +224,16 @@
       <p><strong>Full name</strong>:</p>
       <p>org.apache.james:maven-mailetdocs-plugin:0.2-SNAPSHOT:help</p>
       <p><strong>Description</strong>:</p>
-      <p>Display help information on
-'org.apache.james:maven-mailetdocs-plugin' plugin. Call 'mvn
-mailetdocs:help -Ddetail=true' to display all details.</p>
+      <div>Display help information on maven-mailetdocs-plugin.<br></br>
+ Call 
+
+<pre>
+ mvn mailetdocs:help -Ddetail=true -Dgoal=&lt;goal-name&gt;
+</pre>
+
+to display parameter details.</div>
       <p><strong>Attributes</strong>:</p>
-      <ul>
-        <li>Requires a Maven 2.0 project to be executed.</li>
-      </ul>
+      <ul></ul>
       <a name="Optional Parameters"></a><div class="section"><h3>Optional Parameters</h3>
         <table class="bodyTable">
           <tr class="a">
@@ -243,18 +246,60 @@ mailetdocs:help -Ddetail=true' to display all details.</p>
             <td><strong><a href="#detail">detail</a></strong></td>
             <td><code>boolean</code></td>
             <td><code>-</code></td>
-            <td>If true, display all settable properies for each goal. Default value is: <code>false</code>.</td>
+            <td>If <code>true</code>, display all settable properties for each
+goal.<br></br><strong>Default value is</strong>: <code>false</code>.</td>
+          </tr>
+          <tr class="a">
+            <td><strong><a href="#goal">goal</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.<br></br></td>
+          </tr>
+          <tr class="b">
+            <td><strong><a href="#indentSize">indentSize</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The number of spaces per indentation level, should be positive.<br></br><strong>Default value is</strong>: <code>2</code>.</td>
+          </tr>
+          <tr class="a">
+            <td><strong><a href="#lineLength">lineLength</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The maximum length of a display line, should be positive.<br></br><strong>Default value is</strong>: <code>80</code>.</td>
           </tr>
         </table>
       </div>
       <a name="Parameter Details"></a><div class="section"><h3>Parameter Details</h3>
-        <strong><a name="detail">detail</a>:</strong>
-        <p>If true, display all settable properies for each goal.</p>
+        <p><strong><a name="detail">detail</a>:</strong></p>
+        <div>If <code>true</code>, display all settable properties for each
+goal.</div>
         <ul>
           <li><strong>Type</strong>: <code>boolean</code></li>
           <li><strong>Required</strong>: <code>No</code></li>
           <li><strong>Expression</strong>: <code>${detail}</code></li>
           <li><strong>Default</strong>: <code>false</code></li>
+        </ul><hr></hr><strong><a name="goal">goal</a>:</strong>
+        <div>The name of the goal for which to show help. If unspecified, all
+goals will be displayed.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>Expression</strong>: <code>${goal}</code></li>
+        </ul><hr></hr><strong><a name="indentSize">indentSize</a>:</strong>
+        <div>The number of spaces per indentation level, should be positive.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>Expression</strong>: <code>${indentSize}</code></li>
+          <li><strong>Default</strong>: <code>2</code></li>
+        </ul><hr></hr><strong><a name="lineLength">lineLength</a>:</strong>
+        <div>The maximum length of a display line, should be positive.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>Expression</strong>: <code>${lineLength}</code></li>
+          <li><strong>Default</strong>: <code>80</code></li>
         </ul>
       </div>
     </div>
