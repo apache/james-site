@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 12/13/2008
+        Last Published: 05/15/2009
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -186,6 +186,8 @@
       
             
       
+            
+      
               
         <li class="collapsed">
               <a href="project-reports.html">Project Reports</a>
@@ -196,6 +198,10 @@
               
     <li class="none">
               <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../release-notes.html">Release Notes</a>
         </li>
               
     <li class="none">
@@ -210,19 +216,12 @@
               <a href="../app">Application</a>
         </li>
           </ul>
-          <h5>Useful Information</h5>
+          <h5>The Apache Software Foundation</h5>
         <ul>
               
     <li class="none">
               <a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
         </li>
-              
-    <li class="none">
-              <a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
-        </li>
-          </ul>
-          <h5>The Apache Software Foundation</h5>
-        <ul>
               
     <li class="none">
               <a href="http://apache.org/foundation/faq.html">FAQ</a>
@@ -269,7 +268,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Overview</h2>This project uses <a href="http://subversion.tigris.org/">Subversion</a> to manage its source code. Instructions on Subversion use can be found at <a href="http://svnbook.red-bean.com/">http://svnbook.red-bean.com/</a>.</div><div class="section"><h2>Web Access</h2><p>The following is a link to the online source repository.</p><div class="source"><pre><a href="http://svn.apache.org/viewcvs.cgi/james/mpt/trunk/app?root=Apache-SVN">http://svn.apache.org/viewcvs.cgi/james/mpt/trunk/app?root=Apache-SVN</a></pre></div></div><div class="section"><h2>Anonymous access</h2><p>The source can be checked out anonymously from SVN with this command:</p><div class="source"><pre>$ svn checkout http://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mtp-app</pre></div></div><div class="section"><h2>Developer access</h2><p>Everyone can access the Subversion repository via HTTP, but Committers must checkout the Subversion repository via HTTPS.</p><div class="source"><pre>$ svn checkout https://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mtp-app</pre></div><p>To commit changes to the repository, execute the following command to commit your changes (svn will prompt you for your password)</p><div class="source"><pre>$ svn commit --username your-username -m &quot;A message&quot;</pre></div></div><div class="section"><h2>Access from behind a firewall</h2><p>For those users who are stuck behind a corporate firewall which is blocking HTTP access to the Subversion repository, you can try to access it via the developer connection:</p><div class="source"><pre>$ svn checkout https://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mtp-app</pre></div></div><div class="section"><h2>Access through a proxy</h2><p>The Subversion client can go through a proxy, if you configure it to do so. First, edit your &quot;servers&quot; configuration file to indicate which proxy to use. The file's location depends on your operating system. On Linux or Unix it is located in the directory &quot;~/.subversion&quot;. On Windows it is in &quot;%APPDATA%\Subversion&quot;. (Try &quot;echo %APPDATA%&quot;, note this is a hidden directory.)</p><p>There are comments in the file explaining what to do. If you don't have that file, get the latest Subversion client and run any command; this will cause the configuration directory and template files to be created.</p><p>Example: Edit the 'servers' file and add something like:</p><div class="source"><pre>[global]
+        <div class="section"><h2>Overview</h2>This project uses <a href="http://subversion.tigris.org/">Subversion</a> to manage its source code. Instructions on Subversion use can be found at <a href="http://svnbook.red-bean.com/">http://svnbook.red-bean.com/</a>.</div><div class="section"><h2>Web Access</h2><p>The following is a link to the online source repository.</p><div class="source"><pre><a href="http://svn.apache.org/viewcvs.cgi/james/mpt/trunk/app?root=Apache-SVN">http://svn.apache.org/viewcvs.cgi/james/mpt/trunk/app?root=Apache-SVN</a></pre></div></div><div class="section"><h2>Anonymous access</h2><p>The source can be checked out anonymously from SVN with this command:</p><div class="source"><pre>$ svn checkout http://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mpt-app</pre></div></div><div class="section"><h2>Developer access</h2><p>Everyone can access the Subversion repository via HTTP, but Committers must checkout the Subversion repository via HTTPS.</p><div class="source"><pre>$ svn checkout https://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mpt-app</pre></div><p>To commit changes to the repository, execute the following command to commit your changes (svn will prompt you for your password)</p><div class="source"><pre>$ svn commit --username your-username -m &quot;A message&quot;</pre></div></div><div class="section"><h2>Access from behind a firewall</h2><p>For those users who are stuck behind a corporate firewall which is blocking HTTP access to the Subversion repository, you can try to access it via the developer connection:</p><div class="source"><pre>$ svn checkout https://svn.apache.org/repos/asf/james/mpt/trunk/app apache-james-mpt-app</pre></div></div><div class="section"><h2>Access through a proxy</h2><p>The Subversion client can go through a proxy, if you configure it to do so. First, edit your &quot;servers&quot; configuration file to indicate which proxy to use. The file's location depends on your operating system. On Linux or Unix it is located in the directory &quot;~/.subversion&quot;. On Windows it is in &quot;%APPDATA%\Subversion&quot;. (Try &quot;echo %APPDATA%&quot;, note this is a hidden directory.)</p><p>There are comments in the file explaining what to do. If you don't have that file, get the latest Subversion client and run any command; this will cause the configuration directory and template files to be created.</p><p>Example: Edit the 'servers' file and add something like:</p><div class="source"><pre>[global]
 http-proxy-host = your.proxy.name
 http-proxy-port = 3128
 </pre></div></div>
@@ -280,7 +279,7 @@ http-proxy-port = 3128
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2008-2009
     
           The Apache Software Foundation
           

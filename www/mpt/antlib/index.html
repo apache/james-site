@@ -48,7 +48,7 @@
   
   
             <div class="xleft">
-        Last Published: 12/13/2008
+        Last Published: 05/15/2009
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -139,6 +139,8 @@
       
             
       
+            
+      
               
         <li class="collapsed">
               <a href="project-reports.html">Project Reports</a>
@@ -149,6 +151,10 @@
               
     <li class="none">
               <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../release-notes.html">Release Notes</a>
         </li>
               
     <li class="none">
@@ -163,19 +169,12 @@
               <a href="../app">Application</a>
         </li>
           </ul>
-          <h5>Useful Information</h5>
+          <h5>The Apache Software Foundation</h5>
         <ul>
               
     <li class="none">
               <a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
         </li>
-              
-    <li class="none">
-              <a href="http://jakarta.apache.org/site/library.html">Reference Library</a>
-        </li>
-          </ul>
-          <h5>The Apache Software Foundation</h5>
-        <ul>
               
     <li class="none">
               <a href="http://apache.org/foundation/faq.html">FAQ</a>
@@ -257,28 +256,28 @@ element.
 <a name="Parameters"></a><div class="section"><h3>Parameters</h3>
 <table class="bodyTable"> 
 <tr class="a">
-    <td><strong>Attribute</strong></td> <td><strong>Description</strong></td> <td><strong>Required</strong></td>
+	<td><strong>Attribute</strong></td> <td><strong>Description</strong></td> <td><strong>Required</strong></td>
 </tr> 
 <tr class="b">
-    <td>port</td> 
-    <td>Port number that the scripts should be executed against</td> 
-    <td>Yes</td>
+	<td>port</td> 
+	<td>Port number that the scripts should be executed against</td> 
+	<td>Yes</td>
 </tr>
 <tr class="a">
-    <td>host</td> 
-    <td>Host name or IP address of the server against which the scripts should be executed</td> 
-    <td>No (Defaults to <code>127.0.0.1</code>)</td>
+	<td>host</td> 
+	<td>Host name or IP address of the server against which the scripts should be executed</td> 
+	<td>No (Defaults to <code>127.0.0.1</code>)</td>
 </tr> 
 <tr class="b">
-    <td>script</td> 
-    <td>File containing a script to be executed. To execute multiple scripts, 
-    use a <a href="#Any Resource Collection">Resource Collection</a></td> 
-    <td>When no resource collections elements exist</td>
+	<td>script</td> 
+	<td>File containing a script to be executed. To execute multiple scripts, 
+	use a <a href="#Any Resource Collection">Resource Collection</a></td> 
+	<td>When no resource collections elements exist</td>
 </tr> 
 <tr class="a">
-    <td>skip</td> 
-    <td>Skips execution of scripts. For simple conditional execution.</td> 
-    <td>No</td>
+	<td>skip</td> 
+	<td>Skips execution of scripts. For simple conditional execution.</td> 
+	<td>No</td>
 </tr> 
 <tr class="b">
     <td>shabang</td> 
@@ -289,6 +288,12 @@ element.
     <td>quiet</td> 
     <td>Optional boolean setting when true will suppress progress output.</td> 
     <td>No (defaults to false)</td>
+</tr>
+<tr class="b">
+    <td>errorproperty</td> 
+    <td>Optionally names a property which will be set (with error message) when test fails.
+    When unset, the build will terminate when test fails.</td> 
+    <td>No</td>
 </tr>
 </table>
 </div>
@@ -307,31 +312,31 @@ Allows scripted addition of any users required by the tests.
 The port can vary but the host is inherited.
 
 <table class="bodyTable"> 
-<tr class="b">
-    <td><strong>Attribute</strong></td> <td><strong>Description</strong></td> <td><strong>Required</strong></td>
-</tr> 
 <tr class="a">
-    <td>port</td> 
-    <td>Port number that the user addition script should be executed against</td> 
-    <td>Yes</td>
+	<td><strong>Attribute</strong></td> <td><strong>Description</strong></td> <td><strong>Required</strong></td>
+</tr> 
+<tr class="b">
+	<td>port</td> 
+	<td>Port number that the user addition script should be executed against</td> 
+	<td>Yes</td>
 </tr>
 
+<tr class="a">
+	<td>passwd</td> 
+	<td>Password to be set for user created. Will be passed to the script.</td> 
+	<td>No</td>
+</tr> 
+
 <tr class="b">
-    <td>passwd</td> 
-    <td>Password to be set for user created. Will be passed to the script.</td> 
-    <td>No</td>
+	<td>user</td> 
+	<td>Name of the user to be created. Will be passed to the script.</td> 
+	<td>No</td>
 </tr> 
 
 <tr class="a">
-    <td>user</td> 
-    <td>Name of the user to be created. Will be passed to the script.</td> 
-    <td>No</td>
-</tr> 
-
-<tr class="b">
-    <td>script</td> 
-    <td>File containing the user creation script</td> 
-    <td>Either this attribute must be set, or the user addition script </td>
+	<td>script</td> 
+	<td>File containing the user creation script</td> 
+	<td>Either this attribute must be set, or the user addition script </td>
 </tr> 
 </table>
 <p>
@@ -383,7 +388,7 @@ as text to the body of this element.
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2008-2009
     
           The Apache Software Foundation
           

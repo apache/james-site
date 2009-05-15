@@ -1,113 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.1" timestamp="2008-12-13T13:00:46.062">
-<file name="/opt/development/protocol-tester/app/src/main/java/org/apache/james/mpt/app/RunScript.java">
-<violation beginline="53" endline="54" begincolumn="8" endcolumn="87" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="RunScript" method="run" variable="host" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'UR'-anomaly for variable 'host' (lines '53'-'54').
+<pmd version="3.9" timestamp="2009-05-15T16:20:45.520" elapsedTime="0s">
+<file name="/opt/development/mpt/app/src/main/java/org/apache/james/mpt/app/Main.java">
+<violation line="42" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt.app" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AtLeastOneConstructor" priority="3">
+Each class should declare at least one constructor
 </violation>
-<violation beginline="56" endline="56" begincolumn="8" endcolumn="102" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="RunScript" method="run" variable="host" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="57" endline="57" begincolumn="8" endcolumn="74" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="RunScript" method="run" variable="builder" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="58" endline="58" begincolumn="8" endcolumn="41" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="RunScript" method="run" variable="runner" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
+<violation line="72" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="Main" method="runCommand" priority="5">
+Found 'DU'-anomaly for variable 'verbose' (lines '72'-'90').
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/AbstractProtocolTestFramework.java">
-<violation beginline="42" endline="47" begincolumn="12" endcolumn="5" rule="CallSuperInConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt" class="AbstractProtocolTestFramework" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#CallSuperInConstructor" priority="3">
+<file name="/opt/development/mpt/app/src/main/java/org/apache/james/mpt/app/RunScript.java">
+<violation line="53" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt.app" class="RunScript" method="run" priority="5">
+Found 'UR'-anomaly for variable 'host' (lines '53'-'54').
+</violation>
+</file>
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/AbstractProtocolTestFramework.java">
+<violation line="42" rule="CallSuperInConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt" class="AbstractProtocolTestFramework" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#CallSuperInConstructor" priority="3">
 It is a good practice to call super() in a constructor
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/ExternalSession.java">
-<violation beginline="64" endline="64" begincolumn="9" endcolumn="27" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSession" method="readLine" variable="result" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/AbstractSimpleScriptedTestProtocol.java">
+<violation line="35" rule="SingularField" ruleset="Controversial Rules" package="org.apache.james.mpt" class="AbstractSimpleScriptedTestProtocol" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#SingularField" priority="3">
+Perhaps 'builder' could be replaced by a local variable.
 </violation>
-<violation beginline="81" endline="81" begincolumn="13" endcolumn="13" rule="EmptyWhileStmt" ruleset="Basic Rules" package="org.apache.james.mpt" class="ExternalSession" method="readlineInto" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyWhileStmt" priority="3">
+</file>
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/ExternalSession.java">
+<violation line="81" rule="EmptyWhileStmt" ruleset="Basic Rules" package="org.apache.james.mpt" class="ExternalSession" method="readlineInto" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyWhileStmt" priority="3">
 Avoid empty while statements
 </violation>
-<violation beginline="88" endline="88" begincolumn="9" endcolumn="28" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSession" method="oneFromLine" variable="result" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="156" endline="156" begincolumn="9" endcolumn="30" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSession" method="toString" variable="TAB" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
+<violation line="87" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSession" priority="5">
+Found 'DU'-anomaly for variable 'buffer' (lines '87'-'119').
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/ExternalSessionFactory.java">
-<violation beginline="46" endline="46" begincolumn="9" endcolumn="65" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSessionFactory" method="newSession" variable="channel" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="48" endline="48" begincolumn="9" endcolumn="85" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSessionFactory" method="newSession" variable="result" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="65" endline="65" begincolumn="9" endcolumn="30" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSessionFactory" method="toString" variable="TAB" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/ExternalSessionFactory.java">
+<violation line="44" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ExternalSessionFactory" priority="5">
+Found 'DU'-anomaly for variable 'continuation' (lines '44'-'50').
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/HostSystem.java">
-<violation beginline="41" endline="41" begincolumn="12" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/HostSystem.java">
+<violation line="41" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="52" endline="52" begincolumn="12" endcolumn="71" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="52" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="54" endline="56" begincolumn="12" endcolumn="5" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Continuation" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="52" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" priority="5">
+Found 'DU'-anomaly for variable 'password' (lines '52'-'52').
+</violation>
+<violation line="52" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="HostSystem" priority="5">
+Found 'DU'-anomaly for variable 'user' (lines '52'-'52').
+</violation>
+<violation line="54" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Continuation" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="55" endline="55" begincolumn="16" endcolumn="33" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Continuation" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="55" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Continuation" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/Runner.java">
-<violation beginline="78" endline="84" begincolumn="21" endcolumn="35" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionContinuation" method="doContinue" variable="session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/Monitor.java">
+<violation line="27" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Monitor" priority="5">
+Found 'DU'-anomaly for variable 'message' (lines '27'-'27').
+</violation>
+<violation line="28" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Monitor" priority="5">
+Found 'DU'-anomaly for variable 'character' (lines '28'-'28').
+</violation>
+<violation line="29" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Monitor" priority="5">
+Found 'DU'-anomaly for variable 'message' (lines '29'-'29').
+</violation>
+</file>
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/NullMonitor.java">
+<violation line="25" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AtLeastOneConstructor" priority="3">
+Each class should declare at least one constructor
+</violation>
+<violation line="27" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="NullMonitor" priority="5">
+Found 'DU'-anomaly for variable 'message' (lines '27'-'28').
+</violation>
+<violation line="30" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="NullMonitor" priority="5">
+Found 'DU'-anomaly for variable 'character' (lines '30'-'31').
+</violation>
+<violation line="33" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="NullMonitor" priority="5">
+Found 'DU'-anomaly for variable 'messsage' (lines '33'-'34').
+</violation>
+</file>
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/Runner.java">
+<violation line="25" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AtLeastOneConstructor" priority="3">
+Each class should declare at least one constructor
+</violation>
+<violation line="78" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Runner" priority="5">
+Found 'DU'-anomaly for variable 'factory' (lines '78'-'111').
+</violation>
+<violation line="78" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Runner" priority="5">
+Found 'DU'-anomaly for variable 'factory' (lines '78'-'111').
+</violation>
+<violation line="78" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionContinuation" method="doContinue" priority="5">
 Found 'UR'-anomaly for variable 'session' (lines '78'-'84').
 </violation>
-<violation beginline="78" endline="84" begincolumn="21" endcolumn="35" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionContinuation" method="doContinue" variable="session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+<violation line="78" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionContinuation" method="doContinue" priority="5">
 Found 'UR'-anomaly for variable 'session' (lines '78'-'84').
 </violation>
-<violation beginline="122" endline="122" begincolumn="9" endcolumn="30" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Runner" method="toString" variable="TAB" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
+<violation line="79" rule="AtLeastOneConstructor" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionContinuation" method="runSessions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AtLeastOneConstructor" priority="3">
+Each class should declare at least one constructor
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/ScriptedUserAdder.java">
-<violation beginline="81" endline="81" begincolumn="9" endcolumn="60" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ScriptedUserAdder" method="addUser" variable="reader" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="93" endline="93" begincolumn="9" endcolumn="75" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ScriptedUserAdder" method="addUser" variable="builder" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="97" endline="97" begincolumn="9" endcolumn="42" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ScriptedUserAdder" method="addUser" variable="runner" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="99" endline="99" begincolumn="9" endcolumn="100" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ScriptedUserAdder" method="addUser" variable="factory" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-<violation beginline="112" endline="112" begincolumn="9" endcolumn="30" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.james.mpt" class="ScriptedUserAdder" method="toString" variable="TAB" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
-Avoid using final local variables, turn them into fields
-</violation>
-</file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/Session.java">
-<violation beginline="33" endline="33" begincolumn="12" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/Session.java">
+<violation line="33" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="40" endline="40" begincolumn="12" endcolumn="56" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="40" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="47" endline="47" begincolumn="12" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="40" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" priority="5">
+Found 'DU'-anomaly for variable 'line' (lines '40'-'40').
+</violation>
+<violation line="47" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="54" endline="54" begincolumn="12" endcolumn="40" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation line="54" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="Session" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/SessionFactory.java">
-<violation beginline="35" endline="36" begincolumn="21" endcolumn="29" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionFactory" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/SessionFactory.java">
+<violation line="35" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionFactory" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
+<violation line="35" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SessionFactory" priority="5">
+Found 'DU'-anomaly for variable 'continuation' (lines '35'-'36').
+</violation>
 </file>
-<file name="/opt/development/protocol-tester/main/src/main/java/org/apache/james/mpt/UserAdder.java">
-<violation beginline="33" endline="33" begincolumn="12" endcolumn="71" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="UserAdder" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/SystemLoggingMonitor.java">
+<violation line="49" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SystemLoggingMonitor" priority="5">
+Found 'DU'-anomaly for variable 'character' (lines '49'-'53').
+</violation>
+<violation line="55" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="SystemLoggingMonitor" priority="5">
+Found 'DU'-anomaly for variable 'message' (lines '55'-'59').
+</violation>
+</file>
+<file name="/opt/development/mpt/main/src/main/java/org/apache/james/mpt/UserAdder.java">
+<violation line="33" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.james.mpt" class="UserAdder" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
+</violation>
+<violation line="33" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="UserAdder" priority="5">
+Found 'DU'-anomaly for variable 'password' (lines '33'-'33').
+</violation>
+<violation line="33" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.james.mpt" class="UserAdder" priority="5">
+Found 'DU'-anomaly for variable 'user' (lines '33'-'33').
 </violation>
 </file>
 </pmd>
