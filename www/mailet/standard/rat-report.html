@@ -247,7 +247,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>RAT (Release Audit Tool) results</h2><p>The following document contains the results of <a href="http://code.google.com/p/arat/">RAT (Release Audit Tool)</a>.</p><p><div class="source"><pre>
+        <div class="section"><h2>RAT (Release Audit Tool) results</h2><p>The following document contains the results of <a href="http://incubator.apache.org/rat/">RAT (Release Audit Tool)</a>.</p><p><div class="source"><pre>
 *****************************************************
 Summary
 -------
@@ -256,13 +256,18 @@ Binaries: 2
 Archives: 10
 Standards: 116
 
-Apache Licensed: 113
+Apache Licensed: 116
 Generated Documents: 0
 
 JavaDocs are generated and so license header is optional
 Generated files do not required license headers
 
-3 Unknown Licenses
+0 Unknown Licenses
+
+*******************************
+
+Unapproved licenses:
+
 
 *******************************
 
@@ -280,7 +285,7 @@ Archives (+ indicates readable, $ unreadable):
  + /opt/development/workspace/mailet-site/standard/stage/junit/jars/junit-3.8.1.jar
  
 *****************************************************
-  Files with AL headers will be marked L
+  Files with Apache License headers will be marked AL
   Binary files (which do not require AL headers) will be marked B
   Compressed archives will be marked A
   Notices, licenses etc will be marked N
@@ -355,7 +360,7 @@ Archives (+ indicates readable, $ unreadable):
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/ClamAVScan.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/MailAttributesToMimeHeaders.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/ReplaceContent.java
- !????? /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/RecoverAttachment.java
+  AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/RecoverAttachment.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/RemoveMimeHeader.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/package.html
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/RemoveAllMailAttributes.java
@@ -370,12 +375,12 @@ Archives (+ indicates readable, $ unreadable):
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/AbstractAddFooter.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/SetMailAttribute.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/OnlyText.java
- !????? /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/StripAttachment.java
+  AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/StripAttachment.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/UnwrapText.java
   AL    /opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/Null.java
   AL    /opt/development/workspace/mailet-site/standard/src/assemble/src.xml
   AL    /opt/development/workspace/mailet-site/standard/src/assemble/bin.xml
- !????? /opt/development/workspace/mailet-site/standard/src/test/resources/org/apache/james/transport/mailets/replaceSubject.patterns
+  AL    /opt/development/workspace/mailet-site/standard/src/test/resources/org/apache/james/transport/mailets/replaceSubject.patterns
   AL    /opt/development/workspace/mailet-site/standard/src/test/java/org/apache/james/transport/matchers/SenderIsTest.java
   AL    /opt/development/workspace/mailet-site/standard/src/test/java/org/apache/james/transport/matchers/SMTPIsAuthNetworkTest.java
   AL    /opt/development/workspace/mailet-site/standard/src/test/java/org/apache/james/transport/matchers/SMTPAuthSuccessfulTest.java
@@ -420,123 +425,7 @@ Archives (+ indicates readable, $ unreadable):
  *****************************************************
  Printing headers for files without AL header...
  
- 
- =======================================================================
- ==/opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/RecoverAttachment.java
- =======================================================================
- package org.apache.james.transport.mailets;
-
-import org.apache.mailet.base.GenericMailet;
-import org.apache.mailet.Mail;
-import org.apache.mailet.MailetException;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.Map;
-
-/**
- * &lt;p&gt;
- * This mailet takes an attachment stored in an attribute and attach it back to
- * the message
- * &lt;/p&gt;
- * &lt;p&gt;
- * This may be used to place back attachment stripped by StripAttachment and
- * stored in the attribute
- * &lt;code&gt;org.apache.james.transport.mailets.StripAttachment.saved&lt;/code&gt;
- * &lt;/p&gt;
- * &lt;p&gt;
- * 
- * &lt;pre&gt;
- *   &amp;lt;mailet match=&amp;quot;All&amp;quot; class=&amp;quot;RecoverAttachment&amp;quot; &amp;gt;
- *     &amp;lt;attribute&amp;gt;my.attribute.name&amp;lt;/attribute&amp;gt;
- *   &amp;lt;/mailet &amp;gt;
- * &lt;/pre&gt;
- * 
- * &lt;/p&gt;
- */
-public class RecoverAttachment extends GenericMailet {
-
-    public static final String ATTRIBUTE_PARAMETER_NAME = &quot;attribute&quot;;
-
-    private String attributeName = null;
-
-    /**
-     * Checks if the mandatory parameters are present
-     * 
-     * @throws MailetException
-     */
-    public void init() throws MailetException {
-
- =======================================================================
- ==/opt/development/workspace/mailet-site/standard/src/main/java/org/apache/james/transport/mailets/StripAttachment.java
- =======================================================================
- package org.apache.james.transport.mailets;
-
-import org.apache.mailet.base.GenericMailet;
-import org.apache.mailet.Mail;
-import org.apache.mailet.MailetException;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-/**
- * &lt;p&gt;
- * Remove attachments from a Message. Supports simple removal, storing to file,
- * or storing to mail attributes.
- * &lt;/p&gt;
- * &lt;p&gt;
- * Configuration:
- * &lt;/p&gt;
- * &lt;p&gt;
- * 
- * &lt;pre&gt;
- *   &amp;lt;mailet match=&amp;quot;All&amp;quot; class=&amp;quot;StripAttachment&amp;quot; &amp;gt;
- *     &amp;lt;pattern &amp;gt;.*\.xls &amp;lt;/pattern&amp;gt;  &amp;lt;!-- The regular expression that must be matched -- &amp;gt;
- *     &amp;lt;!-- notpattern &amp;gt;.*\.xls &amp;lt;/notpattern--&amp;gt;  &amp;lt;!-- The regular expression that must be matched -- &amp;gt;
- *     &amp;lt;directory &amp;gt;c:\temp\james_attach &amp;lt;/directory&amp;gt;   &amp;lt;!-- The directory to save to -- &amp;gt;
- *     &amp;lt;remove &amp;gt;all &amp;lt;/remove&amp;gt;   &amp;lt;!-- either &amp;quot;no&amp;quot;, &amp;quot;matched&amp;quot;, &amp;quot;all&amp;quot; -- &amp;gt;
- *     &amp;lt;!-- attribute&amp;gt;my.attribute.name&amp;lt;/attribute --&amp;gt;
- *   &amp;lt;/mailet &amp;gt;
- * &lt;/pre&gt;
- * 
- * &lt;/p&gt;
- */
-public class StripAttachment extends GenericMailet {
-
- =======================================================================
- ==/opt/development/workspace/mailet-site/standard/src/test/resources/org/apache/james/transport/mailets/replaceSubject.patterns
- =======================================================================
- # Substitution rules
-/re:[ ]*/Re: /i/
-/ri:[ ]*/Re: /i/
-/r:[ ]*/Re: /i/
-</pre></div></p>
+ </pre></div></p>
       </div>
     </div>
     <div class="clear">
