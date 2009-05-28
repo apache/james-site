@@ -50,7 +50,7 @@
   
   
             <div class="xleft">
-        Last Published: 05/26/2009
+        Last Published: 05/28/2009
                       </div>
             <div class="xright">      
   
@@ -147,6 +147,8 @@
       
             
       
+            
+      
               
         <li class="collapsed">
               <a href="project-info.html">Project Information</a>
@@ -197,19 +199,20 @@
         used.
       </p>
       <p>
-        Ensure that the
-        <code>org.apache.james.transport.mailets.smime</code>
-        package is available to load mailets and matchers. For example:
+      To use the mailets, the package 
+      <code>org.apache.james.mailet.crypto.mailet</code> must be available.
+      To use the matchers, <code>org.apache.james.mailet.crypto.matcher</code> must be.
+      For example:
       </p>
       <div class="source"><pre>
         <pre>
     &lt;mailetpackages&gt; 
-      &lt;mailetpackage&gt;org.apache.james.transport.mailets&lt;/mailetpackage&gt;
-      &lt;mailetpackage&gt;org.apache.james.transport.mailets.smime&lt;/mailetpackage&gt; 
+      ...
+      &lt;mailetpackage&gt;org.apache.james.mailet.crypto.mailet&lt;/mailetpackage&gt; 
     &lt;/mailetpackages&gt;
     &lt;matcherpackages&gt; 
-      &lt;matcherpackage&gt;org.apache.james.transport.matchers &lt;/matcherpackage&gt;
-      &lt;matcherpackage&gt;org.apache.james.transport.matchers.smime&lt;/matcherpackage&gt; 
+      ...
+      &lt;matcherpackage&gt;org.apache.james.mailet.crypto.matcher&lt;/matcherpackage&gt; 
     &lt;/matcherpackages&gt;
         </pre>
       </pre></div>
