@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
 </head>
 <body>
-<div id="overview"><a href="../../../../../../../../../../../../workspace-seda-imap/target/site/apidocs/org/apache/james/util/watchdog/InaccurateTimeoutWatchdog.html">View Javadoc</a></div><pre>
+<div id="overview"><a href="../../../../../../apidocs/org/apache/james/util/watchdog/InaccurateTimeoutWatchdog.html">View Javadoc</a></div><pre>
 
 <a name="1" href="#1">1</a>   <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">**************************************************************</em>
 <a name="2" href="#2">2</a>   <em class="jxr_javadoccomment"> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
@@ -109,128 +109,134 @@
 <a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * Start this Watchdog, causing it to begin checking.</em>
 <a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     */</em>
 <a name="101" href="#101">101</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> start() {
-<a name="102" href="#102">102</a>         getLogger().debug(<span class="jxr_string">"Calling start()"</span>);
-<a name="103" href="#103">103</a>         lastReset = System.currentTimeMillis();
-<a name="104" href="#104">104</a>         isChecking = <strong class="jxr_keyword">true</strong>;
-<a name="105" href="#105">105</a>         <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
-<a name="106" href="#106">106</a>             <strong class="jxr_keyword">if</strong> ( watchdogThread == <strong class="jxr_keyword">null</strong>) {
-<a name="107" href="#107">107</a>                 myThreadPool.execute(<strong class="jxr_keyword">this</strong>);
-<a name="108" href="#108">108</a>             }
-<a name="109" href="#109">109</a>         }
-<a name="110" href="#110">110</a>     }
-<a name="111" href="#111">111</a> 
-<a name="112" href="#112">112</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * Reset this Watchdog.  Tells the Watchdog thread to reset</em>
-<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * the timer when it next awakens.</em>
-<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     */</em>
-<a name="116" href="#116">116</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> reset() {
-<a name="117" href="#117">117</a>         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
-<a name="118" href="#118">118</a>             getLogger().debug(<span class="jxr_string">"Calling reset() "</span> + watchdogThread.getName());
-<a name="119" href="#119">119</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="120" href="#120">120</a>             getLogger().debug(<span class="jxr_string">"Calling reset() for inactive watchdog"</span>);
-<a name="121" href="#121">121</a>         }
-<a name="122" href="#122">122</a>         isReset = <strong class="jxr_keyword">true</strong>;
-<a name="123" href="#123">123</a>     }
-<a name="124" href="#124">124</a> 
-<a name="125" href="#125">125</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     * Stop this Watchdog, causing the Watchdog to stop checking the trigger</em>
-<a name="127" href="#127">127</a> <em class="jxr_javadoccomment">     * condition.  The monitor can be restarted with a call to startWatchdog.</em>
-<a name="128" href="#128">128</a> <em class="jxr_javadoccomment">     */</em>
-<a name="129" href="#129">129</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> stop() {
-<a name="130" href="#130">130</a>         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
-<a name="131" href="#131">131</a>             getLogger().debug(<span class="jxr_string">"Calling stop() "</span> + watchdogThread.getName());
-<a name="132" href="#132">132</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="133" href="#133">133</a>             getLogger().debug(<span class="jxr_string">"Calling stop() for inactive watchdog"</span>);
-<a name="134" href="#134">134</a>         }
-<a name="135" href="#135">135</a>         isChecking = false;
-<a name="136" href="#136">136</a>     }
-<a name="137" href="#137">137</a> 
-<a name="138" href="#138">138</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="139" href="#139">139</a> <em class="jxr_javadoccomment">     * Execute the body of the Watchdog, triggering as appropriate.</em>
-<a name="140" href="#140">140</a> <em class="jxr_javadoccomment">     */</em>
-<a name="141" href="#141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() {
-<a name="142" href="#142">142</a> 
-<a name="143" href="#143">143</a>         <strong class="jxr_keyword">try</strong> {
-<a name="144" href="#144">144</a>             watchdogThread = Thread.currentThread();
-<a name="145" href="#145">145</a> 
-<a name="146" href="#146">146</a>             <strong class="jxr_keyword">while</strong> ((!(Thread.interrupted())) &amp;&amp; (watchdogThread != <strong class="jxr_keyword">null</strong>)) {
-<a name="147" href="#147">147</a>                 <strong class="jxr_keyword">try</strong> {
-<a name="148" href="#148">148</a>                     <strong class="jxr_keyword">if</strong> (!isChecking) {
-<a name="149" href="#149">149</a>                         <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
-<a name="150" href="#150">150</a>                             getLogger().debug(<span class="jxr_string">"Watchdog "</span> + Thread.currentThread().getName() + <span class="jxr_string">" is not active - going to exit."</span>);
-<a name="151" href="#151">151</a>                         }
-<a name="152" href="#152">152</a>                         <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
-<a name="153" href="#153">153</a>                             <strong class="jxr_keyword">if</strong> (!isChecking) {
-<a name="154" href="#154">154</a>                                 watchdogThread = <strong class="jxr_keyword">null</strong>;
-<a name="155" href="#155">155</a>                             }
-<a name="156" href="#156">156</a>                             <strong class="jxr_keyword">continue</strong>;
-<a name="157" href="#157">157</a>                         }
-<a name="158" href="#158">158</a>                     } <strong class="jxr_keyword">else</strong> {
-<a name="159" href="#159">159</a>                         <strong class="jxr_keyword">long</strong> currentTime = System.currentTimeMillis();
-<a name="160" href="#160">160</a>                         <strong class="jxr_keyword">if</strong> (isReset) {
-<a name="161" href="#161">161</a>                             isReset = false;
-<a name="162" href="#162">162</a>                             lastReset = currentTime;
-<a name="163" href="#163">163</a>                         }
-<a name="164" href="#164">164</a>                         <strong class="jxr_keyword">long</strong> timeToSleep = lastReset + timeout - currentTime;
-<a name="165" href="#165">165</a>                         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
-<a name="166" href="#166">166</a>                             getLogger().debug(<span class="jxr_string">"Watchdog "</span> + watchdogThread.getName() + <span class="jxr_string">" has time to sleep "</span> + timeToSleep);
-<a name="167" href="#167">167</a>                         } <strong class="jxr_keyword">else</strong> {
-<a name="168" href="#168">168</a>                             getLogger().debug(<span class="jxr_string">"Watchdog has time to sleep "</span> + timeToSleep);
-<a name="169" href="#169">169</a>                         }
-<a name="170" href="#170">170</a>                         <strong class="jxr_keyword">if</strong> (timeToSleep &lt;= 0) {
-<a name="171" href="#171">171</a>                             <strong class="jxr_keyword">try</strong> {
-<a name="172" href="#172">172</a>                                 <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
-<a name="173" href="#173">173</a>                                     <strong class="jxr_keyword">if</strong> ((isChecking) &amp;&amp; (triggerTarget != <strong class="jxr_keyword">null</strong>)) {
-<a name="174" href="#174">174</a>                                         triggerTarget.execute();
-<a name="175" href="#175">175</a>                                     }
-<a name="176" href="#176">176</a>                                     watchdogThread = <strong class="jxr_keyword">null</strong>;
-<a name="177" href="#177">177</a>                                 }
-<a name="178" href="#178">178</a>                             } <strong class="jxr_keyword">catch</strong> (Throwable t) {
-<a name="179" href="#179">179</a>                                 getLogger().error(<span class="jxr_string">"Encountered error while executing Watchdog target."</span>, t);
-<a name="180" href="#180">180</a>                             }
-<a name="181" href="#181">181</a>                             isChecking = false;
-<a name="182" href="#182">182</a>                             <strong class="jxr_keyword">continue</strong>;
-<a name="183" href="#183">183</a>                         } <strong class="jxr_keyword">else</strong> {
-<a name="184" href="#184">184</a>                             <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
-<a name="185" href="#185">185</a>                                 wait(timeToSleep);
-<a name="186" href="#186">186</a>                             }
-<a name="187" href="#187">187</a>                         }
-<a name="188" href="#188">188</a>                     }
-<a name="189" href="#189">189</a>                 } <strong class="jxr_keyword">catch</strong> (InterruptedException ie) {
-<a name="190" href="#190">190</a>                 }
-<a name="191" href="#191">191</a>             }
-<a name="192" href="#192">192</a> 
-<a name="193" href="#193">193</a>             <strong class="jxr_keyword">synchronized</strong>( <strong class="jxr_keyword">this</strong> ) {
-<a name="194" href="#194">194</a>                 watchdogThread = <strong class="jxr_keyword">null</strong>;
-<a name="195" href="#195">195</a>             }
-<a name="196" href="#196">196</a>         } <strong class="jxr_keyword">finally</strong> {
-<a name="197" href="#197">197</a>             <em class="jxr_comment">// Ensure that the thread is in a non-interrupted state when it gets returned</em>
-<a name="198" href="#198">198</a>             <em class="jxr_comment">// to the pool.</em>
-<a name="199" href="#199">199</a>             Thread.interrupted();
-<a name="200" href="#200">200</a>         }
-<a name="201" href="#201">201</a>         getLogger().debug(<span class="jxr_string">"Watchdog "</span> + Thread.currentThread().getName() + <span class="jxr_string">" is exiting run()."</span>);
-<a name="202" href="#202">202</a>     }
-<a name="203" href="#203">203</a> 
-<a name="204" href="#204">204</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * @see org.apache.avalon.framework.activity.Disposable#dispose()</em>
-<a name="206" href="#206">206</a> <em class="jxr_javadoccomment">     */</em>
-<a name="207" href="#207">207</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> dispose() {
-<a name="208" href="#208">208</a>         <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
-<a name="209" href="#209">209</a>             isChecking = false;
-<a name="210" href="#210">210</a>             <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
-<a name="211" href="#211">211</a>                 getLogger().debug(<span class="jxr_string">"Calling disposeWatchdog() "</span> + watchdogThread.getName());
-<a name="212" href="#212">212</a>             } <strong class="jxr_keyword">else</strong> {
-<a name="213" href="#213">213</a>                 getLogger().debug(<span class="jxr_string">"Calling disposeWatchdog() for inactive watchdog"</span>);
-<a name="214" href="#214">214</a>             }
-<a name="215" href="#215">215</a>             <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
-<a name="216" href="#216">216</a>                 watchdogThread = <strong class="jxr_keyword">null</strong>;
-<a name="217" href="#217">217</a>                 notifyAll();
-<a name="218" href="#218">218</a>             }
-<a name="219" href="#219">219</a>             ContainerUtil.dispose(triggerTarget);
-<a name="220" href="#220">220</a>             triggerTarget = <strong class="jxr_keyword">null</strong>;
-<a name="221" href="#221">221</a>         }
-<a name="222" href="#222">222</a>     }
-<a name="223" href="#223">223</a> }
+<a name="102" href="#102">102</a>         <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="103" href="#103">103</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling start()"</span> );
+<a name="104" href="#104">104</a>         }
+<a name="105" href="#105">105</a>         lastReset = System.currentTimeMillis();
+<a name="106" href="#106">106</a>         isChecking = <strong class="jxr_keyword">true</strong>;
+<a name="107" href="#107">107</a>         <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
+<a name="108" href="#108">108</a>             <strong class="jxr_keyword">if</strong> ( watchdogThread == <strong class="jxr_keyword">null</strong>) {
+<a name="109" href="#109">109</a>                 myThreadPool.execute(<strong class="jxr_keyword">this</strong>);
+<a name="110" href="#110">110</a>             }
+<a name="111" href="#111">111</a>         }
+<a name="112" href="#112">112</a>     }
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * Reset this Watchdog.  Tells the Watchdog thread to reset</em>
+<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * the timer when it next awakens.</em>
+<a name="117" href="#117">117</a> <em class="jxr_javadoccomment">     */</em>
+<a name="118" href="#118">118</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> reset() {
+<a name="119" href="#119">119</a>         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
+<a name="120" href="#120">120</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling reset() on thread '"</span> + watchdogThread.getName() + <span class="jxr_string">"'"</span>);
+<a name="121" href="#121">121</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="122" href="#122">122</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling reset() for inactive watchdog"</span>);
+<a name="123" href="#123">123</a>         }
+<a name="124" href="#124">124</a>         isReset = <strong class="jxr_keyword">true</strong>;
+<a name="125" href="#125">125</a>     }
+<a name="126" href="#126">126</a> 
+<a name="127" href="#127">127</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="128" href="#128">128</a> <em class="jxr_javadoccomment">     * Stop this Watchdog, causing the Watchdog to stop checking the trigger</em>
+<a name="129" href="#129">129</a> <em class="jxr_javadoccomment">     * condition.  The monitor can be restarted with a call to startWatchdog.</em>
+<a name="130" href="#130">130</a> <em class="jxr_javadoccomment">     */</em>
+<a name="131" href="#131">131</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> stop() {
+<a name="132" href="#132">132</a>         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
+<a name="133" href="#133">133</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling stop() on thread '"</span> + watchdogThread.getName() + <span class="jxr_string">"'"</span>);
+<a name="134" href="#134">134</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="135" href="#135">135</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling stop() for inactive watchdog"</span>);
+<a name="136" href="#136">136</a>         }
+<a name="137" href="#137">137</a>         isChecking = false;
+<a name="138" href="#138">138</a>     }
+<a name="139" href="#139">139</a> 
+<a name="140" href="#140">140</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * Execute the body of the Watchdog, triggering as appropriate.</em>
+<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">     */</em>
+<a name="143" href="#143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() {
+<a name="144" href="#144">144</a> 
+<a name="145" href="#145">145</a>         <strong class="jxr_keyword">try</strong> {
+<a name="146" href="#146">146</a>             watchdogThread = Thread.currentThread();
+<a name="147" href="#147">147</a> 
+<a name="148" href="#148">148</a>             <strong class="jxr_keyword">while</strong> ((!(Thread.interrupted())) &amp;&amp; (watchdogThread != <strong class="jxr_keyword">null</strong>)) {
+<a name="149" href="#149">149</a>                 <strong class="jxr_keyword">try</strong> {
+<a name="150" href="#150">150</a>                     <strong class="jxr_keyword">if</strong> (!isChecking) {
+<a name="151" href="#151">151</a>                         <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="152" href="#152">152</a>                             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Watchdog on thread '"</span> + Thread.currentThread().getName() + <span class="jxr_string">"' is not active - going to exit."</span>);
+<a name="153" href="#153">153</a>                         }
+<a name="154" href="#154">154</a>                         <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
+<a name="155" href="#155">155</a>                             <strong class="jxr_keyword">if</strong> (!isChecking) {
+<a name="156" href="#156">156</a>                                 watchdogThread = <strong class="jxr_keyword">null</strong>;
+<a name="157" href="#157">157</a>                             }
+<a name="158" href="#158">158</a>                             <strong class="jxr_keyword">continue</strong>;
+<a name="159" href="#159">159</a>                         }
+<a name="160" href="#160">160</a>                     } <strong class="jxr_keyword">else</strong> {
+<a name="161" href="#161">161</a>                         <strong class="jxr_keyword">long</strong> currentTime = System.currentTimeMillis();
+<a name="162" href="#162">162</a>                         <strong class="jxr_keyword">if</strong> (isReset) {
+<a name="163" href="#163">163</a>                             isReset = false;
+<a name="164" href="#164">164</a>                             lastReset = currentTime;
+<a name="165" href="#165">165</a>                         }
+<a name="166" href="#166">166</a>                         <strong class="jxr_keyword">long</strong> timeToSleep = lastReset + timeout - currentTime;
+<a name="167" href="#167">167</a>                         <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
+<a name="168" href="#168">168</a>                             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Watchdog on thread '"</span> + watchdogThread.getName() + <span class="jxr_string">"' has time to sleep "</span> + timeToSleep);
+<a name="169" href="#169">169</a>                         } <strong class="jxr_keyword">else</strong> {
+<a name="170" href="#170">170</a>                             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Watchdog has time to sleep "</span> + timeToSleep);
+<a name="171" href="#171">171</a>                         }
+<a name="172" href="#172">172</a>                         <strong class="jxr_keyword">if</strong> (timeToSleep &lt;= 0) {
+<a name="173" href="#173">173</a>                             <strong class="jxr_keyword">try</strong> {
+<a name="174" href="#174">174</a>                                 <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
+<a name="175" href="#175">175</a>                                     <strong class="jxr_keyword">if</strong> ((isChecking) &amp;&amp; (triggerTarget != <strong class="jxr_keyword">null</strong>)) {
+<a name="176" href="#176">176</a>                                         triggerTarget.execute();
+<a name="177" href="#177">177</a>                                     }
+<a name="178" href="#178">178</a>                                     watchdogThread = <strong class="jxr_keyword">null</strong>;
+<a name="179" href="#179">179</a>                                 }
+<a name="180" href="#180">180</a>                             } <strong class="jxr_keyword">catch</strong> (Throwable t) {
+<a name="181" href="#181">181</a>                                 getLogger().error(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Encountered error while executing Watchdog target."</span>, t);
+<a name="182" href="#182">182</a>                             }
+<a name="183" href="#183">183</a>                             isChecking = false;
+<a name="184" href="#184">184</a>                             <strong class="jxr_keyword">continue</strong>;
+<a name="185" href="#185">185</a>                         } <strong class="jxr_keyword">else</strong> {
+<a name="186" href="#186">186</a>                             <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
+<a name="187" href="#187">187</a>                                 wait(timeToSleep);
+<a name="188" href="#188">188</a>                             }
+<a name="189" href="#189">189</a>                         }
+<a name="190" href="#190">190</a>                     }
+<a name="191" href="#191">191</a>                 } <strong class="jxr_keyword">catch</strong> (InterruptedException ie) {
+<a name="192" href="#192">192</a>                 }
+<a name="193" href="#193">193</a>             }
+<a name="194" href="#194">194</a> 
+<a name="195" href="#195">195</a>             <strong class="jxr_keyword">synchronized</strong>( <strong class="jxr_keyword">this</strong> ) {
+<a name="196" href="#196">196</a>                 watchdogThread = <strong class="jxr_keyword">null</strong>;
+<a name="197" href="#197">197</a>             }
+<a name="198" href="#198">198</a>         } <strong class="jxr_keyword">finally</strong> {
+<a name="199" href="#199">199</a>             <em class="jxr_comment">// Ensure that the thread is in a non-interrupted state when it gets returned</em>
+<a name="200" href="#200">200</a>             <em class="jxr_comment">// to the pool.</em>
+<a name="201" href="#201">201</a>             Thread.interrupted();
+<a name="202" href="#202">202</a>         }
+<a name="203" href="#203">203</a>         <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="204" href="#204">204</a>             getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Watchdog on thread '"</span> + Thread.currentThread().getName() + <span class="jxr_string">"' is exiting run()."</span>);
+<a name="205" href="#205">205</a>         }
+<a name="206" href="#206">206</a>     }
+<a name="207" href="#207">207</a> 
+<a name="208" href="#208">208</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="209" href="#209">209</a> <em class="jxr_javadoccomment">     * @see org.apache.avalon.framework.activity.Disposable#dispose()</em>
+<a name="210" href="#210">210</a> <em class="jxr_javadoccomment">     */</em>
+<a name="211" href="#211">211</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> dispose() {
+<a name="212" href="#212">212</a>         <strong class="jxr_keyword">synchronized</strong>(<strong class="jxr_keyword">this</strong>) {
+<a name="213" href="#213">213</a>             isChecking = false;
+<a name="214" href="#214">214</a>             <strong class="jxr_keyword">if</strong> (getLogger().isDebugEnabled()) {
+<a name="215" href="#215">215</a>                 <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
+<a name="216" href="#216">216</a>                     getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling disposeWatchdog() on thread '"</span> + watchdogThread.getName() + <span class="jxr_string">"'"</span>);
+<a name="217" href="#217">217</a>                 } <strong class="jxr_keyword">else</strong> {
+<a name="218" href="#218">218</a>                     getLogger().debug(<span class="jxr_string">"["</span> + triggerTarget + <span class="jxr_string">"] Calling disposeWatchdog() for inactive watchdog"</span>);
+<a name="219" href="#219">219</a>                 }
+<a name="220" href="#220">220</a>             }
+<a name="221" href="#221">221</a>             <strong class="jxr_keyword">if</strong> (watchdogThread != <strong class="jxr_keyword">null</strong>) {
+<a name="222" href="#222">222</a>                 watchdogThread = <strong class="jxr_keyword">null</strong>;
+<a name="223" href="#223">223</a>                 notifyAll();
+<a name="224" href="#224">224</a>             }
+<a name="225" href="#225">225</a>             ContainerUtil.dispose(triggerTarget);
+<a name="226" href="#226">226</a>             triggerTarget = <strong class="jxr_keyword">null</strong>;
+<a name="227" href="#227">227</a>         }
+<a name="228" href="#228">228</a>     }
+<a name="229" href="#229">229</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
