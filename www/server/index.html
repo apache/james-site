@@ -20,12 +20,12 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
           <meta name="author" content="
-    James Project Web Team" />
+    James Project Team" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="" id="bannerLeft">
+                  <a href="http://james.apache.org/server/" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -48,19 +48,23 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 06/18/2009
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
-          <a href="../server/index.html">Server</a>
+          <a href="../imap/index.html">IMAP</a>
           |
-          <a href="../mailet/index.html">Mailets</a>
+          <a href="../jsieve/index.html">JSieve</a>
           |
           <a href="../jspf/index.html">jSPF</a>
           |
           <a href="../mime4j/index.html">Mime4J</a>
           |
-          <a href="../jsieve/index.html">JSieve</a>
+          <a href="../mailet/index.html">Mailets</a>
+          |
+          <a href="../mpt/index.html">MPT</a>
+          |
+          <a href="../server/index.html">Server</a>
           |
           <a href="../postage/index.html">Postage</a>
           
@@ -110,11 +114,15 @@
         </li>
               
     <li class="none">
-              <a href="http://wiki.apache.org/james">Wiki</a>
+              <a href="rfclist.html">Useful RFCs</a>
         </li>
               
     <li class="none">
-              <a href="rfclist.html">Useful RFCs</a>
+              <a href="http://issues.apache.org/jira/browse/JAMES">Issue Tracker</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://svn.apache.org/viewvc/james/server/">Source</a>
         </li>
           </ul>
           <h5>Documentation</h5>
@@ -144,34 +152,77 @@
               <a href="archive/document_archive.html">Archive</a>
         </li>
           </ul>
-          <h5>Project</h5>
+          <h5>Download</h5>
         <ul>
               
     <li class="none">
-              <a href="http://issues.apache.org/jira/browse/JAMES">Bug Database</a>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">License</a>
         </li>
               
     <li class="none">
-              <a href="http://svn.apache.org/viewvc/james/server/">Source Code</a>
-        </li>
-              
-    <li class="none">
-              <a href="todo.html">TODO</a>
-        </li>
-          </ul>
-          <h5>Downloads</h5>
-        <ul>
-              
-    <li class="none">
-              <a href="../download.cgi">Stable releases</a>
-        </li>
-              
-    <li class="none">
-              <a href="../downloadunstable.cgi">Unstable releases</a>
+              <a href="../download.cgi">Releases</a>
         </li>
               
     <li class="none">
               <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+          <h5>About James</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../newsarchive.html">News</a>
+        </li>
+              
+    <li class="none">
+              <a href="../mail.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="../contribute.html">Contributing</a>
+        </li>
+              
+    <li class="none">
+              <a href="../guidelines.html">Project Guidelines</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://wiki.apache.org/james">Wiki</a>
+        </li>
+              
+    <li class="none">
+              <a href="../weare.html">Who We Are</a>
+        </li>
+              
+    <li class="none">
+              <a href="../license.html">License</a>
+        </li>
+          </ul>
+          <h5>Apache Software Foundation</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/faq.html">FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/sponsorship.html">Sponsorship</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/contributing.html">Donations</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/thanks.html">Thanks</a>
         </li>
           </ul>
                                        <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
@@ -192,45 +243,126 @@
   
   
     <a name="What is it?"></a><div class="section"><h2>What is it?</h2>
-      <p>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure <b>Java SMTP and POP3 Mail server and NNTP News server</b>.  We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols. </p>
-      <p>James is also a <i>mail application platform</i>.  We have developed a Java API to let you write Java code to process emails that we call the mailet API.  A <b>mailet</b> can generate an automatic reply, update a database, prevent spam, build a message archive, or whatever you can imagine.  A <b>matcher</b> determines whether your mailet should process an email in the server.  The James project hosts the Mailet API, and James provides an implementation of this mail application platform API.</p>
-      <p>James is based upon the Apache Avalon application framework, formerly a product of the Apache Avalon project (see &quot;news&quot; below).</p>
-      <p>James requires Java 1.4 (For further information you may want to search the web, our <a href="http://www.mail-archive.com/server-dev@james.apache.org/">dev</a> and <a href="http://www.mail-archive.com/server-user@james.apache.org/">user</a> mail archives or our <a href="http://wiki.apache.org/james">wiki</a>).</p>
+      <p>Apache James Server
+      </p>
+      
+      <ul>
+      <li>Is 100% pure java capable of running on Java 1.4 onwards</li>
+      <li>Integrates protocols
+        <ul>
+          <li>Email
+            <ul>
+              <li><a href="http://james.apache.org/server/rfclist/smtp/rfc0821.txt">
+<abbr title="Simple Mail Transport Protocol">SMTP</abbr></a></li>
+              <li><a href="http://james.apache.org/server/rfclist/pop3/rfc1725.txt">
+<abbr title="Post Office Protocol">POP3</abbr></a>
+                <ul>
+                  <li>Outgoing server</li>
+                  <li>Incoming from POP3 accounts (FetchMail)</li>
+                </ul>
+              </li>
+              <li><a href="http://james.apache.org/server/rfclist/imap4/rfc2060.txt">
+<abbr title="Internet Message Access Protocol">IMAP</abbr></a> (James 3)
+                <ul> 
+                  <li>Server</li>
+                  <li><a href="http://james.apache.org/jsieve">Sieve</a> 
+                  filtering into IMAP mailboxes for incoming mail</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+           <li><a href="http://james.apache.org/server/rfclist/nntp/rfc0977.txt">
+<abbr title="Network News Transfer Protocol">NNTP</abbr></a> (better known as news)</li>
+        </ul>
+      </li>
+      <li>Is based on open standards</li>
+      <li>Is a mailet container. Processing is delegated to independent, extensible, pluggable agents
+      specified by the <a href="http://james.apache.org/mailet/api">Mailet API</a>. Any function
+      which is not already available (from <a href="http://james.apache.org/mailet">James</a>
+      or from a third party) can be developed.</li>
+      <li>Is a modular, component based <a href="http://dbpedia.org/resource/Inversion_of_control">IoC</a> 
+      mail platform
+      <ul>
+        <li>Based on mature, production proved <a href="http://excalibur.apache.org">Apache Excalibur</a>
+        components</li>
+        <li>James 2 (production) uses the <a href="http://avalon.apache.org">Avalon</a> framework. Avalon development
+        has now stopped but the framework is mature, stable and of proved production quality.</li>
+        <li><a href="http://james.apache.org/server/head">James 3</a> (development) supports Spring and is moving
+        towards OSGI</li>
+      </ul>
+      </li>
+      </ul>
     </div>
     <a name="Releases"></a><div class="section"><h2>Releases</h2>
-      <a name="Latest and Stable: James v2.3.1"></a><div class="section"><h3>Latest and Stable: James v2.3.1</h3>
-<p>
-James v2.3.1 is the current best release. Both <a href="http://james.apache.org/download.cgi">binary and source</a> distributions are available.
-</p><p>
-James v2.3.1 is a bugfix release to the James platform, with importent bugfixes.
-See the <a href="2.3.1/changelog.html">Change Log</a> for a detailed list of bugfixes.  <b>All
-users are urged to upgrade to v2.3.1 as soon as possible</b>.
-</p><p>
-Any bugs found in James are dealt with promptly.  Please provide <a href="https://issues.apache.org/jira/browse/JAMES">feedback</a>.
-</p><p>
-        <b>Get your hands on the latest versions..</b>
-        <br></br>We put significant milestones, and potential release candidates in the <a href="http://people.apache.org/dist/james/">download area.</a>
-        <br></br>Whilst the quality of these versions cannot be guaranteed they may contain important bug fixes and cool new features.<br></br>
- </p>
-      </div>
-      <a name="James Server 2.3.2 Candidate"></a><div class="section"><h3>James Server 2.3.2 Candidate</h3>
-        <p>
-        A bug fix point release currently in preparation. See <a href="2.3.2/release-notes.html">release notes</a>
-        for details.
-        </p>
+      <a name="Stable - James 2"></a><div class="section"><h3>Stable - James 2</h3>
+        
+        James 2 is a mature, production ready code stream with minimal development. 
+        Use of the latest stable release is recommended.
+        
+        <a name="Latest and Stable - James 2.3.1"></a><div class="section"><h3>Latest and Stable - James 2.3.1</h3>
+  <ul>
+  <li>Is the latest official stable release</li>
+  <li>Is a bugfix <a href="http://james.apache.org/download.cgi">release</a>.
+  See the <a href="2.3.1/changelog.html">Change Log</a> for details.
+  </li>
+  </ul>
+        </div>
+        <a name="Candidate - James 2.3.2"></a><div class="section"><h3>Candidate - James 2.3.2</h3>
+          <ul>
+          <li>
+          Is a bug fix point release currently in preparation. See <a href="2.3.2/release-notes.html">release notes</a>
+          for details.
+          </li>
+          <li>
+          Release candidates are <a href="http://people.apache.org/~rdonkin/server/">available</a>. Note that these
+          are <strong>not</strong> official releases and are intended for evaluation by expert users only. 
+          </li><li>
+          Feedback welcomed either through the <a href="http://james.apache.org/mail.html">mailing lists</a>
+          or <a href="http://issues.apache.org/jira/browse/JAMES">JIRA</a>.
+          </li>
+          </ul>
+        </div>
+        <a name="Proposal - James 2.4.0"></a><div class="section"><h3>Proposal - James 2.4.0</h3>
+          <ul>
+          <li>Is a 
+          <a href="http://issues.apache.org/jira/browse/JAMES/fixforversion/12313985">Proposed</a> 
+          minor revision upgrading to Java 1.5 and adding support for Java 1.6.
+          </li><li>
+          Some libraries developed for 
+          <a href="http://james.apache.org/server/head">James 3</a> may be added,
+          allowing access to their features.
+          </li><li>
+          Feedback welcomed either through the <a href="http://james.apache.org/mail.html">mailing lists</a>
+          or <a href="http://issues.apache.org/jira/browse/JAMES">JIRA</a>.
+          </li>
+          </ul>
+        </div>
       </div>
       <a name="Development - James 3.0"></a><div class="section"><h3>Development - James 3.0</h3>
-        <p>
-The <a href="http://james.apache.org/server/head">James 3.0</a> code base has many 
+        
+The <a href="http://james.apache.org/server/head">James 3</a> code base has many 
 <a href="http://james.apache.org/server/head/jira-report.html">new features</a>
 and major revisions to the architecture are ongoing.  
-</p><p>
+
 It is recommended only for advanced users who are willing to accept that
 development is ongoing and that they may need to participate actively.
-Users are strongly recommended to subscribe to the server-dev mailing list.
-        </p>
+Users are strongly recommended to subscribe to the server-dev 
+<a href="http://james.apache.org/mail.html">mailing list</a>.
+        
+        <a name="Proposal - James 3.0 Milestone 1"></a><div class="section"><h3>Proposal - James 3.0 Milestone 1</h3>
+          <ul>
+          <li>Is a proposed milestone release allowing a preview of the James 3.0 features
+          </li><li>
+          Feedback welcomed either through the <a href="http://james.apache.org/mail.html">mailing lists</a>
+          or <a href="http://issues.apache.org/jira/browse/JAMES">JIRA</a>.
+          </li>
+          </ul>
+        </div>
       </div>
-      <a name="Feature Status"></a><div class="section"><h3>Feature Status</h3>
+      </div>
+      <a name="Feature Matrix"></a><div class="section"><h2>Feature Matrix</h2>
         <table class="bodyTable">
           <tr class="a">
             <th>Item</th>
@@ -310,8 +442,16 @@ Users are strongly recommended to subscribe to the server-dev mailing list.
             <td>2.2</td>
             <td>2.2</td>
           </tr>
+          <tr class="b">
+            <td>IMAP</td>
+            <td>Okay</td>
+            <td>3.0</td>
+            <td>3.0</td>
+          </tr>
         </table>
-      </div>
+    </div>
+    <a name="TODO"></a><div class="section"><h2>TODO</h2>
+      See <a href="todo.html">here</a>
     </div>
   
 
