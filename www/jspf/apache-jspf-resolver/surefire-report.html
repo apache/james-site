@@ -1,0 +1,2317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>jSPF - Surefire Report</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="../index.html" id="bannerLeft">
+    
+                                            <img src="../images/james-jspf-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="../images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 06/25/2009
+                      </div>
+            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+          |
+          <a href="../../server/index.html">Server</a>
+          |
+          <a href="../../mailet/index.html">Mailets</a>
+          |
+          <a href="../index.html">jSPF</a>
+          |
+          <a href="../../mime4j/index.html">Mime4J</a>
+          |
+          <a href="../../jsieve/index.html">JSieve</a>
+          |
+          <a href="../../postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>jSPF</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../FAQ.html">jSPF FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="../mail-lists.html">Mailing Lists</a>
+        </li>
+              
+    <li class="none">
+              <a href="../rfclist.html">Useful RFCs</a>
+        </li>
+          </ul>
+          <h5>Parent Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Apache JAMES jSPF</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+            
+            
+      
+            
+      
+              
+            <li class="expanded">
+              <a href="project-reports.html">Project Reports</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="cpd.html">CPD Report</a>
+        </li>
+                  
+    <li class="none">
+              <a href="apidocs/index.html">JavaDocs</a>
+        </li>
+                  
+    <li class="none">
+              <a href="pmd.html">PMD Report</a>
+        </li>
+                  
+    <li class="none">
+              <a href="rat-report.html">RAT Report</a>
+        </li>
+                  
+    <li class="none">
+              <a href="xref/index.html">Source Xref</a>
+        </li>
+                  
+    <li class="none">
+              <strong>Surefire Report</strong>
+        </li>
+                  
+    <li class="none">
+              <a href="testapidocs/index.html">Test JavaDocs</a>
+        </li>
+                  
+    <li class="none">
+              <a href="xref-test/index.html">Test Source Xref</a>
+        </li>
+              </ul>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../../download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="../../downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <script type="text/javascript">
+function toggleDisplay(elementId) {
+ var elm = document.getElementById(elementId + 'error');
+ if (elm && typeof elm.style != "undefined") {
+ if (elm.style.display == "none") {
+ elm.style.display = "";
+ document.getElementById(elementId + 'off').style.display = "none";
+ document.getElementById(elementId + 'on').style.display = "inline";
+ } else if (elm.style.display == "") { elm.style.display = "none";
+ document.getElementById(elementId + 'off').style.display = "inline";
+ document.getElementById(elementId + 'on').style.display = "none";
+ } 
+ } 
+ }
+</script><div class="section"><h2>Surefire Report</h2>
+</div>
+<div class="section"><h2><a name="Summary"></a>Summary</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<br />
+<table class="bodyTable"><tr class="a"><th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="b"><td>457</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>47.699</td>
+</tr>
+</table>
+<br />
+Note: failures are anticipated and checked for with assertions while errors are unanticipated.<br />
+</div>
+<div class="section"><h2><a name="Package_List"></a>Package List</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<br />
+<table class="bodyTable"><tr class="a"><th>Package</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspf">org.apache.james.jspf</a></td>
+<td>437</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>47.651</td>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspf.core">org.apache.james.jspf.core</a></td>
+<td>20</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.048</td>
+</tr>
+</table>
+<br />
+Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.<div class="section"><h3><a name="org.apache.james.jspf"></a>org.apache.james.jspf</h3>
+<table class="bodyTable"><tr class="b"><th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspfDNSServiceXBillImplTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfDNSServiceXBillImplTest">DNSServiceXBillImplTest</a></td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.055</td>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspfMailZoneAsynchronousYamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfMailZoneAsynchronousYamlTest">MailZoneAsynchronousYamlTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>3.651</td>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspfMailZoneYamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfMailZoneYamlTest">MailZoneYamlTest</a></td>
+<td>134</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.594</td>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspfRFC4408AsynchronousYamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfRFC4408AsynchronousYamlTest">RFC4408AsynchronousYamlTest</a></td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>42.547</td>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspfRFC4408YamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfRFC4408YamlTest">RFC4408YamlTest</a></td>
+<td>171</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.548</td>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspfSPF1ParserTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfSPF1ParserTest">SPF1ParserTest</a></td>
+<td>80</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.09</td>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspfSPFYamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfSPFYamlTest">SPFYamlTest</a></td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.073</td>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspfYamlTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspfYamlTest">YamlTest</a></td>
+<td>21</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.093</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspf.core"></a>org.apache.james.jspf.core</h3>
+<table class="bodyTable"><tr class="a"><th></th>
+<th>Class</th>
+<th>Tests</th>
+<th>Errors </th>
+<th>Failures</th>
+<th>Skipped</th>
+<th>Success Rate</th>
+<th>Time</th>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspf.coreIPAddrTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspf.coreIPAddrTest">IPAddrTest</a></td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.026</td>
+</tr>
+<tr class="a"><td><a href="#org.apache.james.jspf.coreMacroExpandTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspf.coreMacroExpandTest">MacroExpandTest</a></td>
+<td>14</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.02</td>
+</tr>
+<tr class="b"><td><a href="#org.apache.james.jspf.coreSPFSessionTest"><img src="images/icon_success_sml.gif" /></a></td>
+<td><a href="#org.apache.james.jspf.coreSPFSessionTest">SPFSessionTest</a></td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>100%</td>
+<td>0.002</td>
+</tr>
+</table>
+</div>
+<br />
+</div>
+<div class="section"><h2><a name="Test_Cases"></a>Test Cases</h2>
+<div class="section">[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</div>
+<div class="section"><h3><a name="org.apache.james.jspf.coreIPAddrTest"></a>IPAddrTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testValidIp4Address</td>
+<td>0.024</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testValidIp4OverIpv6Address</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testValidIp6Address</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testInvalidIp6Address</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testInvalidIp4AddressGreatThan255</td>
+<td>0</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspf.coreMacroExpandTest"></a>MacroExpandTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercS</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercK</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercentAloneIsError</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testDoublePercent</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercO</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercD</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testPercL</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample1</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample2</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample3</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample4</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample5</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testExample6_ipv6</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testLocalPartWithSpecialChars</td>
+<td>0.002</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspf.coreSPFSessionTest"></a>SPFSessionTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testGetMacroIpAddress</td>
+<td>0</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfDNSServiceXBillImplTest"></a>DNSServiceXBillImplTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testGetLocalDomainNames</td>
+<td>0.049</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>testMultipleStrings</td>
+<td>0.003</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfMailZoneAsynchronousYamlTest"></a>MailZoneAsynchronousYamlTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #COMPLETE!</td>
+<td>3.386</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfMailZoneYamlTest"></a>MailZoneYamlTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#80</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#64</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#57</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#111</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#81</td>
+<td>0.032</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#10</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#59</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#109</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#69</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#83</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#20</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#131</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#53</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#62</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#23</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#110</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#77</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#21</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#82</td>
+<td>0.011</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#60</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#65</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#58</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#63</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#5</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#73</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#119</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#114</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#103</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#51</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#79</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#95</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#33</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#11</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#133</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#38</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#117</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#32</td>
+<td>0.008</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#45</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#130</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#39</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#107</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#52</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#96</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#18</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#61</td>
+<td>0.005</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#37</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#74</td>
+<td>0.012</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#127</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#47</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#46</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#115</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#34</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#13</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#35</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#99</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#118</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#14</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#50</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#36</td>
+<td>0.009</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#30</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#26</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#126</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#70</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#27</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#125</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#92</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#1</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#106</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#7</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#76</td>
+<td>0.007</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#2</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#17</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#129</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#48</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#31</td>
+<td>0.009</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#128</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#108</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#132</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#121</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#91</td>
+<td>0.009</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#15</td>
+<td>0.005</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#97</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#12</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#116</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#105</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#8</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#75</td>
+<td>0.009</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#3</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#49</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#87</td>
+<td>0.01</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#88</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#113</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#124</td>
+<td>0.007</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#44</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#6</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#123</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#134</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#86</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#42</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#4</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#78</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#56</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#104</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#67</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#89</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#98</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#43</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#16</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#112</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#101</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#54</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#28</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#25</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#120</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#68</td>
+<td>0.011</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#90</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#85</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#40</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#9</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#100</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#22</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#84</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#122</td>
+<td>0.005</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#24</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#55</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#93</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#102</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#71</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#94</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#19</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#41</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#66</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#29</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Mailzone converted tests #mailzone-#72</td>
+<td>0.006</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfRFC4408AsynchronousYamlTest"></a>RFC4408AsynchronousYamlTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #COMPLETE!</td>
+<td>0.621</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #COMPLETE!</td>
+<td>10.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #COMPLETE!</td>
+<td>0.799</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #COMPLETE!</td>
+<td>0.602</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #COMPLETE!</td>
+<td>0.53</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #COMPLETE!</td>
+<td>1.042</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #COMPLETE!</td>
+<td>0.963</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #COMPLETE!</td>
+<td>10.38</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #COMPLETE!</td>
+<td>1.085</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>EXISTS mechanism syntax #COMPLETE!</td>
+<td>0.498</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #COMPLETE!</td>
+<td>0.48</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #COMPLETE!</td>
+<td>0.368</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #COMPLETE!</td>
+<td>10.023</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #COMPLETE!</td>
+<td>1.283</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #COMPLETE!</td>
+<td>3.774</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfRFC4408YamlTest"></a>RFC4408YamlTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #helo-domain-literal</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #toolonglabel</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #emptylabel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #domain-literal</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #longlabel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #helo-not-fqdn</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Initial processing #nolocalpart</td>
+<td>0.023</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #txtonly</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #alltimeout</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #spftimeout</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #spfonly</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #nospftxttimeout</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #both</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record lookup #txttimeout</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #multispf2</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #case-insensitive</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #multitxt1</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #nospace2</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #nospf</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #spfoverride</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #multispf1</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #multitxt2</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #empty</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Selecting records #nospace1</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #redirect-is-modifier</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #detect-errors-anywhere</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #invalid-domain-empty-label</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #invalid-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #modifier-charset-good</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #modifier-charset-bad2</td>
+<td>0.005</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #invalid-domain-long-via-macro</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #redirect-after-mechanisms2</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #invalid-domain-long</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #default-result</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #modifier-charset-bad1</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Record evaluation #redirect-after-mechanisms1</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #all-arg</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #all-cidr</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #all-dot</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #all-neutral</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>ALL mechanism syntax #all-double</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-cidr</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-match-ip6</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-match-target</td>
+<td>0.007</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-nomatch-invalid</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>PTR mechanism syntax #ptr-match-implicit</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr6-0-ip6</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-null</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-colon-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-only-toplabel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-empty-domain</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-dash-in-toplabel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-only-toplabel-trailing-dot</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr4-0-ip6</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-bad-cidr6</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-colon-domain-ip4mapped</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr6</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-multi-ip1</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr4-0</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr6-0-ip4</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-bad-domain</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-multi-ip2</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-bad-toplabel</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-numeric</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr6-0-nxdomain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-nxdomain</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-cidr6-0-ip4mapped</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-numeric-toplabel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>A mechanism syntax #a-bad-cidr4</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-fail</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-softfail</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-syntax-error</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-none</td>
+<td>0.007</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-neutral</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-cidr</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-permerror</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Include mechanism semantics and syntax #include-temperror</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-colon-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-bad-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-null</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-multi-ip2</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-numeric-top-label</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-implicit</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-bad-toplab</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-nxdomain</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-colon-domain-ip4mapped</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr6-0-ip4</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-bad-cidr4</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr6</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-empty</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr4-0-ip6</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr6-0-ip6</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr6-0-ip4mapped</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-bad-cidr6</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-multi-ip1</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr6-0-nxdomain</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>MX mechanism syntax #mx-cidr4-0</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>EXISTS mechanism syntax #exists-implicit</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>EXISTS mechanism syntax #exists-cidr</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>EXISTS mechanism syntax #exists-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #cidr4-32</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #bad-ip4-port</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #cidr4-0</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #ip4-dual-cidr</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #ip4-mapped-ip6</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #cidr4-33</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #bad-ip4-short</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #cidr4-032</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP4 mechanism syntax #bare-ip4</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-ip4</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-bad</td>
+<td>0.024</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-0-ip4</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-129</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-33-ip4</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-0</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #cidr6-33</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #bare-ip6</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>IP6 mechanism syntax #ip6-bad1</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #unknown-modifier-syntax</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-cancels-prior-exp</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #default-modifier-obsolete2</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-twice</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-no-txt</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #invalid-modifier</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #dorky-sentinel</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-multiple-txt</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-syntax-error</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-dns-error</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-cancels-exp</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-twice</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-syntax-error</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #redirect-none</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #exp-empty-domain</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #explanation-syntax-error</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #empty-modifier-name</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #default-modifier-obsolete</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Semantics of exp and other modifiers #include-ignores-exp</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #trailing-dot-domain</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #p-macro-multiple</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #invalid-hello-macro</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #require-valid-helo</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #undef-macro</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #hello-domain-literal</td>
+<td>0.005</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #upper-macro</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #v-macro-ip4</td>
+<td>0.007</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #macro-reverse-split-on-dash</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #invalid-macro-char</td>
+<td>0.011</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #v-macro-ip6</td>
+<td>0.006</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #p-macro-ip4-novalid</td>
+<td>0.007</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #p-macro-ip4-valid</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #p-macro-ip6-novalid</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #exp-txt-macro-char</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #domain-name-truncation</td>
+<td>0.004</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #macro-mania-in-domain</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #p-macro-ip6-valid</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #hello-macro</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #exp-only-macro-char</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Macro expansion rules #trailing-dot-exp</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #ptr-limit</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #false-a-limit</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #include-at-limit</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #mech-at-limit</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #include-loop</td>
+<td>0.01</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #redirect-loop</td>
+<td>0.009</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #include-over-limit</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #mx-limit</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Processing limits #mech-over-limit</td>
+<td>0.004</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfSPF1ParserTest"></a>SPF1ParserTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>a</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=sp a</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1a a</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1mx</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 al</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 all</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 alll</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 alllll</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 includ:a.a</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 include:a.a</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 includee:a.a</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/24</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/32//12</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/32//128</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/32//129</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/x32//12</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a/x32//128</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/32//12</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/32//128</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32//12</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 +redirect=asdf.net</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 -redirect=asdf.net</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 redirect=asdf.net</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 a</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 default=den</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 default=deny</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 default=denyy</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 default=fail</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 default=softfail</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 mx</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12 redirect=asdf.net</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//12</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:/x32.com//128</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%%20/24//4 mx:%{i3r}.spf.%{d}/24</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%- mx:%{i3r}.spf.%{d}</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24//4 mx:%{i3r}.spf.%{d}</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24//4 mx:%{i3r}.spf.%{d}/</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24//4 mx:%{i3r}.spf.%{d}/24</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24//4 mx:%{i3r}.spf.%{d}</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24 mx:%{i3r}.spf.%{d}</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/24//4 mx:%{i3r}.spf.%{d}</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:as%-/324 mx:%{i3r}.spf.%{d}</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b/234//2</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/24</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/24//2</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/24//332</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/32//128</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/32//129</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 a:b.c/33//129</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 include:spf.trusted-forwarder.org</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:1.2.3.4</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:11.22.33.44</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.133.144</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.133.144/22 ip4:1.2.3.4/004</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.133.144/22 ip4:1.2.3.4/4</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.133.144/22 ip4:1.2.3/4</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.133.144/22</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.33.4</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.33.44</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.33.444</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.333.4</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.333.44</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip4:111.222.333.444</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip6:::</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip6:::0</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip6:::1 ip4:111.222.133.144/22 ip4:1.2.3.4/004</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip6:::1</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ip6:::k</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 ipa4:111.222.133.144</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx mx:a mx:b mx:c mx:d mx:e mx:f mx:g</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx mx:a mx:b mx:c mx:d mx:e mx:f mx:g mx:h mx:i mx:j mx:k</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx mx:a mx:b mx:c mx:d mx:e mx:f mx:g mx:h</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx mx:a mx:b mx:c</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx mx:a mx:b</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx/23</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx:%{i3r}.spf.%{d} a:as%%20.a</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx:xx.a/23</td>
+<td>0</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 mx:%{i3r}.spf.%{d} a:as%%20.a</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>v=spf1 xip4:111.222.133.144</td>
+<td>0.001</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfSPFYamlTest"></a>SPFYamlTest</h3>
+<table class="bodyTable"><tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Check basic exists with macros #exists-fail</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Check basic exists with macros #exists-pass</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Permerror detection #badip</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Permerror detection #badall</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Permerror detection #incloop</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Permerror detection #baddomain</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Test #3 #nospace2</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Test #3 #empty</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Test #3 #nospace1</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Check trailing dot with redirect and exp #traildot1</td>
+<td>0.03</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Check trailing dot with redirect and exp #traildot2</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Corner cases #localhost</td>
+<td>0.009</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Corner cases #emptyMX</td>
+<td>0.001</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="org.apache.james.jspfYamlTest"></a>YamlTest</h3>
+<table class="bodyTable"><tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#9</td>
+<td>0.006</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#11</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#double@</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#6</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#2</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#7</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#15</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#4</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#13</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#14</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#3</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#8</td>
+<td>0.004</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#10</td>
+<td>0.002</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#1</td>
+<td>0.001</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#12</td>
+<td>0.001</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#malformedip</td>
+<td>0</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>Converted tests #test-#5</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>JSPF coverage #test-macrodata4-SPF</td>
+<td>0.003</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>JSPF coverage #test-macrodata3</td>
+<td>0.003</td>
+</tr>
+<tr class="b"><td><img src="images/icon_success_sml.gif" /></td>
+<td>JSPF coverage #test-macrodata2</td>
+<td>0.002</td>
+</tr>
+<tr class="a"><td><img src="images/icon_success_sml.gif" /></td>
+<td>JSPF coverage #test-macrodata</td>
+<td>0.003</td>
+</tr>
+</table>
+</div>
+<br />
+</div>
+<br />
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006-2009
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
