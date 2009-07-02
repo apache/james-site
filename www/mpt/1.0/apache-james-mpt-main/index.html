@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>JAMES Mail Protocol Tester (MPT) - 
+  Overview</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="
+  Mail Protocol Tester" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/mpt/index.html" id="bannerLeft">
+    
+                                            <img src="images/james-mpt-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                            <img src="images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 07/02/2009
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="http://james.apache.org/server/index.html">Server</a>
+          |
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Mail Protocol Tester</h5>
+        <ul>
+              
+    <li class="none">
+              <strong>Overview</strong>
+        </li>
+              
+    <li class="none">
+              <a href="doap_apache-james-mtp.rdf">DOAP</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul>
+          <h5>Mail Protocol Tester</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mpt/index.html">Overview</a>
+        </li>
+              
+    <li class="none">
+              <a href="../release-notes.html">Release Notes</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mpt/main">Main Library</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mpt/antlib">AntLib</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/mpt/app">Application</a>
+        </li>
+          </ul>
+          <h5>The Apache Software Foundation</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://jakarta.apache.org/site/getinvolved.html">Get Involved</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/faq.html">FAQ</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/sponsorship.html">Sponsorship</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/contributing.html">Donations</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://apache.org/foundation/thanks.html">Thanks</a>
+        </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+ 
+
+
+<a name="What is the Apache James MTP?"></a><div class="section"><h2>What is the Apache James MTP?</h2>
+<p>
+Apache James Mail Protocol Tester (MTP) is a library providing a framework for the 
+scritable functional testing of ASCII based line protocols.</p>
+<p>
+This contains a lightweight scripting framework suitable for the
+functional testing of the ASCII line based protocols common in mail.
+A script contains a list of client requests and templated server
+responses. The framework runs the client lines against a host system
+and then compares the server lines received in response against the
+template responses. 
+</p>
+</div>
+<a name="Using MPT"></a><div class="section"><h2>Using MPT</h2>
+<a name="Host System"></a><div class="section"><h3>Host System</h3>
+<p>
+MPT is a lightweight, flexible framework which is capable of being used
+in a variety of ways. <code>HostSystem</code> is pivotal, defining the 
+interface between the framework and the server system under test.
+</p>
+<ul>
+<li>
+The <code>ExternalHostSystem</code> implementation connects to a port on a server. 
+This is typically used to test a complete running server (including the sockets).
+<a href="../antlib">MPT AntLib</a> provides an
+<a href="http://ant.apache.org">Ant</a> task suitable for this use case.
+</li>
+<li>
+When performing in-JVM testing (without a live server socket) a custom implementation
+must be created connecting the framework to the components under test. This use case
+is typically developed as a <a href="http://www.junit.org">JUnit</a> test case.
+</li>
+</ul>
+</div>
+<a name="With JUnit"></a><div class="section"><h3>With JUnit</h3>
+
+In-JVM JUnit testing is a typical use case. The framework provides
+abstract superclasses which setup up appropriate fixtures. 
+
+</div>
+</div>
+<a name="Script Features"></a><div class="section"><h2>Script Features</h2>
+<a name="Basic Syntax"></a><div class="section"><h3>Basic Syntax</h3>
+
+MPT scripts are line based plain text files. The initial letter of each line determines it's type:
+
+<table class="bodyTable">
+<tr class="a">
+    <td><strong>Line Prefix</strong></td> <td><strong>Description</strong></td>
+</tr> 
+<tr class="b">
+    <td>#</td> 
+    <td>A comment: the rest of the line will be ignored</td> 
+</tr>
+<tr class="a">
+    <td>C: </td> 
+    <td>A client request: the rest of the line will be sent to the server</td> 
+</tr>
+<tr class="b">
+    <td>S: </td> 
+    <td>A server response: the framework will read one line of response from the server, 
+    and compare it to the rest of the line (see 
+    <a href="#Regex Matching Of Server Responses">regex matching</a>)</td> 
+</tr>
+</table>
+<p>
+Example:
+</p>
+<div class="source"><pre><pre>
+#
+# This script is a basic SMTP HELO.
+# 
+S: 220 localhost. SMTP Server \(JAMES SMTP Server .*
+C: HELO example.org
+S: 250 localhost. Hello example.org .*
+C: QUIT
+S: 221 2.0.0 localhost. Service closing transmission channel
+</pre></pre></div>
+</div>
+<a name="Regex Matching Of Server Responses"></a><div class="section"><h3>Regex Matching Of Server Responses</h3>
+<p>
+The server responses in the script support regex matching. 
+<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">Java Pattern</a>
+is used for the regex comparison and so the syntax is identical. 
+</p>
+</div>
+<a name="Variable Substitution"></a><div class="section"><h3>Variable Substitution</h3>
+<p>
+Variables of form <code>${<em>variable-name</em>}</code> may be substituted by values
+passed into the script builder before interpretation.
+</p>
+</div>
+</div>
+
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2008-2009
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
