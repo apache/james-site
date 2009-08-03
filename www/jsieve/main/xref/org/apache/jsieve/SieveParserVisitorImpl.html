@@ -92,193 +92,205 @@
 <a name="82" href="#82">82</a>  <em class="jxr_javadoccomment">     * @return Object - A List</em>
 <a name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * @throws SieveException</em>
 <a name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="85" href="#85">85</a>      <strong class="jxr_keyword">protected</strong> Object visitChildren(SimpleNode node, Object data)
-<a name="86" href="#86">86</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../org/apache/jsieve/exception/SieveException.html">SieveException</a> {
-<a name="87" href="#87">87</a>          List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="88" href="#88">88</a>          node.childrenAccept(<strong class="jxr_keyword">this</strong>, children);
-<a name="89" href="#89">89</a>          ((List) data).addAll(children);
-<a name="90" href="#90">90</a>          <strong class="jxr_keyword">return</strong> data;
-<a name="91" href="#91">91</a>      }
-<a name="92" href="#92">92</a>  
-<a name="93" href="#93">93</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTargument, Object)</em>
-<a name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="96" href="#96">96</a>      <strong class="jxr_keyword">public</strong> Object visit(ASTargument node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="97" href="#97">97</a>          List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="98" href="#98">98</a>          <a href="../../../org/apache/jsieve/Argument.html">Argument</a> argument = <strong class="jxr_keyword">null</strong>;
-<a name="99" href="#99">99</a>  
-<a name="100" href="#100">100</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">null</strong> != node.getValue()) {
-<a name="101" href="#101">101</a>             argument = (Argument) node.getValue();
-<a name="102" href="#102">102</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="103" href="#103">103</a>             argument = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/StringListArgument.html">StringListArgument</a>(((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
-<a name="104" href="#104">104</a>                     children)));
-<a name="105" href="#105">105</a>         }
-<a name="106" href="#106">106</a>         ((List) data).add(argument);
-<a name="107" href="#107">107</a> 
-<a name="108" href="#108">108</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="109" href="#109">109</a>     }
-<a name="110" href="#110">110</a> 
-<a name="111" href="#111">111</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTarguments, Object)</em>
-<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     */</em>
-<a name="114" href="#114">114</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTarguments node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="115" href="#115">115</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="116" href="#116">116</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
-<a name="117" href="#117">117</a> 
-<a name="118" href="#118">118</a>         <em class="jxr_comment">// Extract Tests and TestList from the children</em>
-<a name="119" href="#119">119</a>         Iterator childrenIter = children.iterator();
-<a name="120" href="#120">120</a>         <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList = <strong class="jxr_keyword">null</strong>;
-<a name="121" href="#121">121</a>         List argList = <strong class="jxr_keyword">new</strong> ArrayList(children.size());
-<a name="122" href="#122">122</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
-<a name="123" href="#123">123</a>             Object next = childrenIter.next();
-<a name="124" href="#124">124</a>             <strong class="jxr_keyword">if</strong> (next instanceof Test)
-<a name="125" href="#125">125</a>                 testList = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>((Test) next);
-<a name="126" href="#126">126</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (next instanceof TestList)
-<a name="127" href="#127">127</a>                 testList = (TestList) next;
-<a name="128" href="#128">128</a>             <strong class="jxr_keyword">else</strong>
-<a name="129" href="#129">129</a>                 argList.add(next);
-<a name="130" href="#130">130</a>         }
-<a name="131" href="#131">131</a> 
-<a name="132" href="#132">132</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a>(argList, testList);
-<a name="133" href="#133">133</a>         ((List) data).add(arguments);
-<a name="134" href="#134">134</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="135" href="#135">135</a>     }
-<a name="136" href="#136">136</a> 
-<a name="137" href="#137">137</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="138" href="#138">138</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTblock, Object)</em>
-<a name="139" href="#139">139</a> <em class="jxr_javadoccomment">     */</em>
-<a name="140" href="#140">140</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTblock node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="141" href="#141">141</a>         <em class="jxr_comment">// if (node.jjtGetNumChildren() != 1)</em>
-<a name="142" href="#142">142</a>         <em class="jxr_comment">// throw new ParseException("Expecting exactly one 1 child");</em>
-<a name="143" href="#143">143</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="144" href="#144">144</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = (Commands) ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
-<a name="145" href="#145">145</a>                 children)).get(0);
-<a name="146" href="#146">146</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Block.html">Block</a>(commands);
-<a name="147" href="#147">147</a>         ((List) data).add(block);
-<a name="148" href="#148">148</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="149" href="#149">149</a>     }
-<a name="150" href="#150">150</a> 
-<a name="151" href="#151">151</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="152" href="#152">152</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTcommand, Object)</em>
-<a name="153" href="#153">153</a> <em class="jxr_javadoccomment">     */</em>
-<a name="154" href="#154">154</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTcommand node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="155" href="#155">155</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="156" href="#156">156</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
+<a name="85" href="#85">85</a>      @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="86" href="#86">86</a>      <strong class="jxr_keyword">protected</strong> Object visitChildren(SimpleNode node, Object data)
+<a name="87" href="#87">87</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../org/apache/jsieve/exception/SieveException.html">SieveException</a> {
+<a name="88" href="#88">88</a>          List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="89" href="#89">89</a>          node.childrenAccept(<strong class="jxr_keyword">this</strong>, children);
+<a name="90" href="#90">90</a>          ((List) data).addAll(children);
+<a name="91" href="#91">91</a>          <strong class="jxr_keyword">return</strong> data;
+<a name="92" href="#92">92</a>      }
+<a name="93" href="#93">93</a>  
+<a name="94" href="#94">94</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTargument, Object)</em>
+<a name="96" href="#96">96</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="97" href="#97">97</a>      @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="98" href="#98">98</a>      <strong class="jxr_keyword">public</strong> Object visit(ASTargument node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="99" href="#99">99</a>          List&lt;String&gt; children = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(node.jjtGetNumChildren());
+<a name="100" href="#100">100</a>         <a href="../../../org/apache/jsieve/Argument.html">Argument</a> argument = <strong class="jxr_keyword">null</strong>;
+<a name="101" href="#101">101</a> 
+<a name="102" href="#102">102</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">null</strong> != node.getValue()) {
+<a name="103" href="#103">103</a>             argument = (Argument) node.getValue();
+<a name="104" href="#104">104</a>         } <strong class="jxr_keyword">else</strong> {
+<a name="105" href="#105">105</a>             argument = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/StringListArgument.html">StringListArgument</a>(((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
+<a name="106" href="#106">106</a>                     children)));
+<a name="107" href="#107">107</a>         }
+<a name="108" href="#108">108</a>         ((List) data).add(argument);
+<a name="109" href="#109">109</a> 
+<a name="110" href="#110">110</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="111" href="#111">111</a>     }
+<a name="112" href="#112">112</a> 
+<a name="113" href="#113">113</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTarguments, Object)</em>
+<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     */</em>
+<a name="116" href="#116">116</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="117" href="#117">117</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTarguments node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="118" href="#118">118</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="119" href="#119">119</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
+<a name="120" href="#120">120</a> 
+<a name="121" href="#121">121</a>         <em class="jxr_comment">// Extract Tests and TestList from the children</em>
+<a name="122" href="#122">122</a>         Iterator childrenIter = children.iterator();
+<a name="123" href="#123">123</a>         <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList = <strong class="jxr_keyword">null</strong>;
+<a name="124" href="#124">124</a>         List&lt;Argument&gt; argList = <strong class="jxr_keyword">new</strong> ArrayList&lt;Argument&gt;(children.size());
+<a name="125" href="#125">125</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
+<a name="126" href="#126">126</a>             Object next = childrenIter.next();
+<a name="127" href="#127">127</a>             <strong class="jxr_keyword">if</strong> (next instanceof Test)
+<a name="128" href="#128">128</a>                 testList = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>((Test) next);
+<a name="129" href="#129">129</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (next instanceof TestList)
+<a name="130" href="#130">130</a>                 testList = (TestList) next;
+<a name="131" href="#131">131</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (next instanceof Argument) {
+<a name="132" href="#132">132</a>                 argList.add((Argument)next);
+<a name="133" href="#133">133</a>             } <strong class="jxr_keyword">else</strong> {
+<a name="134" href="#134">134</a>                 context.getLog().error(<span class="jxr_string">"Expected an 'Argument' but was "</span> + next);
+<a name="135" href="#135">135</a>             }
+<a name="136" href="#136">136</a>         }
+<a name="137" href="#137">137</a> 
+<a name="138" href="#138">138</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a>(argList, testList);
+<a name="139" href="#139">139</a>         ((List) data).add(arguments);
+<a name="140" href="#140">140</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="141" href="#141">141</a>     }
+<a name="142" href="#142">142</a> 
+<a name="143" href="#143">143</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="144" href="#144">144</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTblock, Object)</em>
+<a name="145" href="#145">145</a> <em class="jxr_javadoccomment">     */</em>
+<a name="146" href="#146">146</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="147" href="#147">147</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTblock node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="148" href="#148">148</a>         <em class="jxr_comment">// if (node.jjtGetNumChildren() != 1)</em>
+<a name="149" href="#149">149</a>         <em class="jxr_comment">// throw new ParseException("Expecting exactly one 1 child");</em>
+<a name="150" href="#150">150</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="151" href="#151">151</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = (Commands) ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
+<a name="152" href="#152">152</a>                 children)).get(0);
+<a name="153" href="#153">153</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Block.html">Block</a>(commands);
+<a name="154" href="#154">154</a>         ((List) data).add(block);
+<a name="155" href="#155">155</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="156" href="#156">156</a>     }
 <a name="157" href="#157">157</a> 
-<a name="158" href="#158">158</a>         <em class="jxr_comment">// Extract the Arguments and Block from the children</em>
-<a name="159" href="#159">159</a>         Iterator childrenIter = children.iterator();
-<a name="160" href="#160">160</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">null</strong>;
-<a name="161" href="#161">161</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">null</strong>;
-<a name="162" href="#162">162</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
-<a name="163" href="#163">163</a>             Object next = childrenIter.next();
-<a name="164" href="#164">164</a>             <strong class="jxr_keyword">if</strong> (next instanceof Arguments)
-<a name="165" href="#165">165</a>                 arguments = (Arguments) next;
-<a name="166" href="#166">166</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (next instanceof Block)
-<a name="167" href="#167">167</a>                 block = (Block) next;
-<a name="168" href="#168">168</a>         }
-<a name="169" href="#169">169</a> 
-<a name="170" href="#170">170</a>         context.setCoordinate(node.getCoordinate());
-<a name="171" href="#171">171</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/apache/jsieve/ScriptCoordinate.html">ScriptCoordinate</a> coordinate = context.getCoordinate();
-<a name="172" href="#172">172</a>         <a href="../../../org/apache/jsieve/Command.html">Command</a> command = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Command.html">Command</a>(node.getName(), arguments, block,
-<a name="173" href="#173">173</a>                 coordinate);
-<a name="174" href="#174">174</a>         ((List) data).add(command);
-<a name="175" href="#175">175</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="176" href="#176">176</a>     }
+<a name="158" href="#158">158</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="159" href="#159">159</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTcommand, Object)</em>
+<a name="160" href="#160">160</a> <em class="jxr_javadoccomment">     */</em>
+<a name="161" href="#161">161</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="162" href="#162">162</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTcommand node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="163" href="#163">163</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="164" href="#164">164</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
+<a name="165" href="#165">165</a> 
+<a name="166" href="#166">166</a>         <em class="jxr_comment">// Extract the Arguments and Block from the children</em>
+<a name="167" href="#167">167</a>         Iterator childrenIter = children.iterator();
+<a name="168" href="#168">168</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">null</strong>;
+<a name="169" href="#169">169</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">null</strong>;
+<a name="170" href="#170">170</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
+<a name="171" href="#171">171</a>             Object next = childrenIter.next();
+<a name="172" href="#172">172</a>             <strong class="jxr_keyword">if</strong> (next instanceof Arguments)
+<a name="173" href="#173">173</a>                 arguments = (Arguments) next;
+<a name="174" href="#174">174</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (next instanceof Block)
+<a name="175" href="#175">175</a>                 block = (Block) next;
+<a name="176" href="#176">176</a>         }
 <a name="177" href="#177">177</a> 
-<a name="178" href="#178">178</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTcommands, Object)</em>
-<a name="180" href="#180">180</a> <em class="jxr_javadoccomment">     */</em>
-<a name="181" href="#181">181</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTcommands node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="182" href="#182">182</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="183" href="#183">183</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Commands.html">Commands</a>(((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
-<a name="184" href="#184">184</a>                 children)));
-<a name="185" href="#185">185</a>         ((List) data).add(commands);
-<a name="186" href="#186">186</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="187" href="#187">187</a>     }
-<a name="188" href="#188">188</a> 
-<a name="189" href="#189">189</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstart, Object)</em>
-<a name="191" href="#191">191</a> <em class="jxr_javadoccomment">     */</em>
-<a name="192" href="#192">192</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstart node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="193" href="#193">193</a>         <em class="jxr_comment">// The data object must be the MailAdapter to process</em>
-<a name="194" href="#194">194</a>         <strong class="jxr_keyword">if</strong> (!(data instanceof MailAdapter))
-<a name="195" href="#195">195</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/exception/SieveException.html">SieveException</a>(<span class="jxr_string">"Expecting an instance of "</span>
-<a name="196" href="#196">196</a>                     + MailAdapter.<strong class="jxr_keyword">class</strong>.getName()
-<a name="197" href="#197">197</a>                     + <span class="jxr_string">" as data, received an instance of "</span>
-<a name="198" href="#198">198</a>                     + (data == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"&lt;null&gt;"</span> : data.getClass().getName())
-<a name="199" href="#199">199</a>                     + <span class="jxr_string">"."</span>);
-<a name="200" href="#200">200</a> 
-<a name="201" href="#201">201</a>         <em class="jxr_comment">// Start is an implicit Block</em>
-<a name="202" href="#202">202</a>         <em class="jxr_comment">// There will be one child, an instance of Commands</em>
-<a name="203" href="#203">203</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="204" href="#204">204</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = (Commands) ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
-<a name="205" href="#205">205</a>                 children)).get(0);
-<a name="206" href="#206">206</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Block.html">Block</a>(commands);
-<a name="207" href="#207">207</a>         context.setCoordinate(node.getCoordinate());
-<a name="208" href="#208">208</a>         <em class="jxr_comment">// Answer the result of executing the Block</em>
-<a name="209" href="#209">209</a>         <strong class="jxr_keyword">return</strong> block.execute((MailAdapter) data, context);
-<a name="210" href="#210">210</a>     }
-<a name="211" href="#211">211</a> 
-<a name="212" href="#212">212</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="213" href="#213">213</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstring_list, Object)</em>
-<a name="214" href="#214">214</a> <em class="jxr_javadoccomment">     */</em>
-<a name="215" href="#215">215</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstring_list node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="216" href="#216">216</a>         <strong class="jxr_keyword">return</strong> visitChildren(node, data);
-<a name="217" href="#217">217</a>     }
-<a name="218" href="#218">218</a> 
-<a name="219" href="#219">219</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="220" href="#220">220</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstring, Object)</em>
-<a name="221" href="#221">221</a> <em class="jxr_javadoccomment">     */</em>
-<a name="222" href="#222">222</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstring node, Object data) {
-<a name="223" href="#223">223</a>         <em class="jxr_comment">// Strings are always surround by double-quotes</em>
-<a name="224" href="#224">224</a>         <strong class="jxr_keyword">final</strong> String value = (String) node.getValue();
-<a name="225" href="#225">225</a>         <em class="jxr_comment">// A String is terminal, add it</em>
-<a name="226" href="#226">226</a>         ((List) data).add(value);
-<a name="227" href="#227">227</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="228" href="#228">228</a>     }
-<a name="229" href="#229">229</a> 
-<a name="230" href="#230">230</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="231" href="#231">231</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTtest_list, Object)</em>
-<a name="232" href="#232">232</a> <em class="jxr_javadoccomment">     */</em>
-<a name="233" href="#233">233</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTtest_list node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="234" href="#234">234</a>         <em class="jxr_comment">// return visitChildren(node, data);</em>
-<a name="235" href="#235">235</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="236" href="#236">236</a>         <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>(((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
-<a name="237" href="#237">237</a>                 children)));
-<a name="238" href="#238">238</a>         ((List) data).add(testList);
-<a name="239" href="#239">239</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="240" href="#240">240</a>     }
-<a name="241" href="#241">241</a> 
-<a name="242" href="#242">242</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="243" href="#243">243</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTtest, Object)</em>
-<a name="244" href="#244">244</a> <em class="jxr_javadoccomment">     */</em>
-<a name="245" href="#245">245</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTtest node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="246" href="#246">246</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
-<a name="247" href="#247">247</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
-<a name="248" href="#248">248</a> 
-<a name="249" href="#249">249</a>         <em class="jxr_comment">// Extract the Arguments from the children</em>
-<a name="250" href="#250">250</a>         Iterator childrenIter = children.iterator();
-<a name="251" href="#251">251</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">null</strong>;
-<a name="252" href="#252">252</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
-<a name="253" href="#253">253</a>             Object next = childrenIter.next();
-<a name="254" href="#254">254</a>             <strong class="jxr_keyword">if</strong> (next instanceof Arguments)
-<a name="255" href="#255">255</a>                 arguments = (Arguments) next;
-<a name="256" href="#256">256</a>         }
-<a name="257" href="#257">257</a> 
-<a name="258" href="#258">258</a>         context.setCoordinate(node.getCoordinate());
-<a name="259" href="#259">259</a>         <a href="../../../org/apache/jsieve/Test.html">Test</a> test = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Test.html">Test</a>(node.getName(), arguments);
-<a name="260" href="#260">260</a>         ((List) data).add(test);
-<a name="261" href="#261">261</a>         <strong class="jxr_keyword">return</strong> data;
-<a name="262" href="#262">262</a>     }
-<a name="263" href="#263">263</a> 
-<a name="264" href="#264">264</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="265" href="#265">265</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(SimpleNode, Object)</em>
-<a name="266" href="#266">266</a> <em class="jxr_javadoccomment">     */</em>
-<a name="267" href="#267">267</a>     <strong class="jxr_keyword">public</strong> Object visit(SimpleNode node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="268" href="#268">268</a>         <strong class="jxr_keyword">return</strong> visitChildren(node, data);
-<a name="269" href="#269">269</a>     }
-<a name="270" href="#270">270</a> 
-<a name="271" href="#271">271</a> }
+<a name="178" href="#178">178</a>         context.setCoordinate(node.getCoordinate());
+<a name="179" href="#179">179</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/apache/jsieve/ScriptCoordinate.html">ScriptCoordinate</a> coordinate = context.getCoordinate();
+<a name="180" href="#180">180</a>         <a href="../../../org/apache/jsieve/Command.html">Command</a> command = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Command.html">Command</a>(node.getName(), arguments, block,
+<a name="181" href="#181">181</a>                 coordinate);
+<a name="182" href="#182">182</a>         ((List) data).add(command);
+<a name="183" href="#183">183</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="184" href="#184">184</a>     }
+<a name="185" href="#185">185</a> 
+<a name="186" href="#186">186</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTcommands, Object)</em>
+<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     */</em>
+<a name="189" href="#189">189</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="190" href="#190">190</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTcommands node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="191" href="#191">191</a>         List&lt;Command&gt; children = <strong class="jxr_keyword">new</strong> ArrayList&lt;Command&gt;(node.jjtGetNumChildren());
+<a name="192" href="#192">192</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Commands.html">Commands</a>(((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
+<a name="193" href="#193">193</a>                 children)));
+<a name="194" href="#194">194</a>         ((List) data).add(commands);
+<a name="195" href="#195">195</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="196" href="#196">196</a>     }
+<a name="197" href="#197">197</a> 
+<a name="198" href="#198">198</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="199" href="#199">199</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstart, Object)</em>
+<a name="200" href="#200">200</a> <em class="jxr_javadoccomment">     */</em>
+<a name="201" href="#201">201</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstart node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="202" href="#202">202</a>         <em class="jxr_comment">// The data object must be the MailAdapter to process</em>
+<a name="203" href="#203">203</a>         <strong class="jxr_keyword">if</strong> (!(data instanceof MailAdapter))
+<a name="204" href="#204">204</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/exception/SieveException.html">SieveException</a>(<span class="jxr_string">"Expecting an instance of "</span>
+<a name="205" href="#205">205</a>                     + MailAdapter.<strong class="jxr_keyword">class</strong>.getName()
+<a name="206" href="#206">206</a>                     + <span class="jxr_string">" as data, received an instance of "</span>
+<a name="207" href="#207">207</a>                     + (data == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"&lt;null&gt;"</span> : data.getClass().getName())
+<a name="208" href="#208">208</a>                     + <span class="jxr_string">"."</span>);
+<a name="209" href="#209">209</a> 
+<a name="210" href="#210">210</a>         <em class="jxr_comment">// Start is an implicit Block</em>
+<a name="211" href="#211">211</a>         <em class="jxr_comment">// There will be one child, an instance of Commands</em>
+<a name="212" href="#212">212</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="213" href="#213">213</a>         <a href="../../../org/apache/jsieve/Commands.html">Commands</a> commands = (Commands) ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
+<a name="214" href="#214">214</a>                 children)).get(0);
+<a name="215" href="#215">215</a>         <a href="../../../org/apache/jsieve/Block.html">Block</a> block = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Block.html">Block</a>(commands);
+<a name="216" href="#216">216</a>         context.setCoordinate(node.getCoordinate());
+<a name="217" href="#217">217</a>         <em class="jxr_comment">// Answer the result of executing the Block</em>
+<a name="218" href="#218">218</a>         <strong class="jxr_keyword">return</strong> block.execute((MailAdapter) data, context);
+<a name="219" href="#219">219</a>     }
+<a name="220" href="#220">220</a> 
+<a name="221" href="#221">221</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstring_list, Object)</em>
+<a name="223" href="#223">223</a> <em class="jxr_javadoccomment">     */</em>
+<a name="224" href="#224">224</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstring_list node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="225" href="#225">225</a>         <strong class="jxr_keyword">return</strong> visitChildren(node, data);
+<a name="226" href="#226">226</a>     }
+<a name="227" href="#227">227</a> 
+<a name="228" href="#228">228</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="229" href="#229">229</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTstring, Object)</em>
+<a name="230" href="#230">230</a> <em class="jxr_javadoccomment">     */</em>
+<a name="231" href="#231">231</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="232" href="#232">232</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTstring node, Object data) {
+<a name="233" href="#233">233</a>         <em class="jxr_comment">// Strings are always surround by double-quotes</em>
+<a name="234" href="#234">234</a>         <strong class="jxr_keyword">final</strong> String value = (String) node.getValue();
+<a name="235" href="#235">235</a>         <em class="jxr_comment">// A String is terminal, add it</em>
+<a name="236" href="#236">236</a>         ((List) data).add(value);
+<a name="237" href="#237">237</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="238" href="#238">238</a>     }
+<a name="239" href="#239">239</a> 
+<a name="240" href="#240">240</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="241" href="#241">241</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTtest_list, Object)</em>
+<a name="242" href="#242">242</a> <em class="jxr_javadoccomment">     */</em>
+<a name="243" href="#243">243</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="244" href="#244">244</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTtest_list node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="245" href="#245">245</a>         <em class="jxr_comment">// return visitChildren(node, data);</em>
+<a name="246" href="#246">246</a>         List&lt;Test&gt; children = <strong class="jxr_keyword">new</strong> ArrayList&lt;Test&gt;(node.jjtGetNumChildren());
+<a name="247" href="#247">247</a>         <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>(((List&lt;Test&gt;) node.childrenAccept(<strong class="jxr_keyword">this</strong>,
+<a name="248" href="#248">248</a>                 children)));
+<a name="249" href="#249">249</a>         ((List) data).add(testList);
+<a name="250" href="#250">250</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="251" href="#251">251</a>     }
+<a name="252" href="#252">252</a> 
+<a name="253" href="#253">253</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="254" href="#254">254</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(ASTtest, Object)</em>
+<a name="255" href="#255">255</a> <em class="jxr_javadoccomment">     */</em>
+<a name="256" href="#256">256</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="257" href="#257">257</a>     <strong class="jxr_keyword">public</strong> Object visit(ASTtest node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="258" href="#258">258</a>         List children = <strong class="jxr_keyword">new</strong> ArrayList(node.jjtGetNumChildren());
+<a name="259" href="#259">259</a>         children = ((List) node.childrenAccept(<strong class="jxr_keyword">this</strong>, children));
+<a name="260" href="#260">260</a> 
+<a name="261" href="#261">261</a>         <em class="jxr_comment">// Extract the Arguments from the children</em>
+<a name="262" href="#262">262</a>         Iterator childrenIter = children.iterator();
+<a name="263" href="#263">263</a>         <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments = <strong class="jxr_keyword">null</strong>;
+<a name="264" href="#264">264</a>         <strong class="jxr_keyword">while</strong> (childrenIter.hasNext()) {
+<a name="265" href="#265">265</a>             Object next = childrenIter.next();
+<a name="266" href="#266">266</a>             <strong class="jxr_keyword">if</strong> (next instanceof Arguments)
+<a name="267" href="#267">267</a>                 arguments = (Arguments) next;
+<a name="268" href="#268">268</a>         }
+<a name="269" href="#269">269</a> 
+<a name="270" href="#270">270</a>         context.setCoordinate(node.getCoordinate());
+<a name="271" href="#271">271</a>         <a href="../../../org/apache/jsieve/Test.html">Test</a> test = <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/Test.html">Test</a>(node.getName(), arguments);
+<a name="272" href="#272">272</a>         ((List) data).add(test);
+<a name="273" href="#273">273</a>         <strong class="jxr_keyword">return</strong> data;
+<a name="274" href="#274">274</a>     }
+<a name="275" href="#275">275</a> 
+<a name="276" href="#276">276</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="277" href="#277">277</a> <em class="jxr_javadoccomment">     * @see SieveParserVisitor#visit(SimpleNode, Object)</em>
+<a name="278" href="#278">278</a> <em class="jxr_javadoccomment">     */</em>
+<a name="279" href="#279">279</a>     <strong class="jxr_keyword">public</strong> Object visit(SimpleNode node, Object data) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="280" href="#280">280</a>         <strong class="jxr_keyword">return</strong> visitChildren(node, data);
+<a name="281" href="#281">281</a>     }
+<a name="282" href="#282">282</a> 
+<a name="283" href="#283">283</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -196,7 +196,7 @@
 <a name="186" href="#186">186</a>         <strong class="jxr_keyword">return</strong> verbose || !quiet;
 <a name="187" href="#187">187</a>     }
 <a name="188" href="#188">188</a> 
-<a name="189" href="#189">189</a>     <em class="jxr_comment">//@Override</em>
+<a name="189" href="#189">189</a>     @Override
 <a name="190" href="#190">190</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init(MailetConfig config) <strong class="jxr_keyword">throws</strong> MessagingException {
 <a name="191" href="#191">191</a>         
 <a name="192" href="#192">192</a>         <strong class="jxr_keyword">super</strong>.init(config);
@@ -228,173 +228,178 @@
 <a name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * @throws MessagingException</em>
 <a name="219" href="#219">219</a> <em class="jxr_javadoccomment">     *             if an error occurs while storing the mail</em>
 <a name="220" href="#220">220</a> <em class="jxr_javadoccomment">     */</em>
-<a name="221" href="#221">221</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="222" href="#222">222</a>         Collection recipients = mail.getRecipients();
-<a name="223" href="#223">223</a>         Collection errors = <strong class="jxr_keyword">new</strong> Vector();
-<a name="224" href="#224">224</a> 
-<a name="225" href="#225">225</a>         MimeMessage message = <strong class="jxr_keyword">null</strong>;
-<a name="226" href="#226">226</a>         <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong> || resetReturnPath) {
-<a name="227" href="#227">227</a>             message = mail.getMessage();
-<a name="228" href="#228">228</a>         }
-<a name="229" href="#229">229</a> 
-<a name="230" href="#230">230</a>         <strong class="jxr_keyword">if</strong> (resetReturnPath) {
-<a name="231" href="#231">231</a>             <em class="jxr_comment">// Set Return-Path and remove all other Return-Path headers from the</em>
-<a name="232" href="#232">232</a>             <em class="jxr_comment">// message</em>
-<a name="233" href="#233">233</a>             <em class="jxr_comment">// This only works because there is a placeholder inserted by</em>
-<a name="234" href="#234">234</a>             <em class="jxr_comment">// MimeMessageWrapper</em>
-<a name="235" href="#235">235</a>             message.setHeader(RFC2822Headers.RETURN_PATH,
-<a name="236" href="#236">236</a>                     (mail.getSender() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"&lt;&gt;"</span> : <span class="jxr_string">"&lt;"</span> + mail.getSender()
-<a name="237" href="#237">237</a>                             + <span class="jxr_string">"&gt;"</span>));
-<a name="238" href="#238">238</a>         }
-<a name="239" href="#239">239</a> 
-<a name="240" href="#240">240</a>         Enumeration headers;
-<a name="241" href="#241">241</a>         InternetHeaders deliveredTo = <strong class="jxr_keyword">new</strong> InternetHeaders();
-<a name="242" href="#242">242</a>         <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
-<a name="243" href="#243">243</a>             <em class="jxr_comment">// Copy any Delivered-To headers from the message</em>
-<a name="244" href="#244">244</a>             headers = message
-<a name="245" href="#245">245</a>                     .getMatchingHeaders(<strong class="jxr_keyword">new</strong> String[] { deliveryHeader });
-<a name="246" href="#246">246</a>             <strong class="jxr_keyword">while</strong> (headers.hasMoreElements()) {
-<a name="247" href="#247">247</a>                 Header header = (Header) headers.nextElement();
-<a name="248" href="#248">248</a>                 deliveredTo.addHeader(header.getName(), header.getValue());
-<a name="249" href="#249">249</a>             }
-<a name="250" href="#250">250</a>         }
-<a name="251" href="#251">251</a> 
-<a name="252" href="#252">252</a>         <strong class="jxr_keyword">for</strong> (Iterator i = recipients.iterator(); i.hasNext();) {
-<a name="253" href="#253">253</a>             MailAddress recipient = (MailAddress) i.next();
-<a name="254" href="#254">254</a>             <strong class="jxr_keyword">try</strong> {
-<a name="255" href="#255">255</a>                 <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
-<a name="256" href="#256">256</a>                     <em class="jxr_comment">// Add qmail's de facto standard Delivered-To header</em>
-<a name="257" href="#257">257</a>                     message.addHeader(deliveryHeader, recipient.toString());
-<a name="258" href="#258">258</a>                 }
-<a name="259" href="#259">259</a> 
-<a name="260" href="#260">260</a>                 storeMail(mail.getSender(), recipient, mail);
+<a name="221" href="#221">221</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a name="222" href="#222">222</a>     @Override
+<a name="223" href="#223">223</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> service(Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="224" href="#224">224</a>         Collection&lt;MailAddress&gt; recipients = mail.getRecipients();
+<a name="225" href="#225">225</a>         Collection&lt;MailAddress&gt; errors = <strong class="jxr_keyword">new</strong> Vector&lt;MailAddress&gt;();
+<a name="226" href="#226">226</a> 
+<a name="227" href="#227">227</a>         MimeMessage message = <strong class="jxr_keyword">null</strong>;
+<a name="228" href="#228">228</a>         <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong> || resetReturnPath) {
+<a name="229" href="#229">229</a>             message = mail.getMessage();
+<a name="230" href="#230">230</a>         }
+<a name="231" href="#231">231</a> 
+<a name="232" href="#232">232</a>         <strong class="jxr_keyword">if</strong> (resetReturnPath) {
+<a name="233" href="#233">233</a>             <em class="jxr_comment">// Set Return-Path and remove all other Return-Path headers from the</em>
+<a name="234" href="#234">234</a>             <em class="jxr_comment">// message</em>
+<a name="235" href="#235">235</a>             <em class="jxr_comment">// This only works because there is a placeholder inserted by</em>
+<a name="236" href="#236">236</a>             <em class="jxr_comment">// MimeMessageWrapper</em>
+<a name="237" href="#237">237</a>             message.setHeader(RFC2822Headers.RETURN_PATH,
+<a name="238" href="#238">238</a>                     (mail.getSender() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"&lt;&gt;"</span> : <span class="jxr_string">"&lt;"</span> + mail.getSender()
+<a name="239" href="#239">239</a>                             + <span class="jxr_string">"&gt;"</span>));
+<a name="240" href="#240">240</a>         }
+<a name="241" href="#241">241</a> 
+<a name="242" href="#242">242</a>         Enumeration headers;
+<a name="243" href="#243">243</a>         InternetHeaders deliveredTo = <strong class="jxr_keyword">new</strong> InternetHeaders();
+<a name="244" href="#244">244</a>         <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
+<a name="245" href="#245">245</a>             <em class="jxr_comment">// Copy any Delivered-To headers from the message</em>
+<a name="246" href="#246">246</a>             headers = message
+<a name="247" href="#247">247</a>                     .getMatchingHeaders(<strong class="jxr_keyword">new</strong> String[] { deliveryHeader });
+<a name="248" href="#248">248</a>             <strong class="jxr_keyword">while</strong> (headers.hasMoreElements()) {
+<a name="249" href="#249">249</a>                 Header header = (Header) headers.nextElement();
+<a name="250" href="#250">250</a>                 deliveredTo.addHeader(header.getName(), header.getValue());
+<a name="251" href="#251">251</a>             }
+<a name="252" href="#252">252</a>         }
+<a name="253" href="#253">253</a> 
+<a name="254" href="#254">254</a>         <strong class="jxr_keyword">for</strong> (Iterator&lt;MailAddress&gt; i = recipients.iterator(); i.hasNext();) {
+<a name="255" href="#255">255</a>             MailAddress recipient = i.next();
+<a name="256" href="#256">256</a>             <strong class="jxr_keyword">try</strong> {
+<a name="257" href="#257">257</a>                 <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
+<a name="258" href="#258">258</a>                     <em class="jxr_comment">// Add qmail's de facto standard Delivered-To header</em>
+<a name="259" href="#259">259</a>                     message.addHeader(deliveryHeader, recipient.toString());
+<a name="260" href="#260">260</a>                 }
 <a name="261" href="#261">261</a> 
-<a name="262" href="#262">262</a>                 <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
-<a name="263" href="#263">263</a>                     <strong class="jxr_keyword">if</strong> (i.hasNext()) {
-<a name="264" href="#264">264</a>                         <em class="jxr_comment">// Remove headers but leave all placeholders</em>
-<a name="265" href="#265">265</a>                         message.removeHeader(deliveryHeader);
-<a name="266" href="#266">266</a>                         headers = deliveredTo.getAllHeaders();
-<a name="267" href="#267">267</a>                         <em class="jxr_comment">// And restore any original Delivered-To headers</em>
-<a name="268" href="#268">268</a>                         <strong class="jxr_keyword">while</strong> (headers.hasMoreElements()) {
-<a name="269" href="#269">269</a>                             Header header = (Header) headers.nextElement();
-<a name="270" href="#270">270</a>                             message.addHeader(header.getName(), header
-<a name="271" href="#271">271</a>                                     .getValue());
-<a name="272" href="#272">272</a>                         }
-<a name="273" href="#273">273</a>                     }
-<a name="274" href="#274">274</a>                 }
-<a name="275" href="#275">275</a>             } <strong class="jxr_keyword">catch</strong> (Exception ex) {
-<a name="276" href="#276">276</a>                 log(<span class="jxr_string">"Error while storing mail."</span>, ex);
-<a name="277" href="#277">277</a>                 errors.add(recipient);
-<a name="278" href="#278">278</a>             }
-<a name="279" href="#279">279</a>         }
-<a name="280" href="#280">280</a> 
-<a name="281" href="#281">281</a>         <strong class="jxr_keyword">if</strong> (!errors.isEmpty()) {
-<a name="282" href="#282">282</a>             <em class="jxr_comment">// If there were errors, we redirect the email to the ERROR</em>
-<a name="283" href="#283">283</a>             <em class="jxr_comment">// processor.</em>
-<a name="284" href="#284">284</a>             <em class="jxr_comment">// In order for this server to meet the requirements of the SMTP</em>
-<a name="285" href="#285">285</a>             <em class="jxr_comment">// specification, mails on the ERROR processor must be returned to</em>
-<a name="286" href="#286">286</a>             <em class="jxr_comment">// the sender. Note that this email doesn't include any details</em>
-<a name="287" href="#287">287</a>             <em class="jxr_comment">// regarding the details of the failure(s).</em>
-<a name="288" href="#288">288</a>             <em class="jxr_comment">// In the future we may wish to address this.</em>
-<a name="289" href="#289">289</a>             getMailetContext().sendMail(mail.getSender(), errors,
-<a name="290" href="#290">290</a>                     mail.getMessage(), Mail.ERROR);
-<a name="291" href="#291">291</a>         }
-<a name="292" href="#292">292</a>         <strong class="jxr_keyword">if</strong> (consume) {
-<a name="293" href="#293">293</a>             <em class="jxr_comment">// Consume this message</em>
-<a name="294" href="#294">294</a>             mail.setState(Mail.GHOST);
-<a name="295" href="#295">295</a>         }
-<a name="296" href="#296">296</a>     }
-<a name="297" href="#297">297</a> 
-<a name="298" href="#298">298</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="299" href="#299">299</a> <em class="jxr_javadoccomment">     * Return a string describing this mailet.</em>
-<a name="300" href="#300">300</a> <em class="jxr_javadoccomment">     * </em>
-<a name="301" href="#301">301</a> <em class="jxr_javadoccomment">     * @return a string describing this mailet</em>
-<a name="302" href="#302">302</a> <em class="jxr_javadoccomment">     */</em>
-<a name="303" href="#303">303</a>     <strong class="jxr_keyword">public</strong> String getMailetInfo() {
-<a name="304" href="#304">304</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Sieve Mailbox Mailet"</span>;
-<a name="305" href="#305">305</a>     }
-<a name="306" href="#306">306</a> 
-<a name="307" href="#307">307</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="308" href="#308">308</a> <em class="jxr_javadoccomment">     * </em>
-<a name="309" href="#309">309</a> <em class="jxr_javadoccomment">     * @param sender</em>
-<a name="310" href="#310">310</a> <em class="jxr_javadoccomment">     * @param recipient</em>
-<a name="311" href="#311">311</a> <em class="jxr_javadoccomment">     * @param mail</em>
-<a name="312" href="#312">312</a> <em class="jxr_javadoccomment">     * @throws MessagingException</em>
-<a name="313" href="#313">313</a> <em class="jxr_javadoccomment">     */</em>
-<a name="314" href="#314">314</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> storeMail(MailAddress sender, MailAddress recipient,
-<a name="315" href="#315">315</a>             Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="316" href="#316">316</a>         String username;
-<a name="317" href="#317">317</a>         <strong class="jxr_keyword">if</strong> (recipient == <strong class="jxr_keyword">null</strong>) {
-<a name="318" href="#318">318</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(
-<a name="319" href="#319">319</a>                     <span class="jxr_string">"Recipient for mail to be spooled cannot be null."</span>);
-<a name="320" href="#320">320</a>         }
-<a name="321" href="#321">321</a>         <strong class="jxr_keyword">if</strong> (mail.getMessage() == <strong class="jxr_keyword">null</strong>) {
+<a name="262" href="#262">262</a>                 storeMail(mail.getSender(), recipient, mail);
+<a name="263" href="#263">263</a> 
+<a name="264" href="#264">264</a>                 <strong class="jxr_keyword">if</strong> (deliveryHeader != <strong class="jxr_keyword">null</strong>) {
+<a name="265" href="#265">265</a>                     <strong class="jxr_keyword">if</strong> (i.hasNext()) {
+<a name="266" href="#266">266</a>                         <em class="jxr_comment">// Remove headers but leave all placeholders</em>
+<a name="267" href="#267">267</a>                         message.removeHeader(deliveryHeader);
+<a name="268" href="#268">268</a>                         headers = deliveredTo.getAllHeaders();
+<a name="269" href="#269">269</a>                         <em class="jxr_comment">// And restore any original Delivered-To headers</em>
+<a name="270" href="#270">270</a>                         <strong class="jxr_keyword">while</strong> (headers.hasMoreElements()) {
+<a name="271" href="#271">271</a>                             Header header = (Header) headers.nextElement();
+<a name="272" href="#272">272</a>                             message.addHeader(header.getName(), header
+<a name="273" href="#273">273</a>                                     .getValue());
+<a name="274" href="#274">274</a>                         }
+<a name="275" href="#275">275</a>                     }
+<a name="276" href="#276">276</a>                 }
+<a name="277" href="#277">277</a>             } <strong class="jxr_keyword">catch</strong> (Exception ex) {
+<a name="278" href="#278">278</a>                 log(<span class="jxr_string">"Error while storing mail."</span>, ex);
+<a name="279" href="#279">279</a>                 errors.add(recipient);
+<a name="280" href="#280">280</a>             }
+<a name="281" href="#281">281</a>         }
+<a name="282" href="#282">282</a> 
+<a name="283" href="#283">283</a>         <strong class="jxr_keyword">if</strong> (!errors.isEmpty()) {
+<a name="284" href="#284">284</a>             <em class="jxr_comment">// If there were errors, we redirect the email to the ERROR</em>
+<a name="285" href="#285">285</a>             <em class="jxr_comment">// processor.</em>
+<a name="286" href="#286">286</a>             <em class="jxr_comment">// In order for this server to meet the requirements of the SMTP</em>
+<a name="287" href="#287">287</a>             <em class="jxr_comment">// specification, mails on the ERROR processor must be returned to</em>
+<a name="288" href="#288">288</a>             <em class="jxr_comment">// the sender. Note that this email doesn't include any details</em>
+<a name="289" href="#289">289</a>             <em class="jxr_comment">// regarding the details of the failure(s).</em>
+<a name="290" href="#290">290</a>             <em class="jxr_comment">// In the future we may wish to address this.</em>
+<a name="291" href="#291">291</a>             getMailetContext().sendMail(mail.getSender(), errors,
+<a name="292" href="#292">292</a>                     mail.getMessage(), Mail.ERROR);
+<a name="293" href="#293">293</a>         }
+<a name="294" href="#294">294</a>         <strong class="jxr_keyword">if</strong> (consume) {
+<a name="295" href="#295">295</a>             <em class="jxr_comment">// Consume this message</em>
+<a name="296" href="#296">296</a>             mail.setState(Mail.GHOST);
+<a name="297" href="#297">297</a>         }
+<a name="298" href="#298">298</a>     }
+<a name="299" href="#299">299</a> 
+<a name="300" href="#300">300</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="301" href="#301">301</a> <em class="jxr_javadoccomment">     * Return a string describing this mailet.</em>
+<a name="302" href="#302">302</a> <em class="jxr_javadoccomment">     * </em>
+<a name="303" href="#303">303</a> <em class="jxr_javadoccomment">     * @return a string describing this mailet</em>
+<a name="304" href="#304">304</a> <em class="jxr_javadoccomment">     */</em>
+<a name="305" href="#305">305</a>     @Override
+<a name="306" href="#306">306</a>     <strong class="jxr_keyword">public</strong> String getMailetInfo() {
+<a name="307" href="#307">307</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Sieve Mailbox Mailet"</span>;
+<a name="308" href="#308">308</a>     }
+<a name="309" href="#309">309</a> 
+<a name="310" href="#310">310</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="311" href="#311">311</a> <em class="jxr_javadoccomment">     * </em>
+<a name="312" href="#312">312</a> <em class="jxr_javadoccomment">     * @param sender</em>
+<a name="313" href="#313">313</a> <em class="jxr_javadoccomment">     * @param recipient</em>
+<a name="314" href="#314">314</a> <em class="jxr_javadoccomment">     * @param mail</em>
+<a name="315" href="#315">315</a> <em class="jxr_javadoccomment">     * @throws MessagingException</em>
+<a name="316" href="#316">316</a> <em class="jxr_javadoccomment">     */</em>
+<a name="317" href="#317">317</a>     @SuppressWarnings(<span class="jxr_string">"deprecation"</span>)
+<a name="318" href="#318">318</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> storeMail(MailAddress sender, MailAddress recipient,
+<a name="319" href="#319">319</a>             Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="320" href="#320">320</a>         String username;
+<a name="321" href="#321">321</a>         <strong class="jxr_keyword">if</strong> (recipient == <strong class="jxr_keyword">null</strong>) {
 <a name="322" href="#322">322</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(
-<a name="323" href="#323">323</a>                     <span class="jxr_string">"Mail message to be spooled cannot be null."</span>);
+<a name="323" href="#323">323</a>                     <span class="jxr_string">"Recipient for mail to be spooled cannot be null."</span>);
 <a name="324" href="#324">324</a>         }
-<a name="325" href="#325">325</a>         <em class="jxr_comment">// recipient.toString was used here (JD)</em>
-<a name="326" href="#326">326</a>         username = recipient.getUser();
-<a name="327" href="#327">327</a>         
-<a name="328" href="#328">328</a>         sieveMessage(username, mail);
-<a name="329" href="#329">329</a>  
-<a name="330" href="#330">330</a>     }
-<a name="331" href="#331">331</a>     
-<a name="332" href="#332">332</a>     <strong class="jxr_keyword">void</strong> sieveMessage(String username, Mail aMail) <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="333" href="#333">333</a>         <em class="jxr_comment">// Evaluate the script against the mail</em>
-<a name="334" href="#334">334</a>         String relativeUri = <span class="jxr_string">"//"</span> + username + <span class="jxr_string">"@"</span> + <span class="jxr_string">"localhost/sieve"</span>; 
-<a name="335" href="#335">335</a>         <strong class="jxr_keyword">try</strong>
-<a name="336" href="#336">336</a>         {
-<a name="337" href="#337">337</a>             <strong class="jxr_keyword">final</strong> InputStream ins = locator.get(relativeUri);
-<a name="338" href="#338">338</a>             
-<a name="339" href="#339">339</a>             <a href="../../../../org/apache/jsieve/mailet/SieveMailAdapter.html">SieveMailAdapter</a> aMailAdapter = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/SieveMailAdapter.html">SieveMailAdapter</a>(aMail,
-<a name="340" href="#340">340</a>                     getMailetContext(), actionDispatcher, poster);
-<a name="341" href="#341">341</a>             aMailAdapter.setLog(log);
-<a name="342" href="#342">342</a>             <em class="jxr_comment">// This logging operation is potentially costly</em>
-<a name="343" href="#343">343</a>             <strong class="jxr_keyword">if</strong> (verbose) {
-<a name="344" href="#344">344</a>                 log(<span class="jxr_string">"Evaluating "</span> + aMailAdapter.toString() + <span class="jxr_string">"against \&quot;"</span>
-<a name="345" href="#345">345</a>                     + relativeUri + <span class="jxr_string">"\&quot;"</span>);
-<a name="346" href="#346">346</a>             }
-<a name="347" href="#347">347</a>             factory.evaluate(aMailAdapter, factory.parse(ins));
-<a name="348" href="#348">348</a>         }
-<a name="349" href="#349">349</a>         <strong class="jxr_keyword">catch</strong> (Exception ex)
-<a name="350" href="#350">350</a>         {
-<a name="351" href="#351">351</a>             <em class="jxr_comment">//</em>
-<a name="352" href="#352">352</a>             <em class="jxr_comment">// SLIEVE is a mail filtering protocol.</em>
-<a name="353" href="#353">353</a>             <em class="jxr_comment">// Rejecting the mail because it cannot be filtered</em>
-<a name="354" href="#354">354</a>             <em class="jxr_comment">// seems very unfriendly.</em>
-<a name="355" href="#355">355</a>             <em class="jxr_comment">// So just log and store in INBOX.</em>
-<a name="356" href="#356">356</a>             <em class="jxr_comment">//</em>
-<a name="357" href="#357">357</a>             <strong class="jxr_keyword">if</strong> (isInfoLoggingOn()) {
-<a name="358" href="#358">358</a>                 log(<span class="jxr_string">"Cannot evaluate Sieve script. Storing mail in user INBOX."</span>, ex);
-<a name="359" href="#359">359</a>             }
-<a name="360" href="#360">360</a>             storeMessageInbox(username, aMail);
-<a name="361" href="#361">361</a>         }
-<a name="362" href="#362">362</a>     }
-<a name="363" href="#363">363</a>     
-<a name="364" href="#364">364</a>     <strong class="jxr_keyword">void</strong> storeMessageInbox(String username, Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="365" href="#365">365</a>         String url = <span class="jxr_string">"mailbox://"</span> + username + <span class="jxr_string">"@localhost/"</span>;
-<a name="366" href="#366">366</a>         poster.post(url, mail.getMessage());
-<a name="367" href="#367">367</a>     }
-<a name="368" href="#368">368</a> 
-<a name="369" href="#369">369</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="370" href="#370">370</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.base.GenericMailet#init()</em>
-<a name="371" href="#371">371</a> <em class="jxr_javadoccomment">     */</em>
-<a name="372" href="#372">372</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MessagingException {
-<a name="373" href="#373">373</a>         <strong class="jxr_keyword">super</strong>.init();
-<a name="374" href="#374">374</a>         <strong class="jxr_keyword">if</strong> (poster == <strong class="jxr_keyword">null</strong> || locator == <strong class="jxr_keyword">null</strong>) {
-<a name="375" href="#375">375</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Not initialised. Please ensure that the mailet container supports either"</span> +
-<a name="376" href="#376">376</a>                     <span class="jxr_string">" setter or constructor injection"</span>);
-<a name="377" href="#377">377</a>         }
-<a name="378" href="#378">378</a>         
-<a name="379" href="#379">379</a>         <strong class="jxr_keyword">this</strong>.deliveryHeader = getInitParameter(<span class="jxr_string">"addDeliveryHeader"</span>);
-<a name="380" href="#380">380</a>         <strong class="jxr_keyword">this</strong>.resetReturnPath = getInitParameter(<span class="jxr_string">"resetReturnPath"</span>, <strong class="jxr_keyword">true</strong>);
-<a name="381" href="#381">381</a>         <strong class="jxr_keyword">this</strong>.consume = getInitParameter(<span class="jxr_string">"consume"</span>, <strong class="jxr_keyword">true</strong>);
-<a name="382" href="#382">382</a>         <strong class="jxr_keyword">this</strong>.verbose = getInitParameter(<span class="jxr_string">"verbose"</span>, false);
-<a name="383" href="#383">383</a>         <strong class="jxr_keyword">this</strong>.quiet = getInitParameter(<span class="jxr_string">"quiet"</span>, false);
-<a name="384" href="#384">384</a>         
-<a name="385" href="#385">385</a>         actionDispatcher = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/ActionDispatcher.html">ActionDispatcher</a>();
-<a name="386" href="#386">386</a>     }
-<a name="387" href="#387">387</a> }
+<a name="325" href="#325">325</a>         <strong class="jxr_keyword">if</strong> (mail.getMessage() == <strong class="jxr_keyword">null</strong>) {
+<a name="326" href="#326">326</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(
+<a name="327" href="#327">327</a>                     <span class="jxr_string">"Mail message to be spooled cannot be null."</span>);
+<a name="328" href="#328">328</a>         }
+<a name="329" href="#329">329</a>         <em class="jxr_comment">// recipient.toString was used here (JD)</em>
+<a name="330" href="#330">330</a>         username = recipient.getUser();
+<a name="331" href="#331">331</a>         
+<a name="332" href="#332">332</a>         sieveMessage(username, mail);
+<a name="333" href="#333">333</a>  
+<a name="334" href="#334">334</a>     }
+<a name="335" href="#335">335</a>     
+<a name="336" href="#336">336</a>     <strong class="jxr_keyword">void</strong> sieveMessage(String username, Mail aMail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="337" href="#337">337</a>         <em class="jxr_comment">// Evaluate the script against the mail</em>
+<a name="338" href="#338">338</a>         String relativeUri = <span class="jxr_string">"//"</span> + username + <span class="jxr_string">"@"</span> + <span class="jxr_string">"localhost/sieve"</span>; 
+<a name="339" href="#339">339</a>         <strong class="jxr_keyword">try</strong>
+<a name="340" href="#340">340</a>         {
+<a name="341" href="#341">341</a>             <strong class="jxr_keyword">final</strong> InputStream ins = locator.get(relativeUri);
+<a name="342" href="#342">342</a>             
+<a name="343" href="#343">343</a>             <a href="../../../../org/apache/jsieve/mailet/SieveMailAdapter.html">SieveMailAdapter</a> aMailAdapter = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/SieveMailAdapter.html">SieveMailAdapter</a>(aMail,
+<a name="344" href="#344">344</a>                     getMailetContext(), actionDispatcher, poster);
+<a name="345" href="#345">345</a>             aMailAdapter.setLog(log);
+<a name="346" href="#346">346</a>             <em class="jxr_comment">// This logging operation is potentially costly</em>
+<a name="347" href="#347">347</a>             <strong class="jxr_keyword">if</strong> (verbose) {
+<a name="348" href="#348">348</a>                 log(<span class="jxr_string">"Evaluating "</span> + aMailAdapter.toString() + <span class="jxr_string">"against \&quot;"</span>
+<a name="349" href="#349">349</a>                     + relativeUri + <span class="jxr_string">"\&quot;"</span>);
+<a name="350" href="#350">350</a>             }
+<a name="351" href="#351">351</a>             factory.evaluate(aMailAdapter, factory.parse(ins));
+<a name="352" href="#352">352</a>         }
+<a name="353" href="#353">353</a>         <strong class="jxr_keyword">catch</strong> (Exception ex)
+<a name="354" href="#354">354</a>         {
+<a name="355" href="#355">355</a>             <em class="jxr_comment">//</em>
+<a name="356" href="#356">356</a>             <em class="jxr_comment">// SLIEVE is a mail filtering protocol.</em>
+<a name="357" href="#357">357</a>             <em class="jxr_comment">// Rejecting the mail because it cannot be filtered</em>
+<a name="358" href="#358">358</a>             <em class="jxr_comment">// seems very unfriendly.</em>
+<a name="359" href="#359">359</a>             <em class="jxr_comment">// So just log and store in INBOX.</em>
+<a name="360" href="#360">360</a>             <em class="jxr_comment">//</em>
+<a name="361" href="#361">361</a>             <strong class="jxr_keyword">if</strong> (isInfoLoggingOn()) {
+<a name="362" href="#362">362</a>                 log(<span class="jxr_string">"Cannot evaluate Sieve script. Storing mail in user INBOX."</span>, ex);
+<a name="363" href="#363">363</a>             }
+<a name="364" href="#364">364</a>             storeMessageInbox(username, aMail);
+<a name="365" href="#365">365</a>         }
+<a name="366" href="#366">366</a>     }
+<a name="367" href="#367">367</a>     
+<a name="368" href="#368">368</a>     <strong class="jxr_keyword">void</strong> storeMessageInbox(String username, Mail mail) <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="369" href="#369">369</a>         String url = <span class="jxr_string">"mailbox://"</span> + username + <span class="jxr_string">"@localhost/"</span>;
+<a name="370" href="#370">370</a>         poster.post(url, mail.getMessage());
+<a name="371" href="#371">371</a>     }
+<a name="372" href="#372">372</a> 
+<a name="373" href="#373">373</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="374" href="#374">374</a> <em class="jxr_javadoccomment">     * @see org.apache.mailet.base.GenericMailet#init()</em>
+<a name="375" href="#375">375</a> <em class="jxr_javadoccomment">     */</em>
+<a name="376" href="#376">376</a>     @Override
+<a name="377" href="#377">377</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() <strong class="jxr_keyword">throws</strong> MessagingException {
+<a name="378" href="#378">378</a>         <strong class="jxr_keyword">super</strong>.init();
+<a name="379" href="#379">379</a>         <strong class="jxr_keyword">if</strong> (poster == <strong class="jxr_keyword">null</strong> || locator == <strong class="jxr_keyword">null</strong>) {
+<a name="380" href="#380">380</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MailetException(<span class="jxr_string">"Not initialised. Please ensure that the mailet container supports either"</span> +
+<a name="381" href="#381">381</a>                     <span class="jxr_string">" setter or constructor injection"</span>);
+<a name="382" href="#382">382</a>         }
+<a name="383" href="#383">383</a>         
+<a name="384" href="#384">384</a>         <strong class="jxr_keyword">this</strong>.deliveryHeader = getInitParameter(<span class="jxr_string">"addDeliveryHeader"</span>);
+<a name="385" href="#385">385</a>         <strong class="jxr_keyword">this</strong>.resetReturnPath = getInitParameter(<span class="jxr_string">"resetReturnPath"</span>, <strong class="jxr_keyword">true</strong>);
+<a name="386" href="#386">386</a>         <strong class="jxr_keyword">this</strong>.consume = getInitParameter(<span class="jxr_string">"consume"</span>, <strong class="jxr_keyword">true</strong>);
+<a name="387" href="#387">387</a>         <strong class="jxr_keyword">this</strong>.verbose = getInitParameter(<span class="jxr_string">"verbose"</span>, false);
+<a name="388" href="#388">388</a>         <strong class="jxr_keyword">this</strong>.quiet = getInitParameter(<span class="jxr_string">"quiet"</span>, false);
+<a name="389" href="#389">389</a>         
+<a name="390" href="#390">390</a>         actionDispatcher = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/mailet/ActionDispatcher.html">ActionDispatcher</a>();
+<a name="391" href="#391">391</a>     }
+<a name="392" href="#392">392</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

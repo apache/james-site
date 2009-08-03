@@ -30,8 +30,8 @@
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.jsieve.mail;
 <a name="21" href="#21">21</a>  
 <a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> java.util.ListIterator;
-<a name="24" href="#24">24</a>  
+<a name="23" href="#23">23</a>  
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.SieveContext;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.exception.InternetAddressException;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.exception.SieveException;
 <a name="27" href="#27">27</a>  
@@ -80,156 +80,161 @@
 <a name="70" href="#70">70</a>  <em class="jxr_javadoccomment"> * &lt;/pre&gt;&lt;/code&gt;</em>
 <a name="71" href="#71">71</a>  <em class="jxr_javadoccomment"> */</em>
 <a name="72" href="#72">72</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> {
-<a name="73" href="#73">73</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="74" href="#74">74</a>  <em class="jxr_javadoccomment">     * Method getActions answers the List of Actions accumulated by the</em>
-<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * receiver. Implementations may elect to supply an unmodifiable collection.</em>
-<a name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * </em>
-<a name="77" href="#77">77</a>  <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt; of {@link Action}'s, not null, possibly</em>
-<a name="78" href="#78">78</a>  <em class="jxr_javadoccomment">     *         unmodifiable</em>
-<a name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="80" href="#80">80</a>      <strong class="jxr_keyword">public</strong> List getActions();
-<a name="81" href="#81">81</a>  
-<a name="82" href="#82">82</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * Method getActionIteraror answers an Iterator over the List of Actions</em>
-<a name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     * accumulated by the receiver. Implementations may elect to supply an</em>
-<a name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     * unmodifiable iterator.</em>
-<a name="86" href="#86">86</a>  <em class="jxr_javadoccomment">     * </em>
-<a name="87" href="#87">87</a>  <em class="jxr_javadoccomment">     * @return &lt;code&gt;ListIterator&lt;/code&gt;, not null, possibly unmodifiable</em>
-<a name="88" href="#88">88</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="89" href="#89">89</a>      <strong class="jxr_keyword">public</strong> ListIterator getActionsIterator();
-<a name="90" href="#90">90</a>  
-<a name="91" href="#91">91</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="92" href="#92">92</a>  <em class="jxr_javadoccomment">     * Method getHeader answers a List of all of the headers in the receiver</em>
-<a name="93" href="#93">93</a>  <em class="jxr_javadoccomment">     * whose name is equal to the passed name. If no headers are found an empty</em>
-<a name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     * List is returned.</em>
-<a name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     * </em>
-<a name="96" href="#96">96</a>  <em class="jxr_javadoccomment">     * @param name</em>
-<a name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt; not null, possibly empty, possible</em>
-<a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     *         unmodifiable</em>
-<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     */</em>
-<a name="101" href="#101">101</a>     <strong class="jxr_keyword">public</strong> List getHeader(String name) <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="102" href="#102">102</a> 
-<a name="103" href="#103">103</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="104" href="#104">104</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * Method getMatchingHeader answers a List of all of the headers in the</em>
-<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     * receiver with the passed name. If no headers are found an empty List is</em>
-<a name="107" href="#107">107</a> <em class="jxr_javadoccomment">     * returned.</em>
-<a name="108" href="#108">108</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="109" href="#109">109</a> <em class="jxr_javadoccomment">     * </em>
+<a name="73" href="#73">73</a>      
+<a name="74" href="#74">74</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Sets the context for the current sieve script execution.&lt;/p&gt;</em>
+<a name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Sieve engines &lt;code&gt;MUST&lt;/code&gt; set this property before any calls</em>
+<a name="77" href="#77">77</a>  <em class="jxr_javadoccomment">     * related to the execution of a script are made.&lt;/p&gt;</em>
+<a name="78" href="#78">78</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Implementations intended to be shared between separate threads of</em>
+<a name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     * execution &lt;code&gt;MUST&lt;/code&gt; ensure that they manage concurrency contexts,</em>
+<a name="80" href="#80">80</a>  <em class="jxr_javadoccomment">     * for example by storage in a thread local variable. Engines &lt;code&gt;MUST&lt;/code&gt;</em>
+<a name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     * - for a script execution - ensure that all calls are made within the</em>
+<a name="82" href="#82">82</a>  <em class="jxr_javadoccomment">     * same thread of execution.&lt;/p&gt;</em>
+<a name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * @param context the current context, </em>
+<a name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     * or null to clear the contest once the execution of a script has completed.</em>
+<a name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="86" href="#86">86</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setContext(<a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context);
+<a name="87" href="#87">87</a>      
+<a name="88" href="#88">88</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="89" href="#89">89</a>  <em class="jxr_javadoccomment">     * Method getActions answers the List of Actions accumulated by the</em>
+<a name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     * receiver. Implementations may elect to supply an unmodifiable collection.</em>
+<a name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     * </em>
+<a name="92" href="#92">92</a>  <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt; of {@link Action}'s, not null, possibly</em>
+<a name="93" href="#93">93</a>  <em class="jxr_javadoccomment">     *         unmodifiable</em>
+<a name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="95" href="#95">95</a>      <strong class="jxr_keyword">public</strong> List&lt;Action&gt; getActions();
+<a name="96" href="#96">96</a>      
+<a name="97" href="#97">97</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * Method getHeader answers a List of all of the headers in the receiver</em>
+<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * whose name is equal to the passed name. If no headers are found an empty</em>
+<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * List is returned.</em>
+<a name="101" href="#101">101</a> <em class="jxr_javadoccomment">     * </em>
+<a name="102" href="#102">102</a> <em class="jxr_javadoccomment">     * @param name</em>
+<a name="103" href="#103">103</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt; not null, possibly empty, possible</em>
+<a name="104" href="#104">104</a> <em class="jxr_javadoccomment">     *         unmodifiable</em>
+<a name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     */</em>
+<a name="107" href="#107">107</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getHeader(String name) <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>     <em class="jxr_javadoccomment">/**</em>
 <a name="110" href="#110">110</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="111" href="#111">111</a> <em class="jxr_javadoccomment">     * This method differs from getHeader(String) in that it ignores case and</em>
-<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     * the whitespace prefixes and suffixes of a header name when performing the</em>
-<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * match, as required by RFC 3028. Thus "From", "from ", " From" and " from "</em>
-<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * are considered equal.</em>
-<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * </em>
-<a name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * @param name</em>
-<a name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt;, not null possibly empty, possible</em>
-<a name="119" href="#119">119</a> <em class="jxr_javadoccomment">     *         unmodifiable</em>
-<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="121" href="#121">121</a> <em class="jxr_javadoccomment">     */</em>
-<a name="122" href="#122">122</a>     <strong class="jxr_keyword">public</strong> List getMatchingHeader(String name) <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="123" href="#123">123</a> 
-<a name="124" href="#124">124</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="125" href="#125">125</a> <em class="jxr_javadoccomment">     * Method getHeaderNames answers a List of all of the headers in the</em>
-<a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     * receiver. No duplicates are allowed.</em>
-<a name="127" href="#127">127</a> <em class="jxr_javadoccomment">     * </em>
-<a name="128" href="#128">128</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt;, not null possible empty, possible</em>
-<a name="129" href="#129">129</a> <em class="jxr_javadoccomment">     *         unmodifiable</em>
-<a name="130" href="#130">130</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="131" href="#131">131</a> <em class="jxr_javadoccomment">     */</em>
-<a name="132" href="#132">132</a>     <strong class="jxr_keyword">public</strong> List getHeaderNames() <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="133" href="#133">133</a> 
-<a name="134" href="#134">134</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * Method addAction adds an Action to the List of Actions to be performed by</em>
-<a name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * the receiver.</em>
-<a name="137" href="#137">137</a> <em class="jxr_javadoccomment">     * </em>
-<a name="138" href="#138">138</a> <em class="jxr_javadoccomment">     * @param action</em>
-<a name="139" href="#139">139</a> <em class="jxr_javadoccomment">     */</em>
-<a name="140" href="#140">140</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addAction(<a href="../../../../org/apache/jsieve/mail/Action.html">Action</a> action);
-<a name="141" href="#141">141</a> 
-<a name="142" href="#142">142</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="143" href="#143">143</a> <em class="jxr_javadoccomment">     * Method executeActions. Applies the Actions accumulated by the receiver.</em>
-<a name="144" href="#144">144</a> <em class="jxr_javadoccomment">     */</em>
-<a name="145" href="#145">145</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> executeActions() <strong class="jxr_keyword">throws</strong> SieveException;
-<a name="146" href="#146">146</a> 
-<a name="147" href="#147">147</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="148" href="#148">148</a> <em class="jxr_javadoccomment">     * Method getSize answers the receiver's message size in octets.</em>
-<a name="149" href="#149">149</a> <em class="jxr_javadoccomment">     * </em>
-<a name="150" href="#150">150</a> <em class="jxr_javadoccomment">     * @return int</em>
-<a name="151" href="#151">151</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="152" href="#152">152</a> <em class="jxr_javadoccomment">     */</em>
-<a name="153" href="#153">153</a>     <strong class="jxr_keyword">int</strong> getSize() <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="154" href="#154">154</a> 
-<a name="155" href="#155">155</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="156" href="#156">156</a> <em class="jxr_javadoccomment">     * Method getContentType returns string/mime representation of the message</em>
-<a name="157" href="#157">157</a> <em class="jxr_javadoccomment">     * type.</em>
-<a name="158" href="#158">158</a> <em class="jxr_javadoccomment">     * </em>
-<a name="159" href="#159">159</a> <em class="jxr_javadoccomment">     * @return String</em>
-<a name="160" href="#160">160</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="161" href="#161">161</a> <em class="jxr_javadoccomment">     */</em>
-<a name="162" href="#162">162</a>     <strong class="jxr_keyword">public</strong> String getContentType() <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="163" href="#163">163</a> 
-<a name="164" href="#164">164</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="165" href="#165">165</a> <em class="jxr_javadoccomment">     * Method getContent returns object containing the message content. TODO:</em>
-<a name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * This is poorly defined. TODO: This is used to search a mail body and</em>
-<a name="167" href="#167">167</a> <em class="jxr_javadoccomment">     * needs to return a string. TODO: But creating a string is not efficient.</em>
-<a name="168" href="#168">168</a> <em class="jxr_javadoccomment">     * TODO: It would be better to allow the adapter to search.</em>
-<a name="169" href="#169">169</a> <em class="jxr_javadoccomment">     * </em>
-<a name="170" href="#170">170</a> <em class="jxr_javadoccomment">     * @return Object</em>
-<a name="171" href="#171">171</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="172" href="#172">172</a> <em class="jxr_javadoccomment">     */</em>
-<a name="173" href="#173">173</a>     <strong class="jxr_keyword">public</strong> Object getContent() <strong class="jxr_keyword">throws</strong> SieveMailException;
-<a name="174" href="#174">174</a> 
-<a name="175" href="#175">175</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * Parses the named header value into individual addresses.</em>
-<a name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * </em>
-<a name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="181" href="#181">181</a> <em class="jxr_javadoccomment">     * Headers should be matched in a way that ignores case and the whitespace</em>
-<a name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * prefixes and suffixes of a header name when performing the match, as</em>
-<a name="183" href="#183">183</a> <em class="jxr_javadoccomment">     * required by RFC 3028. Thus "From", "from ", " From" and " from " are</em>
-<a name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * considered equal.</em>
-<a name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="186" href="#186">186</a> <em class="jxr_javadoccomment">     * </em>
-<a name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * @param headerName</em>
-<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     *            name of the header whose value is to be split</em>
-<a name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * @return addresses listed in the given header not null, possibly empty</em>
-<a name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * @throws InternetAddressException</em>
-<a name="191" href="#191">191</a> <em class="jxr_javadoccomment">     *             when the header value is not an address or list of addresses.</em>
-<a name="192" href="#192">192</a> <em class="jxr_javadoccomment">     *             Implemetations may elect to support only standard headers</em>
-<a name="193" href="#193">193</a> <em class="jxr_javadoccomment">     *             known to containing one or more addresses rather than parsing</em>
-<a name="194" href="#194">194</a> <em class="jxr_javadoccomment">     *             the value content</em>
-<a name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
-<a name="196" href="#196">196</a> <em class="jxr_javadoccomment">     *             when the header value cannot be read</em>
-<a name="197" href="#197">197</a> <em class="jxr_javadoccomment">     */</em>
-<a name="198" href="#198">198</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/jsieve/mail/MailAdapter.html">Address</a>[] parseAddresses(String headerName)
-<a name="199" href="#199">199</a>             <strong class="jxr_keyword">throws</strong> SieveMailException, InternetAddressException;
-<a name="200" href="#200">200</a> 
-<a name="201" href="#201">201</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * Contains address data required for SIEVE processing.</em>
-<a name="203" href="#203">203</a> <em class="jxr_javadoccomment">     */</em>
-<a name="204" href="#204">204</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/apache/jsieve/mail/MailAdapter.html">Address</a> {
+<a name="111" href="#111">111</a> <em class="jxr_javadoccomment">     * Method getMatchingHeader answers a List of all of the headers in the</em>
+<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     * receiver with the passed name. If no headers are found an empty List is</em>
+<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * returned.</em>
+<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * </em>
+<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * This method differs from getHeader(String) in that it ignores case and</em>
+<a name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * the whitespace prefixes and suffixes of a header name when performing the</em>
+<a name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * match, as required by RFC 3028. Thus "From", "from ", " From" and " from "</em>
+<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * are considered equal.</em>
+<a name="121" href="#121">121</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="122" href="#122">122</a> <em class="jxr_javadoccomment">     * </em>
+<a name="123" href="#123">123</a> <em class="jxr_javadoccomment">     * @param name</em>
+<a name="124" href="#124">124</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt;, not null possibly empty, possible</em>
+<a name="125" href="#125">125</a> <em class="jxr_javadoccomment">     *         unmodifiable</em>
+<a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="127" href="#127">127</a> <em class="jxr_javadoccomment">     */</em>
+<a name="128" href="#128">128</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getMatchingHeader(String name) <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="129" href="#129">129</a> 
+<a name="130" href="#130">130</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="131" href="#131">131</a> <em class="jxr_javadoccomment">     * Method getHeaderNames answers a List of all of the headers in the</em>
+<a name="132" href="#132">132</a> <em class="jxr_javadoccomment">     * receiver. No duplicates are allowed.</em>
+<a name="133" href="#133">133</a> <em class="jxr_javadoccomment">     * </em>
+<a name="134" href="#134">134</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;List&lt;/code&gt;, not null possible empty, possible</em>
+<a name="135" href="#135">135</a> <em class="jxr_javadoccomment">     *         unmodifiable</em>
+<a name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="137" href="#137">137</a> <em class="jxr_javadoccomment">     */</em>
+<a name="138" href="#138">138</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getHeaderNames() <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="139" href="#139">139</a> 
+<a name="140" href="#140">140</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * Method addAction adds an Action to the List of Actions to be performed by</em>
+<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">     * the receiver.</em>
+<a name="143" href="#143">143</a> <em class="jxr_javadoccomment">     * </em>
+<a name="144" href="#144">144</a> <em class="jxr_javadoccomment">     * @param action</em>
+<a name="145" href="#145">145</a> <em class="jxr_javadoccomment">     */</em>
+<a name="146" href="#146">146</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addAction(<a href="../../../../org/apache/jsieve/mail/Action.html">Action</a> action);
+<a name="147" href="#147">147</a> 
+<a name="148" href="#148">148</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="149" href="#149">149</a> <em class="jxr_javadoccomment">     * Method executeActions. Applies the Actions accumulated by the receiver.</em>
+<a name="150" href="#150">150</a> <em class="jxr_javadoccomment">     */</em>
+<a name="151" href="#151">151</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> executeActions() <strong class="jxr_keyword">throws</strong> SieveException;
+<a name="152" href="#152">152</a> 
+<a name="153" href="#153">153</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="154" href="#154">154</a> <em class="jxr_javadoccomment">     * Method getSize answers the receiver's message size in octets.</em>
+<a name="155" href="#155">155</a> <em class="jxr_javadoccomment">     * </em>
+<a name="156" href="#156">156</a> <em class="jxr_javadoccomment">     * @return int</em>
+<a name="157" href="#157">157</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="158" href="#158">158</a> <em class="jxr_javadoccomment">     */</em>
+<a name="159" href="#159">159</a>     <strong class="jxr_keyword">int</strong> getSize() <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="160" href="#160">160</a> 
+<a name="161" href="#161">161</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="162" href="#162">162</a> <em class="jxr_javadoccomment">     * Method getContentType returns string/mime representation of the message</em>
+<a name="163" href="#163">163</a> <em class="jxr_javadoccomment">     * type.</em>
+<a name="164" href="#164">164</a> <em class="jxr_javadoccomment">     * </em>
+<a name="165" href="#165">165</a> <em class="jxr_javadoccomment">     * @return String</em>
+<a name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="167" href="#167">167</a> <em class="jxr_javadoccomment">     */</em>
+<a name="168" href="#168">168</a>     <strong class="jxr_keyword">public</strong> String getContentType() <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="169" href="#169">169</a> 
+<a name="170" href="#170">170</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="171" href="#171">171</a> <em class="jxr_javadoccomment">     * Is the given phrase found in the body text of this mail?</em>
+<a name="172" href="#172">172</a> <em class="jxr_javadoccomment">     * This search should be case insensitive.</em>
+<a name="173" href="#173">173</a> <em class="jxr_javadoccomment">     * @param phraseCaseInsensitive the phrase to search</em>
+<a name="174" href="#174">174</a> <em class="jxr_javadoccomment">     * @return true when the mail has a textual body and contains the phrase</em>
+<a name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * (case insensitive), false otherwise</em>
+<a name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * @throws SieveMailException when the search cannot be completed</em>
+<a name="177" href="#177">177</a> <em class="jxr_javadoccomment">     */</em>
+<a name="178" href="#178">178</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isInBodyText(<strong class="jxr_keyword">final</strong> String phraseCaseInsensitive) <strong class="jxr_keyword">throws</strong> SieveMailException;
+<a name="179" href="#179">179</a>     
+<a name="180" href="#180">180</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="181" href="#181">181</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * Parses the named header value into individual addresses.</em>
+<a name="183" href="#183">183</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * </em>
+<a name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a name="186" href="#186">186</a> <em class="jxr_javadoccomment">     * Headers should be matched in a way that ignores case and the whitespace</em>
+<a name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * prefixes and suffixes of a header name when performing the match, as</em>
+<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * required by RFC 3028. Thus "From", "from ", " From" and " from " are</em>
+<a name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * considered equal.</em>
+<a name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="191" href="#191">191</a> <em class="jxr_javadoccomment">     * </em>
+<a name="192" href="#192">192</a> <em class="jxr_javadoccomment">     * @param headerName</em>
+<a name="193" href="#193">193</a> <em class="jxr_javadoccomment">     *            name of the header whose value is to be split</em>
+<a name="194" href="#194">194</a> <em class="jxr_javadoccomment">     * @return addresses listed in the given header not null, possibly empty</em>
+<a name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * @throws InternetAddressException</em>
+<a name="196" href="#196">196</a> <em class="jxr_javadoccomment">     *             when the header value is not an address or list of addresses.</em>
+<a name="197" href="#197">197</a> <em class="jxr_javadoccomment">     *             Implemetations may elect to support only standard headers</em>
+<a name="198" href="#198">198</a> <em class="jxr_javadoccomment">     *             known to containing one or more addresses rather than parsing</em>
+<a name="199" href="#199">199</a> <em class="jxr_javadoccomment">     *             the value content</em>
+<a name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * @throws SieveMailException</em>
+<a name="201" href="#201">201</a> <em class="jxr_javadoccomment">     *             when the header value cannot be read</em>
+<a name="202" href="#202">202</a> <em class="jxr_javadoccomment">     */</em>
+<a name="203" href="#203">203</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/jsieve/mail/MailAdapter.html">Address</a>[] parseAddresses(String headerName)
+<a name="204" href="#204">204</a>             <strong class="jxr_keyword">throws</strong> SieveMailException, InternetAddressException;
 <a name="205" href="#205">205</a> 
-<a name="206" href="#206">206</a>         <em class="jxr_javadoccomment">/**</em>
-<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">         * Gets the local part of the email address. Specified in &lt;a</em>
-<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">         * href='<a href="http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;." target="alexandria_uri">http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;.</a></em>
-<a name="209" href="#209">209</a> <em class="jxr_javadoccomment">         * </em>
-<a name="210" href="#210">210</a> <em class="jxr_javadoccomment">         * @return local part, not null</em>
-<a name="211" href="#211">211</a> <em class="jxr_javadoccomment">         */</em>
-<a name="212" href="#212">212</a>         <strong class="jxr_keyword">public</strong> String getLocalPart();
-<a name="213" href="#213">213</a> 
-<a name="214" href="#214">214</a>         <em class="jxr_javadoccomment">/**</em>
-<a name="215" href="#215">215</a> <em class="jxr_javadoccomment">         * Gets the domain part of the email address. Specified in &lt;a</em>
-<a name="216" href="#216">216</a> <em class="jxr_javadoccomment">         * href='<a href="http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;." target="alexandria_uri">http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;.</a></em>
-<a name="217" href="#217">217</a> <em class="jxr_javadoccomment">         * </em>
-<a name="218" href="#218">218</a> <em class="jxr_javadoccomment">         * @return domain, not null</em>
-<a name="219" href="#219">219</a> <em class="jxr_javadoccomment">         */</em>
-<a name="220" href="#220">220</a>         <strong class="jxr_keyword">public</strong> String getDomain();
-<a name="221" href="#221">221</a>     }
-<a name="222" href="#222">222</a> }
+<a name="206" href="#206">206</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">     * Contains address data required for SIEVE processing.</em>
+<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">     */</em>
+<a name="209" href="#209">209</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/apache/jsieve/mail/MailAdapter.html">Address</a> {
+<a name="210" href="#210">210</a> 
+<a name="211" href="#211">211</a>         <em class="jxr_javadoccomment">/**</em>
+<a name="212" href="#212">212</a> <em class="jxr_javadoccomment">         * Gets the local part of the email address. Specified in &lt;a</em>
+<a name="213" href="#213">213</a> <em class="jxr_javadoccomment">         * href='<a href="http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;." target="alexandria_uri">http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;.</a></em>
+<a name="214" href="#214">214</a> <em class="jxr_javadoccomment">         * </em>
+<a name="215" href="#215">215</a> <em class="jxr_javadoccomment">         * @return local part, not null</em>
+<a name="216" href="#216">216</a> <em class="jxr_javadoccomment">         */</em>
+<a name="217" href="#217">217</a>         <strong class="jxr_keyword">public</strong> String getLocalPart();
+<a name="218" href="#218">218</a> 
+<a name="219" href="#219">219</a>         <em class="jxr_javadoccomment">/**</em>
+<a name="220" href="#220">220</a> <em class="jxr_javadoccomment">         * Gets the domain part of the email address. Specified in &lt;a</em>
+<a name="221" href="#221">221</a> <em class="jxr_javadoccomment">         * href='<a href="http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;." target="alexandria_uri">http://james.apache.org/server/rfclist/basic/rfc0822.txt'&gt;RFC822&lt;/a&gt;.</a></em>
+<a name="222" href="#222">222</a> <em class="jxr_javadoccomment">         * </em>
+<a name="223" href="#223">223</a> <em class="jxr_javadoccomment">         * @return domain, not null</em>
+<a name="224" href="#224">224</a> <em class="jxr_javadoccomment">         */</em>
+<a name="225" href="#225">225</a>         <strong class="jxr_keyword">public</strong> String getDomain();
+<a name="226" href="#226">226</a>     }
+<a name="227" href="#227">227</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

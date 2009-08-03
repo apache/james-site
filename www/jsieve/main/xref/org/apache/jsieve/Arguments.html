@@ -48,7 +48,7 @@
 <a name="38" href="#38">38</a>      <em class="jxr_javadoccomment">/**</em>
 <a name="39" href="#39">39</a>  <em class="jxr_javadoccomment">     * A List of the parsed Arguments</em>
 <a name="40" href="#40">40</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="41" href="#41">41</a>      <strong class="jxr_keyword">private</strong> List fieldArgumentList;
+<a name="41" href="#41">41</a>      <strong class="jxr_keyword">private</strong> List&lt;Argument&gt; fieldArgumentList;
 <a name="42" href="#42">42</a>  
 <a name="43" href="#43">43</a>      <em class="jxr_javadoccomment">/**</em>
 <a name="44" href="#44">44</a>  <em class="jxr_javadoccomment">     * The parsed tests</em>
@@ -68,7 +68,7 @@
 <a name="58" href="#58">58</a>  <em class="jxr_javadoccomment">     * @param arguments</em>
 <a name="59" href="#59">59</a>  <em class="jxr_javadoccomment">     * @param testList</em>
 <a name="60" href="#60">60</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="61" href="#61">61</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a>(List arguments, <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList) {
+<a name="61" href="#61">61</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/apache/jsieve/Arguments.html">Arguments</a>(List&lt;Argument&gt; arguments, <a href="../../../org/apache/jsieve/TestList.html">TestList</a> testList) {
 <a name="62" href="#62">62</a>          <strong class="jxr_keyword">this</strong>();
 <a name="63" href="#63">63</a>          setArgumentList(arguments);
 <a name="64" href="#64">64</a>          setTestList(testList);
@@ -79,7 +79,7 @@
 <a name="69" href="#69">69</a>  <em class="jxr_javadoccomment">     * </em>
 <a name="70" href="#70">70</a>  <em class="jxr_javadoccomment">     * @return List</em>
 <a name="71" href="#71">71</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="72" href="#72">72</a>      <strong class="jxr_keyword">public</strong> List getArgumentList() {
+<a name="72" href="#72">72</a>      <strong class="jxr_keyword">public</strong> List&lt;Argument&gt; getArgumentList() {
 <a name="73" href="#73">73</a>          <strong class="jxr_keyword">return</strong> fieldArgumentList;
 <a name="74" href="#74">74</a>      }
 <a name="75" href="#75">75</a>  
@@ -123,7 +123,7 @@
 <a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * @return TestList</em>
 <a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     */</em>
 <a name="115" href="#115">115</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a> computeTestList() {
-<a name="116" href="#116">116</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>(<strong class="jxr_keyword">new</strong> ArrayList());
+<a name="116" href="#116">116</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/apache/jsieve/TestList.html">TestList</a>(<strong class="jxr_keyword">new</strong> ArrayList&lt;Test&gt;());
 <a name="117" href="#117">117</a>     }
 <a name="118" href="#118">118</a> 
 <a name="119" href="#119">119</a>     <em class="jxr_javadoccomment">/**</em>
@@ -132,7 +132,7 @@
 <a name="122" href="#122">122</a> <em class="jxr_javadoccomment">     * @param arguments</em>
 <a name="123" href="#123">123</a> <em class="jxr_javadoccomment">     *            The arguments to set</em>
 <a name="124" href="#124">124</a> <em class="jxr_javadoccomment">     */</em>
-<a name="125" href="#125">125</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setArgumentList(List arguments) {
+<a name="125" href="#125">125</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> setArgumentList(List&lt;Argument&gt; arguments) {
 <a name="126" href="#126">126</a>         fieldArgumentList = arguments;
 <a name="127" href="#127">127</a>     }
 <a name="128" href="#128">128</a> 

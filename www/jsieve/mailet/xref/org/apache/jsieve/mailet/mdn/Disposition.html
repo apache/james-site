@@ -143,25 +143,25 @@
 <a name="133" href="#133">133</a> <em class="jxr_javadoccomment">     */</em>
 <a name="134" href="#134">134</a>     <strong class="jxr_keyword">public</strong> String toString()
 <a name="135" href="#135">135</a>     {
-<a name="136" href="#136">136</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer(64);
-<a name="137" href="#137">137</a>         buffer.append(<span class="jxr_string">"Disposition: "</span>);
-<a name="138" href="#138">138</a>         buffer.append(getActionMode() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getActionMode().toString());
-<a name="139" href="#139">139</a>         buffer.append('/');
-<a name="140" href="#140">140</a>         buffer.append(getSendingMode() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getSendingMode().toString());
-<a name="141" href="#141">141</a>         buffer.append(';');
-<a name="142" href="#142">142</a>         buffer.append(getDispositionType() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getDispositionType().toString());
+<a name="136" href="#136">136</a>         StringBuilder builder = <strong class="jxr_keyword">new</strong> StringBuilder(64);
+<a name="137" href="#137">137</a>         builder.append(<span class="jxr_string">"Disposition: "</span>);
+<a name="138" href="#138">138</a>         builder.append(getActionMode() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getActionMode().toString());
+<a name="139" href="#139">139</a>         builder.append('/');
+<a name="140" href="#140">140</a>         builder.append(getSendingMode() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getSendingMode().toString());
+<a name="141" href="#141">141</a>         builder.append(';');
+<a name="142" href="#142">142</a>         builder.append(getDispositionType() == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : getDispositionType().toString());
 <a name="143" href="#143">143</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">null</strong> != getDispositionModifiers()
 <a name="144" href="#144">144</a>                 &amp;&amp; getDispositionModifiers().length &gt; 0)
 <a name="145" href="#145">145</a>         {
-<a name="146" href="#146">146</a>             buffer.append('/');
+<a name="146" href="#146">146</a>             builder.append('/');
 <a name="147" href="#147">147</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; getDispositionModifiers().length; i++)
 <a name="148" href="#148">148</a>             {
 <a name="149" href="#149">149</a>                 <strong class="jxr_keyword">if</strong> (i &gt; 0)
-<a name="150" href="#150">150</a>                     buffer.append(',');
-<a name="151" href="#151">151</a>                 buffer.append(getDispositionModifiers()[i]);
+<a name="150" href="#150">150</a>                     builder.append(',');
+<a name="151" href="#151">151</a>                 builder.append(getDispositionModifiers()[i]);
 <a name="152" href="#152">152</a>             }
 <a name="153" href="#153">153</a>         }
-<a name="154" href="#154">154</a>         <strong class="jxr_keyword">return</strong> buffer.toString();
+<a name="154" href="#154">154</a>         <strong class="jxr_keyword">return</strong> builder.toString();
 <a name="155" href="#155">155</a>     }
 <a name="156" href="#156">156</a> 
 <a name="157" href="#157">157</a>     <em class="jxr_javadoccomment">/**</em>

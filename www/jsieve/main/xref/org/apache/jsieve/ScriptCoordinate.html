@@ -158,11 +158,11 @@
 <a name="148" href="#148">148</a> <em class="jxr_javadoccomment">     *         positional phrase appended, not null</em>
 <a name="149" href="#149">149</a> <em class="jxr_javadoccomment">     */</em>
 <a name="150" href="#150">150</a>     <strong class="jxr_keyword">public</strong> String addStartLineAndColumn(CharSequence message) {
-<a name="151" href="#151">151</a>         <strong class="jxr_keyword">final</strong> StringBuffer buffer;
-<a name="152" href="#152">152</a>         <strong class="jxr_keyword">if</strong> (message instanceof StringBuffer) {
-<a name="153" href="#153">153</a>             buffer = (StringBuffer) message;
+<a name="151" href="#151">151</a>         <strong class="jxr_keyword">final</strong> StringBuilder buffer;
+<a name="152" href="#152">152</a>         <strong class="jxr_keyword">if</strong> (message instanceof StringBuilder) {
+<a name="153" href="#153">153</a>             buffer = (StringBuilder) message;
 <a name="154" href="#154">154</a>         } <strong class="jxr_keyword">else</strong> {
-<a name="155" href="#155">155</a>             buffer = <strong class="jxr_keyword">new</strong> StringBuffer(message.toString());
+<a name="155" href="#155">155</a>             buffer = <strong class="jxr_keyword">new</strong> StringBuilder(message.toString());
 <a name="156" href="#156">156</a>         }
 <a name="157" href="#157">157</a>         buffer.append(<span class="jxr_string">" Line "</span>);
 <a name="158" href="#158">158</a>         buffer.append(startLineNumber);

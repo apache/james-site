@@ -29,9 +29,9 @@
 <a name="19" href="#19">19</a>  
 <a name="20" href="#20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.jsieve.tests;
 <a name="21" href="#21">21</a>  
-<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Iterator;
-<a name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a name="24" href="#24">24</a>  
+<a name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a name="23" href="#23">23</a>  
+<a name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.Argument;
 <a name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.Arguments;
 <a name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.SieveContext;
 <a name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.jsieve.StringListArgument;
@@ -57,39 +57,41 @@
 <a name="47" href="#47">47</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> executeBasic(<a href="../../../../org/apache/jsieve/mail/MailAdapter.html">MailAdapter</a> mail, <a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments,
 <a name="48" href="#48">48</a>              <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> SieveException {
 <a name="49" href="#49">49</a>  
-<a name="50" href="#50">50</a>          Iterator headerNamesIter = ((StringListArgument) arguments
-<a name="51" href="#51">51</a>                  .getArgumentList().get(0)).getList().iterator();
-<a name="52" href="#52">52</a>  
+<a name="50" href="#50">50</a>          <strong class="jxr_keyword">final</strong> List&lt;String&gt; argumentList = ((StringListArgument) arguments
+<a name="51" href="#51">51</a>                                  .getArgumentList().get(0)).getList();
+<a name="52" href="#52">52</a>          
 <a name="53" href="#53">53</a>          <strong class="jxr_keyword">boolean</strong> found = <strong class="jxr_keyword">true</strong>;
-<a name="54" href="#54">54</a>          <strong class="jxr_keyword">while</strong> (found &amp;&amp; headerNamesIter.hasNext()) {
-<a name="55" href="#55">55</a>              List headers = mail.getMatchingHeader((String) headerNamesIter
-<a name="56" href="#56">56</a>                      .next());
-<a name="57" href="#57">57</a>              found = found &amp;&amp; !headers.isEmpty();
-<a name="58" href="#58">58</a>          }
-<a name="59" href="#59">59</a>          <strong class="jxr_keyword">return</strong> found;
-<a name="60" href="#60">60</a>      }
-<a name="61" href="#61">61</a>  
-<a name="62" href="#62">62</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="63" href="#63">63</a>  <em class="jxr_javadoccomment">     * @see org.apache.jsieve.tests.AbstractTest#validateArguments(Arguments,</em>
-<a name="64" href="#64">64</a>  <em class="jxr_javadoccomment">     *      SieveContext)</em>
-<a name="65" href="#65">65</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="66" href="#66">66</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
-<a name="67" href="#67">67</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../org/apache/jsieve/exception/SieveException.html">SieveException</a> {
-<a name="68" href="#68">68</a>          List argumentsList = arguments.getArgumentList();
-<a name="69" href="#69">69</a>          <strong class="jxr_keyword">if</strong> (1 != argumentsList.size())
-<a name="70" href="#70">70</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
-<a name="71" href="#71">71</a>                      <span class="jxr_string">"Expecting exactly one argument"</span>);
-<a name="72" href="#72">72</a>  
-<a name="73" href="#73">73</a>          <strong class="jxr_keyword">if</strong> (!(argumentsList.get(0) instanceof StringListArgument))
-<a name="74" href="#74">74</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
-<a name="75" href="#75">75</a>                      <span class="jxr_string">"Expecting a StringList"</span>);
-<a name="76" href="#76">76</a>  
-<a name="77" href="#77">77</a>          <strong class="jxr_keyword">if</strong> (arguments.hasTests())
-<a name="78" href="#78">78</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
-<a name="79" href="#79">79</a>                      <span class="jxr_string">"Found unexpected tests"</span>);
-<a name="80" href="#80">80</a>      }
-<a name="81" href="#81">81</a>  
-<a name="82" href="#82">82</a>  }
+<a name="54" href="#54">54</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String arg:argumentList) {
+<a name="55" href="#55">55</a>              List&lt;String&gt; headers = mail.getMatchingHeader(arg);
+<a name="56" href="#56">56</a>              found = found &amp;&amp; !headers.isEmpty();
+<a name="57" href="#57">57</a>              <strong class="jxr_keyword">if</strong> (!found) {
+<a name="58" href="#58">58</a>                  <strong class="jxr_keyword">break</strong>;
+<a name="59" href="#59">59</a>              }
+<a name="60" href="#60">60</a>          }
+<a name="61" href="#61">61</a>          <strong class="jxr_keyword">return</strong> found;
+<a name="62" href="#62">62</a>      }
+<a name="63" href="#63">63</a>  
+<a name="64" href="#64">64</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="65" href="#65">65</a>  <em class="jxr_javadoccomment">     * @see org.apache.jsieve.tests.AbstractTest#validateArguments(Arguments,</em>
+<a name="66" href="#66">66</a>  <em class="jxr_javadoccomment">     *      SieveContext)</em>
+<a name="67" href="#67">67</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="68" href="#68">68</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> validateArguments(<a href="../../../../org/apache/jsieve/Arguments.html">Arguments</a> arguments, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context)
+<a name="69" href="#69">69</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../org/apache/jsieve/exception/SieveException.html">SieveException</a> {
+<a name="70" href="#70">70</a>          List&lt;Argument&gt; argumentsList = arguments.getArgumentList();
+<a name="71" href="#71">71</a>          <strong class="jxr_keyword">if</strong> (1 != argumentsList.size())
+<a name="72" href="#72">72</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
+<a name="73" href="#73">73</a>                      <span class="jxr_string">"Expecting exactly one argument"</span>);
+<a name="74" href="#74">74</a>  
+<a name="75" href="#75">75</a>          <strong class="jxr_keyword">if</strong> (!(argumentsList.get(0) instanceof StringListArgument))
+<a name="76" href="#76">76</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
+<a name="77" href="#77">77</a>                      <span class="jxr_string">"Expecting a StringList"</span>);
+<a name="78" href="#78">78</a>  
+<a name="79" href="#79">79</a>          <strong class="jxr_keyword">if</strong> (arguments.hasTests())
+<a name="80" href="#80">80</a>              <strong class="jxr_keyword">throw</strong> context.getCoordinate().syntaxException(
+<a name="81" href="#81">81</a>                      <span class="jxr_string">"Found unexpected tests"</span>);
+<a name="82" href="#82">82</a>      }
+<a name="83" href="#83">83</a>  
+<a name="84" href="#84">84</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

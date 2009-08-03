@@ -82,7 +82,7 @@
 <a name="72" href="#72">72</a>      }
 <a name="73" href="#73">73</a>  
 <a name="74" href="#74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetHeader() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="75" href="#75">75</a>          List headers = adapter.getHeader(FROM);
+<a name="75" href="#75">75</a>          List&lt;String&gt; headers = adapter.getHeader(FROM);
 <a name="76" href="#76">76</a>          assertNotNull(headers);
 <a name="77" href="#77">77</a>          assertEquals(<span class="jxr_string">"From header"</span>, 1, headers.size());
 <a name="78" href="#78">78</a>          assertEquals(<span class="jxr_string">"From header"</span>, FROM_ADDRESS, headers.get(0));
@@ -119,7 +119,7 @@
 <a name="109" href="#109">109</a>     }
 <a name="110" href="#110">110</a> 
 <a name="111" href="#111">111</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetMatchingHeader() <strong class="jxr_keyword">throws</strong> Exception {
-<a name="112" href="#112">112</a>         List headers = adapter.getMatchingHeader(FROM);
+<a name="112" href="#112">112</a>         List&lt;String&gt; headers = adapter.getMatchingHeader(FROM);
 <a name="113" href="#113">113</a>         assertNotNull(headers);
 <a name="114" href="#114">114</a>         assertEquals(<span class="jxr_string">"From headers set returned"</span>, 1, headers.size());
 <a name="115" href="#115">115</a>         assertTrue(<span class="jxr_string">"From headers set returned"</span>, headers.contains(FROM_ADDRESS));
