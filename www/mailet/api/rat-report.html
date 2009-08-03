@@ -45,7 +45,7 @@
   
   
             <div class="xleft">
-        Last Published: 05/28/2009
+        Last Published: 08/03/2009
                       </div>
             <div class="xright">      <a href="../../index.html">JAMES Project</a>
           |
@@ -236,7 +236,7 @@ Summary
 Notes: 4
 Binaries: 4
 Archives: 5
-Standards: 22
+Standards: 23
 
 Apache Licensed: 20
 Generated Documents: 0
@@ -244,7 +244,7 @@ Generated Documents: 0
 JavaDocs are generated and so license header is optional
 Generated files do not required license headers
 
-2 Unknown Licenses
+3 Unknown Licenses
 
 *******************************
 
@@ -288,6 +288,7 @@ Archives (+ indicates readable, $ unreadable):
   AL    /opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/package.html
   AL    /opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/Mail.java
   AL    /opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/MailAddress.java
+ !????? /opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/Mail.java.rej
   AL    /opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/Mailet.java
   AL    /opt/development/workspace/mailet-site/api/src/test/java/org/apache/mailet/MailAddressTest.java
   AL    /opt/development/workspace/mailet-site/api/build.xml
@@ -301,6 +302,60 @@ Archives (+ indicates readable, $ unreadable):
  Printing headers for files without AL header...
  
  
+ =======================================================================
+ ==/opt/development/workspace/mailet-site/api/src/main/java/org/apache/mailet/Mail.java.rej
+ =======================================================================
+ ***************
+*** 27,206 ****
+  import java.util.Iterator;
+  
+  /**
+-  * Wrap a MimeMessage with routing information (from SMTP) such
+-  * as SMTP specified recipients, sender, and ip address and hostname
+-  * of sending server.  It also contains its state which represents
+-  * which processor in the mailet container it is currently running.
+-  * Special processor names are &quot;root&quot; and &quot;error&quot;.
+   *
+-  * @version CVS $Revision$ $Date$
+   */
+  public interface Mail extends Serializable, Cloneable {
+      String GHOST = &quot;ghost&quot;;
+      String DEFAULT = &quot;root&quot;;
+      String ERROR = &quot;error&quot;;
+      String TRANSPORT = &quot;transport&quot;;
+      /**
+-      * Returns the message name of this message
+       * 
+       * @return the message name
+       * @since Mailet API v2.3
+       */
+      String getName();
+      /**
+-      * Set the message name of this message
+       * 
+-      * @param newName new name
+       * @since Mailet API v2.3
+       */
+-     void setName(String newName);
+      /**
+-      * Returns the MimeMessage stored in this message
+       *
+       * @return the MimeMessage that this Mail object wraps
+-      * @throws MessagingException - an error occured while loading this object
+       */
+      MimeMessage getMessage() throws MessagingException;
+      /**
+-      * Returns a Collection of MailAddress objects that are recipients of this message
+       *
+-      * @return a Collection of MailAddress objects that are recipients of this message
+       */
+      Collection getRecipients();
+      /**
+-      * Method setRecipients.
+-      * @param recipients a Collection of MailAddress Objects representing the recipients of this message
+       * @since Mailet API v3.0-unstable
+       */
+
  =======================================================================
  ==/opt/development/workspace/mailet-site/api/LICENSE.apache
  =======================================================================
