@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Adding Users</title>
+    <title>James Server - 
+  James 2.3 - Adding Users</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,11 +329,16 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Creating_User_Accounts"></a>Creating User Accounts</h2>
+        
+
+ 
+
+
+<a name="Creating User Accounts"></a><div class="section"><h2>Creating User Accounts</h2>
 <p>User accounts are shared across services.  A common user repository is shared across James 
 services.  That is, once you've created a POP3 mail account and set a password, that same 
 account is available for authenticated SMTP and NNTP.</p>
-<div class="section"><h3><a name="Before_You_Add_Accounts"></a>Before You Add Accounts</h3>
+<a name="Before You Add Accounts"></a><div class="section"><h3>Before You Add Accounts</h3>
 <p>In James, user accounts are created throught the RemoteManager.  So, after installation is complete, the first step to adding users 
 is to configure the RemoteManager.  More information on RemoteManager configuration can be found 
 <a href="remotemanager_configuration.html">here</a>.  You will need to have configured at least one administrator account and 
@@ -345,26 +351,20 @@ values with care.</p>
 the running system.  You are now ready to create user accounts.</p>
 </div>
 <p>Once James is up and listening, adding a user is simple:</p>
-
 1.  Telnet to the host and port on which the RemoteManager is listening.  For command-line telnet clients 
 this is generally done by typing &quot;telnet &lt;host&gt; &lt;pass&gt;&quot; where &lt;host&gt; is the James 
-hostname and &lt;port&gt; is the RemoteManager port specified in the James config.xml.<br />
-<br />
-
+hostname and &lt;port&gt; is the RemoteManager port specified in the James config.xml.<br></br><br></br>
 2.  You will be prompted for your administrator userid and password.  Enter the values you specified 
-in the James config.xml.<br />
-<br />
-
+in the James config.xml.<br></br><br></br>
 3.  After logging in, type &quot;adduser &lt;user&gt; &lt;password&gt;&quot; where &lt;user&gt; is the user name 
 and &lt;password&gt; is the password of the account you wish to create.  Please note that the user name 
 should NOT be a complete email address.  Rather, all email addresses of the form &lt;user&gt;@&lt;domain&gt; 
 (where &lt;domain&gt; is any of the values specified in the &lt;servernames&gt; block) will be delivered to 
-this account by default.  Mailet configuration can change this default behavior.<br />
-<br />
-
+this account by default.  Mailet configuration can change this default behavior.<br></br><br></br>
 4.  Repeat step 3 for all user accounts you wish to create.
 <p>That's it.  Your user accounts are now created and can be used by all James services.</p>
 </div>
+
 
       </div>
     </div>

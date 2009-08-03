@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Creating Mailing Lists</title>
+    <title>James Server - 
+  James 2.3 - Creating Mailing Lists</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,31 +329,43 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="How_To_Create_Mailing_Lists"></a>How To Create Mailing Lists</h2>
+        
+ 
+
+
+<a name="How To Create Mailing Lists"></a><div class="section"><h2>How To Create Mailing Lists</h2>
 <p>One of the frequent questions on the James-User Mailing List is how
 to create a mailing list. This document explains one way of using the
 currently supplied Matchers and Mailets in James v2.3.</p>
+
 <p>Basically, the process requires creating two &lt;mailet&gt; entries
 and a repository.  The first mailet handles list commands (currently
 only <i>list-name</i>-on and <i>list-name</i>-off).  The second mailet
 handles list messages.  The repository will hold the e-mail addresses
 of list subscribers.</p>
+
 <p>The mailets go into the processor chain (e.g., at the top of the
 <i>transport</i> processor), the repository goes into the
 &lt;users-store&gt; block.</p>
-<div class="section"><h3><a name="Setting_up_the_Mailets"></a>Setting up the Mailets</h3>
+
+<a name="Setting up the Mailets"></a><div class="section"><h3>Setting up the Mailets</h3>
+
 <p>You need to setup two mailets.</p>
+
 <p>The first mailet that you need to setup is an instance of the <a href="provided_mailets.html#AvalonListservManager">Avalon Listserv
 Manager</a> mailet.  This will handle subscribing and unsubscribing.
 [Note: the current code does not support confirmed opt-in, just basic
 commands.]  The <a href="provided_matchers.html#CommandForListserv">CommandForListserv</a>
 matcher is used to invoke match messages containing commands for the
 mailing list.</p>
+
 <p>The second mailet is an instance of the <a href="provided_mailets.html#AvalonListserv">Avalon Listserv</a>
 mailet.  That mailet actually receives messages for the list and
 causes them to be distributed.  The <a href="provided_matchers.html#RecipientIs">RecipientIs</a> matcher
 is used to match messages intended for the mailing list.</p>
+
 <p>The following illustrates the two &lt;mailet&gt; elements that need to be added:</p>
+
 <div class="source"><pre>
   &lt;mailet match=&quot;CommandForListserv=<i>list-name</i>@<i>domain</i>&quot;
           class=&quot;AvalonListservManager&quot;&gt;
@@ -363,42 +376,48 @@ is used to match messages intended for the mailing list.</p>
     &lt;repositoryName&gt;<i>list-name</i>&lt;/repositoryName&gt;
     ... list options ...
   &lt;/mailet&gt;
-</pre>
+</pre></div>
+
 </div>
-</div>
-<div class="section"><h3><a name="Setting_up_the_Repository"></a>Setting up the Repository</h3>
+
+<a name="Setting up the Repository"></a><div class="section"><h3>Setting up the Repository</h3>
+
 <p>The mailing list mailets need a repository within which to store
 the subscriber list.  There is a separate repository for each mailing
 list, and is completely independent of the user repository used by
 James to manage e-mail accounts.  This is configured in the
 &lt;users-store&gt; block of config.xml.</p>
+
 <p>The following illustrates a database-backed repository using JDBC
 with the ListUsersJdbcRepository class.  Notice that there will be a
 single table, <i>lists</i>, created in the db://maildb resource
 defined elsewhere.  There are currently two columns: the list name and
 the list subscriber.</p>
+
 <div class="source"><pre>
   &lt;repository name=&quot;<i>list-name</i>&quot;
                  class=&quot;org.apache.james.userrepository.ListUsersJdbcRepository&quot;
                  destinationURL=&quot;db://maildb/lists/<i>list-name</i>&quot;&gt;
     &lt;sqlFile&gt;file://conf/sqlResources.xml&lt;/sqlFile&gt;
   &lt;/repository&gt;
-</pre>
-</div>
+</pre></div>
+
 <p>The following illustrates a file-system repository using the
 UsersFileRepository class. [Note: the destination URL is a child
 element when configuring a file-system repository, and an attribute
 when configuring a database-backed repository.  This inconsistency
 will be addressed in a future version of James.]</p>
+
 <div class="source"><pre>
   &lt;repository name=&quot;<i>list-name</i>&quot;
                  class=&quot;org.apache.james.userrepository.UsersFileRepository&quot;&gt;
     &lt;destination URL=&quot;file://var/lists/<i>list-name</i>/&quot; /&gt; 
   &lt;/repository&gt;
-</pre>
+</pre></div>
+
 </div>
 </div>
-</div>
+
 
       </div>
     </div>

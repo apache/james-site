@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Provided Mailets</title>
+    <title>James Server - 
+  James 2.3 - Provided Mailets</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,31 +329,47 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Mailets"></a>Mailets</h2>
+        
+
+ 
+
+
+
+<a name="Mailets"></a><div class="section"><h2>Mailets</h2>
+
 <p>James provides a number of implemented Mailets for use by James administrators in their 
 configurations.  These are primarily mailets that members of the James developer or user 
 communities have found useful in their own configurations.  A description of how to configure 
 Mailets and use them in the James SpoolManager can be found <a href="spoolmanager_configuration.html">here</a>.</p>
-<div class="section"><h3><a name="AddFooter"></a>AddFooter</h3>
+
+<a name="AddFooter"></a><div class="section"><h3>AddFooter</h3>
 <p>Description: This mailet adds a text footer to the message.</p>
+
 <p>Parameters:
-<ul><li><strong>text</strong> (required) - the text that will be added as a footer to the message.</li>
+<ul>
+<li><strong>text</strong> (required) - the text that will be added as a footer to the message.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="AddHabeasWarrantMark"></a>AddHabeasWarrantMark</h3>
-<p>Description: This mailet adds a Habeas warrant mark (see <a href="http://habeas.com" class="externalLink">http://habeas.com</a> for details) to the message.</p>
+
+<a name="AddHabeasWarrantMark"></a><div class="section"><h3>AddHabeasWarrantMark</h3>
+<p>Description: This mailet adds a Habeas warrant mark (see <a href="http://habeas.com">http://habeas.com</a> for details) to the message.</p>
+
 <p>Parameters: None.</p>
 </div>
-<div class="section"><h3><a name="AddHeader"></a>AddHeader</h3>
+
+<a name="AddHeader"></a><div class="section"><h3>AddHeader</h3>
 <p>Description: This mailet is <strong>deprecated</strong> .Please use SetMimeHeader .</p>
 </div>
-<div class="section"><h3><a name="AvalonListserv"></a>AvalonListserv</h3>
+
+<a name="AvalonListserv"></a><div class="section"><h3>AvalonListserv</h3>
 <p>Provides basic list server functionality.  Implements basic filters for emails sent to the list, 
 including restriction of senders to members, diallowing attachments in list messages, and subject line 
 processing</p>
+
 <p>Parameters:
-<ul><li><strong>repositoryName</strong> (required) - the name of the user repository that contains the users 
+<ul>
+<li><strong>repositoryName</strong> (required) - the name of the user repository that contains the users 
 for this list.</li>
 <li><strong>membersonly</strong> (optional) - whether only members of the list can send messages to this 
 list.  Defaults to false.</li>
@@ -365,43 +382,55 @@ line of all messages sent to the list.</li>
 <li><strong>autobracket</strong> (optional) - a boolean value.  If a subjectprefix is set, this value determines 
 whether the prefix is bracketed before being prepended to the subject line.  Defaults to true.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="AvalonListservManager"></a>AvalonListservManager</h3>
-<p>Processes list management commands of the form &lt;list-name&gt;-on@&lt;host&gt; and 
+
+<a name="AvalonListservManager"></a><div class="section"><h3>AvalonListservManager</h3>
+Processes list management commands of the form &lt;list-name&gt;-on@&lt;host&gt; and 
 &lt;list-name&gt;-off@&lt;host&gt; where &lt;list-name&gt; and lt;host&gt; are arbitrary.  Note 
 that this should be used in tandem with a CommandForListserv matcher to ensure that only commands 
-intended for a specific list are processed.</p>
-<p>Parameters:
-<ul><li><strong>repositoryName</strong> (required) - the name of the user repository that contains the users 
+intended for a specific list are processed.
+
+Parameters:
+<ul>
+<li><strong>repositoryName</strong> (required) - the name of the user repository that contains the users 
 for this list.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="BayesianAnalysis"></a>BayesianAnalysis</h3>
-<p>Description: Spam detection mailet using bayesian analysis techniques.</p>
-<p>Parameters:
-<ul><li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
+
+<a name="BayesianAnalysis"></a><div class="section"><h3>BayesianAnalysis</h3>
+Description: Spam detection mailet using bayesian analysis techniques.
+
+Parameters:
+<ul>
+<li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
 <li><strong>headerName</strong> - The HeaderName which get adds to holds the Probalitity. Default is <i>X-MessageIsSpamProbability</i>.</li>
 <li><strong>ignoreLocalSender</strong> - Set to true if you want to ignore messages from local senders. By local sender we mean a return-path 
 with a local server part (server listed in &lt;servernames&gt; in config.xml). Default is <i>false</i>.</li>
 <li><strong>maxSize</strong> - Set this to the maximum message size (in bytes) after analysis will be skipped. Default is <i>100000</i>.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="BayesianAnalysisFeeder"></a>BayesianAnalysisFeeder</h3>
-<p>Description: Feeds ham OR spam messages to train the BayesianAnalysis mailet.</p>
-<p>Parameters:
-<ul><li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
+
+<a name="BayesianAnalysisFeeder"></a><div class="section"><h3>BayesianAnalysisFeeder</h3>
+Description: Feeds ham OR spam messages to train the BayesianAnalysis mailet.
+
+Parameters:
+<ul>
+<li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
 <li><strong>feedType</strong> (required) - The type of the message which is used to feed the mailet. Allowed values are <i>spam</i> and <i>ham</i>.</li>
 <li><strong>maxSize</strong> - Set this to the maximum message size (in bytes) after analysis will be skipped. Default is <i>100000</i>.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="Bounce"></a>Bounce</h3>
-<p>Description: Generates a response to the reverse-path address.</p>
-<p>Parameters:
-<ul><li><strong>sender</strong> - The senderAddress which will be used for sending the bounce. Possible values: <i>address</i>, <i>postmaster</i> , <i>sender</i>,
+
+<a name="Bounce"></a><div class="section"><h3>Bounce</h3>
+Description: Generates a response to the reverse-path address.
+
+Parameters:
+<ul>
+<li><strong>sender</strong> - The senderAddress which will be used for sending the bounce. Possible values: <i>address</i>, <i>postmaster</i> , <i>sender</i>,
 <i>unaltered</i>. Default <i>postmaster</i>.</li>
 <li><strong>attachError</strong> - Attach error. Default is false.</li>
 <li><strong>message</strong> - Set the message which get included in the bounce.</li>
@@ -417,12 +446,15 @@ Default <i>true</i>.</li>
 <li><strong>debug</strong> - If set true you can enable debugging. Possible values: <i>true</i>, <i>false</i>. 
 Default <i>false</i>.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="ClamAVScan"></a>ClamAVScan</h3>
-<p>Description: Does an antivirus scan check using a ClamAV daemon (CLAMD).</p>
-<p>Parameters:
-<ul><li><strong>host</strong> - The host name of the server where CLAMD runs. The default is <i>localhost</i></li>
+
+<a name="ClamAVScan"></a><div class="section"><h3>ClamAVScan</h3>
+Description: Does an antivirus scan check using a ClamAV daemon (CLAMD).
+
+Parameters:
+<ul>
+<li><strong>host</strong> - The host name of the server where CLAMD runs. The default is <i>localhost</i></li>
 <li><strong>port</strong>  - The port on which CLAMD listens. The default is <i>3310</i>.</li>
 <li><strong>maxPings</strong> - The maximum number of connection retries during startup. If the value is <i>0</i> no startup 
 test will be done.</li>
@@ -433,41 +465,43 @@ default is <i>8192</i>.</li>
 <li><strong>debug</strong> - If set true you can enable debugging. Possible values: <i>true</i>, <i>false</i>. 
 Default <i>false</i>.</li>
 </ul>
-</p>
-</div>
-<div class="section"><h3><a name="CommandListservFooter"></a>CommandListservFooter</h3>
-<p>Description: CommandListservFooter is based on the AddFooter mailet. It is used by the CommandListservProcessor to inject a footer into mailing list.</p>
-<p>Parameters: None.</p>
-</div>
-<div class="section"><h3><a name="CommandListservManager"></a>CommandListservManager</h3>
-<p> Description: CommandListservManager is the default implementation of ICommandListservManager.
-It loads all the configured IListServCommands and delegates to them at runtime.
-<br />
 
+</div>
+
+<a name="CommandListservFooter"></a><div class="section"><h3>CommandListservFooter</h3>
+Description: CommandListservFooter is based on the AddFooter mailet. It is used by the CommandListservProcessor to inject a footer into mailing list.
+
+Parameters: None.
+</div>
+
+<a name="CommandListservManager"></a><div class="section"><h3>CommandListservManager</h3>
+ Description: CommandListservManager is the default implementation of ICommandListservManager.
+It loads all the configured IListServCommands and delegates to them at runtime.
+<br></br>
 It isn't responsible for procesing messages sent to the main mailing list, but is responsible for
 individual commands sent by users, such as: info, subscribe, etc...
-<br />
-
+<br></br>
 Requests sent to the CommandListservManager take the form of:
 <pre>
 &lt;listName&gt;-&lt;commandName&gt;@domain
 </pre>
  
 If the command isn't recognized an error will be sent.
-<br />
-<br />
+<br></br>
+<br></br>
+The configuration for this mailet sould be in the 'root' processor block.
 
-The configuration for this mailet sould be in the 'root' processor block.</p>
-<p>Parameters:
-<ul><li><strong>listName</strong> - The listname </li>
+Parameters:
+<ul>
+<li><strong>listName</strong> - The listname </li>
 <li><strong>displayName</strong>  - The full listname</li>
 <li><strong>listOwner</strong> - An emailaddress which will be used as owneraddress.</li>
-<li><strong>repositoryName</strong> - the repository name </li>
+<li><strong>repositoryName</strong> - the repository name </li> 
 <li><strong>listDomain</strong> - The domain</li>
 </ul>
-</p>
-<br />
-<p> Example configuration:
+
+<br></br> 
+ Example configuration:
 <div class="source"><pre>
 &lt;mailet match=&quot;CommandListservMatcher=announce@localhost&quot; class=&quot;CommandListservManager&quot;&gt;
   &lt;listName&gt;announce&lt;/listName&gt;
@@ -490,143 +524,177 @@ The configuration for this mailet sould be in the 'root' processor block.</p>
      &lt;command name=&quot;info&quot; class=&quot;Info&quot;/&gt;
   &lt;/commands&gt;
  &lt;/mailet&gt;
-</pre>
+</pre></div> 
+
 </div>
-</p>
-</div>
-<div class="section"><h3><a name="DSNBounce"></a>DSNBounce</h3>
-<p>Description: Generates a Delivery Status Notification (DSN). Note that this is different than a mail-client's
+
+
+<a name="DSNBounce"></a><div class="section"><h3>DSNBounce</h3>
+Description: Generates a Delivery Status Notification (DSN). Note that this is different than a mail-client's
 reply, which would use the Reply-To or From header.Bounced messages are attached in their entirety (headers and
 content) and the resulting MIME part type is &quot;message/rfc822&quot;.
 The reverse-path and the Return-Path header of the response is set to <i>null</i> (<i>&lt;&gt;</i>),
 meaning that no reply should be sent.
 A sender of the notification message can optionally be specified.
-If one is not specified, the postmaster's address will be used.</p>
-<p>Parameters:
-<ul><li><strong>sender</strong> - An address, postmaster,sender or unaltered. Default is <i>postmaster</i></li>
+If one is not specified, the postmaster's address will be used.
+
+Parameters:
+<ul>
+<li><strong>sender</strong> - An address, postmaster,sender or unaltered. Default is <i>postmaster</i></li>
 <li><strong>prefix</strong>  - Optional subject prefix prepended to the original message.</li>
 <li><strong>attachment</strong> - Values are message, heads or none. Default is <i>message</i>. 
 test will be done.</li>
-<li><strong>messageString</strong> - the message sent in the bounce, the first occurrence of the pattern [machine] is replaced with the name of the executing machine, default=Hi. This is the James mail server at [machine] .... </li>
+<li><strong>messageString</strong> - the message sent in the bounce, the first occurrence of the pattern [machine] is replaced with the name of the executing machine, default=Hi. This is the James mail server at [machine] .... </li> 
 <li><strong>passThrough</strong> (optional) - a boolean value (true/false) indicating whether
 processing should continue on the message is on.  If false, the original message is GHOSTed.  Defaults to false.</li>
 <li><strong>debug</strong> - If set true you can enable debugging. Possible values: <i>true</i>, <i>false</i>. 
-Default <i>false</i>.</li>
+Default <i>false</i>.</li> 
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="Forward"></a>Forward</h3>
-<p>Description: This mailet forwards the message to a set of recipients.</p>
-<p>Parameters:
-<ul><li><strong>forwardto</strong> (required) - a comma delimited list of email addresses.</li>
+
+<a name="Forward"></a><div class="section"><h3>Forward</h3>
+Description: This mailet forwards the message to a set of recipients.
+
+Parameters:
+<ul>
+<li><strong>forwardto</strong> (required) - a comma delimited list of email addresses.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="FromRepository"></a>FromRepository</h3>
-<p>Description: This mailet ee-spools mail found in the specified Repository.</p>
-<p>Parameters:
-<ul><li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
+
+<a name="FromRepository"></a><div class="section"><h3>FromRepository</h3>
+Description: This mailet ee-spools mail found in the specified Repository.
+
+Parameters:
+<ul>
+<li><strong>repositoryPath</strong> (required) - The repositoryPath which is used.</li>
 <li><strong>processor</strong> (required) - The target processor to move the mails to.</li>
 <li><strong>delete</strong> - If set to true the mails get deleted after re-spooling. Default is <i>false</i>.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="ICommandListservManager"></a>ICommandListservManager</h3>
-<p>Description: ICommandListservManager is the interface that describes the functionality of any command based list serv managers.</p>
-<p>Parameters: None.</p>
+
+<a name="ICommandListservManager"></a><div class="section"><h3>ICommandListservManager</h3>
+Description: ICommandListservManager is the interface that describes the functionality of any command based list serv managers.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="JDBCAlias"></a>JDBCAlias</h3>
-<p>Description: This mailet does alias translation for email addresses stored in a database table.</p>
-<p>Parameters:
-<ul><li><strong>mappings</strong> (required) - a URL of the form db://&lt;data-source&gt;/&lt;table&gt;, where 
+
+<a name="JDBCAlias"></a><div class="section"><h3>JDBCAlias</h3>
+Description: This mailet does alias translation for email addresses stored in a database table.
+
+Parameters:
+<ul>
+<li><strong>mappings</strong> (required) - a URL of the form db://&lt;data-source&gt;/&lt;table&gt;, where 
 &lt;table&gt; is the table in the database containing the alias info and &lt;data-source&gt; is the name 
 of the data-source in config.xml that is to be used.</li>
 <li><strong>source_column</strong> (required) - the column containing the aliases.</li>
 <li><strong>target_column</strong> (required) - the column containing the alias targets.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="JDBCVirtualUserTable"></a>JDBCVirtualUserTable</h3>
-<p>Description: This mailet does complex alias translation for email addresses stored in a database table.</p>
-<p>Parameters:
-<ul><li><strong>table</strong> (required) - the URL describing the database table.  This URL has the form 
+
+<a name="JDBCVirtualUserTable"></a><div class="section"><h3>JDBCVirtualUserTable</h3>
+Description: This mailet does complex alias translation for email addresses stored in a database table.
+
+Parameters:
+<ul>
+<li><strong>table</strong> (required) - the URL describing the database table.  This URL has the form 
 db://&lt;data-source&gt;/&lt;table&gt; where &lt;data-source&gt; and &lt;table&gt; are the names of 
 the data-source as defined in config.xml and the table in the database.</li>
 <li><strong>sqlquery</strong> (optional) - the text of the SQL query used by the mailet to do user
 lookup.  The default is &quot;select VirtualUserTable.target_address from VirtualUserTable, VirtualUserTable as VUTDomains where (VirtualUserTable.user like ? or VirtualUserTable.user like '\\%') and (VirtualUserTable.domain like ? or (VirtualUserTable.domain like '\\%' and VUTDomains.domain like ?)) order by concat(VirtualUserTable.user,'@',VirtualUserTable.domain) desc limit 1&quot;</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="LocalDelivery"></a>LocalDelivery</h3>
-<p>Description: This mailet delivers messages to local mailboxes.</p>
-<p>Parameters: None.</p>
+
+<a name="LocalDelivery"></a><div class="section"><h3>LocalDelivery</h3>
+Description: This mailet delivers messages to local mailboxes.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="LogMessage"></a>LogMessage</h3>
-<p>Description: Logs Message Headers and/or Body.</p>
-<p>Parameters:
-<ul><li><strong>passThrough</strong> (optional) - If the &quot;passThrough&quot; in confs is true the mail will be left untouched in
+
+<a name="LogMessage"></a><div class="section"><h3>LogMessage</h3>
+Description: Logs Message Headers and/or Body.
+
+Parameters:
+<ul>
+<li><strong>passThrough</strong> (optional) - If the &quot;passThrough&quot; in confs is true the mail will be left untouched in
 the pipe. If false will be destroyed.  Default is true.</li>
 <li><strong>headers</strong> (optional) - If set to true the headers get logged. Default is true&quot;</li>
 <li><strong>body</strong> (optional) - If set to true the body get logged. Default is true.</li>
 <li><strong>bodyMax</strong> (optional) - The max length wich should be logged. Default is log all.</li>
 <li><strong>comment</strong> (optional) - The comment which should be logged  Default is none.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="NotifyPostmaster"></a>NotifyPostmaster</h3>
-<p>Description: This mailet forwards the message as an attachment to the James postmaster.</p>
-<p>Parameters:
-<ul><li><strong>sendingAddress</strong> (optional) - the address from which the forwarded email will be 
+
+<a name="NotifyPostmaster"></a><div class="section"><h3>NotifyPostmaster</h3>
+Description: This mailet forwards the message as an attachment to the James postmaster.
+
+Parameters:
+<ul>
+<li><strong>sendingAddress</strong> (optional) - the address from which the forwarded email will be 
 sent.  Defaults to the postmaster address.</li>
 <li><strong>notice</strong> (optional) - the text message that will accompany the forwarded message.  Defaults 
 to &quot;We were unable to deliver the attached message because of an error in the mail server.&quot;</li>
 <li><strong>attachStackTrace</strong> (optional) - whether an error stack trace is attached to the forwarded message.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="NotifySender"></a>NotifySender</h3>
-<p>Description: This mailet forwards the message as an attachment to the original sender.</p>
-<p>Parameters:
-<ul><li><strong>sendingAddress</strong> (optional) - the address from which the forwarded email will be 
+
+<a name="NotifySender"></a><div class="section"><h3>NotifySender</h3>
+Description: This mailet forwards the message as an attachment to the original sender.
+
+Parameters:
+<ul>
+<li><strong>sendingAddress</strong> (optional) - the address from which the forwarded email will be 
 sent.  Defaults to the postmaster address.</li>
 <li><strong>notice</strong> (optional) - the text message that will accompany the forwarded message.  Defaults 
 to &quot;We were unable to deliver the attached message because of an error in the mail server.&quot;</li>
 <li><strong>attachStackTrace</strong> (optional) - whether an error stack trace is attached to the forwarded message.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="Null"></a>Null</h3>
-<p>Description: This mailet ends processing for this mail.</p>
-<p>Parameters: None.</p>
+
+<a name="Null"></a><div class="section"><h3>Null</h3>
+Description: This mailet ends processing for this mail.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="PostmasterAlias"></a>PostmasterAlias</h3>
-<p>Description: Intercepts all mails addressed to postmaster@&lt;domain&gt; where &lt;domain&gt; is one
+
+<a name="PostmasterAlias"></a><div class="section"><h3>PostmasterAlias</h3>
+Description: Intercepts all mails addressed to postmaster@&lt;domain&gt; where &lt;domain&gt; is one
 of the domains managed by this James server and substitutes the configured James postmaster address for
 the original recipient address.  This mailet is inserted automatically by James at the head of the root
-processor.</p>
-<p>Parameters: None.</p>
+processor.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="Redirect"></a>Redirect</h3>
-<p>Description: A mailet providing powerful, configurable redirection services.<br />
 
+<a name="Redirect"></a><div class="section"><h3>Redirect</h3>
+Description: A mailet providing powerful, configurable redirection services.<br></br>
       This mailet can produce listserver, forward and notify behaviour, with the
-      original message intact, attached, appended or left out altogether.<br />
-
+      original message intact, attached, appended or left out altogether.<br></br>
       This built in functionality is controlled by the configuration as described
-      <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">here</a>.</p>
-<p>It is also intended to be easily subclassed to make providing bespoke redirection
-    mailets simple. <br />
-
+      <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">here</a>.
+It is also intended to be easily subclassed to make providing bespoke redirection
+    mailets simple. <br></br>
     By extending it and overriding one or more of its methods new behaviour can
     be quickly created without the author having to address any other issue than
     the relevant one. For more information see the javadocs
-    <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">here</a>.</p>
-<p>Parameters: <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">See javadocs.</a></p>
+    <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">here</a>.
+
+Parameters: <a href="apidocs/org/apache/james/transport/mailets/Redirect.html">See javadocs.</a>
 </div>
-<div class="section"><h3><a name="RemoteDelivery"></a>RemoteDelivery</h3>
-<p>Manages delivery of messages to recipients on remote SMTP hosts.</p>
-<p>Parameters:
-<ul><li><strong>outgoing</strong> (required) - The URL for the repository that will hold messages being processed
+
+<a name="RemoteDelivery"></a><div class="section"><h3>RemoteDelivery</h3>
+Manages delivery of messages to recipients on remote SMTP hosts.
+
+Parameters:
+<ul>
+<li><strong>outgoing</strong> (required) - The URL for the repository that will hold messages being processed
 by the RemoteDelivery Mailet.</li>
 <li><strong>delayTime</strong> (optional) - a non-negative Long value that is the time in
 milliseconds between redelivery attempts for a particular mail.  Defaults to six hours.</li>
@@ -651,99 +719,123 @@ a port as described above.</li>
 <li><strong>bind</strong> (optional) - If present, this value is a string 
 describing the local IP address to which the mailet should be bound while 
 delivering emails. If the tag is absent then the service will bind to the 
-default local address of the machine. This tag is useful for multihomed machines.<br />
-
+default local address of the machine. This tag is useful for multihomed machines.<br></br>
 Note: Currently you must use the same IP address for all of those RemoteDelivery 
 instances where you explicitly supply a bind address.</li>
 <li><strong>debug</strong> (optional) - a boolean value (true/false) indicating whether debugging is
 on.  Defaults to false.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="RemoveAllMailAttributes"></a>RemoveAllMailAttributes</h3>
-<p>Description: Removes all attributes on the Mail instance.</p>
-<p>Parameters: None.</p>
+
+<a name="RemoveAllMailAttributes"></a><div class="section"><h3>RemoveAllMailAttributes</h3>
+Description: Removes all attributes on the Mail instance.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="RemoveMailAttributes"></a>RemoveMailAttributes</h3>
-<p>Description: Remove attributes on the Mail instance.</p>
-<p>Parameters:
-<ul><li><strong>name</strong> (required) - The name of the attribute to remove.</li>
+
+<a name="RemoveMailAttributes"></a><div class="section"><h3>RemoveMailAttributes</h3>
+Description: Remove attributes on the Mail instance.
+
+Parameters:
+<ul>
+<li><strong>name</strong> (required) - The name of the attribute to remove.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="Resend"></a>Resend</h3>
-<p>Description:A mailet providing configurable redirection services. For more information see 
-the javadocs <a href="apidocs/org/apache/james/transport/mailets/Resend.html">here</a>.</p>
-<p>Parameters: <a href="apidocs/org/apache/james/transport/mailets/Resend.html">See javadocs.</a></p>
+
+<a name="Resend"></a><div class="section"><h3>Resend</h3>
+Description:A mailet providing configurable redirection services. For more information see 
+the javadocs <a href="apidocs/org/apache/james/transport/mailets/Resend.html">here</a>.
+
+Parameters: <a href="apidocs/org/apache/james/transport/mailets/Resend.html">See javadocs.</a>
 </div>
-<div class="section"><h3><a name="ServerTime"></a>ServerTime</h3>
-<p>Description: This mailet sends a message to the sender of the original mail message with a server timestamp.</p>
-<p>Parameters: None.</p>
+
+<a name="ServerTime"></a><div class="section"><h3>ServerTime</h3>
+Description: This mailet sends a message to the sender of the original mail message with a server timestamp.
+
+Parameters: None.
 </div>
-<div class="section"><h3><a name="SetMailAttributes"></a>SetMailAttributes</h3>
-<p>Description: Set attributes on the Mail instance.</p>
-<p>Parameters:
-<ul><li><strong>name</strong> (required) - The name of the attribute to set.</li>
+
+<a name="SetMailAttributes"></a><div class="section"><h3>SetMailAttributes</h3>
+Description: Set attributes on the Mail instance.
+
+Parameters:
+<ul>
+<li><strong>name</strong> (required) - The name of the attribute to set.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="SetMimeHeader"></a>SetMimeHeader</h3>
-<p>Description: Set an MimeHeader on a MimeMessage.</p>
-<p>Parameters:
-<ul><li><strong>name</strong> (required) - the name of the header to be added to the message.</li>
+
+<a name="SetMimeHeader"></a><div class="section"><h3>SetMimeHeader</h3>
+Description: Set an MimeHeader on a MimeMessage.
+
+Parameters:
+<ul>
+<li><strong>name</strong> (required) - the name of the header to be added to the message.</li>
 <li><strong>value</strong> (required) - the text that will be added as a header to the message.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="SMIMECheckSignature"></a>SMIMECheckSignature</h3>
-<p>Description: Verifies the s/mime signature of a message. The s/mime signing ensure that
+
+<a name="SMIMECheckSignature"></a><div class="section"><h3>SMIMECheckSignature</h3>
+Description: Verifies the s/mime signature of a message. The s/mime signing ensure that
 the private key owner is the real sender of the message. To be checked by
 this mailet the s/mime signature must contain the actual signature, the
 signer's certificate and optionally a set of certificate that can be used to
 create a chain of trust that starts from the signer's certificate and leads
 to a known trusted certificate.
-</p>
-<p>
+
+
 This check is composed by two steps: firstly it's ensured that the signature
 is valid, then it's checked if a chain of trust starting from the signer
 certificate and that leads to a trusted certificate can be created. The first
 check verifies that the the message has not been modified after the signature
 was put and that the signer's certificate was valid at the time of the
 signing. The latter should ensure that the signer is who he declare to be.
-</p>
-<p>Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMECheckSignature.html">See javadocs.</a></p>
+
+
+Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMECheckSignature.html">See javadocs.</a>
 </div>
-<div class="section"><h3><a name="SMIMEDecrypt"></a>SMIMEDecrypt</h3>
-<p>Description: This mailet decrypts a s/mime encrypted message. It takes as input an
+
+<a name="SMIMEDecrypt"></a><div class="section"><h3>SMIMEDecrypt</h3>
+Description: This mailet decrypts a s/mime encrypted message. It takes as input an
 encrypted message and it tries to dechiper it using the key specified in its
 configuration. If the decryption is successful the mail will be changed and
 it will contain the decrypted message. The mail attribute
 <code>org.apache.james.SMIMEDecrypt</code> will contain the public
-certificate of the key used in the process. </p>
-<p>Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMEDecrypt.html">See javadocs.</a></p>
+certificate of the key used in the process. 
+
+Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMEDecrypt.html">See javadocs.</a>
 </div>
-<div class="section"><h3><a name="SMIMESign"></a>SMIMESign</h3>
-<p>Description: Puts a <i>server-side</i> SMIME signature on a message.
-It is a concrete subclass of SMIMEAbstractSign, with very few modifications to it.</p>
-<p>A text file with an explanation text is attached to the original message,
+
+<a name="SMIMESign"></a><div class="section"><h3>SMIMESign</h3>
+Description: Puts a <i>server-side</i> SMIME signature on a message.
+It is a concrete subclass of SMIMEAbstractSign, with very few modifications to it.
+A text file with an explanation text is attached to the original message,
 and the resulting message with all its attachments is signed.
 The resulting appearence of the message is almost unchanged: only an extra attachment
-and the signature are added.</p>
-<p>Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMESign.html">See javadocs.</a></p>
+and the signature are added.
+
+Parameters: <a href="apidocs/org/apache/james/transport/mailets/smime/SMIMESign.html">See javadocs.</a>
 </div>
-<div class="section"><h3><a name="ToProcessor"></a>ToProcessor</h3>
-<p>Description: Redirects processing of the mail message to the specified processor.</p>
-<p>Parameters:
-<ul><li><strong>processor</strong> (required) - the name of the processor to which the message
+
+<a name="ToProcessor"></a><div class="section"><h3>ToProcessor</h3>
+Description: Redirects processing of the mail message to the specified processor.
+
+Parameters:
+<ul>
+<li><strong>processor</strong> (required) - the name of the processor to which the message
 is to be redirected.</li>
 <li><strong>noticeText</strong> (optional) - a String value that, if present,
 is set as the error message of the redirected message.  If this value is not
 present, no error message is set.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="ToMultiRepository"></a>ToMultiRepository</h3>
-<p>Description: Receives a Mail from JamesSpoolManager and takes care of delivery of the
+
+<a name="ToMultiRepository"></a><div class="section"><h3>ToMultiRepository</h3>
+Description: Receives a Mail from JamesSpoolManager and takes care of delivery of the
 message to local inboxes or a specific repository.
  
 Differently from LocalDelivery this does not lookup the UserRepository This
@@ -751,40 +843,50 @@ simply store the message in a repository named like the local part of the
 recipient address.
  
 If no repository is specified then this fallback to MailServer.getUserInbox.
-Otherwise you can add your own configuration for the repository.</p>
-<p>Parameters:
-<ul><li><strong>repositoryUrl</strong> (required) - the URL of the repository to which the message
+Otherwise you can add your own configuration for the repository.
+Parameters:
+<ul>
+<li><strong>repositoryUrl</strong> (required) - the URL of the repository to which the message
 is to be added.</li>
 <li><strong>addDeliveryHeader</strong> (optional) - a String value which can be used specify a header which will add to the message. 
 Default is to not add a header.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="ToRepository"></a>ToRepository</h3>
-<p>Places a copy of the message in the specified repository.</p>
-<p>Parameters:
-<ul><li><strong>repositoryPath</strong> (required) - the URL of the repository to which the message
+
+<a name="ToRepository"></a><div class="section"><h3>ToRepository</h3>
+Places a copy of the message in the specified repository.
+
+Parameters:
+<ul>
+<li><strong>repositoryPath</strong> (required) - the URL of the repository to which the message
 is to be added.</li>
 <li><strong>passThrough</strong> (optional) - a boolean value (true/false) indicating whether
 processing should continue on the message is on.  If false, the original message is GHOSTed.  Defaults to false.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="UseHeaderRecipients"></a>UseHeaderRecipients</h3>
-<p>Description: Ignores the recipients associated with the Mail interface.  Instead, it regenerates the
+
+<a name="UseHeaderRecipients"></a><div class="section"><h3>UseHeaderRecipients</h3>
+Description: Ignores the recipients associated with the Mail interface.  Instead, it regenerates the
 mail recipients from the MimeMessage headers (To, Cc, Bcc) and inserts a new message at the queue root
-these new recipients.  The original message is GHOSTed.</p>
-<p>Parameters:
-<ul><li><strong>debug</strong> (optional) - a boolean value (true/false) indicating whether debugging is
+these new recipients.  The original message is GHOSTed.
+
+Parameters:
+<ul>
+<li><strong>debug</strong> (optional) - a boolean value (true/false) indicating whether debugging is
 on.  Defaults to false.</li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="UsersRepositoryAliasingForwarding"></a>UsersRepositoryAliasingForwarding</h3>
-<p>Receives a Mail from JamesSpoolManager and takes care of delivery of the
-message to local inboxes.</p>
-<p>Parameters:
-<ul><li><strong>enableAliases</strong> (optional) - Specify wether the user aliases should 
+
+<a name="UsersRepositoryAliasingForwarding"></a><div class="section"><h3>UsersRepositoryAliasingForwarding</h3>
+Receives a Mail from JamesSpoolManager and takes care of delivery of the
+message to local inboxes.
+
+Parameters:
+<ul>
+<li><strong>enableAliases</strong> (optional) - Specify wether the user aliases should 
 be looked up or not. Default is false.</li>
 <li><strong>enableForwarding</strong> (optional) -Enable the forwarding. Default to 
 false.</li>
@@ -792,27 +894,30 @@ false.</li>
 name. Default to empty. If empty does lookup the default userRepository.
 </li>
 </ul>
-</p>
+
 </div>
-<div class="section"><h3><a name="WhiteListManager"></a>WhiteListManager</h3>
-<p>Manages for each local user a &quot;white list&quot; of remote addresses whose messages
-should never be blocked as spam.</p>
-<p>The normal behaviour is to check, for a local sender, if a remote recipient
+
+<a name="WhiteListManager"></a><div class="section"><h3>WhiteListManager</h3>
+Manages for each local user a &quot;white list&quot; of remote addresses whose messages
+should never be blocked as spam.
+The normal behaviour is to check, for a local sender, if a remote recipient
 is already in the list: if not, it will be automatically inserted.
 This is under the interpretation that if a local sender <i>X</i> sends a message to a
 remote recipient <i>Y</i>, then later on if a message is sent by <i>Y</i> to <i>X</i> it should be
 considered always valid and never blocked; hence <i>Y</i> should be in the white list
-of <i>X</i>.</p>
-<p>Another mode of operations is when a local sender sends a message to <i>whitelistManagerAddress</i>
+of <i>X</i>.
+Another mode of operations is when a local sender sends a message to <i>whitelistManagerAddress</i>
 with one of three specific values in the subject, to
 (i) send back a message displaying a list of the addresses in his own list;
 (ii) insert some new addresses in his own list;
 (iii) remove some addresses from his own list.
 In all this cases the message will be ghosted and the postmaster will reply
-to the sender.</p>
-<p> The sender name is always converted to its primary name (handling aliases).</p>
-<p>Parameters:
-<ul><li><strong>repositoryPath</strong>  - The repository path.</li>
+to the sender.
+ The sender name is always converted to its primary name (handling aliases).
+
+Parameters:
+<ul>
+<li><strong>repositoryPath</strong>  - The repository path.</li>
 <li><strong>automaticInsert</strong> (optional) - If true automatically inserts the local sender to remote 
 recipients entries in the whitelist. Default is false.</li>
 <li><strong>whitelistManagerAddress</strong> (optional) -  Set this to an email address of the &quot;whitelist manager&quot; to send 
@@ -824,9 +929,10 @@ to tell the mailet to insert some new remote recipients to the white list. Defau
 <li><strong>removeFlag</strong> (optional) - Set this to a unique text that you can use (by sending a message to the &quot;whitelist manager&quot; above)
 to tell the mailet to remove some remote recipients from the white list. Default is null.</li>
 </ul>
-</p>
+
 </div>
 </div>
+
 
       </div>
     </div>

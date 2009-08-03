@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Configuring the SpoolManager</title>
+    <title>James Server - 
+  James 2.3 - Configuring the SpoolManager</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,19 +329,28 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="SpoolManager_Configuration"></a>SpoolManager Configuration</h2>
+        
+
+ 
+
+
+<a name="SpoolManager Configuration"></a><div class="section"><h2>SpoolManager Configuration</h2>
 <p>The SpoolManager is controlled by a single configuration block in the config.xml.
 The spoolmanager tag defines the boundaries of the configuration block.  The behavior of 
 the SpoolManager, most importantly the routing of mail messages through the processor tree,
 is controlled by this block.</p>
+
 <p>The spoolmanager tag has only one children.  It is:</p>
-<ul><li><strong>threads</strong> - This is a required positive integer element.  It specifies 
+<ul>
+<li><strong>threads</strong> - This is a required positive integer element.  It specifies 
 the number of threads the SpoolManager will use to process messages in the spool.  This 
 parameter tends to substantially impact performance, so it is advisable to tune it in production 
 configurations.</li>
 </ul>
-<p>Spoolmanager depends on mailet and matcher packages, configured by these tags:</p>
-<ul><li><strong>mailetpackages</strong> - This is a required container tag.  It contains some number 
+
+Spoolmanager depends on mailet and matcher packages, configured by these tags:
+<ul>
+<li><strong>mailetpackages</strong> - This is a required container tag.  It contains some number 
 of <strong>mailetpackage</strong> children.  The body of each of these <strong>mailetpackage</strong> 
 elements is a Java package name.  It is these packages that contain the classes to be instantiated
 as mailets.</li>
@@ -349,12 +359,14 @@ of <strong>matcherpackage</strong> children.  The body of each of these <strong>
 elements is a Java package name.  It is these packages that contain the classes to be instantiated
 as matchers.</li>
 </ul>
-<p>The remaining SpoolManager configuration elements are complex enough to require a more in-depth
-discussion.</p>
-<div class="section"><h3><a name="Processor_Configuration"></a>Processor Configuration</h3>
-<p>In addition to the child elements discussed above, the SpoolManager tag can have several 
+
+The remaining SpoolManager configuration elements are complex enough to require a more in-depth
+discussion.
+
+<a name="Processor Configuration"></a><div class="section"><h3>Processor Configuration</h3>
+In addition to the child elements discussed above, the SpoolManager tag can have several 
 <strong>processor</strong> children.  It is these tags and their children that define the processor tree 
-for the SpoolManager.</p>
+for the SpoolManager.
 <p>Each processor has a required attribute, <strong>name</strong>.  The value of this attribute must be 
 unique for each processor tag.  The name of a processor is significant.  Certain processors are required 
 (specifically root and error).  The name &quot;ghost&quot; is forbidden as a processor name, as it is used to denote 
@@ -377,14 +389,11 @@ matcher/mailet pair.  The ordering of the <strong>mailet</strong> children is cr
 it is the order in which pairs will be traversed in the processor.</p>
 <p>It is this <strong>mailet</strong> element that is at the core of the SpoolManager configuration.</p>
 </div>
-<div class="section"><h3><a name="The_Mailet_Tag"></a>The Mailet Tag</h3>
+<a name="The Mailet Tag"></a><div class="section"><h3>The Mailet Tag</h3>
 <p>Consider the following simple <strong>mailet</strong> tag:</p>
-
-&lt;mailet match=&quot;RemoteAddrNotInNetwork=127.0.0.1&quot; class=&quot;ToProcessor&quot;&gt;<br />
-
-&lt;processor&gt;spam&lt;/processor&gt;<br />
-
-&lt;/mailet&gt;<br />
+&lt;mailet match=&quot;RemoteAddrNotInNetwork=127.0.0.1&quot; class=&quot;ToProcessor&quot;&gt;<br></br>
+&lt;processor&gt;spam&lt;/processor&gt;<br></br>
+&lt;/mailet&gt;<br></br>
 <p>The mailet tag has two required attributes, <strong>match</strong> and <strong>class</strong>.</p>
 <p>The <strong>match</strong> attribute is set to the value of the specific Matcher class to be instantiated with a an 
 optional argument.  If present, the argument is separated from the Matcher class name by an '='.  Semantic 
@@ -400,6 +409,7 @@ pair of (&quot;processor&quot;, &quot;spam&quot;).</p>
 <a href="provided_mailets.html">here</a>.  A list of provided Matchers may be found <a href="provided_matchers.html">here</a>.</p>
 </div>
 </div>
+
 
       </div>
     </div>

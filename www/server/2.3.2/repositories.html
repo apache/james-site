@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - Repositories</title>
+    <title>James Server - 
+  Repositories</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,49 +329,70 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Repositories"></a>Repositories</h2>
+        
+
+ 
+
+
+<a name="Repositories"></a><div class="section"><h2>Repositories</h2>
+
 <p>James uses a number of different repositories to both store message data (email, news messages) and 
 user information.  User repositories store user information, including user names, authentication 
 information, and aliases.  Mail repositories store messages that have been delivered locally.  Spool 
 repositories store messages that are still being processed.  Finally, news repositories are used to
 store news messages.</p>
+
 </div>
-<div class="section"><h2><a name="Storage_Types"></a>Storage Types</h2>
+<a name="Storage Types"></a><div class="section"><h2>Storage Types</h2>
+
 <p>Aside from the type of data they store, repositories are distinguished by 
 where they store data.  There are three types of storage - File, Database, and DBFile.</p>
-<div class="section"><h3><a name="File_Repositories"></a>File Repositories</h3>
+<a name="File Repositories"></a><div class="section"><h3>File Repositories</h3>
+
 <p>File-based repositories store all data in the file system.  In general, these repositories are extremely
 simple to configure, but may compare poorly in terms of performance when compared to other repository
 types.  File repositories are not recommended for large or performance-critical configurations.  In the
 default configuration, all repositories are file repositories.</p>
+
 <p>File repository paths typically begin with the prefix &quot;file&quot;.  Paths are relative to the application
 base directory, unless the path begins with a slash.  As an example, assume that James is running in 
 /usr/james/phoenix/apps/james.  Then &quot;file://var/mail/spool/&quot; would refer to the directory /usr/james/phoenix/apps/james/var/mail/spool.  
 And &quot;file:///var/mail/spool/&quot; (note the extra '/') would refer to the directory /var/mail/spool.</p>
+
 <p>All repository types (mail, spool, user, and news) have file-based implementations.  No special configuration is required to enable file-based repositories</p>
+
 </div>
-<div class="section"><h3><a name="Database_JDBC_Repositories"></a>Database (JDBC) Repositories</h3>
+<a name="Database (JDBC) Repositories"></a><div class="section"><h3>Database (JDBC) Repositories</h3>
+
 <p>Database repositories store all data in an administrator-supplied database.  Configuration is somewhat
 more complex, requiring that the administrator adjust the data-connections section.  Detailed directions 
 are included in the sample configuration file.  The administrator will need to know the JDBC driver class,
 the appropriate URL for use with his database, and a valid username/password for the database.</p>
+
 <p>If the administrator wants to configure a database other than MySQL, it will be necessary to add the jar 
 or zip file containing the JDBC driver classes to the lib subdirectory of the installation directory.  This
 will allow Phoenix to properly load the driver when it is initializing the database repository.  The MySQL
 driver is pre-packaged with James.</p>
+
 <p>Database repository paths typically begin with the prefix &quot;db&quot;.  The format is &quot;db://&lt;data-source&gt;/&lt;table&gt;&quot; 
 where &lt;data-source&gt; is the name of the data-source defined in the data-connections section.  And &lt;table&gt; is 
 the particular table associated with the repository.</p>
+
 <p>Mail, spool, and user repositories have JDBC-based implementations.</p>
+
 </div>
-<div class="section"><h3><a name="DBFile_Repositories"></a>DBFile Repositories</h3>
+<a name="DBFile Repositories"></a><div class="section"><h3>DBFile Repositories</h3>
+
 <p>This is a special repository type used only for mail repositories.  DBFile repositories store the body of
 a mail message in the file system, while headers are stored in the database.  This allows the administrator 
 to minimize the size of data stored in the database, while conserving most of the performance of the 
 database repository.</p>
+
 <p>Only mail repositories have dbfile-based implementations.</p>
 </div>
+
 </div>
+
 
       </div>
     </div>

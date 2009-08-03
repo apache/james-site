@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Installation</title>
+    <title>James Server - 
+  James 2.3 - Installation</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,7 +329,11 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Requirements"></a>Requirements</h2>
+        
+
+ 
+
+<a name="Requirements"></a><div class="section"><h2>Requirements</h2>
 <p>James requires a Java Runtime Environment of Java version 1.4 or higher installed to run the 
 James application.  The exact JREs available depend on the platform.  A JRE must be downloaded and
 installed before James can run.  In addition, the environment variable JAVA_HOME must be set to
@@ -342,7 +347,7 @@ server sockets on such ports in standard configurations, James requires root acc
 Obviously James also requires sufficient disk space, processor power, and network bandwidth.  But, 
 other than what's been discussed here, it has no additional special requirements.</p>
 </div>
-<div class="section"><h2><a name="Installation_Comments"></a>Installation Comments</h2>
+<a name="Installation Comments"></a><div class="section"><h2>Installation Comments</h2>
 <p>James installation involves a number of steps, each of which is described in some detail in the 
 following sections.  But as this sequence of steps has confused some users in the past, additional 
 comments seem warranted.</p>
@@ -352,25 +357,26 @@ Avalon Phoenix container used to run James.  Once James has been started, the di
 be unpacked.  The server should be stopped, the configuration files edited, and the server restarted.</p>
 <p>So the installation sequence is: <b>1) Start, 2) Stop, 3) Edit, 4) Restart</b>.</p>
 </div>
-<div class="section"><h2><a name="Installing_the_Binary"></a>Installing the Binary</h2>
-<div class="section"><h3><a name="Installing_a_Stand-alone_James_Server"></a>Installing a Stand-alone James Server</h3>
-<p>Obtain the full James binary distribution from the <a href="http://james.apache.org/download.cgi" class="externalLink">James 
+<a name="Installing the Binary"></a><div class="section"><h2>Installing the Binary</h2>
+<a name="Installing a Stand-alone James Server"></a><div class="section"><h3>Installing a Stand-alone James Server</h3>
+<p>Obtain the full James binary distribution from the <a href="http://james.apache.org/download.cgi">James 
 release mirrors</a>.  Unpack the archive into your James installation directory.  Go to the bin subdirectory of the 
 installation directory and run the &quot;run&quot; script (either run.sh or run.bat, depending on your platform).  The configuration
 file is now unpacked and available for editing.</p>
 </div>
-<div class="section"><h3><a name="Deploying_a_James_Server_in_a_Pre-Existing_Phoenix_Container"></a>Deploying a James Server in a Pre-Existing Phoenix Container</h3>
+<a name="Deploying a James Server in a Pre-Existing Phoenix Container"></a><div class="section"><h3>Deploying a James Server in a Pre-Existing Phoenix Container</h3>
 <p><strong>Warning!</strong> - James requires Phoenix version 4.0.x to run.  There is a known issue with logging in Phoenix 4.0, so version 
 4.0.1 or higher is strongly recommended.  Before attempting to deploy James in a Phoenix container, please make sure
 it meets these version criteria.</p>
-<p>Deploying James in Phoenix is fairly easy.  Obtain the james.sar file from the <a href="http://james.apache.org/download.cgi" class="externalLink">James 
+<p>Deploying James in Phoenix is fairly easy.  Obtain the james.sar file from the <a href="http://james.apache.org/download.cgi">James 
 release mirrors</a>.  It can be found in the &quot;Other Binaries&quot; 
 area of the distribution directory.  After downloading the james.sar,
 simply place it in the apps subdirectory of your Phoenix installation.  Restart Phoenix, and the james.sar should unpack and you
 will be ready to configure your James installation.</p>
 </div>
 </div>
-<div class="section"><h2><a name="Initial_Configuration"></a>Initial Configuration</h2>
+
+<a name="Initial Configuration"></a><div class="section"><h2>Initial Configuration</h2>
 <p>
 After installing the binary, the next step is to adjust the initial configuration.  The server should be stopped, and then 
 configuration can proceed.  The most essential configuration is set in the config.xml file.  This file can be 
@@ -378,7 +384,8 @@ found in the apps/james/SAR-INF subdirectory of the installation directory.</p>
 <p>The out of the box configuration makes certain assumptions and has some default values that are unlikely to 
 be appropriate for real-world servers.  There are a few issues that should be addressed immediately upon installation:
 </p>
-<ul><li>RemoteManager Administrator Account - Before the RemoteManager service can be used to add users to this server 
+<ul>
+<li>RemoteManager Administrator Account - Before the RemoteManager service can be used to add users to this server 
 installation an administrator account must be created.  More information can be found <a href="remotemanager_configuration.html">here</a>.</li>
 <li>DNS Servers - James needs to have access to a DNS server for domain resolution.  The out of the box 
 configuration assumes that there is a DNS server on localhost.  In general administrators will have to change 
@@ -390,19 +397,21 @@ for your domain or IP address, you simply need to add the appropriate domain nam
 section of the config.xml.  More information can be found <a href="serverwide_configuration.html">here</a>.</li>
 <li>Postmaster Address - More information can be found <a href="serverwide_configuration.html">here</a>.</li>
 </ul>
-<p>In addition to adjusting these parameters, you may wish to consult the documentation for a discussion of
+In addition to adjusting these parameters, you may wish to consult the documentation for a discussion of
 common configurations.  A list of such configurations, as well as the steps necessary to configure them, can
-be found <a href="index.html">here</a>.</p>
+be found <a href="index.html">here</a>.
 </div>
-<div class="section"><h2><a name="Starting_James_with_Your_Configuration"></a>Starting James with Your Configuration</h2>
-<p>Once you have edited the configuration file you will need to restart James so that the changes take 
+<a name="Starting James with Your Configuration"></a><div class="section"><h2>Starting James with Your Configuration</h2>
+Once you have edited the configuration file you will need to restart James so that the changes take 
 effect.  When James starts, a list of the James services and the ports on which they are listening should 
 be displayed on the console.  Additional information about the system configuration is printed in the James log files 
-upon startup.</p>
-<p>Finally, after configuration is complete, it will be necessary to create user accounts before the James server 
+upon startup.
+Finally, after configuration is complete, it will be necessary to create user accounts before the James server 
 will be fully operational.  Instructions on creating user accounts can be found 
-<a href="adding_users.html">here</a>.</p>
+<a href="adding_users.html">here</a>.
 </div>
+
+
 
       </div>
     </div>

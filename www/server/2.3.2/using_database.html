@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Using a Database</title>
+    <title>James Server - 
+  James 2.3 - Using a Database</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,10 +329,15 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Database_Configuration"></a>Database Configuration</h2>
+        
+
+ 
+
+
+<a name="Database Configuration"></a><div class="section"><h2>Database Configuration</h2>
 <p>James has the capacity to use a JDBC-compatible database for storage of both message and user 
 data.  This section explains how to configure James to utilize a database for storage.</p>
-<div class="section"><h3><a name="Requirements"></a>Requirements</h3>
+<a name="Requirements"></a><div class="section"><h3>Requirements</h3>
 <p>Using James with a database backend has certain requirements.  Database configuration is 
 extremely vendor-specific, so we can only state the requirements in general terms.</p>
 <p>There must be a database instance accessible from the James server.  An account with appropriate
@@ -343,7 +349,7 @@ available for installation.</p>
 James to use it as a repository.  This will help ensure that configuration issues are properly
 identified.</p>
 </div>
-<div class="section"><h3><a name="Connection_Configuration"></a>Connection Configuration</h3>
+<a name="Connection Configuration"></a><div class="section"><h3>Connection Configuration</h3>
 <p>Configuring the Phoenix container to work with JDBC is the first step in enabling James database support.</p>
 <p>First, Phoenix must be able to load the JDBC classes.  To make these classes available to Phoenix, place the 
 jar/zip files for the JDBC driver in the lib subdirectory of the James installation directory.  Any additional 
@@ -357,45 +363,53 @@ elements, <strong>data-source</strong> elements, that define the database connec
 must be unique to each <strong>data-source</strong> element.  It is this <strong>name</strong> that will 
 be used to specify the database connection in other parts of the config.xml file.</p>
 <p>The <strong>data-source</strong> element has five children, all of whom are required.
-<ul><li><strong>driver</strong> - The class name of the database driver to be used.</li>
+<ul>
+<li><strong>driver</strong> - The class name of the database driver to be used.</li>
 <li><strong>dburl</strong> - The JDBC connection URL for your database/driver.</li>
 <li><strong>user</strong> - The user id of the database account to be used by this connection.</li>
 <li><strong>password</strong> - The password of the database account to be used by this connection.</li>
 <li><strong>max</strong> - The maximum number of JDBC connections to be used concurrently by this data-source.</li>
 </ul>
-</p>
-<p>Generally, you simply configure these entries in the config.xml
+
+
+Generally, you simply configure these entries in the config.xml
 file, which are commented, in order to use a database with James.  You
 would then use the db: or dbfile: prefix instead of the file: prefix
 for a particular repository.  You are currently free to mix and match
 your use of these different storage types for different repositories.
 See <a href="repositories.html">Repository Configuration</a> for
-more details.  A sample configuration is described below.</p>
+more details.  A sample configuration is described below.
+
 </div>
-<div class="section"><h3><a name="SQL_Statement_Configuration"></a>SQL Statement Configuration</h3>
-<p>The precise SQL statements used by James to modify and view data stored in the database are specified in
+<a name="SQL Statement Configuration"></a><div class="section"><h3>SQL Statement Configuration</h3>
+The precise SQL statements used by James to modify and view data stored in the database are specified in
 an external configuration file.  The sqlResources.xml file 
 (which can be found in the apps/james/conf directory) is a sample configuration file that contains the SQL
 statements used by James.  The purpose of each of these statements, as well as the repository with which 
-they are associated, is documented in situ.</p>
-<p>If you are using a SQL database with unusual SQL commands or data types, you may
+they are associated, is documented in situ.
+
+If you are using a SQL database with unusual SQL commands or data types, you may
 need to add special entries to this file.  The James team
 does try to keep sqlResources.xml updated, so if you do run into a
-special case, please let us know.</p>
-<p>Also, if the database tables are not created a priori, but rather are to be created by James
+special case, please let us know.
+
+Also, if the database tables are not created a priori, but rather are to be created by James
 upon startup, special attention should be paid to the &quot;create table&quot; statements in this file.  Such
-statements tend to be both very database and very database instance specific.</p>
+statements tend to be both very database and very database instance specific.
 </div>
-<div class="section"><h3><a name="Sample_James_Configuration"></a>Sample James Configuration</h3>
+<a name="Sample James Configuration"></a><div class="section"><h3>Sample James Configuration</h3>
+
 <p>The config.xml file has commented out examples for MySQL and
 MSSQL data sources, and for each of the standard repositories.  For
 example, to use MySQL, you would uncomment and adjust the following
 data-source element.</p>
+
 <p>You must create the database, in this case named
 <strong>mail</strong>, the user, and assign the user privileges.
 You may create the tables before running James or, if you so choose, James 
 will automatically create the tables it needs.  In the latter case the user 
 must have table creation privileges.</p>
+
 <div class="source"><pre>
 &lt;data-source name=&quot;maildb&quot; class=&quot;org.apache.james.util.mordred.JdbcDataSource&quot;&gt;
   &lt;driver&gt;com.mysql.jdbc.Driver&lt;/driver&gt;
@@ -404,33 +418,36 @@ must have table creation privileges.</p>
   &lt;password&gt;password&lt;/password&gt;
   &lt;max&gt;20&lt;/max&gt;
 &lt;/data-source&gt;
-</pre>
-</div>
+</pre></div>
+
 <p>Once the data-source element has been created, it can be referenced elsewhere in the config.xml 
 file.  For example, the following element tells James to use the maildb data-source and dbfile 
 storage mechanism for the message spool:</p>
+
 <div class="source"><pre>
 &lt;spoolRepository&gt;
    &lt;repository destinationURL=&quot;dbfile://maildb/spool/spool&quot; type=&quot;SPOOL&quot;/&gt;
 &lt;/spoolRepository&gt;
-</pre>
-</div>
+</pre></div>
+
 <p>The following element tells James to store mailboxes in a the maildb data-source:</p>
+
 <div class="source"><pre>
 &lt;inboxRepository&gt;
    &lt;repository destinationURL=&quot;db://maildb/inbox/&quot; type=&quot;MAIL&quot;/&gt;
 &lt;/inboxRepository&gt;
-</pre>
-</div>
+</pre></div>
+
 <p>The configuration file contains further examples.</p>
 </div>
-<div class="section"><h3><a name="Known_Issues"></a>Known Issues</h3>
+<a name="Known Issues"></a><div class="section"><h3>Known Issues</h3>
 <p>There are some vendor-specific subtleties in using databases with James that have been observed 
 by some users.  These issues (and methods to resolve them) are recorded on the 
 <a href="../FAQ.html">James FAQ</a> as they are reported.  Please consult the FAQ if you encounter any 
 difficulties.</p>
 </div>
 </div>
+
 
       </div>
     </div>

@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Writing a Custom Matcher</title>
+    <title>James Server - 
+  James 2.3 - Writing a Custom Matcher</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,7 +329,12 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Writing_a_Custom_Matcher"></a>Writing a Custom Matcher</h2>
+        
+
+ 
+
+
+<a name="Writing a Custom Matcher"></a><div class="section"><h2>Writing a Custom Matcher</h2>
 <p>Implementing a custom matcher is generally a simple task, most of whose complexity 
 lies in coding the actual work to be done by the matcher.  This is largely due to the 
 simplicity of the Matcher interface and the fact that a couple of abstract Matcher template
@@ -348,7 +354,7 @@ anon.</p>
 each recipient is evaluated individually.  It is a subclass of GenericMatcher, and inherits 
 most of its behavior from that class.  The only major difference is that subclasses are 
 expected to override matchRecipient(MailAddress) rather than match(Mail).</p>
-<div class="section"><h3><a name="Configuration"></a>Configuration</h3>
+<a name="Configuration"></a><div class="section"><h3>Configuration</h3>
 <p>Matchers are passed a single String as part of their configuration.  Interpretation of this 
 list is left entirely to the body of the Matcher.  This String value is available in 
 the body of the Matcher through use of the getCondition() method of the 
@@ -356,7 +362,7 @@ GenericMatcher class.  This method returns the String value passed to the Matche
 null if no value is set.  The method getCondition() is available inside the init(), destroy(), match(Mail), 
 and matchRecipient(MailAddress) methods.</p>
 </div>
-<div class="section"><h3><a name="Logging"></a>Logging</h3>
+<a name="Logging"></a><div class="section"><h3>Logging</h3>
 <p>There is a simple logging mechanism provided by the Mailet API.  It does not support 
 logging levels, so any log filtering will have to be implemented in the Matcher code.  
 Logging is done by calling one of the two logging methods on GenericMatcher/GenericRecipientMatcher - log(String) 
@@ -366,7 +372,7 @@ and matchRecipient(MailAddress) methods.</p>
 Matcher.  So it may be desirable for you to override this method so you can distinguish Matcher
 log entries by Matcher.</p>
 </div>
-<div class="section"><h3><a name="Initialization"></a>Initialization</h3>
+<a name="Initialization"></a><div class="section"><h3>Initialization</h3>
 <p>As part of the Matcher lifecycle, a Matcher is guaranteed to be initialized immediately after 
 being instantiated.  This happens once and only once for each Matcher instance.  The 
 Initialization phase is where configuration parsing and per-Matcher resource creation generally 
@@ -374,7 +380,7 @@ take place.  Depending on your Matcher, it may or may not be necessary to do any
 of the Matcher.  Initialization logic is implemented by overriding the init() method of 
 GenericMatcher/GenericRecipientMatcher.</p>
 </div>
-<div class="section"><h3><a name="Matching"></a>Matching</h3>
+<a name="Matching"></a><div class="section"><h3>Matching</h3>
 <p>It is the matching phase where the Matcher's work is done.  The exact form of this phase largely 
 depends on which Matcher superclass is subclassed.</p>
 <p>If GenericMatcher is being subclassed, it is the match(Mail) that is implemented.  As described 
@@ -385,7 +391,7 @@ subclassed.  In this case, developers must provide an implementation of the
 matchRecipient(MailAddress) method.  This method returns true if the recipient matches,
 and false otherwise.</p>
 </div>
-<div class="section"><h3><a name="Destruction"></a>Destruction</h3>
+<a name="Destruction"></a><div class="section"><h3>Destruction</h3>
 <p>As part of the Matcher lifecycle, a Matcher is guaranteed to be destroyed when the container 
 cleans up the Matcher.  This happens once and only once for each Matcher instance.  The 
 Destruction phase is where per-Matcher resource release generally takes place.  Depending 
@@ -394,10 +400,10 @@ of the Matcher.  Destruction logic is implemented by overriding the destroy() me
 GenericMatcher/GenericRecipientMatcher.</p>
 </div>
 </div>
-<div class="section"><h2><a name="Deploying_a_Custom_Matcher"></a>Deploying a Custom Matcher</h2>
+<a name="Deploying a Custom Matcher"></a><div class="section"><h2>Deploying a Custom Matcher</h2>
 <p>Once a Matcher has been successfully implemented there are only a couple of 
 additional steps necessary to actually deploy the Matcher.</p>
-<div class="section"><h3><a name="Adding_Your_Matcher_to_the_Classpath"></a>Adding Your Matcher to the Classpath</h3>
+<a name="Adding Your Matcher to the Classpath"></a><div class="section"><h3>Adding Your Matcher to the Classpath</h3>
 <p>
 The Matcher must be added to James' classpath so that the Matcher can be loaded by James.  There 
 are two ways to add a custom Matcher to the classpath so that James will be able to load the 
@@ -427,21 +433,20 @@ the lib directory and copy the jar to the directory.
 </p>
 <p>
 2. After this is done get sure you add the matcher package to the config.xml. For example: 
-<p><div class="source"><pre>
+<p>
+<div class="source"><pre>
 &lt;!-- Set the Java packages from which to load mailets and matchers --&gt;
 &lt;matcherpackages&gt;
     &lt;matcherpackage&gt;org.apache.james.transport.matchers&lt;/matcherpackage&gt;
     &lt;matcherpackage&gt;org.apache.james.transport.matchers.smime&lt;/matcherpackage&gt;
     &lt;matcherpackage&gt;your.costum.package.transport-matchers&lt;/matcherpackage&gt;
 &lt;/matcherpackages&gt;
-</pre>
-</div>
+</pre></div>
 </p>
-
 After that restart james.
 </p>
 </div>
-<div class="section"><h3><a name="James_Configuration"></a>James Configuration</h3>
+<a name="James Configuration"></a><div class="section"><h3>James Configuration</h3>
 <p>Configuration of the processor chain is discussed 
 <a href="spoolmanager_configuration.html">elsewhere</a> in this documentation.  The 
 details of configuring matcher deployment is discussed at length.  Here we will only comment 
@@ -451,6 +456,7 @@ the matchers described <a href="provided_matchers.html">here</a>.
 </p>
 </div>
 </div>
+
 
       </div>
     </div>

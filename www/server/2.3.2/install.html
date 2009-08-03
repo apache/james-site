@@ -11,19 +11,21 @@
 
 <html>
   <head>
-    <title>James Server - Installation</title>
+    <title>James Server - 
+  Installation</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-          <meta name="author" content="Serge Knystautas" />
+          <meta name="author" content="
+Serge Knystautas" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -46,21 +48,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -304,11 +306,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -329,10 +331,13 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="Step_0:_Building._only_necessary_for_daily_snapshots"></a>Step 0: Building. (only necessary for daily snapshots)</h2>
+        
+
+   
+<a name="Step 0: Building. (only necessary for daily snapshots)"></a><div class="section"><h2>Step 0: Building. (only necessary for daily snapshots)</h2> 
 <p> If you have downloaded a binary distribution, you do not need to build James. 
   Proceed directory to Step 1. </p>
-<p> To compile James from the source code you need <a href="http://ant.apache.org/" class="externalLink">Ant</a>. 
+<p> To compile James from the source code you need <a href="http://ant.apache.org/">Ant</a>. 
   This is a Java-tailored, XML-configured, extensible build or make system. We 
   are currently using Ant 1.4, which is included in the source distribution.</p>
 <p> If you have downloaded a daily snapshot, you need to build a distribution. 
@@ -347,34 +352,37 @@
   (or &quot;./build.sh dist&quot;). This will create the distribution in the &quot;./dist&quot; 
   directory as well as create .tgz and .zip copies of this directory, however it may 
   require other resources to build the documentation. </p>
-<p><strong>Warning!</strong> Any changes you've made in the 'dist' directory 
+<p> <strong>Warning!</strong> Any changes you've made in the 'dist' directory 
   will be lost after a recompilation. If you are making changes to the conf.xml 
   or other files, we recommend you backup and then change the copies in src to 
   avoid losing work. </p>
-</div>
-<div class="section"><h2><a name="Step_1:_Installation."></a>Step 1: Installation.</h2>
+</div> <a name="Step 1: Installation."></a><div class="section"><h2>Step 1: Installation.</h2> 
 <p> Download distibution. Extract or copy all the files in the archive or dist 
   directory intto your installation directory. </p>
 </div>
-<div class="section"><h2><a name="Step_2:_Configuration."></a>Step 2: Configuration.</h2>
-<p>
+
+<a name="Step 2: Configuration."></a><div class="section"><h2>Step 2: Configuration.</h2>
+  <p>
     Read the short and snappy documentation at docs/index.html for a proper
     overview of configuring the system.
   </p>
-<p><b>Summary</b> (for impatient people)
+  <p>
+    <b>Summary</b> (for impatient people)
   </p>
+  
 <p> M$ users should just run /bin/run.bat. Unix users will find run.sh under the 
   same directory. A JVM must be present and its location specified in the JAVA_HOME 
   environment variable. Set this on windows at the command prompt with something 
   similar to &quot;set JAVA_HOME=\jdk1.3\bin&quot; on *nix with JAVA_HOME=/jdk1.3/</p>
 <p> Running [run* --help] will provide a simple command line help. </p>
-<p>
+  <p>
     Most UNIX systems require superuser privileges to open sockets below 1024,
     which includes the IANA-standard SMTP (on port 25) and POP3 (on port 110).
     These default ports can be changed in the conf.xml file. (Obviously, you
     would then need to reconfigure your clients. This may not be an option if
     you want to receive mail from external mailservers.)
   </p>
+  
 <p> The Avalon framework will unpack the necessary configuration files you will 
   need to start the server.  Wait until it is running, stop it again (ctrl-c), and 
   edit the configuration (thereafter *nix users can run the server in the background 
@@ -383,8 +391,9 @@
   and the IP address of a DNS server. Once you have edited the configuration files, 
   press 'Enter' on the terminal where Avalon is waiting. </p>
 </div>
-<div class="section"><h2><a name="Step_4:_Kickstart."></a>Step 4: Kickstart.</h2>
-<p>
+
+<a name="Step 4: Kickstart."></a><div class="section"><h2>Step 4: Kickstart.</h2>
+  <p>
     Once started you'll see a message saying Avalon is running. This means that
     Avalon has loaded JAMES and every other needed Block (see /logs/avalon.log)
     and is now waiting for a socket request.
@@ -396,7 +405,7 @@
     administrator tool&quot;. It is really a basic set but should allow you to test
     installation.
   </p>
-<p>
+  <p>
     Once you have some local users registered, try sending mail to one of them
     @localhost with SMTP (port 25) (assuming you have not changed the default
     server names in the conf.xml file). You'll see the mail appear under
@@ -407,10 +416,12 @@
     the mailet pipe line (/conf/JAMES.conf.xml). Look at it if you want to
     understand what's happening.
   </p>
-<p>
+  <p>
   Good luck :)
   </p>
 </div>
+
+
 
       </div>
     </div>

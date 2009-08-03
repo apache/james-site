@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - Using TLS</title>
+    <title>James Server - 
+  James 2.3 - Using TLS</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,27 +329,36 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="James_2.3_-_Using_TLS"></a>James 2.3 - Using TLS</h2>
+        
+
+ 
+
+
+
+<a name="James 2.3 - Using TLS"></a><div class="section"><h2>James 2.3 - Using TLS</h2>
+
 <p>
 This document explains how to enable James 2.3 services to use Transport Layer Security (TLS) for encrypted client-server communication.</p>
-<div class="section"><h3><a name="Making_TLSSSL_Server_Sockets_Available_Inside_James"></a>Making TLS/SSL Server Sockets Available Inside James</h3>
+
+<a name="Making TLS/SSL Server Sockets Available Inside James"></a><div class="section"><h3>Making TLS/SSL Server Sockets Available Inside James</h3>
 <p>James uses the Sun Java Secure Sockets Extension (JSSE) infrastructure to provide TLS/SSL 
 sockets.  JSSE comes packaged with several vendor Java distributions (i.e. Sun Java 1.4.x, 
 IBM Java 1.3.x).  For these distributions, please follow the vendor provided instructions for
 configuring the JVM to use JSSE services.</p>
+
 <p>If you are using a Java distribution that does not include JSSE as part of the 
 distribution you will need to download the JSSE package separately.  It can be obtained from 
-<a href="http://java.sun.com/products/jsse" class="externalLink">here</a>.  Please follow Sun's instructions for installation 
+<a href="http://java.sun.com/products/jsse">here</a>.  Please follow Sun's instructions for installation 
 and configuration of JSSE.</p>
 <p>In either case, you will need to statically define a JSSE TLS provider.  In general, this 
 is the default installation.</p>
 <p>Once you've installed JSSE, James still needs to be configured to take advantage of the JSSE
 functionality.</p>
 </div>
-<div class="section"><h3><a name="Certificate_Keystores"></a>Certificate Keystores</h3>
+<a name="Certificate Keystores"></a><div class="section"><h3>Certificate Keystores</h3>
 <p>To use TLS/SSL inside James you will need a certificate keystore.</p>
 </div>
-<div class="section"><h3><a name="Configuring_the_Server_Socket_Factory"></a>Configuring the Server Socket Factory</h3>
+<a name="Configuring the Server Socket Factory"></a><div class="section"><h3>Configuring the Server Socket Factory</h3>
 <p>The out of the box configuration file contains a template for the SSL configuration in place.  Specifically, 
 in the sockets block, under the server-sockets element, there is a commented out factory with the 
 name &quot;ssl&quot;.  The first step to configuring the server socket factory is uncommenting out this element.</p>
@@ -363,7 +373,7 @@ supported by the JSSE provider being used (see the JSSE documentation for detail
 configuration specifies JKS (Java Keystore).</p>
 <p>The remaining children should not need to be deleted or adjusted.</p>
 </div>
-<div class="section"><h3><a name="Configuring_a_Service_to_Use_TLS"></a>Configuring a Service to Use TLS</h3>
+<a name="Configuring a Service to Use TLS"></a><div class="section"><h3>Configuring a Service to Use TLS</h3>
 <p>Each of the services - <a href="smtp_configuration.html">SMTP</a>, 
 <a href="pop3_configuration.html">POP3</a>, <a href="nntp_configuration.html">NNTP</a>, 
 and <a href="remotemanager_configuration.html">RemoteManager</a> - supports use of TLS.  Each of
@@ -371,7 +381,7 @@ these services has an optional boolean configuration element <b>useTLS</b> which
 use of TLS for the service.  When this value is set to true, that particular service will use the &quot;ssl&quot; 
 server socket factory to spawn server sockets.</p>
 </div>
-<div class="section"><h3><a name="Verifying_a_TLS-enabled_James_Service"></a>Verifying a TLS-enabled James Service</h3>
+<a name="Verifying a TLS-enabled James Service"></a><div class="section"><h3>Verifying a TLS-enabled James Service</h3>
 <p>After you've configured a particular service to use TLS/SSL connections, the service port 
 should no longer accept unencrypted TCP/IP connections.  This can be tested by using a telnet 
 client to directly connect to the service port.  The telnet connection should simply hang until 
@@ -379,11 +389,13 @@ the client times out.</p>
 <p>
 To validate that the port is properly accepting SSL connections an SSL client can be used to 
 open a connection to the service port.  One such client is OpenSSL, available from the 
-<a href="http://www.openssl.org" class="externalLink">OpenSSL web site</a>.  Follow the instructions provided with 
+<a href="http://www.openssl.org">OpenSSL web site</a>.  Follow the instructions provided with 
 the SSL client to create a connection to the service port.  Upon connection, the usual 
 service greeting should appear.</p>
 </div>
 </div>
+
+
 
       </div>
     </div>

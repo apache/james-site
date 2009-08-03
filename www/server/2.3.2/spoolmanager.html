@@ -11,7 +11,8 @@
 
 <html>
   <head>
-    <title>James Server - James 2.3 - The SpoolManager, Matchers, and Mailets</title>
+    <title>James Server - 
+  James 2.3 - The SpoolManager, Matchers, and Mailets</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -22,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="../../index.html" id="bannerLeft">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
     
                                             <img src="images/james-server-logo.gif" alt="" />
     
@@ -45,21 +46,21 @@
   
   
             <div class="xleft">
-        Last Published: 05/23/2009
+        Last Published: 08/03/2009
                       </div>
-            <div class="xright">      <a href="../../index.html">JAMES Project</a>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
           |
-          <a href="../index.html">Server</a>
+          <a href="http://james.apache.org/server/index.html">Server</a>
           |
-          <a href="../../mailet/index.html">Mailet API</a>
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
           |
-          <a href="../../jspf/index.html">jSPF</a>
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
           |
-          <a href="../../mime4j/index.html">Mime4J</a>
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
           |
-          <a href="../../jsieve/index.html">JSieve</a>
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
           |
-          <a href="../../postage/index.html">Postage</a>
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
           
   
 
@@ -303,11 +304,11 @@
         <ul>
               
     <li class="none">
-              <a href="../../download.cgi">Stable releases</a>
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
         </li>
               
     <li class="none">
-              <a href="../../downloadunstable.cgi">Unstable releases</a>
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
         </li>
               
     <li class="none">
@@ -328,11 +329,18 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="The_SpoolManager_Matchers_and_Mailets"></a>The SpoolManager, Matchers, and Mailets</h2>
+        
+
+ 
+
+
+<a name="The SpoolManager, Matchers, and Mailets"></a><div class="section"><h2>The SpoolManager, Matchers, and Mailets</h2>
+
 <p>James separates the services that deliver mail to James (i.e. SMTP, FetchMail) 
 from the engine that processes mail after it is received by James.  The 
 SpoolManager component is James' mail processing engine.  James' SpoolManager component 
 is a Mailet container.  It is these mailets and matchers that actually carry out mail processing.</p>
+
 <p>Core to the SpoolManager operation are Matchers and Mailets.  A Matcher is a 
 simple object that checks whether a mail message matches a particular condition. 
 A mailet is another type object that processes an email message in some way.  Some 
@@ -340,6 +348,7 @@ typical tasks appropriate for a mailet would be adding a header, delivering the 
 to a local repository, or handling remote delivery.  Both the Matcher and Mailet APIs are 
 public, allowing James users to write their own custom matchers and mailets.  James 
 comes with a large set of pre-built matchers and mailets.</p>
+
 <p>Matchers and mailets are used in pairs.  At each stage in processing a message is checked 
 against a matcher.  The matcher will attempt to match the mail message.  The match is not simply
 a yes or no issue.  Instead, the match method returns a collection of matched recipients.  If the 
@@ -349,7 +358,9 @@ associated mailet.  Finally, if the matcher only matches a proper subset of the 
 the original mail is duplicated.  The recipients for one message are set to the matched recipients,
 and that message is processed by the mailet.  The recipients for the other mail are set to the
 non-matching recipients, and that message is not processed by the mailet.</p>
+
 <p>More on matchers and mailets can be found <a href="mailet_api.html">here</a>.</p>
+
 <p>One level up from the matchers and mailets are the processors.  Each processor 
 is a list of matcher/mailet pairs.  During mail processing, mail messages will be 
 processed by each pair, in order.  In most cases, the message will be processed by 
@@ -362,6 +373,7 @@ as a candidate for special processing (i.e. the message is spam and thus should 
 routed to the spam processor).  Because of this redirection, the processors in the 
 SpoolManager form a tree.  The root processor, which must be present, is the root of
 this tree.</p>
+
 <p>The SpoolManager continually checks for mail in the spool repository.  When
 mail is first found in the repository, it is delivered to the root processor.  
 Mail can be placed on this spool from a number of sources (SMTP, FetchPOP, a 
@@ -369,13 +381,17 @@ custom component).  This spool repository is also used for storage of mail that 
 being redirected from one processor to another.  Mail messages are driven through 
 the processor tree until they reach the end of a processor or are marked completed 
 by a mailet.</p>
+
 <p>More on configuration of the SpoolManager can be found <a href="spoolmanager_configuration.html">here</a>.</p>
+
 <p>Much of the power of James lies in the SpoolManager component.  Custom matchers and 
 mailets can be easily developed to address an administrator's particular needs.  The 
 processor tree can easily be configured to sort, filter, and deliver mail based on any 
 number of criteria.  Mail administrators new to James should spend some time learning how 
 to configure the SpoolManager to meet their needs.</p>
+
 </div>
+
 
       </div>
     </div>
