@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.2" timestamp="2009-04-11T20:04:46.367">
+<pmd version="4.2.2" timestamp="2009-09-05T10:19:50.596">
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/ActionContext.java">
 <violation beginline="38" endline="38" begincolumn="12" endcolumn="24" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionContext" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
@@ -7,11 +7,19 @@ Avoid modifiers which are implied by the context
 <violation beginline="49" endline="49" begincolumn="12" endcolumn="77" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionContext" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
-<violation beginline="58" endline="58" begincolumn="12" endcolumn="108" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionContext" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation beginline="58" endline="58" begincolumn="12" endcolumn="121" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionContext" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
 <violation beginline="64" endline="64" begincolumn="12" endcolumn="34" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionContext" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/ActionDispatcher.java">
+<violation beginline="68" endline="68" begincolumn="9" endcolumn="77" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionDispatcher" method="execute" variable="mailAction" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+Avoid using final local variables, turn them into fields
+</violation>
+<violation beginline="87" endline="87" begincolumn="9" endcolumn="102" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="ActionDispatcher" method="defaultMethodMap" variable="actionMap" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+Avoid using final local variables, turn them into fields
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/ActionUtils.java">
@@ -20,41 +28,41 @@ Avoid unnecessary temporaries when converting primitives to Strings
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/FileIntoAction.java">
-<violation beginline="36" endline="36" begincolumn="13" endcolumn="73" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="fileIntoAction" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="41" endline="41" begincolumn="13" endcolumn="73" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="fileIntoAction" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="70" endline="91" begincolumn="13" endcolumn="28" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="delivered" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'delivered' (lines '70'-'91').
+<violation beginline="76" endline="97" begincolumn="13" endcolumn="28" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="delivered" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'delivered' (lines '76'-'97').
 </violation>
-<violation beginline="81" endline="81" begincolumn="13" endcolumn="87" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="mailbox" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="87" endline="87" begincolumn="13" endcolumn="87" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="mailbox" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="82" endline="82" begincolumn="13" endcolumn="29" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="host" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="88" endline="88" begincolumn="13" endcolumn="29" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="host" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="88" endline="88" begincolumn="13" endcolumn="82" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="url" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="94" endline="94" begincolumn="13" endcolumn="82" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="url" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="91" endline="116" begincolumn="13" endcolumn="28" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="delivered" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DU'-anomaly for variable 'delivered' (lines '91'-'116').
+<violation beginline="97" endline="122" begincolumn="13" endcolumn="28" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="delivered" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DU'-anomaly for variable 'delivered' (lines '97'-'122').
 </violation>
-<violation beginline="95" endline="95" begincolumn="13" endcolumn="44" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="log" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="101" endline="101" begincolumn="13" endcolumn="44" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="log" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="108" endline="108" begincolumn="13" endcolumn="44" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="log" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="114" endline="114" begincolumn="13" endcolumn="44" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="FileIntoAction" method="execute" variable="log" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/KeepAction.java">
-<violation beginline="35" endline="35" begincolumn="13" endcolumn="61" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="KeepAction" method="execute" variable="actionKeep" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="40" endline="40" begincolumn="13" endcolumn="61" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="KeepAction" method="execute" variable="actionKeep" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="57" endline="57" begincolumn="9" endcolumn="63" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="KeepAction" method="execute" variable="action" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="62" endline="62" begincolumn="9" endcolumn="63" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="KeepAction" method="execute" variable="action" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/MailAction.java">
-<violation beginline="38" endline="38" begincolumn="12" endcolumn="117" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="MailAction" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
+<violation beginline="39" endline="39" begincolumn="12" endcolumn="117" rule="UnusedModifier" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="MailAction" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="3">
 Avoid modifiers which are implied by the context
 </violation>
 </file>
@@ -64,22 +72,22 @@ Avoid modifiers which are implied by the context
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/RedirectAction.java">
-<violation beginline="38" endline="38" begincolumn="13" endcolumn="73" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RedirectAction" method="execute" variable="actionRedirect" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="43" endline="43" begincolumn="13" endcolumn="73" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RedirectAction" method="execute" variable="actionRedirect" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/RejectAction.java">
-<violation beginline="49" endline="49" begincolumn="13" endcolumn="67" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="actionReject" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="54" endline="54" begincolumn="13" endcolumn="67" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="actionReject" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="83" endline="86" begincolumn="13" endcolumn="43" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="reporting_UA_name" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'reporting_UA_name' (lines '83'-'86').
+<violation beginline="87" endline="90" begincolumn="13" endcolumn="43" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="reporting_UA_name" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'reporting_UA_name' (lines '87'-'90').
 </violation>
-<violation beginline="86" endline="91" begincolumn="13" endcolumn="43" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="reporting_UA_name" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'reporting_UA_name' (lines '86'-'91').
+<violation beginline="90" endline="95" begincolumn="13" endcolumn="43" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="reporting_UA_name" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'reporting_UA_name' (lines '90'-'95').
 </violation>
-<violation beginline="98" endline="101" begincolumn="13" endcolumn="54" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="original_recipient" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'original_recipient' (lines '98'-'101').
+<violation beginline="102" endline="105" begincolumn="13" endcolumn="54" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="RejectAction" method="execute" variable="original_recipient" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'original_recipient' (lines '102'-'105').
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/ResourceLocator.java">
@@ -88,50 +96,59 @@ Avoid modifiers which are implied by the context
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/SieveMailAdapter.java">
-<violation beginline="118" endline="119" begincolumn="13" endcolumn="49" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" variable="actions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'actions' (lines '118'-'119').
+<violation beginline="121" endline="122" begincolumn="13" endcolumn="49" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" variable="actions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'actions' (lines '121'-'122').
 </violation>
-<violation beginline="119" endline="119" begincolumn="13" endcolumn="49" rule="AssignmentInOperand" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AssignmentInOperand" priority="3">
+<violation beginline="122" endline="122" begincolumn="13" endcolumn="49" rule="AssignmentInOperand" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AssignmentInOperand" priority="3">
 Avoid assignments in operands
 </violation>
-<violation beginline="119" endline="125" begincolumn="13" endcolumn="49" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" variable="actions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DU'-anomaly for variable 'actions' (lines '119'-'125').
+<violation beginline="122" endline="128" begincolumn="13" endcolumn="49" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" variable="actions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DU'-anomaly for variable 'actions' (lines '122'-'128').
 </violation>
-<violation beginline="122" endline="122" begincolumn="13" endcolumn="32" rule="OnlyOneReturn" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#OnlyOneReturn" priority="3">
+<violation beginline="125" endline="125" begincolumn="13" endcolumn="32" rule="OnlyOneReturn" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getActions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#OnlyOneReturn" priority="3">
 A method should have only one exit point, and that should be the last statement in the method
 </violation>
-<violation beginline="316" endline="319" begincolumn="13" endcolumn="64" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getEnvelopeTo" variable="recipient" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'recipient' (lines '316'-'319').
-</violation>
-<violation beginline="363" endline="366" begincolumn="13" endcolumn="61" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="toString" variable="messageID" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'messageID' (lines '363'-'366').
-</violation>
-<violation beginline="366" endline="370" begincolumn="13" endcolumn="50" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="toString" variable="messageID" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'messageID' (lines '366'-'370').
-</violation>
-<violation beginline="398" endline="398" begincolumn="13" endcolumn="69" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="list" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="161" endline="161" begincolumn="9" endcolumn="49" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="executeActions" variable="actions" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="399" endline="399" begincolumn="13" endcolumn="40" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="size" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="291" endline="291" begincolumn="9" endcolumn="76" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getMatchingEnvelope" variable="matchedEnvelopeValues" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="400" endline="400" begincolumn="13" endcolumn="55" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="317" endline="320" begincolumn="13" endcolumn="64" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="getEnvelopeTo" variable="recipient" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'recipient' (lines '317'-'320').
+</violation>
+<violation beginline="342" endline="342" begincolumn="23" endcolumn="26" rule="NullAssignment" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="setMail" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#NullAssignment" priority="3">
+Assigning an Object to null is a code smell.  Consider refactoring.
+</violation>
+<violation beginline="370" endline="373" begincolumn="13" endcolumn="61" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="toString" variable="messageID" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'messageID' (lines '370'-'373').
+</violation>
+<violation beginline="373" endline="377" begincolumn="13" endcolumn="50" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="toString" variable="messageID" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'messageID' (lines '373'-'377').
+</violation>
+<violation beginline="396" endline="396" begincolumn="13" endcolumn="69" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="list" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="400" endline="403" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'results' (lines '400'-'403').
-</violation>
-<violation beginline="400" endline="409" begincolumn="29" endcolumn="55" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DU'-anomaly for variable 'results' (lines '400'-'409').
-</violation>
-<violation beginline="402" endline="402" begincolumn="17" endcolumn="51" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="mailbox" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="397" endline="397" begincolumn="13" endcolumn="40" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="size" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="403" endline="403" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'results' (lines '403'-'403').
+<violation beginline="398" endline="398" begincolumn="13" endcolumn="55" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="403" endline="409" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DU'-anomaly for variable 'results' (lines '403'-'409').
+<violation beginline="398" endline="401" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'results' (lines '398'-'401').
+</violation>
+<violation beginline="398" endline="407" begincolumn="29" endcolumn="55" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DU'-anomaly for variable 'results' (lines '398'-'407').
+</violation>
+<violation beginline="400" endline="400" begincolumn="17" endcolumn="51" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="mailbox" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+Avoid using final local variables, turn them into fields
+</violation>
+<violation beginline="401" endline="401" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'results' (lines '401'-'401').
+</violation>
+<violation beginline="401" endline="407" begincolumn="17" endcolumn="89" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailAdapter" method="parseAddresses" variable="results" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DU'-anomaly for variable 'results' (lines '401'-'407').
 </violation>
 </file>
 <file name="/opt/development/workspace/jsieve/mailet/src/main/java/org/apache/jsieve/mailet/SieveMailboxMailet.java">
@@ -144,22 +161,22 @@ Avoid using final local variables, turn them into fields
 <violation beginline="196" endline="196" begincolumn="13" endcolumn="30" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="init" variable="logLevel" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="225" endline="227" begincolumn="13" endcolumn="39" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" variable="message" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DD'-anomaly for variable 'message' (lines '225'-'227').
+<violation beginline="227" endline="229" begincolumn="13" endcolumn="39" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" variable="message" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DD'-anomaly for variable 'message' (lines '227'-'229').
 </violation>
-<violation beginline="241" endline="296" begincolumn="25" endcolumn="59" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" variable="deliveredTo" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
-Found 'DU'-anomaly for variable 'deliveredTo' (lines '241'-'296').
+<violation beginline="243" endline="298" begincolumn="25" endcolumn="59" rule="DataflowAnomalyAnalysis" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" variable="deliveredTo" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DataflowAnomalyAnalysis" priority="5">
+Found 'DU'-anomaly for variable 'deliveredTo' (lines '243'-'298').
 </violation>
-<violation beginline="263" endline="273" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="265" endline="275" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="service" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="332" endline="362" begincolumn="5" endcolumn="5" rule="DefaultPackage" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DefaultPackage" priority="3">
+<violation beginline="336" endline="366" begincolumn="5" endcolumn="5" rule="DefaultPackage" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DefaultPackage" priority="3">
 Use explicit scoping instead of the default package private level
 </violation>
-<violation beginline="337" endline="337" begincolumn="13" endcolumn="60" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="sieveMessage" variable="ins" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
+<violation beginline="341" endline="341" begincolumn="13" endcolumn="60" rule="AvoidFinalLocalVariable" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" method="sieveMessage" variable="ins" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#AvoidFinalLocalVariable" priority="3">
 Avoid using final local variables, turn them into fields
 </violation>
-<violation beginline="364" endline="367" begincolumn="5" endcolumn="5" rule="DefaultPackage" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DefaultPackage" priority="3">
+<violation beginline="368" endline="371" begincolumn="5" endcolumn="5" rule="DefaultPackage" ruleset="Controversial Rules" package="org.apache.jsieve.mailet" class="SieveMailboxMailet" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#DefaultPackage" priority="3">
 Use explicit scoping instead of the default package private level
 </violation>
 </file>

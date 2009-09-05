@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
 </head>
 <body>
-<div id="overview"><a href="../../../../../../../../../../workspace/jsieve/main/target/site/apidocs/org/apache/jsieve/Command.html">View Javadoc</a></div><pre>
+<div id="overview"><a href="../../../../apidocs/org/apache/jsieve/Command.html">View Javadoc</a></div><pre>
 
 <a name="1" href="#1">1</a>   <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">**************************************************************</em>
 <a name="2" href="#2">2</a>   <em class="jxr_javadoccomment"> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
@@ -164,7 +164,7 @@
 <a name="154" href="#154">154</a>         <em class="jxr_comment">// recursively from the top level block</em>
 <a name="155" href="#155">155</a>         <em class="jxr_comment">// so need to use the coordinate recorded from the parse</em>
 <a name="156" href="#156">156</a>         context.setCoordinate(coordinate);
-<a name="157" href="#157">157</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/apache/jsieve/ExecutableCommand.html">ExecutableCommand</a> executable = context.getCommand(getName());
+<a name="157" href="#157">157</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/apache/jsieve/ExecutableCommand.html">ExecutableCommand</a> executable = context.getCommandManager().getCommand(getName());
 <a name="158" href="#158">158</a>         <strong class="jxr_keyword">final</strong> Object result = executable.execute(mail, getArguments(),
 <a name="159" href="#159">159</a>                 getBlock(), context);
 <a name="160" href="#160">160</a>         <strong class="jxr_keyword">return</strong> result;

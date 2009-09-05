@@ -11,21 +11,19 @@
 
 <html>
   <head>
-    <title>jSieve - 
-    Overview</title>
+    <title>jSieve - Overview</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-          <meta name="author" content="
-    jSieve Project" />
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+          <meta name="author" content="jSieve Project" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="http://james.apache.org/" id="bannerLeft">
+                  <a href="../" id="bannerLeft">
     
                                             <img src="images/james-jsieve-logo.gif" alt="" />
     
@@ -48,13 +46,13 @@
   
   
             <div class="xleft">
-        Last Published: 08/03/2009
+        Last Published: 09/05/2009
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
           <a href="../imap/index.html">IMAP</a>
           |
-          <a href="../jsieve/index.html">JSieve</a>
+          <a href="index.html">JSieve</a>
           |
           <a href="../jspf/index.html">jSPF</a>
           |
@@ -92,46 +90,54 @@
         <ul>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/main/index.html">Main</a>
+              <a href="main/index.html">Main</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/mailet/index.html">Mailet</a>
+              <a href="mailet/index.html">Mailet</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/util/index.html">Util</a>
+              <a href="util/index.html">Util</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/jira-report.html">Changes</a>
+              <a href="jira-report.html">Changes</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/release-notes.html">Release Notes</a>
+              <a href="release-notes.html">Release Notes</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/apidocs/index.html">JavaDocs</a>
+              <a href="apidocs/index.html">JavaDocs</a>
         </li>
           </ul>
           <h5>Specifications</h5>
         <ul>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 ABNF</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 ACAP</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 MDN</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
+              <a href="http://tools.ietf.org/html/rfc5228">RFC 5228 Sieve</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://tools.ietf.org/html/rfc4790">RFC 4790 IAPCR</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://tools.ietf.org/html/rfc5173">RFC 5173 Body Extension</a>
         </li>
           </ul>
           <h5>0.3 Release</h5>
@@ -236,96 +242,88 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
-
-  
-
-  
-    <a name="What is jSieve?"></a><div class="section"><h2>What is jSieve?</h2>
-      <p>
+        <div class="section"><h2><a name="What_is_jSieve"></a>What is jSieve?</h2>
+<p>
         jSieve is a Java implementation of the Sieve mail filtering
         language defined by
-        <a href="http://www.rfc-editor.org/rfc/rfc3028.txt">RFC 3028</a>
+        <a class="externalLink" href="http://www.rfc-editor.org/rfc/rfc3028.txt">RFC 3028</a>
         . jSieve is implemented as a language processor that can be
         plugged into any internet mail application to add Sieve support.
       </p>
-      <p>
+<p>
         jSieve is a subproject of
-        <a href="http://james.apache.org">Apache JAMES</a>
+        <a class="externalLink" href="http://james.apache.org">Apache JAMES</a>
         . All who are interested in developing jSieve and JAMES will be
         warmly welcomed on the
         <a href="mail-lists.html">mailing lists</a>
         .
       </p>
-      <p>jSieve consists of three products:</p>
-      <ol type="1">
-        <li>
-          <a href="main/index.html">Apache JSieve</a>
+<p>jSieve consists of three products:</p>
+<ol type="1"><li><a href="main/index.html">Apache JSieve</a>
           is a Sieve library coded in Java.
         </li>
-        <li>
-          <a href="mailet/index.html">Apache JSieve Mailet</a>
+<li><a href="mailet/index.html">Apache JSieve Mailet</a>
           is a
-          <a href="http://james.apache.org/mailet">Mailet</a>
+          <a class="externalLink" href="http://james.apache.org/mailet">Mailet</a>
           which builds on the JSieve library to create a comprehensive
           server side Sieve filtering system.
         </li>
-        <li>
-          <a href="util/index.html">Apache JSieve Utilities</a>
+<li><a href="util/index.html">Apache JSieve Utilities</a>
           contains utility classes helpful when using Sieve but not
           considered sufficiently core to be included in the main
           library.
         </li>
-      </ol>
-      <a name="What is Sieve?"></a><div class="section"><h3>What is Sieve?</h3>
-        
+</ol>
+<div class="section"><h3><a name="What_is_Sieve"></a>What is Sieve?</h3>
+<p>
           Sieve is an extensible mail filtering language. It's limited
           expressiveness (no loops or variables, no tests with side
           effects) allows user created scripts to be run safely on email
           servers. Sieve is targeted at the final delivery phase (where
           an incoming email is transferred to a user's mailbox).
-        
-        
+        </p>
+<p>
           Sieve scripts are composed of commands. Control commands
           manage the execution of the script. Test commands define
           side-effect free criteria. Action commands are mail operations
           to be performed.
-        
+        </p>
+</div>
+</div>
+<div class="section"><h2><a name="Extensions_Supported"></a>Extensions Supported</h2>
+<div class="section"><h3><a name="Body_Extension"></a>Body Extension</h3>
+<abbr title="Sieve Email Filtering: Body Extension"><a class="externalLink" href="http://tools.ietf.org/html/rfc5173">RFC 5173</a></abbr> describes 
+        an extension command that tests the body of an email for one or more strings.
       </div>
-    </div>
-    <a name="Extensions Supported"></a><div class="section"><h2>Extensions Supported</h2>
-      <a name="Sieve-In-Xml"></a><div class="section"><h3>Sieve-In-Xml</h3>
-          
-    <a href="http://tools.ietf.org/html/draft-freed-sieve-in-xml-04">Sieve-in-xml</a> is an Internet Draft.
+<div class="section"><h3><a name="Sieve-In-Xml"></a>Sieve-In-Xml</h3>
+<p><a class="externalLink" href="http://tools.ietf.org/html/draft-freed-sieve-in-xml-04">Sieve-in-xml</a> is an Internet Draft.
     It describes a method for converting Sieve scripts to and from XML fragments.
     <a href="util/index.html">JSieve Utilities</a> contains an experimental preview of a subset of this draft
-    to allow early feedback. <a href="util/index.html#Sieve In Xml">More...</a>
-        
-      </div>
-    </div>
-    <a name="News"></a><div class="section"><h2>News</h2>
-        <h4>Jun/2008 - jSieve-0.3 released</h4>
-        <p>
+    to allow early feedback. <a href="util/index.html#Sieve In Xml">More...</a></p>
+</div>
+</div>
+<div class="section"><h2><a name="News"></a>News</h2>
+<h4>Jun/2008 - jSieve-0.3 released</h4>
+<p>
           The Apache JAMES team is happy to announce the availability of
-          <a href="http://james.apache.org/download.cgi#Apache%20JSieve">
+          <a class="externalLink" href="http://james.apache.org/download.cgi#Apache%20JSieve">
             Apache jSieve 0.3
           </a>
           . This is the first modular release including a filtering 
-          <a href="http://james.apache.org/mailet">mailet</a> as well as many fixes 
+          <a class="externalLink" href="http://james.apache.org/mailet">mailet</a> as well as many fixes 
           and improvements. See the 
-          <a href="http://james.apache.org/jsieve/0.3/release-notes.html">release notes</a> 
+          <a class="externalLink" href="http://james.apache.org/jsieve/0.3/release-notes.html">release notes</a> 
           for more details.
         </p>
-        <h4>Aug/2008 - jSieve-0.2 released</h4>
-        <p>
+<h4>Aug/2008 - jSieve-0.2 released</h4>
+<p>
           The Apache JAMES team is happy to announce the availability of
-          <a href="http://james.apache.org/download.cgi#jsieve">
+          <a class="externalLink" href="http://james.apache.org/download.cgi#jsieve">
             Apache jSieve 0.2
           </a>
           . This first public release is a major milestone for JSieve.
         </p>
-    </div>
-  
+</div>
 
       </div>
     </div>

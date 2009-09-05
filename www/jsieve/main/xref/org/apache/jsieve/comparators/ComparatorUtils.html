@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
 </head>
 <body>
-<div id="overview"><a href="../../../../../../../../../../../workspace/jsieve/main/target/site/apidocs/org/apache/jsieve/comparators/ComparatorUtils.html">View Javadoc</a></div><pre>
+<div id="overview"><a href="../../../../../apidocs/org/apache/jsieve/comparators/ComparatorUtils.html">View Javadoc</a></div><pre>
 
 <a name="1" href="#1">1</a>   <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">**************************************************************</em>
 <a name="2" href="#2">2</a>   <em class="jxr_javadoccomment"> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
@@ -93,154 +93,153 @@
 <a name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     */</em>
 <a name="84" href="#84">84</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> matches(String string, String glob)
 <a name="85" href="#85">85</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../org/apache/jsieve/exception/SievePatternException.html">SievePatternException</a> {
-<a name="86" href="#86">86</a>          <em class="jxr_comment">// TODO Is there a way to re-use the compiled pattern?</em>
-<a name="87" href="#87">87</a>          <strong class="jxr_keyword">try</strong> {
-<a name="88" href="#88">88</a>              String regex = sieveToJavaRegex(glob);
-<a name="89" href="#89">89</a>              <strong class="jxr_keyword">final</strong> Matcher matcher = Pattern.compile(regex).matcher(string);
-<a name="90" href="#90">90</a>              <strong class="jxr_keyword">return</strong> matcher.matches();
-<a name="91" href="#91">91</a>          } <strong class="jxr_keyword">catch</strong> (PatternSyntaxException e) {
-<a name="92" href="#92">92</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/exception/SievePatternException.html">SievePatternException</a>(e.getMessage());
-<a name="93" href="#93">93</a>          }
-<a name="94" href="#94">94</a>      }
-<a name="95" href="#95">95</a>  
-<a name="96" href="#96">96</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * Method &lt;code&gt;contains&lt;/code&gt; answers a boolean indicating if the</em>
-<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * parameter &lt;code&gt;container&lt;/code&gt; contains the parameter</em>
-<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * &lt;code&gt;contents&lt;/code&gt;.</em>
-<a name="101" href="#101">101</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="102" href="#102">102</a> <em class="jxr_javadoccomment">     * </em>
-<a name="103" href="#103">103</a> <em class="jxr_javadoccomment">     * @param container</em>
-<a name="104" href="#104">104</a> <em class="jxr_javadoccomment">     * @param contents</em>
-<a name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * @return boolean</em>
-<a name="106" href="#106">106</a> <em class="jxr_javadoccomment">     */</em>
-<a name="107" href="#107">107</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> contains(String container, String contents) {
-<a name="108" href="#108">108</a>         <strong class="jxr_keyword">return</strong> container.indexOf(contents) &gt; -1;
-<a name="109" href="#109">109</a>     }
-<a name="110" href="#110">110</a> 
-<a name="111" href="#111">111</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;equals&lt;/code&gt; answers a boolean indicating if the</em>
-<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * parameter &lt;code&gt;string1&lt;/code&gt; is equal to the parameter</em>
-<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * &lt;code&gt;string2&lt;/code&gt;.</em>
-<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
-<a name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * </em>
-<a name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * @param string1</em>
-<a name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * @param string2</em>
-<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * @return boolean</em>
-<a name="121" href="#121">121</a> <em class="jxr_javadoccomment">     */</em>
-<a name="122" href="#122">122</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(String string1, String string2) {
-<a name="123" href="#123">123</a>         <strong class="jxr_keyword">return</strong> string1.equals(string2);
-<a name="124" href="#124">124</a>     }
-<a name="125" href="#125">125</a> 
-<a name="126" href="#126">126</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="127" href="#127">127</a> <em class="jxr_javadoccomment">     * Returns true if the char is a special char for regex</em>
-<a name="128" href="#128">128</a> <em class="jxr_javadoccomment">     */</em>
-<a name="129" href="#129">129</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isRegexSpecialChar(<strong class="jxr_keyword">char</strong> ch) {
-<a name="130" href="#130">130</a>         <strong class="jxr_keyword">return</strong> (ch == '*' || ch == '?' || ch == '+' || ch == '[' || ch == ']'
-<a name="131" href="#131">131</a>                 || ch == '(' || ch == ')' || ch == '|' || ch == '^'
-<a name="132" href="#132">132</a>                 || ch == '$' || ch == '.' || ch == '{' || ch == '}' || ch == '&#92;&#92;');
-<a name="133" href="#133">133</a>     }
-<a name="134" href="#134">134</a> 
-<a name="135" href="#135">135</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * Returns true if the char is a special char for sieve matching</em>
-<a name="137" href="#137">137</a> <em class="jxr_javadoccomment">     */</em>
-<a name="138" href="#138">138</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isSieveMatcherSpecialChar(<strong class="jxr_keyword">char</strong> ch) {
-<a name="139" href="#139">139</a>         <strong class="jxr_keyword">return</strong> (ch == '*' || ch == '?' || ch == '&#92;&#92;');
-<a name="140" href="#140">140</a>     }
-<a name="141" href="#141">141</a> 
-<a name="142" href="#142">142</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="143" href="#143">143</a> <em class="jxr_javadoccomment">     * Converts a Sieve pattern in a java regex pattern</em>
-<a name="144" href="#144">144</a> <em class="jxr_javadoccomment">     */</em>
-<a name="145" href="#145">145</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String sieveToJavaRegex(String pattern) {
-<a name="146" href="#146">146</a>         <strong class="jxr_keyword">int</strong> ch;
-<a name="147" href="#147">147</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer(2 * pattern.length());
-<a name="148" href="#148">148</a>         <strong class="jxr_keyword">boolean</strong> lastCharWasStar = false;
-<a name="149" href="#149">149</a>         <strong class="jxr_keyword">for</strong> (ch = 0; ch &lt; pattern.length(); ch++) {
-<a name="150" href="#150">150</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong> nextChar = pattern.charAt(ch);
-<a name="151" href="#151">151</a>             <strong class="jxr_keyword">switch</strong> (nextChar) {
-<a name="152" href="#152">152</a>             <strong class="jxr_keyword">case</strong> '*':
-<a name="153" href="#153">153</a>                 <em class="jxr_comment">//</em>
-<a name="154" href="#154">154</a>                 <em class="jxr_comment">// Java Matcher has issues with repeated stars</em>
-<a name="155" href="#155">155</a>                 <em class="jxr_comment">//</em>
-<a name="156" href="#156">156</a>                 <strong class="jxr_keyword">if</strong> (!lastCharWasStar) {
-<a name="157" href="#157">157</a>                     buffer.append(<span class="jxr_string">".*"</span>);
-<a name="158" href="#158">158</a>                 }
-<a name="159" href="#159">159</a>                 <strong class="jxr_keyword">break</strong>;
-<a name="160" href="#160">160</a>             <strong class="jxr_keyword">case</strong> '?':
-<a name="161" href="#161">161</a>                 buffer.append('.');
-<a name="162" href="#162">162</a>                 <strong class="jxr_keyword">break</strong>;
-<a name="163" href="#163">163</a>             <strong class="jxr_keyword">case</strong> '&#92;&#92;':
-<a name="164" href="#164">164</a>                 buffer.append('&#92;&#92;');
-<a name="165" href="#165">165</a>                 <strong class="jxr_keyword">if</strong> (ch == pattern.length() - 1)
-<a name="166" href="#166">166</a>                     buffer.append('&#92;&#92;');
-<a name="167" href="#167">167</a>                 <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (isSieveMatcherSpecialChar(pattern.charAt(ch + 1)))
-<a name="168" href="#168">168</a>                     buffer.append(pattern.charAt(++ch));
-<a name="169" href="#169">169</a>                 <strong class="jxr_keyword">else</strong>
-<a name="170" href="#170">170</a>                     buffer.append('&#92;&#92;');
-<a name="171" href="#171">171</a>                 <strong class="jxr_keyword">break</strong>;
-<a name="172" href="#172">172</a>             <strong class="jxr_keyword">default</strong>:
-<a name="173" href="#173">173</a>                 <strong class="jxr_keyword">if</strong> (isRegexSpecialChar(nextChar))
-<a name="174" href="#174">174</a>                     buffer.append('&#92;&#92;');
-<a name="175" href="#175">175</a>                 buffer.append(nextChar);
-<a name="176" href="#176">176</a>                 <strong class="jxr_keyword">break</strong>;
-<a name="177" href="#177">177</a>             }
-<a name="178" href="#178">178</a>             <em class="jxr_comment">// Workaround for issue with Java Matcher</em>
-<a name="179" href="#179">179</a>             lastCharWasStar = '*' == nextChar;
-<a name="180" href="#180">180</a>         }
-<a name="181" href="#181">181</a>         <strong class="jxr_keyword">return</strong> buffer.toString();
-<a name="182" href="#182">182</a>     }
-<a name="183" href="#183">183</a> 
-<a name="184" href="#184">184</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;contains&lt;code&gt; answers a boolean indicating if the parameter </em>
-<a name="186" href="#186">186</a> <em class="jxr_javadoccomment">     * &lt;code&gt;container&lt;/code&gt; contains the parameter &lt;code&gt;contents&lt;/code&gt; using an</em>
-<a name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
-<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * @param comparatorName not null</em>
-<a name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * @param container not null</em>
-<a name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * @param contents not null</em>
-<a name="191" href="#191">191</a> <em class="jxr_javadoccomment">     * @param context not null</em>
-<a name="192" href="#192">192</a> <em class="jxr_javadoccomment">     * @return boolean</em>
-<a name="193" href="#193">193</a> <em class="jxr_javadoccomment">     */</em>
-<a name="194" href="#194">194</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> contains(String comparatorName, String container,
-<a name="195" href="#195">195</a>             String contents, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> LookupException {
-<a name="196" href="#196">196</a>         <a href="../../../../org/apache/jsieve/comparators/Contains.html">Contains</a> comparatorObj = context.getComparator(comparatorName);
-<a name="197" href="#197">197</a>         <strong class="jxr_keyword">return</strong> comparatorObj.contains(container, contents);
-<a name="198" href="#198">198</a>     }
-<a name="199" href="#199">199</a> 
-<a name="200" href="#200">200</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="201" href="#201">201</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;is&lt;code&gt; answers a boolean indicating if the parameter </em>
-<a name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * &lt;code&gt;container&lt;/code&gt; is equal to the parameter &lt;code&gt;contents&lt;/code&gt; using </em>
-<a name="203" href="#203">203</a> <em class="jxr_javadoccomment">     * an instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
-<a name="204" href="#204">204</a> <em class="jxr_javadoccomment">     * @param comparatorName</em>
-<a name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * @param string1 not null</em>
-<a name="206" href="#206">206</a> <em class="jxr_javadoccomment">     * @param string2 not null</em>
-<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">     * @param context not null</em>
-<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">     * @return boolean</em>
-<a name="209" href="#209">209</a> <em class="jxr_javadoccomment">     */</em>
-<a name="210" href="#210">210</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> is(String comparatorName, String string1,
-<a name="211" href="#211">211</a>             String string2, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> LookupException {
-<a name="212" href="#212">212</a>         <a href="../../../../org/apache/jsieve/comparators/Equals.html">Equals</a> comparatorObj = context.getComparator(comparatorName);
-<a name="213" href="#213">213</a>         <strong class="jxr_keyword">return</strong> comparatorObj.equals(string1, string2);
-<a name="214" href="#214">214</a>     }
-<a name="215" href="#215">215</a> 
-<a name="216" href="#216">216</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;matches&lt;/code&gt; answers a boolean indicating if the</em>
-<a name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * parameter</em>
-<a name="219" href="#219">219</a> <em class="jxr_javadoccomment">     * &lt;code&gt;string/code&gt; is matched by the patterm &lt;code&gt;glob&lt;/code&gt; using an</em>
-<a name="220" href="#220">220</a> <em class="jxr_javadoccomment">     * instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
-<a name="221" href="#221">221</a> <em class="jxr_javadoccomment">     * @param comparatorName not null</em>
-<a name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * @param string not null</em>
-<a name="223" href="#223">223</a> <em class="jxr_javadoccomment">     * @param glob not null</em>
-<a name="224" href="#224">224</a> <em class="jxr_javadoccomment">     * @param context not null</em>
-<a name="225" href="#225">225</a> <em class="jxr_javadoccomment">     * @return boolean</em>
-<a name="226" href="#226">226</a> <em class="jxr_javadoccomment">     */</em>
-<a name="227" href="#227">227</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> matches(String comparatorName, String string,
-<a name="228" href="#228">228</a>             String glob, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> SieveException {
-<a name="229" href="#229">229</a>         <a href="../../../../org/apache/jsieve/comparators/Matches.html">Matches</a> comparatorObj = context.getComparator(comparatorName);
-<a name="230" href="#230">230</a>         <strong class="jxr_keyword">return</strong> comparatorObj.matches(string, glob);
-<a name="231" href="#231">231</a>     }
-<a name="232" href="#232">232</a> 
-<a name="233" href="#233">233</a> }
+<a name="86" href="#86">86</a>          <strong class="jxr_keyword">try</strong> {
+<a name="87" href="#87">87</a>              String regex = sieveToJavaRegex(glob);
+<a name="88" href="#88">88</a>              <strong class="jxr_keyword">final</strong> Matcher matcher = Pattern.compile(regex).matcher(string);
+<a name="89" href="#89">89</a>              <strong class="jxr_keyword">return</strong> matcher.matches();
+<a name="90" href="#90">90</a>          } <strong class="jxr_keyword">catch</strong> (PatternSyntaxException e) {
+<a name="91" href="#91">91</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/jsieve/exception/SievePatternException.html">SievePatternException</a>(e.getMessage());
+<a name="92" href="#92">92</a>          }
+<a name="93" href="#93">93</a>      }
+<a name="94" href="#94">94</a>  
+<a name="95" href="#95">95</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="96" href="#96">96</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * Method &lt;code&gt;contains&lt;/code&gt; answers a boolean indicating if the</em>
+<a name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * parameter &lt;code&gt;container&lt;/code&gt; contains the parameter</em>
+<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * &lt;code&gt;contents&lt;/code&gt;.</em>
+<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="101" href="#101">101</a> <em class="jxr_javadoccomment">     * </em>
+<a name="102" href="#102">102</a> <em class="jxr_javadoccomment">     * @param container</em>
+<a name="103" href="#103">103</a> <em class="jxr_javadoccomment">     * @param contents</em>
+<a name="104" href="#104">104</a> <em class="jxr_javadoccomment">     * @return boolean</em>
+<a name="105" href="#105">105</a> <em class="jxr_javadoccomment">     */</em>
+<a name="106" href="#106">106</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> contains(String container, String contents) {
+<a name="107" href="#107">107</a>         <strong class="jxr_keyword">return</strong> container.indexOf(contents) &gt; -1;
+<a name="108" href="#108">108</a>     }
+<a name="109" href="#109">109</a> 
+<a name="110" href="#110">110</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="111" href="#111">111</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a name="112" href="#112">112</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;equals&lt;/code&gt; answers a boolean indicating if the</em>
+<a name="113" href="#113">113</a> <em class="jxr_javadoccomment">     * parameter &lt;code&gt;string1&lt;/code&gt; is equal to the parameter</em>
+<a name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * &lt;code&gt;string2&lt;/code&gt;.</em>
+<a name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
+<a name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * </em>
+<a name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * @param string1</em>
+<a name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * @param string2</em>
+<a name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * @return boolean</em>
+<a name="120" href="#120">120</a> <em class="jxr_javadoccomment">     */</em>
+<a name="121" href="#121">121</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(String string1, String string2) {
+<a name="122" href="#122">122</a>         <strong class="jxr_keyword">return</strong> string1.equals(string2);
+<a name="123" href="#123">123</a>     }
+<a name="124" href="#124">124</a> 
+<a name="125" href="#125">125</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="126" href="#126">126</a> <em class="jxr_javadoccomment">     * Returns true if the char is a special char for regex</em>
+<a name="127" href="#127">127</a> <em class="jxr_javadoccomment">     */</em>
+<a name="128" href="#128">128</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isRegexSpecialChar(<strong class="jxr_keyword">char</strong> ch) {
+<a name="129" href="#129">129</a>         <strong class="jxr_keyword">return</strong> (ch == '*' || ch == '?' || ch == '+' || ch == '[' || ch == ']'
+<a name="130" href="#130">130</a>                 || ch == '(' || ch == ')' || ch == '|' || ch == '^'
+<a name="131" href="#131">131</a>                 || ch == '$' || ch == '.' || ch == '{' || ch == '}' || ch == '&#92;&#92;');
+<a name="132" href="#132">132</a>     }
+<a name="133" href="#133">133</a> 
+<a name="134" href="#134">134</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * Returns true if the char is a special char for sieve matching</em>
+<a name="136" href="#136">136</a> <em class="jxr_javadoccomment">     */</em>
+<a name="137" href="#137">137</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isSieveMatcherSpecialChar(<strong class="jxr_keyword">char</strong> ch) {
+<a name="138" href="#138">138</a>         <strong class="jxr_keyword">return</strong> (ch == '*' || ch == '?' || ch == '&#92;&#92;');
+<a name="139" href="#139">139</a>     }
+<a name="140" href="#140">140</a> 
+<a name="141" href="#141">141</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">     * Converts a Sieve pattern in a java regex pattern</em>
+<a name="143" href="#143">143</a> <em class="jxr_javadoccomment">     */</em>
+<a name="144" href="#144">144</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String sieveToJavaRegex(String pattern) {
+<a name="145" href="#145">145</a>         <strong class="jxr_keyword">int</strong> ch;
+<a name="146" href="#146">146</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer(2 * pattern.length());
+<a name="147" href="#147">147</a>         <strong class="jxr_keyword">boolean</strong> lastCharWasStar = false;
+<a name="148" href="#148">148</a>         <strong class="jxr_keyword">for</strong> (ch = 0; ch &lt; pattern.length(); ch++) {
+<a name="149" href="#149">149</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong> nextChar = pattern.charAt(ch);
+<a name="150" href="#150">150</a>             <strong class="jxr_keyword">switch</strong> (nextChar) {
+<a name="151" href="#151">151</a>             <strong class="jxr_keyword">case</strong> '*':
+<a name="152" href="#152">152</a>                 <em class="jxr_comment">//</em>
+<a name="153" href="#153">153</a>                 <em class="jxr_comment">// Java Matcher has issues with repeated stars</em>
+<a name="154" href="#154">154</a>                 <em class="jxr_comment">//</em>
+<a name="155" href="#155">155</a>                 <strong class="jxr_keyword">if</strong> (!lastCharWasStar) {
+<a name="156" href="#156">156</a>                     buffer.append(<span class="jxr_string">".*"</span>);
+<a name="157" href="#157">157</a>                 }
+<a name="158" href="#158">158</a>                 <strong class="jxr_keyword">break</strong>;
+<a name="159" href="#159">159</a>             <strong class="jxr_keyword">case</strong> '?':
+<a name="160" href="#160">160</a>                 buffer.append('.');
+<a name="161" href="#161">161</a>                 <strong class="jxr_keyword">break</strong>;
+<a name="162" href="#162">162</a>             <strong class="jxr_keyword">case</strong> '&#92;&#92;':
+<a name="163" href="#163">163</a>                 buffer.append('&#92;&#92;');
+<a name="164" href="#164">164</a>                 <strong class="jxr_keyword">if</strong> (ch == pattern.length() - 1)
+<a name="165" href="#165">165</a>                     buffer.append('&#92;&#92;');
+<a name="166" href="#166">166</a>                 <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (isSieveMatcherSpecialChar(pattern.charAt(ch + 1)))
+<a name="167" href="#167">167</a>                     buffer.append(pattern.charAt(++ch));
+<a name="168" href="#168">168</a>                 <strong class="jxr_keyword">else</strong>
+<a name="169" href="#169">169</a>                     buffer.append('&#92;&#92;');
+<a name="170" href="#170">170</a>                 <strong class="jxr_keyword">break</strong>;
+<a name="171" href="#171">171</a>             <strong class="jxr_keyword">default</strong>:
+<a name="172" href="#172">172</a>                 <strong class="jxr_keyword">if</strong> (isRegexSpecialChar(nextChar))
+<a name="173" href="#173">173</a>                     buffer.append('&#92;&#92;');
+<a name="174" href="#174">174</a>                 buffer.append(nextChar);
+<a name="175" href="#175">175</a>                 <strong class="jxr_keyword">break</strong>;
+<a name="176" href="#176">176</a>             }
+<a name="177" href="#177">177</a>             <em class="jxr_comment">// Workaround for issue with Java Matcher</em>
+<a name="178" href="#178">178</a>             lastCharWasStar = '*' == nextChar;
+<a name="179" href="#179">179</a>         }
+<a name="180" href="#180">180</a>         <strong class="jxr_keyword">return</strong> buffer.toString();
+<a name="181" href="#181">181</a>     }
+<a name="182" href="#182">182</a> 
+<a name="183" href="#183">183</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;contains&lt;code&gt; answers a boolean indicating if the parameter </em>
+<a name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * &lt;code&gt;container&lt;/code&gt; contains the parameter &lt;code&gt;contents&lt;/code&gt; using an</em>
+<a name="186" href="#186">186</a> <em class="jxr_javadoccomment">     * instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
+<a name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * @param comparatorName not null</em>
+<a name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * @param container not null</em>
+<a name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * @param contents not null</em>
+<a name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * @param context not null</em>
+<a name="191" href="#191">191</a> <em class="jxr_javadoccomment">     * @return boolean</em>
+<a name="192" href="#192">192</a> <em class="jxr_javadoccomment">     */</em>
+<a name="193" href="#193">193</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> contains(String comparatorName, String container,
+<a name="194" href="#194">194</a>             String contents, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="195" href="#195">195</a>         <a href="../../../../org/apache/jsieve/comparators/Contains.html">Contains</a> comparatorObj = context.getComparatorManager().getComparator(comparatorName);
+<a name="196" href="#196">196</a>         <strong class="jxr_keyword">return</strong> comparatorObj.contains(container, contents);
+<a name="197" href="#197">197</a>     }
+<a name="198" href="#198">198</a> 
+<a name="199" href="#199">199</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;is&lt;code&gt; answers a boolean indicating if the parameter </em>
+<a name="201" href="#201">201</a> <em class="jxr_javadoccomment">     * &lt;code&gt;container&lt;/code&gt; is equal to the parameter &lt;code&gt;contents&lt;/code&gt; using </em>
+<a name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * an instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
+<a name="203" href="#203">203</a> <em class="jxr_javadoccomment">     * @param comparatorName</em>
+<a name="204" href="#204">204</a> <em class="jxr_javadoccomment">     * @param string1 not null</em>
+<a name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * @param string2 not null</em>
+<a name="206" href="#206">206</a> <em class="jxr_javadoccomment">     * @param context not null</em>
+<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">     * @return boolean</em>
+<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">     */</em>
+<a name="209" href="#209">209</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> is(String comparatorName, String string1,
+<a name="210" href="#210">210</a>             String string2, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> LookupException {
+<a name="211" href="#211">211</a>         <a href="../../../../org/apache/jsieve/comparators/Equals.html">Equals</a> comparatorObj = context.getComparatorManager().getComparator(comparatorName);
+<a name="212" href="#212">212</a>         <strong class="jxr_keyword">return</strong> comparatorObj.equals(string1, string2);
+<a name="213" href="#213">213</a>     }
+<a name="214" href="#214">214</a> 
+<a name="215" href="#215">215</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="216" href="#216">216</a> <em class="jxr_javadoccomment">     * Method &lt;code&gt;matches&lt;/code&gt; answers a boolean indicating if the</em>
+<a name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * parameter</em>
+<a name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * &lt;code&gt;string/code&gt; is matched by the patterm &lt;code&gt;glob&lt;/code&gt; using an</em>
+<a name="219" href="#219">219</a> <em class="jxr_javadoccomment">     * instance of &lt;code&gt;comparatorName&lt;/code&gt;.</em>
+<a name="220" href="#220">220</a> <em class="jxr_javadoccomment">     * @param comparatorName not null</em>
+<a name="221" href="#221">221</a> <em class="jxr_javadoccomment">     * @param string not null</em>
+<a name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * @param glob not null</em>
+<a name="223" href="#223">223</a> <em class="jxr_javadoccomment">     * @param context not null</em>
+<a name="224" href="#224">224</a> <em class="jxr_javadoccomment">     * @return boolean</em>
+<a name="225" href="#225">225</a> <em class="jxr_javadoccomment">     */</em>
+<a name="226" href="#226">226</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> matches(String comparatorName, String string,
+<a name="227" href="#227">227</a>             String glob, <a href="../../../../org/apache/jsieve/SieveContext.html">SieveContext</a> context) <strong class="jxr_keyword">throws</strong> SieveException {
+<a name="228" href="#228">228</a>         <a href="../../../../org/apache/jsieve/comparators/Matches.html">Matches</a> comparatorObj = context.getComparatorManager().getComparator(comparatorName);
+<a name="229" href="#229">229</a>         <strong class="jxr_keyword">return</strong> comparatorObj.matches(string, glob);
+<a name="230" href="#230">230</a>     }
+<a name="231" href="#231">231</a> 
+<a name="232" href="#232">232</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -19,11 +19,11 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
           <meta name="author" content="Apache JAMES Project Team" />
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="http://james.apache.org/" id="bannerLeft">
+                  <a href="../" id="bannerLeft">
     
                                             <img src="images/james-jsieve-logo.gif" alt="" />
     
@@ -46,13 +46,13 @@
   
   
             <div class="xleft">
-        Last Published: 08/03/2009
+        Last Published: 09/05/2009
                       </div>
             <div class="xright">      <a href="../index.html">JAMES Project</a>
           |
           <a href="../imap/index.html">IMAP</a>
           |
-          <a href="../jsieve/index.html">JSieve</a>
+          <a href="index.html">JSieve</a>
           |
           <a href="../jspf/index.html">jSPF</a>
           |
@@ -90,46 +90,54 @@
         <ul>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/main/index.html">Main</a>
+              <a href="main/index.html">Main</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/mailet/index.html">Mailet</a>
+              <a href="mailet/index.html">Mailet</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/util/index.html">Util</a>
+              <a href="util/index.html">Util</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/jira-report.html">Changes</a>
+              <a href="jira-report.html">Changes</a>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/release-notes.html">Release Notes</a>
+              <strong>Release Notes</strong>
         </li>
               
     <li class="none">
-              <a href="http://james.apache.org/jsieve/apidocs/index.html">JavaDocs</a>
+              <a href="apidocs/index.html">JavaDocs</a>
         </li>
           </ul>
           <h5>Specifications</h5>
         <ul>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 (ABNF)</a>
+              <a href="http://www.ietf.org/rfc/rfc2234.txt">RFC 2234 ABNF</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 (ACAP)</a>
+              <a href="http://www.ietf.org/rfc/rfc2244.txt">RFC 2244 ACAP</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 (MDN)</a>
+              <a href="http://www.ietf.org/rfc/rfc2298.txt">RFC 2298 MDN</a>
         </li>
               
     <li class="none">
-              <a href="http://www.ietf.org/rfc/rfc3028.txt">RFC 3028 (Sieve)</a>
+              <a href="http://tools.ietf.org/html/rfc5228">RFC 5228 Sieve</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://tools.ietf.org/html/rfc4790">RFC 4790 IAPCR</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://tools.ietf.org/html/rfc5173">RFC 5173 Body Extension</a>
         </li>
           </ul>
           <h5>0.3 Release</h5>
@@ -234,7 +242,58 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Release Notes</h2></div><div class="section"><h2>Apache JSieve</h2><p>jSieve is a Java implementation of the Sieve mail filtering language defined by RFC 3028. jSieve is implemented as a langauge processor that can be plugged into any internet mail application to add Sieve support.</p><div class="section"><h3>Comments, Questions and Issues</h3><p>jSieve is a sub-project of Apache James. Please direct your comments and questions to the relevant James list.</p><p>To report issues, such as bugs, go to http://issues.apache.org/jira/browse/JSIEVE As jSieve comes with a fairly extensive suite of jUnit Tests, it would be most helpful for bug reports to be accompanied by an illustrative jUnit test case.</p></div><div class="section"><h3>Licensing and legal issues</h3><p>For legal and licensing issues, please look in the legal section of the documentation or read the LICENSE and NOTICE files.</p></div></div><div class="section"><h2>Version 0.3</h2><p>This release is the first to include mailet and utility modules, in addition to the core parsing library. The configuration API has changed significantly to replace magic singletons with POJOs suitable for IoC. The default configuration mechanism has been retained so though calls have changed, existing configurations should still be compatible.</p><p>Utilities include node serializers to xml and sieve script. The mailet module provides Sieve in the James 3 codebase.</p><div class="section"><h3>Changes </h3><div class="section"><h4>Sub-tasks Completed</h4><ul><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-27">JSIEVE-27</a>] - Refactor ComparatorManager</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-29">JSIEVE-29</a>] - Refactor ConfigurationManager</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-32">JSIEVE-32</a>] - Refactor TestManager</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-37">JSIEVE-37</a>] - Push main source down a level</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-38">JSIEVE-38</a>] - Modular Ant Build</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-44">JSIEVE-44</a>] - Create Check Module</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-45">JSIEVE-45</a>] - Extract Reusable Ant Macros</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-46">JSIEVE-46</a>] - Unified Distribution</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-48">JSIEVE-48</a>] - Release Quality Maven Build</li></ul></div><div class="section"><h4>Bugs Fixed</h4><ul><li>[<a href="href='https://issues.apache.org/jira/browse/JSIEVE-49">JSIEVE-49</a>] - CPU spins when :matches expression contains &amp;quot;*************&amp;quot;</li></ul></div><div class="section"><h4>Improvements Made</h4><ul><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-47">JSIEVE-47</a>] - Access to script comments</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-52">JSIEVE-52</a>] - Check Support For Numeric Quantifiers</li></ul></div><div class="section"><h4>New Features Added</h4><ul><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-43">JSIEVE-43</a>] - Add API for generating a Sieve script from a parse tree </li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-50">JSIEVE-50</a>] - Sieve-In-XML (Experimental Preview)</li></ul></div><div class="section"><h4>Tasks Completed</h4><ul><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-16">JSIEVE-16</a>] - Singletons -&gt; IoC</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-24">JSIEVE-24</a>] - Include build time libraries (javacc, javamail, activation) in the source distribution</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-33">JSIEVE-33</a>] - Remove .junit. package name from tests.</li><li>[<a href="https://issues.apache.org/jira/browse/JSIEVE-34">JSIEVE-34</a>] - make jsieve a multimodule project</li></ul></div></div></div>
+        <div class="section"><h2>Release Notes</h2>
+</div>
+<div class="section"><h2>Apache JSieve</h2>
+<p>jSieve is a Java implementation of the Sieve mail filtering language defined by RFC 3028. jSieve is implemented as a langauge processor that can be plugged into any internet mail application to add Sieve support.</p>
+<div class="section"><h3>Comments, Questions and Issues</h3>
+<p>jSieve is a sub-project of Apache James. Please direct your comments and questions to the relevant James list.</p>
+<p>To report issues, such as bugs, go to http://issues.apache.org/jira/browse/JSIEVE As jSieve comes with a fairly extensive suite of jUnit Tests, it would be most helpful for bug reports to be accompanied by an illustrative jUnit test case.</p>
+</div>
+<div class="section"><h3>Licensing and legal issues</h3>
+<p>For legal and licensing issues, please look in the legal section of the documentation or read the LICENSE and NOTICE files.</p>
+</div>
+</div>
+<div class="section"><h2>Version 0.3</h2>
+<p>This release is the first to include mailet and utility modules, in addition to the core parsing library. The configuration API has changed significantly to replace magic singletons with POJOs suitable for IoC. The default configuration mechanism has been retained so though calls have changed, existing configurations should still be compatible.</p>
+<p>Utilities include node serializers to xml and sieve script. The mailet module provides Sieve in the James 3 codebase.</p>
+<div class="section"><h3>Changes </h3>
+<div class="section"><h4>Sub-tasks Completed</h4>
+<ul><li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-27">JSIEVE-27</a>] - Refactor ComparatorManager</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-29">JSIEVE-29</a>] - Refactor ConfigurationManager</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-32">JSIEVE-32</a>] - Refactor TestManager</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-37">JSIEVE-37</a>] - Push main source down a level</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-38">JSIEVE-38</a>] - Modular Ant Build</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-44">JSIEVE-44</a>] - Create Check Module</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-45">JSIEVE-45</a>] - Extract Reusable Ant Macros</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-46">JSIEVE-46</a>] - Unified Distribution</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-48">JSIEVE-48</a>] - Release Quality Maven Build</li>
+</ul>
+</div>
+<div class="section"><h4>Bugs Fixed</h4>
+<ul><li>[<a href="href='https://issues.apache.org/jira/browse/JSIEVE-49">JSIEVE-49</a>] - CPU spins when :matches expression contains &amp;quot;*************&amp;quot;</li>
+</ul>
+</div>
+<div class="section"><h4>Improvements Made</h4>
+<ul><li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-47">JSIEVE-47</a>] - Access to script comments</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-52">JSIEVE-52</a>] - Check Support For Numeric Quantifiers</li>
+</ul>
+</div>
+<div class="section"><h4>New Features Added</h4>
+<ul><li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-43">JSIEVE-43</a>] - Add API for generating a Sieve script from a parse tree </li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-50">JSIEVE-50</a>] - Sieve-In-XML (Experimental Preview)</li>
+</ul>
+</div>
+<div class="section"><h4>Tasks Completed</h4>
+<ul><li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-16">JSIEVE-16</a>] - Singletons -&gt; IoC</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-24">JSIEVE-24</a>] - Include build time libraries (javacc, javamail, activation) in the source distribution</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-33">JSIEVE-33</a>] - Remove .junit. package name from tests.</li>
+<li>[<a class="externalLink" href="https://issues.apache.org/jira/browse/JSIEVE-34">JSIEVE-34</a>] - make jsieve a multimodule project</li>
+</ul>
+</div>
+</div>
+</div>
+
       </div>
     </div>
     <div class="clear">
