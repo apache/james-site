@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Hupa - Building Hupa</title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+          <meta name="author" content="James Hupa Project Team" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                  <a href="http://james.apache.org/index.html" id="bannerLeft">
+    
+                                    <img src="http://james.apache.org/images/james-project-logo.gif" alt="" />
+    
+            </a>
+                        <a href="http://www.apache.org/index.html" id="bannerRight">
+    
+                                    <img src="http://james.apache.org/hupa/images/asf-logo-reduced.gif" alt="" />
+    
+            </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+            <div class="xleft">
+        Last Published: 10/16/2009
+                      </div>
+            <div class="xright">      <a href="http://james.apache.org/index.html">JAMES Project</a>
+          |
+          <a href="http://james.apache.org/server/index.html">Server</a>
+          |
+          <a href="http://james.apache.org/mailet/index.html">Mailets</a>
+          |
+          <a href="http://james.apache.org/jspf/index.html">jSPF</a>
+          |
+          <a href="http://james.apache.org/mime4j/index.html">Mime4J</a>
+          |
+          <a href="http://james.apache.org/jsieve/index.html">JSieve</a>
+          |
+          <a href="http://james.apache.org/postage/index.html">Postage</a>
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+                   <h5>Hupa</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../index.html">Overview</a>
+        </li>
+          </ul>
+          <h5>Get Involved</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../dev/environment.html">Setup</a>
+        </li>
+          </ul>
+          <h5>Project</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../issue-tracking.html">Bug Database</a>
+        </li>
+              
+    <li class="none">
+              <a href="../source-repository.html">Source Code</a>
+        </li>
+              
+    <li class="none">
+              <a href="../team-list.html">Who We Are</a>
+        </li>
+              
+    <li class="none">
+              <a href="../license.html">License</a>
+        </li>
+          </ul>
+          <h5>Modules</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="../hupa-shared/index.html">hupa-shared</a>
+        </li>
+              
+    <li class="none">
+              <a href="../hupa-server/index.html">hupa-server</a>
+        </li>
+              
+    <li class="none">
+              <a href="../hupa-widgets/index.html">hupa-widgets</a>
+        </li>
+              
+    <li class="none">
+              <a href="../hupa-client/index.html">hupa</a>
+        </li>
+          </ul>
+          <h5>Project Documentation</h5>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="../project-info.html">Project Information</a>
+              </li>
+          </ul>
+          <h5>Downloads</h5>
+        <ul>
+              
+    <li class="none">
+              <a href="http://james.apache.org/download.cgi">Stable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://james.apache.org/downloadunstable.cgi">Unstable releases</a>
+        </li>
+              
+    <li class="none">
+              <a href="http://people.apache.org/builds/james/nightly/">Nightly builds</a>
+        </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+            <img alt="Built by Maven" src="../images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="Building_Hupa_for_the_first_time"></a>Building Hupa for the first time</h2>
+<p>
+        Because Hupa uses maven2 as its build tool, the management of
+        dependencies is rather simple. You can either run
+        <code>mvn clean package</code>
+        from the command line, or use the built-in m2eclipse plugin.
+      </p>
+<div class="section"><h3><a name="Setting_up_m2eclipse_to_build_Hupa"></a>Setting up m2eclipse to build Hupa</h3>
+<p>
+          m2eclipse provides you with the ability to create different run
+          configurations for maven. So you can run
+          <b>what</b>
+          you want,
+          <b>when</b>
+          you want, by a single mouse-click. To configure the m2 run
+          configuration, please do a right click on the project name and select
+          Run As -&gt; Run Configurations ...
+        </p>
+<p>
+          In the Following Dialog left-click Maven Build, then click on New on
+          the top. On the dialogs main content area provide the run
+          configuration now. In the Name field type
+          <code>hupa clean package</code>
+          . Uder the Base Directory should be written
+          <code>${workspace_loc:/hupa-trunk}</code>
+          (if your project is only named hupa, then it would be
+          ${workspace_loc:/hupa}).
+          <img src="../images/dev/run-configurations-main.jpg" />
+          Underneath you should check Update Snaphots
+          and on the Refresh Tab you
+          should check Refresh Resources upon
+          Completion and The Project
+          Containing the selected Resource.
+          <img src="../images/dev/run-configurations-refresh.jpg" />
+          After all is set, click Apply and then click Run. It will take a hile
+          to download all the dependencies. Once it is finished, it will refresh
+          eclipse, and we are on the final step to start it up the first time.
+        </p>
+</div>
+</div>
+<div class="section"><h2><a name="Setting_up_the_Google_Plugin"></a>Setting up the Google Plugin</h2>
+<p>
+        Because Hupa uses the google web toolkit (GWT) it is necessary to
+        adjust
+        the output directory of the project. If you don't the Stand alone
+        google
+        browser will not be able to pick up the compiled classes. So, to
+        change
+        it do a right-click on your project choos Run As -&gt; Web Application. But
+        beware you will get an error! We do this only because the plugin sets
+        almost everything up for us. After we get the error right-click on the
+        project again, and choose Run As -&gt; Run Configurations... then expand
+        the Web Application Node, go to the Arguments tab and add
+        <code>-Dhupa.config.file=${project_loc}/server/src/main/webapp/WEB-INF/conf/config.properties
+        </code>
+        to the VM Arguments Textbox. Click on Apply and close the dialog.
+        After
+        that go into the Package Explorer
+        View and expand server -&gt; src -&gt; main
+        -&gt; webapp -&gt; WEB-INF -&gt; conf and
+        double click on config.properties.
+        Adjust these settings to your liking.
+        googlemail is setup by default.
+        Last thing to setup is the projects output path. Do a right-click on the
+        project and choose Build Path -&gt; Configure Build Path... Under the
+        Source tab put &lt;your_project_name&gt;/war/WEB-INF/classes in the
+        output directory textbox.
+      </p>
+</div>
+<div class="section"><h2><a name="Starting_Hupa"></a>Starting Hupa</h2>
+<p>
+        So we are finally there. We can run Hupa for the first time. Do a
+        right-click
+        on the project choose Run As -&gt; Run Configurations... -&gt;
+        Hupa.html and
+        click on run.
+    </p>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2009
+    
+          The Apache Software Foundation
+          
+  
+
+  
+    
+  
+  
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "UA-1384591-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
