@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="20" tokens="149">
+<file line="365" path="/opt/development/2011/ai-workspace/classic/src/main/java/org/apache/james/ai/classic/BayesianAnalyzer.java"/>
+<file line="412" path="/opt/development/2011/ai-workspace/classic/src/main/java/org/apache/james/ai/classic/BayesianAnalyzer.java"/>
+<codefragment>
+<![CDATA[
+        String token;
+        String header = "";
+
+        // Build a Map of tokens encountered.
+        while ((token = nextToken(stream)) != null) {
+            boolean endingLine = false;
+            if (token.length() > 0 && token.charAt(token.length() - 1) == '\n') {
+                endingLine = true;
+                token = token.substring(0, token.length() - 1);
+            }
+
+            if (token.length() > 0 && header.length() + token.length() < 90 && !allDigits(token)) {
+                if (token.equals("From:") || token.equals("Return-Path:") || token.equals("Subject:") || token.equals("To:")) {
+                    header = token;
+                    if (!endingLine) {
+                        continue;
+                    }
+                }
+
+                token = header + token;
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>
