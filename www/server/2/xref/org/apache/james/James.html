@@ -1,0 +1,898 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" /><title>James xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../apidocs/org/apache/james/James.html">View Javadoc</a></div><pre>
+
+<a name="1" href="#1">1</a>   <em>/**<em>***************************************************************</em></em>
+<a name="2" href="#2">2</a>   <em> * Licensed to the Apache Software Foundation (ASF) under one   *</em>
+<a name="3" href="#3">3</a>   <em> * or more contributor license agreements.  See the NOTICE file *</em>
+<a name="4" href="#4">4</a>   <em> * distributed with this work for additional information        *</em>
+<a name="5" href="#5">5</a>   <em> * regarding copyright ownership.  The ASF licenses this file   *</em>
+<a name="6" href="#6">6</a>   <em> * to you under the Apache License, Version 2.0 (the            *</em>
+<a name="7" href="#7">7</a>   <em> * "License"); you may not use this file except in compliance   *</em>
+<a name="8" href="#8">8</a>   <em> * with the License.  You may obtain a copy of the License at   *</em>
+<a name="9" href="#9">9</a>   <em> *                                                              *</em>
+<a name="10" href="#10">10</a>  <em> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a>                 *</em>
+<a name="11" href="#11">11</a>  <em> *                                                              *</em>
+<a name="12" href="#12">12</a>  <em> * Unless required by applicable law or agreed to in writing,   *</em>
+<a name="13" href="#13">13</a>  <em> * software distributed under the License is distributed on an  *</em>
+<a name="14" href="#14">14</a>  <em> * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *</em>
+<a name="15" href="#15">15</a>  <em> * KIND, either express or implied.  See the License for the    *</em>
+<a name="16" href="#16">16</a>  <em> * specific language governing permissions and limitations      *</em>
+<a name="17" href="#17">17</a>  <em> * under the License.                                           *</em>
+<a name="18" href="#18">18</a>  <em> ****************************************************************/</em>
+<a name="19" href="#19">19</a>  
+<a name="20" href="#20">20</a>  <strong>package</strong> org.apache.james;
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>  <strong>import</strong> org.apache.avalon.cornerstone.services.store.Store;
+<a name="23" href="#23">23</a>  <strong>import</strong> org.apache.avalon.framework.activity.Initializable;
+<a name="24" href="#24">24</a>  <strong>import</strong> org.apache.avalon.framework.configuration.Configurable;
+<a name="25" href="#25">25</a>  <strong>import</strong> org.apache.avalon.framework.configuration.Configuration;
+<a name="26" href="#26">26</a>  <strong>import</strong> org.apache.avalon.framework.configuration.ConfigurationException;
+<a name="27" href="#27">27</a>  <strong>import</strong> org.apache.avalon.framework.configuration.DefaultConfiguration;
+<a name="28" href="#28">28</a>  <strong>import</strong> org.apache.avalon.framework.container.ContainerUtil;
+<a name="29" href="#29">29</a>  <strong>import</strong> org.apache.avalon.framework.context.Context;
+<a name="30" href="#30">30</a>  <strong>import</strong> org.apache.avalon.framework.context.Contextualizable;
+<a name="31" href="#31">31</a>  <strong>import</strong> org.apache.avalon.framework.context.DefaultContext;
+<a name="32" href="#32">32</a>  <strong>import</strong> org.apache.avalon.framework.logger.AbstractLogEnabled;
+<a name="33" href="#33">33</a>  <strong>import</strong> org.apache.avalon.framework.logger.Logger;
+<a name="34" href="#34">34</a>  <strong>import</strong> org.apache.avalon.framework.service.DefaultServiceManager;
+<a name="35" href="#35">35</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceException;
+<a name="36" href="#36">36</a>  <strong>import</strong> org.apache.avalon.framework.service.ServiceManager;
+<a name="37" href="#37">37</a>  <strong>import</strong> org.apache.avalon.framework.service.Serviceable;
+<a name="38" href="#38">38</a>  <strong>import</strong> org.apache.commons.collections.ReferenceMap;
+<a name="39" href="#39">39</a>  
+<a name="40" href="#40">40</a>  <strong>import</strong> org.apache.james.context.AvalonContextUtilities;
+<a name="41" href="#41">41</a>  <strong>import</strong> org.apache.james.core.MailHeaders;
+<a name="42" href="#42">42</a>  <strong>import</strong> org.apache.james.core.MailImpl;
+<a name="43" href="#43">43</a>  <strong>import</strong> org.apache.james.core.MailetConfigImpl;
+<a name="44" href="#44">44</a>  <strong>import</strong> org.apache.james.services.DNSServer;
+<a name="45" href="#45">45</a>  <strong>import</strong> org.apache.james.services.MailRepository;
+<a name="46" href="#46">46</a>  <strong>import</strong> org.apache.james.services.MailServer;
+<a name="47" href="#47">47</a>  <strong>import</strong> org.apache.james.services.SpoolRepository;
+<a name="48" href="#48">48</a>  <strong>import</strong> org.apache.james.services.UsersRepository;
+<a name="49" href="#49">49</a>  <strong>import</strong> org.apache.james.services.UsersStore;
+<a name="50" href="#50">50</a>  <strong>import</strong> org.apache.james.transport.mailets.LocalDelivery;
+<a name="51" href="#51">51</a>  <strong>import</strong> org.apache.james.userrepository.DefaultJamesUser;
+<a name="52" href="#52">52</a>  <strong>import</strong> org.apache.mailet.Mail;
+<a name="53" href="#53">53</a>  <strong>import</strong> org.apache.mailet.MailAddress;
+<a name="54" href="#54">54</a>  <strong>import</strong> org.apache.mailet.Mailet;
+<a name="55" href="#55">55</a>  <strong>import</strong> org.apache.mailet.MailetContext;
+<a name="56" href="#56">56</a>  <strong>import</strong> org.apache.mailet.RFC2822Headers;
+<a name="57" href="#57">57</a>  
+<a name="58" href="#58">58</a>  <strong>import</strong> javax.mail.Address;
+<a name="59" href="#59">59</a>  <strong>import</strong> javax.mail.Message;
+<a name="60" href="#60">60</a>  <strong>import</strong> javax.mail.MessagingException;
+<a name="61" href="#61">61</a>  <strong>import</strong> javax.mail.internet.InternetAddress;
+<a name="62" href="#62">62</a>  <strong>import</strong> javax.mail.internet.MimeMessage;
+<a name="63" href="#63">63</a>  <strong>import</strong> java.io.ByteArrayInputStream;
+<a name="64" href="#64">64</a>  <strong>import</strong> java.io.InputStream;
+<a name="65" href="#65">65</a>  <strong>import</strong> java.io.SequenceInputStream;
+<a name="66" href="#66">66</a>  <strong>import</strong> java.net.InetAddress;
+<a name="67" href="#67">67</a>  <strong>import</strong> java.net.UnknownHostException;
+<a name="68" href="#68">68</a>  <strong>import</strong> java.util.Collection;
+<a name="69" href="#69">69</a>  <strong>import</strong> java.util.Date;
+<a name="70" href="#70">70</a>  <strong>import</strong> java.util.Enumeration;
+<a name="71" href="#71">71</a>  <strong>import</strong> java.util.HashSet;
+<a name="72" href="#72">72</a>  <strong>import</strong> java.util.Hashtable;
+<a name="73" href="#73">73</a>  <strong>import</strong> java.util.Iterator;
+<a name="74" href="#74">74</a>  <strong>import</strong> java.util.Locale;
+<a name="75" href="#75">75</a>  <strong>import</strong> java.util.Map;
+<a name="76" href="#76">76</a>  <strong>import</strong> java.util.Vector;
+<a name="77" href="#77">77</a>  
+<a name="78" href="#78">78</a>  <em>/**<em>*</em></em>
+<a name="79" href="#79">79</a>  <em> * Core class for JAMES. Provides three primary services:</em>
+<a name="80" href="#80">80</a>  <em> * &lt;br> 1) Instantiates resources, such as user repository, and protocol</em>
+<a name="81" href="#81">81</a>  <em> * handlers</em>
+<a name="82" href="#82">82</a>  <em> * &lt;br> 2) Handles interactions between components</em>
+<a name="83" href="#83">83</a>  <em> * &lt;br> 3) Provides container services for Mailets</em>
+<a name="84" href="#84">84</a>  <em> *</em>
+<a name="85" href="#85">85</a>  <em> *</em>
+<a name="86" href="#86">86</a>  <em> * @version This is $Revision: 494012 $</em>
+<a name="87" href="#87">87</a>  
+<a name="88" href="#88">88</a>  <em> */</em>
+<a name="89" href="#89">89</a>  <strong>public</strong> <strong>class</strong> <a href="../../../org/apache/james/James.html">James</a>
+<a name="90" href="#90">90</a>      <strong>extends</strong> AbstractLogEnabled
+<a name="91" href="#91">91</a>      implements Contextualizable, Serviceable, Configurable, JamesMBean, Initializable, MailServer, <a href="../../../org/apache/mailet/MailetContext.html">MailetContext</a> {
+<a name="92" href="#92">92</a>  
+<a name="93" href="#93">93</a>      <em>/**<em>*</em></em>
+<a name="94" href="#94">94</a>  <em>     * The software name and version</em>
+<a name="95" href="#95">95</a>  <em>     */</em>
+<a name="96" href="#96">96</a>      <strong>private</strong> <strong>final</strong> <strong>static</strong> String SOFTWARE_NAME_VERSION = Constants.SOFTWARE_NAME + <span class="string">" "</span> + Constants.SOFTWARE_VERSION;
+<a name="97" href="#97">97</a>  
+<a name="98" href="#98">98</a>      <em>/**<em>*</em></em>
+<a name="99" href="#99">99</a>  <em>     * The component manager used both internally by James and by Mailets.</em>
+<a name="100" href="#100">100</a> <em>     */</em>
+<a name="101" href="#101">101</a>     <strong>private</strong> DefaultServiceManager compMgr; <em class="comment">//Components shared</em>
+<a name="102" href="#102">102</a> 
+<a name="103" href="#103">103</a>     <em>/**<em>*</em></em>
+<a name="104" href="#104">104</a> <em>     * TODO: Investigate what this is supposed to do.  Looks like it</em>
+<a name="105" href="#105">105</a> <em>     *       was supposed to be the Mailet context.</em>
+<a name="106" href="#106">106</a> <em>     */</em>
+<a name="107" href="#107">107</a>     <strong>private</strong> DefaultContext context;
+<a name="108" href="#108">108</a> 
+<a name="109" href="#109">109</a>     <em>/**<em>*</em></em>
+<a name="110" href="#110">110</a> <em>     * The top level configuration object for this server.</em>
+<a name="111" href="#111">111</a> <em>     */</em>
+<a name="112" href="#112">112</a>     <strong>private</strong> Configuration conf;
+<a name="113" href="#113">113</a> 
+<a name="114" href="#114">114</a>     <em>/**<em>*</em></em>
+<a name="115" href="#115">115</a> <em>     * The logger used by the Mailet API.</em>
+<a name="116" href="#116">116</a> <em>     */</em>
+<a name="117" href="#117">117</a>     <strong>private</strong> Logger mailetLogger = <strong>null</strong>;
+<a name="118" href="#118">118</a> 
+<a name="119" href="#119">119</a>     <em>/**<em>*</em></em>
+<a name="120" href="#120">120</a> <em>     * The mail store containing the inbox repository and the spool.</em>
+<a name="121" href="#121">121</a> <em>     */</em>
+<a name="122" href="#122">122</a>     <strong>private</strong> Store store;
+<a name="123" href="#123">123</a> 
+<a name="124" href="#124">124</a>     <em>/**<em>*</em></em>
+<a name="125" href="#125">125</a> <em>     * The store containing the local user repository.</em>
+<a name="126" href="#126">126</a> <em>     */</em>
+<a name="127" href="#127">127</a>     <strong>private</strong> <a href="../../../org/apache/james/services/UsersStore.html">UsersStore</a> usersStore;
+<a name="128" href="#128">128</a> 
+<a name="129" href="#129">129</a>     <em>/**<em>*</em></em>
+<a name="130" href="#130">130</a> <em>     * The spool used for processing mail handled by this server.</em>
+<a name="131" href="#131">131</a> <em>     */</em>
+<a name="132" href="#132">132</a>     <strong>private</strong> <a href="../../../org/apache/james/services/SpoolRepository.html">SpoolRepository</a> spool;
+<a name="133" href="#133">133</a> 
+<a name="134" href="#134">134</a>     <em>/**<em>*</em></em>
+<a name="135" href="#135">135</a> <em>     * The root URL used to get mailboxes from the repository</em>
+<a name="136" href="#136">136</a> <em>     */</em>
+<a name="137" href="#137">137</a>     <strong>private</strong> String inboxRootURL;
+<a name="138" href="#138">138</a> 
+<a name="139" href="#139">139</a>     <em>/**<em>*</em></em>
+<a name="140" href="#140">140</a> <em>     * The user repository for this mail server.  Contains all the users with inboxes</em>
+<a name="141" href="#141">141</a> <em>     * on this server.</em>
+<a name="142" href="#142">142</a> <em>     */</em>
+<a name="143" href="#143">143</a>     <strong>private</strong> <a href="../../../org/apache/james/services/UsersRepository.html">UsersRepository</a> localusers;
+<a name="144" href="#144">144</a> 
+<a name="145" href="#145">145</a>     <em>/**<em>*</em></em>
+<a name="146" href="#146">146</a> <em>     * The collection of domain/server names for which this instance of James</em>
+<a name="147" href="#147">147</a> <em>     * will receive and process mail.</em>
+<a name="148" href="#148">148</a> <em>     */</em>
+<a name="149" href="#149">149</a>     <strong>private</strong> Collection serverNames;
+<a name="150" href="#150">150</a> 
+<a name="151" href="#151">151</a>     <em>/**<em>*</em></em>
+<a name="152" href="#152">152</a> <em>     * Whether to ignore case when looking up user names on this server</em>
+<a name="153" href="#153">153</a> <em>     */</em>
+<a name="154" href="#154">154</a>     <strong>private</strong> <strong>boolean</strong> ignoreCase;
+<a name="155" href="#155">155</a> 
+<a name="156" href="#156">156</a>     <em>/**<em>*</em></em>
+<a name="157" href="#157">157</a> <em>     * The number of mails generated.  Access needs to be synchronized for</em>
+<a name="158" href="#158">158</a> <em>     * thread safety and to ensure that all threads see the latest value.</em>
+<a name="159" href="#159">159</a> <em>     */</em>
+<a name="160" href="#160">160</a>     <strong>private</strong> <strong>static</strong> <strong>long</strong> count;
+<a name="161" href="#161">161</a> 
+<a name="162" href="#162">162</a>     <em>/**<em>*</em></em>
+<a name="163" href="#163">163</a> <em>     * The address of the postmaster for this server</em>
+<a name="164" href="#164">164</a> <em>     */</em>
+<a name="165" href="#165">165</a>     <strong>private</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> postmaster;
+<a name="166" href="#166">166</a> 
+<a name="167" href="#167">167</a>     <em>/**<em>*</em></em>
+<a name="168" href="#168">168</a> <em>     * A map used to store mailboxes and reduce the cost of lookup of individual</em>
+<a name="169" href="#169">169</a> <em>     * mailboxes.</em>
+<a name="170" href="#170">170</a> <em>     */</em>
+<a name="171" href="#171">171</a>     <strong>private</strong> Map mailboxes; <em class="comment">//Not to be shared!</em>
+<a name="172" href="#172">172</a> 
+<a name="173" href="#173">173</a>     <em>/**<em>*</em></em>
+<a name="174" href="#174">174</a> <em>     * A hash table of server attributes</em>
+<a name="175" href="#175">175</a> <em>     * These are the MailetContext attributes</em>
+<a name="176" href="#176">176</a> <em>     */</em>
+<a name="177" href="#177">177</a>     <strong>private</strong> Hashtable attributes = <strong>new</strong> Hashtable();
+<a name="178" href="#178">178</a> 
+<a name="179" href="#179">179</a>     <em>/**<em>*</em></em>
+<a name="180" href="#180">180</a> <em>     * The Avalon context used by the instance</em>
+<a name="181" href="#181">181</a> <em>     */</em>
+<a name="182" href="#182">182</a>     <strong>protected</strong> Context           myContext;
+<a name="183" href="#183">183</a> 
+<a name="184" href="#184">184</a>     <em>/**<em>*</em></em>
+<a name="185" href="#185">185</a> <em>     * Currently used by storeMail to avoid code duplication (we moved store logic to that mailet).</em>
+<a name="186" href="#186">186</a> <em>     * TODO We should remove this and its initialization when we remove storeMail method.</em>
+<a name="187" href="#187">187</a> <em>     */</em>
+<a name="188" href="#188">188</a>     <strong>protected</strong> <a href="../../../org/apache/mailet/Mailet.html">Mailet</a> localDeliveryMailet;
+<a name="189" href="#189">189</a>     
+<a name="190" href="#190">190</a>     <em>/**<em>*</em></em>
+<a name="191" href="#191">191</a> <em>     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(Context)</em>
+<a name="192" href="#192">192</a> <em>     */</em>
+<a name="193" href="#193">193</a>     <strong>public</strong> <strong>void</strong> contextualize(<strong>final</strong> Context context) {
+<a name="194" href="#194">194</a>         <strong>this</strong>.myContext = context;
+<a name="195" href="#195">195</a>     }
+<a name="196" href="#196">196</a> 
+<a name="197" href="#197">197</a>     <em>/**<em>*</em></em>
+<a name="198" href="#198">198</a> <em>     * @see org.apache.avalon.framework.service.Serviceable#service(ServiceManager)</em>
+<a name="199" href="#199">199</a> <em>     */</em>
+<a name="200" href="#200">200</a>     <strong>public</strong> <strong>void</strong> service(ServiceManager comp) {
+<a name="201" href="#201">201</a>         compMgr = <strong>new</strong> DefaultServiceManager(comp);
+<a name="202" href="#202">202</a>         mailboxes = <strong>new</strong> ReferenceMap();
+<a name="203" href="#203">203</a>     }
+<a name="204" href="#204">204</a> 
+<a name="205" href="#205">205</a>     <em>/**<em>*</em></em>
+<a name="206" href="#206">206</a> <em>     * @see org.apache.avalon.framework.configuration.Configurable#configure(Configuration)</em>
+<a name="207" href="#207">207</a> <em>     */</em>
+<a name="208" href="#208">208</a>     <strong>public</strong> <strong>void</strong> configure(Configuration conf) {
+<a name="209" href="#209">209</a>         <strong>this</strong>.conf = conf;
+<a name="210" href="#210">210</a>     }
+<a name="211" href="#211">211</a> 
+<a name="212" href="#212">212</a>     <em>/**<em>*</em></em>
+<a name="213" href="#213">213</a> <em>     * @see org.apache.avalon.framework.activity.Initializable#initialize()</em>
+<a name="214" href="#214">214</a> <em>     */</em>
+<a name="215" href="#215">215</a>     <strong>public</strong> <strong>void</strong> initialize() throws Exception {
+<a name="216" href="#216">216</a> 
+<a name="217" href="#217">217</a>         getLogger().info(<span class="string">"JAMES init..."</span>);
+<a name="218" href="#218">218</a> 
+<a name="219" href="#219">219</a>         <em class="comment">// TODO: This should retrieve a more specific named thread pool from</em>
+<a name="220" href="#220">220</a>         <em class="comment">// Context that is set up in server.xml</em>
+<a name="221" href="#221">221</a>         <strong>try</strong> {
+<a name="222" href="#222">222</a>             store = (Store) compMgr.lookup( Store.ROLE );
+<a name="223" href="#223">223</a>         } <strong>catch</strong> (Exception e) {
+<a name="224" href="#224">224</a>             <strong>if</strong> (getLogger().isWarnEnabled()) {
+<a name="225" href="#225">225</a>                 getLogger().warn(<span class="string">"Can't get Store: "</span> + e);
+<a name="226" href="#226">226</a>             }
+<a name="227" href="#227">227</a>         }
+<a name="228" href="#228">228</a>         <strong>if</strong> (getLogger().isDebugEnabled()) {
+<a name="229" href="#229">229</a>             getLogger().debug(<span class="string">"Using Store: "</span> + store.toString());
+<a name="230" href="#230">230</a>         }
+<a name="231" href="#231">231</a>         <strong>try</strong> {
+<a name="232" href="#232">232</a>             spool = (SpoolRepository) compMgr.lookup( SpoolRepository.ROLE );
+<a name="233" href="#233">233</a>         } <strong>catch</strong> (Exception e) {
+<a name="234" href="#234">234</a>             <strong>if</strong> (getLogger().isWarnEnabled()) {
+<a name="235" href="#235">235</a>                 getLogger().warn(<span class="string">"Can't get spoolRepository: "</span> + e);
+<a name="236" href="#236">236</a>             }
+<a name="237" href="#237">237</a>         }
+<a name="238" href="#238">238</a>         <strong>if</strong> (getLogger().isDebugEnabled()) {
+<a name="239" href="#239">239</a>             getLogger().debug(<span class="string">"Using SpoolRepository: "</span> + spool.toString());
+<a name="240" href="#240">240</a>         }
+<a name="241" href="#241">241</a>         <strong>try</strong> {
+<a name="242" href="#242">242</a>             usersStore = (UsersStore) compMgr.lookup( UsersStore.ROLE );
+<a name="243" href="#243">243</a>         } <strong>catch</strong> (Exception e) {
+<a name="244" href="#244">244</a>             <strong>if</strong> (getLogger().isWarnEnabled()) {
+<a name="245" href="#245">245</a>                 getLogger().warn(<span class="string">"Can't get Store: "</span> + e);
+<a name="246" href="#246">246</a>             }
+<a name="247" href="#247">247</a>         }
+<a name="248" href="#248">248</a>         <strong>if</strong> (getLogger().isDebugEnabled()) {
+<a name="249" href="#249">249</a>             getLogger().debug(<span class="string">"Using UsersStore: "</span> + usersStore.toString());
+<a name="250" href="#250">250</a>         }
+<a name="251" href="#251">251</a> 
+<a name="252" href="#252">252</a>         String hostName = <strong>null</strong>;
+<a name="253" href="#253">253</a>         <strong>try</strong> {
+<a name="254" href="#254">254</a>             hostName = InetAddress.getLocalHost().getHostName();
+<a name="255" href="#255">255</a>         } <strong>catch</strong>  (UnknownHostException ue) {
+<a name="256" href="#256">256</a>             hostName = <span class="string">"localhost"</span>;
+<a name="257" href="#257">257</a>         }
+<a name="258" href="#258">258</a> 
+<a name="259" href="#259">259</a>         context = <strong>new</strong> DefaultContext();
+<a name="260" href="#260">260</a>         context.put(<span class="string">"HostName"</span>, hostName);
+<a name="261" href="#261">261</a>         getLogger().info(<span class="string">"Local host is: "</span> + hostName);
+<a name="262" href="#262">262</a> 
+<a name="263" href="#263">263</a>         <em class="comment">// Get the domains and hosts served by this instance</em>
+<a name="264" href="#264">264</a>         serverNames = <strong>new</strong> HashSet();
+<a name="265" href="#265">265</a>         Configuration serverConf = conf.getChild(<span class="string">"servernames"</span>);
+<a name="266" href="#266">266</a>         <strong>if</strong> (serverConf.getAttributeAsBoolean(<span class="string">"autodetect"</span>) &amp;&amp; (!hostName.equals(<span class="string">"localhost"</span>))) {
+<a name="267" href="#267">267</a>             serverNames.add(hostName.toLowerCase(Locale.US));
+<a name="268" href="#268">268</a>         }
+<a name="269" href="#269">269</a> 
+<a name="270" href="#270">270</a>         <strong>final</strong> Configuration[] serverNameConfs =
+<a name="271" href="#271">271</a>             conf.getChild( <span class="string">"servernames"</span> ).getChildren( <span class="string">"servername"</span> );
+<a name="272" href="#272">272</a>         <strong>for</strong> ( <strong>int</strong> i = 0; i &lt; serverNameConfs.length; i++ ) {
+<a name="273" href="#273">273</a>             serverNames.add( serverNameConfs[i].getValue().toLowerCase(Locale.US));
+<a name="274" href="#274">274</a> 
+<a name="275" href="#275">275</a>             <strong>if</strong> (serverConf.getAttributeAsBoolean(<span class="string">"autodetectIP"</span>, <strong>true</strong>)) {
+<a name="276" href="#276">276</a>                 <strong>try</strong> {
+<a name="277" href="#277">277</a>                     <em class="comment">/*<em class="comment"> This adds the IP address(es) for each host to support</em></em>
+<a name="278" href="#278">278</a> <em class="comment">                     * support &lt;user@address-literal> - RFC 2821, sec 4.1.3.</em>
+<a name="279" href="#279">279</a> <em class="comment">                     * It might be proper to use the actual IP addresses</em>
+<a name="280" href="#280">280</a> <em class="comment">                     * available on this server, but we can't do that</em>
+<a name="281" href="#281">281</a> <em class="comment">                     * without NetworkInterface from JDK 1.4.  Because of</em>
+<a name="282" href="#282">282</a> <em class="comment">                     * Virtual Hosting considerations, we may need to modify</em>
+<a name="283" href="#283">283</a> <em class="comment">                     * this to keep hostname and IP associated, rather than</em>
+<a name="284" href="#284">284</a> <em class="comment">                     * just both in the set.</em>
+<a name="285" href="#285">285</a> <em class="comment">                     */</em>
+<a name="286" href="#286">286</a>                     InetAddress[] addrs = InetAddress.getAllByName(serverNameConfs[i].getValue());
+<a name="287" href="#287">287</a>                     <strong>for</strong> (<strong>int</strong> j = 0; j &lt; addrs.length ; j++) {
+<a name="288" href="#288">288</a>                         serverNames.add(addrs[j].getHostAddress());
+<a name="289" href="#289">289</a>                     }
+<a name="290" href="#290">290</a>                 }
+<a name="291" href="#291">291</a>                 <strong>catch</strong>(Exception genericException) {
+<a name="292" href="#292">292</a>                     getLogger().error(<span class="string">"Cannot get IP address(es) for "</span> + serverNameConfs[i].getValue());
+<a name="293" href="#293">293</a>                 }
+<a name="294" href="#294">294</a>             }
+<a name="295" href="#295">295</a>         }
+<a name="296" href="#296">296</a>         <strong>if</strong> (serverNames.isEmpty()) {
+<a name="297" href="#297">297</a>             <strong>throw</strong> <strong>new</strong> ConfigurationException( <span class="string">"Fatal configuration error: no servernames specified!"</span>);
+<a name="298" href="#298">298</a>         }
+<a name="299" href="#299">299</a> 
+<a name="300" href="#300">300</a>         <strong>if</strong> (getLogger().isInfoEnabled()) {
+<a name="301" href="#301">301</a>             <strong>for</strong> (Iterator i = serverNames.iterator(); i.hasNext(); ) {
+<a name="302" href="#302">302</a>                 getLogger().info(<span class="string">"Handling mail for: "</span> + i.next());
+<a name="303" href="#303">303</a>             }
+<a name="304" href="#304">304</a>         }
+<a name="305" href="#305">305</a>         
+<a name="306" href="#306">306</a>         String defaultDomain = (String) serverNames.iterator().next();
+<a name="307" href="#307">307</a>         context.put(Constants.DEFAULT_DOMAIN, defaultDomain);
+<a name="308" href="#308">308</a>         attributes.put(Constants.DEFAULT_DOMAIN, defaultDomain);
+<a name="309" href="#309">309</a> 
+<a name="310" href="#310">310</a>         <em class="comment">// Get postmaster</em>
+<a name="311" href="#311">311</a>         String postMasterAddress = conf.getChild(<span class="string">"postmaster"</span>).getValue(<span class="string">"postmaster"</span>).toLowerCase(Locale.US);
+<a name="312" href="#312">312</a>         <em class="comment">// if there is no @domain part, then add the first one from the</em>
+<a name="313" href="#313">313</a>         <em class="comment">// list of supported domains that isn't localhost.  If that</em>
+<a name="314" href="#314">314</a>         <em class="comment">// doesn't work, use the hostname, even if it is localhost.</em>
+<a name="315" href="#315">315</a>         <strong>if</strong> (postMasterAddress.indexOf('@') &lt; 0) {
+<a name="316" href="#316">316</a>             String domainName = <strong>null</strong>;    <em class="comment">// the domain to use</em>
+<a name="317" href="#317">317</a>             <em class="comment">// loop through candidate domains until we find one or exhaust the list</em>
+<a name="318" href="#318">318</a>             <strong>for</strong> ( <strong>int</strong> i = 0; domainName == <strong>null</strong> &amp;&amp; i &lt; serverNameConfs.length ; i++ ) {
+<a name="319" href="#319">319</a>                 String serverName = serverNameConfs[i].getValue().toLowerCase(Locale.US);
+<a name="320" href="#320">320</a>                 <strong>if</strong> (!(<span class="string">"localhost"</span>.equals(serverName))) {
+<a name="321" href="#321">321</a>                     domainName = serverName;    <em class="comment">// ok, not localhost, so use it</em>
+<a name="322" href="#322">322</a>                 }
+<a name="323" href="#323">323</a>             }
+<a name="324" href="#324">324</a>             <em class="comment">// if we found a suitable domain, use it.  Otherwise fallback to the host name.</em>
+<a name="325" href="#325">325</a>             postMasterAddress = postMasterAddress + <span class="string">"@"</span> + (domainName != <strong>null</strong> ? domainName : hostName);
+<a name="326" href="#326">326</a>         }
+<a name="327" href="#327">327</a>         <strong>this</strong>.postmaster = <strong>new</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a>( postMasterAddress );
+<a name="328" href="#328">328</a>         context.put( Constants.POSTMASTER, postmaster );
+<a name="329" href="#329">329</a> 
+<a name="330" href="#330">330</a>         <strong>if</strong> (!isLocalServer(postmaster.getHost())) {
+<a name="331" href="#331">331</a>             StringBuffer warnBuffer
+<a name="332" href="#332">332</a>                 = <strong>new</strong> StringBuffer(320)
+<a name="333" href="#333">333</a>                         .append(<span class="string">"The specified postmaster address ( "</span>)
+<a name="334" href="#334">334</a>                         .append(postmaster)
+<a name="335" href="#335">335</a>                         .append(<span class="string">" ) is not a local address.  This is not necessarily a problem, but it does mean that emails addressed to the postmaster will be routed to another server.  For some configurations this may cause problems."</span>);
+<a name="336" href="#336">336</a>             getLogger().warn(warnBuffer.toString());
+<a name="337" href="#337">337</a>         }
+<a name="338" href="#338">338</a> 
+<a name="339" href="#339">339</a>         Configuration userNamesConf = conf.getChild(<span class="string">"usernames"</span>);
+<a name="340" href="#340">340</a>         ignoreCase = userNamesConf.getAttributeAsBoolean(<span class="string">"ignoreCase"</span>, false);
+<a name="341" href="#341">341</a>         <strong>boolean</strong> enableAliases = userNamesConf.getAttributeAsBoolean(<span class="string">"enableAliases"</span>, false);
+<a name="342" href="#342">342</a>         <strong>boolean</strong> enableForwarding = userNamesConf.getAttributeAsBoolean(<span class="string">"enableForwarding"</span>, false);
+<a name="343" href="#343">343</a>         attributes.put(Constants.DEFAULT_ENABLE_ALIASES,<strong>new</strong> Boolean(enableAliases));
+<a name="344" href="#344">344</a>         attributes.put(Constants.DEFAULT_ENABLE_FORWARDING,<strong>new</strong> Boolean(enableForwarding));
+<a name="345" href="#345">345</a>         attributes.put(Constants.DEFAULT_IGNORE_USERNAME_CASE,<strong>new</strong> Boolean(ignoreCase));
+<a name="346" href="#346">346</a> 
+<a name="347" href="#347">347</a>         <em class="comment">//Get localusers</em>
+<a name="348" href="#348">348</a>         <strong>try</strong> {
+<a name="349" href="#349">349</a>             localusers = (UsersRepository) compMgr.lookup(UsersRepository.ROLE);
+<a name="350" href="#350">350</a>         } <strong>catch</strong> (Exception e) {
+<a name="351" href="#351">351</a>             getLogger().error(<span class="string">"Cannot open private UserRepository"</span>);
+<a name="352" href="#352">352</a>             <strong>throw</strong> e;
+<a name="353" href="#353">353</a>         }
+<a name="354" href="#354">354</a>         <em class="comment">//}</em>
+<a name="355" href="#355">355</a>         compMgr.put( UsersRepository.ROLE, localusers);
+<a name="356" href="#356">356</a>         getLogger().info(<span class="string">"Local users repository opened"</span>);
+<a name="357" href="#357">357</a> 
+<a name="358" href="#358">358</a>         Configuration inboxConf = conf.getChild(<span class="string">"inboxRepository"</span>);
+<a name="359" href="#359">359</a>         Configuration inboxRepConf = inboxConf.getChild(<span class="string">"repository"</span>);
+<a name="360" href="#360">360</a>         <em class="comment">// we could delete this block. I didn't remove this because I'm not sure</em>
+<a name="361" href="#361">361</a>         <em class="comment">// wether we need the "check" of the inbox repository here, or not.</em>
+<a name="362" href="#362">362</a>         <strong>try</strong> {
+<a name="363" href="#363">363</a>             store.select(inboxRepConf);
+<a name="364" href="#364">364</a>         } <strong>catch</strong> (Exception e) {
+<a name="365" href="#365">365</a>             getLogger().error(<span class="string">"Cannot open private MailRepository"</span>);
+<a name="366" href="#366">366</a>             <strong>throw</strong> e;
+<a name="367" href="#367">367</a>         }
+<a name="368" href="#368">368</a>         inboxRootURL = inboxRepConf.getAttribute(<span class="string">"destinationURL"</span>);
+<a name="369" href="#369">369</a> 
+<a name="370" href="#370">370</a>         getLogger().info(<span class="string">"Private Repository LocalInbox opened"</span>);
+<a name="371" href="#371">371</a> 
+<a name="372" href="#372">372</a>         <em class="comment">// Add this to comp</em>
+<a name="373" href="#373">373</a>         compMgr.put( MailServer.ROLE, <strong>this</strong>);
+<a name="374" href="#374">374</a> 
+<a name="375" href="#375">375</a>         <em class="comment">// For mailet engine provide MailetContext</em>
+<a name="376" href="#376">376</a>         <em class="comment">//compMgr.put("org.apache.mailet.MailetContext", this);</em>
+<a name="377" href="#377">377</a>         <em class="comment">// For AVALON aware mailets and matchers, we put the Component object as</em>
+<a name="378" href="#378">378</a>         <em class="comment">// an attribute</em>
+<a name="379" href="#379">379</a>         attributes.put(Constants.AVALON_COMPONENT_MANAGER, compMgr);
+<a name="380" href="#380">380</a> 
+<a name="381" href="#381">381</a>         <em class="comment">//Temporary get out to allow complex mailet config files to stop blocking sergei sozonoff's work on bouce processing</em>
+<a name="382" href="#382">382</a>         java.io.File configDir = AvalonContextUtilities.getFile(myContext, <span class="string">"file://conf/"</span>);
+<a name="383" href="#383">383</a>         attributes.put(<span class="string">"confDir"</span>, configDir.getCanonicalPath());
+<a name="384" href="#384">384</a> 
+<a name="385" href="#385">385</a>         <em class="comment">// We can safely remove this and the localDeliveryField when we </em>
+<a name="386" href="#386">386</a>         <em class="comment">// remove the storeMail method from James and from the MailetContext</em>
+<a name="387" href="#387">387</a>         DefaultConfiguration conf = <strong>new</strong> DefaultConfiguration(<span class="string">"mailet"</span>, <span class="string">"generated:James.initialize()"</span>);
+<a name="388" href="#388">388</a>         <a href="../../../org/apache/james/core/MailetConfigImpl.html">MailetConfigImpl</a> configImpl = <strong>new</strong> <a href="../../../org/apache/james/core/MailetConfigImpl.html">MailetConfigImpl</a>();
+<a name="389" href="#389">389</a>         configImpl.setMailetName(<span class="string">"LocalDelivery"</span>);
+<a name="390" href="#390">390</a>         configImpl.setConfiguration(conf);
+<a name="391" href="#391">391</a>         configImpl.setMailetContext(<strong>this</strong>);
+<a name="392" href="#392">392</a>         localDeliveryMailet = <strong>new</strong> <a href="../../../org/apache/james/transport/mailets/LocalDelivery.html">LocalDelivery</a>();
+<a name="393" href="#393">393</a>         localDeliveryMailet.init(configImpl);
+<a name="394" href="#394">394</a> 
+<a name="395" href="#395">395</a>         System.out.println(SOFTWARE_NAME_VERSION);
+<a name="396" href="#396">396</a>         getLogger().info(<span class="string">"JAMES ...init end"</span>);
+<a name="397" href="#397">397</a>     }
+<a name="398" href="#398">398</a> 
+<a name="399" href="#399">399</a>     <em>/**<em>*</em></em>
+<a name="400" href="#400">400</a> <em>     * Place a mail on the spool for processing</em>
+<a name="401" href="#401">401</a> <em>     *</em>
+<a name="402" href="#402">402</a> <em>     * @param message the message to send</em>
+<a name="403" href="#403">403</a> <em>     *</em>
+<a name="404" href="#404">404</a> <em>     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="405" href="#405">405</a> <em>     *                            on the spool</em>
+<a name="406" href="#406">406</a> <em>     */</em>
+<a name="407" href="#407">407</a>     <strong>public</strong> <strong>void</strong> sendMail(MimeMessage message) throws MessagingException {
+<a name="408" href="#408">408</a>         <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender = <strong>new</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a>((InternetAddress)message.getFrom()[0]);
+<a name="409" href="#409">409</a>         Collection recipients = <strong>new</strong> HashSet();
+<a name="410" href="#410">410</a>         Address addresses[] = message.getAllRecipients();
+<a name="411" href="#411">411</a>         <strong>if</strong> (addresses != <strong>null</strong>) {
+<a name="412" href="#412">412</a>             <strong>for</strong> (<strong>int</strong> i = 0; i &lt; addresses.length; i++) {
+<a name="413" href="#413">413</a>                 <em class="comment">// Javamail treats the "newsgroups:" header field as a</em>
+<a name="414" href="#414">414</a>                 <em class="comment">// recipient, so we want to filter those out.</em>
+<a name="415" href="#415">415</a>                 <strong>if</strong> ( addresses[i] instanceof InternetAddress ) {
+<a name="416" href="#416">416</a>                     recipients.add(<strong>new</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a>((InternetAddress)addresses[i]));
+<a name="417" href="#417">417</a>                 }
+<a name="418" href="#418">418</a>             }
+<a name="419" href="#419">419</a>         }
+<a name="420" href="#420">420</a>         sendMail(sender, recipients, message);
+<a name="421" href="#421">421</a>     }
+<a name="422" href="#422">422</a> 
+<a name="423" href="#423">423</a>     <em>/**<em>*</em></em>
+<a name="424" href="#424">424</a> <em>     * Place a mail on the spool for processing</em>
+<a name="425" href="#425">425</a> <em>     *</em>
+<a name="426" href="#426">426</a> <em>     * @param sender the sender of the mail</em>
+<a name="427" href="#427">427</a> <em>     * @param recipients the recipients of the mail</em>
+<a name="428" href="#428">428</a> <em>     * @param message the message to send</em>
+<a name="429" href="#429">429</a> <em>     *</em>
+<a name="430" href="#430">430</a> <em>     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="431" href="#431">431</a> <em>     *                            on the spool</em>
+<a name="432" href="#432">432</a> <em>     */</em>
+<a name="433" href="#433">433</a>     <strong>public</strong> <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage message)
+<a name="434" href="#434">434</a>             throws MessagingException {
+<a name="435" href="#435">435</a>         sendMail(sender, recipients, message, Mail.DEFAULT);
+<a name="436" href="#436">436</a>     }
+<a name="437" href="#437">437</a> 
+<a name="438" href="#438">438</a>     <em>/**<em>*</em></em>
+<a name="439" href="#439">439</a> <em>     * Place a mail on the spool for processing</em>
+<a name="440" href="#440">440</a> <em>     *</em>
+<a name="441" href="#441">441</a> <em>     * @param sender the sender of the mail</em>
+<a name="442" href="#442">442</a> <em>     * @param recipients the recipients of the mail</em>
+<a name="443" href="#443">443</a> <em>     * @param message the message to send</em>
+<a name="444" href="#444">444</a> <em>     * @param state the state of the message</em>
+<a name="445" href="#445">445</a> <em>     *</em>
+<a name="446" href="#446">446</a> <em>     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="447" href="#447">447</a> <em>     *                            on the spool</em>
+<a name="448" href="#448">448</a> <em>     */</em>
+<a name="449" href="#449">449</a>     <strong>public</strong> <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, MimeMessage message, String state)
+<a name="450" href="#450">450</a>             throws MessagingException {
+<a name="451" href="#451">451</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> mail = <strong>new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(), sender, recipients, message);
+<a name="452" href="#452">452</a>         <strong>try</strong> {
+<a name="453" href="#453">453</a>             mail.setState(state);
+<a name="454" href="#454">454</a>             sendMail(mail);
+<a name="455" href="#455">455</a>         } <strong>finally</strong> {
+<a name="456" href="#456">456</a>             ContainerUtil.dispose(mail);
+<a name="457" href="#457">457</a>         }
+<a name="458" href="#458">458</a>     }
+<a name="459" href="#459">459</a> 
+<a name="460" href="#460">460</a>     <em>/**<em>*</em></em>
+<a name="461" href="#461">461</a> <em>     * Place a mail on the spool for processing</em>
+<a name="462" href="#462">462</a> <em>     *</em>
+<a name="463" href="#463">463</a> <em>     * @param sender the sender of the mail</em>
+<a name="464" href="#464">464</a> <em>     * @param recipients the recipients of the mail</em>
+<a name="465" href="#465">465</a> <em>     * @param msg an &lt;code>InputStream&lt;/code> containing the message</em>
+<a name="466" href="#466">466</a> <em>     *</em>
+<a name="467" href="#467">467</a> <em>     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="468" href="#468">468</a> <em>     *                            on the spool</em>
+<a name="469" href="#469">469</a> <em>     */</em>
+<a name="470" href="#470">470</a>     <strong>public</strong> <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, Collection recipients, InputStream msg)
+<a name="471" href="#471">471</a>             throws MessagingException {
+<a name="472" href="#472">472</a>         <em class="comment">// parse headers</em>
+<a name="473" href="#473">473</a>         <a href="../../../org/apache/james/core/MailHeaders.html">MailHeaders</a> headers = <strong>new</strong> <a href="../../../org/apache/james/core/MailHeaders.html">MailHeaders</a>(msg);
+<a name="474" href="#474">474</a> 
+<a name="475" href="#475">475</a>         <em class="comment">// if headers do not contains minimum REQUIRED headers fields throw Exception</em>
+<a name="476" href="#476">476</a>         <strong>if</strong> (!headers.isValid()) {
+<a name="477" href="#477">477</a>             <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Some REQURED header field is missing. Invalid Message"</span>);
+<a name="478" href="#478">478</a>         }
+<a name="479" href="#479">479</a>         ByteArrayInputStream headersIn = <strong>new</strong> ByteArrayInputStream(headers.toByteArray());
+<a name="480" href="#480">480</a>         sendMail(<strong>new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(), sender, recipients, <strong>new</strong> SequenceInputStream(headersIn, msg)));
+<a name="481" href="#481">481</a>     }
+<a name="482" href="#482">482</a> 
+<a name="483" href="#483">483</a>     <em>/**<em>*</em></em>
+<a name="484" href="#484">484</a> <em>     * Place a mail on the spool for processing</em>
+<a name="485" href="#485">485</a> <em>     *</em>
+<a name="486" href="#486">486</a> <em>     * @param mail the mail to place on the spool</em>
+<a name="487" href="#487">487</a> <em>     *</em>
+<a name="488" href="#488">488</a> <em>     * @throws MessagingException if an exception is caught while placing the mail</em>
+<a name="489" href="#489">489</a> <em>     *                            on the spool</em>
+<a name="490" href="#490">490</a> <em>     */</em>
+<a name="491" href="#491">491</a>     <strong>public</strong> <strong>void</strong> sendMail(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail) throws MessagingException {
+<a name="492" href="#492">492</a>         <strong>try</strong> {
+<a name="493" href="#493">493</a>             spool.store(mail);
+<a name="494" href="#494">494</a>         } <strong>catch</strong> (Exception e) {
+<a name="495" href="#495">495</a>             getLogger().error(<span class="string">"Error storing message: "</span> + e.getMessage(),e);
+<a name="496" href="#496">496</a>             <strong>try</strong> {
+<a name="497" href="#497">497</a>                 spool.remove(mail);
+<a name="498" href="#498">498</a>             } <strong>catch</strong> (Exception ignored) {
+<a name="499" href="#499">499</a>                 getLogger().error(<span class="string">"Error removing message after an error storing it: "</span> + e.getMessage(),e);
+<a name="500" href="#500">500</a>             }
+<a name="501" href="#501">501</a>             <strong>throw</strong> <strong>new</strong> MessagingException(<span class="string">"Exception spooling message: "</span> + e.getMessage(), e);
+<a name="502" href="#502">502</a>         }
+<a name="503" href="#503">503</a>         <strong>if</strong> (getLogger().isDebugEnabled()) {
+<a name="504" href="#504">504</a>             StringBuffer logBuffer =
+<a name="505" href="#505">505</a>                 <strong>new</strong> StringBuffer(64)
+<a name="506" href="#506">506</a>                         .append(<span class="string">"Mail "</span>)
+<a name="507" href="#507">507</a>                         .append(mail.getName())
+<a name="508" href="#508">508</a>                         .append(<span class="string">" pushed in spool"</span>);
+<a name="509" href="#509">509</a>             getLogger().debug(logBuffer.toString());
+<a name="510" href="#510">510</a>         }
+<a name="511" href="#511">511</a>     }
+<a name="512" href="#512">512</a> 
+<a name="513" href="#513">513</a>     <em>/**<em>*</em></em>
+<a name="514" href="#514">514</a> <em>     * &lt;p>Retrieve the mail repository for a user&lt;/p></em>
+<a name="515" href="#515">515</a> <em>     *</em>
+<a name="516" href="#516">516</a> <em>     * &lt;p>For POP3 server only - at the moment.&lt;/p></em>
+<a name="517" href="#517">517</a> <em>     *</em>
+<a name="518" href="#518">518</a> <em>     * @param userName the name of the user whose inbox is to be retrieved</em>
+<a name="519" href="#519">519</a> <em>     *</em>
+<a name="520" href="#520">520</a> <em>     * @return the POP3 inbox for the user</em>
+<a name="521" href="#521">521</a> <em>     */</em>
+<a name="522" href="#522">522</a>     <strong>public</strong> <strong>synchronized</strong> <a href="../../../org/apache/james/services/MailRepository.html">MailRepository</a> getUserInbox(String userName) {
+<a name="523" href="#523">523</a>         <a href="../../../org/apache/james/services/MailRepository.html">MailRepository</a> userInbox = <strong>null</strong>;
+<a name="524" href="#524">524</a> 
+<a name="525" href="#525">525</a>         userInbox = (MailRepository) mailboxes.get(userName);
+<a name="526" href="#526">526</a> 
+<a name="527" href="#527">527</a>         <strong>if</strong> (userInbox != <strong>null</strong>) {
+<a name="528" href="#528">528</a>             <strong>return</strong> userInbox;
+<a name="529" href="#529">529</a>         } <strong>else</strong> <strong>if</strong> (mailboxes.containsKey(userName)) {
+<a name="530" href="#530">530</a>             <em class="comment">// we have a problem</em>
+<a name="531" href="#531">531</a>             getLogger().error(<span class="string">"Null mailbox for non-null key"</span>);
+<a name="532" href="#532">532</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Error in getUserInbox."</span>);
+<a name="533" href="#533">533</a>         } <strong>else</strong> {
+<a name="534" href="#534">534</a>             <em class="comment">// need mailbox object</em>
+<a name="535" href="#535">535</a>             <strong>if</strong> (getLogger().isDebugEnabled()) {
+<a name="536" href="#536">536</a>                 getLogger().debug(<span class="string">"Retrieving and caching inbox for "</span> + userName );
+<a name="537" href="#537">537</a>             }
+<a name="538" href="#538">538</a>             StringBuffer destinationBuffer =
+<a name="539" href="#539">539</a>                 <strong>new</strong> StringBuffer(192)
+<a name="540" href="#540">540</a>                         .append(inboxRootURL)
+<a name="541" href="#541">541</a>                         .append(userName)
+<a name="542" href="#542">542</a>                         .append(<span class="string">"/"</span>);
+<a name="543" href="#543">543</a>             String destination = destinationBuffer.toString();
+<a name="544" href="#544">544</a>             DefaultConfiguration mboxConf
+<a name="545" href="#545">545</a>                 = <strong>new</strong> DefaultConfiguration(<span class="string">"repository"</span>, <span class="string">"generated:AvalonFileRepository.compose()"</span>);
+<a name="546" href="#546">546</a>             mboxConf.setAttribute(<span class="string">"destinationURL"</span>, destination);
+<a name="547" href="#547">547</a>             mboxConf.setAttribute(<span class="string">"type"</span>, <span class="string">"MAIL"</span>);
+<a name="548" href="#548">548</a>             <strong>try</strong> {
+<a name="549" href="#549">549</a>                 userInbox = (MailRepository) store.select(mboxConf);
+<a name="550" href="#550">550</a>                 <strong>if</strong> (userInbox!=<strong>null</strong>) {
+<a name="551" href="#551">551</a>                     mailboxes.put(userName, userInbox);
+<a name="552" href="#552">552</a>                 }
+<a name="553" href="#553">553</a>             } <strong>catch</strong> (Exception e) {
+<a name="554" href="#554">554</a>                 <strong>if</strong> (getLogger().isErrorEnabled())
+<a name="555" href="#555">555</a>                 {
+<a name="556" href="#556">556</a>                     getLogger().error(<span class="string">"Cannot open user Mailbox"</span> + e);
+<a name="557" href="#557">557</a>                 }
+<a name="558" href="#558">558</a>                 <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Error in getUserInbox."</span> + e);
+<a name="559" href="#559">559</a>             }
+<a name="560" href="#560">560</a>             <strong>return</strong> userInbox;
+<a name="561" href="#561">561</a>         }
+<a name="562" href="#562">562</a>     }
+<a name="563" href="#563">563</a> 
+<a name="564" href="#564">564</a>     <em>/**<em>*</em></em>
+<a name="565" href="#565">565</a> <em>     * Return a new mail id.</em>
+<a name="566" href="#566">566</a> <em>     *</em>
+<a name="567" href="#567">567</a> <em>     * @return a new mail id</em>
+<a name="568" href="#568">568</a> <em>     */</em>
+<a name="569" href="#569">569</a>     <strong>public</strong> String getId() {
+<a name="570" href="#570">570</a>         <strong>long</strong> localCount = -1;
+<a name="571" href="#571">571</a>         <strong>synchronized</strong> (James.<strong>class</strong>) {
+<a name="572" href="#572">572</a>             localCount = count++;
+<a name="573" href="#573">573</a>         }
+<a name="574" href="#574">574</a>         StringBuffer idBuffer =
+<a name="575" href="#575">575</a>             <strong>new</strong> StringBuffer(64)
+<a name="576" href="#576">576</a>                     .append(<span class="string">"Mail"</span>)
+<a name="577" href="#577">577</a>                     .append(System.currentTimeMillis())
+<a name="578" href="#578">578</a>                     .append(<span class="string">"-"</span>)
+<a name="579" href="#579">579</a>                     .append(localCount);
+<a name="580" href="#580">580</a>         <strong>return</strong> idBuffer.toString();
+<a name="581" href="#581">581</a>     }
+<a name="582" href="#582">582</a> 
+<a name="583" href="#583">583</a>     <em>/**<em>*</em></em>
+<a name="584" href="#584">584</a> <em>     * The main method.  Should never be invoked, as James must be called</em>
+<a name="585" href="#585">585</a> <em>     * from within an Avalon framework container.</em>
+<a name="586" href="#586">586</a> <em>     *</em>
+<a name="587" href="#587">587</a> <em>     * @param args the command line arguments</em>
+<a name="588" href="#588">588</a> <em>     */</em>
+<a name="589" href="#589">589</a>     <strong>public</strong> <strong>static</strong> <strong>void</strong> main(String[] args) {
+<a name="590" href="#590">590</a>         System.out.println(<span class="string">"ERROR!"</span>);
+<a name="591" href="#591">591</a>         System.out.println(<span class="string">"Cannot execute James as a stand alone application."</span>);
+<a name="592" href="#592">592</a>         System.out.println(<span class="string">"To run James, you need to have the Avalon framework installed."</span>);
+<a name="593" href="#593">593</a>         System.out.println(<span class="string">"Please refer to the Readme file to know how to run James."</span>);
+<a name="594" href="#594">594</a>     }
+<a name="595" href="#595">595</a> 
+<a name="596" href="#596">596</a>     <em class="comment">//Methods for MailetContext</em>
+<a name="597" href="#597">597</a> 
+<a name="598" href="#598">598</a>     <em>/**<em>*</em></em>
+<a name="599" href="#599">599</a> <em>     * &lt;p>Get the prioritized list of mail servers for a given host.&lt;/p></em>
+<a name="600" href="#600">600</a> <em>     *</em>
+<a name="601" href="#601">601</a> <em>     * &lt;p>TODO: This needs to be made a more specific ordered subtype of Collection.&lt;/p></em>
+<a name="602" href="#602">602</a> <em>     *</em>
+<a name="603" href="#603">603</a> <em>     * @param host</em>
+<a name="604" href="#604">604</a> <em>     */</em>
+<a name="605" href="#605">605</a>     <strong>public</strong> Collection getMailServers(String host) {
+<a name="606" href="#606">606</a>         <a href="../../../org/apache/james/services/DNSServer.html">DNSServer</a> dnsServer = <strong>null</strong>;
+<a name="607" href="#607">607</a>         <strong>try</strong> {
+<a name="608" href="#608">608</a>             dnsServer = (DNSServer) compMgr.lookup( DNSServer.ROLE );
+<a name="609" href="#609">609</a>         } <strong>catch</strong> ( <strong>final</strong> ServiceException cme ) {
+<a name="610" href="#610">610</a>             getLogger().error(<span class="string">"Fatal configuration error - DNS Servers lost!"</span>, cme );
+<a name="611" href="#611">611</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal configuration error - DNS Servers lost!"</span>);
+<a name="612" href="#612">612</a>         }
+<a name="613" href="#613">613</a>         <strong>return</strong> dnsServer.findMXRecords(host);
+<a name="614" href="#614">614</a>     }
+<a name="615" href="#615">615</a> 
+<a name="616" href="#616">616</a>     <strong>public</strong> Object getAttribute(String key) {
+<a name="617" href="#617">617</a>         <strong>return</strong> attributes.get(key);
+<a name="618" href="#618">618</a>     }
+<a name="619" href="#619">619</a> 
+<a name="620" href="#620">620</a>     <strong>public</strong> <strong>void</strong> setAttribute(String key, Object object) {
+<a name="621" href="#621">621</a>         attributes.put(key, object);
+<a name="622" href="#622">622</a>     }
+<a name="623" href="#623">623</a> 
+<a name="624" href="#624">624</a>     <strong>public</strong> <strong>void</strong> removeAttribute(String key) {
+<a name="625" href="#625">625</a>         attributes.remove(key);
+<a name="626" href="#626">626</a>     }
+<a name="627" href="#627">627</a> 
+<a name="628" href="#628">628</a>     <strong>public</strong> Iterator getAttributeNames() {
+<a name="629" href="#629">629</a>         Vector names = <strong>new</strong> Vector();
+<a name="630" href="#630">630</a>         <strong>for</strong> (Enumeration e = attributes.keys(); e.hasMoreElements(); ) {
+<a name="631" href="#631">631</a>             names.add(e.nextElement());
+<a name="632" href="#632">632</a>         }
+<a name="633" href="#633">633</a>         <strong>return</strong> names.iterator();
+<a name="634" href="#634">634</a>     }
+<a name="635" href="#635">635</a> 
+<a name="636" href="#636">636</a>     <em>/**<em>*</em></em>
+<a name="637" href="#637">637</a> <em>     * This generates a response to the Return-Path address, or the address of</em>
+<a name="638" href="#638">638</a> <em>     * the message's sender if the Return-Path is not available.  Note that</em>
+<a name="639" href="#639">639</a> <em>     * this is different than a mail-client's reply, which would use the</em>
+<a name="640" href="#640">640</a> <em>     * Reply-To or From header. This will send the bounce with the server's</em>
+<a name="641" href="#641">641</a> <em>     * postmaster as the sender.</em>
+<a name="642" href="#642">642</a> <em>     */</em>
+<a name="643" href="#643">643</a>     <strong>public</strong> <strong>void</strong> bounce(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail, String message) throws MessagingException {
+<a name="644" href="#644">644</a>         bounce(mail, message, getPostmaster());
+<a name="645" href="#645">645</a>     }
+<a name="646" href="#646">646</a> 
+<a name="647" href="#647">647</a>     <em>/**<em>*</em></em>
+<a name="648" href="#648">648</a> <em>     * This generates a response to the Return-Path address, or the</em>
+<a name="649" href="#649">649</a> <em>     * address of the message's sender if the Return-Path is not</em>
+<a name="650" href="#650">650</a> <em>     * available.  Note that this is different than a mail-client's</em>
+<a name="651" href="#651">651</a> <em>     * reply, which would use the Reply-To or From header.</em>
+<a name="652" href="#652">652</a> <em>     *</em>
+<a name="653" href="#653">653</a> <em>     * Bounced messages are attached in their entirety (headers and</em>
+<a name="654" href="#654">654</a> <em>     * content) and the resulting MIME part type is "message/rfc822".</em>
+<a name="655" href="#655">655</a> <em>     *</em>
+<a name="656" href="#656">656</a> <em>     * The attachment to the subject of the original message (or "No</em>
+<a name="657" href="#657">657</a> <em>     * Subject" if there is no subject in the original message)</em>
+<a name="658" href="#658">658</a> <em>     *</em>
+<a name="659" href="#659">659</a> <em>     * There are outstanding issues with this implementation revolving</em>
+<a name="660" href="#660">660</a> <em>     * around handling of the return-path header.</em>
+<a name="661" href="#661">661</a> <em>     *</em>
+<a name="662" href="#662">662</a> <em>     * MIME layout of the bounce message:</em>
+<a name="663" href="#663">663</a> <em>     *</em>
+<a name="664" href="#664">664</a> <em>     * multipart (mixed)/</em>
+<a name="665" href="#665">665</a> <em>     *     contentPartRoot (body) = mpContent (alternative)/</em>
+<a name="666" href="#666">666</a> <em>     *           part (body) = message</em>
+<a name="667" href="#667">667</a> <em>     *     part (body) = original</em>
+<a name="668" href="#668">668</a> <em>     *</em>
+<a name="669" href="#669">669</a> <em>     */</em>
+<a name="670" href="#670">670</a> 
+<a name="671" href="#671">671</a>     <strong>public</strong> <strong>void</strong> bounce(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail, String message, <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> bouncer) throws MessagingException {
+<a name="672" href="#672">672</a>         <strong>if</strong> (mail.getSender() == <strong>null</strong>) {
+<a name="673" href="#673">673</a>             <strong>if</strong> (getLogger().isInfoEnabled())
+<a name="674" href="#674">674</a>                 getLogger().info(<span class="string">"Mail to be bounced contains a null (&lt;>) reverse path.  No bounce will be sent."</span>);
+<a name="675" href="#675">675</a>             <strong>return</strong>;
+<a name="676" href="#676">676</a>         } <strong>else</strong> {
+<a name="677" href="#677">677</a>             <em class="comment">// Bounce message goes to the reverse path, not to the Reply-To address</em>
+<a name="678" href="#678">678</a>             <strong>if</strong> (getLogger().isInfoEnabled())
+<a name="679" href="#679">679</a>                 getLogger().info(<span class="string">"Processing a bounce request for a message with a reverse path of "</span> + mail.getSender().toString());
+<a name="680" href="#680">680</a>         }
+<a name="681" href="#681">681</a> 
+<a name="682" href="#682">682</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> reply = rawBounce(mail,message);
+<a name="683" href="#683">683</a>         <em class="comment">//Change the sender...</em>
+<a name="684" href="#684">684</a>         reply.getMessage().setFrom(bouncer.toInternetAddress());
+<a name="685" href="#685">685</a>         reply.getMessage().saveChanges();
+<a name="686" href="#686">686</a>         <em class="comment">//Send it off ... with null reverse-path</em>
+<a name="687" href="#687">687</a>         reply.setSender(<strong>null</strong>);
+<a name="688" href="#688">688</a>         sendMail(reply);
+<a name="689" href="#689">689</a>         ContainerUtil.dispose(reply);
+<a name="690" href="#690">690</a>     }
+<a name="691" href="#691">691</a> 
+<a name="692" href="#692">692</a>     <em>/**<em>*</em></em>
+<a name="693" href="#693">693</a> <em>     * Generates a bounce mail that is a bounce of the original message.</em>
+<a name="694" href="#694">694</a> <em>     *</em>
+<a name="695" href="#695">695</a> <em>     * @param bounceText the text to be prepended to the message to describe the bounce condition</em>
+<a name="696" href="#696">696</a> <em>     *</em>
+<a name="697" href="#697">697</a> <em>     * @return the bounce mail</em>
+<a name="698" href="#698">698</a> <em>     *</em>
+<a name="699" href="#699">699</a> <em>     * @throws MessagingException if the bounce mail could not be created</em>
+<a name="700" href="#700">700</a> <em>     */</em>
+<a name="701" href="#701">701</a>     <strong>private</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> rawBounce(<a href="../../../org/apache/mailet/Mail.html">Mail</a> mail, String bounceText) throws MessagingException {
+<a name="702" href="#702">702</a>         <em class="comment">//This sends a message to the james component that is a bounce of the sent message</em>
+<a name="703" href="#703">703</a>         MimeMessage original = mail.getMessage();
+<a name="704" href="#704">704</a>         MimeMessage reply = (MimeMessage) original.reply(false);
+<a name="705" href="#705">705</a>         reply.setSubject(<span class="string">"Re: "</span> + original.getSubject());
+<a name="706" href="#706">706</a>         reply.setSentDate(<strong>new</strong> Date());
+<a name="707" href="#707">707</a>         Collection recipients = <strong>new</strong> HashSet();
+<a name="708" href="#708">708</a>         recipients.add(mail.getSender());
+<a name="709" href="#709">709</a>         InternetAddress addr[] = { <strong>new</strong> InternetAddress(mail.getSender().toString())};
+<a name="710" href="#710">710</a>         reply.setRecipients(Message.RecipientType.TO, addr);
+<a name="711" href="#711">711</a>         reply.setFrom(<strong>new</strong> InternetAddress(mail.getRecipients().iterator().next().toString()));
+<a name="712" href="#712">712</a>         reply.setText(bounceText);
+<a name="713" href="#713">713</a>         reply.setHeader(RFC2822Headers.MESSAGE_ID, <span class="string">"replyTo-"</span> + mail.getName());
+<a name="714" href="#714">714</a>         <strong>return</strong> <strong>new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(
+<a name="715" href="#715">715</a>             <span class="string">"replyTo-"</span> + mail.getName(),
+<a name="716" href="#716">716</a>             <strong>new</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a>(mail.getRecipients().iterator().next().toString()),
+<a name="717" href="#717">717</a>             recipients,
+<a name="718" href="#718">718</a>             reply);
+<a name="719" href="#719">719</a>     }
+<a name="720" href="#720">720</a> 
+<a name="721" href="#721">721</a>     <em>/**<em>*</em></em>
+<a name="722" href="#722">722</a> <em>     * Returns whether that account has a local inbox on this server</em>
+<a name="723" href="#723">723</a> <em>     *</em>
+<a name="724" href="#724">724</a> <em>     * @param name the name to be checked</em>
+<a name="725" href="#725">725</a> <em>     *</em>
+<a name="726" href="#726">726</a> <em>     * @return whether the account has a local inbox</em>
+<a name="727" href="#727">727</a> <em>     */</em>
+<a name="728" href="#728">728</a>     <strong>public</strong> <strong>boolean</strong> isLocalUser(String name) {
+<a name="729" href="#729">729</a>         <strong>if</strong> (ignoreCase) {
+<a name="730" href="#730">730</a>             <strong>return</strong> localusers.containsCaseInsensitive(name);
+<a name="731" href="#731">731</a>         } <strong>else</strong> {
+<a name="732" href="#732">732</a>             <strong>return</strong> localusers.contains(name);
+<a name="733" href="#733">733</a>         }
+<a name="734" href="#734">734</a>     }
+<a name="735" href="#735">735</a> 
+<a name="736" href="#736">736</a>     <em>/**<em>*</em></em>
+<a name="737" href="#737">737</a> <em>     * Returns the address of the postmaster for this server.</em>
+<a name="738" href="#738">738</a> <em>     *</em>
+<a name="739" href="#739">739</a> <em>     * @return the &lt;code>MailAddress&lt;/code> for the postmaster</em>
+<a name="740" href="#740">740</a> <em>     */</em>
+<a name="741" href="#741">741</a>     <strong>public</strong> <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> getPostmaster() {
+<a name="742" href="#742">742</a>         <strong>return</strong> postmaster;
+<a name="743" href="#743">743</a>     }
+<a name="744" href="#744">744</a> 
+<a name="745" href="#745">745</a>     <em>/**<em>*</em></em>
+<a name="746" href="#746">746</a> <em>     * Return the major version number for the server</em>
+<a name="747" href="#747">747</a> <em>     *</em>
+<a name="748" href="#748">748</a> <em>     * @return the major vesion number for the server</em>
+<a name="749" href="#749">749</a> <em>     */</em>
+<a name="750" href="#750">750</a>     <strong>public</strong> <strong>int</strong> getMajorVersion() {
+<a name="751" href="#751">751</a>         <strong>return</strong> 2;
+<a name="752" href="#752">752</a>     }
+<a name="753" href="#753">753</a> 
+<a name="754" href="#754">754</a>     <em>/**<em>*</em></em>
+<a name="755" href="#755">755</a> <em>     * Return the minor version number for the server</em>
+<a name="756" href="#756">756</a> <em>     *</em>
+<a name="757" href="#757">757</a> <em>     * @return the minor vesion number for the server</em>
+<a name="758" href="#758">758</a> <em>     */</em>
+<a name="759" href="#759">759</a>     <strong>public</strong> <strong>int</strong> getMinorVersion() {
+<a name="760" href="#760">760</a>         <strong>return</strong> 3;
+<a name="761" href="#761">761</a>     }
+<a name="762" href="#762">762</a> 
+<a name="763" href="#763">763</a>     <em>/**<em>*</em></em>
+<a name="764" href="#764">764</a> <em>     * Check whether the mail domain in question is to be</em>
+<a name="765" href="#765">765</a> <em>     * handled by this server.</em>
+<a name="766" href="#766">766</a> <em>     *</em>
+<a name="767" href="#767">767</a> <em>     * @param serverName the name of the server to check</em>
+<a name="768" href="#768">768</a> <em>     * @return whether the server is local</em>
+<a name="769" href="#769">769</a> <em>     */</em>
+<a name="770" href="#770">770</a>     <strong>public</strong> <strong>boolean</strong> isLocalServer( <strong>final</strong> String serverName ) {
+<a name="771" href="#771">771</a>         <strong>return</strong> serverNames.contains(serverName.toLowerCase(Locale.US));
+<a name="772" href="#772">772</a>     }
+<a name="773" href="#773">773</a> 
+<a name="774" href="#774">774</a>     <em>/**<em>*</em></em>
+<a name="775" href="#775">775</a> <em>     * Return the type of the server</em>
+<a name="776" href="#776">776</a> <em>     *</em>
+<a name="777" href="#777">777</a> <em>     * @return the type of the server</em>
+<a name="778" href="#778">778</a> <em>     */</em>
+<a name="779" href="#779">779</a>     <strong>public</strong> String getServerInfo() {
+<a name="780" href="#780">780</a>         <strong>return</strong> <span class="string">"Apache JAMES"</span>;
+<a name="781" href="#781">781</a>     }
+<a name="782" href="#782">782</a> 
+<a name="783" href="#783">783</a>     <em>/**<em>*</em></em>
+<a name="784" href="#784">784</a> <em>     * Return the logger for the Mailet API</em>
+<a name="785" href="#785">785</a> <em>     *</em>
+<a name="786" href="#786">786</a> <em>     * @return the logger for the Mailet API</em>
+<a name="787" href="#787">787</a> <em>     */</em>
+<a name="788" href="#788">788</a>     <strong>private</strong> Logger getMailetLogger() {
+<a name="789" href="#789">789</a>         <strong>if</strong> (mailetLogger == <strong>null</strong>) {
+<a name="790" href="#790">790</a>             mailetLogger = getLogger().getChildLogger(<span class="string">"Mailet"</span>);
+<a name="791" href="#791">791</a>         }
+<a name="792" href="#792">792</a>         <strong>return</strong> mailetLogger;
+<a name="793" href="#793">793</a>     }
+<a name="794" href="#794">794</a> 
+<a name="795" href="#795">795</a>     <em>/**<em>*</em></em>
+<a name="796" href="#796">796</a> <em>     * Log a message to the Mailet logger</em>
+<a name="797" href="#797">797</a> <em>     *</em>
+<a name="798" href="#798">798</a> <em>     * @param message the message to pass to the Mailet logger</em>
+<a name="799" href="#799">799</a> <em>     */</em>
+<a name="800" href="#800">800</a>     <strong>public</strong> <strong>void</strong> log(String message) {
+<a name="801" href="#801">801</a>         getMailetLogger().info(message);
+<a name="802" href="#802">802</a>     }
+<a name="803" href="#803">803</a> 
+<a name="804" href="#804">804</a>     <em>/**<em>*</em></em>
+<a name="805" href="#805">805</a> <em>     * Log a message and a Throwable to the Mailet logger</em>
+<a name="806" href="#806">806</a> <em>     *</em>
+<a name="807" href="#807">807</a> <em>     * @param message the message to pass to the Mailet logger</em>
+<a name="808" href="#808">808</a> <em>     * @param t the &lt;code>Throwable&lt;/code> to be logged</em>
+<a name="809" href="#809">809</a> <em>     */</em>
+<a name="810" href="#810">810</a>     <strong>public</strong> <strong>void</strong> log(String message, Throwable t) {
+<a name="811" href="#811">811</a>         getMailetLogger().info(message,t);
+<a name="812" href="#812">812</a>     }
+<a name="813" href="#813">813</a> 
+<a name="814" href="#814">814</a>     <em>/**<em>*</em></em>
+<a name="815" href="#815">815</a> <em>     * Adds a user to this mail server. Currently just adds user to a</em>
+<a name="816" href="#816">816</a> <em>     * UsersRepository.</em>
+<a name="817" href="#817">817</a> <em>     *</em>
+<a name="818" href="#818">818</a> <em>     * @param userName String representing user name, that is the portion of</em>
+<a name="819" href="#819">819</a> <em>     * an email address before the '@&lt;domain>'.</em>
+<a name="820" href="#820">820</a> <em>     * @param password String plaintext password</em>
+<a name="821" href="#821">821</a> <em>     * @return boolean true if user added succesfully, else false.</em>
+<a name="822" href="#822">822</a> <em>     * </em>
+<a name="823" href="#823">823</a> <em>     * @deprecated we deprecated this in the MailServer interface and this is an implementation</em>
+<a name="824" href="#824">824</a> <em>     * this component depends already depends on a UsersRepository: clients could directly </em>
+<a name="825" href="#825">825</a> <em>     * use the addUser of the usersRepository.</em>
+<a name="826" href="#826">826</a> <em>     */</em>
+<a name="827" href="#827">827</a>     <strong>public</strong> <strong>boolean</strong> addUser(String userName, String password) {
+<a name="828" href="#828">828</a>         <strong>boolean</strong> success;
+<a name="829" href="#829">829</a>         <a href="../../../org/apache/james/userrepository/DefaultJamesUser.html">DefaultJamesUser</a> user = <strong>new</strong> <a href="../../../org/apache/james/userrepository/DefaultJamesUser.html">DefaultJamesUser</a>(userName, <span class="string">"SHA"</span>);
+<a name="830" href="#830">830</a>         user.setPassword(password);
+<a name="831" href="#831">831</a>         user.initialize();
+<a name="832" href="#832">832</a>         success = localusers.addUser(user);
+<a name="833" href="#833">833</a>         <strong>return</strong> success;
+<a name="834" href="#834">834</a>     }
+<a name="835" href="#835">835</a> 
+<a name="836" href="#836">836</a>     <em>/**<em>*</em></em>
+<a name="837" href="#837">837</a> <em>     * Performs DNS lookups as needed to find servers which should or might</em>
+<a name="838" href="#838">838</a> <em>     * support SMTP.</em>
+<a name="839" href="#839">839</a> <em>     * Returns an Iterator over HostAddress, a specialized subclass of</em>
+<a name="840" href="#840">840</a> <em>     * javax.mail.URLName, which provides location information for</em>
+<a name="841" href="#841">841</a> <em>     * servers that are specified as mail handlers for the given</em>
+<a name="842" href="#842">842</a> <em>     * hostname.  This is done using MX records, and the HostAddress</em>
+<a name="843" href="#843">843</a> <em>     * instances are returned sorted by MX priority.  If no host is</em>
+<a name="844" href="#844">844</a> <em>     * found for domainName, the Iterator returned will be empty and the</em>
+<a name="845" href="#845">845</a> <em>     * first call to hasNext() will return false.</em>
+<a name="846" href="#846">846</a> <em>     *</em>
+<a name="847" href="#847">847</a> <em>     * @see org.apache.james.DNSServer#getSMTPHostAddresses(String)</em>
+<a name="848" href="#848">848</a> <em>     * @since Mailet API v2.2.0a16-unstable</em>
+<a name="849" href="#849">849</a> <em>     * @param domainName - the domain for which to find mail servers</em>
+<a name="850" href="#850">850</a> <em>     * @return an Iterator over HostAddress instances, sorted by priority</em>
+<a name="851" href="#851">851</a> <em>     */</em>
+<a name="852" href="#852">852</a>     <strong>public</strong> Iterator getSMTPHostAddresses(String domainName) {
+<a name="853" href="#853">853</a>         <a href="../../../org/apache/james/services/DNSServer.html">DNSServer</a> dnsServer = <strong>null</strong>;
+<a name="854" href="#854">854</a>         <strong>try</strong> {
+<a name="855" href="#855">855</a>             dnsServer = (DNSServer) compMgr.lookup( DNSServer.ROLE );
+<a name="856" href="#856">856</a>         } <strong>catch</strong> ( <strong>final</strong> ServiceException cme ) {
+<a name="857" href="#857">857</a>             getLogger().error(<span class="string">"Fatal configuration error - DNS Servers lost!"</span>, cme );
+<a name="858" href="#858">858</a>             <strong>throw</strong> <strong>new</strong> RuntimeException(<span class="string">"Fatal configuration error - DNS Servers lost!"</span>);
+<a name="859" href="#859">859</a>         }
+<a name="860" href="#860">860</a>         <strong>return</strong> dnsServer.getSMTPHostAddresses(domainName);
+<a name="861" href="#861">861</a>     }
+<a name="862" href="#862">862</a> 
+<a name="863" href="#863">863</a>     <em>/**<em>*</em></em>
+<a name="864" href="#864">864</a> <em>     * This method has been moved to LocalDelivery (the only client of the method).</em>
+<a name="865" href="#865">865</a> <em>     * Now we can safely remove it from the Mailet API and from this implementation of MailetContext.</em>
+<a name="866" href="#866">866</a> <em>     *</em>
+<a name="867" href="#867">867</a> <em>     * The local field localDeliveryMailet will be removed when we remove the storeMail method.</em>
+<a name="868" href="#868">868</a> <em>     * </em>
+<a name="869" href="#869">869</a> <em>     * @deprecated since 2.2.0 look at the LocalDelivery code to find out how to do the local delivery.</em>
+<a name="870" href="#870">870</a> <em>     * @see org.apache.mailet.MailetContext#storeMail(org.apache.mailet.MailAddress, org.apache.mailet.MailAddress, javax.mail.internet.MimeMessage)</em>
+<a name="871" href="#871">871</a> <em>     */</em>
+<a name="872" href="#872">872</a>     <strong>public</strong> <strong>void</strong> storeMail(<a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> sender, <a href="../../../org/apache/mailet/MailAddress.html">MailAddress</a> recipient, MimeMessage msg) throws MessagingException {
+<a name="873" href="#873">873</a>         <strong>if</strong> (recipient == <strong>null</strong>) {
+<a name="874" href="#874">874</a>             <strong>throw</strong> <strong>new</strong> IllegalArgumentException(<span class="string">"Recipient for mail to be spooled cannot be null."</span>);
+<a name="875" href="#875">875</a>         }
+<a name="876" href="#876">876</a>         <strong>if</strong> (msg == <strong>null</strong>) {
+<a name="877" href="#877">877</a>             <strong>throw</strong> <strong>new</strong> IllegalArgumentException(<span class="string">"Mail message to be spooled cannot be null."</span>);
+<a name="878" href="#878">878</a>         } 
+<a name="879" href="#879">879</a>         Collection recipients = <strong>new</strong> HashSet();
+<a name="880" href="#880">880</a>         recipients.add(recipient); 
+<a name="881" href="#881">881</a>         <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a> m = <strong>new</strong> <a href="../../../org/apache/james/core/MailImpl.html">MailImpl</a>(getId(),sender,recipients,msg);
+<a name="882" href="#882">882</a>         localDeliveryMailet.service(m);
+<a name="883" href="#883">883</a>         ContainerUtil.dispose(m);
+<a name="884" href="#884">884</a>     }
+<a name="885" href="#885">885</a> }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

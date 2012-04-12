@@ -1,0 +1,1284 @@
+<?xml version="1.0"  encoding="UTF-8"?><pmd-cpd>
+<duplication lines="61" tokens="303">
+<file line="387" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/BayesianAnalysis.java"/>
+<file line="682" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<codefragment>
+<![CDATA[
+        }
+    }
+    
+    private void sendReplyFromPostmaster(Mail mail, String stringContent) throws MessagingException {
+        try {
+            MailAddress notifier = getMailetContext().getPostmaster();
+            
+            MailAddress senderMailAddress = mail.getSender();
+            
+            MimeMessage message = mail.getMessage();
+            //Create the reply message
+            MimeMessage reply = new MimeMessage(Session.getDefaultInstance(System.getProperties(), null));
+            
+            //Create the list of recipients in the Address[] format
+            InternetAddress[] rcptAddr = new InternetAddress[1];
+            rcptAddr[0] = senderMailAddress.toInternetAddress();
+            reply.setRecipients(Message.RecipientType.TO, rcptAddr);
+            
+            //Set the sender...
+            reply.setFrom(notifier.toInternetAddress());
+            
+            //Create the message body
+            MimeMultipart multipart = new MimeMultipart();
+            //Add message as the first mime body part
+            MimeBodyPart part = new MimeBodyPart();
+            part.setContent(stringContent, "text/plain");
+            part.setHeader(RFC2822Headers.CONTENT_TYPE, "text/plain");
+            multipart.addBodyPart(part);
+            
+            reply.setContent(multipart);
+            reply.setHeader(RFC2822Headers.CONTENT_TYPE, multipart.getContentType());
+            
+            //Create the list of recipients in our MailAddress format
+            Set recipients = new HashSet();
+            recipients.add(senderMailAddress);
+            
+            //Set additional headers
+            if (reply.getHeader(RFC2822Headers.DATE)==null){
+                reply.setHeader(RFC2822Headers.DATE, rfc822DateFormat.format(new java.util.Date()));
+            }
+            String subject = message.getSubject();
+            if (subject == null) {
+                subject = "";
+            }
+            if (subject.indexOf("Re:") == 0){
+                reply.setSubject(subject);
+            } else {
+                reply.setSubject("Re:" + subject);
+            }
+            reply.setHeader(RFC2822Headers.IN_REPLY_TO, message.getMessageID());
+            
+            //Send it off...
+            getMailetContext().sendMail(notifier, recipients, reply);
+        }
+        catch (Exception e) {
+            log("Exception found sending reply", e);
+        }
+    }
+    
+    /** Gets the main name of a local customer, handling alias */
+    private String getPrimaryName(String originalUsername) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="74" tokens="272">
+<file line="418" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/CommandListservProcessor.java"/>
+<file line="86" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/GenericListserv.java"/>
+<codefragment>
+<![CDATA[
+    }
+
+    /**
+     * <p>This takes the subject string and reduces (normailzes) it.
+     * Multiple "Re:" entries are reduced to one, and capitalized.  The
+     * prefix is always moved/placed at the beginning of the line, and
+     * extra blanks are reduced, so that the output is always of the
+     * form:</p>
+     * <code>
+     * &lt;prefix&gt; + &lt;one-optional-"Re:"*gt; + &lt;remaining subject&gt;
+     * </code>
+     * <p>I have done extensive testing of this routine with a standalone
+     * driver, and am leaving the commented out debug messages so that
+     * when someone decides to enhance this method, it can be yanked it
+     * from this file, embedded it with a test driver, and the comments
+     * enabled.</p>
+     */
+    static private String normalizeSubject(final String subj, final String prefix) {
+        // JDK IMPLEMENTATION NOTE!  When we require JDK 1.4+, all
+        // occurrences of subject.toString.().indexOf(...) can be
+        // replaced by subject.indexOf(...).
+
+        StringBuffer subject = new StringBuffer(subj);
+        int prefixLength = prefix.length();
+
+        // System.err.println("In:  " + subject);
+
+        // If the "prefix" is not at the beginning the subject line, remove it
+        int index = subject.toString().indexOf(prefix);
+        if (index != 0) {
+            // System.err.println("(p) index: " + index + ", subject: " + subject);
+            if (index > 0) {
+                subject.delete(index, index + prefixLength);
+            }
+            subject.insert(0, prefix); // insert prefix at the front
+        }
+
+        // Replace Re: with RE:
+        String match = "Re:";
+        index = subject.toString().indexOf(match, prefixLength);
+
+        while(index > -1) {
+            // System.err.println("(a) index: " + index + ", subject: " + subject);
+            subject.replace(index, index + match.length(), "RE:");
+            index = subject.toString().indexOf(match, prefixLength);
+            // System.err.println("(b) index: " + index + ", subject: " + subject);
+        }
+
+        // Reduce them to one at the beginning
+        match ="RE:";
+        int indexRE = subject.toString().indexOf(match, prefixLength) + match.length();
+        index = subject.toString().indexOf(match, indexRE);
+        while(index > 0) {
+            // System.err.println("(c) index: " + index + ", subject: " + subject);
+            subject.delete(index, index + match.length());
+            index = subject.toString().indexOf(match, indexRE);
+            // System.err.println("(d) index: " + index + ", subject: " + subject);
+        }
+
+        // Reduce blanks
+        match = "  ";
+        index = subject.toString().indexOf(match, prefixLength);
+        while(index > -1) {
+            // System.err.println("(e) index: " + index + ", subject: " + subject);
+            subject.replace(index, index + match.length(), " ");
+            index = subject.toString().indexOf(match, prefixLength);
+            // System.err.println("(f) index: " + index + ", subject: " + subject);
+        }
+
+
+        // System.err.println("Out: " + subject);
+
+        return subject.toString();
+    }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="60" tokens="242">
+<file line="183" path="/opt/development/v2.3/src/java/org/apache/james/mailrepository/AvalonMailRepository.java"/>
+<file line="483" path="/opt/development/v2.3/src/java/org/apache/james/mailrepository/JDBCMailRepository.java"/>
+<codefragment>
+<![CDATA[
+        }
+    }
+
+    /**
+     * Releases a lock on a message identified by a key
+     *
+     * @param key the key of the message to be unlocked
+     *
+     * @return true if successfully released the lock, false otherwise
+     */
+    public boolean unlock(String key) {
+        if (lock.unlock(key)) {
+            if ((DEEP_DEBUG) && (getLogger().isDebugEnabled())) {
+                StringBuffer debugBuffer =
+                    new StringBuffer(256)
+                            .append("Unlocked ")
+                            .append(key)
+                            .append(" for ")
+                            .append(Thread.currentThread().getName())
+                            .append(" @ ")
+                            .append(new java.util.Date(System.currentTimeMillis()));
+                getLogger().debug(debugBuffer.toString());
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Obtains a lock on a message identified by a key
+     *
+     * @param key the key of the message to be locked
+     *
+     * @return true if successfully obtained the lock, false otherwise
+     */
+    public boolean lock(String key) {
+        if (lock.lock(key)) {
+            if ((DEEP_DEBUG) && (getLogger().isDebugEnabled())) {
+                StringBuffer debugBuffer =
+                    new StringBuffer(256)
+                            .append("Locked ")
+                            .append(key)
+                            .append(" for ")
+                            .append(Thread.currentThread().getName())
+                            .append(" @ ")
+                            .append(new java.util.Date(System.currentTimeMillis()));
+                getLogger().debug(debugBuffer.toString());
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Store this message to the database.  Optionally stores the message
+     * body to the filesystem and only writes the headers to the database.
+     */
+    public void store(Mail mc) throws MessagingException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="41" tokens="226">
+<file line="459" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="582" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<codefragment>
+<![CDATA[
+            out.println("Removing from the white list of " + (new MailAddress(senderUser, senderHost)) + " ...");
+            out.println();
+            
+            MimeMessage message = mail.getMessage() ;
+            
+            Object content= message.getContent();
+            
+            if (message.getContentType().startsWith("text/plain")
+            && content instanceof String) {
+                StringTokenizer st = new StringTokenizer((String) content, " \t\n\r\f,;:<>");
+                while (st.hasMoreTokens()) {
+                    ResultSet selectRS = null;
+                    try {
+                        MailAddress recipientMailAddress;
+                        try {
+                            recipientMailAddress = new MailAddress(st.nextToken());
+                        }
+                        catch (javax.mail.internet.ParseException pe) {
+                            continue;
+                        }
+                        String recipientUser = recipientMailAddress.getUser().toLowerCase(Locale.US);
+                        String recipientHost = recipientMailAddress.getHost().toLowerCase(Locale.US);
+                        
+                        if (getMailetContext().isLocalServer(recipientHost)) {
+                            // not a remote recipient, so skip
+                            continue;
+                        }
+                        
+                        if (conn == null) {
+                            conn = datasource.getConnection();
+                        }
+                        
+                        if (selectStmt == null) {
+                            selectStmt = conn.prepareStatement(selectByPK);
+                        }
+                        selectStmt.setString(1, senderUser);
+                        selectStmt.setString(2, senderHost);
+                        selectStmt.setString(3, recipientUser);
+                        selectStmt.setString(4, recipientHost);
+                        selectRS = selectStmt.executeQuery();
+                        if (!selectRS.next()) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="53" tokens="220">
+<file line="719" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/ClamAVScan.java"/>
+<file line="565" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/smime/SMIMEAbstractSign.java"/>
+<codefragment>
+<![CDATA[
+    private void checkInitParameters(String[] allowedArray) throws MessagingException {
+        // if null then no check is requested
+        if (allowedArray == null) {
+            return;
+        }
+        
+        Collection allowed = new HashSet();
+        Collection bad = new ArrayList();
+        
+        for (int i = 0; i < allowedArray.length; i++) {
+            allowed.add(allowedArray[i]);
+        }
+        
+        Iterator iterator = getInitParameterNames();
+        while (iterator.hasNext()) {
+            String parameter = (String) iterator.next();
+            if (!allowed.contains(parameter)) {
+                bad.add(parameter);
+            }
+        }
+        
+        if (bad.size() > 0) {
+            throw new MessagingException("Unexpected init parameters found: "
+            + arrayToString(bad.toArray()));
+        }
+    }
+    
+    /**
+     * Utility method for obtaining a string representation of an array of Objects.
+     */
+    private final String arrayToString(Object[] array) {
+        if (array == null) {
+            return "null";
+        }
+        StringBuffer sb = new StringBuffer(1024);
+        sb.append("[");
+        for (int i = 0; i < array.length; i++) {
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append(array[i]);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    
+    /**
+     * Utility method that checks if there is at least one address in the "From:" header
+     * same as the <i>reverse-path</i>.
+     * @param mail The mail to check.
+     * @return True if an address is found, false otherwise.
+     */    
+    protected final boolean fromAddressSameAsReverse(Mail mail) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="35" tokens="184">
+<file line="208" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="120" path="/opt/development/v2.3/src/java/org/apache/james/transport/matchers/IsInWhiteList.java"/>
+<codefragment>
+<![CDATA[
+        if (repositoryPath != null) {
+            log("repositoryPath: " + repositoryPath);
+        }
+        else {
+            throw new MessagingException("repositoryPath is null");
+        }
+
+        ServiceManager serviceManager = (ServiceManager) getMailetContext().getAttribute(Constants.AVALON_COMPONENT_MANAGER);
+
+        try {
+            // Get the DataSourceSelector block
+            DataSourceSelector datasources = (DataSourceSelector) serviceManager.lookup(DataSourceSelector.ROLE);
+            // Get the data-source required.
+            int stindex =   repositoryPath.indexOf("://") + 3;
+            String datasourceName = repositoryPath.substring(stindex);
+            datasource = (DataSourceComponent) datasources.select(datasourceName);
+        } catch (Exception e) {
+            throw new MessagingException("Can't get datasource", e);
+        }
+
+         try {
+            // Get the UsersRepository
+            usersStore = (UsersStore)serviceManager.lookup(UsersStore.ROLE);
+            localusers = (UsersRepository)usersStore.getRepository("LocalUsers");
+        } catch (Exception e) {
+            throw new MessagingException("Can't get the local users repository", e);
+        }
+
+        try {
+            initSqlQueries(datasource.getConnection(), getMailetContext());
+        } catch (Exception e) {
+            throw new MessagingException("Exception initializing queries", e);
+        }        
+        
+        selectByPK = sqlQueries.getSqlString("selectByPK", true);
+]]>
+</codefragment>
+</duplication>
+<duplication lines="39" tokens="154">
+<file line="397" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="333" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/Redirect.java"/>
+<codefragment>
+<![CDATA[
+        String addressList = getInitParameter("recipients",getInitParameter("to"));
+                                 
+        // if nothing was specified, return <CODE>null</CODE> meaning no change
+        if (addressList == null) {
+            return null;
+        }
+
+        try {
+            InternetAddress[] iaarray = InternetAddress.parse(addressList, false);
+            for (int i = 0; i < iaarray.length; i++) {
+                String addressString = iaarray[i].getAddress();
+                MailAddress specialAddress = getSpecialAddress(addressString,
+                new String[] {"postmaster", "sender", "from", "replyTo", "reversePath", "unaltered", "recipients", "to", "null"});
+                if (specialAddress != null) {
+                    newRecipients.add(specialAddress);
+                } else {
+                    newRecipients.add(new MailAddress(iaarray[i]));
+                }
+            }
+        } catch (Exception e) {
+            throw new MessagingException("Exception thrown in getRecipients() parsing: " + addressList, e);
+        }
+        if (newRecipients.size() == 0) {
+            throw new MessagingException("Failed to initialize \"recipients\" list; empty <recipients> init parameter found.");
+        }
+
+        return newRecipients;
+    }
+
+    /**
+     * @return the <CODE>to</CODE> init parameter
+     * or the postmaster address
+     * or <CODE>SpecialAddress.SENDER</CODE>
+     * or <CODE>SpecialAddress.REVERSE_PATH</CODE>
+     * or <CODE>SpecialAddress.UNALTERED</CODE>
+     * or the <CODE>recipients</CODE> init parameter if missing
+     * or <CODE>null</CODE> if also the latter is missing
+     */
+    protected InternetAddress[] getTo() throws MessagingException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="34" tokens="153">
+<file line="118" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/Forward.java"/>
+<file line="338" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/Redirect.java"/>
+<codefragment>
+<![CDATA[
+        }
+
+        try {
+            InternetAddress[] iaarray = InternetAddress.parse(addressList, false);
+            for (int i = 0; i < iaarray.length; i++) {
+                String addressString = iaarray[i].getAddress();
+                MailAddress specialAddress = getSpecialAddress(addressString,
+                new String[] {"postmaster", "sender", "from", "replyTo", "reversePath", "unaltered", "recipients", "to", "null"});
+                if (specialAddress != null) {
+                    newRecipients.add(specialAddress);
+                } else {
+                    newRecipients.add(new MailAddress(iaarray[i]));
+                }
+            }
+        } catch (Exception e) {
+            throw new MessagingException("Exception thrown in getRecipients() parsing: " + addressList, e);
+        }
+        if (newRecipients.size() == 0) {
+            throw new MessagingException("Failed to initialize \"recipients\" list; empty <recipients> init parameter found.");
+        }
+
+        return newRecipients;
+    }
+
+    /**
+     * @return the <CODE>to</CODE> init parameter
+     * or the postmaster address
+     * or <CODE>SpecialAddress.SENDER</CODE>
+     * or <CODE>SpecialAddress.REVERSE_PATH</CODE>
+     * or <CODE>SpecialAddress.UNALTERED</CODE>
+     * or the <CODE>recipients</CODE> init parameter if missing
+     * or <CODE>null</CODE> if also the latter is missing
+     */
+    protected InternetAddress[] getTo() throws MessagingException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="32" tokens="150">
+<file line="664" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<file line="746" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<codefragment>
+<![CDATA[
+                                    .append(mc.getName());
+                        responseString = responseBuffer.toString();
+                        writeLoggedFlushedResponse(responseString);
+                    } else {
+                        StringBuffer responseBuffer =
+                            new StringBuffer(64)
+                                    .append(ERR_RESPONSE)
+                                    .append(" Message (")
+                                    .append(num)
+                                    .append(") already deleted.");
+                        responseString = responseBuffer.toString();
+                        writeLoggedFlushedResponse(responseString);
+                    }
+                } catch (IndexOutOfBoundsException npe) {
+                    StringBuffer responseBuffer =
+                        new StringBuffer(64)
+                                .append(ERR_RESPONSE)
+                                .append(" Message (")
+                                .append(num)
+                                .append(") does not exist.");
+                    responseString = responseBuffer.toString();
+                    writeLoggedFlushedResponse(responseString);
+                } catch (NumberFormatException nfe) {
+                    StringBuffer responseBuffer =
+                        new StringBuffer(64)
+                                .append(ERR_RESPONSE)
+                                .append(" ")
+                                .append(argument)
+                                .append(" is not a valid number");
+                    responseString = responseBuffer.toString();
+                    writeLoggedFlushedResponse(responseString);
+                }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="24" tokens="149">
+<file line="371" path="/opt/development/v2.3/src/java/org/apache/james/util/BayesianAnalyzer.java"/>
+<file line="423" path="/opt/development/v2.3/src/java/org/apache/james/util/BayesianAnalyzer.java"/>
+<codefragment>
+<![CDATA[
+        String token;
+        String header = "";
+        
+        //Build a Map of tokens encountered.
+        while ((token = nextToken(stream)) != null) {
+            boolean endingLine = false;
+            if (token.length() > 0 && token.charAt(token.length() - 1) == '\n') {
+                endingLine = true;
+                token = token.substring(0, token.length() - 1);
+            }
+            
+            if (token.length() > 0 && header.length() + token.length() < 90 && !allDigits(token)) {
+                if (token.equals("From:")
+                || token.equals("Return-Path:")
+                || token.equals("Subject:")
+                || token.equals("To:")
+                ) {
+                    header = token;
+                    if (!endingLine) {
+                        continue;
+                    }
+                }
+                
+                token = header + token;
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="144">
+<file line="402" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="118" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/Forward.java"/>
+<codefragment>
+<![CDATA[
+        }
+
+        try {
+            InternetAddress[] iaarray = InternetAddress.parse(addressList, false);
+            for (int i = 0; i < iaarray.length; i++) {
+                String addressString = iaarray[i].getAddress();
+                MailAddress specialAddress = getSpecialAddress(addressString,
+                new String[] {"postmaster", "sender", "from", "replyTo", "reversePath", "unaltered", "recipients", "to", "null"});
+                if (specialAddress != null) {
+                    newRecipients.add(specialAddress);
+                } else {
+                    newRecipients.add(new MailAddress(iaarray[i]));
+                }
+            }
+        } catch (Exception e) {
+            throw new MessagingException("Exception thrown in getRecipients() parsing: " + addressList, e);
+        }
+        if (newRecipients.size() == 0) {
+            throw new MessagingException("Failed to initialize \"recipients\" list; empty <recipients> init parameter found.");
+        }
+
+        return newRecipients;
+    }
+
+    /**
+     * @return null
+     */
+    protected InternetAddress[] getTo() throws MessagingException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="39" tokens="142">
+<file line="737" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="226" path="/opt/development/v2.3/src/java/org/apache/james/transport/matchers/IsInWhiteList.java"/>
+<codefragment>
+<![CDATA[
+            theJDBCUtil.closeJDBCConnection(conn);
+        }
+    }
+
+    /** Gets the main name of a local customer, handling alias */
+    private String getPrimaryName(String originalUsername) {
+        String username;
+        try {
+            username = localusers.getRealName(originalUsername);
+            JamesUser user = (JamesUser) localusers.getUserByName(username);
+            if (user.getAliasing()) {
+                username = user.getAlias();
+            }
+        }
+        catch (Exception e) {
+            username = originalUsername;
+        }
+        return username;
+    }
+    
+    /**
+     * Initializes the sql query environment from the SqlResources file.
+     * Will look for conf/sqlResources.xml.
+     * Will <I>not</I> create the database resources, if missing
+     * (this task is done, if needed, in the {@link WhiteListManager}
+     * initialization routine).
+     * @param conn The connection for accessing the database
+     * @param mailetContext The current mailet context,
+     * for finding the conf/sqlResources.xml file
+     * @throws Exception If any error occurs
+     */
+    public void initSqlQueries(Connection conn, org.apache.mailet.MailetContext mailetContext) throws Exception {
+        try {
+            if (conn.getAutoCommit()) {
+                conn.setAutoCommit(false);
+            }
+            
+            this.sqlFile = new File((String) mailetContext.getAttribute("confDir"), "sqlResources.xml").getCanonicalFile();
+            sqlQueries.init(this.sqlFile, "WhiteList" , conn, getSqlParameters());
+]]>
+</codefragment>
+</duplication>
+<duplication lines="35" tokens="139">
+<file line="787" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="377" path="/opt/development/v2.3/src/java/org/apache/james/util/JDBCBayesianAnalyzer.java"/>
+<codefragment>
+<![CDATA[
+        dbUpdated = createTable(conn, "messageCountsTableName", "createMessageCountsTable");
+        
+        //Commit our changes if necessary.
+        if (conn != null && dbUpdated && !conn.getAutoCommit()) {
+            conn.commit();
+            dbUpdated = false;
+        }
+            
+    }
+    
+    private boolean createTable(Connection conn, String tableNameSqlStringName, String createSqlStringName) throws SQLException {
+        String tableName = sqlQueries.getSqlString(tableNameSqlStringName, true);
+        
+        DatabaseMetaData dbMetaData = conn.getMetaData();
+
+        // Try UPPER, lower, and MixedCase, to see if the table is there.
+        if (theJDBCUtil.tableExists(dbMetaData, tableName)) {
+            return false;
+        }
+        
+        PreparedStatement createStatement = null;
+        
+        try {
+            createStatement =
+                    conn.prepareStatement(sqlQueries.getSqlString(createSqlStringName, true));
+            createStatement.execute();
+            
+            StringBuffer logBuffer = null;
+            logBuffer =
+                    new StringBuffer(64)
+                    .append("Created table '")
+                    .append(tableName)
+                    .append("' using sqlResources string '")
+                    .append(createSqlStringName)
+                    .append("'.");
+]]>
+</codefragment>
+</duplication>
+<duplication lines="35" tokens="137">
+<file line="477" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="373" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/Redirect.java"/>
+<codefragment>
+<![CDATA[
+        String addressList = getInitParameter("to",getInitParameter("recipients"));
+
+        // if nothing was specified, return null meaning no change
+        if (addressList == null) {
+            return null;
+        }
+
+        try {
+            iaarray = InternetAddress.parse(addressList, false);
+            for(int i = 0; i < iaarray.length; ++i) {
+                String addressString = iaarray[i].getAddress();
+                MailAddress specialAddress = getSpecialAddress(addressString,
+                                                new String[] {"postmaster", "sender", "from", "replyTo", "reversePath", "unaltered", "recipients", "to", "null"});
+                if (specialAddress != null) {
+                    iaarray[i] = specialAddress.toInternetAddress();
+                }
+            }
+        } catch (Exception e) {
+            throw new MessagingException("Exception thrown in getTo() parsing: " + addressList, e);
+        }
+        if (iaarray.length == 0) {
+            throw new MessagingException("Failed to initialize \"to\" list; empty <to> init parameter found.");
+        }
+
+        return iaarray;
+    }
+
+    /**
+     * @return the <CODE>reversePath</CODE> init parameter 
+     * or the postmaster address
+     * or <CODE>SpecialAddress.SENDER</CODE>
+     * or <CODE>SpecialAddress.NULL</CODE>
+     * or <CODE>null</CODE> if missing
+     */
+    protected MailAddress getReversePath() throws MessagingException {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="34" tokens="136">
+<file line="939" path="/opt/development/v2.3/src/java/org/apache/james/nntpserver/NNTPHandler.java"/>
+<file line="1002" path="/opt/development/v2.3/src/java/org/apache/james/nntpserver/NNTPHandler.java"/>
+<file line="1070" path="/opt/development/v2.3/src/java/org/apache/james/nntpserver/NNTPHandler.java"/>
+<codefragment>
+<![CDATA[
+                            .append("221 0 ")
+                            .append(param);
+                writeLoggedFlushedResponse(respBuffer.toString());
+            }
+        } else {
+            int newArticleNumber = currentArticleNumber;
+            if ( group == null ) {
+                writeLoggedFlushedResponse("412 no newsgroup selected");
+                return;
+            } else {
+                if ( param == null ) {
+                    if ( currentArticleNumber < 0 ) {
+                        writeLoggedFlushedResponse("420 no current article selected");
+                        return;
+                    } else {
+                        article = group.getArticle(currentArticleNumber);
+                    }
+                }
+                else {
+                    newArticleNumber = Integer.parseInt(param);
+                    article = group.getArticle(newArticleNumber);
+                }
+                if ( article == null ) {
+                    writeLoggedFlushedResponse("423 no such article number in this group");
+                    return;
+                } else {
+                    currentArticleNumber = newArticleNumber;
+                    String articleID = article.getUniqueID();
+                    if (articleID == null) {
+                        articleID = "<0>";
+                    }
+                    StringBuffer respBuffer =
+                        new StringBuffer(128)
+                                .append("221 ")
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="135">
+<file line="522" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="645" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<codefragment>
+<![CDATA[
+                    log("Removal request issued by " + senderMailAddress);
+                }
+                //Commit our changes if necessary.
+                if (conn != null && dbUpdated && !conn.getAutoCommit()) {
+                    conn.commit() ;
+                    dbUpdated = false;
+                }
+            }
+            else {
+                out.println("The message must be plain - no action");
+            }
+            
+            out.println();
+            out.println("Finished");
+            
+            sendReplyFromPostmaster(mail, sout.toString());
+            
+        } catch (SQLException sqle) {
+            out.println("Error accessing the database");
+            sendReplyFromPostmaster(mail, sout.toString());
+            throw new MessagingException("Error accessing the database", sqle);
+        } catch (IOException ioe) {
+            out.println("Error getting message content");
+            sendReplyFromPostmaster(mail, sout.toString());
+            throw new MessagingException("Error getting message content", ioe);
+        } finally {
+            theJDBCUtil.closeJDBCStatement(selectStmt);
+            theJDBCUtil.closeJDBCStatement(deleteStmt);
+]]>
+</codefragment>
+</duplication>
+<duplication lines="26" tokens="133">
+<file line="1430" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="565" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/smime/SMIMEAbstractSign.java"/>
+<codefragment>
+<![CDATA[
+    private void checkInitParameters(String[] allowedArray) throws MessagingException {
+        // if null then no check is requested
+        if (allowedArray == null) {
+            return;
+        }
+        
+        Collection allowed = new HashSet();
+        Collection bad = new ArrayList();
+        
+        for (int i = 0; i < allowedArray.length; i++) {
+            allowed.add(allowedArray[i]);
+        }
+        
+        Iterator iterator = getInitParameterNames();
+        while (iterator.hasNext()) {
+            String parameter = (String) iterator.next();
+            if (!allowed.contains(parameter)) {
+                bad.add(parameter);
+            }
+        }
+        
+        if (bad.size() > 0) {
+            throw new MessagingException("Unexpected init parameters found: "
+            + arrayToString(bad.toArray()));
+        }
+    }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="26" tokens="132">
+<file line="1430" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="719" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/ClamAVScan.java"/>
+<codefragment>
+<![CDATA[
+    protected final void checkInitParameters(String[] allowedArray) throws MessagingException {
+        // if null then no check is requested
+        if (allowedArray == null) {
+            return;
+        }
+        
+        Collection allowed = new HashSet();
+        Collection bad = new ArrayList();
+        
+        for (int i = 0; i < allowedArray.length; i++) {
+            allowed.add(allowedArray[i]);
+        }
+        
+        Iterator iterator = getInitParameterNames();
+        while (iterator.hasNext()) {
+            String parameter = (String) iterator.next();
+            if (!allowed.contains(parameter)) {
+                bad.add(parameter);
+            }
+        }
+        
+        if (bad.size() > 0) {
+            throw new MessagingException("Unexpected init parameters found: "
+                    + arrayToString(bad.toArray()));
+        }
+    }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="32" tokens="129">
+<file line="941" path="/opt/development/v2.3/src/java/org/apache/james/nntpserver/NNTPHandler.java"/>
+<file line="1140" path="/opt/development/v2.3/src/java/org/apache/james/nntpserver/NNTPHandler.java"/>
+<codefragment>
+<![CDATA[
+                writeLoggedResponse(respBuffer.toString());
+            }
+        } else {
+            int newArticleNumber = currentArticleNumber;
+            if ( group == null ) {
+                writeLoggedFlushedResponse("412 no newsgroup selected");
+                return;
+            } else {
+                if ( param == null ) {
+                    if ( currentArticleNumber < 0 ) {
+                        writeLoggedFlushedResponse("420 no current article selected");
+                        return;
+                    } else {
+                        article = group.getArticle(currentArticleNumber);
+                    }
+                }
+                else {
+                    newArticleNumber = Integer.parseInt(param);
+                    article = group.getArticle(newArticleNumber);
+                }
+                if ( article == null ) {
+                    writeLoggedFlushedResponse("423 no such article number in this group");
+                    return;
+                } else {
+                    currentArticleNumber = newArticleNumber;
+                    String articleID = article.getUniqueID();
+                    if (articleID == null) {
+                        articleID = "<0>";
+                    }
+                    StringBuffer respBuffer =
+                        new StringBuffer(128)
+                                .append("220 ")
+]]>
+</codefragment>
+</duplication>
+<duplication lines="12" tokens="127">
+<file line="1033" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="223" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/DSNBounce.java"/>
+<codefragment>
+<![CDATA[
+            setRecipients(newMail, getRecipients(originalMail), originalMail);
+            setTo(newMail, getTo(originalMail), originalMail);
+            setSubjectPrefix(newMail, getSubjectPrefix(originalMail), originalMail);
+            if(newMail.getMessage().getHeader(RFC2822Headers.DATE) == null) {
+                newMail.getMessage().setHeader(RFC2822Headers.DATE,rfc822DateFormat.format(new Date()));
+            }
+            setReplyTo(newMail, getReplyTo(originalMail), originalMail);
+            setReversePath(newMail, getReversePath(originalMail), originalMail);
+            setSender(newMail, getSender(originalMail), originalMail);
+            setIsReply(newMail, isReply(originalMail), originalMail);
+    
+            newMail.getMessage().saveChanges();
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="124">
+<file line="138" path="/opt/development/v2.3/src/java/org/apache/james/util/SqlResources.java"/>
+<file line="142" path="/opt/development/v2.3/src/java/org/apache/james/util/XMLResources.java"/>
+<codefragment>
+<![CDATA[
+                        .append(group)
+                        .append("\' does not exist.");
+            throw new RuntimeException(exceptionBuffer.toString());
+        }
+
+        // Get parameters defined within the file as defaults,
+        // and use supplied parameters as overrides.
+        Map parameters = new HashMap();
+        // First read from the <params> element, if it exists.
+        Element parametersElement = 
+            (Element)(sectionElement.getElementsByTagName("parameters").item(0));
+        if ( parametersElement != null ) {
+            NamedNodeMap params = parametersElement.getAttributes();
+            int paramCount = params.getLength();
+            for (int i = 0; i < paramCount; i++ ) {
+                Attr param = (Attr)params.item(i);
+                String paramName = param.getName();
+                String paramValue = param.getValue();
+                parameters.put(paramName, paramValue);
+            }
+        }
+        // Then copy in the parameters supplied with the call.
+        parameters.putAll(configParameters);
+
+        // 2 maps - one for storing default statements,
+        // the other for statements with a "for" attribute matching this 
+        // connection.
+        Map defaultStrings = new HashMap();
+]]>
+</codefragment>
+</duplication>
+<duplication lines="30" tokens="124">
+<file line="1089" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/AbstractRedirect.java"/>
+<file line="585" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/DSNBounce.java"/>
+<codefragment>
+<![CDATA[
+    protected String newName(Mail mail) throws MessagingException {
+        String oldName = mail.getName();
+
+        // Checking if the original mail name is too long, perhaps because of a
+        // loop caused by a configuration error.
+        // it could cause a "null pointer exception" in AvalonMailRepository much
+        // harder to understand.
+        if (oldName.length() > 76) {
+            int count = 0;
+            int index = 0;
+            while ((index = oldName.indexOf('!', index + 1)) >= 0) {
+                count++;
+            }
+            // It looks like a configuration loop. It's better to stop.
+            if (count > 7) {
+                throw new MessagingException("Unable to create a new message name: too long."
+                                             + " Possible loop in config.xml.");
+            }
+            else {
+                oldName = oldName.substring(0, 76);
+            }
+        }
+
+        StringBuffer nameBuffer =
+            new StringBuffer(64)
+            .append(oldName)
+            .append("-!")
+            .append(random.nextInt(1048576));
+        return nameBuffer.toString();
+    }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="123">
+<file line="327" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="479" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<codefragment>
+<![CDATA[
+                        String recipientUser = recipientMailAddress.getUser().toLowerCase(Locale.US);
+                        String recipientHost = recipientMailAddress.getHost().toLowerCase(Locale.US);
+                        
+                        if (getMailetContext().isLocalServer(recipientHost)) {
+                            // not a remote recipient, so skip
+                            continue;
+                        }
+                        
+                        if (conn == null) {
+                            conn = datasource.getConnection();
+                        }
+                        
+                        if (selectStmt == null) {
+                            selectStmt = conn.prepareStatement(selectByPK);
+                        }
+                        selectStmt.setString(1, senderUser);
+                        selectStmt.setString(2, senderHost);
+                        selectStmt.setString(3, recipientUser);
+                        selectStmt.setString(4, recipientHost);
+                        selectRS = selectStmt.executeQuery();
+                        if (selectRS.next()) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="27" tokens="122">
+<file line="229" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/BayesianAnalysis.java"/>
+<file line="187" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/BayesianAnalysisFeeder.java"/>
+<codefragment>
+<![CDATA[
+        initDb();
+        
+    }
+    
+    private void initDb() throws MessagingException {
+        
+        try {
+            ServiceManager serviceManager = (ServiceManager) getMailetContext().getAttribute(Constants.AVALON_COMPONENT_MANAGER);
+            
+            // Get the DataSourceSelector block
+            DataSourceSelector datasources = (DataSourceSelector) serviceManager.lookup(DataSourceSelector.ROLE);
+            
+            // Get the data-source required.
+            int stindex =   repositoryPath.indexOf("://") + 3;
+            
+            String datasourceName = repositoryPath.substring(stindex);
+            
+            datasource = (DataSourceComponent) datasources.select(datasourceName);
+        } catch (Exception e) {
+            throw new MessagingException("Can't get datasource", e);
+        }
+        
+        try {
+            analyzer.initSqlQueries(datasource.getConnection(), getMailetContext());
+        } catch (Exception e) {
+            throw new MessagingException("Exception initializing queries", e);
+        }        
+]]>
+</codefragment>
+</duplication>
+<duplication lines="23" tokens="117">
+<file line="87" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/JDBCAlias.java"/>
+<file line="125" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/JDBCVirtualUserTable.java"/>
+<codefragment>
+<![CDATA[
+        try {
+            ServiceManager componentManager = (ServiceManager)getMailetContext().getAttribute(Constants.AVALON_COMPONENT_MANAGER);
+            // Get the DataSourceSelector service
+            DataSourceSelector datasources = (DataSourceSelector)componentManager.lookup(DataSourceSelector.ROLE);
+            // Get the data-source required.
+            datasource = (DataSourceComponent)datasources.select(datasourceName);
+
+            conn = datasource.getConnection();
+
+            // Check if the required table exists. If not, complain.
+            DatabaseMetaData dbMetaData = conn.getMetaData();
+            // Need to ask in the case that identifiers are stored, ask the DatabaseMetaInfo.
+            // Try UPPER, lower, and MixedCase, to see if the table is there.
+            if (!(theJDBCUtil.tableExists(dbMetaData, tableName))) {
+                StringBuffer exceptionBuffer =
+                                              new StringBuffer(128)
+                                              .append("Could not find table '")
+                                              .append(tableName)
+                                              .append("' in datasource '")
+                                              .append(datasourceName)
+                                              .append("'");
+                throw new MailetException(exceptionBuffer.toString());
+            }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="116">
+<file line="327" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<file line="602" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/WhiteListManager.java"/>
+<codefragment>
+<![CDATA[
+                        String recipientUser = recipientMailAddress.getUser().toLowerCase(Locale.US);
+                        String recipientHost = recipientMailAddress.getHost().toLowerCase(Locale.US);
+                        
+                        if (getMailetContext().isLocalServer(recipientHost)) {
+                            // not a remote recipient, so skip
+                            continue;
+                        }
+                        
+                        if (conn == null) {
+                            conn = datasource.getConnection();
+                        }
+                        
+                        if (selectStmt == null) {
+                            selectStmt = conn.prepareStatement(selectByPK);
+                        }
+                        selectStmt.setString(1, senderUser);
+                        selectStmt.setString(2, senderHost);
+                        selectStmt.setString(3, recipientUser);
+                        selectStmt.setString(4, recipientHost);
+                        selectRS = selectStmt.executeQuery();
+                        if (!selectRS.next()) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="16" tokens="115">
+<file line="620" path="/opt/development/v2.3/src/java/org/apache/james/mailrepository/JDBCMailRepository.java"/>
+<file line="724" path="/opt/development/v2.3/src/java/org/apache/james/mailrepository/JDBCMailRepository.java"/>
+<codefragment>
+<![CDATA[
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ObjectOutputStream oos = new ObjectOutputStream(baos);
+                        try {
+                            if (mc instanceof MailImpl) {
+                            oos.writeObject(((MailImpl)mc).getAttributesRaw());
+                            } else {
+                                HashMap temp = new HashMap();
+                                for (Iterator i = mc.getAttributeNames(); i.hasNext(); ) {
+                                    String hashKey = (String) i.next();
+                                    temp.put(hashKey,mc.getAttribute(hashKey));
+                                }
+                                oos.writeObject(temp);
+                            }
+                            oos.flush();
+                            ByteArrayInputStream attrInputStream =
+                                new ByteArrayInputStream(baos.toByteArray());
+]]>
+</codefragment>
+</duplication>
+<duplication lines="26" tokens="114">
+<file line="904" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<file line="984" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<codefragment>
+<![CDATA[
+                        writeMessageContentTo(mc.getMessage(),nouts,lines);
+                        nouts.flush();
+                        edouts.checkCRLFTerminator();
+                        edouts.flush();
+                    } finally {
+                        out.println(".");
+                        out.flush();
+                    }
+                } else {
+                    StringBuffer responseBuffer =
+                        new StringBuffer(64)
+                                .append(ERR_RESPONSE)
+                                .append(" Message (")
+                                .append(num)
+                                .append(") already deleted.");
+                    responseString = responseBuffer.toString();
+                    writeLoggedFlushedResponse(responseString);
+                }
+            } catch (IOException ioe) {
+                responseString = ERR_RESPONSE + " Error while retrieving message.";
+                writeLoggedFlushedResponse(responseString);
+            } catch (MessagingException me) {
+                responseString = ERR_RESPONSE + " Error while retrieving message.";
+                writeLoggedFlushedResponse(responseString);
+            } catch (IndexOutOfBoundsException iob) {
+                StringBuffer exceptionBuffer =
+]]>
+</codefragment>
+</duplication>
+<duplication lines="13" tokens="111">
+<file line="150" path="/opt/development/v2.3/src/java/org/apache/james/smtpserver/DataCmdHandler.java"/>
+<file line="95" path="/opt/development/v2.3/src/java/org/apache/james/smtpserver/SendMailHandler.java"/>
+<codefragment>
+<![CDATA[
+                   StringBuffer errorBuffer =
+                     new StringBuffer(256)
+                         .append("Rejected message from ")
+                         .append(session.getState().get(SMTPSession.SENDER).toString())
+                         .append(" from host ")
+                         .append(session.getRemoteHost())
+                         .append(" (")
+                         .append(session.getRemoteIPAddress())
+                         .append(") exceeding system maximum message size of ")
+                         .append(session.getConfigurationData().getMaxMessageSize());
+                   getLogger().error(errorBuffer.toString());
+              } else {
+                   responseString = "451 "+DSNStatus.getStatus(DSNStatus.TRANSIENT,DSNStatus.UNDEFINED_STATUS)+" Error processing message.";
+]]>
+</codefragment>
+</duplication>
+<duplication lines="29" tokens="110">
+<file line="303" path="/opt/development/v2.3/src/java/org/apache/james/util/SqlResources.java"/>
+<file line="278" path="/opt/development/v2.3/src/java/org/apache/james/util/XMLResources.java"/>
+<codefragment>
+<![CDATA[
+    static private String substituteSubString( String input, 
+                                               String find,
+                                               String replace )
+    {
+        int find_length = find.length();
+        int replace_length = replace.length();
+
+        StringBuffer output = new StringBuffer(input);
+        int index = input.indexOf(find);
+        int outputOffset = 0;
+
+        while ( index > -1 ) {
+            output.replace(index + outputOffset, index + outputOffset + find_length, replace);
+            outputOffset = outputOffset + (replace_length - find_length);
+
+            index = input.indexOf(find, index + find_length);
+        }
+
+        String result = output.toString();
+        return result;
+    }
+
+    /**
+     * Returns a named string for the specified key.
+     * 
+     * @param name   the name of the String resource required.
+     * @return the requested resource
+     */
+    public String getString(String name)
+]]>
+</codefragment>
+</duplication>
+<duplication lines="23" tokens="103">
+<file line="416" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/CommandListservManager.java"/>
+<file line="518" path="/opt/development/v2.3/src/java/org/apache/james/transport/mailets/CommandListservProcessor.java"/>
+<codefragment>
+<![CDATA[
+    }
+
+    /**
+     * Retrieves a data field, potentially defined by a super class.
+     * @return null if not found, the object otherwise
+     */
+    protected static Object getField(Object instance, String name) throws IllegalAccessException {
+        Class clazz = instance.getClass();
+        Field[] fields;
+        while (clazz != null) {
+            fields = clazz.getDeclaredFields();
+            for (int index = 0; index < fields.length; index++) {
+                Field field = fields[index];
+                if (field.getName().equals(name)) {
+                    field.setAccessible(true);
+                    return field.get(instance);
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+
+        return null;
+    }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="20" tokens="102">
+<file line="570" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<file line="613" path="/opt/development/v2.3/src/java/org/apache/james/pop3server/POP3Handler.java"/>
+<codefragment>
+<![CDATA[
+            if (argument == null) {
+                long size = 0;
+                int count = 0;
+                try {
+                    for (Iterator i = userMailbox.iterator(); i.hasNext(); ) {
+                        Mail mc = (Mail) i.next();
+                        if (mc != DELETED) {
+                            size += mc.getMessageSize();
+                            count++;
+                        }
+                    }
+                    StringBuffer responseBuffer =
+                        new StringBuffer(32)
+                                .append(OK_RESPONSE)
+                                .append(" ")
+                                .append(count)
+                                .append(" ")
+                                .append(size);
+                    responseString = responseBuffer.toString();
+                    writeLoggedFlushedResponse(responseString);
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>
