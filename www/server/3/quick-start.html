@@ -332,9 +332,9 @@ Step 3: Understand James Features
 
 Persistence
 - Mailbox is for users' Inbox, Sent Items, Trash... folders - Mailbox persistence is configured in spring-beans.xml (by default jpa, you set the database connection properties in database.properties - can also be maildir=file, jcr). We think to move this config out-of spring-beans.xml.
-- Mailrepositorystore is for spam, error,... mails, so nothing to do with users visible mails. Available mailstore persistence are defined in mailstore.conf. Each has an URL prefix (file, db, dbfile,...) that can be used in mailetcontainer.conf to define where to store spam,... mails (exemple: file://var/mail/error/).
-- Domain persistence is configured in domainlist.conf
-- Users persistence is configured in usersrepository.conf
+- Mailrepositorystore is for spam, error,... mails, so nothing to do with users visible mails. Available mailstore persistence are defined in mailstore.xml. Each has an URL prefix (file, db, dbfile,...) that can be used in mailetcontainer.xml to define where to store spam,... mails (exemple: file://var/mail/error/).
+- Domain persistence is configured in domainlist.xml
+- Users persistence is configured in usersrepository.xml
 - All database connection use the database.properties in case of database access.
 
 Mailet Container - http://james.apache.org/server/3/feature-mailetcontainer.html
@@ -350,30 +350,30 @@ Step 4: Configure
       Copy the conf folder any ...-template... you need and update according to your needs.
 
 database.properties
-META-INF/persistence.conf
-dnsservice.conf
-domainlist.conf
-fetchmail.conf
-imapserver.conf
-james-listmanager.conf
-jcr-repository.conf
+META-INF/persistence.xml
+dnsservice.xml
+domainlist.xml
+fetchmail.xml
+imapserver.xml
+james-listmanager.xml
+jcr-repository.xml
 jmx.properties
-lmtpserver.conf
+lmtpserver.xml
 log4j.properties
-mailetcontainer.conf
-mailbox.conf
-mailserver.conf
-mailrepositorystore.conf
-pop3server.conf
-recipientrewritetable.conf
-smtpserver.conf
-sqlResources.conf
-usersrepository.conf
-wrapper.conf
+mailetcontainer.xml
+mailbox.xml
+mailserver.xml
+mailrepositorystore.xml
+pop3server.xml
+recipientrewritetable.xml
+smtpserver.xml
+sqlResources.xml
+usersrepository.xml
+wrapper.xml
 lib folder (for your additional jar, e.g. JDBC drviers,...)
 
 James is packaged with virtual hosting enabled, JPA (Derby database) storage for the mails, users, and domains.
-On SMTP (see smtpserver.conf config)
+On SMTP (see smtpserver.xml config)
   * authRequired is true by default, so you can safely deploy James on the Internet (it won't be an open relay).
   * verifyIdentity is true by default (you can only send mails with a FROM being the authenticated user).
 
