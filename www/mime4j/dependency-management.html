@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache James Mime4J &#x2013; Issue Management</title>
+    <title>Apache James Mime4J &#x2013; Project Dependency Management</title>
     <style type="text/css" media="all">
       @import url("./css/james.css");
       @import url("./css/maven-base.css");
@@ -225,13 +225,93 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section">
-<h2><a name="Overview"></a>Overview</h2><a name="Overview"></a>
-<p>This project uses an issue management system to manage its issues.</p></div>
+<h2><a name="Project_Dependency_Management"></a>Project Dependency Management</h2><a name="Project_Dependency_Management"></a>
 <div class="section">
-<h2><a name="Issue_Management"></a>Issue Management</h2><a name="Issue_Management"></a>
-<p>Issues, bugs, and feature requests should be submitted to the following issue management system for this project.</p>
-<div class="source">
-<pre><a class="externalLink" href="http://issues.apache.org/jira/browse/MIME4J">http://issues.apache.org/jira/browse/MIME4J</a></pre></div></div>
+<h3><a name="compile"></a>compile</h3><a name="compile"></a>
+<p>The following is a list of compile dependencies in the DependencyManagement of this project. These dependencies can be included in the submodules to compile and run the submodule:</p>
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+<th>License</th></tr>
+<tr class="b">
+<td>commons-io</td>
+<td><a class="externalLink" href="http://commons.apache.org/io/">commons-io</a></td>
+<td>2.4</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>commons-logging</td>
+<td><a class="externalLink" href="http://commons.apache.org/logging">commons-logging</a></td>
+<td>1.1.1</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-benchmark">apache-mime4j-benchmark</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-core">apache-mime4j-core</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-dom">apache-mime4j-dom</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-examples">apache-mime4j-examples</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-mbox-iterator">apache-mime4j-mbox-iterator</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.apache.james</td>
+<td><a class="externalLink" href="http://james.apache.org/mime4j/apache-mime4j-storage">apache-mime4j-storage</a></td>
+<td>0.8.0-SNAPSHOT</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr></table></div>
+<div class="section">
+<h3><a name="test"></a>test</h3><a name="test"></a>
+<p>The following is a list of test dependencies in the DependencyManagement of this project. These dependencies can be included in the submodules to compile and run unit tests for the submodule:</p>
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+<th>License</th></tr>
+<tr class="b">
+<td>junit</td>
+<td><a class="externalLink" href="http://junit.org">junit</a></td>
+<td>4.10</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.opensource.org/licenses/cpl1.0.txt">Common Public License Version 1.0</a></td></tr>
+<tr class="a">
+<td>log4j</td>
+<td><a class="externalLink" href="http://logging.apache.org/log4j/docs/">log4j</a></td>
+<td>1.2.14</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.mockito</td>
+<td><a class="externalLink" href="http://www.mockito.org">mockito-core</a></td>
+<td>1.9.5</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://code.google.com/p/mockito/wiki/License">The MIT License</a></td></tr></table></div></div>
       </div>
     </div>
     <div class="clear">
