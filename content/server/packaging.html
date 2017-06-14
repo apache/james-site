@@ -23,7 +23,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Apache James Project - 
-        Apache James Server 3 - Upgrading from previous Apache James Server version</title>
+        Apache James Server 3 - Packaging</title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -124,8 +124,8 @@
                           <a href="../server/features.html" title="1. Features">1. Features</a>
                   </li>
                       <li class="none">
-                          <a href="../server/packaging.html" title="2. Packaging">2. Packaging</a>
-            </li>
+            <strong>2. Packaging</strong>
+          </li>
                       <li class="none">
                           <a href="../server/install.html" title="3. Install James">3. Install James</a>
             </li>
@@ -138,17 +138,9 @@
                                                                                                             <li class="collapsed">
                           <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
                   </li>
-                                                                                              <li class="expanded">
-            <strong>7. Upgrade</strong>
-                  <ul>
-                      <li class="none">
-                          <a href="../server/upgrade-2.3.html" title="Upgrade from 2.3">Upgrade from 2.3</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/upgrade-database.html" title="Upgrade database">Upgrade database</a>
-            </li>
-              </ul>
-        </li>
+                                                                                          <li class="collapsed">
+                          <a href="../server/upgrade.html" title="7. Upgrade">7. Upgrade</a>
+                  </li>
                                                                                                                                                                                                                                                       <li class="collapsed">
                           <a href="../server/dev.html" title="8. Developers Corner">8. Developers Corner</a>
                   </li>
@@ -248,16 +240,312 @@
     
 
         <div class="section">
-<h2>Upgrade<a name="Upgrade"></a></h2>
+<h2>Available packaging options<a name="Available_packaging_options"></a></h2>
+            
+<p>James components are assembled in various way, called packaging.</p>
 
             
-<p>If you are already using Apache James 2.3, you may face important changes. 
-            We have written <a href="upgrade-2.3.html">this page</a> to help you.</p>
+<ul>The packaging you choose will influence:
+                
+<li>Your java requirement</li>
+                
+<li>The protocol the mail server supports</li>
+                
+<li>The components you can use</li>
+            </ul>
 
             
-<p>If you are want to do incremental upgrade 
-               you may need <a href="upgrade-database.html">to upgrade your database schema</a>.</p>
+<p>Thus, one must carefully choose his packaging.</p>
 
+            
+<ul>To help you doing this, here is a list of available packages:
+                
+<li><a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/app">Spring</a>: Allows you to
+                    choose across various available implementations for each component. Requires more configuration effort.</li>
+                
+<li><a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/container/guice/cassandra-guice">
+                    Cassandra-guice</a>: Ships a James server storing emails in Cassandra and index them in ElasticSearch.</li>
+                
+<li><a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/container/guice/cassandra-ldap-guice">
+                    Cassandra-guice-ldap</a>: Ships a James server storing emails in Cassandra and index them in ElasticSearch. User are authenticated against a LDAP server.</li>
+                
+<li><a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/container/guice/jpa-guice">
+                    Jpa-Guice</a>: Ships a James server storing emails in a SQL database (derby by default) accessed with JPA and Lucene to index emails.</li>
+                
+<li><a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/container/guice/jpa-smtp">
+                    Jpa-Smtp</a>: A tiny SMTP server shiped without mailbox, using SQL database to store data, accessed by JPA.</li>
+            </ul>
+
+            
+<p>Note: Especially using Guice, one can easily define new modules for existing James components, as well as
+            for third party code. Note that building your own combination of components will lead to an untested and unsupported server.
+            </p>
+        </div>
+
+        
+<div class="section">
+<h2>Support matrix<a name="Support_matrix"></a></h2>
+            
+<p>
+                </p>
+<table border="0" class="bodyTable">
+                    
+<tr class="a">
+                        
+<th>Packaging</th>
+                        
+<th>Spring</th>
+                        
+<th>Cassandra-guice</th>
+                        
+<th>Cassandra-ldap-guice</th>
+                        
+<th>Jpa-guice</th>
+                        
+<th>Jpa-smtp</th>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>IoC framework</td>
+                        
+<td>Spring</td>
+                        
+<td>Guice</td>
+                        
+<td>Guice</td>
+                        
+<td>Guice</td>
+                        
+<td>Guice</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Java version</td>
+                        
+<td>Java 6</td>
+                        
+<td>Java 8</td>
+                        
+<td>Java 8</td>
+                        
+<td>Java 8</td>
+                        
+<td>Java 8</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Docker image</td>
+                        
+<td><a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/spring">Available</a></td>
+                        
+<td><a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra">Available</a></td>
+                        
+<td><a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfilehttps://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpas/run/guice/cassandra-ldap">Available</a></td>
+                        
+<td><a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpa">Available</a></td>
+                        
+<td>None</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Supports SMTP</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Supports IMAP</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Supports JMAP</td>
+                        
+<td>No</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Supports POP3</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Supports FetchMail</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                        
+<td>No</td>
+                        
+<td>No</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Supports CLI</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Supports WebAdmin</td>
+                        
+<td>No</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Supports Grafana metrics</td>
+                        
+<td>No</td>
+                        
+<td>Yes</td>
+                        
+<td>Yes</td>
+                        
+<td>No</td>
+                        
+<td>No</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Mailbox implementation</td>
+                        
+<td>JPA/MailDir/JCR/Memory</td>
+                        
+<td>Cassandra</td>
+                        
+<td>Cassandra</td>
+                        
+<td>JPA</td>
+                        
+<td>JPA</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Indexer implementation</td>
+                        
+<td>Lucene/None</td>
+                        
+<td>ElasticSearch</td>
+                        
+<td>ElasticSearch</td>
+                        
+<td>Lucene</td>
+                        
+<td>None</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Server data implementation</td>
+                        
+<td>JPA/File/HBase/JCR</td>
+                        
+<td>Cassandra</td>
+                        
+<td>Cassandra</td>
+                        
+<td>JPA</td>
+                        
+<td>JPA</td>
+                    </tr>
+                    
+<tr class="b">
+                        
+<td>Mail queue implementation</td>
+                        
+<td>ActiveMQ</td>
+                        
+<td>ActiveMQ</td>
+                        
+<td>ActiveMQ</td>
+                        
+<td>ActiveMQ</td>
+                        
+<td>ActiveMQ</td>
+                    </tr>
+                    
+<tr class="a">
+                        
+<td>Sieve</td>
+                        
+<td>Experimental</td>
+                        
+<td>Experimental</td>
+                        
+<td>Experimental</td>
+                        
+<td>Experimental</td>
+                        
+<td>No</td>
+                    </tr>
+                </table>
+            
         </div>
 
     

@@ -22,8 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache James Project - 
-        Apache James Server 3 - Upgrading from previous Apache James Server version</title>
+    <title>Apache James Project - </title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -132,23 +131,26 @@
                                                                                                                                                                                                                                                                                                                                                                                                                               <li class="collapsed">
                           <a href="../server/config.html" title="4. Configure James">4. Configure James</a>
                   </li>
-                                                                                                            <li class="collapsed">
+                                                                                                                      <li class="expanded">
                           <a href="../server/manage.html" title="5. Manage">5. Manage</a>
-                  </li>
-                                                                                                            <li class="collapsed">
-                          <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
-                  </li>
-                                                                                              <li class="expanded">
-            <strong>7. Upgrade</strong>
-                  <ul>
+                    <ul>
                       <li class="none">
-                          <a href="../server/upgrade-2.3.html" title="Upgrade from 2.3">Upgrade from 2.3</a>
+                          <a href="../server/manage-webadmin.html" title="WebAdmin">WebAdmin</a>
             </li>
                       <li class="none">
-                          <a href="../server/upgrade-database.html" title="Upgrade database">Upgrade database</a>
+            <strong>Command line</strong>
+          </li>
+                      <li class="none">
+                          <a href="../server/metrics.html" title="Metrics">Metrics</a>
             </li>
               </ul>
         </li>
+                                                                                                            <li class="collapsed">
+                          <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
+                  </li>
+                                                                                          <li class="collapsed">
+                          <a href="../server/upgrade.html" title="7. Upgrade">7. Upgrade</a>
+                  </li>
                                                                                                                                                                                                                                                       <li class="collapsed">
                           <a href="../server/dev.html" title="8. Developers Corner">8. Developers Corner</a>
                   </li>
@@ -228,41 +230,256 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <!-- Licensed to the Apache Software Foundation (ASF) under one
-  or more contributor license agreements.  See the NOTICE file
-  distributed with this work for additional information
-  regarding copyright ownership.  The ASF licenses this file
-  to you under the Apache License, Version 2.0 (the
-  "License"); you may not use this file except in compliance
-  with the License.  You may obtain a copy of the License at
+        <h1>Manage James via the Command Line</h1>
+<p>With any packaging, James is packed with a command line client.</p>
+<p>To use it enter, for Spring distrubution:</p>
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<div class="source">
+<pre>./bin/james-cli.sh -h 127.0.0.1 -p 9999 COMMAND
+</pre></div>
+<p>And for Guice distributions:</p>
 
-  Unless required by applicable law or agreed to in writing,
-  software distributed under the License is distributed on an
-  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  KIND, either express or implied.  See the License for the
-  specific language governing permissions and limitations
-  under the License. -->
+<div class="source">
+<pre>java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 COMMAND
+</pre></div>
+<p>The following document will explain you which are the available options for <b>COMMAND</b>.</p>
+<p>Note: the command line before <b>COMMAND</b> will be documente as <i>{cli}</i>.</p>
+<div class="section">
+<h2>Manage Domains<a name="Manage_Domains"></a></h2>
+<p>Domains represent the domain names handled by your server.</p>
+<p>You can add a domain:</p>
 
-    
+<div class="source">
+<pre>{cli} AddDomain domain.tld
+</pre></div>
+<p>You can remove a domain:</p>
 
-        <div class="section">
-<h2>Upgrade<a name="Upgrade"></a></h2>
+<div class="source">
+<pre>{cli} RemoveDomain domain.tld
+</pre></div>
+<p>(Note: associated users are not removed automatically)</p>
+<p>Check if a domain is handled:</p>
 
-            
-<p>If you are already using Apache James 2.3, you may face important changes. 
-            We have written <a href="upgrade-2.3.html">this page</a> to help you.</p>
+<div class="source">
+<pre>{cli} ContainsDomain domain.tld
+</pre></div>
+<p>And list your domains:</p>
 
-            
-<p>If you are want to do incremental upgrade 
-               you may need <a href="upgrade-database.html">to upgrade your database schema</a>.</p>
+<div class="source">
+<pre>{cli} ListDomains
+</pre></div></div>
+<div class="section">
+<h2>Managing users<a name="Managing_users"></a></h2>
+<p>Note: the following commands are explained with virtual hosting turned on.</p>
+<p>Users are accounts on the mail server. James can maintain mailboxes for them.</p>
+<p>You can add a user:</p>
 
-        </div>
+<div class="source">
+<pre>{cli} AddUser user@domain.tld password
+</pre></div>
+<p>Note: the domain used should have been previously created.</p>
+<p>You can delete a user:</p>
 
-    
+<div class="source">
+<pre>{cli} RemoveUser user@domain.tld
+</pre></div>
+<p>(Note: associated mailboxes are not removed automatically)</p>
+<p>And change a user password:</p>
 
+<div class="source">
+<pre>{cli} SetPassword user@domain.tld password
+</pre></div>
+<p>Note: All these write operations can not be performed on LDAP backend, as the implementation is read-only.</p>
+<p>Finally, you can list users:</p>
 
+<div class="source">
+<pre>{cli} ListUsers
+</pre></div>
+<div class="section">
+<h3>Virtual hosting<a name="Virtual_hosting"></a></h3>
+<p>James supports virtualhosting.</p>
+
+<ul>
+  
+<li>If set to true in the configuration, then the username is the full mail address.</li>
+</ul>
+<p>The domains then become a part of the user.</p>
+<p><i><a class="externalLink" href="mailto:usera@domaina.com">usera@domaina.com</a> and</i> *<a class="externalLink" href="mailto:usera@domainb.com*">usera@domainb.com*</a> on a mail server with <i>domaina.com</i> and <i>domainb.com</i> configured are mail addresses that belongs to different users.</p>
+
+<ul>
+  
+<li>If set to false in the configurations, then the username is the mail address local part.</li>
+</ul>
+<p>It means that a user is automatically created for all the domains configured on your server.</p>
+<p><i><a class="externalLink" href="mailto:usera@domaina.com">usera@domaina.com</a> and</i> *<a class="externalLink" href="mailto:usera@domainb.com*">usera@domainb.com*</a> on a mail server with <i>domaina.com</i> and <i>domainb.com</i> configured are mail addresses that belongs to the same users.</p>
+<p>Here are some sample commands for managing users when virtual hosting is turned off:</p>
+
+<div class="source">
+<pre>{cli} AddUser user password
+{cli} RemoveUser user
+{cli} SetPassword user password
+</pre></div></div></div>
+<div class="section">
+<h2>Managing mailboxes<a name="Managing_mailboxes"></a></h2>
+<p>An administrator can perform some basic operation on user mailboxes.</p>
+<p>Note on mailbox formatting: mailboxes are composed of three parts.</p>
+
+<ul>
+  
+<li>The namespace, indicating what kind of mailbox it is. (Shared or not?). The value for users mailboxes is #private . Note that for now no other values are supported as James do not support shared mailboxes.</li>
+  
+<li>The username as stated above, depending on the virtual hosting value.</li>
+  
+<li>And finally mailbox name. Be aware that &#x2018;.&#x2019; serves as mailbox hierarchy delimiter.</li>
+</ul>
+<p>An administrator can delete all of the mailboxes of a user, which is not done automatically when removing a user (to avoid data loss):</p>
+
+<div class="source">
+<pre>{cli} DeleteUserMailboxes user@domain.tld
+</pre></div>
+<p>He can delete a specific mailbox:</p>
+
+<div class="source">
+<pre>{cli} DeleteMailbox #private user@domain.tld INBOX.toBeDeleted
+</pre></div>
+<p>He can list the mailboxes of a specific user:</p>
+
+<div class="source">
+<pre>{cli} ListUserMailboxes user@domain.tld
+</pre></div>
+<p>And finally can create a specific mailbox:</p>
+
+<div class="source">
+<pre>{cli} CreateMailbox #private user@domain.tld INBO.newFolder
+</pre></div></div>
+<div class="section">
+<h2>Managing mappings<a name="Managing_mappings"></a></h2>
+<p>A mapping is a recipient rewritting rule. There is several kind of rewritting rules:</p>
+
+<ul>
+  
+<li>address mapping: rewrite a given mail address into an other one.</li>
+  
+<li>regex mapping.</li>
+</ul>
+<p>You can manage address mapping like (redirects email from <a class="externalLink" href="mailto:user@domain.tld">user@domain.tld</a> to <a class="externalLink" href="mailto:redirected@domain.new">redirected@domain.new</a>, then deletes the mapping):</p>
+
+<div class="source">
+<pre>{cli} AddAddressMapping redirected domain.new user@domain.tld
+{cli} RemoveAddressMapping redirected domain.new user@domain.tld
+</pre></div>
+<p>You can manage regex mapping like this:</p>
+
+<div class="source">
+<pre>{cli} AddRegexMapping redirected domain.new .*@domain.tld
+{cli} RemoveRegexMapping redirected domain.new .*@domain.tld
+</pre></div>
+<p>You can view mapping for a mail address:</p>
+
+<div class="source">
+<pre>{cli} ListUserDomainMappings user domain.tld
+</pre></div>
+<p>And all mappings defined on the server:</p>
+
+<div class="source">
+<pre>{cli} ListMappings
+</pre></div></div>
+<div class="section">
+<h2>Manage quotas<a name="Manage_quotas"></a></h2>
+<p>Quotas are limitations on a group of mailboxes. They can limit the <b>size</b> or the <b>messages count</b> in a group of mailboxes.</p>
+<p>James groups by defaults mailboxes by user (but it can be overridden), and labels each group with a quotaroot.</p>
+<p>To get the quotaroot a given mailbox belongs to:</p>
+
+<div class="source">
+<pre>{cli} GetQuotaroot #private user@domain.tld INBOX
+</pre></div>
+<p>Then you can get the specific quotaroot limitations.</p>
+<p>For the number of messages:</p>
+
+<div class="source">
+<pre>{cli} GetMessageCountQuota quotaroot
+</pre></div>
+<p>And for the storage space available:</p>
+
+<div class="source">
+<pre>{cli} GetStorageQuota quotaroot
+</pre></div>
+<p>You see the maximum allowed for these values:</p>
+<p>For the number of messages:</p>
+
+<div class="source">
+<pre>{cli} GetMaxMessageCountQuota quotaroot
+</pre></div>
+<p>And for the storage space available:</p>
+
+<div class="source">
+<pre>{cli} GetMaxStorageQuota quotaroot
+</pre></div>
+<p>You can also specify maximum for these values.</p>
+<p>For the number of messages:</p>
+
+<div class="source">
+<pre>{cli} SetMaxMessageCountQuota quotaroot value
+</pre></div>
+<p>And for the storage space available:</p>
+
+<div class="source">
+<pre>{cli} SetMaxStorageQuota quotaroot value
+</pre></div>
+<p>With value being an integer. Please note the use of units for storage (K, M, G). For instance:</p>
+
+<div class="source">
+<pre>{cli} SetMaxStorageQuota someone@apache.org 4G
+</pre></div>
+<p>Moreover, James allows to specify defaults maximum values, at the server level. Note: syntax is similar to what was exposed previously.</p>
+
+<div class="source">
+<pre>{cli} SetDefaultMaxMessageCountQuota value
+{cli} GetDefaultMaxMessageCountQuota
+{cli} SetDefaultMaxStorageQuota value
+{cli} GetDefaultMaxStorageQuota
+</pre></div></div>
+<div class="section">
+<h2>Re-indexing<a name="Re-indexing"></a></h2>
+<p>James allow you to index your emails in a search engine, for making search faster. Both ElasticSearch and Lucene are supported.</p>
+<p>For some reasons, you might want to re-index your mails (inconsistencies across datastore, migrations).</p>
+<p>To re-index all mails of all mailboxes of all users, type:</p>
+
+<div class="source">
+<pre>{cli} ReindexAll
+</pre></div>
+<p>And for a precise mailbox:</p>
+
+<div class="source">
+<pre>{cli} Reindex #private user@domain.tld INBOX
+</pre></div></div>
+<div class="section">
+<h2>Sieve scripts quota<a name="Sieve_scripts_quota"></a></h2>
+<p>James implements Sieve (RFC-5228). Your users can then writte scripts and upload them to the server. Thus they can define the desired behavior upon email reception. James defines a Sieve mailet for this, and stores Sieve scripts. You can update them via the ManageSieve protocol, or via the ManageSieveMailet.</p>
+<p>You can define quota for the total size of Sieve scripts, per user.</p>
+<p>Syntax is similar to what was exposed for quotas. For defaults values:</p>
+
+<div class="source">
+<pre>{cli} GetSieveQuota
+{cli} SetSieveQuota value
+{cli} RemoveSieveQuota
+</pre></div>
+<p>And for specific user quotas:</p>
+
+<div class="source">
+<pre>{cli} GetSieveUserQuota user@domain.tld
+{cli} SetSieveQuota user@domain.tld value
+{cli} RemoveSieveUserQuota user@domain.tld
+</pre></div></div>
+<div class="section">
+<h2>Switching of mailbox implementation<a name="Switching_of_mailbox_implementation"></a></h2>
+<p>Migration is experimental for now. You would need to customize <b>Spring</b> configuration to add a new mailbox manager with a different bean name.</p>
+<p>You can then copy data accross mailbox managers using:</p>
+
+<div class="source">
+<pre>{cli} CopyMailbox srcBean dstBean
+</pre></div>
+<p>You will then need to reconfigure James to use the new mailbox manager.</p></div>
       </div>
     </div>
     <div class="clear">

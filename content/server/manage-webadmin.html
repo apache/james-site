@@ -22,8 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache James Project - 
-        Apache James Server 3 - Upgrading from previous Apache James Server version</title>
+    <title>Apache James Project - </title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -132,23 +131,26 @@
                                                                                                                                                                                                                                                                                                                                                                                                                               <li class="collapsed">
                           <a href="../server/config.html" title="4. Configure James">4. Configure James</a>
                   </li>
-                                                                                                            <li class="collapsed">
+                                                                                                                      <li class="expanded">
                           <a href="../server/manage.html" title="5. Manage">5. Manage</a>
-                  </li>
-                                                                                                            <li class="collapsed">
-                          <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
-                  </li>
-                                                                                              <li class="expanded">
-            <strong>7. Upgrade</strong>
-                  <ul>
+                    <ul>
                       <li class="none">
-                          <a href="../server/upgrade-2.3.html" title="Upgrade from 2.3">Upgrade from 2.3</a>
+            <strong>WebAdmin</strong>
+          </li>
+                      <li class="none">
+                          <a href="../server/manage-cli.html" title="Command line">Command line</a>
             </li>
                       <li class="none">
-                          <a href="../server/upgrade-database.html" title="Upgrade database">Upgrade database</a>
+                          <a href="../server/metrics.html" title="Metrics">Metrics</a>
             </li>
               </ul>
         </li>
+                                                                                                            <li class="collapsed">
+                          <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
+                  </li>
+                                                                                          <li class="collapsed">
+                          <a href="../server/upgrade.html" title="7. Upgrade">7. Upgrade</a>
+                  </li>
                                                                                                                                                                                                                                                       <li class="collapsed">
                           <a href="../server/dev.html" title="8. Developers Corner">8. Developers Corner</a>
                   </li>
@@ -228,41 +230,391 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <!-- Licensed to the Apache Software Foundation (ASF) under one
-  or more contributor license agreements.  See the NOTICE file
-  distributed with this work for additional information
-  regarding copyright ownership.  The ASF licenses this file
-  to you under the Apache License, Version 2.0 (the
-  "License"); you may not use this file except in compliance
-  with the License.  You may obtain a copy of the License at
+        <h1>Web administration for JAMES</h1>
+<p>The web administration supports for now the CRUD operations on the domains,the users, their mailboxes and their quotas, as described in the following sections.</p>
+<p><b>WARNING</b>: This API allow authentication only via the use of JWT. If not configured with JWT, an administrator should ensure an attacker can not use this API.</p>
+<p>Please also note <b>webadmin</b> is only enabled with <b>Guice</b>. You can not use it when using James with <b>Spring</b>, as the required injections are not implemented.</p>
+<div class="section">
+<h2>Administrating domains<a name="Administrating_domains"></a></h2>
+<div class="section">
+<h3>Create a domain<a name="Create_a_domain"></a></h3>
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<div class="source">
+<pre>curl -XPUT http://ip:port/domains/domainToBeCreated
+</pre></div>
+<p>Resource name domainToBeCreated:</p>
 
-  Unless required by applicable law or agreed to in writing,
-  software distributed under the License is distributed on an
-  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  KIND, either express or implied.  See the License for the
-  specific language governing permissions and limitations
-  under the License. -->
+<ul>
+  
+<li>can not be null or empty</li>
+  
+<li>can not contain &#x2018;@&#x2019;</li>
+  
+<li>can not be more than 255 characters</li>
+  
+<li>can not contain &#x2018;/&#x2019;</li>
+</ul>
+<p>Response codes:</p>
 
-    
+<ul>
+  
+<li>204: The domain was successfully added</li>
+  
+<li>400: The domain name is invalid</li>
+  
+<li>500: Internal error while adding the domain</li>
+</ul></div>
+<div class="section">
+<h3>Delete a domain<a name="Delete_a_domain"></a></h3>
 
-        <div class="section">
-<h2>Upgrade<a name="Upgrade"></a></h2>
+<div class="source">
+<pre>curl -XDELETE http://ip:port/domains/domainToBeDeleted
+</pre></div>
+<p>Response codes:</p>
 
-            
-<p>If you are already using Apache James 2.3, you may face important changes. 
-            We have written <a href="upgrade-2.3.html">this page</a> to help you.</p>
+<ul>
+  
+<li>204: The domain was successfully removed</li>
+  
+<li>500: Internal error while removing the domain</li>
+</ul></div>
+<div class="section">
+<h3>Test if a domain exists<a name="Test_if_a_domain_exists"></a></h3>
 
-            
-<p>If you are want to do incremental upgrade 
-               you may need <a href="upgrade-database.html">to upgrade your database schema</a>.</p>
+<div class="source">
+<pre>curl -XGET http://ip:port/domains/domainName
+</pre></div>
+<p>Response codes:</p>
 
-        </div>
+<ul>
+  
+<li>204: The domain exists</li>
+  
+<li>404: The domain does not exist</li>
+  
+<li>500: Internal error while accessing the domains</li>
+</ul></div>
+<div class="section">
+<h3>Get the list of domains<a name="Get_the_list_of_domains"></a></h3>
 
-    
+<div class="source">
+<pre>curl -XGET http://ip:port/domains
+</pre></div>
+<p>Possible response:</p>
 
+<div class="source">
+<pre>{&quot;domains&quot;:[&quot;domain1&quot;, &quot;domain2&quot;]}
+</pre></div>
+<p>Response codes:</p>
 
+<ul>
+  
+<li>200: The domain list was successfully retrieved</li>
+  
+<li>500: Internal error while accessing the domains</li>
+</ul></div></div>
+<div class="section">
+<h2>Administrating users<a name="Administrating_users"></a></h2>
+<div class="section">
+<h3>Create a user<a name="Create_a_user"></a></h3>
+
+<div class="source">
+<pre>curl -XPUT http://ip:port/users/usernameToBeUsed -d '{&quot;password&quot;:&quot;passwordToBeUsed&quot;}'
+</pre></div>
+<p>Resource name usernameToBeUsed:</p>
+
+<ul>
+  
+<li>can not be null or empty</li>
+  
+<li>can not be more than 255 characters</li>
+  
+<li>can not contain &#x2018;/&#x2019;</li>
+</ul>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The user was successfully created</li>
+  
+<li>400: The user name or the payload is invalid</li>
+  
+<li>409: Conflict: A concurrent modification make that query to fail</li>
+  
+<li>500: Internal error while adding the user</li>
+</ul>
+<p>Note: if the user is already, its password will be updated.</p></div>
+<div class="section">
+<h3>Updating a user password<a name="Updating_a_user_password"></a></h3>
+<p>Same than Create, but a user need to exist.</p>
+<p>If the user do not exist, then it will be created.</p></div>
+<div class="section">
+<h3>Deleting a user<a name="Deleting_a_user"></a></h3>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/users/userToBeDeleted
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The user was successfully deleted</li>
+  
+<li>500: Internal error while deleting the user</li>
+</ul></div>
+<div class="section">
+<h3>Retrieving the user list<a name="Retrieving_the_user_list"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/users
+</pre></div>
+<p>The answer looks like:</p>
+
+<div class="source">
+<pre>[{&quot;username&quot;:&quot;username@domain-jmapauthentication.tld&quot;},{&quot;username&quot;:&quot;username@domain.tld&quot;}]
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>200: The user name list was successfully retrieved</li>
+  
+<li>500: Internal error while retrieving the users</li>
+</ul></div></div>
+<div class="section">
+<h2>Administrating user mailboxes<a name="Administrating_user_mailboxes"></a></h2>
+<div class="section">
+<h3>Creating a mailbox<a name="Creating_a_mailbox"></a></h3>
+
+<div class="source">
+<pre>curl -XPUT http://ip:port/users/usernameToBeUsed/mailboxes/mailboxNameToBeCreated
+</pre></div>
+<p>Resource name usernameToBeUsed should be an existing user Resource name mailboxNameToBeCreated should not be empty, nor contain # &amp; % * characters.</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The mailbox now exists on the server</li>
+  
+<li>400: Invalid mailbox name</li>
+  
+<li>404: The user name does not exist</li>
+  
+<li>500: Internal error</li>
+</ul>
+<p>To create nested mailboxes, for instance a work mailbox inside the INBOX mailbox, people should use the . separator. The sample query is:</p>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/users/usernameToBeUsed/mailboxes/INBOX.work
+</pre></div></div>
+<div class="section">
+<h3>Deleting a mailbox and its children<a name="Deleting_a_mailbox_and_its_children"></a></h3>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/users/usernameToBeUsed/mailboxes/mailboxNameToBeCreated
+</pre></div>
+<p>Resource name usernameToBeUsed should be an existing user Resource name mailboxNameToBeCreated should not be empty</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The mailbox now does not exist on the server</li>
+  
+<li>400: Invalid mailbox name</li>
+  
+<li>404: The user name does not exist</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Testing existence of a mailbox<a name="Testing_existence_of_a_mailbox"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/users/usernameToBeUsed/mailboxes/mailboxNameToBeCreated
+</pre></div>
+<p>Resource name usernameToBeUsed should be an existing user Resource name mailboxNameToBeCreated should not be empty</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The mailbox exists</li>
+  
+<li>400: Invalid mailbox name</li>
+  
+<li>404: The user name does not exist, the mailbox does not exist</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Listing user mailboxes<a name="Listing_user_mailboxes"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/users/usernameToBeUsed/mailboxes
+</pre></div>
+<p>The answer looks like:</p>
+
+<div class="source">
+<pre>[{&quot;mailboxName&quot;:&quot;INBOX&quot;},{&quot;mailboxName&quot;:&quot;outbox&quot;}]
+</pre></div>
+<p>Resource name usernameToBeUsed should be an existing user</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>200: The mailboxes list was successfully retrieved</li>
+  
+<li>404: The user name does not exist</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Deleting user mailboxes<a name="Deleting_user_mailboxes"></a></h3>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/users/usernameToBeUsed/mailboxes
+</pre></div>
+<p>Resource name usernameToBeUsed should be an existing user</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: The user do not have mailboxes anymore</li>
+  
+<li>404: The user name does not exist</li>
+  
+<li>500: Internal error</li>
+</ul></div></div>
+<div class="section">
+<h2>Administrating quotas<a name="Administrating_quotas"></a></h2>
+<p>A quota with a value of -1 means unlimited</p>
+<div class="section">
+<h3>Reading per quotaroot mail count limitation<a name="Reading_per_quotaroot_mail_count_limitation"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/quota/count
+</pre></div>
+<p>The answer looks like:</p>
+
+<div class="source">
+<pre>100000
+</pre></div>
+<p>Response codes:  - 200: Nothing special  - 500: Internal error</p></div>
+<div class="section">
+<h3>Updating per quotaroot mail count limitation<a name="Updating_per_quotaroot_mail_count_limitation"></a></h3>
+
+<div class="source">
+<pre>curl -XPUT http://ip:port/quota/count -d '1024000000'
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: Value updated</li>
+  
+<li>400: The body is not a positive integer</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Removing per quotaroot mail count limitation<a name="Removing_per_quotaroot_mail_count_limitation"></a></h3>
+<p>It removes the limitation, and the quota becomes UNILIMITED.</p>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/quota/count
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: Value updated to UNLIMITED</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Reading per quotaroot size limitation<a name="Reading_per_quotaroot_size_limitation"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/quota/size
+</pre></div>
+<p>The answer looks like:</p>
+
+<div class="source">
+<pre>100000
+</pre></div>
+<p>It represent the allowed Byte count of the mailboxes belonging to this quotaroot.</p>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>200: Nothing special</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Updating per quotaroot size limitation<a name="Updating_per_quotaroot_size_limitation"></a></h3>
+
+<div class="source">
+<pre>curl -XPUT http://ip:port/quota/size -d '1024000000'
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: Value updated</li>
+  
+<li>400: The body is not a positive integer</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Removing per quotaroot size limitation<a name="Removing_per_quotaroot_size_limitation"></a></h3>
+<p>It removes the limitation, and the quota becomes UNILIMITED.</p>
+
+<div class="source">
+<pre>curl -XDELETE http://ip:port/quota/size
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: Value updated to UNLIMITED</li>
+  
+<li>500: Internal error</li>
+</ul></div>
+<div class="section">
+<h3>Managing count and size at the same time<a name="Managing_count_and_size_at_the_same_time"></a></h3>
+
+<div class="source">
+<pre>curl -XGET http://ip:port/quota/
+</pre></div>
+<p>Will return:</p>
+
+<div class="source">
+<pre>{&quot;count&quot;:52,&quot;size&quot;:42}
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>200: Success</li>
+  
+<li>500: Internal error</li>
+</ul>
+<p>You can also write the value the same way:</p>
+
+<div class="source">
+<pre>curl -XPUT http://ip:port/quota/ -d '{&quot;count&quot;:52,&quot;size&quot;:42}'
+</pre></div>
+<p>Response codes:</p>
+
+<ul>
+  
+<li>204: Success</li>
+  
+<li>400: Invalid JSON, or numbers are less than -1.</li>
+  
+<li>500: Internal error</li>
+</ul></div></div>
       </div>
     </div>
     <div class="clear">

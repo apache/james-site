@@ -23,7 +23,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Apache James Project - 
-        Apache James Server 3 - Upgrading from previous Apache James Server version</title>
+        Apache James Server 3 - Manage Domains</title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -108,78 +108,9 @@
                                                                                                                                                                                                                                       <li class="collapsed">
                           <a href="../documentation.html" title="About James">About James</a>
                   </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <li class="expanded">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <li class="collapsed">
                           <a href="../server/index.html" title="Server">Server</a>
-                    <ul>
-                      <li class="none">
-                          <a href="../server/advantages.html" title="Advantages">Advantages</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/objectives.html" title="Objectives">Objectives</a>
-            </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <li class="expanded">
-                          <a href="../server/quick-start.html" title="User Manual">User Manual</a>
-                    <ul>
-                                                                                                                                                                                    <li class="collapsed">
-                          <a href="../server/features.html" title="1. Features">1. Features</a>
                   </li>
-                      <li class="none">
-                          <a href="../server/packaging.html" title="2. Packaging">2. Packaging</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/install.html" title="3. Install James">3. Install James</a>
-            </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                              <li class="collapsed">
-                          <a href="../server/config.html" title="4. Configure James">4. Configure James</a>
-                  </li>
-                                                                                                            <li class="collapsed">
-                          <a href="../server/manage.html" title="5. Manage">5. Manage</a>
-                  </li>
-                                                                                                            <li class="collapsed">
-                          <a href="../server/monitor.html" title="6. Monitor">6. Monitor</a>
-                  </li>
-                                                                                              <li class="expanded">
-            <strong>7. Upgrade</strong>
-                  <ul>
-                      <li class="none">
-                          <a href="../server/upgrade-2.3.html" title="Upgrade from 2.3">Upgrade from 2.3</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/upgrade-database.html" title="Upgrade database">Upgrade database</a>
-            </li>
-              </ul>
-        </li>
-                                                                                                                                                                                                                                                      <li class="collapsed">
-                          <a href="../server/dev.html" title="8. Developers Corner">8. Developers Corner</a>
-                  </li>
-              </ul>
-        </li>
-                      <li class="none">
-                          <a href="../mail.html#James_Mailing_lists" title="Mailing Lists">Mailing Lists</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/release-notes.html" title="Release Notes">Release Notes</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/apidocs/index.html" title="Javadoc">Javadoc</a>
-            </li>
-                      <li class="none">
-                          <a href="https://issues.apache.org/jira/browse/JAMES" title="Issue Tracker">Issue Tracker</a>
-            </li>
-                      <li class="none">
-                          <a href="https://github.com/apache/james-project" title="Sources">Sources</a>
-            </li>
-                      <li class="none">
-                          <a href="../server/rfcs.html" title="RFCs">RFCs</a>
-            </li>
-                      <li class="none">
-                          <a href="../other-versions.html" title="Other versions">Other versions</a>
-            </li>
-                      <li class="none">
-                          <a href="../download.cgi#Apache_James_Server" title="Download releases">Download releases</a>
-            </li>
-              </ul>
-        </li>
                                                                                                                                                                                                                                                                           <li class="collapsed">
                           <a href="../mailet/index.html" title="Mailets">Mailets</a>
                   </li>
@@ -248,15 +179,100 @@
     
 
         <div class="section">
-<h2>Upgrade<a name="Upgrade"></a></h2>
+<h2>Manage via JMX<a name="Manage_via_JMX"></a></h2>
 
             
-<p>If you are already using Apache James 2.3, you may face important changes. 
-            We have written <a href="upgrade-2.3.html">this page</a> to help you.</p>
+<p>James can be managed via JMX.</p>
 
             
-<p>If you are want to do incremental upgrade 
-               you may need <a href="upgrade-database.html">to upgrade your database schema</a>.</p>
+<p>The managed objects are exposed from localhost only (for security reasons) on the following URL:</p>
+
+            
+<p><tt>service:jmx:rmi://localhost/jndi/rmi://localhost:999/jmxrmi </tt></p>
+
+            
+<p>Simply launch jconsole to access the exposed attributes and methods.</p>
+
+            
+<p>If you want a remote access, change 'localhost' to your server hostname in the previous URL:</p>
+
+            
+<p><tt>service:jmx:rmi://localhost/jndi/rmi://localhost:999/jmxrmi </tt></p>
+
+            
+<p>To manage through a firewall, you will have to take care to random ports creation (read
+                <a class="externalLink" href="http://docs.oracle.com/javase/6/docs/technotes/guides/management/agent.html">JMX agent</a>
+                ,
+                <a class="externalLink" href="http://olegz.wordpress.com/2009/03/23/jmx-connectivity-through-the-firewall">JMX through firewall</a>
+                and
+                <a class="externalLink" href="http://blogs.law.harvard.edu/hoanga/2006/07/07/getting-java-jmx-to-work-through-firewalls-properly">Getting Java JMX to work through firewalls properly</a>.
+            </p>
+
+            
+<p>You can install a web application management tool such as jmanage.
+                You will get screens such as the following one.</p>
+
+            
+<p><img src="images/jmx-management/jmx-domainlist.png" alt="" /></p>
+
+        </div>
+
+        
+<div class="section">
+<h2>Manage Domains via JMX<a name="Manage_Domains_via_JMX"></a></h2>
+
+            
+<p>Use a JMX client to access the DomainList management function.</p>
+
+            
+<p>The managed objects are exposed from localhost only (for security reasons) on the following URL:</p>
+
+            
+<p><tt>service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi</tt></p>
+
+            
+<p>If you want a remote access, you can install a web application management tool such as jmanage.
+                You will get screens such as the following one.</p>
+
+            
+<p><img src="images/jmx-management/jmx-domainlist.png" alt="" /></p>
+
+        </div>
+
+        
+<div class="section">
+<h2>Manage Users via JMX<a name="Manage_Users_via_JMX"></a></h2>
+
+            
+<p>Use and JMX client to access the Users management function.</p>
+
+            
+<p>The managed objects are exposed from localhost only (for security reasons) on the following URL:</p>
+
+            
+<p><tt>service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi</tt></p>
+
+            
+<p>If you want a remote access, you can install a web application management tool such as jmanage.
+                You will get screens such as the following one.</p>
+
+            
+<p><img src="images/jmx-management/jmx-user.png" alt="" /></p>
+
+        </div>
+
+        
+<div class="section">
+<h2>Manage Virtual Users via JMX<a name="Manage_Virtual_Users_via_JMX"></a></h2>
+
+            
+<p>Use and JMX client to access the Virtual User management function.</p>
+
+            
+<p>The managed objects are exposed from localhost only (for security reasons) on the following URL:</p>
+
+            
+<p><tt>service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi</tt></p>
 
         </div>
 
