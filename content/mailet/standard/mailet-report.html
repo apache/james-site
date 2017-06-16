@@ -197,6 +197,16 @@
                 
             </div>
     </div>
+
+
+
+
+<!-- PASTE HERE -->
+
+
+
+
+
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section"><h2>Mailets and Matchers Reference<a name="Mailets_and_Matchers_Reference"></a></h2>Items marked as Experimental are not yet supported by James; however, you can try 
@@ -365,23 +375,16 @@ toString() is called on the attribute value, and that is the value matched again
 class="section"><h3><a name="HostIsLocal">HostIsLocal</a></h3><p>Matches mail to Domains which are local
 .</p></div><div class="section"><h3><a name="IsSingleRecipient">IsSingleRecipient</a></h3><p>Matches mail where the number of recipiants is exactly one.</p></div><div class="section"><h3><a 
 name="NESSpamCheck">NESSpamCheck (Experimental)</a><a name="NESSpamCheck_Experimental"></a></h3><p>This is based on a sample filter.cfg for a Netscape Mail Server to stop
-spam.</p></div><div class="section"><h3><a name="RecipientIs">RecipientIs</a></h3><p>Licensed to the Apache Software Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="RecipientIsLocal">RecipientIsLocal</a></h3><p>Matches mail where the recipient is 
-local.</p></div><div class="section"><h3><a name="RecipientIsRegex">RecipientIsRegex</a></h3><p><P>Matches recipients whose address matches a regular expression.</P>
+spam.</p></div><div class="section"><h3><a name="RecipientIs">RecipientIs</a></h3><p>This matcher matches a specific recipient (in the envelope of the mail), passed as a condition to this matcher.
+
+
+<p>The example below will match only the recipient user@domain</p>
+
+<pre><code>
+&lt;mailet match=&quot;RecipientIs=user@domain&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+&lt;/mailet&gt;
+</code></pre></p></div><div class="section"><h3><a name="RecipientIsLocal">RecipientIsLocal</a></h3><p>Matches mail where the recipient is local.</p></div><div class="section"><h3><a 
+name="RecipientIsRegex">RecipientIsRegex</a></h3><p><P>Matches recipients whose address matches a regular expression.</P>
 <P>Is equivalent to the {@link SenderIsRegex} matcher but matching on the recipient.</P>
 <P>Configuration string: a regular expression.</P>
 <PRE><CODE>
@@ -421,23 +424,16 @@ Sample Configuration: <br>
 <br>
 &lt;mailet match="SenderHostIsLocal" class="SpamAssassin"&gt; &lt;/mailet&gt;
 <br>
-<br></p></div><div class="section"><h3><a name="SenderIs">SenderIs</a></h3><p>Licensed to the Apache Software Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="SenderIsLocal">SenderIsLocal</a></h3><p>Matches mail where the sender is local.</p></div><div 
-class="section"><h3><a name="SenderIsNull">SenderIsNull</a></h3><p><P>Matches mails that are sent by a null sender.</P>
+<br></p></div><div class="section"><h3><a name="SenderIs">SenderIs</a></h3><p>This matcher matches a specific sender, passed as a condition to this matcher.
+
+
+<p>The example below will match mail with a sender being user@domain</p>
+
+<pre><code>
+&lt;mailet match=&quot;SenderIs=user@domain&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
+&lt;/mailet&gt;
+</code></pre></p></div><div class="section"><h3><a name="SenderIsLocal">SenderIsLocal</a></h3><p>Matches mail where the sender is local.</p></div><div class="section"><h3><a 
+name="SenderIsNull">SenderIsNull</a></h3><p><P>Matches mails that are sent by a null sender.</P>
 <PRE><CODE>
 &lt;mailet match=&quot;SenderIsNull&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
 </CODE></PRE></p></div><div class="section"><h3><a name="SenderIsRegex">SenderIsRegex</a></h3><p><P>Matches mails that are sent by a sender whose address matches a regular expression.</P>
@@ -456,92 +452,42 @@ class="section"><h3><a name="SenderIsNull">SenderIsNull</a></h3><p><P>Matches ma
 <PRE><CODE>
 &lt;mailet match=&quot;SenderIsRegex=(.*)(mp3|emmepitre)(.*)@&quot; class=&quot;&lt;any-class&gt;&quot;&gt;
 &lt;/mailet&gt;
-</CODE></PRE></p></div><div class="section"><h3><a name="SentByMailet">SentByMailet</a></h3><p>Licensed to the Apache Software Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="SizeGreaterThan">SizeGreaterThan</a></h3><p>Checks whether the message (entire message, not just 
-content) is greater
+</CODE></PRE></p></div><div class="section"><h3><a name="SentByMailet">SentByMailet</a></h3><p>This matcher matches email sent automatically by mailets.
+
+<pre><code>
+&lt;mailet match=&quot;SentByMailetAny&quot; class=&quot;&lt;any-class&gt;&quot;/&gt;
+</code></pre>
+
+This matcher allows you, for instance, to enable/disable routing automatically generated emails out of your server.</p></div><div class="section"><h3><a 
+name="SizeGreaterThan">SizeGreaterThan</a></h3><p>Checks whether the message (entire message, not just content) is greater
 than a certain number of bytes.  You can use 'k' and 'm' as optional postfixes.
 In other words, "1m" is the same as writing "1024k", which is the same as
 "1048576".</p></div><div class="section"><h3><a name="SubjectIs">SubjectIs</a></h3><p>Matches mail where the subject is contained in a configurable list.</p></div><div class="section"><h3><a 
-name="SubjectStartsWith">SubjectStartsWith</a></h3><p>Matches mail where the subject starts with a given phrase.</p></div><div class="section"><h3><a name="TooManyLines">TooManyLines</a></h3><p>Licensed 
-to the Apache Software Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="TooManyRecipients">TooManyRecipients</a></h3><p>Licensed to the Apache Software Foundation (ASF) 
-under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="UserIs">UserIs</a></h3><p>Matches mail where the user is contained in a configurable 
-list.</p></div></div><div class="section"><h2>Mailets<a name="Mailets"></a></h2><div class="section"><h3><a name="AddDeliveredToHeader">AddDeliveredToHeader</a></h3><p>Licensed to the Apache Software 
-Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="AddFooter">AddFooter</a></h3><p>Mailet Info: <b>AddFooter Mailet</b><br /></p><p>Licensed to the 
-Apache Software Foundation (ASF) under one   *
-or more contributor license agreements.  See the NOTICE file *
-distributed with this work for additional information        *
-regarding copyright ownership.  The ASF licenses this file   *
-to you under the Apache License, Version 2.0 (the            *
-"License"); you may not use this file except in compliance   *
-with the License.  You may obtain a copy of the License at   *
-                                                             *
-  http://www.apache.org/licenses/LICENSE-2.0                 *
-                                                             *
-Unless required by applicable law or agreed to in writing,   *
-software distributed under the License is distributed on an  *
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
-KIND, either express or implied.  See the License for the    *
-specific language governing permissions and limitations      *
-under the License.                                           *</p></div><div class="section"><h3><a name="AddHabeasWarrantMark">AddHabeasWarrantMark (Experimental)</a><a 
+name="SubjectStartsWith">SubjectStartsWith</a></h3><p>Matches mail where the subject starts with a given phrase.</p></div><div class="section"><h3><a name="TooManyLines">TooManyLines</a></h3><p>This 
+matcher matches emails that have too many lines. This allows better rejection of emails when, for instance, MIME4J
+is configured with a limited number of lines.
+
+<p>The example below will match mail with more than 10000 lines</p>
+
+<pre><code>
+&lt;mailet match=&quot;TooManyLines=10000&quot; class=&quot;&lt;any-class&gt;&quot;/&gt;
+</code></pre></p></div><div class="section"><h3><a name="TooManyRecipients">TooManyRecipients</a></h3><p>This matcher matches emails that have too many recipients.
+
+<p>The example below will reject any email with more than 5 recipients</p>
+
+<pre><code>
+&lt;mailet match=&quot;TooManyRecipients=5&quot; class=&quot;&lt;any-class&gt;&quot;/&gt;
+</code></pre></p></div><div class="section"><h3><a name="UserIs">UserIs</a></h3><p>Matches mail where the user is contained in a configurable list.</p></div></div><div class="section"><h2>Mailets<a 
+name="Mailets"></a></h2><div class="section"><h3><a name="AddDeliveredToHeader">AddDeliveredToHeader</a></h3><p>This mailet adds the de-facto standard QMail Delivered-To header.
+
+Upon processing by LocalDelivery, a Delivered-To header matching the recipient mail address will be added before storage.
+
+<pre><code>
+&lt;mailet match=&quot;All&quot; class=&quot;&lt;AddDeliveredToHeader&gt;&quot;/&gt;
+</code></pre></p></div><div class="section"><h3><a name="AddFooter">AddFooter</a></h3><p>Mailet Info: <b>AddFooter Mailet</b><br /></p><p>Takes the message and attaches a footer message to it.  Right 
+now, it only
+supports simple messages.  Needs to have additions to make it support
+messages with alternate content types or with attachments.</p></div><div class="section"><h3><a name="AddHabeasWarrantMark">AddHabeasWarrantMark (Experimental)</a><a 
 name="AddHabeasWarrantMark_Experimental"></a></h3><p>Mailet Info: <b>Add Habeas Warrant Mark.  Must be used in accordance with a license from Habeas (see http://www.habeas.com for details).</b><br 
 /></p><p><p>This matcher adds the Hebeas Warrant Mark to a message.
 For details see: http://www.hebeas.com</p>
@@ -1007,6 +953,18 @@ format=flowed</p></div></div>
         <hr/>
       </div>
     </div>
+
+
+
+
+
+
+
+<!-- End of paste -->
+
+
+
+
   
-</body>
+</body> 
 </html>
