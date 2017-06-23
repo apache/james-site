@@ -69,30 +69,27 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Apache James Mime4J 0.8.1</h1>
-          <h2><span class="icon fa-clock-o"></span><b> June 16, 2017</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> Apache James JSieve 0.7</h1>
+          <h2><span class="icon fa-clock-o"></span><b> June 23, 2017</b></h2>
 
           <br/>
 
           <div>
-            <p>James Mime4J 0.8.1 has been released.</p>
+            <p>James JSieve 0.7 has been released.</p>
 
-<p>The library is available as a maven artifact, for instance for mime4j core:</p>
+<p>The library is available as a maven artifact, for instance for jsieve core:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
-    &lt;artifactId&gt;apache-mime4j-core&lt;/artifactId&gt;
-    &lt;version&gt;0.8.1&lt;/version&gt;
+    &lt;artifactId&gt;apache-jsieve-core&lt;/artifactId&gt;
+    &lt;version&gt;0.7&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 </div>
 
-<p>This release solves issues with header Date handling in the dom project:</p>
+<p>This release solves issues with folded encoded header matching.</p>
 
-<ul>
-  <li>It was not possible to know if the Date header was set as a default value was always provided</li>
-  <li>Valid dates missing century was badly parsed.</li>
-</ul>
+<p>It also adds an additional DiscardAction to make discarding emails explicit for the calling code.</p>
 
 
           </div>
