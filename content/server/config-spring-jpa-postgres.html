@@ -23,7 +23,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Apache James Project - 
-  Apache James Server 3 - Mail Repository Store Configuration</title>
+  Apache James Server 3 - Spring JPA With Postgres Configuration</title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -148,8 +148,8 @@
                           <a href="../server/config-mailbox.html" title="Mailbox">Mailbox</a>
             </li>
                       <li class="none">
-            <strong>Mail Repository Stores</strong>
-          </li>
+                          <a href="../server/config-mailrepositorystore.html" title="Mail Repository Stores">Mail Repository Stores</a>
+            </li>
                       <li class="none">
                           <a href="../server/config-dnsservice.html" title="DNS Service">DNS Service</a>
             </li>
@@ -187,8 +187,8 @@
                           <a href="../server/config-cassandra.html" title="Cassandra">Cassandra</a>
             </li>
                       <li class="none">
-                          <a href="../server/config-spring-jpa-postgres.html" title="Spring JPA Postgres">Spring JPA Postgres</a>
-            </li>
+            <strong>Spring JPA Postgres</strong>
+          </li>
                       <li class="none">
                           <a href="../server/config-quota.html" title="Quota">Quota</a>
             </li>
@@ -304,111 +304,132 @@
 
  
 
-  <div class="section">
-<h2>Mail Repository Store Configuration<a name="Mail_Repository_Store_Configuration"></a></h2>
-  
-    
-<div class="section">
-<h3>Introduction<a name="Introduction"></a></h3>
 
+    <div class="section">
+<h2>Introduction<a name="Introduction"></a></h2>
       
-<p>Read <a href="feature-persistence.html">documentation about persistence</a> for a description of the Mail Repository Store functionality.</p>
-    
-      
-<p>Consult <a class="externalLink" href="https://github.com/apache/james-project/tree/master/server/app/src/main/resources/mailrepositorystore.xml">mailrepositorystore.xml</a> in GIT to get some examples and hints.</p>
-
-      
-<p>Mail Repository Stores are distinguished by where they store data.  There are five types of 
-        storage: File, Database, DBFile, MBox and JCR.</p>
-        
-    </div>
-        
-    
-<div class="section">
-<h3>File Repositories<a name="File_Repositories"></a></h3>
-    
-      
-<p>File-based repositories store all data in the file system.  In general, these repositories are extremely
-      simple to configure, but may compare poorly in terms of performance when compared to other repository
-      types.  File repositories are not recommended for large or performance-critical configurations.  In the
-      default configuration, all repositories are file repositories.</p>
-      
-      
-<p>File repository paths typically begin with the prefix &quot;file&quot;.  Paths are relative to the application
-      base directory, unless the path begins with a slash.  As an example, assume that James is running in 
-      /usr/james/phoenix/apps/james.  Then &quot;file://var/mail/spool/&quot; would refer to the directory /usr/james/phoenix/apps/james/var/mail/spool.  
-      And &quot;file:///var/mail/spool/&quot; (note the extra '/') would refer to the directory /var/mail/spool.</p>
-      
-      
-<p>All repository types (mail, spool, user, and news) have file-based implementations.  No special configuration is required to enable file-based repositories</p>
-    
-    <!-- File based repositories.  These repositories store all message data -->
-        <!-- in the file system. -->
-        
-    </div>
-    
-    
-<div class="section">
-<h3>Database (JDBC) Repositories<a name="Database_JDBC_Repositories"></a></h3>
-    
-      
-<p>These repositories store all message data in the database.</p>
-    
-      
-<p>Database repositories store all data in an administrator-supplied database.  Configuration is somewhat
-      more complex, requiring that the administrator adjust the data-connections section.  Detailed directions 
-      are included in the sample configuration file.  The administrator will need to know the JDBC driver class,
-      the appropriate URL for use with his database, and a valid username/password for the database.</p>
-      
-      
-<p>If the administrator wants to configure a database other than MySQL, it will be necessary to add the jar 
-      or zip file containing the JDBC driver classes to the lib subdirectory of the installation directory.  This
-      will allow Apache James Server to properly load the driver when it is initializing the database repository.</p>
-      
-      
-<p>Database repository paths typically begin with the prefix &quot;db&quot;.  The format is &quot;db://&lt;data-source&gt;/&lt;table&gt;&quot; 
-      where &lt;data-source&gt; is the name of the data-source defined in the data-connections section.  And &lt;table&gt; is 
-      the particular table associated with the repository.</p>
-      
-    </div>
-    
-    
-<div class="section">
-<h3>DBFile Repositories<a name="DBFile_Repositories"></a></h3>
-    
-      
-<p>These repositories store message delivery and headers in the DB, and the body to the filesystem.</p>
-    
-      
-<p>This is a special repository type used only for mail repositories.  DBFile repositories store the body of
-      a mail message in the file system, while headers are stored in the database.  This allows the administrator 
-      to minimize the size of data stored in the database, while conserving most of the performance of the 
-      database repository.</p>
-      
-    </div>
-    
-    
-<div class="section">
-<h3>MBox Repositories<a name="MBox_Repositories"></a></h3>
-    
-     
-<p>The MBox file format repository.</p>
-
+<p>Consult <a class="externalLink" href="http://james.apache.org/server/config-system.html">System Configuration</a> to get template, some examples and hints for the configuration with JPA.</p>
     </div>
 
     
 <div class="section">
-<h3>JCR Repositories<a name="JCR_Repositories"></a></h3>
-    
+<h2>Current Supported Relational Database<a name="Current_Supported_Relational_Database"></a></h2>
       
-<p>Store mails in a JCR (Java Content Repository) based implementation.</p>
-    
-      
-<p>If you enable this you need to make sure that embedded Jackrabbit instance is started as well. Check the container configuration</p>
-        
+<p>James supports Derby as a default database, you do not need to do any additional configuration if you are using Derby</p>
     </div>
-  
-  </div>
+
+    
+<div class="section">
+<h2>Spring JPA With Postgres Configuration<a name="Spring_JPA_With_Postgres_Configuration"></a></h2>
+      
+<p>If you wish to use Postgres as a database, please follow those steps to configure it</p>
+      
+<div class="section">
+<h3>Step 1: Create database on Postgres<a name="Step_1:_Create_database_on_Postgres"></a></h3>
+
+        
+<p>You need to install Postgres or run Postgres with Docker</p>
+
+        
+<p>Example to install it on Debian:</p>
+        
+<div class="source">
+<pre>
+          sudo apt-get update &amp;&amp; sudo apt-get install postgresql-9.4 postgresql-client-9.4
+        </pre></div>
+        
+<p>Example to pull and launch Postgres on docker</p>
+        
+<div class="source">
+<pre>
+          docker run --detach --name postgres library/postgres
+        </pre></div>
+        
+<p>Postgres does not create database on the fly so you need to create the database manually if it does not exist. Here is the command to perform this action: </p>
+
+        
+<div class="source">
+<pre>psql --username postgres --tuples-only --command &quot;SELECT 1 FROM pg_database WHERE dataname = '<b>database_name</b>'&quot; \
+          | grep -q 1 || psql --username postgres --command &quot;CREATE DATABASE <b>database_name</b>&quot;</pre></div>
+
+        
+<dl>
+          
+<dt><b>database_name</b></dt>
+          
+<dd>The name of database</dd>
+        </dl>
+
+      </div>
+
+      
+<div class="section">
+<h3>Step 2: Point to the database in configuration file<a name="Step_2:_Point_to_the_database_in_configuration_file"></a></h3>
+        
+<p>Change the content of james-database.properties and point to the 'database_name' created earlier</p>
+        
+<div class="source">
+<pre>
+          database.driverClassName=org.postgresql.Driver
+          database.url=jdbc:postgresql://<b>ip_of_postgres</b>/<b>database_name</b>
+          database.username=postgres
+          database.password=postgres
+
+          vendorAdapter.database=POSTGRESQL
+        </pre></div>
+        
+<p>If you are using the James Spring docker image. You need to customise the configuration file of the docker container with those steps:</p>
+          
+<ul>
+            
+<li>Create a new james-database.properties file with above content</li>
+            
+<li>Then you can add the configuration file to docker container using --volume flag</li>
+              
+<div class="source">
+<pre>
+                --volume path_to_folder_which_contain_configuration_file/james-database.properties:/root/james-server-app-3.0.0-RC2-SNAPSHOT/conf/james-database.properties
+              </pre></div>
+          </ul>
+      </div>
+
+      
+<div class="section">
+<h3>Step 3: Copy driver class to the right place<a name="Step_3:_Copy_driver_class_to_the_right_place"></a></h3>
+        
+<p>Follow this link <a class="externalLink" href="https://jdbc.postgresql.org/download.html">Postgres Driver</a> to download the right version of the JDBC driver.</p>
+        
+<p>Copy that jar file to the <b>conf/lib/</b> folder of Spring James</p>
+        
+<p>If you are using the James Spring docker image, download the jar file then make it available on the classpath of your James instance using an additional docker volume: </p>
+        
+<div class="source">
+<pre>
+          --volume path_to_folder_which_contain_jar_file/:/root/james-server-app-3.0.0-RC2-SNAPSHOT/conf/lib/
+        </pre></div>
+      </div>
+
+      
+<div class="section">
+<h3>Step 4: Restart James<a name="Step_4:_Restart_James"></a></h3>
+        
+<p>Follow the guide on <a class="externalLink" href="http://james.apache.org/server/install.html">Restart and Testing</a> to restart James</p>
+
+        
+<p>If you are using the James Spring docker image, launch James docker or just stop and start docker container again if it ran. </p>
+
+        
+<p>Example to launch James Spring docker image with the volume</p>
+        
+<div class="source">
+<pre>
+          docker run --volume path_to_folder_which_contain_configuration_file/james-database.properties:/root/james-server-app-3.0.0-RC2-SNAPSHOT/conf/james-database.properties \
+          --volume path_to_folder_which_contain_jar_file/:/root/james-server-app-3.0.0-RC2-SNAPSHOT/conf/lib/ \
+          --hostname localhost --publish &quot;25:25&quot; --publish &quot;110:110&quot; --publish &quot;143:143&quot; --publish &quot;465:465&quot; --publish &quot;587:587&quot; --publish &quot;993:993&quot; \
+          --name james_run linagora/james-jpa-spring
+        </pre></div>
+      </div>
+    </div>
 
 
 
