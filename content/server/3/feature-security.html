@@ -315,7 +315,35 @@
 <p>Apache James Server supports different user storage (<a href="config-users.html">read more</a>) - LDAP support is partail (work in progress).</p>
 
   </div>
-  
+
+    
+<div class="section">
+<h2><a name="Reported_vulnerabilities"></a>Reported vulnerabilities</h2>
+        
+<div class="section">
+<h3><a name="Apache_James_3.0.0"></a>Apache James 3.0.0</h3>
+            
+<p>The Apache James Server version 3.0.0 is vulnerable to Java deserialization issues.</p>
+            
+<p>One can use this for privilege escalation.</p>
+            
+<p>This issue can be mitigated by:</p>
+            
+<ul>
+                
+<li>Upgrading to James 3.0.1</li>
+                
+<li>Using a recent JRE (Exploit could not be reproduced on OpenJdk 8 u141)</li>
+                
+<li>Exposing JMX socket only to localhost (default behaviour)</li>
+                
+<li>Possibly running James in a container</li>
+            </ul>
+            
+<p>Read more <a class="externalLink" href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
+        </div>
+
+    </div>  
 
 
 
