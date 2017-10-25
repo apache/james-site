@@ -29,6 +29,42 @@
     <generator>Jekyll v3.4.3</generator>
     
       <item>
+        <title>Security release: Apache James server 3.0.1</title>
+        <description>&lt;p&gt;The Apache James PMCs are glad to announce you the release
+version 3.0.1 of Apache James server.&lt;/p&gt;
+
+&lt;p&gt;It fixes vulnerability described in CVE-2017-12628. The JMX server, also
+used by the command line client is exposed to a java de-serialization
+issue, and thus can be used to execute arbitrary commands. As James
+exposes JMX socket by default only on local-host, this vulnerability can
+only be used for privilege escalation.&lt;/p&gt;
+
+&lt;p&gt;Release 3.0.1 upgrades the incriminated library.&lt;/p&gt;
+
+&lt;p&gt;Note that you can take additional defensive steps in order to mitigate this vulnerability:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ensure that you restrict the access to JMX only on local-host&lt;/li&gt;
+  &lt;li&gt;Ensure that you are using a recent Java Run-time Environment. For instance OpenJDK 8 u111 is vulnerable but OpenJDK 8 u 141 is not.&lt;/li&gt;
+  &lt;li&gt;You can additionally run James in a container to limit damages of potential exploits&lt;/li&gt;
+  &lt;li&gt;And of course upgrade to the newest 3.0.1 version.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Read more about Java deserialization &lt;a href=&quot;https://www.sourceclear.com/blog/Commons-Collections-Deserialization-Vulnerability-Research-Findings/&quot;&gt;issues&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 19 Oct 2017 22:00:22 +0000</pubDate>
+        <link>http://james.apache.org/james/update/2017/10/19/james-3.0.1.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2017/10/19/james-3.0.1.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
         <title>Hacktoberfest: contribute to James</title>
         <description>&lt;p&gt;The James project joins the &lt;a href=&quot;https://hacktoberfest.digitalocean.com/&quot;&gt;Hactoberfest&lt;/a&gt;!&lt;/p&gt;
 
@@ -200,24 +236,6 @@ features explained with working examples!&lt;/p&gt;
         <pubDate>Wed, 19 Oct 2016 21:13:22 +0700</pubDate>
         <link>http://localhost:4000/james/update/2016/10/19/james-3.0.html</link>
         <guid isPermaLink="true">http://localhost:4000/james/update/2016/10/19/james-3.0.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James Server 3.0</title>
-        <description>&lt;p&gt;We are currently working on the release.&lt;/p&gt;
-
-&lt;p&gt;Keep an eye on the &lt;a href=&quot;http://james.apache.org/newsarchive.html&quot;&gt;news&lt;/a&gt;, we are planning to release the next version in November.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 19 Sep 2016 21:13:22 +0700</pubDate>
-        <link>http://localhost:4000/james/update/2016/09/19/james-3.0.html</link>
-        <guid isPermaLink="true">http://localhost:4000/james/update/2016/09/19/james-3.0.html</guid>
         
         
         <category>james</category>
