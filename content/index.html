@@ -1,37 +1,7 @@
-
-
+---
+layout: default
+---
 <!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements. See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership. The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License. You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied. See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Apache James</title>
-
-        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="/assets/css/ie8.css">
-        <link rel="stylesheet" type="text/css" href="/assets/css/ie9.css">
-        <link rel="shortcut icon" href="/images/james-logo.png">
-    </head>
-<body>
-    <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements. See the NOTICE file
     distributed with this work for additional information
@@ -131,7 +101,7 @@ WHAT WILL YOU TRY:</b><br>
               </li>
               <li class="post-template"><span class="long-arrow-right">&#8594;</span><span><b>STEPS YOU HAVE TO FOLLOW:</b><br>
                 Pull and run the James image with the following single command:<br><br>
-                <code class="highlighter-rouge">docker run -p "25:25" -p "143:143" linagora/james-jpa-sample</code>
+                <code class="highlighter-rouge">docker run -p "25:25" -p "143:143" linagora/james-jpa-sample:3.0.1</code>
 
                 <br><br>
                 Then, connect this image with for instance, Thunderbird.<br>
@@ -148,26 +118,14 @@ WHAT WILL YOU TRY:</b><br>
         </header>
         <section>
           <ul class="no-padding">
-            
+            {% for post in site.posts limit:2 %}
               <li class="post-template">
                 <span class="icon fa-file-text-o"></span>
                 <span class="details">
-                  <a href="/announcements/2018/02/01/gsoc-2018.html" alt="Apache JAMES joins Google Summer of code 2018 !"><b>Apache JAMES joins Google Summer of code 2018 ! - February 01, 2018</b><br><small><p>This year, James developers will propose ideas of Google Summer of Code projects for students.</p>
-
-</small></a>
+                  <a href="{{ post.url }}" alt="{{ post.title }}"><b>{{ post.title }} - {{ post.date | date: '%B %d, %Y' }}</b><br><small>{{ post.excerpt }}</small></a>
                 </span>
               </li>
-            
-              <li class="post-template">
-                <span class="icon fa-file-text-o"></span>
-                <span class="details">
-                  <a href="/james/update/2018/01/26/admin-features.html" alt="New administration features: manage your queues and your reporitories"><b>New administration features: manage your queues and your reporitories - January 26, 2018</b><br><small><p>An often asked feature for James is the ability to handle the mails, that after some processing,
-have landed in a <a href="http://james.apache.org/server/feature-persistence.html">repository</a>, for example /var/mail/error/.</p>
-
-</small></a>
-                </span>
-              </li>
-            
+            {% endfor %}
           </ul>
         </section>
         <footer>
@@ -352,7 +310,7 @@ have landed in a <a href="http://james.apache.org/server/feature-persistence.htm
                   <li class="james-use-case-li center-icon"><span class="icon fa-arrow-right"></span>To allow email interactions with the platform</li>
                   <li class="james-use-case-li center-icon"><span class="icon fa-arrow-right"></span>To use the&nbsp;<a href="https://jmap.io/" class="comm">JMAP</a>&nbsp;protocol (the browser interacts directly with the mail server)</li>
                 </ul>
-                <p>Our deployment currently allows serving a hundred user over JMAP, SMTP and IMAP.</p>
+                <p>Our deployment currently allows serving a hundred users over JMAP, SMTP and IMAP.</p>
               </div>
           </div>
         </section>
@@ -437,6 +395,3 @@ have landed in a <a href="http://james.apache.org/server/feature-persistence.htm
 <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 
-
-</body>
-</html>
