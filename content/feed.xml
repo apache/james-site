@@ -24,9 +24,81 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 08 May 2018 09:20:21 +0700</pubDate>
-    <lastBuildDate>Tue, 08 May 2018 09:20:21 +0700</lastBuildDate>
+    <pubDate>Thu, 07 Jun 2018 15:56:52 +0700</pubDate>
+    <lastBuildDate>Thu, 07 Jun 2018 15:56:52 +0700</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Linagora June newsletter</title>
+        <description>&lt;p&gt;In the name of the James team @Linagora I will be presenting you what we did in the past few weeks, and plan to work on in the coming weeks.&lt;/p&gt;
+
+&lt;p&gt;We have to work on some specific features to make James easier to adopt for large organizations.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-was-achieved-in-may&quot;&gt;What was achieved in May&lt;/h1&gt;
+
+&lt;h2 id=&quot;notifications-when-soon-over-quota&quot;&gt;Notifications when soon over quota&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A mail needs to be sent to the user to warn him. This is an attempts to allow clients not implementing quota’s RFCs to still get the warning.&lt;/p&gt;
+
+  &lt;p&gt;This is implemented with mailbox listeners (and not mailets), with event sourcing. We added the interfaces and implementations to achieve this feature in James using event sourcing with events being stored in Cassandra or in memory.
+Such a technical solution might be very useful to implement other feature.&lt;/p&gt;
+
+  &lt;p&gt;This mailbox listener is optional. We allowed one to register his (potentially custom) mailbox listeners when working with Guice.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;searching-user-by-quota-usage&quot;&gt;Searching user by quota usage&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This would allow an admin to inspect per-user quota usage, via a webadmin interface.&lt;/p&gt;
+
+  &lt;p&gt;Again, we provided two implementations: a scanning one, which naively enumerates mailboxes to compute occupation, and one where quota occupation is indexed in ElasticSearch.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;performance-enhancements&quot;&gt;Performance enhancements&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In order to have a very good mail search experience, it is possible to plug Apache Tika as a text extractor into James. We use Tika as an external service that we call with HTTP. When you use this Tika extractor with ElasticSearch indexing, you get a very powerful fulltext search even on complex attachment format like LibreOffice documents.&lt;/p&gt;
+
+  &lt;p&gt;We did experience slow requests with our Tika server. We contributed &lt;a href=&quot;https://github.com/apache/tika/pull/237&quot;&gt;this issue&lt;/a&gt; which significantly enhanced Tika server performance, and we introduce a cache on James side to reduce calls to tika.&lt;/p&gt;
+
+  &lt;p&gt;We also worked on improving massive JMAP operation performance (delete a large number of emails).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;what-we-will-work-on-in-june&quot;&gt;What we will work on in June&lt;/h1&gt;
+
+&lt;h2 id=&quot;data-leak-prevention&quot;&gt;Data Leak Prevention&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We should have a matcher applying rules defined by the admin. This matcher will then store suspicious emails in specific mail repository for an admin review.&lt;/p&gt;
+
+  &lt;p&gt;To implement this, we need to enhance browsing to MailRepository via WebAdmin. We need to allow storing such rules as well as updating them via webadmin. We need finally a mailet storing emails in a repository given its sender domain.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;exporting-a-mail-account&quot;&gt;Exporting a mail account&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;As an administrator, I should be able to export the content of my mail account. This both allows easier migrations, comply with legal requirements as well as allow some forms of backups.&lt;/p&gt;
+
+  &lt;p&gt;The chosen format is EMLs in a ZIP format, with the folder structure described in archive meta-data, and specific metadata to ease restoring a James account (flags, etc…). An administrator (via webamin) should be able to download/upload such backups in order to do export/restores mail accounts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;coming-next&quot;&gt;Coming next&lt;/h3&gt;
+
+&lt;p&gt;Along side these features that turns out to be necessary for large organisations, our focus will be on having a distributed
+James server. To achieve this, we will propose soon a distributed mail queue based on RabbitMQ.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 06 Jun 2018 11:30:00 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Mime4J 0.8.2</title>
@@ -306,24 +378,6 @@ features explained with working examples!&lt;/p&gt;
         <pubDate>Fri, 16 Jun 2017 11:30:00 +0700</pubDate>
         <link>http://james.apache.org/james/update/2017/06/16/mime4j-0.8.1.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2017/06/16/mime4j-0.8.1.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James Server 3.0-RC1</title>
-        <description>&lt;p&gt;James server 3.0.0-RC1 has been released.&lt;/p&gt;
-
-&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 16 May 2017 14:14:00 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2017/05/16/james-3.0.0-rc1.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2017/05/16/james-3.0.0-rc1.html</guid>
         
         
         <category>james</category>
