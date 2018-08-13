@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache James Project &#x2013; Apache James Protocols Index</title>
+    <title>Apache James Project &#x2013; Apache James Server 3 - ActiveMQ</title>
     <style type="text/css" media="all">
       @import url("../css/james.css");
       @import url("../css/maven-base.css");
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
     <meta name="Date-Revision-yyyymmdd" content="20180813" />
     <meta http-equiv="Content-Language" content="en" />
-        
+        <script type="text/javascript" src="./js/dev-extend.js"></script>
           <!-- Google Analytics -->
     <script type="text/javascript">
     
@@ -114,32 +114,9 @@
                                                                                                                                                                                                                                                                                                                                             <li class="collapsed">
                           <a href="../mailbox/index.html" title="Mailbox">Mailbox</a>
                   </li>
-                                                                                                                                                                                    <li class="expanded">
-            <strong>Protocols</strong>
-                  <ul>
-                      <li class="none">
-                          <a href="../protocols/smtp.html" title="SMTP">SMTP</a>
-            </li>
-                      <li class="none">
-                          <a href="../protocols/pop3.html" title="POP3">POP3</a>
-            </li>
-                      <li class="none">
-                          <a href="../protocols/imap4.html" title="IMAP4">IMAP4</a>
-            </li>
-                      <li class="none">
-                          <a href="../protocols/source-code.html" title="Source Code">Source Code</a>
-            </li>
-                      <li class="none">
-                          <a href="../protocols/apidocs/index.html" title="Javadoc">Javadoc</a>
-            </li>
-                      <li class="none">
-                          <a href="https://issues.apache.org/jira/browse/PROTOCOLS" title="Issue Tracker">Issue Tracker</a>
-            </li>
-                      <li class="none">
-                          <a href="../download.cgi#Apache_James_Protocols" title="Download Releases">Download Releases</a>
-            </li>
-              </ul>
-        </li>
+                                                                                                                                                                                <li class="collapsed">
+                          <a href="../protocols/index.html" title="Protocols">Protocols</a>
+                  </li>
                                                                                                                                                                                                         <li class="collapsed">
                           <a href="../mpt/index.html" title="MPT">MPT</a>
                   </li>
@@ -181,57 +158,40 @@
       <div id="contentBox">
         
 
-  
+ 
 
-  <div class="section">
-<h2><a name="What_is_Apache_James_Protocols"></a>What is Apache James Protocols?</h2>
-    
-<p>The Apache James Protocols Project delivers a lightweight, 
-       and highly extensible framework for mail protocols implementations.</p>
-    
-<p>The framework was build as a generic one, so its not bound to any socket implementation. 
-       This make it possible to use it with NIO or IO Frameworks.</p>
-    
-<p>You can download James Protocols official release from the <a class="externalLink" href="http://james.apache.org/download.cgi">download page</a>.</p>
-  </div>
-       
-  
+
 <div class="section">
-<h2><a name="Apache_James_Protocols_in_Server_and_as_Component"></a>Apache James Protocols in Server and as Component</h2>
-    
-<p>The framework is currently used by James Server in conjunction with Netty to provide a 
-       high performance and extensible <a href="smtp.html">SMTP</a>, 
-       <a href="pop3.html">POP3</a> and <a href="imap4.html">IMAP4</a> Server.</p>
-    
-<p>At the moment those 3 standard mail protocols are included, but others will follow.</p>
-  </div>
+<h2><a name="ActiveMQ"></a>ActiveMQ</h2>
 
   
 <div class="section">
-<h2><a name="Develop_with_Apache_James_Protocols"></a>Develop with Apache James Protocols</h2>
-    
-<p>The <a href="source-code.html">source code</a> page contains information on how 
-       to develop with James Protocols.</p>
-    
-<p>You can also read more on the way the James Server
-       uses James Protocols to <a class="externalLink" href="http://james.apache.org/server/3/dev-extend-smtp-hook.html">Hook SMTP</a>.</p>
-    <img src="images/uml/org.apache.james.protocols-package.png" alt="" />
-  </div>
+<h3><a name="Specification"></a>Specification</h3>
 
+    
+<p>By default with James spring, ActiveMQ is activated, an <b>mailqueuefactory</b> is searched in the class path, see <a class="externalLink" href="https://github.com/linagora/james-project/blob/master/server/container/spring/src/main/resources/META-INF/org/apache/james/spring-server.xml">import</a> and <a class="externalLink" href="https://github.com/linagora/james-project/blob/master/server/queue/queue-activemq/src/main/resources/META-INF/spring/activemq-queue-context.xml">initialisation</a>.</p>
+
+  </div>
   
 <div class="section">
-<h2><a name="About_the_Apache_Software_Foundation"></a>About the Apache Software Foundation</h2>
+<h3><a name="Initialisation"></a>Initialisation</h3>
+
+      You have to declare a bean identified as <b>mailqueuefactory</b> with the type
+      <b>org.apache.james.queue.activemq.ActiveMQMailQueueFactory</b> with the following indexed-arguments:
+
     
-<p>Apache James is a project of The Apache Software Foundation (ASF) which 
-       encourages a collaborative, consensus-based development process under an 
-       open software license.</p>
+<dl>
     
-<p>The ASF maintains other Java projects which may also be of interest. 
-        These are detailed on the ASF Projects page.</p>
+<dt><b>org.apache.james.queue.activemq.EmbeddedActiveMQ</b></dt>
     
-<p>We recommended that users of James products subscribe to the 
-       James users <a class="externalLink" href="http://james.apache.org/mail.html">mailing list</a>.</p>
-    </div>
+<dt><b>org.apache.james.queue.api.MailQueueItemDecoratorFactory</b></dt>
+    
+<dt><b>org.apache.james.metrics.api.MetricFactory</b></dt>
+    </dl>
+
+  </div>
+
+</div>
 
 
 
