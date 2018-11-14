@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
     Licensed to the Apache Software Foundation (ASF) under one
     or more contributor license agreements. See the NOTICE file
@@ -25,9 +24,74 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 13 Aug 2018 10:17:36 +0700</pubDate>
-    <lastBuildDate>Mon, 13 Aug 2018 10:17:36 +0700</lastBuildDate>
+    <pubDate>Wed, 14 Nov 2018 15:02:46 +0700</pubDate>
+    <lastBuildDate>Wed, 14 Nov 2018 15:02:46 +0700</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Apache James Server 3.2.0</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.2.0 release.&lt;/p&gt;
+
+&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
+
+&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mail filtering configured via the JMAP protocol&lt;/li&gt;
+  &lt;li&gt;WebAdmin exposed mail re-indexing tasks&lt;/li&gt;
+  &lt;li&gt;WebAdmin exposed health checks. This includes:
+    &lt;ul&gt;
+      &lt;li&gt;Possibility to perform a single healthcheck, thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Cassandra health checks thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;IMAP MOVE commend (RFC-6851) On top of JPA. Thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;JPA support for Sieve script storage thanks to &lt;a href=&quot;https://github.com/sebast26&quot;&gt;Sebast26&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Sieve script upload via the CLI thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Mailet DOC: Exclude from documentation annotation thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;cassandra.pooling.max.queue.size&lt;/strong&gt; configuration option Thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;RecipentDomainI&lt;/strong&gt; and &lt;strong&gt;SenderDomainIs&lt;/strong&gt; matchers by &lt;a href=&quot;https://github.com/athulyaraj&quot;&gt;athulyaraj&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Multiple libraries updates&lt;/li&gt;
+  &lt;li&gt;Migration from Cassandra 2 to Cassandra 3&lt;/li&gt;
+  &lt;li&gt;Mail::getSender was deprecated. Mail::getMaybeSender offers better Null Sender support. Java 8 default API method was used to not break compatibility.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;deprecated&quot;&gt;Deprecated&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HBase and JCR components (mailbox and server/data). This will be removed as part of 3.3.0. If you have development skills, and are willing to maintain these components, please reach us.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Drop partially implemented Kafka distributed events&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;third-party-softwares&quot;&gt;Third party softwares&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SpamAssassin prior 3.4.2 is subject to multiple CVEs. We recommend the upg&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 14 Nov 2018 12:13:22 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Server 3.1.0</title>
@@ -366,35 +430,6 @@ features explained with working examples!&lt;/p&gt;
         <pubDate>Thu, 20 Jul 2017 21:13:22 +0700</pubDate>
         <link>http://james.apache.org/james/update/2017/07/20/james-3.0.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2017/07/20/james-3.0.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James JSieve 0.7</title>
-        <description>&lt;p&gt;James JSieve 0.7 has been released.&lt;/p&gt;
-
-&lt;p&gt;The library is available as a maven artifact, for instance for jsieve core:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
-    &amp;lt;groupId&amp;gt;org.apache.james&amp;lt;/groupId&amp;gt;
-    &amp;lt;artifactId&amp;gt;apache-jsieve-core&amp;lt;/artifactId&amp;gt;
-    &amp;lt;version&amp;gt;0.7&amp;lt;/version&amp;gt;
-&amp;lt;/dependency&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This release solves issues with folded encoded header matching.&lt;/p&gt;
-
-&lt;p&gt;It also adds an additional DiscardAction to make discarding emails explicit for the calling code.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 23 Jun 2017 11:30:00 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2017/06/23/jsieve-0.7.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2017/06/23/jsieve-0.7.html</guid>
         
         
         <category>james</category>
