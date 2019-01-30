@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache James Project &#x2013; </title>
+    <title>Apache James Project &#x2013; Guice-Cassandra-Rabbitmq-Swift installation guide</title>
     <style type="text/css" media="all">
       @import url("../../css/james.css");
       @import url("../../css/maven-base.css");
@@ -156,28 +156,85 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        
+        <h1>Guice-Cassandra-Rabbitmq-Swift installation guide</h1>
+<div class="section">
+<h2><a name="Building"></a>Building</h2>
+<div class="section">
+<h3><a name="Requirements"></a>Requirements</h3>
 
-    Mailet API - An API for processing email
-    Mailet API - An API for processing email
+<ul>
+  
+<li>Java 8 SDK</li>
+  
+<li>Docker &#x2215; ElasticSearch 2.4.6, RabbitMQ Management 3.3.7, Swift ObjectStorage 2.15.1 and Cassandra 3.11.3</li>
+  
+<li>Maven 3</li>
+</ul></div>
+<div class="section">
+<h3><a name="Building_the_artifacts"></a>Building the artifacts</h3>
+<p>An usual compilation using maven will produce two artifacts into server/container/guice/cassandra-rabbitmq-guice/target directory:</p>
 
-    
-    <menu name="Mailet">
-        
-    </menu>
-    
-    
-<menu name="Downloads">
-        
-        
-    </menu>    
-    
-    
-<menu name="Documentation">
-        
-    </menu>    
-    
+<ul>
+  
+<li>james-server-cassandra-rabbitmq-guice.jar</li>
+  
+<li>james-server-cassandra-rabbitmq-guice.lib</li>
+</ul>
+<p>You can for example run in the base of <a class="externalLink" href="https://github.com/apache/james-project">this git repository</a>:</p>
 
+<div class="source">
+<div class="source">
+<pre>mvn clean install
+</pre></div></div></div></div>
+<div class="section">
+<h2><a name="Running"></a>Running</h2>
+<div class="section">
+<h3><a name="Requirements"></a>Requirements</h3>
+
+<ul>
+  
+<li>Cassandra 3.11.3</li>
+  
+<li>ElasticSearch 2.4.6</li>
+  
+<li>RabbitMQ-Management 3.7.7</li>
+  
+<li>
+<p>Swift ObjectStorage 2.15.1</p></div>
+<div class="section">
+<h3><a name="James_Launch"></a>James Launch</h3></li>
+</ul>
+<p>To run james, you have to create a directory containing required configuration files.</p>
+<p>James requires the configuration to be in a subfolder of working directory that is called <b>conf</b>. You can get a sample directory for configuration from <a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq/destination/conf</a>. You might need to adapt it to your needs.</p>
+<p>You also need to generate a keystore in your conf folder with the following command:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore
+</pre></div></div>
+<p>You need to have a Cassandra, ElasticSearch and RabbitMQ instance running. You can either install the servers or launch them via docker:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ docker run -d --port 9042:9042 --name=cassandra cassandra:3.11.3
+$ docker run -d --port 9200:9200 --port 9300:9300 --name=elasticsearch elasticsearch:2.4.6
+$ docker run -d --port 5672:5672 --port 15672:15672 --name=rabbitmq rabbitmq:3.7.7-management
+$ docker run -d --port 5000:5000 --port 8080:8080 --port 35357:35357 --name=swift linagora/openstack-keystone-swift:pike
+</pre></div></div>
+<p>Once everything is set up, you just have to run the jar with:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-guice.jar
+</pre></div></div></div></div>
+<div class="section">
+<h2><a name="Guice-cassandra-rabbitmq-ldap"></a>Guice-cassandra-rabbitmq-ldap</h2>
+<p>You can follow the same guide to build and run guice-cassandra-rabbitmq-swift-ldap artifact, except that:  - The <b>jar</b> and <b>libs</b> needs to be retrieve from server/container/guice/cassandra-rabbitmq-ldap-guice/target after compilation  - The sample configuration can be found in <a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf</a>  - You need to configure James to be connecting to a running LDAP server. The configuration file is located in <a class="externalLink" href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml</a>  - You can then launch James via this command:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-ldap-guice.jar
+</pre></div></div></div>
       </div>
     </div>
     <div class="clear">
