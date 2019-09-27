@@ -24,9 +24,85 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 May 2019 11:32:29 +0700</pubDate>
-    <lastBuildDate>Wed, 29 May 2019 11:32:29 +0700</lastBuildDate>
-    <generator>Jekyll v3.4.3</generator>
+    <pubDate>Fri, 27 Sep 2019 04:48:51 -0500</pubDate>
+    <lastBuildDate>Fri, 27 Sep 2019 04:48:51 -0500</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Apache James Server 3.4.0</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.4.0 release.&lt;/p&gt;
+
+&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
+
+&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Add in-memory docker image&lt;/li&gt;
+  &lt;li&gt;Support of AWS S3 as blobstore&lt;/li&gt;
+  &lt;li&gt;WebAdmin routes for mapping management (&lt;code class=&quot;highlighter-rouge&quot;&gt;AddAddressMapping&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;AddRegexMapping&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ListMappings&lt;/code&gt;), previously only manageable by CLI&lt;/li&gt;
+  &lt;li&gt;Metrics for Deleted Message Vault&lt;/li&gt;
+  &lt;li&gt;More metrics for BlobStore (new delete &amp;amp; deleteBucket configuration)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;(experimental) New implementation of the deleted message vault on top of an object store, not relying anymore on a 
+repository. This avoids exposing messages via webAdmin. Messages previously stored in the vault will be lost.&lt;/li&gt;
+  &lt;li&gt;Migration to ElasticSearch 6.3&lt;/li&gt;
+  &lt;li&gt;Blob export to LinShare&lt;/li&gt;
+  &lt;li&gt;Native DKIM support for outgoing mails. The mailets from james-jdkim have been included in main James project.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;deprecated&quot;&gt;Deprecated&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Zookeeper component. This will be removed after 3.4 release. If you have development skills, and are willing to maintain this component, please reach us.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Karaf OSGi implementation. It was not compiled nor tested for a year. We didn’t get any feedback about that and we don’t have the resources nor the skills to maintain it any more.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 05 Sep 2019 08:16:30 -0500</pubDate>
+        <link>http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>Apache James `latest` Docker images changes</title>
+        <description>&lt;p&gt;We have decided to change the &lt;code class=&quot;highlighter-rouge&quot;&gt;latest&lt;/code&gt; Docker images behaviour.&lt;/p&gt;
+
+&lt;p&gt;Until nowadays, such images were built on the &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch for each products (&lt;code class=&quot;highlighter-rouge&quot;&gt;linagora/james-memory&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;linagora/james-cassandra-rabbitmq-ldap-project&lt;/code&gt;, …).&lt;br /&gt;
+This is not the way &lt;code class=&quot;highlighter-rouge&quot;&gt;latest&lt;/code&gt; docker image should be, this &lt;a href=&quot;https://blog.container-solutions.com/docker-latest-confusion&quot;&gt;blog post&lt;/a&gt; is explaining this kind of misunderstood.&lt;/p&gt;
+
+&lt;p&gt;So we decided to follow the global Docker users behaviour which is to clone the &lt;em&gt;latest stable release&lt;/em&gt; as the Docker &lt;code class=&quot;highlighter-rouge&quot;&gt;latest&lt;/code&gt; images.&lt;/p&gt;
+
+&lt;p&gt;For those of you who are willing to use a Docker image on top of the master branch, you can use the newly created &lt;code class=&quot;highlighter-rouge&quot;&gt;branch-master&lt;/code&gt; tag,&lt;br /&gt;
+which is published on each merge on the master branch.&lt;/p&gt;
+
+&lt;p&gt;NB: you should not use the &lt;code class=&quot;highlighter-rouge&quot;&gt;latest&lt;/code&gt; image in a production deployment, otherwise you are at risk of jumping from one major release to another unexpectedly.&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading,
+Antoine&lt;/p&gt;
+</description>
+        <pubDate>Fri, 30 Aug 2019 03:09:47 -0500</pubDate>
+        <link>http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Server 3.3.0</title>
@@ -81,7 +157,7 @@
 &lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 26 Mar 2019 15:09:47 +0700</pubDate>
+        <pubDate>Tue, 26 Mar 2019 03:09:47 -0500</pubDate>
         <link>http://james.apache.org/james/update/2019/03/26/james-3.3.0.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2019/03/26/james-3.3.0.html</guid>
         
@@ -108,20 +184,19 @@
 
 &lt;p&gt;The library is available as a maven artifact, for instance for mime4j core:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
     &amp;lt;groupId&amp;gt;org.apache.james&amp;lt;/groupId&amp;gt;
     &amp;lt;artifactId&amp;gt;apache-mime4j-core&amp;lt;/artifactId&amp;gt;
     &amp;lt;version&amp;gt;0.8.3&amp;lt;/version&amp;gt;
 &amp;lt;/dependency&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can also download the release artifacts &lt;a href=&quot;https://www.apache.org/dist/james/mime4j/0.8.3/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 19 Mar 2019 08:13:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2019/03/19/mime4j-0.8.3.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2019/03/19/mime4j-0.8.3.html</guid>
+        <pubDate>Mon, 18 Mar 2019 20:13:22 -0500</pubDate>
+        <link>http://james.apache.org/james/update/2019/03/18/mime4j-0.8.3.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2019/03/18/mime4j-0.8.3.html</guid>
         
         
         <category>james</category>
@@ -184,9 +259,9 @@
 &lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Wed, 14 Nov 2018 12:13:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</guid>
+        <pubDate>Tue, 13 Nov 2018 23:13:22 -0600</pubDate>
+        <link>http://james.apache.org/james/update/2018/11/13/james-3.2.0.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/11/13/james-3.2.0.html</guid>
         
         
         <category>james</category>
@@ -232,7 +307,7 @@
 &lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 31 Jul 2018 21:13:22 +0700</pubDate>
+        <pubDate>Tue, 31 Jul 2018 09:13:22 -0500</pubDate>
         <link>http://james.apache.org/james/update/2018/07/31/james-3.1.0.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2018/07/31/james-3.1.0.html</guid>
         
@@ -304,9 +379,9 @@ Such a technical solution might be very useful to implement other feature.&lt;/p
 James server. To achieve this, we will propose soon a distributed mail queue based on RabbitMQ.&lt;/p&gt;
 
 </description>
-        <pubDate>Wed, 06 Jun 2018 11:30:00 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</guid>
+        <pubDate>Tue, 05 Jun 2018 23:30:00 -0500</pubDate>
+        <link>http://james.apache.org/james/update/2018/06/05/linagora-june-nl.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/06/05/linagora-june-nl.html</guid>
         
         
         <category>james</category>
@@ -337,20 +412,19 @@ James server. To achieve this, we will propose soon a distributed mail queue bas
 
 &lt;p&gt;The library is available as a maven artifact, for instance for mime4j core:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
     &amp;lt;groupId&amp;gt;org.apache.james&amp;lt;/groupId&amp;gt;
     &amp;lt;artifactId&amp;gt;apache-mime4j-core&amp;lt;/artifactId&amp;gt;
     &amp;lt;version&amp;gt;0.8.2&amp;lt;/version&amp;gt;
 &amp;lt;/dependency&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can also download the release artifacts &lt;a href=&quot;https://www.apache.org/dist/james/mime4j/0.8.2/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 07 May 2018 11:30:00 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/05/07/mime4j-0.8.2.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/05/07/mime4j-0.8.2.html</guid>
+        <pubDate>Sun, 06 May 2018 23:30:00 -0500</pubDate>
+        <link>http://james.apache.org/james/update/2018/05/06/mime4j-0.8.2.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/05/06/mime4j-0.8.2.html</guid>
         
         
         <category>james</category>
@@ -401,9 +475,9 @@ Students work with an open source organization on a 3 month programming project 
 &lt;p&gt;Thank you by advance for your involvement and hope to see you around!&lt;/p&gt;
 
 </description>
-        <pubDate>Thu, 01 Feb 2018 05:00:22 +0700</pubDate>
-        <link>http://james.apache.org/announcements/2018/02/01/gsoc-2018.html</link>
-        <guid isPermaLink="true">http://james.apache.org/announcements/2018/02/01/gsoc-2018.html</guid>
+        <pubDate>Wed, 31 Jan 2018 16:00:22 -0600</pubDate>
+        <link>http://james.apache.org/announcements/2018/01/31/gsoc-2018.html</link>
+        <guid isPermaLink="true">http://james.apache.org/announcements/2018/01/31/gsoc-2018.html</guid>
         
         
         <category>announcements</category>
@@ -427,74 +501,9 @@ of them regarding different criteria, but also flush delayed mails.&lt;/p&gt;
 &lt;p&gt;Most of the work on these already usable features is done, but we still have some ideas for related improvements. &lt;a href=&quot;https://issues.apache.org/jira/issues/?jql=project%20%3D%20JAMES%20AND%20resolution%20%3D%20Unresolved%20AND%20labels%20in%20(feature)%20AND%20component%20%20in%20(Queue%2C%20%22MailStore%20%26%20MailRepository%22)%20AND%20type%20in%20(Improvement)&quot;&gt;Contributions&lt;/a&gt; are welcomed!&lt;/p&gt;
 
 </description>
-        <pubDate>Fri, 26 Jan 2018 05:00:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/01/26/admin-features.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/01/26/admin-features.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Security release: Apache James server 3.0.1</title>
-        <description>&lt;p&gt;The Apache James PMCs are glad to announce you the release
-version 3.0.1 of Apache James server.&lt;/p&gt;
-
-&lt;p&gt;It fixes vulnerability described in CVE-2017-12628. The JMX server, also
-used by the command line client is exposed to a java de-serialization
-issue, and thus can be used to execute arbitrary commands. As James
-exposes JMX socket by default only on local-host, this vulnerability can
-only be used for privilege escalation.&lt;/p&gt;
-
-&lt;p&gt;Release 3.0.1 upgrades the incriminated library.&lt;/p&gt;
-
-&lt;p&gt;Note that you can take additional defensive steps in order to mitigate this vulnerability:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ensure that you restrict the access to JMX only on local-host&lt;/li&gt;
-  &lt;li&gt;Ensure that you are using a recent Java Run-time Environment. For instance OpenJDK 8 u111 is vulnerable but OpenJDK 8 u 141 is not.&lt;/li&gt;
-  &lt;li&gt;You can additionally run James in a container to limit damages of potential exploits&lt;/li&gt;
-  &lt;li&gt;And of course upgrade to the newest 3.0.1 version.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Read more about Java deserialization &lt;a href=&quot;https://www.sourceclear.com/blog/Commons-Collections-Deserialization-Vulnerability-Research-Findings/&quot;&gt;issues&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 20 Oct 2017 05:00:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2017/10/20/james-3.0.1.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2017/10/20/james-3.0.1.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Hacktoberfest: contribute to James</title>
-        <description>&lt;p&gt;The James project joins the &lt;a href=&quot;https://hacktoberfest.digitalocean.com/&quot;&gt;Hactoberfest&lt;/a&gt;!&lt;/p&gt;
-
-&lt;p&gt;Retrieve available issues on &lt;a href=&quot;https://github.com/linagora/james-project/issues?q=is%3Aissue+is%3Aopen+label%3AHacktoberfest&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/hactoberfest.png&quot; alt=&quot;Hacktoberfest logo&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Contributions are diversified and feature some core James components like:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Additional mailet/matcher contributions&lt;/li&gt;
-  &lt;li&gt;Additional Command Line options&lt;/li&gt;
-  &lt;li&gt;Additional WebAdmin functionality&lt;/li&gt;
-  &lt;li&gt;JPA Mailbox missing components&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Tue, 03 Oct 2017 21:13:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2017/10/03/Hacktoberfest.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2017/10/03/Hacktoberfest.html</guid>
+        <pubDate>Thu, 25 Jan 2018 16:00:22 -0600</pubDate>
+        <link>http://james.apache.org/james/update/2018/01/25/admin-features.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2018/01/25/admin-features.html</guid>
         
         
         <category>james</category>
