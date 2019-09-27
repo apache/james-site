@@ -69,62 +69,40 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Apache James Server 3.2.0</h1>
-          <h2><span class="icon fa-clock-o"></span><b> November 14, 2018</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> Apache James Mime4J 0.8.2</h1>
+          <h2><span class="icon fa-clock-o"></span><b> May 06, 2018</b></h2>
 
           <br/>
 
           <div>
-            <p>The Apache James developers are pleased to announce James server 3.2.0 release.</p>
+            <p>James Mime4J 0.8.2 has been released.</p>
 
-<p>Here are some points we worked on:</p>
-
-<h3 id="added">Added</h3>
+<p>This release solves the following bugs:</p>
 
 <ul>
-  <li>Mail filtering configured via the JMAP protocol</li>
-  <li>WebAdmin exposed mail re-indexing tasks</li>
-  <li>WebAdmin exposed health checks. This includes:
-    <ul>
-      <li>Possibility to perform a single healthcheck, thanks to <a href="https://github.com/mschnitzler">mschnitzler</a></li>
-      <li>Cassandra health checks thanks to <a href="https://github.com/matzepan">matzepan</a></li>
-    </ul>
-  </li>
-  <li>IMAP MOVE commend (RFC-6851) On top of JPA. Thanks to <a href="https://github.com/mschnitzler">mschnitzler</a></li>
-  <li>JPA support for Sieve script storage thanks to <a href="https://github.com/sebast26">Sebast26</a></li>
-  <li>Sieve script upload via the CLI thanks to <a href="https://github.com/matzepan">matzepan</a></li>
-  <li>Mailet DOC: Exclude from documentation annotation thanks to <a href="https://github.com/mschnitzler">mschnitzler</a></li>
-  <li><strong>cassandra.pooling.max.queue.size</strong> configuration option Thanks to <a href="https://github.com/matzepan">matzepan</a></li>
-  <li><strong>RecipentDomainI</strong> and <strong>SenderDomainIs</strong> matchers by <a href="https://github.com/athulyaraj">athulyaraj</a></li>
+  <li>MIME4J-267 MIME4J DOM parsing errors on specific formats</li>
+  <li>MIME4J-273 Correcting encoder splitting point</li>
 </ul>
 
-<h3 id="changed">Changed</h3>
+<p>The following feature were added:</p>
 
 <ul>
-  <li>Multiple libraries updates</li>
-  <li>Migration from Cassandra 2 to Cassandra 3</li>
-  <li>Mail::getSender was deprecated. Mail::getMaybeSender offers better Null Sender support. Java 8 default API method was used to not break compatibility.</li>
+  <li>MIME4J-269 Introduce a safe to use, PERMISSIVE configuration</li>
+  <li>MIME4J-268 DefaultMessageWriter: expose a convenient <em>asBytes</em> method</li>
+  <li>MIME4J-271 Make possible to define a Content-Type parameter</li>
+  <li>MIME4J-272 Implicit DOM builder call</li>
 </ul>
 
-<h3 id="deprecated">Deprecated</h3>
+<p>The library is available as a maven artifact, for instance for mime4j core:</p>
 
-<ul>
-  <li>HBase and JCR components (mailbox and server/data). This will be removed as part of 3.3.0. If you have development skills, and are willing to maintain these components, please reach us.</li>
-</ul>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-mime4j-core&lt;/artifactId&gt;
+    &lt;version&gt;0.8.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></div></div>
 
-<h3 id="removed">Removed</h3>
-
-<ul>
-  <li>Drop partially implemented Kafka distributed events</li>
-</ul>
-
-<h3 id="third-party-softwares">Third party softwares</h3>
-
-<ul>
-  <li>SpamAssassin prior 3.4.2 is subject to multiple CVEs. We recommend the upg</li>
-</ul>
-
-<p>Early adopters can <a href="http://james.apache.org/download.cgi#Apache_James_Server">download it</a>, any issue can be reported on our issue <a href="https://issues.apache.org/jira/browse/JAMES">tracker</a>.</p>
+<p>You can also download the release artifacts <a href="https://www.apache.org/dist/james/mime4j/0.8.2/">here</a>.</p>
 
 
 

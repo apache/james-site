@@ -69,33 +69,25 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Security release: Apache James server 3.0.1</h1>
-          <h2><span class="icon fa-clock-o"></span><b> October 20, 2017</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> New administration features: manage your queues and your reporitories</h1>
+          <h2><span class="icon fa-clock-o"></span><b> January 25, 2018</b></h2>
 
           <br/>
 
           <div>
-            <p>The Apache James PMCs are glad to announce you the release
-version 3.0.1 of Apache James server.</p>
+            <p>An often asked feature for James is the ability to handle the mails, that after some processing,
+have landed in a <a href="http://james.apache.org/server/feature-persistence.html">repository</a>, for example /var/mail/error/.</p>
 
-<p>It fixes vulnerability described in CVE-2017-12628. The JMX server, also
-used by the command line client is exposed to a java de-serialization
-issue, and thus can be used to execute arbitrary commands. As James
-exposes JMX socket by default only on local-host, this vulnerability can
-only be used for privilege escalation.</p>
+<p>A brand new webadmin API allows you to handle the content of these repositories, see the documentation in <a href="https://james.apache.org/server/manage-webadmin.html">manage-webadmin</a>.
+It allows you to list the repositories, their content, but also to reprocess one or several mails in the processor and queue
+of your choice.</p>
 
-<p>Release 3.0.1 upgrades the incriminated library.</p>
+<p>Oh! And bonus, now you can forget this non scalable file repository and use the brand new Cassandra repository!</p>
 
-<p>Note that you can take additional defensive steps in order to mitigate this vulnerability:</p>
+<p>On the same documentation page you will also find the new mail queue management API, done to list queued mails, remove some
+of them regarding different criteria, but also flush delayed mails.</p>
 
-<ul>
-  <li>Ensure that you restrict the access to JMX only on local-host</li>
-  <li>Ensure that you are using a recent Java Run-time Environment. For instance OpenJDK 8 u111 is vulnerable but OpenJDK 8 u 141 is not.</li>
-  <li>You can additionally run James in a container to limit damages of potential exploits</li>
-  <li>And of course upgrade to the newest 3.0.1 version.</li>
-</ul>
-
-<p>Read more about Java deserialization <a href="https://www.sourceclear.com/blog/Commons-Collections-Deserialization-Vulnerability-Research-Findings/">issues</a>.</p>
+<p>Most of the work on these already usable features is done, but we still have some ideas for related improvements. <a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20JAMES%20AND%20resolution%20%3D%20Unresolved%20AND%20labels%20in%20(feature)%20AND%20component%20%20in%20(Queue%2C%20%22MailStore%20%26%20MailRepository%22)%20AND%20type%20in%20(Improvement)">Contributions</a> are welcomed!</p>
 
 
 

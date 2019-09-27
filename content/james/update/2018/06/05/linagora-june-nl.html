@@ -69,27 +69,70 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Apache James JSieve 0.7</h1>
-          <h2><span class="icon fa-clock-o"></span><b> June 23, 2017</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> Linagora June newsletter</h1>
+          <h2><span class="icon fa-clock-o"></span><b> June 05, 2018</b></h2>
 
           <br/>
 
           <div>
-            <p>James JSieve 0.7 has been released.</p>
+            <p>In the name of the James team @Linagora I will be presenting you what we did in the past few weeks, and plan to work on in the coming weeks.</p>
 
-<p>The library is available as a maven artifact, for instance for jsieve core:</p>
+<p>We have to work on some specific features to make James easier to adopt for large organizations.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
-    &lt;artifactId&gt;apache-jsieve-core&lt;/artifactId&gt;
-    &lt;version&gt;0.7&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-</div>
+<h1 id="what-was-achieved-in-may">What was achieved in May</h1>
 
-<p>This release solves issues with folded encoded header matching.</p>
+<h2 id="notifications-when-soon-over-quota">Notifications when soon over quota</h2>
 
-<p>It also adds an additional DiscardAction to make discarding emails explicit for the calling code.</p>
+<blockquote>
+  <p>A mail needs to be sent to the user to warn him. This is an attempts to allow clients not implementing quota’s RFCs to still get the warning.</p>
+
+  <p>This is implemented with mailbox listeners (and not mailets), with event sourcing. We added the interfaces and implementations to achieve this feature in James using event sourcing with events being stored in Cassandra or in memory.
+Such a technical solution might be very useful to implement other feature.</p>
+
+  <p>This mailbox listener is optional. We allowed one to register his (potentially custom) mailbox listeners when working with Guice.</p>
+</blockquote>
+
+<h2 id="searching-user-by-quota-usage">Searching user by quota usage</h2>
+
+<blockquote>
+  <p>This would allow an admin to inspect per-user quota usage, via a webadmin interface.</p>
+
+  <p>Again, we provided two implementations: a scanning one, which naively enumerates mailboxes to compute occupation, and one where quota occupation is indexed in ElasticSearch.</p>
+</blockquote>
+
+<h2 id="performance-enhancements">Performance enhancements</h2>
+
+<blockquote>
+  <p>In order to have a very good mail search experience, it is possible to plug Apache Tika as a text extractor into James. We use Tika as an external service that we call with HTTP. When you use this Tika extractor with ElasticSearch indexing, you get a very powerful fulltext search even on complex attachment format like LibreOffice documents.</p>
+
+  <p>We did experience slow requests with our Tika server. We contributed <a href="https://github.com/apache/tika/pull/237">this issue</a> which significantly enhanced Tika server performance, and we introduce a cache on James side to reduce calls to tika.</p>
+
+  <p>We also worked on improving massive JMAP operation performance (delete a large number of emails).</p>
+</blockquote>
+
+<h1 id="what-we-will-work-on-in-june">What we will work on in June</h1>
+
+<h2 id="data-leak-prevention">Data Leak Prevention</h2>
+
+<blockquote>
+  <p>We should have a matcher applying rules defined by the admin. This matcher will then store suspicious emails in specific mail repository for an admin review.</p>
+
+  <p>To implement this, we need to enhance browsing to MailRepository via WebAdmin. We need to allow storing such rules as well as updating them via webadmin. We need finally a mailet storing emails in a repository given its sender domain.</p>
+</blockquote>
+
+<h3 id="exporting-a-mail-account">Exporting a mail account</h3>
+
+<blockquote>
+  <p>As an administrator, I should be able to export the content of my mail account. This both allows easier migrations, comply with legal requirements as well as allow some forms of backups.</p>
+
+  <p>The chosen format is EMLs in a ZIP format, with the folder structure described in archive meta-data, and specific metadata to ease restoring a James account (flags, etc…). An administrator (via webamin) should be able to download/upload such backups in order to do export/restores mail accounts.</p>
+</blockquote>
+
+<h3 id="coming-next">Coming next</h3>
+
+<p>Along side these features that turns out to be necessary for large organisations, our focus will be on having a distributed
+James server. To achieve this, we will propose soon a distributed mail queue based on RabbitMQ.</p>
+
 
 
           </div>

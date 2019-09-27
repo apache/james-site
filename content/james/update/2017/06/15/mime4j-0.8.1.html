@@ -69,42 +69,29 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Apache James Mime4J 0.8.2</h1>
-          <h2><span class="icon fa-clock-o"></span><b> May 07, 2018</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> Apache James Mime4J 0.8.1</h1>
+          <h2><span class="icon fa-clock-o"></span><b> June 15, 2017</b></h2>
 
           <br/>
 
           <div>
-            <p>James Mime4J 0.8.2 has been released.</p>
-
-<p>This release solves the following bugs:</p>
-
-<ul>
-  <li>MIME4J-267 MIME4J DOM parsing errors on specific formats</li>
-  <li>MIME4J-273 Correcting encoder splitting point</li>
-</ul>
-
-<p>The following feature were added:</p>
-
-<ul>
-  <li>MIME4J-269 Introduce a safe to use, PERMISSIVE configuration</li>
-  <li>MIME4J-268 DefaultMessageWriter: expose a convenient <em>asBytes</em> method</li>
-  <li>MIME4J-271 Make possible to define a Content-Type parameter</li>
-  <li>MIME4J-272 Implicit DOM builder call</li>
-</ul>
+            <p>James Mime4J 0.8.1 has been released.</p>
 
 <p>The library is available as a maven artifact, for instance for mime4j core:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;dependency&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
     &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
     &lt;artifactId&gt;apache-mime4j-core&lt;/artifactId&gt;
-    &lt;version&gt;0.8.2&lt;/version&gt;
+    &lt;version&gt;0.8.1&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>You can also download the release artifacts <a href="https://www.apache.org/dist/james/mime4j/0.8.2/">here</a>.</p>
+<p>This release solves issues with header Date handling in the dom project:</p>
 
+<ul>
+  <li>It was not possible to know if the Date header was set as a default value was always provided</li>
+  <li>Valid dates missing century was badly parsed.</li>
+</ul>
 
 
           </div>
