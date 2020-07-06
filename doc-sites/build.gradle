@@ -1,0 +1,22 @@
+plugins {
+  id 'base'
+  id "com.github.node-gradle.node" version "2.2.4"
+}
+
+node {
+  // Version of node to use.
+  version = '12.18.2'
+  download = true
+}
+
+task generateDocs(type: NpxTask) {
+  dependsOn npmInstall
+  inputs.files('package.json', 'package-lock.json', 'antora-playbook.yml')
+  inputs.dir(fileTree("node_modules").exclude(".cache"))
+  outputs.dir('build/site')
+
+  command = 'antora'
+  args = ['antora-playbook.yml']
+}
+
+tasks.build.dependsOn generateDocs
