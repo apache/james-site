@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Long Demo :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org">Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="main" data-version="3.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Apache James Reference Book</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../concepts/messages/index.html">Messages</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/messages/imf.html">IMF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/messages/mime.html">MIME</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../concepts/storage/index.html">Storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="local.html">Local</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="redundant.html">Redundant</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="distributed.html">Distributed</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../community/index.html">Community</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Reference Book</span>
+    <span class="version">3.5 Alpha</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Apache James Reference Book</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.5 Alpha</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Apache James Reference Book</a></li>
+    <li><a href="index.html">Servers</a></li>
+    <li><a href="demo.html">Demo</a></li>
+    <li><a href="15-minute-demo.html">Long Demo</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Long Demo</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this demo (~15 minutes), we will set up a runing James demo using a prepared Docker image.
+We will then test the server by connecting with an email client. Finally, we
+will connect to the server via the REST-based Admin API.</p>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Docker</p>
+</li>
+<li>
+<p>curl</p>
+</li>
+<li>
+<p>Thunderbird client (optional)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_up_the_demo_server"><a class="anchor" href="#_set_up_the_demo_server"></a>Set up the demo server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before starting the server, because we will be connecting to the Admin API we need to set some configuration parameters.
+We will create a <code>webadmin.properties</code> file that James will use in order to allow us to connect to the API.</p>
+</div>
+<div class="paragraph">
+<p>Run this command to create the <code>webadmin.properties</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">printf 'enabled=true\nport=8000\nhost=localhost' &gt;&gt; webadmin.properties</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>enabled=true</code> instructs James to run the Admin API service</p>
+</li>
+<li>
+<p><code>port=8000</code> configures the Admin API to be made available via port 8000</p>
+</li>
+<li>
+<p><code>host=localhost</code> configures the Admin API to respond on localhost</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now run the James demo server using this command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d -p "25:25" -p "143:143" -p "127.0.0.1:8000:8000" -v $(pwd)/webadmin.properties:/root/conf/webadmin.properties --name james linagora/james-jpa-sample:3.4.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>docker run</code> runs the provided image with the given parameters</p>
+</li>
+<li>
+<p>The <code>-d</code> parameter runs the container in "detached" mode</p>
+</li>
+<li>
+<p><code>-p "25:25" -p "143:143"</code> attaches the image ports to the ports 25 (SMTP) and 143 (IMAP) on the host machine</p>
+</li>
+<li>
+<p>`-p "127.0.0.1:8000:8000" attaches the port 8000 to localhost on the host machine to allow us to connect to the Admin API</p>
+</li>
+<li>
+<p><code>-v $(pwd)/webadmin.properties:/root/conf/webadmin.properties</code> mounts the webadmin.properties file to configure the Admin API</p>
+</li>
+<li>
+<p>The <code>--name james</code> parameter gives the running container a name to make it easier to manipulate</p>
+</li>
+<li>
+<p><code>linagora/james-jpa-sample:3.4.0</code> is the image that is used for this demo</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Docker will pull the image and start the container.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>To run commands using the James CLI, you can use the running container via Docker:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker exec james java -jar /root/james-cli.jar \
+    -h \&lt;&lt;HOST&gt;&gt; -p \&lt;&lt;PORT&gt;&gt; \&lt;&lt;COMMAND&gt;&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this demo, we are using host 127.0.0.1 and port 9999, so every command looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker exec james java -jar /root/james-cli.jar \
+    -h 127.0.0.1 -p 9999 \&lt;&lt;COMMAND&gt;&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Host 127.0.0.1 is of course localhost, and the use of port 9999 is completely arbitrary.</p>
+</div>
+<div class="paragraph">
+<p>To make this demo a little easier to use, set this up as a bash script by copying and pasting this script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">printf '#!/bin/bash\n\ndocker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 $@' &gt;&gt; james ; chmod +x james</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>As an example, list all the domains currently in use by James:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should notice that a default domain, james.local, has been created</p>
+</div>
+<div class="paragraph">
+<p>List all the current users:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see users <code>user01@james.local</code>, <code>user02@james.local</code>, and <code>user03@james.local</code>.</p>
+</div>
+<div class="paragraph">
+<p>Create a new "test.local" domain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addDomain test.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>List the domains again to ensure that "test.local" has successfully been added:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add the user "testuser" to the "test.local" domain with password "password":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addUser testuser@test.local password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now see your newly created user:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connect_to_the_server_with_an_email_client"><a class="anchor" href="#_connect_to_the_server_with_an_email_client"></a>Connect to the server with an email client</h2>
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>For this demo, we will use Thunderbird, as it is available in multiple languages
+on Windows, Mac, and Linux.</p>
+</div>
+<div class="paragraph">
+<p>Go to <a href="https://www.thunderbird.net" class="bare">https://www.thunderbird.net</a> to download Thunderbird.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After you have installed Thunderbird,
+<a href="https://support.mozilla.org/en-US/kb/manual-account-configuration">manually set up an account</a>
+for user01@james.local using the following parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Account name: user01</p>
+</li>
+<li>
+<p>Your name: User 01</p>
+</li>
+<li>
+<p>Email address: user01@james.local</p>
+</li>
+<li>
+<p>SMTP server name: localhost</p>
+</li>
+<li>
+<p>SMTP port: 25</p>
+</li>
+<li>
+<p>SMTP connection security: none</p>
+</li>
+<li>
+<p>SMTP authentication: password</p>
+</li>
+<li>
+<p>IMAP server name: localhost</p>
+</li>
+<li>
+<p>IMAP user name: user01@james.local</p>
+</li>
+<li>
+<p>IMAP port: 143</p>
+</li>
+<li>
+<p>IMAP connection security: none</p>
+</li>
+<li>
+<p>IMAP authentication: none</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Repeat the above for testuser@test.local:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Account name: testuser</p>
+</li>
+<li>
+<p>Your name: Test User</p>
+</li>
+<li>
+<p>Email address: testuser@test.local</p>
+</li>
+<li>
+<p>SMTP server name: localhost</p>
+</li>
+<li>
+<p>SMTP port: 25</p>
+</li>
+<li>
+<p>SMTP connection security: none</p>
+</li>
+<li>
+<p>SMTP authentication: password</p>
+</li>
+<li>
+<p>IMAP server name: localhost</p>
+</li>
+<li>
+<p>IMAP user name: testuser@test.local</p>
+</li>
+<li>
+<p>IMAP port: 143</p>
+</li>
+<li>
+<p>IMAP connection security: none</p>
+</li>
+<li>
+<p>IMAP authentication: none</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now have fun sending emails back and forth to yourself. :-)
+But don&#8217;t spend all day doing this. You have too much work to do.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connect_to_the_server_via_the_admin_api"><a class="anchor" href="#_connect_to_the_server_via_the_admin_api"></a>Connect to the server via the Admin API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will use curl to connect to localhost on port 8000, as the Admin API
+is made available on this port.</p>
+</div>
+<div class="paragraph">
+<p>List the available domains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8000/domains</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see a response similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+  "edfce41c55e6",
+  "james.linagora.com",
+  "james.local",
+  "localhost",
+  "test.local",
+  "172.17.0.2"
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Test that a domain exists:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -I -X GET http://localhost:8000/domains/test.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see an empty <code>204</code> response, which means "yes, this domain does exist".</p>
+</div>
+<div class="paragraph">
+<p>Delete our test domain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X DELETE http://localhost:8000/domains/test.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now retest <code>test.local</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -I -X GET http://localhost:8000/domains/test.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This time you will receive a <code>404</code> code because the <code>test.local</code> domain no longer exists.</p>
+</div>
+<div class="paragraph">
+<p>Documentation for the webadmin is available at: <a href="http://james.apache.org/server/manage-webadmin.html" class="bare">http://james.apache.org/server/manage-webadmin.html</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optional"><a class="anchor" href="#_optional"></a>Optional</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Connect manually with SMTP (~5 minutes)</p>
+</li>
+<li>
+<p>Connect manually with POP (~5 minutes)</p>
+</li>
+<li>
+<p>Connect manually with IMAP (~5 minutes)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stop_the_demo"><a class="anchor" href="#_stop_the_demo"></a>Stop the demo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To shutdown the server:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>docker stop james ; docker rm james</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all, folks!</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

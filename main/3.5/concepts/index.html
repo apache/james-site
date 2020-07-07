@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apache James Core Concepts :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org">Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="main" data-version="3.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Apache James Reference Book</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="messages/index.html">Messages</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="messages/imf.html">IMF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="messages/mime.html">MIME</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="storage/index.html">Storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../servers/index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../servers/demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../servers/5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../servers/15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../servers/local.html">Local</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../servers/redundant.html">Redundant</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../servers/distributed.html">Distributed</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../community/index.html">Community</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Reference Book</span>
+    <span class="version">3.5 Alpha</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Apache James Reference Book</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.5 Alpha</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Apache James Reference Book</a></li>
+    <li><a href="index.html">Concepts</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Apache James Core Concepts</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The core domain of Apache James is intimitely related to email communications.
+Therefore this section is divided into topics that deal with the various
+aspect of email systems.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#emails">Email Messages</a></p>
+</li>
+<li>
+<p><a href="#protocols">Transmission Protocols</a></p>
+</li>
+<li>
+<p><a href="#mailbox">Mailbox and Email Storage</a></p>
+</li>
+<li>
+<p><a href="#processing">Email Processing</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="emails"><a class="anchor" href="#emails"></a>Email Messages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Electronic Mail (often written as "e-mail" or "email") is a means of
+exchanging messages over a data network. In our context, it is obvious
+that we mean "electronic mail" and not "postal mail", so we usually just
+write "mail".</p>
+</div>
+<div class="paragraph">
+<p><a href="mail/index.html" class="page">Email messages</a> are based on a few specifications
+that are not easy to digest, so we make an effort to provide a simplified
+model.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="protocols"><a class="anchor" href="#protocols"></a>Transmission Protocols</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Emails are only useful because people can communicate with each other.
+To allow for this, obviously there must be a means of transmitting messages
+from one user to another. A number of different protocols have emerged to
+handle the various different requirements of using email in a practical
+manner. The most common <a href="protocols/index.html" class="page">transmission protocols</a>
+are SMTP, POP, and IMAP. More recently JMAP is an interesting protocol
+that merits attention.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mailbox"><a class="anchor" href="#mailbox"></a>Mailbox and Email Storage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Email would not be very useful if, like in <a href="https://www.youtube.com/watch?v=0TiqXFssKMY">Mission Impossible</a>,
+a message would self-destruct immediately after being read.
+For those of us who are not secret agents, we generally prefer to keep
+a record of those messages that we receive. For this reason we need a means
+of <a href="storage/index.html" class="page">storing messages</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="processing"><a class="anchor" href="#processing"></a>Email Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are many ways to peel a potato. James has its own particular
+<a href="processing/index.html" class="page">model for processing mail</a>,
+based mostly on the concept of a "Mailet". The idea of Mailet-based
+processing was heavily inspired by the <a href="https://en.wikipedia.org/wiki/Java_servlet">Servlet</a>
+concept.</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
