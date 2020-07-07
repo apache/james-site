@@ -37,7 +37,7 @@ pipeline {
 
     options {
         // Configure an overall timeout for the build of one hour.
-        timeout(time: 4, unit: 'HOURS')
+        timeout(time: 30, unit: 'MINUTES')
         // When we have test-fails e.g. we don't need to run the remaining steps
         skipStagesAfterUnstable()
         buildDiscarder(
@@ -50,6 +50,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh "./gradlew clean build"
+                stash includes: 'doc-sites/build/site/**/*', name: 'apache-james-site'
             }
         }
 
@@ -60,8 +61,18 @@ pipeline {
         }
 
         stage('Publish') {
+            agent {
+                node {
+                    label 'git-websites'
+                }
+            }
+
             steps {
-                echo "These are not the publish commands you are looking for."
+                echo "Deploy staging James website."
+
+                unstash 'apache-james-site'
+
+                sh 'mvn -f jenkins.pom -X -P deploy-site scm-publish:publish-scm'
             }
         }
     }
