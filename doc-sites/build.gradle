@@ -1,0 +1,35 @@
+plugins {
+  id 'base'
+  id 'com.github.node-gradle.node' version '2.2.4'
+}
+
+node {
+  // Version of node to use.
+  version = '12.18.2'
+  download = true
+}
+
+def siteOutputDir = "${buildDir}/site";
+
+task generateDocs(type: NpxTask) {
+  dependsOn npmInstall
+
+  inputs.files('package.json', 'package-lock.json', 'antora-playbook.yml')
+  inputs.dir(fileTree('node_modules').exclude('.cache'))
+  outputs.dir(siteOutputDir)
+
+  command = 'antora'
+  args = ['antora-playbook.yml' ]
+}
+
+task copySomeFiles(type: Copy) {
+  dependsOn generateDocs
+  from 'src/main/asf'
+  into siteOutputDir
+}
+
+task buildSite() {
+  dependsOn generateDocs, copySomeFiles
+}
+
+tasks.build.dependsOn buildSite

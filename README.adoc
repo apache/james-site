@@ -1,0 +1,44 @@
+= Apache James website
+
+This repository is used for storing (some) content for https://james.apache.org[Apache James] website.
+
+It's also used to build and publish the website.
+
+
+== How to build the website
+
+We use https://antora.org[Antora] as a tool to manage and generate the website.
+We use https://gradle.org[Gradle] as a tool to drive / automate the tasks for generating, aggregating and publishing the website.
+
+
+=== Why Antora?
+
+Antora lets us aggregate multiple documentation sources, across multiple versions and publish them as a single website.
+Documentation for each Apache James component is kept and versioned alongside the code for it.
+
+=== Why Gradle?
+
+Gralde allows us to autoamte the tasks that we do when publishing a website.
+We write gradle tasks for building and publishing the website.
+We can run those tasks locally and inside our CI infrastructure: https://builds.apache.org[Apache Builds].
+
+More specifically, we use Gradle to:
+
+* Download and install a specific version of https://nodejs.org[NodeJS] using https://github.com/node-gradle/gradle-node-plugin[Gradle Node Plugin]
+* Install a local version of Antora
+* Use a Gradle task to call build the website with Antora
+
+By using this specific flow, you only need `git`, `Java` and shell access to build the website.
+All other dependencies are installed automatically by Gradle.
+Even Gradle is downloaded and installed using the Gradle wrapper script.
+
+
+== How to build the website
+
+[source,bash]
+----
+    # To build the website run
+    ./gradlew clean build
+    # The website is located here
+    cd doc-sites/build/site
+----
