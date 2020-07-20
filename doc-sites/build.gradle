@@ -7,10 +7,6 @@ configurations {
   antora
 }
 
-dependencies {
-  antora(project(path: ':ui-bundle', configuration: 'uiBundle'))
-}
-
 node {
   // Version of node to use.
   version = '12.18.2'
@@ -21,14 +17,14 @@ def siteOutputDir = "${buildDir}/site";
 
 task generateDocs(type: NpxTask) {
   dependsOn npmInstall
-  dependsOn ':ui-bundle:build'
+  dependsOn ':antora-ui:build'
 
   inputs.files('package.json', 'package-lock.json', 'antora-playbook.yml')
   inputs.dir(fileTree('node_modules').exclude('.cache'))
   outputs.dir(siteOutputDir)
 
   command = 'antora'
-  args = ['antora-playbook.yml' ]
+  args = ['antora-playbook.yml', '--stacktrace']
 }
 
 task copySomeFiles(type: Copy) {

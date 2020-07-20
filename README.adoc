@@ -42,3 +42,30 @@ Even Gradle is downloaded and installed using the Gradle wrapper script.
     # The website is located here
     cd doc-sites/build/site
 ----
+
+
+== How to customize the theme for the documentaion
+
+The documentation website is based on https://antora.org[Antora].
+We have added https://gitlab.com/antora/antora-ui-default/[antora-ui-default] project as a git subtree under `antora-ui`.
+
+`./gradlew :antora-ui:build` will assemble the `antora-ui/build/ui-bundle.zip` archive required for the website.
+All the steps are automated as Gradle tasks in that project.
+All you have to do is change the css and html files and then rebuild the project.
+
+The antora-ui project has a preview mode: `/.gradlew gulpPreviewTheme`
+
+
+[source,shell]
+----
+    # antora-ui-default was added like this. You should be able to pull some changes from upstream
+    git subtree add --prefix antora-ui https://gitlab.com/antora/antora-ui-default.git master --squash
+----
+
+
+=== Related links
+
+* https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844[A git subtree tutorial].
+* https://docs.antora.org/antora/2.3/playbook/configure-ui/[Antora UI keys]
+
+

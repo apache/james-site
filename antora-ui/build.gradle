@@ -1,0 +1,35 @@
+plugins {
+  id 'base'
+  id 'maven-publish'
+  id 'com.github.node-gradle.node' version '2.2.4'
+}
+
+// gulp is using build directory so we use another
+project.buildDir = 'build-gradle'
+
+node {
+  // Version of node to use.
+  version = '12.18.2'
+  download = true
+}
+
+task gulpPreviewTheme(type: NpxTask) {
+  dependsOn npm_install
+  // https://gitlab.com/antora/antora-ui-default#user-content-preview-the-ui
+  command = 'gulp-cli@2.3.0'
+  args = [ 'preview']
+}
+
+task gulpBuildBundle(type: NpxTask) {
+  // https://gitlab.com/antora/antora-ui-default#user-content-package-for-use-with-antora
+  dependsOn npm_install
+  command = 'gulp-cli@2.3.0'
+  args = ["bundle"]
+
+  inputs.files('package.json', 'package-lock.json', '.gulp.json', 'gulpfile.js', 'index.js')
+  inputs.dir('src')
+  inputs.dir(fileTree("node_modules").exclude(".cache"))
+  outputs.files('build/ui-bundle.zip')
+}
+
+build.dependsOn 'gulpBuildBundle'
