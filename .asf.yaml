@@ -1,0 +1,24 @@
+#
+# See documentation for the options here
+# https://cwiki.apache.org/confluence/display/INFRA/git+-+.asf.yaml+features
+#
+
+# Staging and publishing profile for yourproject-website.git:
+staging:
+  profile: ~
+  whoami:  asf-staging
+
+github:
+  description: "Project to build the Apache James website"
+  homepage: https://james.apache.org/
+  labels:
+    - mail
+    - server
+    - imap
+    - smtp
+    - jmap
+notifications:
+  commits:      site-dev@james.apache.org
+  issues:       site-dev@james.apache.org
+  pullrequests: site-dev@james.apache.org
+  jira_options: link label comment

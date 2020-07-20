@@ -68,6 +68,9 @@ pipeline {
                     label 'git-websites'
                 }
             }
+            when {
+                anyOf { branch 'live'; branch 'staging' }
+            }
 
             steps {
                 echo "Deploy staging James website."
