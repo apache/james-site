@@ -168,6 +168,9 @@
     <a class="nav-link" href="operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="operate/webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -261,9 +264,16 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Architecture</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>This sections presents the Distributed Server architecture.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_storage"><a class="anchor" href="#_storage"></a>Storage</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In order to deliver its promises, the Distributed Server leverages the following storage strategies:</p>
 </div>
@@ -293,6 +303,418 @@
 <p><strong>SpamAssassin</strong> (optional) can be used for Spam detection and user feedback is supported.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_protocols"><a class="anchor" href="#_protocols"></a>Protocols</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following protocols are supported and can be used to interact with the Distributed Server:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>SMTP</strong></p>
+</li>
+<li>
+<p><strong>IMAP</strong></p>
+</li>
+<li>
+<p><a href="operate/webadmin.html" class="page">WebAdmin</a> REST Administration API</p>
+</li>
+<li>
+<p><strong>LMTP</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following protocols should be considered experimental</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JMAP</strong> (draft specification as defined <a href="https://github.com/apache/james-project/tree/master/server/protocols/jmap-draft/doc">here</a>)</p>
+</li>
+<li>
+<p><strong>POP3</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_components"><a class="anchor" href="#_components"></a>Components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section presents the various components of the Distributed server, providing context about
+their interactions, and about their implementations.</p>
+</div>
+<div class="sect2">
+<h3 id="_mail_processing"><a class="anchor" href="#_mail_processing"></a>Mail processing</h3>
+<div class="paragraph">
+<p>Mail processing allows to take asynchronously business decisions on
+received emails.</p>
+</div>
+<div class="paragraph">
+<p>Here are its components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>spooler</code> takes mail out of the mailQueue and executes mail
+processing within the <code>mailet container</code>.</p>
+</li>
+<li>
+<p>The <code>mailet container</code> synchronously executes the user defined logic.
+This <code>logic' is written through the use of `mailet</code>, <code>matcher</code> and
+<code>processor</code>.</p>
+</li>
+<li>
+<p>A <code>mailet</code> represents an action: mail modification, envelop
+modification, a side effect, or stop processing.</p>
+</li>
+<li>
+<p>A <code>matcher</code> represents a condition to execute a mailet.</p>
+</li>
+<li>
+<p>A <code>processor</code> is a flow of pair of <code>matcher</code> and <code>mailet</code> executed
+sequentially. The <code>ToProcessor</code> mailet is a <code>goto</code> instruction to start
+executing another <code>processor</code></p>
+</li>
+<li>
+<p>A <code>mail repository</code> allows storage of a mail as part of its
+processing. Standard configuration relies on the following mail
+repository:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cassandra://var/mail/error/</code> : unexpected errors that occurred
+during mail processing. Emails impacted by performance related
+exceptions, or logical bug within James code are typically stored here.
+These mails could be reprocessed once the cause of the error is fixed.
+The <code>Mail.error</code> field can help diagnose the issue. Correlation with
+logs can be achieved via the use of the <code>Mail.name</code> field.</p>
+</li>
+<li>
+<p><code>cassandra://var/mail/address-error/</code> : mail addressed to a
+non-existing recipient of a handled local domain. These mails could be
+reprocessed once the user is created, for instance.</p>
+</li>
+<li>
+<p><code>cassandra://var/mail/relay-denied/</code> : mail for whom relay was
+denied: missing authentication can, for instance, be a cause. In
+addition to prevent disasters upon miss configuration, an email review
+of this mail repository can help refine a host spammer blacklist.</p>
+</li>
+<li>
+<p><code>cassandra://var/mail/rrt-error/</code> : runtime error upon Recipient
+Rewritting occurred. This is typically due to a loop.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mail_queue"><a class="anchor" href="#_mail_queue"></a>Mail Queue</h3>
+<div class="paragraph">
+<p>An email queue is a mandatory component of SMTP servers. It is a system
+that creates a queue of emails that are waiting to be processed for
+delivery. Email queuing is a form of Message Queuing – an asynchronous
+service-to-service communication. A message queue is meant to decouple a
+producing process from a consuming one. An email queue decouples email
+reception from email processing. It allows them to communicate without
+being connected. As such, the queued emails wait for processing until
+the recipient is available to receive them. As James is an Email Server,
+it also supports mail queue as well.</p>
+</div>
+<div class="sect3">
+<h4 id="_why_mail_queue_is_necessary"><a class="anchor" href="#_why_mail_queue_is_necessary"></a>Why Mail Queue is necessary</h4>
+<div class="paragraph">
+<p>You might often need to check mail queue to make sure all emails are
+delivered properly. At first, you need to know why email queues get
+clogged. Here are the two core reasons for that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Exceeded volume of emails</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Some mailbox providers enforce email rate limits on IP addresses. The
+limits are based on the sender reputation. If you exceeded this rate and
+queued too many emails, the delivery speed will decrease.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Spam-related issues</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Another common reason is that your email has been busted by spam
+filters. The filters will let the emails gradually pass to analyze how
+the rest of the recipients react to the message. If there is slow
+progress, it’s okay. Your email campaign is being observed and assessed.
+If it’s stuck, there could be different reasons including the blockage
+of your IP address.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_why_combining_cassandra_rabbitmq_and_object_storage_for_mailqueue"><a class="anchor" href="#_why_combining_cassandra_rabbitmq_and_object_storage_for_mailqueue"></a>Why combining Cassandra, RabbitMQ and Object storage for MailQueue</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>RabbitMQ ensures the messaging function, and avoids polling.</p>
+</li>
+<li>
+<p>Cassandra enables administrative operations such as browsing, deleting
+using a time series which might require fine performance tuning (see
+<a href="http://cassandra.apache.org/doc/latest/operating/index.html">Operating
+Casandra documentation</a>).</p>
+</li>
+<li>
+<p>Object Storage stores potentially large binary payload.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>However the current design do not implement delays. Delays allow to
+define the time a mail have to be living in the mailqueue before being
+dequeued and is used for example for exponential wait delays upon remote
+delivery retries, or</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mailbox"><a class="anchor" href="#_mailbox"></a>Mailbox</h3>
+<div class="paragraph">
+<p>Storage for emails belonging for users.</p>
+</div>
+<div class="paragraph">
+<p>Metadata are stored in Cassandra while headers, bodies and attachments are stored
+within the <a href="#_blobstore">BlobStore</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_search_index"><a class="anchor" href="#_search_index"></a>Search index</h4>
+<div class="paragraph">
+<p>Emails are indexed asynchronously in ElasticSearch via the <a href="#_event_bus">EventBus</a>
+in order to enpower advanced and fast email full text search.</p>
+</div>
+<div class="paragraph">
+<p>Text extraction can be set up using <a href="https://tika.apache.org/">Tika</a>, allowing
+to extract the text from attachment, allowing to search your emails based on the attachment
+textual content. In such case, the ElasticSearch indexer will call a Tika server prior
+indexing.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_quotas"><a class="anchor" href="#_quotas"></a>Quotas</h4>
+<div class="paragraph">
+<p>Current Quotas of users are hold in a Cassandra projection. Limitations can be defined via
+user, domain or globally.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_event_bus"><a class="anchor" href="#_event_bus"></a>Event Bus</h4>
+<div class="paragraph">
+<p>Distributed James relies on an event bus system to enrich mailbox capabilities. Each
+operation performed on the mailbox will trigger related events, that can
+be processed asynchronously by potentially any James node on a
+distributed system.</p>
+</div>
+<div class="paragraph">
+<p>Many different kind of events can be triggered during a mailbox
+operation, such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MailboxEvent</code>: event related to an operation regarding a mailbox:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MailboxDeletion</code>: a mailbox has been deleted</p>
+</li>
+<li>
+<p><code>MailboxAdded</code>: a mailbox has been added</p>
+</li>
+<li>
+<p><code>MailboxRenamed</code>: a mailbox has been renamed</p>
+</li>
+<li>
+<p><code>MailboxACLUpdated</code>: a mailbox got its rights and permissions updated</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>MessageEvent</code>: event related to an operation regarding a message:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Added</code>: messages have been added to a mailbox</p>
+</li>
+<li>
+<p><code>Expunged</code>: messages have been expunged from a mailbox</p>
+</li>
+<li>
+<p><code>FlagsUpdated</code>: messages had their flags updated</p>
+</li>
+<li>
+<p><code>MessageMoveEvent</code>: messages have been moved from a mailbox to an
+other</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>QuotaUsageUpdatedEvent</code>: event related to quota update</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Mailbox listeners can register themselves on this event bus system to be
+called when an event is fired, allowing to do different kind of extra
+operations on the system, like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Current quota calculation</p>
+</li>
+<li>
+<p>Message indexation with ElasticSearch</p>
+</li>
+<li>
+<p>Mailbox annotations cleanup</p>
+</li>
+<li>
+<p>Ham/spam reporting to SpamAssassin</p>
+</li>
+<li>
+<p>…</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleted_messages_vault"><a class="anchor" href="#_deleted_messages_vault"></a>Deleted Messages Vault</h4>
+<div class="paragraph">
+<p>Deleted Messages Vault is an interesting feature that will help James
+users have a chance to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>retain users deleted messages for some time.</p>
+</li>
+<li>
+<p>restore &amp; export deleted messages by various criteria.</p>
+</li>
+<li>
+<p>permanently delete some retained messages.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the Deleted Messages Vault is enabled when users delete their mails,
+and by that we mean when they try to definitely delete them by emptying
+the trash, James will retain these mails into the Deleted Messages
+Vault, before an email or a mailbox is going to be deleted. And only
+administrators can interact with this component via
+wref:webadmin.adoc#_deleted-messages-vault[WebAdmin REST APIs].</p>
+</div>
+<div class="paragraph">
+<p>However, mails are not retained forever as you have to configure a
+retention period before using it (with one-year retention by default if
+not defined). It’s also possible to permanently delete a mail if needed.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data"><a class="anchor" href="#_data"></a>Data</h3>
+<div class="paragraph">
+<p>(TODO)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_recipient_rewrite_tables"><a class="anchor" href="#_recipient_rewrite_tables"></a>Recipient rewrite tables</h3>
+<div class="paragraph">
+<p>(TODO)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blobstore"><a class="anchor" href="#_blobstore"></a>BlobStore</h3>
+<div class="paragraph">
+<p>Stores potentially large binary data.</p>
+</div>
+<div class="paragraph">
+<p>Mailbox component, Mail Queue component, Deleted Message Vault
+component relies on it.</p>
+</div>
+<div class="paragraph">
+<p>Supported backends includes ObjectStorage (<a href="https://wiki.openstack.org/wiki/Swift">Swift</a>, S3 API).</p>
+</div>
+<div class="paragraph">
+<p>Encryption can be configured on top of ObjectStorage.</p>
+</div>
+<div class="paragraph">
+<p>Blobs are currently deduplicated in order to reduce storage space. This means that two blobs with
+the same content will be stored one once.</p>
+</div>
+<div class="paragraph">
+<p>The downside is that deletion is more complicated, and a garbage collection needs to be run. This is a work
+in progress. See <a href="https://issues.apache.org/jira/browse/JAMES-3150">JAMES-3150</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_task_manager"><a class="anchor" href="#_task_manager"></a>Task Manager</h3>
+<div class="paragraph">
+<p>Allows to control and schedule long running tasks run by other
+components. Among other it enables scheduling, progress monitoring,
+cancelation of long running tasks.</p>
+</div>
+<div class="paragraph">
+<p>Distributed James leverage a task manager using Event Sourcing and RabbitMQ for messaging.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_event_sourcing"><a class="anchor" href="#_event_sourcing"></a>Event sourcing</h3>
+<div class="paragraph">
+<p><a href="https://martinfowler.com/eaaDev/EventSourcing.html">Event sourcing</a> implementation
+for the Distributed server stores events in Cassandra. It enables components
+to rely on event sourcing technics for taking decisions.</p>
+</div>
+<div class="paragraph">
+<p>A short list of usage are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Data leak prevention storage</p>
+</li>
+<li>
+<p>JMAP filtering rules storage</p>
+</li>
+<li>
+<p>Validation of the MailQueue configuration</p>
+</li>
+<li>
+<p>Sending email warnings to user close to their quota</p>
+</li>
+<li>
+<p>Implementation of the TaskManager</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

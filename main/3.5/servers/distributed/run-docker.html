@@ -168,6 +168,9 @@
     <a class="nav-link" href="operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="operate/webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -261,9 +264,214 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Run with docker</h1>
+<div class="sect1">
+<h2 id="_running_via_docker_compose"><a class="anchor" href="#_running_via_docker_compose"></a>Running via docker-compose</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>(TODO adapt content from
-<a href="https://github.com/linagora/james-project#run-james-with-guice&#8212;&#8203;cassandra&#8212;&#8203;rabbitmq&#8212;&#8203;swift&#8212;&#8203;elasticsearch" class="bare">https://github.com/linagora/james-project#run-james-with-guice&#8212;&#8203;cassandra&#8212;&#8203;rabbitmq&#8212;&#8203;swift&#8212;&#8203;elasticsearch</a>)</p>
+<p>Requirements: docker &amp; docker-compose installed.</p>
+</div>
+<div class="paragraph">
+<p>When you try James this way, you will use the most current state of James.
+It will be configured to run with Cassandra &amp; ElasticSearch.
+All those three components will be started with a single command.</p>
+</div>
+<div class="paragraph">
+<p>You can retrieve the docker-compose file :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ wget https://raw.githubusercontent.com/apache/james-project/master/dockerfiles/run/docker-compose.yml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you just have to start the services:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker-compose up</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait a few seconds in order to have all those services start up. You will see the following log when James is available:
+james           | Started : true</p>
+</div>
+<div class="paragraph">
+<p>A default domain, james.local, has been created. You can see this by running:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 listdomains</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>James will respond to IMAP port 143 and SMTP port 25.
+You have to create users before playing with james. You may also want to create other domains.
+Follow the 'Useful commands' section for more information about James CLI.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_run_with_docker"><a class="anchor" href="#_run_with_docker"></a>Run with docker</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_requirements"><a class="anchor" href="#_requirements"></a>Requirements</h3>
+<div class="paragraph">
+<p>Built artifacts should be in ./dockerfiles/run/guice/cassandra-rabbitmq/destination folder for cassandra.
+If you haven&#8217;t already:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  $ docker build -t james/project dockerfiles/compilation/java-11
+  $ docker run -v $HOME/.m2:/root/.m2 -v $PWD:/origin \
+-v $PWD/dockerfiles/run/guice/cassandra-rabbitmq/destination:/cassandra-rabbitmq/destination \
+-t james/project -s HEAD</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running"><a class="anchor" href="#_running"></a>Running</h3>
+<div class="paragraph">
+<p>You need a running <strong>cassandra</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=cassandra cassandra:3.11.3</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>rabbitmq</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=rabbitmq rabbitmq:3.8.1-management</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>swift</strong> objectstorage in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=swift linagora/openstack-keystone-swift:pike</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>ElasticSearch</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=elasticsearch --env 'discovery.type=single-node' docker.elastic.co/elasticsearch/elasticsearch:6.3.2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to use all the JMAP search capabilities, you may also need to start Tika:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=tika apache/tika:1.24</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more explanation on the need of Tika in this page <a href="http://james.apache.org/server/config-elasticsearch.html" class="bare">http://james.apache.org/server/config-elasticsearch.html</a></p>
+</div>
+<div class="paragraph">
+<p>We need to provide the key we will use for TLS. For obvious reasons, this is not provided in this git.</p>
+</div>
+<div class="paragraph">
+<p>Copy your TLS keys to <code>run/guice/cassandra-rabbitmq/destination/conf/keystore</code> or generate it using the following command. The password must be <code>james72laBalle</code> to match default configuration.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ keytool -genkey -alias james -keyalg RSA -keystore dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/keystore</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we need to build james container :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker build -t james_run dockerfiles/run/guice/cassandra-rabbitmq</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run this container :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> $ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --link cassandra:cassandra --link rabbitmq:rabbitmq
+--link elasticsearch:elasticsearch --link tika:tika --link swift:swift --name james_run -t james_run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HOSTNAME: is the hostname you want to give to your James container. This DNS entry will be used to send mail to your James server.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Webadmin port binding is restricted to loopback as users are not authenticated by default on webadmin server. Thus you should avoid exposing it in production.
+Note that the above example assumes <code>127.0.0.1</code> is your loopback interface for convenience but you should change it if this is not the case on your machine.</p>
+</div>
+<div class="paragraph">
+<p>If you want to pass additional options to the underlying java command, you can configure a <em>JVM_OPTIONS</em> env variable, for example add:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>--env JVM_OPTIONS="-Xms256m -Xmx2048m"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To have log file accessible on a volume, add <strong>-v  $PWD/logs:/logs</strong> option to the above command line, where <strong>$PWD/logs</strong> is your local directory to put files in.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instrumentation"><a class="anchor" href="#_instrumentation"></a>Instrumentation</h3>
+<div class="paragraph">
+<p>You can use Glowroot to instrumentalize James. The provided guice docker files allow a simple way to do it.
+In order to activate Glowroot you need to run the container with the environment variable <em>GLOWROOT_ACTIVATED</em> set to <em>true</em>
+and to expose the glowroot instrumentation ui port.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>--env GLOWROOT_ACTIVATED=true -p "4000:4000"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, the Glowroot UI is accessible from every machines in the network as defined in the <em>destination/admin.json</em>.
+Which you could configure before building the image, if you want to restrict its accessibility to localhost for example.
+See the <a href="https://github.com/glowroot/glowroot/wiki/Agent-Installation-(with-Embedded-Collector)#user-content-optional-post-installation-steps">Glowroot post installation steps</a>  for more details.</p>
+</div>
+<div class="paragraph">
+<p>Or by mapping the 4000 port to the IP of the desired network interface, for example <code>-p 127.0.0.1:4000:4000</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_handling_attachment_indexing"><a class="anchor" href="#_handling_attachment_indexing"></a>Handling attachment indexing</h3>
+<div class="paragraph">
+<p>You can handle attachment text extraction before indexing in ElasticSearch. This makes attachments searchable. To enable this:</p>
+</div>
+<div class="paragraph">
+<p>Run tika:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --name tika apache/tika:1.24</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a link for the tika container in the above command line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" --link cassandra:cassandra --link rabbitmq:rabbitmq
+--link elasticsearch:elasticsearch --link tika:tika --name james_run -t james_run</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

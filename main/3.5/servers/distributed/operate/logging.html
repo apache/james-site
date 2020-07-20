@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Extending the behavior of the Distributed Server :: Apache James</title>
+    <title>Logging :: Apache James</title>
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -162,40 +162,40 @@
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../operate/index.html">Operate the Distributed server</a>
+    <a class="nav-link" href="index.html">Operate the Distributed server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+    <a class="nav-link" href="guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/logging.html">Logging</a>
+    <a class="nav-link" href="webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+    <a class="nav-link" href="metrics.html">Metrics</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+    <a class="nav-link" href="cli.html">Command Line Interface</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Extending the behavior of the Distributed Server</a>
+    <a class="nav-link" href="../extend/index.html">Extending the behavior of the Distributed Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="mail-processing.html">Custom mail processing components</a>
+    <a class="nav-link" href="../extend/mail-processing.html">Custom mail processing components</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="mailbox-listeners.html">Custom Mailbox Listeners</a>
+    <a class="nav-link" href="../extend/mailbox-listeners.html">Custom Mailbox Listeners</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="smtp-hooks.html">Custom SMTP hooks</a>
+    <a class="nav-link" href="../extend/smtp-hooks.html">Custom SMTP hooks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="webadmin-routes.html">Custom WebAdmin routes</a>
+    <a class="nav-link" href="../extend/webadmin-routes.html">Custom WebAdmin routes</a>
   </li>
 </ul>
   </li>
@@ -257,34 +257,153 @@
     <li><a href="../../../index.html">Apache James Reference Book</a></li>
     <li><a href="../../index.html">Servers</a></li>
     <li><a href="../../distributed.html">Distributed</a></li>
-    <li><a href="index.html">Extending the behavior of the Distributed Server</a></li>
+    <li><a href="index.html">Operate the Distributed server</a></li>
+    <li><a href="logging.html">Logging</a></li>
   </ul>
 </nav>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Extending the behavior of the Distributed Server</h1>
+<h1 class="page">Logging</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The Distributed Server exposes several interfaces allowing the user to write custom extensions in
-order to extend the Distributed Server behavior.</p>
+<p>We recommend to closely monitoring <strong>ERROR</strong> and <strong>WARNING</strong> logs. Those
+logs should be considered not normal.</p>
 </div>
 <div class="paragraph">
-<p>Writing <strong>Mailets</strong> and <strong>Matchers</strong> allows one to supply custom components for the
-<a href="mail-processing.html" class="page">Mail Processing</a> and
-enables to take decisions, and implement your business logic at the transport level.</p>
+<p>If you encounter some suspicious logs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you have any doubt about the log being caused by a bug in James
+source code, please reach us via the bug tracker, the user mailing list or our Gitter channel (see our
+<a href="http://james.apache.org/#second">community page</a>)</p>
+</li>
+<li>
+<p>They can be due to insufficient performance from tier applications (eg
+Cassandra timeouts). In such case we advise you to conduct a close
+review of performances at the tier level.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Writing <a href="mailbox-listeners.html" class="page">Mailbox listeners</a> enables to
-react to your user interaction with their mailbox. This powerful tool allows build advanced features
-for mail delivery servers.</p>
+<p>Leveraging filters in Kibana discover view can help filtering out
+``already known'' frequently occurring logs.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="smtp-hooks.html" class="page">SMTP hookd</a> enables to
-add features to your SMTP server.</p>
+<p>When reporting ERROR or WARNING logs, consider adding the full logs, and
+related data (eg the raw content of a mail triggering an issue) to the
+bug report in order to ease resolution.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logging_configuration"><a class="anchor" href="#_logging_configuration"></a>Logging configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Distributed James uses <a href="http://logback.qos.ch/">logback</a> as a logging library.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="webadmin-routes.html" class="page">WebAdmin routes</a> enables to
-add features to the WebAdmin REST API.</p>
+<p>Information about logback configuration can be found
+<a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Distributed Server leverage the use of MDC in order to achieve structured logging,
+and better add context to the logged information. We furthermore ship
+<a href="https://github.com/linagora/logback-elasticsearch-appender">Logback Elasticsearch Appender</a>
+on the classpath to easily allow direct log indexation in
+<a href="https://www.elastic.co/elasticsearch">ElasticSearch</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample <code>conf/logback.xml</code> configuration file for logback with the following
+pre-requisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Logging both in an unstructured fashion on the console and in a structure fashion in
+ElasticSearch</p>
+</li>
+<li>
+<p>Logging ElasticSearch Log appender logs in the console</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration scan="true" scanPeriod="30 seconds"&gt;
+
+        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
+                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
+        &lt;/contextListener&gt;
+
+        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
+                &lt;encoder&gt;
+                        &lt;pattern&gt;%d{yyyy.MM.dd HH:mm:ss.SSS} %highlight([%-5level]) %logger{15} - %msg%n%rEx&lt;/pattern&gt;
+                        &lt;immediateFlush&gt;false&lt;/immediateFlush&gt;
+                &lt;/encoder&gt;
+        &lt;/appender&gt;
+
+        &lt;appender name="ELASTIC" class="com.linagora.logback.elasticsearch.ElasticsearchAppender"&gt;
+            &lt;url&gt;http://elasticsearch:9200/_bulk&lt;/url&gt;
+            &lt;index&gt;logs-james-%date{yyyy.MM.dd}&lt;/index&gt;
+            &lt;type&gt;tester&lt;/type&gt;
+            &lt;includeMdc&gt;true&lt;/includeMdc&gt;
+            &lt;excludedMdcKeys&gt;host&lt;/excludedMdcKeys&gt;
+            &lt;errorLoggerName&gt;es-error-logger&lt;/errorLoggerName&gt;
+            &lt;properties&gt;
+                &lt;property&gt;
+                    &lt;name&gt;host&lt;/name&gt;
+                    &lt;value&gt;${HOSTNAME}&lt;/value&gt;
+                    &lt;allowEmpty&gt;false&lt;/allowEmpty&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;severity&lt;/name&gt;
+                    &lt;value&gt;%level&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;thread&lt;/name&gt;
+                    &lt;value&gt;%thread&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;stacktrace&lt;/name&gt;
+                    &lt;value&gt;%ex&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;logger&lt;/name&gt;
+                    &lt;value&gt;%logger&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/properties&gt;
+            &lt;headers&gt;
+                &lt;header&gt;
+                    &lt;name&gt;Content-Type&lt;/name&gt;
+                    &lt;value&gt;application/json&lt;/value&gt;
+                &lt;/header&gt;
+            &lt;/headers&gt;
+        &lt;/appender&gt;
+
+        &lt;root level="WARN"&gt;
+                &lt;appender-ref ref="ELASTIC" /&gt;
+        &lt;/root&gt;
+
+        &lt;logger name="es-error-logger" level="DEBUG" additivity="false"&gt;
+            &lt;appender-ref ref="CONSOLE" /&gt;
+        &lt;/logger&gt;
+
+        &lt;logger name="org.apache.james" level="INFO" /&gt;
+
+&lt;/configuration&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

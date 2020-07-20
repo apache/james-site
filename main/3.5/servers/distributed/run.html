@@ -168,6 +168,9 @@
     <a class="nav-link" href="operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="operate/webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -261,9 +264,184 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Run</h1>
+<div class="sect1">
+<h2 id="_building"><a class="anchor" href="#_building"></a>Building</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_requirements"><a class="anchor" href="#_requirements"></a>Requirements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Java 11 SDK</p>
+</li>
+<li>
+<p>Docker ∕ ElasticSearch 6.3.2, RabbitMQ Management 3.3.7, Swift
+ObjectStorage 2.15.1 and Cassandra 3.11.3</p>
+</li>
+<li>
+<p>Maven 3</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_the_artifacts"><a class="anchor" href="#_building_the_artifacts"></a>Building the artifacts</h3>
 <div class="paragraph">
-<p>(TODO adapt content from
-<a href="https://github.com/linagora/james-project/blob/master/src/site/markdown/server/install/guice-cassandra-rabbitmq-swift.md" class="bare">https://github.com/linagora/james-project/blob/master/src/site/markdown/server/install/guice-cassandra-rabbitmq-swift.md</a>)</p>
+<p>An usual compilation using maven will produce two artifacts into
+server/container/guice/cassandra-rabbitmq-guice/target directory:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>james-server-cassandra-rabbitmq-guice.jar</p>
+</li>
+<li>
+<p>james-server-cassandra-rabbitmq-guice.lib</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can for example run in the base of
+<a href="https://github.com/apache/james-project">this git repository</a>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mvn clean install</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running"><a class="anchor" href="#_running"></a>Running</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_requirements_2"><a class="anchor" href="#_requirements_2"></a>Requirements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Cassandra 3.11.3</p>
+</li>
+<li>
+<p>ElasticSearch 6.3.2</p>
+</li>
+<li>
+<p>RabbitMQ-Management 3.8.1</p>
+</li>
+<li>
+<p>Swift ObjectStorage 2.15.1 or Scality S3 server or AWS S3</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_james_launch"><a class="anchor" href="#_james_launch"></a>James Launch</h3>
+<div class="paragraph">
+<p>To run james, you have to create a directory containing required
+configuration files.</p>
+</div>
+<div class="paragraph">
+<p>James requires the configuration to be in a subfolder of working
+directory that is called <strong>conf</strong>. You can get a sample directory for
+configuration from
+<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq/destination/conf</a>.
+You might need to adapt it to your needs.</p>
+</div>
+<div class="paragraph">
+<p>You also need to generate a keystore in your conf folder with the
+following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need to have a Cassandra, ElasticSearch and RabbitMQ instance
+running. You can either install the servers or launch them via docker:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ docker run -d -p 9042:9042 --name=cassandra cassandra:3.11.3
+$ docker run -d -p 9200:9200 --name=elasticsearch --env 'discovery.type=single-node' docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+$ docker run -d -p 5672:5672 -p 15672:15672 --name=rabbitmq rabbitmq:3.8.1-management
+$ docker run -d -p 5000:5000 -p 8080:8080 -p 35357:35357 --name=swift linagora/openstack-keystone-swift:pike</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once everything is set up, you just have to run the jar with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-guice.jar</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_aws_s3_of_scality_s3_server"><a class="anchor" href="#_using_aws_s3_of_scality_s3_server"></a>Using AWS S3 of Scality S3 server</h4>
+<div class="paragraph">
+<p>In order to use AWS S3 or a compatible implementation,
+<code>blobstore.propeties</code> has to be filled with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>objectstorage.provider=aws-s3
+objectstorage.namespace=james
+objectstorage.s3.endPoint=http://scality:8080/
+objectstorage.s3.accessKeyId=accessKey1
+objectstorage.s3.secretKey=verySecretKey1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use Scality S3 server you have to launch it instead of swift
+container:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d -p 8080:8000 --name=s3 scality/s3server:6018536a</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More information about available options
+<a href="https://hub.docker.com/r/scality/s3server">here</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_guice_cassandra_rabbitmq_ldap"><a class="anchor" href="#_guice_cassandra_rabbitmq_ldap"></a>Guice-cassandra-rabbitmq-ldap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can follow the same guide to build and run
+guice-cassandra-rabbitmq-swift-ldap artifact, except that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <strong>jar</strong> and <strong>libs</strong> needs to be retrieve from
+server/container/guice/cassandra-rabbitmq-ldap-guice/target after
+compilation</p>
+</li>
+<li>
+<p>The sample configuration can be found in
+<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf</a></p>
+</li>
+<li>
+<p>You need to configure James to be connecting to a running LDAP server.
+The configuration file is located in
+<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml</a></p>
+</li>
+<li>
+<p>You can then launch James via this command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-ldap-guice.jar</code></pre>
+</div>
+</div>
+</div>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
