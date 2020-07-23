@@ -1,0 +1,231 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Apache James</title>
+
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie8.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie9.css">
+        <link rel="shortcut icon" href="/images/james-logo.png">
+    </head>
+<body>
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<link href="/assets/css/lightbox.css" rel="stylesheet">
+<div id="wrapper" class="post-page">
+  <div class="apache_ref">
+    <a href="https://www.apache.org" alt="apache foundation link"><img src="https://www.apache.org/foundation/press/kit/asf_logo.svg" title="apache foundation logo"/></a>
+  </div>
+  <div class="apache_ref_mobile">
+    <a href="https://www.apache.org" alt="apache foundation link">The Apache Software Foundation</a>
+  </div>
+
+  <header id="header" class="alt">
+    <div class="logo"><a href="/index.html" alt="Apache James"><img src="/images/james.svg" alt="james logo"/></a></div>
+    <h1 class="hidden">James Enterprise Mail Server</h1>
+    <h2>Emails at the heart of your business logic</h2>
+  </header>
+
+  <!-- Main -->
+    <div id="main">
+
+      <!-- Content -->
+        <section id="content" class="main">
+
+          <h1><span class="icon fa-file-text-o"></span> Apache James Server 3.5.0</h1>
+          <h2><span class="icon fa-clock-o"></span><b> July 16, 2020</b></h2>
+
+          <br/>
+
+          <div>
+            <p>The Apache James developers are pleased to announce James server 3.5.0 release.</p>
+
+<p>Early adopters can <a href="http://james.apache.org/download.cgi#Apache_James_Server">download it</a>, any issue can be reported on our issue <a href="https://issues.apache.org/jira/browse/JAMES">tracker</a>.</p>
+
+<h2 id="announcements">Announcements</h2>
+
+<h3 id="distributed-james-guice-product-beta">Distributed James guice product beta</h3>
+
+<p>Furthermore, recent work of the Apache James project did lead to a James product that leverages a distributed mail server,
+using storage technologies like <a href="https://cassandra.apache.org/">Cassandra</a>, <a href="https://www.elastic.co/elasticsearch/">ElasticSearch</a>, <a href="https://www.rabbitmq.com/">RabbitMQ</a>, and <a href="https://wiki.openstack.org/wiki/Swift">objectStorage (S3/Swift)</a>.</p>
+
+<p>Feedback on this product, announced as a beta since 3.5.0 is welcome.</p>
+
+<p>This product can be executed via <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/docker-compose.yml">docker-compose</a> or you can follow its <a href="/server/install/guice-cassandra-rabbitmq-swift.html">standard installation guide</a></p>
+
+<h3 id="end-of-support-for-java-8">End of support for Java 8</h3>
+
+<p>James 3.5.x is the last release line to support Java 8. From 3.6.0 James will run on a Java Runtime Environment 11.</p>
+
+<h2 id="release-changelog">Release changelog</h2>
+
+<p>Here are some points we worked on:</p>
+
+<h3 id="added">Added</h3>
+<ul>
+  <li>Distributed task management for Distributed James product. This enables several James servers to share a consistent view
+of tasks being currently executed.</li>
+  <li>JAMES-2563 Health check for ElasticSearch</li>
+  <li>JAMES-2904 Authentication and SSL support for Cassandra backend</li>
+  <li>JAMES-2904 Authentication and SSL support for ElasticSearch backend</li>
+  <li>JAMES-3066 Add support alias when sending emails, with a <a href="https://github.com/apache/james-project/blob/master/src/site/markdown/server/manage-webadmin.md#retrieving-the-list-of-allowed-from-headers-for-a-given-user">“allowed From headers” webadmin endpoint</a></li>
+  <li>JAMES-3062 HealthCheck for EventDeadLetters</li>
+  <li>JAMES-3058 WebAdmin offline task to correct mailbox inconsistencies on top of Cassandra products</li>
+  <li>JAMES-3105 WebAdmin offline task to recompute mailbox counters on top of Cassandra products</li>
+  <li>JAMES-3072 Webadmin endpoint to export mailbox backup</li>
+</ul>
+
+<h3 id="changed">Changed</h3>
+<ul>
+  <li>Multiple changes have been made to enhance Distributed James indexing performance:
+    <ul>
+      <li>Use of routing keys to collocate documents per mailbox</li>
+      <li>Under some configuration, html was not extracted before document indexing</li>
+      <li>Removed unnecessary fields from mailbox mapping</li>
+      <li>Disable dynamic mapping thanks to a change of the header structure</li>
+    </ul>
+  </li>
+  <li>JAMES-2855 Multiple library/plugin/docker images/build tool upgrades</li>
+  <li>By default the cassandra keyspace creation by James is now disabled by default. This allow to have credentials limited to a keyspace. It can be enabled by setting cassandra.keyspace.create=true in the cassandra.properties file.</li>
+  <li>Usernames are assumed to be always lower cased. Many users recently complained about mails non received when sending to upper cased local recipients. We decided to simplify the handling of case for local recipients and users by always storing them lower cased.</li>
+  <li>Unhealthy health checks now return HTTP 503 instead of 500, degraded now returns 200 instead of 500. See JAMES-2576.</li>
+  <li>In order to fasten JMAP-draft message retrieval upon calls on properties expected to be fast to fetch, we now compute the preview and hasAttachment properties asynchronously and persist them in Cassandra to improve performance. See JAMES-2919.</li>
+  <li>It is now forbidden to create new Usernames with the following set of characters in its local part : <code class="language-plaintext highlighter-rouge">"(),:; &lt;&gt;@\[]</code>, as we prefer it to stay simple to handle. However, the read of Usernames already existing with some of those characters is still allowed, to not introduce any breaking change. See JAMES-2950.</li>
+  <li>Linshare blob export configuration and mechanism change. See JAMES-3040.</li>
+  <li>Differentiation between domain alias and domain mapping.</li>
+  <li>JAMES-3122 Log4J2 adoption for Spring product. Log file configuration needs to be updated.</li>
+</ul>
+
+<p>Read related <a href="https://github.com/apache/james-project/blob/master/upgrade-instructions.md#3.5.0-version">upgrade instructions</a></p>
+
+<h3 id="fixed">Fixed</h3>
+<ul>
+  <li>JAMES-2828 &amp; JAMES-2929 bugs affecting JDBCMailRepository usage with PostgresSQL thanks to Jörg Thomas &amp; Sergey B</li>
+  <li>JAMES-2936 Creating a mailbox using consecutive delimiter character leads to creation of list of unnamed mailbox</li>
+  <li>JAMES-2911 Unable to send mail from James using an SMTP gateway</li>
+  <li>JAMES-2944 Inlined attachments should be wrapped in multipart/related by JMAP draft</li>
+  <li>JAMES-2941 Return NO when an IMAP command unexpectedly fails</li>
+  <li>JAMES-2943 Deleting auto detected domain should fail</li>
+  <li>JAMES-2957 dlp.Dlp matcher should parse emails containing attachments</li>
+  <li>JAMES-2958 Limit domain name size to not longer than 255 characters</li>
+  <li>JAMES-2939 Prevent mixed case INBOX creation</li>
+  <li>JAMES-2903 Rework default LOG4J log file for Spring</li>
+  <li>JAMES-2739 fixed browse mails from queue over JMX</li>
+  <li>JAMES-2375 DSNBounce mailet should provide a subject</li>
+  <li>JAMES-2097 RemoteDelivery: Avoid retrying already succeeded recipients when sendPartial</li>
+  <li>MAILBOX-392 Mailbox name validation upon mailbox creation is stricter: forbid <code class="language-plaintext highlighter-rouge">#&amp;*%</code> and empty sub-mailboxes names.</li>
+  <li>JAMES-2972 Incorrect attribute name in the mailet configuration thanks to jtconsol</li>
+  <li>JAMES-2632 JMAP Draft GetMailboxes performance enhancements when retrieving all mailboxes of a user</li>
+  <li>JAMES-2964 Forbid to create User quota/ Domain quota/ Global quota using negative number</li>
+  <li>JAMES-3074 Fixing UidValidity generation, sanitizing of invalid values upon reads.</li>
+</ul>
+
+<h3 id="removed">Removed</h3>
+<ul>
+  <li>Classes marked as deprecated whose removal was planned after 3.4.0 release (See JAMES-2703). This includes:
+    <ul>
+      <li>SieveDefaultRepository. Please use SieveFileRepository instead.</li>
+      <li>JDBCRecipientRewriteTable, XMLRecipientRewriteTable, UsersRepositoryAliasingForwarding, JDBCAlias mailets. Please use RecipientRewriteTable mailet instead.</li>
+      <li>JDBCRecipientRewriteTable implementation. Please use JPARecipientRewriteTable instead.</li>
+      <li>JamesUsersJdbcRepository, DefaultUsersJdbcRepository. Please use JpaUsersRepository instead.</li>
+      <li>MailboxQuotaFixed matcher. Please use IsOverQuota instead.</li>
+    </ul>
+  </li>
+  <li>UsersFileRepository, which was marked as deprecated for years
+    <ul>
+      <li>We accordingly removed deprecated methods within UsersRepositoryManagementMBean exposed over JMX (unsetAlias, getAlias, unsetForwardAddress, getForwardAddress). RecipientRewriteTables should be used instead.</li>
+    </ul>
+  </li>
+  <li>JAMES-3016 RemoteDelivery now doesn’t enable <code class="language-plaintext highlighter-rouge">allow8bitmime</code> property by default. 
+This parameter could cause body content alteration leading to invalid DKIM signatures to be positioned. 
+Thanks to Sergey B. for the report. 
+More details about the property is at <a href="https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html">java mail doc</a></li>
+  <li>JAMES-3122 LogEnabled API in Spring product had been removed for Log4J2 adoption for Java 9+ runtime compatibility.</li>
+</ul>
+
+<h3 id="third-party-softwares">Third party softwares</h3>
+<ul>
+  <li>The distributed James server product (relying on Guice, Cassandra, ElasticSearch, RabbitMQ and optionally Swift) now needs at least RabbitMQ 3.8.</li>
+  <li>Tika prior 1.24 is subject to multiple CVEs. We recommend the upgrade.</li>
+</ul>
+
+
+
+          </div>
+          <footer class="major special">
+            <hr>
+            <center>
+              <ul class="actions">
+                <li><a href="/index.html" class="button">Back to homepage</a></li>
+                <li><a href="/posts.html" class="button">Read More Posts</a></li>
+              </ul>
+            </center>
+          </footer>
+        </section>
+    </div>
+    <footer id="footer" class="major">
+      <section>
+        <h2>James</h2>
+        <ul class="no-padding">
+          <li class="no-padding"><a href="../#intro" class="active">About</a></li>
+          <li class="no-padding"><a href="../#first">Get Started</a></li>
+          <li class="no-padding"><a href="../#posts">Last Posts</a></li>
+          <li class="no-padding"><a href="../#second">Community</a></li>
+          <li class="no-padding"><a href="https://james.apache.org/"><span class="fa fa-external-link"></span> Documentation</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Connect</h2>
+        <ul class="icons">
+          <li><a href="http://twitter.com/ApacheJames" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
+          <li><a href="https://github.com/apache/james-project" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
+          <li><a href="http://james.apache.org/mail.html" class="icon fa-envelope-o alt"><span class="label">Mailing-list</span></a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Copyright</h2>
+        <a href="http://www.apache.org/">Apache Licence Copyright</a><br/>
+        &copy;Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>
+      </section>
+    </footer>
+</div>
+
+</body>
+</html>

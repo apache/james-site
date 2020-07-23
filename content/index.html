@@ -76,6 +76,7 @@
         <li class="logo_li"><span class="logo"><img src="images/james-alt.svg" alt="james logo" /></span></li>
         <li><a href="#intro" class="active">About</a></li>
         <li><a href="#first">Get Started</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="#posts">Last Posts</a></li>
         <li><a href="#second">Community</a></li>
         <li><a href="#third">Contribute</a></li>
@@ -100,8 +101,8 @@
               <p class="align-left">Create your <b>own personal solution</b> of emails treatment by assembling the components you need thanks to the Inversion of Control mail platform offered and  go further customizing filtering and routing rules using <b>James Mailet Container</b>.</p>
               <div class="about-table">
                 <h3 class="tb-h3">James from a technical point of view</h3>
-                <b>Complete portability</b> (100% pure Java)<br/>
-                <b>Built with Java 8</b> and running on the <b>JRE 1.8</b>.<br/><br/>
+                <b>Complete portability</b> (100% pure JVM: Java &amp; Scala)<br/>
+                <b>Built with Java 11</b> and running on the <b>Java RE 11</b>.<br/><br/>
                 <b>James Components:</b><br/>
                 - <b>Emailing protocols:</b> SMTP, LMTP, POP3, IMAP, ManageSieve, JMAP<br/>
                 - <b>Mailet container:</b> independent, extensible and pluggable email processing agents<br/>
@@ -133,21 +134,67 @@
             <ul class="james-ul no-padding">
               <li class="post-template"><span class="long-arrow-right">&#8594;</span><span><b>
 WHAT WILL YOU TRY:</b><br>
-              <span>Here you will try James server v 3.4.0 thanks to an image. This James image has a default configuration
+              <span>Here you will try James server v 3.5.0 thanks to an image. This James image has a default configuration
                 using JPA (hsqldb) and Lucene. It also includes a default domain named james.local and three default users:
                 user01, user02, user03, with their default password being <i>1234</i>.<br>
                 <i>Note: this James server will respond to IMAP port 143 and SMTP port 25.</i></span></span>
               </li>
               <li class="post-template"><span class="long-arrow-right">&#8594;</span><span><b>STEPS YOU HAVE TO FOLLOW:</b><br>
                 Pull and run the James image with the following single command:<br><br>
-                <code class="highlighter-rouge">docker run -p "25:25" -p "143:143" linagora/james-jpa-sample:3.4.0</code>
+                <code class="highlighter-rouge">docker run -p "25:25" -p "143:143" linagora/james-jpa-sample:3.5.0</code>
 
                 <br><br>
                 Then, connect this image with for instance, Thunderbird.<br>
                 <i>Notes: for more information about James CLI, have a look at <a href="https://github.com/apache/james-project/#other-useful-commands" alt="Useful commands">'Useful commands section README.txt'</a>.</i></span>
               </li>
               <li class="post-template"><span class="long-arrow-right">&#8594;</span><span><b>ALTERNATIVES:</b><br>
-                Instructions that do not imply docker are also available <a href="/install.html">here</a>.
+                Instructions that do not imply docker are also available <a href="/server/install.html">here</a>.
+              </span>
+              </li>
+              <li class="post-template"><span class="long-arrow-right">&#8594;</span><span><b>BETA:</b> Distributed James server<br>
+                Recent work of the Apache James project did lead to a James product that leverages a distributed mail server,
+                using storage technologies like <a href="https://cassandra.apache.org/">Cassandra</a>,
+                  <a href="https://www.elastic.co/elasticsearch/">ElasticSearch</a>, <a href="https://www.rabbitmq.com/">RabbitMQ</a>, and
+                <a href="https://wiki.openstack.org/wiki/Swift">objectStorage (S3/Swift)</a>.<br/><br/>
+                Feedback on this product, announced as a beta since 3.5.0 is welcome.<br/><br/>
+                This product can be executed via <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/docker-compose.yml">
+                docker-compose</a> or you can follow its<a href="/server/install/guice-cassandra-rabbitmq-swift.html"> standard
+                installation guide</a>
+              </span></li>
+            </ul>
+          </section>
+        </section>
+
+      <!-- Roadmap -->
+        <section id="roadmap" class="main">
+          <header class="major">
+            <h2>Roadmap</h2>
+          </header>
+          <section>
+            <ul class="james-ul">
+              <li class="post-template"><span><b>MAIN GOALS</b><br>
+                <ul>
+                  <li><span class="long-arrow-right">&#8594;</span>Providing a <b>distributed mail server</b>,
+                    fully horizontally scalable.</li>
+                  <li><span class="long-arrow-right">&#8594;</span><span>Maintaining a <b>standalone version</b>
+                    suitable for a single server, based on <b>JPA</b>.</span></li>
+                </ul>
+              </li>
+              <li class="post-template"><span><b>INCOMING FEATURES</b><br>
+                <ul>
+                  <li><span class="long-arrow-right">&#8594;</span><span><b>Blobs garbage collector</b>:
+                    the deduplication mechanism used to save some spaces makes it complicated to remove blobs. We are implementing a
+                    garbage collector responsible for removing the no more used blobs.
+                    See this <a href="https://github.com/linagora/james-project/pull/3122">ADR</a> (Architecture Decision Record) for more explanation.</span></li>
+                  <li><span class="long-arrow-right">&#8594;</span><span>Update the currently implemented JMAP draft specification
+                    to the <b>new JMAP RFC</b>. See this
+                    <a href="https://github.com/apache/james-project/blob/master/src/adr/0018-jmap-new-specs.md">ADR</a>
+                    for more information.</span></li>
+                  <li><span class="long-arrow-right">&#8594;</span><span>Enhance our eventual consistency model by providing
+                    <b>tools for reparing projections</b>. See this
+                    <a href="https://github.com/linagora/james-project/pull/3125">discussion</a> for more information.</span></li>
+                  <li><span class="long-arrow-right">&#8594;</span><span>Feel free to add your own items here: see <a href="#third">Contribute</a>.</span></li>
+                </ul>
               </span>
               </li>
             </ul>
@@ -165,8 +212,7 @@ WHAT WILL YOU TRY:</b><br>
               <li class="post-template">
                 <span class="icon fa-file-text-o"></span>
                 <span class="details">
-                  <a href="/james/update/2019/09/05/james-3.4.0.html" alt="Apache James Server 3.4.0"><b>Apache James Server 3.4.0 - September 05, 2019</b><br><small><p>The Apache James developers are pleased to announce James server 3.4.0 release.</p>
-
+                  <a href="/james/update/2020/07/16/james-3.5.0.html" alt="Apache James Server 3.5.0"><b>Apache James Server 3.5.0 - July 16, 2020</b><br><small><p>The Apache James developers are pleased to announce James server 3.5.0 release.</p>
 </small></a>
                 </span>
               </li>
@@ -174,8 +220,7 @@ WHAT WILL YOU TRY:</b><br>
               <li class="post-template">
                 <span class="icon fa-file-text-o"></span>
                 <span class="details">
-                  <a href="/james/update/2019/08/30/latest-image-changes.html" alt="Apache James `latest` Docker images changes"><b>Apache James `latest` Docker images changes - August 30, 2019</b><br><small><p>We have decided to change the <code class="highlighter-rouge">latest</code> Docker images behaviour.</p>
-
+                  <a href="/james/apachecon/2019/11/19/apache-con-eu.html" alt="Benoit Tellier presents James at ApacheCon Europe"><b>Benoit Tellier presents James at ApacheCon Europe - November 19, 2019</b><br><small><p>Benoit had the pleasure to present James at the ApacheCon at Berlin: “Gaining control over emails with Apache James”.</p>
 </small></a>
                 </span>
               </li>
@@ -407,6 +452,7 @@ WHAT WILL YOU TRY:</b><br>
         <ul class="no-padding">
           <li class="no-padding"><a href="#intro" class="active">About</a></li>
           <li class="no-padding"><a href="#first">Get Started</a></li>
+          <li class="no-padding"><a href="#roadmap">Roadmap</a></li>
           <li class="no-padding"><a href="#posts">Last Posts</a></li>
           <li class="no-padding"><a href="#second">Community</a></li>
           <li class="no-padding"><a href="#third">Contribute</a></li>
