@@ -1,71 +1,11 @@
 = Apache James website
 
+This repository is part of https://james.apache.org/[Apache James] project.
+
+The sources are available here https://gitbox.apache.org/repos/asf#james and mirrored to Github.
+
 This repository is used for storing (some) content for https://james.apache.org[Apache James] website.
 
 It's also used to build and publish the website.
 
-
-== How to build the website
-
-We use https://antora.org[Antora] as a tool to manage and generate the website.
-We use https://gradle.org[Gradle] as a tool to drive / automate the tasks for generating, aggregating and publishing the website.
-
-
-=== Why Antora?
-
-Antora lets us aggregate multiple documentation sources, across multiple versions and publish them as a single website.
-Documentation for each Apache James component is kept and versioned alongside the code for it.
-
-=== Why Gradle?
-
-Gralde allows us to autoamte the tasks that we do when publishing a website.
-We write gradle tasks for building and publishing the website.
-We can run those tasks locally and inside our CI infrastructure: https://builds.apache.org[Apache Builds].
-
-More specifically, we use Gradle to:
-
-* Download and install a specific version of https://nodejs.org[NodeJS] using https://github.com/node-gradle/gradle-node-plugin[Gradle Node Plugin]
-* Install a local version of Antora
-* Use a Gradle task to call build the website with Antora
-
-By using this specific flow, you only need `git`, `Java` and shell access to build the website.
-All other dependencies are installed automatically by Gradle.
-Even Gradle is downloaded and installed using the Gradle wrapper script.
-
-
-== How to build the website
-
-[source,bash]
-----
-    # To build the website run
-    ./gradlew clean build
-    # The website is located here
-    cd doc-sites/build/site
-----
-
-
-== How to customize the theme for the documentaion
-
-The documentation website is based on https://antora.org[Antora].
-We have added https://gitlab.com/antora/antora-ui-default/[antora-ui-default] project as a git subtree under `antora-ui`.
-
-`./gradlew :antora-ui:build` will assemble the `antora-ui/build/ui-bundle.zip` archive required for the website.
-All the steps are automated as Gradle tasks in that project.
-All you have to do is change the css and html files and then rebuild the project.
-
-The antora-ui project has a preview mode: `/.gradlew gulpPreviewTheme`
-
-
-[source,shell]
-----
-    # antora-ui-default was added like this. You should be able to pull some changes from upstream
-    git subtree add --prefix antora-ui https://gitlab.com/antora/antora-ui-default.git master --squash
-----
-
-
-=== Related links
-
-* https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844[A git subtree tutorial].
-* https://docs.antora.org/antora/2.3/playbook/configure-ui/[Antora UI keys]
-
-
+Please see https://james.apache.org/james-site/latest/index.html[online documentation website] or the `docs/` folder.

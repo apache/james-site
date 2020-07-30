@@ -1,0 +1,40 @@
+#
+# Use this configuration for local testing / docs develop.
+# You should clone all James repositories in the same place.
+#
+site:
+  title: Apache James
+  url: https://james.apache.org/
+  start_page: main::index.adoc
+content:
+  sources:
+  - url: ./../../james-hupa
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-jdkim
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-jsieve
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-jspf
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-mime4j
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-project
+    branches: HEAD
+    start_path: docs
+  - url: ./../../james-postage
+    branches: HEAD
+    start_path: docs
+  - url: ./../
+    branches: HEAD
+    start_path: docs
+ui:
+  bundle:
+    url: ./../antora-ui/build/ui-bundle.zip
+    # start_path: ui-bundle
+runtime:
+  fetch: true
