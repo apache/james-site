@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Run with docker :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org">Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.5">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../concepts/messages/index.html">Messages</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/messages/imf.html">IMF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/messages/mime.html">MIME</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts/storage/index.html">Storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../local.html">Local</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../redundant.html">Redundant</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="run.html">Run</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="configure/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="operate/index.html">Operate the Distributed server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="operate/cli.html">Command Line Interface</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="extend/index.html">Extending the behavior of the Distributed Server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="extend/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="extend/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="extend/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="extend/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../community/index.html">Community</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.5</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Apache James JDKIM</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../jdkim/0.3-SNAPSHOT/index.html">0.3-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSieve</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../jsieve/0.8-SNAPSHOT/index.html">0.8-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSPF</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../jspf/1.0.2-SNAPSHOT/index.html">1.0.2-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Mime4j</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../mime4j/0.8.4-SNAPSHOT/index.html">0.8.4-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Postage</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../postage/0.1-SNAPSHOT/index.html">0.1-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Apache James Server</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">3.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Site</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Apache James Server</a></li>
+    <li><a href="../index.html">Servers</a></li>
+    <li><a href="../distributed.html">Distributed</a></li>
+    <li><a href="run-docker.html">Run with docker</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://gitbox.apache.org/repos/asf/james-project/blob/master/docs/modules/servers/pages/distributed/run-docker.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Run with docker</h1>
+<div class="sect1">
+<h2 id="_running_via_docker_compose"><a class="anchor" href="#_running_via_docker_compose"></a>Running via docker-compose</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Requirements: docker &amp; docker-compose installed.</p>
+</div>
+<div class="paragraph">
+<p>When you try James this way, you will use the most current state of James.
+It will be configured to run with Cassandra &amp; ElasticSearch.
+All those three components will be started with a single command.</p>
+</div>
+<div class="paragraph">
+<p>You can retrieve the docker-compose file :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ wget https://raw.githubusercontent.com/apache/james-project/master/dockerfiles/run/docker-compose.yml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you just have to start the services:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker-compose up</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait a few seconds in order to have all those services start up. You will see the following log when James is available:
+james           | Started : true</p>
+</div>
+<div class="paragraph">
+<p>A default domain, james.local, has been created. You can see this by running:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 listdomains</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>James will respond to IMAP port 143 and SMTP port 25.
+You have to create users before playing with james. You may also want to create other domains.
+Follow the 'Useful commands' section for more information about James CLI.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_run_with_docker"><a class="anchor" href="#_run_with_docker"></a>Run with docker</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_requirements"><a class="anchor" href="#_requirements"></a>Requirements</h3>
+<div class="paragraph">
+<p>Built artifacts should be in ./dockerfiles/run/guice/cassandra-rabbitmq/destination folder for cassandra.
+If you haven&#8217;t already:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  $ docker build -t james/project dockerfiles/compilation/java-11
+  $ docker run -v $HOME/.m2:/root/.m2 -v $PWD:/origin \
+-v $PWD/dockerfiles/run/guice/cassandra-rabbitmq/destination:/cassandra-rabbitmq/destination \
+-t james/project -s HEAD</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running"><a class="anchor" href="#_running"></a>Running</h3>
+<div class="paragraph">
+<p>You need a running <strong>cassandra</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=cassandra cassandra:3.11.3</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>rabbitmq</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=rabbitmq rabbitmq:3.8.1-management</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>swift</strong> objectstorage in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=swift linagora/openstack-keystone-swift:pike</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You need a running <strong>ElasticSearch</strong> in docker. To achieve this run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=elasticsearch --env 'discovery.type=single-node' docker.elastic.co/elasticsearch/elasticsearch:6.3.2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to use all the JMAP search capabilities, you may also need to start Tika:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run -d --name=tika apache/tika:1.24</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more explanation on the need of Tika in this page <a href="http://james.apache.org/server/config-elasticsearch.html" class="bare">http://james.apache.org/server/config-elasticsearch.html</a></p>
+</div>
+<div class="paragraph">
+<p>We need to provide the key we will use for TLS. For obvious reasons, this is not provided in this git.</p>
+</div>
+<div class="paragraph">
+<p>Copy your TLS keys to <code>run/guice/cassandra-rabbitmq/destination/conf/keystore</code> or generate it using the following command. The password must be <code>james72laBalle</code> to match default configuration.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ keytool -genkey -alias james -keyalg RSA -keystore dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/keystore</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we need to build james container :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker build -t james_run dockerfiles/run/guice/cassandra-rabbitmq</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run this container :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> $ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --link cassandra:cassandra --link rabbitmq:rabbitmq
+--link elasticsearch:elasticsearch --link tika:tika --link swift:swift --name james_run -t james_run</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HOSTNAME: is the hostname you want to give to your James container. This DNS entry will be used to send mail to your James server.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Webadmin port binding is restricted to loopback as users are not authenticated by default on webadmin server. Thus you should avoid exposing it in production.
+Note that the above example assumes <code>127.0.0.1</code> is your loopback interface for convenience but you should change it if this is not the case on your machine.</p>
+</div>
+<div class="paragraph">
+<p>If you want to pass additional options to the underlying java command, you can configure a <em>JVM_OPTIONS</em> env variable, for example add:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>--env JVM_OPTIONS="-Xms256m -Xmx2048m"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To have log file accessible on a volume, add <strong>-v  $PWD/logs:/logs</strong> option to the above command line, where <strong>$PWD/logs</strong> is your local directory to put files in.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instrumentation"><a class="anchor" href="#_instrumentation"></a>Instrumentation</h3>
+<div class="paragraph">
+<p>You can use Glowroot to instrumentalize James. The provided guice docker files allow a simple way to do it.
+In order to activate Glowroot you need to run the container with the environment variable <em>GLOWROOT_ACTIVATED</em> set to <em>true</em>
+and to expose the glowroot instrumentation ui port.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>--env GLOWROOT_ACTIVATED=true -p "4000:4000"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, the Glowroot UI is accessible from every machines in the network as defined in the <em>destination/admin.json</em>.
+Which you could configure before building the image, if you want to restrict its accessibility to localhost for example.
+See the <a href="https://github.com/glowroot/glowroot/wiki/Agent-Installation-(with-Embedded-Collector)#user-content-optional-post-installation-steps">Glowroot post installation steps</a>  for more details.</p>
+</div>
+<div class="paragraph">
+<p>Or by mapping the 4000 port to the IP of the desired network interface, for example <code>-p 127.0.0.1:4000:4000</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_handling_attachment_indexing"><a class="anchor" href="#_handling_attachment_indexing"></a>Handling attachment indexing</h3>
+<div class="paragraph">
+<p>You can handle attachment text extraction before indexing in ElasticSearch. This makes attachments searchable. To enable this:</p>
+</div>
+<div class="paragraph">
+<p>Run tika:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --name tika apache/tika:1.24</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a link for the tika container in the above command line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" --link cassandra:cassandra --link rabbitmq:rabbitmq
+--link elasticsearch:elasticsearch --link tika:tika --name james_run -t james_run</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
