@@ -14,6 +14,7 @@ node {
 }
 
 def siteOutputDir = "${buildDir}/site";
+def localAntoraContent = project.hasProperty('localAntoraContent');
 
 task generateDocs(type: NpxTask) {
   dependsOn npmInstall
@@ -24,7 +25,12 @@ task generateDocs(type: NpxTask) {
   outputs.dir(siteOutputDir)
 
   command = 'antora'
-  args = ['antora-playbook.yml', '--stacktrace']
+
+  if (localAntoraContent) {
+    args = ['antora-playbook-local.yml', '--stacktrace']
+  } else {
+    args = ['antora-playbook.yml', '--stacktrace']
+  }
 }
 
 task copySomeFiles(type: Copy) {
