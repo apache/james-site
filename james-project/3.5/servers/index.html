@@ -139,10 +139,31 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="local.html">Local</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="basic/help.html">Help</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="redundant.html">Redundant</a>
+    <a class="nav-link" href="extendable.html">Extendable</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -200,6 +221,9 @@
 </ul>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -314,10 +338,14 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>James offers a number of ready-made Mail Servers. The servers are intended
-for those with typcial use cases, and can be used out-of-the-box. These
-servers have been tested and verified so you can get set up quickly with
-a production-grade Mail Server that you can use with confidence.</p>
+<p>James offers five types of ready-made Mail Servers. The servers are intended
+for those with different needs, ranging from <a href="../concepts/user/index.html#Operators" class="page">Operators</a>
+who are interested in setting up a server for the first time, to experienced teams of
+<a href="../concepts/user/index.html#Developer" class="page">Developers</a>
+looking to deploy an advanced distributed system.
+Each of the servers has been tested and verified so you can
+deploy a production-grade
+<a href="#concepts/insert-link">Mail Server</a> with confidence.</p>
 </div>
 <div class="paragraph">
 <p>The available James Servers are:</p>
@@ -328,15 +356,35 @@ a production-grade Mail Server that you can use with confidence.</p>
 <p><a href="#demo">James Demo Mail Server</a></p>
 </li>
 <li>
-<p><a href="#local">James Local Mail Server</a></p>
+<p><a href="#basic">James Basic Mail Server</a></p>
 </li>
 <li>
-<p><a href="#redundant">James Redundant Mail Server</a></p>
+<p><a href="#extendable">James Extendable Mail Server</a></p>
 </li>
 <li>
 <p><a href="#distributed">James Distributed Mail Server</a></p>
 </li>
+<li>
+<p><a href="#test">James Test Server</a></p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>If you are just checking out James for the first time, then we highly recommend
+investigating the servers in this order:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Initiate yourself with James by using the <a href="#demo">Demo Server</a></p>
+</li>
+<li>
+<p>Install the <a href="#basic">Basic Server</a></p>
+</li>
+<li>
+<p>If and only if the Basic Server is not enough, then try the <a href="#extendable">Extendable Server</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -344,83 +392,48 @@ a production-grade Mail Server that you can use with confidence.</p>
 <h2 id="demo"><a class="anchor" href="#demo"></a>James Demo Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="demo.html" class="page">James Server Demo</a> is intended for those who just want
-to give James a quick spin on their local machine.</p>
+<p>The <a href="demo.html" class="page">Demo Server</a> is intended for those who just want
+to give James a quick spin on their local machine to see what all
+the fuss is about.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="local"><a class="anchor" href="#local"></a>James Local Mail Server</h2>
+<h2 id="basic"><a class="anchor" href="#basic"></a>James Basic Mail Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you are not sure which server you should be using, then
-you probably ought to be using the <a href="local.html" class="page"><strong>Local Server</strong></a>.
-This server uses the local file system to store emails, which tends
-to considerably simplify the system. To safeguard your emails, you
-only need a simple generic backup solution that works with a data
-volume.</p>
+<p>If you just want to get up and running quickly, if you have very simple needs,
+or you want to try deploying a mail server for the first time, then the
+<a href="basic/index.html" class="page"><strong>Basic Server</strong></a> is the right choice for you. If you are
+not sure which server you should be using, then this server is probably the right
+choice.</p>
 </div>
 <div class="paragraph">
 <p>This server is intended to be the simplest to set up and use in production.
-It has the least amount of dependencies and complexities. If you do not yet
-have a huge amount of emails to process, then usually the simplicity is
-well worth the loss of some functionality. The last thing you need is
+It has the least amount of complexity and configurations to worry about.
+The last thing you need is
 to have to resolve difficult issues on a production server when you have not
 yet acquired the requisite knowledge to deal with those issues. Using the
-<a href="local.html" class="page"><strong>Local Server</strong></a> will help you reduce the risk of running into
+<a href="basic/index.html" class="page"><strong>Basic Server</strong></a> will help you reduce the risk of running into
 production issues.</p>
-</div>
-<div class="paragraph">
-<p>This server is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Suggested for use with smaller deployments</p>
-</li>
-<li>
-<p>Appropriate for use by most operators</p>
-</li>
-<li>
-<p>The preferred choice for most installations</p>
-</li>
-<li>
-<p>Endowed with fewer dependencies, which makes it simpler and less risky to use in production</p>
-</li>
-<li>
-<p>Only dependent on your local file system for data storage, so very easy to manage</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="redundant"><a class="anchor" href="#redundant"></a>James Redundant Mail Server</h2>
+<h2 id="extendable"><a class="anchor" href="#extendable"></a>James Extendable Mail Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When your requirements start to get a little more serious
-(let&#8217;s say in the tens of millions of emails), then you may want to
-start to consider using the <a href="redundant.html" class="page"><strong>Redundant Server</strong></a>.</p>
+<p>When your requirements start to get a little more serious, or you
+start to feel adventurous and want to begin your own email adventure,
+you can consider using the <a href="extendable.html" class="page"><strong>Extendable Server</strong></a>.</p>
 </div>
 <div class="paragraph">
-<p>This server provides data redundancy so that it can stay live at
-all times, even in the rare case that your data gets corrupted.</p>
-</div>
-<div class="paragraph">
-<p>This server is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Intended for use by experienced operators only</p>
-</li>
-<li>
-<p>Used for mid-sized to large deployments</p>
-</li>
-<li>
-<p>More performant than the Minimal and Basic Server, but also more complex</p>
-</li>
-</ul>
+<p>This server is intended for experts who understand the consequences of
+what they are doing. It provides extension mechanisms, configurations,
+and integration points to customize its behavior. Unless you are processing
+millions of emails on a daily basis (in which case you should consider the
+<a href="#distributed">Distributed Server</a>), this server should cover just about
+any email needs you may have.</p>
 </div>
 </div>
 </div>
@@ -432,20 +445,16 @@ all times, even in the rare case that your data gets corrupted.</p>
 enterprise mail server.</p>
 </div>
 <div class="paragraph">
-<p>This server is:</p>
+<p>This is the most feature-rich server, but also by far the most complex,
+and is intended for experts only.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Intended for use by experts only</p>
-</li>
-<li>
-<p>Use for large-scale distributed deployments</p>
-</li>
-<li>
-<p>The most feature-rich server, but also by far the most complex</p>
-</li>
-</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="test"><a class="anchor" href="#test"></a>James Test Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="test.html" class="page"><strong>Test Server</strong></a> is, as the name suggests, for testing purposes.</p>
 </div>
 </div>
 </div>

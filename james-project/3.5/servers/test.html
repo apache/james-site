@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Run James in Production :: Apache James</title>
+    <title>James Test Server :: Apache James</title>
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -222,7 +222,7 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="test.html">Test</a>
   </li>
 </ul>
@@ -327,173 +327,17 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Apache James Server</a></li>
-    <li><a href="run.html">Run James in Production</a></li>
+    <li><a href="index.html">Servers</a></li>
+    <li><a href="test.html">Test</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/run.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/test.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Run James in Production</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">James Test Server</h1>
 <div class="paragraph">
-<p>James provides a number of <strong>profiles</strong> out of the box.
-These profiles have been tested and verified so you can
-get set up quickly with a production mail server that you
-can use with confidence.</p>
-</div>
-<div class="paragraph">
-<p>The available profiles are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#minimal">James Minimal Profile</a></p>
-</li>
-<li>
-<p><a href="#basic">James Basic Profile</a></p>
-</li>
-<li>
-<p><a href="#advanced">James Advanced Profile</a></p>
-</li>
-<li>
-<p><a href="#distributed">James Distributed Profile</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="minimal"><a class="anchor" href="#minimal"></a>James Minimal Profile</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If you are not sure which profile you should be using, then
-you probably ought to be using the <strong>James Minimal Profile</strong>.</p>
-</div>
-<div class="paragraph">
-<p>This profile is intended to be the simplest to set up and use in production.
-It has the least amount of dependencies and complexities. If you do not yet
-have a huge amount of emails to process, then usually the simplicity is
-well worth the loss of some functionality. The last thing you need is
-to have to resolve difficult issues on a production server when you have not
-yet acquired the requisite knowledge to deal with those issues. Using the
-<strong>James Minimal Profile</strong> will help you reduce the risk of running into
-production issues.</p>
-</div>
-<div class="paragraph">
-<p>This profile is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Suggested for use with smaller deployments</p>
-</li>
-<li>
-<p>Appropriate for use by most operators</p>
-</li>
-<li>
-<p>The preferred choice for most installations</p>
-</li>
-<li>
-<p>Endowed with fewer dependencies, which makes it simpler and less risky to use in production</p>
-</li>
-<li>
-<p>Only dependent on your local file system for data storage, so very easy to manage</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>(TODO: Add link to details page)</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="basic"><a class="anchor" href="#basic"></a>James Basic Profile</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This profile is intended to be relatively easy to use, but provides additional features with regards
-to data storage and management. Of course, these additional features come at the cost of more
-operational complexity. You will have to now deal with a relational database and all the fun
-that comes with it. However, if you are already an expert at relational database management,
-then this profile should be a natural choice for you.</p>
-</div>
-<div class="paragraph">
-<p>This profile is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Suggested for smaller deployments that require data persisted in a relational database</p>
-</li>
-<li>
-<p>Appropriate for most operators provided that you understand relational databases and data indexing</p>
-</li>
-<li>
-<p>Less complex than most profiles, but also less performant</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>(TODO: Add link to details page)</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="advanced"><a class="anchor" href="#advanced"></a>James Advanced Profile</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When your requirements start to get a little more serious
-(let&#8217;s say in the tens of millions of emails), then you may want to
-start to consider using the <strong>James Advanced Profile</strong>.</p>
-</div>
-<div class="paragraph">
-<p>This profile is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Intended for use by experienced operators only</p>
-</li>
-<li>
-<p>Used for mid-sized to large deployments</p>
-</li>
-<li>
-<p>More performant than the Minimal and Basic Profiles, but also more complex</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>(TODO: Add link to details page)</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="distributed"><a class="anchor" href="#distributed"></a>James Distributed Profile</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <strong>James Distributed Profile</strong> is a heavy-duty industrial enterprise mail server.</p>
-</div>
-<div class="paragraph">
-<p>This profile is:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Intended for use by experts only</p>
-</li>
-<li>
-<p>Use for large-scale distributed deployments</p>
-</li>
-<li>
-<p>The most feature-rich profile, but also by far the most complex</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>(TODO: Add link to details page)</p>
-</div>
-</div>
+<p>(TODO)</p>
 </div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
