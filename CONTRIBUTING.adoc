@@ -1,0 +1,37 @@
+= Contributing
+
+This repository is part of https://james.apache.org/[Apache James] project.
+
+The sources are available here https://gitbox.apache.org/repos/asf#james and mirrored to Github.
+
+This repository contains 4 branches with specific roles: 
+
+- `asf-site` contains the files which are effectively deployed to `https://james.apache.org`
+- `asf-staging` contains the files which are deployed to `https://james.staged.apache.org`
+- `live` is automatically built by a job one the [CI server](https://builds.apache.org/job/james/job/ApacheJames-Website/job/live/)
+- `staging` is automatically built by a job one the [CI server](https://builds.apache.org/job/james/job/ApacheJames-Website/job/live/)
+
+Content pushed to `asf-site` and `asf-staging` is automatically published by
+an ASF process akin to github or gitlab pages. This process can be configured
+using the [.asf.yaml](https://cwiki.apache.org/confluence/display/INFRA/git+-+.asf.yaml+features)
+file.
+
+The output of the `staging` branch build is pushed to the `asf-staging` branch,
+by the CI job and thus is automatically deployed to https://james.staged.apache.org/.
+
+The output of the `live` branch build is ultimately meant to be pushed to the 
+`asf-site` branch by the corresponding CI job and thus will automatically be
+deployed to https://james.apache.org/.
+
+However at the time of this writing, the documentation website is being reorganized and 
+migrated to antora. Thus the link between `live` and `asf-site` is not enabled yet but it 
+is the target.
+
+PRs to this repository should generally target the `staging` branch.
+
+= LICENSING  
+
+The website must not be published as Apache Source files.
+The reason is the antora ui-bundle uses MPL 2.0 license and we can't mix it with ASF 2.0
+ https://issues.apache.org/jira/browse/LEGAL-530 .
+
