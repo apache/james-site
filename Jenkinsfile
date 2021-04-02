@@ -19,8 +19,8 @@
  */
 
 def AGENT_LABEL = env.AGENT_LABEL ?: 'ubuntu'
-def JDK_NAME = env.JDK_NAME ?: 'JDK 11 (latest)'
-def MAVEN_NAME = 'Maven 3 (latest)'
+def JDK_NAME = env.JDK_NAME ?: 'jdk_11_latest'
+def MAVEN_NAME = 'maven_3_latest'
 
 pipeline {
 
