@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; cassandra.properties :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org">Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.6.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#mail/messages/index.adoc">mail/messages/index.adoc</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/imf.adoc">mail/messages/imf.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/mime.adoc">mail/messages/mime.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="elasticsearch.html">elasticsearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.6.0 Snapshot</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Apache James JDKIM</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.3-SNAPSHOT/index.html">0.3-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSieve</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.8-SNAPSHOT/index.html">0.8-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSPF</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.2-SNAPSHOT/index.html">1.0.2-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Mime4j</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.4-SNAPSHOT/index.html">0.8.4-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Postage</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../postage/0.1-SNAPSHOT/index.html">0.1-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Apache James Server</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Site</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../../distributed.html">Distributed</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Storage dependencies</li>
+    <li><a href="cassandra.html">cassandra.properties</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/cassandra.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; cassandra.properties</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/cassandra.properties">example</a>
+to get some examples and hints.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here are generic properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. cassandra.properties content</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.nodes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of some nodes of the cassandra&#8217;s cluster in following format host:port or host, if the port is not specified we use 9042</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.keyspace.create</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicate if the keyspace should be created by James. Optional, default value: <strong>false</strong>
+If set to true James will attempt to create the keyspace when starting up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.keyspace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is the name of the keyspace used by James. Optional, default value: <strong>apache_james</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username used as a credential for contacting Cassandra cluster. Optional, default is absent,
+required if <strong>cassandra.password</strong> is supplied</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password used as a credential for contacting Cassandra cluster. Optional, default is absent,
+required if &lt;strong&gt;cassandra.user&lt;/strong&gt; is supplied</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.ssl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether SSL should be enabled on the communications with Cassandra cluster. Optional, defaults to false.</p>
+<p class="tableblock">The keystore used for trusting SSL server socket can be set via JSSE system properties as explained on
+<a href="https://docs.datastax.com/en/developer/java-driver/3.7/manual/ssl/">Cassandra driver manual</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.replication.factor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is the replication factor used upon keyspace creation. Modifying this property while the keyspace already exists
+will have no effect. Optional. Default value 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.query.logger.constant.threshold</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If specified all queries that take more than the given integer in millisecond will be considered slow and logged.
+If not specified by default a DynamicThresholdQueryLogger will be used (see above)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.query.slow.query.latency.threshold.percentile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default is com.datastax.driver.core.QueryLogger.DEFAULT_SLOW_QUERY_THRESHOLD_PERCENTILE.
+The latency percentile beyond which queries are considered 'slow' and will be logged.
+If you specify cassandra.query.logger.constant.threshold, you should not specify this property</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.query.logger.max.query.string.length</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default is com.datastax.driver.core.QueryLogger.DEFAULT_MAX_QUERY_STRING.LENGTH.
+The maximum length of a CQL query string that can be logged verbatim by the cassandra driver</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.query.logger.max.logged.parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default is com.datastax.driver.core.QueryLogger.DEFAULT_MAX_LOGGED_PARAMETERS.
+The maximum number of query parameters that can be logged by the cassandra driver</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.query.logger.max.parameter.value.length</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default is com.datastax.driver.core.QueryLogger.DEFAULT_MAX_PARAMETER_VALUE_LENGTH.
+The maximum length of query parameter value that can be logged by the cassandra driver</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.readTimeoutMillis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional.
+If specified defines the Cassandra <a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/socket_options/">driver read timeout</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.consistency_level.regular</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Allows specifying the driver default consistency level. Defaults to QUORUM.
+Allowed values: <a href="https://docs.datastax.com/en/cassandra-oss/3.x/cassandra/dml/dmlConfigConsistency.html">QUORUM, LOCAL_QUORUM, or EACH_QUORUM</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.consistency_level.lightweight_transaction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Allows specifying the driver serial consistency level. Defaults to SERIAL.
+Allowed values: <a href="https://docs.datastax.com/en/cassandra-oss/3.x/cassandra/dml/dmlConfigConsistency.html">SERIAL or LOCAL_SERIAL</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pooling_options"><a class="anchor" href="#_pooling_options"></a>Pooling options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here are some properties for Pooling options:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Read com.datastax.driver.core.PoolingOptions for knowing defaults value
+# No value here will default to driver's default value
+
+# cassandra.pooling.local.max.connections=8
+# cassandra.pooling.local.max.requests=128
+## In ms. Should be higher than socket read timeout
+# cassandra.pooling.timeout=5000
+## In seconds.
+# cassandra.pooling.heartbeat.timeout=30
+# cassandra.pooling.max.queue.size=256</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. cassandra.properties content</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.pooling.local.max.connections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 8.
+If specified defines the Cassandra
+<a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/pooling/#pool-size">maximum number of connections to hosts</a>
+(remote and local).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.pooling.local.max.requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 128.
+If specified defines the Cassandra
+<a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/pooling/">maximum number of concurrent requests per connection</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.pooling.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 5000 (ms).
+If specified defines the Cassandra
+<a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/pooling/#acquisition-queue">timeout for waiting in the pool queue</a>.
+Should be higher than sockets timeout.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.pooling.heartbeat.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 30 (s).
+If specified defines the Cassandra
+<a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/pooling/#heartbeat">heartbeat timeout</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.pooling.max.queue.size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 256.
+If specified defines the Cassandra
+<a href="https://docs.datastax.com/en/developer/java-driver/3.5/manual/pooling/#acquisition-queue">maximum size of the connection pool queue</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If you want more explanation about Cassandra configuration, you should visit the dedicated <a href="https://docs.datastax.com/en/developer/java-driver/3.9">documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cassandra_mailbox_configuration"><a class="anchor" href="#_cassandra_mailbox_configuration"></a>Cassandra Mailbox Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>cassandra.properties</strong> file furthermore expose some options to tune the Cassandra Mailbox behaviour.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. cassandra.properties content</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.read.repair.chance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 0.1 (10% chance).
+Must be between 0 and 1 (inclusive). Controls the probability of doing a read-repair upon mailbox read.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.read.repair.chance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 0.1 (10% chance).
+Must be between 0 and 1 (inclusive). Controls the probability of doing a read-repair upon mailbox read.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.counters.read.repair.chance.max</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 0.1 (10% chance).
+Must be between 0 and 1 (inclusive). Controls the probability of doing a read-repair upon mailbox counters read.
+Formula: read_repair_chance = min(mailbox.counters.read.repair.chance.max, (100/unseens)*mailbox.counters.read.repair.chance.one.hundred)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.counters.read.repair.chance.one.hundred</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 0.01 (1% chance).
+Must be between 0 and 1 (inclusive). Controls the probability of doing a read-repair upon mailbox counters read.
+Formula: read_repair_chance = min(mailbox.counters.read.repair.chance.max, (100/unseens)*mailbox.counters.read.repair.chance.one.hundred)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.max.retry.acl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 1000.
+Controls the number of retries upon Cassandra ACL updates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.max.retry.modseq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 100000.
+Controls the number of retries upon Cassandra ModSeq generation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.max.retry.uid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 100000.
+Controls the number of retries upon Cassandra Uid generation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.max.retry.message.flags.update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 1000.
+Controls the number of retries upon Cassandra flags update, in MessageMapper.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.max.retry.message.id.flags.update</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 1000.
+Controls the number of retries upon Cassandra flags update, in MessageIdMapper.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fetch.advance.row.count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 1000.
+Controls the number of remaining rows we should wait before prefetch when paging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">chunk.size.message.read</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 100.
+Controls the number of messages to be retrieved in parallel.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailbox.blob.part.size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to 102400 (100KB).
+Controls the size of blob parts used to store messages in the Cassandra blobStore.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message.read.strong.consistency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Boolean, defaults to true. Disabling should be considered experimental.
+If enabled, regular consistency level is used for read transactions for message. This might result
+in stale reads as the system.paxos table will not be checked for latest updates. Better performance are expected
+by turning it off. Note that reads performed as part of write transactions are always performed with a strong
+consistency.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; Custom Mailbox Listeners :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org">Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.6.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#mail/messages/index.adoc">mail/messages/index.adoc</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/imf.adoc">mail/messages/imf.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/mime.adoc">mail/messages/mime.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/elasticsearch.html">elasticsearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.6.0 Snapshot</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Apache James JDKIM</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.3-SNAPSHOT/index.html">0.3-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSieve</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.8-SNAPSHOT/index.html">0.8-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James jSPF</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.2-SNAPSHOT/index.html">1.0.2-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Mime4j</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.4-SNAPSHOT/index.html">0.8.4-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Postage</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../postage/0.1-SNAPSHOT/index.html">0.1-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Apache James Server</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Apache James Site</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../../distributed.html">Distributed</a></li>
+    <li><a href="index.html">Extending server behavior</a></li>
+    <li><a href="mailbox-listeners.html">Custom Mailbox Listeners</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/extending/mailbox-listeners.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; Custom Mailbox Listeners</h1>
+<div class="sect1">
+<h2 id="_writing_additional_listener"><a class="anchor" href="#_writing_additional_listener"></a>Writing additional listener</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An extension writer can write new additional mailbox listeners.</p>
+</div>
+<div class="paragraph">
+<p>To do so, extend the <strong>GroupMailboxListener</strong> defined in the <strong>mailbox-api</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Here is the dependency:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-james-mailbox-api&lt;/artifactId&gt;
+&lt;/dependency&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are the methods you can implement:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    void event(Event event) throws Exception;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>allows you to specify the business logic you want to execute upon new events generation.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    boolean isHandling(Event event);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Allows to know if this event is worth execution, and should be sent on the EventBus. This avoids execution of non
+handled events and can save some IOs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_registration_of_custom_additional_listeners"><a class="anchor" href="#_registration_of_custom_additional_listeners"></a>Registration of custom additional listeners</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your custom additional listener needs to be in the <strong>extensions-jars</strong> folder.</p>
+</div>
+<div class="paragraph">
+<p>You need to register its fully qualified class name in <a href="../configure/listeners.html" class="page">listeners.xml</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_events"><a class="anchor" href="#_events"></a>Events</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Your listener will be called for the following events:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>MailboxAdded</strong>: A new mailbox had been created</p>
+</li>
+<li>
+<p><strong>MailboxDeletion</strong>: A new mailbox had been deleted</p>
+</li>
+<li>
+<p><strong>MailboxRenamed</strong>: A mailbox was renamed</p>
+</li>
+<li>
+<p><strong>MailboxACLUpdated</strong>: The rights of a mailbox had been changed</p>
+</li>
+<li>
+<p><strong>Expunged</strong>: Some messages had been deleted</p>
+</li>
+<li>
+<p><strong>FlagsUpdated</strong>: Some message flags had been updated</p>
+</li>
+<li>
+<p><strong>Added</strong>: New messages had been added to a mailbox</p>
+</li>
+<li>
+<p><strong>QuotaUsageUpdatedEvent</strong>: The quota of a given account had changed</p>
+</li>
+<li>
+<p><strong>MessageMoveEvent</strong>: A message was moved between mailboxes. This carries an account wide information. Spoecific
+mailboxes event (Added &amp; Expunged) will be emitted as well.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example"><a class="anchor" href="#_example"></a>Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://james.apache.org/howTo/custom-listeners.html">This page</a> provides a working example for writing additional custom mailbox listeners.</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
