@@ -116,47 +116,47 @@ pipeline {
             }
 
         }
-    }
 
-    // If this build didn't fail, but there were failing tests, send an email to the list.
-    unstable {
-        echo "Unstable "
-    }
+        // If this build didn't fail, but there were failing tests, send an email to the list.
+        unstable {
+            echo "Unstable "
+        }
 
-    // Send an email, if the last build was not successful and this one is.
-    success {
-        echo "Success "
-        script {
-            if (env.BRANCH_NAME == "live" || env.BRANCH_NAME == "staging") {
+        // Send an email, if the last build was not successful and this one is.
+        success {
+            echo "Success "
+            script {
+                if (env.BRANCH_NAME == "live" || env.BRANCH_NAME == "staging") {
 
-                if ((currentBuild.previousBuild != null) && (currentBuild.previousBuild.result != 'SUCCESS')) {
-                    emailext(
-                            subject: "[BUILD-STABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
-                            body: """
+                    if ((currentBuild.previousBuild != null) && (currentBuild.previousBuild.result != 'SUCCESS')) {
+                        emailext(
+                                subject: "[BUILD-STABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
+                                body: """
     BUILD-STABLE: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]':
 
     Is back to normal.
     """,
-                            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    )
-                }
-            } else {
-                if ((currentBuild.previousBuild != null) && (currentBuild.previousBuild.result != 'SUCCESS')) {
-                    emailext(
-                            subject: "[BUILD-STABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
-                            body: """
+                                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        )
+                    }
+                } else {
+                    if ((currentBuild.previousBuild != null) && (currentBuild.previousBuild.result != 'SUCCESS')) {
+                        emailext(
+                                subject: "[BUILD-STABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
+                                body: """
     BUILD-STABLE: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]':
 
     Is back to normal.
     """,
-                            recipientProviders: [[$class: 'RequesterRecipientProvider']]
-                    )
+                                recipientProviders: [[$class: 'RequesterRecipientProvider']]
+                        )
+                    }
                 }
             }
         }
-    }
 
-    always {
-        echo "Build done"
+        always {
+            echo "Build done"
+        }
     }
 }
