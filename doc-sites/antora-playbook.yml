@@ -1,44 +1,21 @@
+runtime:
+  cache_dir: ./.cache/antora
+  fetch: true
 site:
   title: Apache James
   url: https://james.apache.org/
   start_page: james-site::homepage.adoc
 content:
   sources:
-  - url: https://github.com/apache/james-hupa.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-jdkim.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-jsieve.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-jspf.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-mime4j.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-project.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: https://github.com/apache/james-postage.git
-    branches: master
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
-  - url: ./../
-    branches: HEAD
-    start_path: docs
-    edit_url: '{web_url}/blob/{refname}/{path}'
+    - url: https://github.com/apache/james-project.git
+      branches: master
+      start_path: docs
+      edit_url: "{web_url}/blob/{refname}/{path}"
+    - url: ./../
+      branches: HEAD
+      start_path: docs
+      edit_url: "{web_url}/blob/{refname}/{path}"
 ui:
   bundle:
-    url: ./../antora-ui/build/ui-bundle.zip
-    # start_path: ui-bundle
-runtime:
-  fetch: true
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+  supplemental_files: ./ui-overrides
