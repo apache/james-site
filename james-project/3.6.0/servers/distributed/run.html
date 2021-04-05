@@ -675,41 +675,6 @@ objectstorage.s3.secretKey=secretKey1</code></pre>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_guice_cassandra_rabbitmq_ldap"><a class="anchor" href="#_guice_cassandra_rabbitmq_ldap"></a>Guice-cassandra-rabbitmq-ldap</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can follow the same guide to build and run
-guice-cassandra-rabbitmq-s3-ldap artifact, except that:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The <strong>jar</strong> and <strong>libs</strong> needs to be retrieve from
-server/container/guice/cassandra-rabbitmq-ldap-guice/target after
-compilation</p>
-</li>
-<li>
-<p>The sample configuration can be found in
-<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf</a></p>
-</li>
-<li>
-<p>You need to configure James to be connecting to a running LDAP server.
-The configuration file is located in
-<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml</a></p>
-</li>
-<li>
-<p>You can then launch James via this command:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-ldap-guice.jar</code></pre>
-</div>
-</div>
-</div>
-</div>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>

@@ -724,6 +724,19 @@ searches. Disabling ElasticSearch requires no extra action, however
 <div class="sect1">
 <h2 id="_exporting_metrics_directly_to_elasticsearch"><a class="anchor" href="#_exporting_metrics_directly_to_elasticsearch"></a>Exporting metrics directly to ElasticSearch</h2>
 <div class="sectionbody">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+A separate ElasticSearch server is required, as an ElasticSearch 6.3 is needed, which is
+not compatible with ElasticSearch 7.10, required by James.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For configuring the metric reporting on ElasticSearch :</p>
 </div>
@@ -768,7 +781,7 @@ searches. Disabling ElasticSearch requires no extra action, however
 <h2 id="_ssl_trusting_configuration"><a class="anchor" href="#_ssl_trusting_configuration"></a>SSL Trusting Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default James will use the system TrustStore to validate https server certificates, if the certificate on
+<p>By default, James will use the system TrustStore to validate https server certificates, if the certificate on
 ES side is already in the system TrustStore, you can leave the sslValidationStrategy property empty or set it to default.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
