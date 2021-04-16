@@ -24,9 +24,193 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 30 Oct 2020 17:37:39 +0700</pubDate>
-    <lastBuildDate>Fri, 30 Oct 2020 17:37:39 +0700</lastBuildDate>
+    <pubDate>Fri, 16 Apr 2021 13:59:24 +0700</pubDate>
+    <lastBuildDate>Fri, 16 Apr 2021 13:59:24 +0700</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Apache James Server 3.6.0</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.6.0 release.&lt;/p&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;announcements&quot;&gt;Announcements&lt;/h2&gt;
+
+&lt;h3 id=&quot;experimental-support-for-jmap-rfc-8621-and-deprecation-of-jmap-draft&quot;&gt;Experimental support for JMAP RFC-8621 and deprecation of JMAP Draft&lt;/h3&gt;
+
+&lt;p&gt;Since the last release we worked hard refreshing our JMAP implementation, implementing both &lt;a href=&quot;https://tools.ietf.org/html/rfc8620&quot;&gt;JMAP core&lt;/a&gt;,
+&lt;a href=&quot;https://tools.ietf.org/html/rfc8621&quot;&gt;JMAP mail&lt;/a&gt; and the &lt;a href=&quot;https://tools.ietf.org/html/rfc8887&quot;&gt;JMAP over WebSocket&lt;/a&gt; specifications. Their support is considered experimental and
+early adopters’ feedback is highly welcomed.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/apache/james-project/tree/master/server/protocols/jmap-draft/doc&quot;&gt;JMAP Draft&lt;/a&gt; should be considered legacy, and will be removed in upcoming 3.7.0 release.&lt;/p&gt;
+
+&lt;h3 id=&quot;switch-to-java-11-for-build-and-run&quot;&gt;Switch to Java 11 for build and run&lt;/h3&gt;
+
+&lt;p&gt;We adopted Java Runtime Environment 11 from James release 3.6.0. James 3.5.0 is the last version offering Java Runtime
+Environment 8 support.&lt;/p&gt;
+
+&lt;h2 id=&quot;release-changelog&quot;&gt;Release changelog&lt;/h2&gt;
+
+&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
+
+&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;JAMES-2884 Partial Support for JMAP RFC-8621: The current implementation status allow reading mailboxes, emails, vacation responses.
+    &lt;ul&gt;
+      &lt;li&gt;JAMES-3457 Implement JMAP eventSource&lt;/li&gt;
+      &lt;li&gt;JAMES-3491 JMAP over websocket (RFC-8887)&lt;/li&gt;
+      &lt;li&gt;JAMES-3470 JMAP RFC-8621 Email/changes + Mailbox/changes support&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;JAMES-3117 Add PeriodicalHealthChecks for periodical calling all health checks&lt;/li&gt;
+  &lt;li&gt;JAMES-3143 WebAdmin endpoint to solve Cassandra message inconsistencies&lt;/li&gt;
+  &lt;li&gt;JAMES-3138 Webadmin endpoint to recompute users current quotas on top of Guice products&lt;/li&gt;
+  &lt;li&gt;JAMES-3296 Webadmin endpoint to rebuild RabbitMQMailQueue in the Distributed Server&lt;/li&gt;
+  &lt;li&gt;JAMES-3266 Offer an option to disable ElasticSearch in Distributed James product&lt;/li&gt;
+  &lt;li&gt;JAMES-3202 Reindex only outdated documents with the Mode option set to CORRECT in reindexing tasks&lt;/li&gt;
+  &lt;li&gt;JAMES-3405 Expose metrics of Guice servers over HTTP - enables easy Prometheus metrics collection&lt;/li&gt;
+  &lt;li&gt;JAMES-3407 Distributed server: Read-repairs for the mailbox entity&lt;/li&gt;
+  &lt;li&gt;JAMES-3428 Distributed server: Read-repairs for the mailbox counters entity&lt;/li&gt;
+  &lt;li&gt;JAMES-3139 Expose RabbitMQ channel &amp;amp; connection configuration&lt;/li&gt;
+  &lt;li&gt;JAMES-3441 Make possible and document Distributed Server setup with specialized instances&lt;/li&gt;
+  &lt;li&gt;JAMES-3337 Document the use of JWT&lt;/li&gt;
+  &lt;li&gt;JAMES-3399 Allow JSON logging with logback - enables structure logging with FluentBit&lt;/li&gt;
+  &lt;li&gt;JAMES-3396 WebAdmin should try to prevent RRT addresses redirection loops when possible&lt;/li&gt;
+  &lt;li&gt;JAMES-3402 JMAP MDN messages should have a Date header&lt;/li&gt;
+  &lt;li&gt;JAMES-3028 Distributed server: allow choosing whether blobs should be deduplicated&lt;/li&gt;
+  &lt;li&gt;JAMES-3196 CanSendFromImpl: enable to send email from aliases for SMTP and JMAP&lt;/li&gt;
+  &lt;li&gt;JAMES-3196 Add an IMAP SessionId to correlate logs&lt;/li&gt;
+  &lt;li&gt;JAMES-3502 DistributedServer: SSL and authentication support for RabbitMQ&lt;/li&gt;
+  &lt;li&gt;JAMES-3504 Metrics and log for POP3&lt;/li&gt;
+  &lt;li&gt;JAMES-3431 Optional DSN support&lt;/li&gt;
+  &lt;li&gt;JAMES-3202 Allow search index Reindexing without cleanup&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Switch to Java 11 for build and run&lt;/li&gt;
+  &lt;li&gt;JAMES-2760 mailqueue.size.metricsEnabled should be false by default&lt;/li&gt;
+  &lt;li&gt;JAMES-3252 DomainList autoDetection should be turned off by default. Operators relying on implicit values for enabling DomainList autoDetection now needs to explicitly configure it.&lt;/li&gt;
+  &lt;li&gt;JAMES-3184 Throttling mechanism allow an admin to specify the throughput desired for a given WebAdmin task&lt;/li&gt;
+  &lt;li&gt;JAMES-3224 Configuration for Cassandra ConsistencyLevel.{QUORUM, SERIAL} (for multi-dc configuration)&lt;/li&gt;
+  &lt;li&gt;JAMES-3176 Rewritte MDN parsing with Parboiled scala (avoid asm library dependency clash within the Distributed Server)&lt;/li&gt;
+  &lt;li&gt;JAMES-3194 Rely on DTOConverter in TaskRoute&lt;/li&gt;
+  &lt;li&gt;JAMES-3430 Restructure message properties storage within Cassandra Mailbox. See upgrade instructions.&lt;/li&gt;
+  &lt;li&gt;JAMES-3435 Use EventSourcing to manage ACL - avoid SERIAL reads for ACL thus unlocking a performance enhancement for the Distributed James server. Read upgrade instructions.&lt;/li&gt;
+  &lt;li&gt;JAMES-2124 Sorts module declarations in reactors (thanks to Jean Helou)&lt;/li&gt;
+  &lt;li&gt;JAMES-3440 JMAP users can now avoid relying on ElasticSearch reads for basic listing operations thanks to the EmailQueryView&lt;/li&gt;
+  &lt;li&gt;JAMES-3252 DomainList autoDection should be turned off by&lt;/li&gt;
+  &lt;li&gt;JAMES-3192 Upgrade Apache configuration to 2.7&lt;/li&gt;
+  &lt;li&gt;JAMES-3492 Upgrade ElasticSearch dependency for DistributedServer to 7.10&lt;/li&gt;
+  &lt;li&gt;JAMES-2514 Upgrade Cassandra dependency for DistributedServer 3.11.3 -&amp;gt; 3.11.10&lt;/li&gt;
+  &lt;li&gt;JAMES-3497 Multiple dependencies upgrades&lt;/li&gt;
+  &lt;li&gt;JAMES-3499 Package LDAP in Distributed Server&lt;/li&gt;
+  &lt;li&gt;JAMES-3225 Set up of the Apache CI&lt;/li&gt;
+  &lt;li&gt;[REFACTORING] Switch most of the test suite to JUNIT 5&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;fixed&quot;&gt;Fixed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;JAMES-3305 Avoid crashes upon deserialization issues when consuming RabbitMQ messages, leverage dead-letter feature&lt;/li&gt;
+  &lt;li&gt;JAMES-3212 JMAP Handle subcrible/unsubcrible child’s folder when update mailbox&lt;/li&gt;
+  &lt;li&gt;JAMES-3416 Fix ElasticSearch email address search&lt;/li&gt;
+  &lt;li&gt;JAMES-1677 Upgrade default hasing algorithm to SHA-512&lt;/li&gt;
+  &lt;li&gt;JAMES-3454 Use a callback mechanism to re-create RabbitMQ auto-delete queues upon reconnections&lt;/li&gt;
+  &lt;li&gt;JAMES-3296 Recover email sent during RabbitMQ outages&lt;/li&gt;
+  &lt;li&gt;JAMES-2046 SentDateComparator should fallback to Mimle4J parsers&lt;/li&gt;
+  &lt;li&gt;JAMES-3416 ElasticSearch address indexing fixes&lt;/li&gt;
+  &lt;li&gt;JAMES-3386 add test to ensure blank mailbox paths are not allowed in jmap draft&lt;/li&gt;
+  &lt;li&gt;MAILBOX-392 WebAdmin documentation: creation of mailboxes with ‘&amp;amp;’ is allowed&lt;/li&gt;
+  &lt;li&gt;JAMES-3380 use non am/pm dependent hour format&lt;/li&gt;
+  &lt;li&gt;JAMES-2220 JMAP Draft: Flags update should not fail when a user is missing its Outbox&lt;/li&gt;
+  &lt;li&gt;JAMES-3364 DeletedMessageVault: deleting many messages dead-locks&lt;/li&gt;
+  &lt;li&gt;JAMES-3361 JMAP Draft: sharee should not be able to modify mailbox rights&lt;/li&gt;
+  &lt;li&gt;JAMES-3308 RabbitMQTerminationSubscriberTest should be thread safe&lt;/li&gt;
+  &lt;li&gt;JAMES-3177 Applicable flags updates needs to be thread safe (IMAP SELECT)&lt;/li&gt;
+  &lt;li&gt;JAMES-3309 Avoid a NPE in FetchProcessor when SelectedMailbox is unselected&lt;/li&gt;
+  &lt;li&gt;JAMES-3300 Fix default Cassandra LDAP configuration&lt;/li&gt;
+  &lt;li&gt;JAMES-3267 Stop forcefully delete ImapRequestFrameDecoder.decode temporary file&lt;/li&gt;
+  &lt;li&gt;JAMES-3167 Reactify MailboxMapper - unlocks better concurrency management&lt;/li&gt;
+  &lt;li&gt;JAMES-3170 Fix metric measurement upon reactor publisher replay&lt;/li&gt;
+  &lt;li&gt;JAMES-3213 Source ReplyTo in ICALToJsonAttribute&lt;/li&gt;
+  &lt;li&gt;JAMES-3204 Push limit to Cassandra backend when reading messages - before that message listing queries where always reading at least 5000 rows, and triggering other reads for these rows.&lt;/li&gt;
+  &lt;li&gt;JAMES-3201 ReIndexing enhancements&lt;/li&gt;
+  &lt;li&gt;JAMES-3179 Fix UpdatableTickingClock thread safety issue&lt;/li&gt;
+  &lt;li&gt;MAILBOX-405 Renaming too much mailboxes at once was failing on top of the Cassandra mailbox&lt;/li&gt;
+  &lt;li&gt;JAMES-3513 Wrong UID dispatched on the EventBus for StoreMessageIdManager::setInMailboxes&lt;/li&gt;
+  &lt;li&gt;JAMES-3512 DigestUtil: close base64 encoding stream&lt;/li&gt;
+  &lt;li&gt;JAMES-3487 Allow setting on*Exception parameters for Bounce&lt;/li&gt;
+  &lt;li&gt;JAMES-3511 Solve java.util.NoSuchElementException: heartbeatHandler&lt;/li&gt;
+  &lt;li&gt;JAMES-3507 Fix broken IMAP APPEND literalSizeLimit option preventing from buffering large requests to files&lt;/li&gt;
+  &lt;li&gt;JAMES-3438 des-ambiguity error message for Email/set create Content-Transfer-Encoding rejection&lt;/li&gt;
+  &lt;li&gt;JAMES-3477 Fix NPE when concurrently updating MimeMessage&lt;/li&gt;
+  &lt;li&gt;JAMES-3444 Perform JMAP TransportChecks only when JMAP is enabled&lt;/li&gt;
+  &lt;li&gt;JAMES-3495 Cassandra mailbox: Reproduce and fix the null messageId bug&lt;/li&gt;
+  &lt;li&gt;JAMES-3490 maxUploadSize should come from configuration&lt;/li&gt;
+  &lt;li&gt;JAMES-1717 VacationMailet should not return answers when no or empty Reply-To header&lt;/li&gt;
+  &lt;li&gt;JAMES-1784 JMAP: Users with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt; in their names cannot download attachments&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;HybridBlobStore. Introduced to fasten small blob access, its usage could be
+compared to a cache, but with a sub-optimal implementation (no eviction, default replication factor, no  circuit breaking).
+Use BlobStore cache instead.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;performance&quot;&gt;Performance&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;JAMES-3295 Multiple IMAP performance enhancements for the Distributed Server. Some enhancement might transfer to other servers as well.
+    &lt;ul&gt;
+      &lt;li&gt;JAMES-3295 Use MessageManager::listMessagesMetadata more widely (IMAP)&lt;/li&gt;
+      &lt;li&gt;JAMES-3265 IMAP FETCH reading lastUid and lastModseq should be optional&lt;/li&gt;
+      &lt;li&gt;JAMES-3265 CassandraMessageMapper should limit modseq allocation upon flags updates&lt;/li&gt;
+      &lt;li&gt;JAMES-3265 Impement a MessageMapper method to reset all recents&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;JAMES-3263 Optimize RecipientRewriteTable::getMappingsForType&lt;/li&gt;
+  &lt;li&gt;JAMES-3458 Limit Cassandra statements when retrieving all quota limits&lt;/li&gt;
+  &lt;li&gt;JAMES-2037 CassandraMessageMapper::listAllMessageUids should not rely on ComposedMessageIdWithMetaData&lt;/li&gt;
+  &lt;li&gt;JAMES-3453 Specify explicitly lower safer defaults for Reactor flatMaps, filterWhens&lt;/li&gt;
+  &lt;li&gt;JAMES-3444 Allow moving JMAP mailets in a local-delivery processor - this enables calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RecipientIsLocal&lt;/code&gt; only one time in the mailet processing pipeline.&lt;/li&gt;
+  &lt;li&gt;JAMES-2037 Use Flux for MessageManager::search&lt;/li&gt;
+  &lt;li&gt;JAMES-3409 Better denormalize mailboxes within the Distributed Server. This enables reading only one table of the projection instead of two. Read repairs are implemented for keeping eventual consistency checks. Read upgrade instructions.&lt;/li&gt;
+  &lt;li&gt;JAMES-3433 Distributed Server: use caching blobstore only for frequently accessed data (callers can specify the level of performance they expect). This ensures the cache is read when it is useful.&lt;/li&gt;
+  &lt;li&gt;JAMES-3408 Limit concurrency when retrieving mailbox counters&lt;/li&gt;
+  &lt;li&gt;JAMES-3430 Restructure message properties storage within Cassandra Mailbox. See upgrade instructions.&lt;/li&gt;
+  &lt;li&gt;JAMES-3277 SetMessagesUpdateProcessor should read less mailboxes - enhance performance for JMAP-draft and JMAP RFC-8621.&lt;/li&gt;
+  &lt;li&gt;JAMES-3408 Enforce IMAP List not reading counters for Distributed James&lt;/li&gt;
+  &lt;li&gt;JAMES-3377 Remove unused text criterion - newly indexed mails indexed in ElasticSearch will take less space&lt;/li&gt;
+  &lt;li&gt;JAMES-3095 Avoid listing all subscriptions for each mailbox (IMAP)&lt;/li&gt;
+  &lt;li&gt;JAMES-2629 Use a future supplier in CassandraAsyncExecutor&lt;/li&gt;
+  &lt;li&gt;JAMES-2904 Avoid loading attachment when not needed (IMAP &amp;amp; JMAP) + attachment content streaming (JMAP)&lt;/li&gt;
+  &lt;li&gt;JAMES-3155 Limit the number of flags updated at the same time&lt;/li&gt;
+  &lt;li&gt;JAMES-3264 MAILBOX details are read 3 times upon indexing&lt;/li&gt;
+  &lt;li&gt;JAMES-3506 Avoid a full body read within VacationMailet&lt;/li&gt;
+  &lt;li&gt;JAMES-3508 Improved performance for IMAP APPEND&lt;/li&gt;
+  &lt;li&gt;JAMES-3506 SMTP performance enhancement&lt;/li&gt;
+  &lt;li&gt;JAMES-3505 Make mail remote delivery multi-threaded&lt;/li&gt;
+  &lt;li&gt;JAMES-3488 Support TLS 1.3&lt;/li&gt;
+  &lt;li&gt;JAMES-3484 Cassandra mailbox should group copies/moves&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;third-party-softwares&quot;&gt;Third party softwares&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;James is no longer tested against Cassandra 3.11.3 but instead against Cassandra 3.11.10. Users are recommended to upgrade to this
+version as well. See related upgrade instructions.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Tue, 16 Mar 2021 20:16:30 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2021/03/16/james-3.6.0.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2021/03/16/james-3.6.0.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Performance testing for James with JMeter</title>
@@ -473,78 +657,6 @@ Antoine&lt;/p&gt;
         <pubDate>Tue, 31 Jul 2018 21:13:22 +0700</pubDate>
         <link>http://james.apache.org/james/update/2018/07/31/james-3.1.0.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2018/07/31/james-3.1.0.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Linagora June newsletter</title>
-        <description>&lt;p&gt;In the name of the James team @Linagora I will be presenting you what we did in the past few weeks, and plan to work on in the coming weeks.&lt;/p&gt;
-
-&lt;p&gt;We have to work on some specific features to make James easier to adopt for large organizations.&lt;/p&gt;
-
-&lt;h1 id=&quot;what-was-achieved-in-may&quot;&gt;What was achieved in May&lt;/h1&gt;
-
-&lt;h2 id=&quot;notifications-when-soon-over-quota&quot;&gt;Notifications when soon over quota&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A mail needs to be sent to the user to warn him. This is an attempts to allow clients not implementing quota’s RFCs to still get the warning.&lt;/p&gt;
-
-  &lt;p&gt;This is implemented with mailbox listeners (and not mailets), with event sourcing. We added the interfaces and implementations to achieve this feature in James using event sourcing with events being stored in Cassandra or in memory.
-Such a technical solution might be very useful to implement other feature.&lt;/p&gt;
-
-  &lt;p&gt;This mailbox listener is optional. We allowed one to register his (potentially custom) mailbox listeners when working with Guice.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;searching-user-by-quota-usage&quot;&gt;Searching user by quota usage&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;This would allow an admin to inspect per-user quota usage, via a webadmin interface.&lt;/p&gt;
-
-  &lt;p&gt;Again, we provided two implementations: a scanning one, which naively enumerates mailboxes to compute occupation, and one where quota occupation is indexed in ElasticSearch.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;performance-enhancements&quot;&gt;Performance enhancements&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In order to have a very good mail search experience, it is possible to plug Apache Tika as a text extractor into James. We use Tika as an external service that we call with HTTP. When you use this Tika extractor with ElasticSearch indexing, you get a very powerful fulltext search even on complex attachment format like LibreOffice documents.&lt;/p&gt;
-
-  &lt;p&gt;We did experience slow requests with our Tika server. We contributed &lt;a href=&quot;https://github.com/apache/tika/pull/237&quot;&gt;this issue&lt;/a&gt; which significantly enhanced Tika server performance, and we introduce a cache on James side to reduce calls to tika.&lt;/p&gt;
-
-  &lt;p&gt;We also worked on improving massive JMAP operation performance (delete a large number of emails).&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;what-we-will-work-on-in-june&quot;&gt;What we will work on in June&lt;/h1&gt;
-
-&lt;h2 id=&quot;data-leak-prevention&quot;&gt;Data Leak Prevention&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;We should have a matcher applying rules defined by the admin. This matcher will then store suspicious emails in specific mail repository for an admin review.&lt;/p&gt;
-
-  &lt;p&gt;To implement this, we need to enhance browsing to MailRepository via WebAdmin. We need to allow storing such rules as well as updating them via webadmin. We need finally a mailet storing emails in a repository given its sender domain.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;exporting-a-mail-account&quot;&gt;Exporting a mail account&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;As an administrator, I should be able to export the content of my mail account. This both allows easier migrations, comply with legal requirements as well as allow some forms of backups.&lt;/p&gt;
-
-  &lt;p&gt;The chosen format is EMLs in a ZIP format, with the folder structure described in archive meta-data, and specific metadata to ease restoring a James account (flags, etc…). An administrator (via webamin) should be able to download/upload such backups in order to do export/restores mail accounts.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;coming-next&quot;&gt;Coming next&lt;/h3&gt;
-
-&lt;p&gt;Along side these features that turns out to be necessary for large organisations, our focus will be on having a distributed
-James server. To achieve this, we will propose soon a distributed mail queue based on RabbitMQ.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 06 Jun 2018 11:30:00 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/06/06/linagora-june-nl.html</guid>
         
         
         <category>james</category>
