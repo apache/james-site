@@ -586,6 +586,8 @@ before starting this time-consuming process.</p>
 <div class="paragraph">
 <p>Open a pull request to validate the changes.</p>
 </div>
+<div class="sect2">
+<h3 id="_running_a_maven_release"><a class="anchor" href="#_running_a_maven_release"></a>Running a maven release</h3>
 <div class="paragraph">
 <p>Once merged, it is time for the maven release.</p>
 </div>
@@ -643,6 +645,9 @@ mvn release:perform -Darguments="-Dmaven.javadoc.skip=true -DskipTests -Dskip.ji
 <p>Then visit <a href="https://repository.apache.org/#stagingRepositories">Apache maven repository</a>, go in staging repository, close
 the corresponding artifact before performing the vote.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_voting_procedure"><a class="anchor" href="#_voting_procedure"></a>Voting procedure</h3>
 <div class="paragraph">
 <p>Send the following voting template on the server-dev mailing list to call the vote:</p>
 </div>
@@ -708,12 +713,138 @@ Cheers,
 PMC member name</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_convenience_downloads_for_your_release"><a class="anchor" href="#_convenience_downloads_for_your_release"></a>Convenience downloads for your release</h3>
 <div class="paragraph">
-<p>Once done:
- * Update the downloadable artifacts (/server/app) - to be more detailed soon
- * Deploy website changes
- * Send an announce on server-user
- * Send an Apache foundation wide announce</p>
+<p>Clone this SVN repository: <code><a href="https://dist.apache.org/repos/dist/release/james" class="bare">https://dist.apache.org/repos/dist/release/james</a></code></p>
+</div>
+<div class="paragraph">
+<p>Create a folder for your release:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>mkdir server/3.x.x
+cd server/3.x.x
+svn add .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Move the release zipped data in this folder:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The convenience ZIPs needs to be downloaded from there staged repository. This includes server/app.</p>
+</li>
+<li>
+<p>sources can be obtained from GitHub tag</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I use the following script to set up the uploads:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>% cat /usr/local/bin/auto_sig
+#/bin/bash
+
+# This quick bash scipt intend to help commiters
+# preparing artifacts for SVN upload.
+#
+# Performs:
+#  - Hashing (sha1 + sha512)
+#  - Signing (main)
+#  - Position SVN properties
+#
+# $1: file to prepare
+# $2: Key footprint to use for signing
+
+sha512sum $1 &gt; $1.sha512
+gpg -u $2 --output $1.asc --detach-sig $1
+svn add $1
+svn propset svn:mime-type application/octet-stream $1
+svn add $1.sha512
+svn add $1.asc
+svn propset svn:mime-type application/octet-stream $1.asc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once done it is time to commit! <code>svn commit -m "Upload convenience artifacts for James release 3.x.x"</code></p>
+</div>
+<div class="paragraph">
+<p>The convenience binaries will then be available. Check that the links of the download page works.</p>
+</div>
+<div class="paragraph">
+<p>Cleanup: Only supported release lines should be maintained. Archive the previous release by deleting them from <code>repos/dist/release</code> - the INFRA will automatically move them to archive:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>svn rm 3.5.0
+svn commit -m "Archive James release 3.5.0"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_push_docker_containers"><a class="anchor" href="#_push_docker_containers"></a>Push docker containers</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Docker images are not considered as an official Apache release materials yet the Apache JAMES PMC members decided
+to offer their community with a set of maintained docker images, for convenience.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Docker images includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>apache/james:memory-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/memory" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/memory</a></p>
+</li>
+<li>
+<p>apache/james:jpa-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpa" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpa</a></p>
+</li>
+<li>
+<p>apache/james:demo-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/provisioned" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/provisioned</a></p>
+</li>
+<li>
+<p>apache/james:cassandra-3.x.x build from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra</a></p>
+</li>
+<li>
+<p>apache/james:distributed-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As a committer contact the INFRA and hand them your docker-hub account to get the permission.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_steps"><a class="anchor" href="#_other_steps"></a>Other steps</h3>
+<div class="paragraph">
+<p>Once done:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy website changes</p>
+</li>
+<li>
+<p>Send an announce on server-user</p>
+</li>
+<li>
+<p>Send an Apache foundation wide announce</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>

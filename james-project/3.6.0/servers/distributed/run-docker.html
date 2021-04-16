@@ -526,7 +526,7 @@ It will be configured to run with Cassandra &amp; ElasticSearch.
 All those three components will be started with a single command.</p>
 </div>
 <div class="paragraph">
-<p>You can retrieve the docker-compose file :</p>
+<p>You can retrieve the docker-compose file : ( docker-compose file and james image name should be changed)</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -538,7 +538,7 @@ All those three components will be started with a single command.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ docker-compose up</pre>
+<pre>$ docker-compose up -d</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -550,7 +550,7 @@ james           | Started : true</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ docker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 listdomains</pre>
+<pre>$ docker exec james james-cli -h 127.0.0.1 -p 9999 listdomains</pre>
 </div>
 </div>
 <div class="paragraph">

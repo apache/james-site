@@ -575,7 +575,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d -p "25:25" -p "143:143" -p "127.0.0.1:8000:8000" -v $(pwd)/webadmin.properties:/root/conf/webadmin.properties --name james linagora/james-jpa-sample:3.4.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d -p "25:25" -p "143:143" -p "127.0.0.1:8000:8000" -v $(pwd)/webadmin.properties:/root/conf/webadmin.properties --name james apache/james:demo-3.6.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -616,28 +616,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker exec james java -jar /root/james-cli.jar \
-    -h \&lt;&lt;HOST&gt;&gt; -p \&lt;&lt;PORT&gt;&gt; \&lt;&lt;COMMAND&gt;&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this demo, we are using host 127.0.0.1 and port 9999, so every command looks like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>docker exec james java -jar /root/james-cli.jar \
-    -h 127.0.0.1 -p 9999 \&lt;&lt;COMMAND&gt;&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Host 127.0.0.1 is of course localhost, and the use of port 9999 is completely arbitrary.</p>
-</div>
-<div class="paragraph">
-<p>To make this demo a little easier to use, set this up as a bash script by copying and pasting this script:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">printf '#!/bin/bash\n\ndocker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 $@' &gt;&gt; james ; chmod +x james</code></pre>
+<pre>docker exec james james-cli &lt;&lt;COMMAND&gt;&gt;</pre>
 </div>
 </div>
 </div>
@@ -647,7 +626,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listDomains</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -658,7 +637,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-clivv listUsers</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -669,7 +648,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addDomain test.local</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli addDomain test.local</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -677,7 +656,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-clivv listDomains</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -685,7 +664,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addUser testuser@test.local password</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cliv addUser testuser@test.local password</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -693,7 +672,7 @@ We will create a <code>webadmin.properties</code> file that James will use in or
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listUsers</code></pre>
 </div>
 </div>
 </div>
