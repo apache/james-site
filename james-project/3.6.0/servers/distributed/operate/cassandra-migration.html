@@ -540,20 +540,11 @@ version upon partial failures, that race condition in version upgrades will be i
 <div class="ulist">
 <ul>
 <li>
-<p><strong>From V5 to V6</strong> : Goal is to no longer rely on an UDT partition key for mailboxPath tables. Entries will be migrated
-to mailboxPathV2 table relying on a composite primary key.</p>
-</li>
-<li>
-<p><strong>From V6 to V7</strong> : Goal is to populate mapping_sources projection table. This table allows finding the source of a given redirection, which is
-handy for things like mail aliases (I want to list aliases rewritting things to bob). Without this projection table being available,
-(ie we rely on schema version 6 or less) such information is obtained through a full table scan, unoptimized. From schema version 7,
-the optimized projection can safely be used.</p>
-</li>
-<li>
-<p><strong>From V7 to V8</strong> : Add UID_VALIDITY to mailboxPath table in order not to mandate mailbox table reads.</p>
-</li>
-<li>
 <p><strong>From V8 to V9</strong> : Adopt a more compact representation for message properties.</p>
+</li>
+<li>
+<p><strong>From V9 to V10</strong> : Handles Mailbox ACL transactionality with event-sourcing. We got read of SERIAL consistency upon
+reads thus unlocking a major performance enhancement.</p>
 </li>
 </ul>
 </div>
