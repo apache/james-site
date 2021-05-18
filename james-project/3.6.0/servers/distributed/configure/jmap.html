@@ -568,26 +568,28 @@ This should not be the same keystore than the ones used by TLS based protocols.<
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default value: <a href="http://localhost" class="bare">http://localhost</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">websocket.url.prefix</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. URL for JMAP WebSocket route.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default value: ws://localhost</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">upload.max.size</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configuration max size Upload in new JMAP-RFC-8621.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default value: 30M. Supported units are B (bytes) K (KB) M (MB) G (GB).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">view.email.query.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Should simple Email/query be resolved against a Cassandra projection, or should we resolve them against ElasticSearch?
 This enables a higher resilience, but the projection needs to be correctly populated.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jmap.version.default</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jmap.version.default</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Defaults to draft. Allowed values: draft, rfc-8621.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Which version of the JMAP protocol should be served when none supplied in the Accept header.
-Defaults to draft for legacy reasons (avoid breaking changes) but setting the value to
-rfc-8621 allow compatibility with other third party apps.</p></td>
 </tr>
 </tbody>
 </table>
