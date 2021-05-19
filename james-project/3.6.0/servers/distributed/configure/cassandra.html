@@ -625,6 +625,11 @@ would result in the use of <code>new TokenAwarePolicy(DCAwareRoundRobinPolicy.bu
 This value is useful in a multi-DC Cassandra setup. Be aware of <a href="#../architecture/consistency-model.html#_about_multi_data_center_setups" class="page unresolved">limitation of multi-DC setups for James</a>
 Not specifying this value results in the driver&#8217;s default load balancing policy to be used.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optimistic.consistency.level.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Allows specifying consistency level ONE for reads in Cassandra BlobStore.
+Falls back to default read consistency level if the blob is missing. Defaults to false.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
