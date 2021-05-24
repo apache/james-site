@@ -760,7 +760,7 @@ to the default SMTP protocol. Here is how to achieve this:</p>
 <pre>&lt;lmtpservers&gt;
     &lt;lmtpserver enabled="true"&gt;
         &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
-        &lt;bind&gt;0.0.0.0:0&lt;/bind&gt;
+        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
         &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
         &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
         &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
@@ -768,6 +768,32 @@ to the default SMTP protocol. Here is how to achieve this:</p>
         &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
         &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
             &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
+        &lt;/handlerchain&gt;
+    &lt;/lmtpserver&gt;
+&lt;/lmtpservers&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that by default the mailet container is executed with all recipients at once and do not allow per recipient
+error reporting. An option &lt;code&gt;splitExecution&lt;/code&gt; allow to execute the mailet container for each recipient separately and mitigate this
+limitation at the cost of performance.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;lmtpservers&gt;
+    &lt;lmtpserver enabled="true"&gt;
+        &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
+        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
+        &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
+        &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
+        &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
+        &lt;connectionLimitPerIP&gt;0&lt;/connectionLimitPerIP&gt;
+        &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
+        &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
+            &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
+            &lt;handler class="org.apache.james.lmtpserver.MailetContainerHandler"&gt;
+                &lt;splitExecution&gt;true&lt;/splitExecution&gt;
+            &lt;/handler&gt;
         &lt;/handlerchain&gt;
     &lt;/lmtpserver&gt;
 &lt;/lmtpservers&gt;</pre>
