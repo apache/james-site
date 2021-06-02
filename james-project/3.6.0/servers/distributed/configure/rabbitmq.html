@@ -474,12 +474,9 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../../../3.7.0-SNAPSHOT/index.html">Apache James Server</a>
+      <a class="title" href="../../../index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../3.7.0-SNAPSHOT/index.html">3.7.0-SNAPSHOT Snapshot</a>
-        </li>
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -511,14 +508,7 @@
     <li><a href="rabbitmq.html">rabbitmq.properties</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
-  <div class="version-menu">
-    <a class="version" href="../../../../3.7.0-SNAPSHOT/servers/distributed/configure/rabbitmq.html">3.7.0-SNAPSHOT Snapshot</a>
-    <a class="version is-current" href="rabbitmq.html">3.6.0 Snapshot</a>
-  </div>
-</div>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/configure/rabbitmq.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/rabbitmq.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -532,7 +522,7 @@
 <p>This configuration helps you configure components using RabbitMQ.</p>
 </div>
 <div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/rabbitmq.properties">example</a>
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/rabbitmq.properties">example</a>
 to get some examples and hints.</p>
 </div>
 </div>
@@ -667,21 +657,21 @@ this implementation relies on Cassandra.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mailqueue.view.sliceWindow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">James divides the view into slices, each slice contains data for a given period, sliceWindow parameter controls this period.
 This dividing of periods allows faster browsing of the mail queue. Tips for choosing sliceWindow are explained in
-<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/rabbitmq.properties">rabbitmq.properties</a></p></td>
+<a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/rabbitmq.properties">rabbitmq.properties</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mailqueue.view.bucketCount</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mails in a mail queue are distributed across the underlying storage service.
 BucketCount describes how to be distributing mails to fit with your James setup
 Tips for choosing bucketCount are explained in
-<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/rabbitmq.properties">rabbitmq.properties</a></p></td>
+<a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/rabbitmq.properties">rabbitmq.properties</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mailqueue.view.updateBrowseStartPace</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">To browse, James needs a starting point and to continuously update that point in runtime.
 UpdateBrowseStartPace describes the probability to update the starting point.
 Tips for choosing updateBrowseStartPace are explained in
-<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/rabbitmq.properties">rabbitmq.properties</a></p></td>
+<a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/rabbitmq.properties">rabbitmq.properties</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mailqueue.size.metricsEnabled</p></td>
@@ -690,7 +680,7 @@ As computing the size of the mail queue is currently implemented on top of brows
 sometimes it can get too big, making it impossible for the ES reporter to handle it correctly without crashing.
 It can be useful then to disable it.
 Tips for choosing metricsEnabled are explained in
-<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/rabbitmq.properties">rabbitmq.properties</a></p></td>
+<a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/rabbitmq.properties">rabbitmq.properties</a></p></td>
 </tr>
 </tbody>
 </table>
