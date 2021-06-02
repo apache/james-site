@@ -474,9 +474,12 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../../index.html">Apache James Server</a>
+      <a class="title" href="../../../../3.7.0-SNAPSHOT/index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../3.7.0-SNAPSHOT/index.html">3.7.0-SNAPSHOT Snapshot</a>
+        </li>
+        <li class="version is-current">
           <a href="../../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -508,7 +511,14 @@
     <li><a href="blobstore.html">blobstore.properties</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/blobstore.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version" href="../../../../3.7.0-SNAPSHOT/servers/distributed/configure/blobstore.html">3.7.0-SNAPSHOT Snapshot</a>
+    <a class="version is-current" href="blobstore.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/configure/blobstore.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -533,7 +543,7 @@ James uses the BlobStore for storing blobs which are usually mail contents, atta
 <p>It could be the implementation on top of Cassandra or file storage service S3 compatible like Openstack Swift and AWS S3.</p>
 </div>
 <div class="paragraph">
-<p>Consult <a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/blob.properties">blob.properties</a>
+<p>Consult <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/blob.properties">blob.properties</a>
 in GIT to get some examples and hints.</p>
 </div>
 <div class="sect2">
@@ -587,56 +597,6 @@ If you are upgrading from James 3.5 or older, the deduplication was enabled.
 </td>
 </tr>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_encryption_choice"><a class="anchor" href="#_encryption_choice"></a>Encryption choice</h3>
-<div class="paragraph">
-<p>Data can be optionally encrypted with a symmetric key using AES before being stored in the blobStore. As many user relies
-on third party for object storage, a compromised third party will not escalate to a data disclosure. Of course, a
-performance price have to be paid, as encryption takes resources.</p>
-</div>
-<div class="paragraph">
-<p><strong>encryption.aes.enable</strong> : Optional boolean, defaults to false.</p>
-</div>
-<div class="paragraph">
-<p>If AES encryption is enabled, then the following properties MUST be present:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>encryption.aes.password</strong> : String</p>
-</li>
-<li>
-<p><strong>encryption.aes.salt</strong> : Hexadecimal string</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Once chosen this choice can not be reverted, all the data is either clear or encrypted. Mixed encryption
-is not supported.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Here is an example of how you can generate the above values (be mindful to customize the byte lengths in order to add
-enough entropy.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre># Password generation
-openssl rand -base64 64
-
-# Salt generation
-generate salt with : openssl rand -hex 16</pre>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -716,10 +676,6 @@ Maximum size of stored objects expressed in bytes.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.secretKey</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">S3 access key secret</a></p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.http.concurrency</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allow setting the number of concurrent HTTP requests allowed by the Netty driver.</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -766,7 +722,7 @@ The deleted messages are transformed into a blob and James will export that blob
 <p>This configuration helps you choose the blob exporting mechanism fit with your James setup and it is only applicable with Guice products.</p>
 </div>
 <div class="paragraph">
-<p>Consult <a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/blob.properties">blob.properties</a>
+<p>Consult <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/blob.properties">blob.properties</a>
 in GIT to get some examples and hints.</p>
 </div>
 <div class="paragraph">
@@ -816,7 +772,7 @@ LinShare server and download them.</p>
 <p>This way helps you to share via whole network as long as they can access to LinShare server.</p>
 </div>
 <div class="paragraph">
-<p>To get an example or details explained, visit <a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/blob.properties">blob.properties</a></p>
+<p>To get an example or details explained, visit <a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/blob.properties">blob.properties</a></p>
 </div>
 <div class="paragraph">
 <p><strong>blob.export.linshare.url</strong>: The URL to connect to LinShare</p>
