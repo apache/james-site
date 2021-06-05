@@ -576,15 +576,27 @@ Follow the 'Useful commands' section for more information about James CLI.</p>
 <div class="sect2">
 <h3 id="_requirements"><a class="anchor" href="#_requirements"></a>Requirements</h3>
 <div class="paragraph">
-<p>Built artifacts should be in ./dockerfiles/run/guice/cassandra-rabbitmq/destination folder for cassandra.
-If you haven&#8217;t already:</p>
+<p>Compile the whole project:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>  $ docker build -t james/project dockerfiles/compilation/java-11
-  $ docker run -v $HOME/.m2:/root/.m2 -v $PWD:/origin \
--v $PWD/dockerfiles/run/guice/cassandra-rabbitmq/destination:/cassandra-rabbitmq/destination \
--t james/project -s HEAD</pre>
+<pre>mvn clean install -DskipTests -T 4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then load the distributed server docker image:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>docker load -i server/container/guice/cassandra-rabbitmq-guice/target/jib-image.tar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively we provide convenience distribution for the latest release:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>docker pull apache/james:distributed-3.6.0</pre>
 </div>
 </div>
 </div>
@@ -637,19 +649,11 @@ If you haven&#8217;t already:</p>
 <p>We need to provide the key we will use for TLS. For obvious reasons, this is not provided in this git.</p>
 </div>
 <div class="paragraph">
-<p>Copy your TLS keys to <code>run/guice/cassandra-rabbitmq/destination/conf/keystore</code> or generate it using the following command. The password must be <code>james72laBalle</code> to match default configuration.</p>
+<p>Copy your TLS keys to the current folder or generate it using the following command. The password must be <code>james72laBalle</code> to match default configuration.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ keytool -genkey -alias james -keyalg RSA -keystore dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/keystore</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then we need to build james container :</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$ docker build -t james_run dockerfiles/run/guice/cassandra-rabbitmq</pre>
+<pre>$ keytool -genkey -alias james -keyalg RSA -keystore keystore</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -657,8 +661,9 @@ If you haven&#8217;t already:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre> $ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --link cassandra:cassandra --link rabbitmq:rabbitmq
---link elasticsearch:elasticsearch --link tika:tika --link s3:s3.docker.test --name james_run -t james_run</pre>
+<pre>$ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --link cassandra:cassandra --link rabbitmq:rabbitmq
+     --link elasticsearch:elasticsearch --link tika:tika --link s3:s3.docker.test --name james_run
+     -v $PWD/keystore:/root/conf/keystore -t apache/james:distributed-latest</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -676,11 +681,11 @@ If you haven&#8217;t already:</p>
 Note that the above example assumes <code>127.0.0.1</code> is your loopback interface for convenience but you should change it if this is not the case on your machine.</p>
 </div>
 <div class="paragraph">
-<p>If you want to pass additional options to the underlying java command, you can configure a <em>JVM_OPTIONS</em> env variable, for example add:</p>
+<p>If you want to pass additional options to the underlying java command, you can configure a <em>JAVA_TOOL_OPTIONS</em> env variable, for example add:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>--env JVM_OPTIONS="-Xms256m -Xmx2048m"</pre>
+<pre>--env "JAVA_TOOL_OPTIONS=-Xms256m -Xmx2048m"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -690,13 +695,12 @@ Note that the above example assumes <code>127.0.0.1</code> is your loopback inte
 <div class="sect2">
 <h3 id="_instrumentation"><a class="anchor" href="#_instrumentation"></a>Instrumentation</h3>
 <div class="paragraph">
-<p>You can use Glowroot to instrumentalize James. The provided guice docker files allow a simple way to do it.
-In order to activate Glowroot you need to run the container with the environment variable <em>GLOWROOT_ACTIVATED</em> set to <em>true</em>
-and to expose the glowroot instrumentation ui port.</p>
+<p>You can use <a href="https://glowroot.org/">Glowroot</a> to instrumentalize James. It is packaged as part of the docker distribution to easily enable valuable performances insights.
+Disabled by default, its java agent can easily be enabled:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>--env GLOWROOT_ACTIVATED=true -p "4000:4000"</pre>
+<pre>--env "JAVA_TOOL_OPTIONS=-javaagent:/root/glowroot.jar" -p "4000:4000"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -726,8 +730,9 @@ See the <a href="https://github.com/glowroot/glowroot/wiki/Agent-Installation-(w
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" --link cassandra:cassandra --link rabbitmq:rabbitmq
---link elasticsearch:elasticsearch --link tika:tika --name james_run -t james_run</pre>
+<pre>$ docker run --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --link cassandra:cassandra --link rabbitmq:rabbitmq
+     --link elasticsearch:elasticsearch --link tika:tika --link s3:s3.docker.test --name james_run
+     --link tika:tika -v $PWD/keystore:/root/conf/keystore -t apache/james:distributed-latest</pre>
 </div>
 </div>
 </div>
