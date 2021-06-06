@@ -474,9 +474,12 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../index.html">Apache James Server</a>
+      <a class="title" href="../../../3.7.0/index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
           <a href="../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -506,7 +509,14 @@
     <li><a href="run.html">Run</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/run.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version" href="../../../3.7.0/servers/distributed/run.html">3.7.0 SNAPSHOT</a>
+    <a class="version is-current" href="run.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/run.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -641,6 +651,41 @@ objectstorage.s3.accessKeyId=accessKey1
 objectstorage.s3.secretKey=secretKey1</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_guice_cassandra_rabbitmq_ldap"><a class="anchor" href="#_guice_cassandra_rabbitmq_ldap"></a>Guice-cassandra-rabbitmq-ldap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can follow the same guide to build and run
+guice-cassandra-rabbitmq-s3-ldap artifact, except that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <strong>jar</strong> and <strong>libs</strong> needs to be retrieve from
+server/container/guice/cassandra-rabbitmq-ldap-guice/target after
+compilation</p>
+</li>
+<li>
+<p>The sample configuration can be found in
+<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf</a></p>
+</li>
+<li>
+<p>You need to configure James to be connecting to a running LDAP server.
+The configuration file is located in
+<a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml">dockerfiles/run/guice/cassandra-rabbitmq-ldap/destination/conf/usersrepository.xml</a></p>
+</li>
+<li>
+<p>You can then launch James via this command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-cassandra-rabbitmq-ldap-guice.jar</code></pre>
 </div>
 </div>
 </div>
