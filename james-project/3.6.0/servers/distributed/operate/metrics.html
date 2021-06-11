@@ -474,9 +474,12 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../../index.html">Apache James Server</a>
+      <a class="title" href="../../../../3.7.0/index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
           <a href="../../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -507,7 +510,14 @@
     <li><a href="metrics.html">Metrics</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/metrics.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version" href="../../../../3.7.0/servers/distributed/operate/metrics.html">3.7.0 SNAPSHOT</a>
+    <a class="version is-current" href="metrics.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/operate/metrics.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -526,168 +536,17 @@ for keeping track of some core metrics of James.</p>
 mbean plugins.</p>
 </div>
 <div class="paragraph">
-<p>We also support displaying them via <a href="https://grafana.com/">Grafana</a>. Two methods can be used to back grafana display:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Prometheus metric collection - Data are exposed on a HTTP endpoint for Prometheus scrape.</p>
-</li>
-<li>
-<p>ElasticSearch metric collection - This method is depreciated and will be removed in next version.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_expose_metrics_for_prometheus_collection"><a class="anchor" href="#_expose_metrics_for_prometheus_collection"></a>Expose metrics for Prometheus collection</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Metrics can be exposed over HTTP and made available by using <code>extensions.routes</code> in James <a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/webadmin.adoc">webadmin.properties</a> file:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>extensions.routes=org.apache.james.webadmin.dropwizard.MetricsRoutes</pre>
-</div>
+<p>You can also export the metrics to ElasticSearch and visualize them with <a href="https://grafana.com/">Grafana</a>.
+See <a href="../configure/elasticsearch.html#_exporting_metrics_directly_to_elasticsearch" class="page">elaticseach.properties</a>
+documentation for more details on how to set this up.</p>
 </div>
 <div class="paragraph">
-<p>You can test the result by accessing to:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>http://james_server:8000/metrics</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_james_with_prometheus"><a class="anchor" href="#_running_james_with_prometheus"></a>Running James with Prometheus</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Make the below changes to scrape job config in <code>prometheus.yml</code> to collect the data for Grafana dashboard.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-      # - alertmanager:9093
-
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-scrape_configs:
-  # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'Apache James'
-    scrape_interval: 5s
-    metrics_path: /metrics
-    static_configs:
-      - targets: ['james:8000']</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can download the dashboard json files and use <a href="https://grafana.com/tutorials/provision-dashboards-and-data-sources/">Grafana provision</a> to make the metrics datasource and dashboards available after container creation. [Insert link to Prometheus json files.]</p>
-</div>
-<div class="paragraph">
-<p>Update the <a href="https://github.com/grafana/grafana/blob/master/conf/sample.ini">grafana.ini</a> configuration file in the <code>/etc/grafana/grafana.ini</code> to override default configuration options. You only need to change the provisioning folder path:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>;provisioning = /etc/grafana/provisioning</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Create the provisioning folder tree and copy all the dashboard json files to <code>/provisioning/dashboards/james/</code></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>|-- provisioning
-    |-- dashboards
-        |-- defaults.yml
-        |-- james
-    |-- datasources
-        |-- prometheus_ds.yml
-    |-- notifiers
-    |-- plugins</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Define the folder path for pre-load dashboard json files in <code>defaults.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>apiVersion: 1
-
-providers:
-  - name: Default    # A uniquely identifiable name for the provider
-    folder: Services # The folder where to place the dashboards
-    type: file
-    options:
-      path:  /etc/grafana/provisioning/dashboards/james</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Define the configuration for pre-load Prometheus datasource in <code>prometheus_ds.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>apiVersion: 1
-
-datasources:
-  - name: prometheus
-    type: prometheus
-    url: http://prometheus_server_ip:9090
-    editable: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally define volume mount for <code>grafana.ini</code> and provisioning folder path in <code>docker-compose.yml</code> and start prometheus/grafana montoring stack:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>version: '3'
-
-services:
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes: #Map your provision config to grafana container
-      - /path/to/grafana.ini:/etc/grafana/grafana.ini
-      - /path/to/grafana/provisioning:/etc/grafana/provisioning
-
-  prometheus:
-    image: prom/prometheus:latest
-    restart: unless-stopped
-    ports:
-      - "9090:9090"
-    volumes: #Map your scrape config to prometheus container.
-      - ./conf/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once running, Prometheus datasource and dashboards will be ready on your Grafana. Datasource name should match with the name provided in dashboard json files. Or else you will have to edit Grafana dashboards afterward.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../../_images/preload-dashboards.png" alt="Pre-loaded dashboards">
-</div>
-</div>
-<div class="paragraph">
-<p>*Note: For communication between multiple docker-compose projects, see <a href="https://stackoverflow.com/questions/38088279/communication-between-multiple-docker-compose-projects">here</a> for example. An easier approach is to merge James and Metric docker-compose files together.</p>
+<p>If some metrics seem abnormally slow despite in depth database
+performance tuning, feedback is appreciated as well on the bug tracker,
+the user mailing list or our Gitter channel (see our
+<a href="http://james.apache.org/#second">community page</a>) . Any additional
+details categorizing the slowness are appreciated as well (details of
+the slow requests for instance).</p>
 </div>
 </div>
 </div>
@@ -871,7 +730,7 @@ Latencies for Tika text extraction. Note that this is relevant if this component
 </div>
 </div>
 <div class="sect1">
-<h2 id="_expose_metrics_for_elasticsearch_collection"><a class="anchor" href="#_expose_metrics_for_elasticsearch_collection"></a>Expose metrics for Elasticsearch collection</h2>
+<h2 id="_running_and_configuring_grafana"><a class="anchor" href="#_running_and_configuring_grafana"></a>Running and configuring Grafana</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following command allow you to run a fresh grafana server :</p>
@@ -898,15 +757,7 @@ your ES node - Specify the index name. By default, it should be :</p>
 <p>You then need to enable reporting through ElasticSearch. Modify your
 James ElasticSearch configuration file accordingly. To help you doing
 this, you can take a look to
-<a href="https://github.com/apache/james-project/blob/master/server/container/guice/cassandra-rabbitmq-guice/sample-configuration/elasticsearch.properties">elasticsearch.properties</a>.</p>
-</div>
-<div class="paragraph">
-<p>If some metrics seem abnormally slow despite in depth database
-performance tuning, feedback is appreciated as well on the bug tracker,
-the user mailing list or our Gitter channel (see our
-<a href="http://james.apache.org/#second">community page</a>) . Any additional
-details categorizing the slowness are appreciated as well (details of
-the slow requests for instance).</p>
+<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra/destination/conf/elasticsearch.properties">elasticsearch.properties</a>.</p>
 </div>
 </div>
 </div>
