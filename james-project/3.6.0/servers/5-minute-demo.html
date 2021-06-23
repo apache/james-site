@@ -474,12 +474,9 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../3.7.0/index.html">Apache James Server</a>
+      <a class="title" href="../index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -509,14 +506,7 @@
     <li><a href="5-minute-demo.html">Short Demo</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
-  <div class="version-menu">
-    <a class="version" href="../../3.7.0/servers/5-minute-demo.html">3.7.0 SNAPSHOT</a>
-    <a class="version is-current" href="5-minute-demo.html">3.6.0 Snapshot</a>
-  </div>
-</div>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/5-minute-demo.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/5-minute-demo.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -551,7 +541,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d -p "25:25" -p "143:143" --name james linagora/james-jpa-sample:3.4.0</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d -p "25:25" -p "143:143" --name james apache/james:demo-3.6.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -591,30 +581,9 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker exec james java -jar /root/james-cli.jar \
-    -h \&lt;&lt;HOST&gt;&gt; -p \&lt;&lt;PORT&gt;&gt; \&lt;&lt;COMMAND&gt;&gt;</pre>
+<pre>docker exec james james-cli &lt;&lt;COMMAND&gt;&gt;</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>In this demo, we are using host 127.0.0.1 and port 9999, so every command looks like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>docker exec james java -jar /root/james-cli.jar \
-    -h 127.0.0.1 -p 9999 \&lt;&lt;COMMAND&gt;&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Host 127.0.0.1 is of course localhost, and the use of port 9999 is completely arbitrary.</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>To make this demo a little easier to use, set this up as a bash script by copying and pasting this script:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">printf '#!/bin/bash\n\ndocker exec james java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 $@' &gt;&gt; james ; chmod +x james</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -622,7 +591,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listDomains</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -633,7 +602,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listUsers</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -644,7 +613,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addDomain test.local</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli addDomain test.local</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -652,7 +621,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listDomains</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listDomains</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -660,7 +629,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james addUser testuser@test.local password</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli addUser testuser@test.local password</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -668,7 +637,7 @@ Then you will add a domain, and a user account within that domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./james listUsers</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec james james-cli listUsers</code></pre>
 </div>
 </div>
 <div class="paragraph">
