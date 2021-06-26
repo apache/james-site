@@ -553,7 +553,7 @@ a proxy to review the changes (described here: <a href="http://www.apache.org/de
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ docker build -t james/homepage dockerfiles/site/homepage
+<pre>$ docker build -t james/homepage src/homepage
 $ docker run -v $PWD:/origin -v $PWD/site:/destination james/homepage master</pre>
 </div>
 </div>
@@ -573,7 +573,7 @@ $ docker run -v $PWD:/origin -v $PWD/site:/destination james/homepage master</pr
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ docker build -t james/site dockerfiles/site/website
+<pre>$ docker build -t james/site src/site
 $ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</pre>
 </div>
 </div>
