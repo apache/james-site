@@ -327,6 +327,7 @@
 <li><b>EventDeadLettersHealthCheck</b>: Included in all Guice products.</li>
 <li><b>Guice application lifecycle</b>: included in all Guice products.</li>
 <li><b>JPA Backend</b>: JPA storage. Included in JPA Guice based products.</li>
+<li><b>MailReceptionCheck</b> We rely on a configured user, send an email to him and assert that the email is well received, and can be read within the given configured period. Unhealthy means that the email could not be received before reacing the timeout.</li>
 <li><b>MessageFastViewProjection</b>: included in memory and Cassandra based Guice products. Health check of the component storing JMAP properties which are fast to retrieve. Those properties are computed in advance from messages and persisted in order to archive a better performance. There are some latencies between a source update and its projections updates. Incoherency problems arise when reads are performed in this time-window. We piggyback the projection update on missed JMAP read in order to decrease the outdated time window for a given entry. The health is determined by the ratio of missed projection reads. (lower than 10% causes degraded)</li>
 <li>
 
