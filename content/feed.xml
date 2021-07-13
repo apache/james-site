@@ -24,9 +24,32 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 27 Jun 2021 19:58:22 +0700</pubDate>
-    <lastBuildDate>Sun, 27 Jun 2021 19:58:22 +0700</lastBuildDate>
+    <pubDate>Tue, 13 Jul 2021 09:23:30 +0700</pubDate>
+    <lastBuildDate>Tue, 13 Jul 2021 09:23:30 +0700</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Apache James Mime4J 0.8.5</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce Apache James Mime4J 0.8.5.&lt;/p&gt;
+
+&lt;p&gt;This release mostly enhances performances (dates, base64 encoding, case 
+sensitivity management, …)&lt;/p&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/MIME4J&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The changelog for this release can be seen &lt;a href=&quot;https://github.com/apache/james-mime4j/blob/master/CHANGELOG.md&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 02 Jul 2021 18:16:30 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2021/07/02/mime4j-0.8.5.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2021/07/02/mime4j-0.8.5.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Mime4J 0.8.4</title>
@@ -564,71 +587,6 @@ Antoine&lt;/p&gt;
         <pubDate>Tue, 19 Mar 2019 08:13:22 +0700</pubDate>
         <link>http://james.apache.org/james/update/2019/03/19/mime4j-0.8.3.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2019/03/19/mime4j-0.8.3.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James Server 3.2.0</title>
-        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.2.0 release.&lt;/p&gt;
-
-&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
-
-&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Mail filtering configured via the JMAP protocol&lt;/li&gt;
-  &lt;li&gt;WebAdmin exposed mail re-indexing tasks&lt;/li&gt;
-  &lt;li&gt;WebAdmin exposed health checks. This includes:
-    &lt;ul&gt;
-      &lt;li&gt;Possibility to perform a single healthcheck, thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;Cassandra health checks thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;IMAP MOVE commend (RFC-6851) On top of JPA. Thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;JPA support for Sieve script storage thanks to &lt;a href=&quot;https://github.com/sebast26&quot;&gt;Sebast26&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Sieve script upload via the CLI thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Mailet DOC: Exclude from documentation annotation thanks to &lt;a href=&quot;https://github.com/mschnitzler&quot;&gt;mschnitzler&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;cassandra.pooling.max.queue.size&lt;/strong&gt; configuration option Thanks to &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;RecipentDomainI&lt;/strong&gt; and &lt;strong&gt;SenderDomainIs&lt;/strong&gt; matchers by &lt;a href=&quot;https://github.com/athulyaraj&quot;&gt;athulyaraj&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Multiple libraries updates&lt;/li&gt;
-  &lt;li&gt;Migration from Cassandra 2 to Cassandra 3&lt;/li&gt;
-  &lt;li&gt;Mail::getSender was deprecated. Mail::getMaybeSender offers better Null Sender support. Java 8 default API method was used to not break compatibility.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;deprecated&quot;&gt;Deprecated&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;HBase and JCR components (mailbox and server/data). This will be removed as part of 3.3.0. If you have development skills, and are willing to maintain these components, please reach us.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Drop partially implemented Kafka distributed events&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;third-party-softwares&quot;&gt;Third party softwares&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;SpamAssassin prior 3.4.2 is subject to multiple CVEs. We recommend the upg&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 14 Nov 2018 12:13:22 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2018/11/14/james-3.2.0.html</guid>
         
         
         <category>james</category>
