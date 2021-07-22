@@ -479,9 +479,6 @@
         <li class="version is-current is-latest">
           <a href="../index.html">3.7.0 SNAPSHOT</a>
         </li>
-        <li class="version">
-          <a href="../../3.6.0/index.html">3.6.0 Snapshot</a>
-        </li>
       </ul>
     </li>
     <li class="component">
@@ -508,13 +505,6 @@
     <li><a href="release.html">Creating an official Apache James release</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.7.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="release.html">3.7.0 SNAPSHOT</a>
-    <a class="version" href="../../3.6.0/community/release.html">3.6.0 Snapshot</a>
-  </div>
-</div>
   <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/release.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
@@ -772,7 +762,7 @@ svn add .</code></pre>
 # $2: Key footprint to use for signing
 
 sha512sum $1 &gt; $1.sha512
-gpg -u $2 --output $1.asc --detach-sig $1
+gpg -u $2 --output $1.asc --detach-sig --armor $1
 svn add $1
 svn propset svn:mime-type application/octet-stream $1
 svn add $1.sha512
