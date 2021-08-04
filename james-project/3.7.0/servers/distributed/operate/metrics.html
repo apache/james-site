@@ -479,9 +479,6 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.7.0 SNAPSHOT</a>
         </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
-        </li>
       </ul>
     </li>
     <li class="component">
@@ -510,13 +507,6 @@
     <li><a href="metrics.html">Metrics</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.7.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="metrics.html">3.7.0 SNAPSHOT</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/metrics.html">3.6.0 Snapshot</a>
-  </div>
-</div>
   <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/metrics.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
@@ -554,142 +544,81 @@ mbean plugins.</p>
 <h2 id="_expose_metrics_for_prometheus_collection"><a class="anchor" href="#_expose_metrics_for_prometheus_collection"></a>Expose metrics for Prometheus collection</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Metrics can be exposed over HTTP and made available by using <code>extensions.routes</code> in James <a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/webadmin.adoc">webadmin.properties</a> file:</p>
+<p>To enable James metrics, add <code>extensions.routes</code> to <a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/webadmin.adoc">webadmin.properties</a> file:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>extensions.routes=org.apache.james.webadmin.dropwizard.MetricsRoutes</pre>
+<pre class="highlightjs highlight"><code>extensions.routes=org.apache.james.webadmin.dropwizard.MetricsRoutes</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can test the result by accessing to:</p>
+<p>Connect to james-admin url to test the result:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>http://james_server:8000/metrics</pre>
+<pre>http://james-admin-url/metrics</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running_james_with_prometheus"><a class="anchor" href="#_running_james_with_prometheus"></a>Running James with Prometheus</h2>
+<h2 id="_configure_prometheus_data_source"><a class="anchor" href="#_configure_prometheus_data_source"></a>Configure Prometheus Data source</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Make the below changes to scrape job config in <code>prometheus.yml</code> to collect the data for Grafana dashboard.</p>
+<p>You need to set up <a href="https://prometheus.io/docs/prometheus/latest/getting_started/">Prometheus</a> first to scrape James metrics.<br>
+Add Apache James WebAdmin Url or IP address to <code>prometheus.yaml</code> configuration file:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>global:
-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets:
-      # - alertmanager:9093
-
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-scrape_configs:
+<pre>scrape_configs:
   # The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'Apache James'
+  - job_name: 'WebAdmin url Example'
     scrape_interval: 5s
     metrics_path: /metrics
     static_configs:
-      - targets: ['james:8000']</pre>
+      - targets: ['james-webamin-url']
+  - job_name: 'WebAdmin IP Example'
+    scrape_interval: 5s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['192.168.100.10:8000']</pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connect_prometheus_to_grafana"><a class="anchor" href="#_connect_prometheus_to_grafana"></a>Connect Prometheus to Grafana</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>You can download the dashboard json files and use <a href="https://grafana.com/tutorials/provision-dashboards-and-data-sources/">Grafana provision</a> to make the metrics datasource and dashboards available after container creation. [Insert link to Prometheus json files.]</p>
-</div>
-<div class="paragraph">
-<p>Update the <a href="https://github.com/grafana/grafana/blob/master/conf/sample.ini">grafana.ini</a> configuration file in the <code>/etc/grafana/grafana.ini</code> to override default configuration options. You only need to change the provisioning folder path:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>;provisioning = /etc/grafana/provisioning</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Create the provisioning folder tree and copy all the dashboard json files to <code>/provisioning/dashboards/james/</code></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>|-- provisioning
-    |-- dashboards
-        |-- defaults.yml
-        |-- james
-    |-- datasources
-        |-- prometheus_ds.yml
-    |-- notifiers
-    |-- plugins</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Define the folder path for pre-load dashboard json files in <code>defaults.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>apiVersion: 1
-
-providers:
-  - name: Default    # A uniquely identifiable name for the provider
-    folder: Services # The folder where to place the dashboards
-    type: file
-    options:
-      path:  /etc/grafana/provisioning/dashboards/james</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Define the configuration for pre-load Prometheus datasource in <code>prometheus_ds.yml</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>apiVersion: 1
-
-datasources:
-  - name: prometheus
-    type: prometheus
-    url: http://prometheus_server_ip:9090
-    editable: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally define volume mount for <code>grafana.ini</code> and provisioning folder path in <code>docker-compose.yml</code> and start prometheus/grafana montoring stack:</p>
+<p>You can do this either from <a href="https://prometheus.io/docs/visualization/grafana/">Grafana UI</a> or from a <a href="https://grafana.com/docs/grafana/latest/datasources/prometheus/">configuration file</a>.<br>
+The following <code>docker-compose.yaml</code> will help you install a simple Prometheus/ Grafana stack :</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code>version: '3'
-
-services:
+#Metric monitoring
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
       - "3000:3000"
-    volumes: #Map your provision config to grafana container
-      - /path/to/grafana.ini:/etc/grafana/grafana.ini
-      - /path/to/grafana/provisioning:/etc/grafana/provisioning
 
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
     ports:
       - "9090:9090"
-    volumes: #Map your scrape config to prometheus container.
-      - ./conf/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml</code></pre>
+    volumes:
+      - ./conf/prometheus.yml:/etc/prometheus/prometheus.yml</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_dashboards"><a class="anchor" href="#_getting_dashboards"></a>Getting dashboards</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Once running, Prometheus datasource and dashboards will be ready on your Grafana. Datasource name should match with the name provided in dashboard json files. Or else you will have to edit Grafana dashboards afterward.</p>
+<p>Now that the Promtheus/Grafana servers are up, go to this <a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/">link</a> to get all dashboards JSON file. Import the different JSON files in this directory to Grafana via UI.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -791,91 +720,96 @@ services:
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/BlobStore-1543222647953-dashboard.json">BlobStore</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_BlobStore.json">BlobStore</a> :
 Rates and percentiles for the BlobStore component</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/CacheBlobStore-15911761170000-dashboard.json">BlobStore Cache</a> :
-Hit ratios and percentiles for the BlobStore Cache component. Note that this is relevant if this component is configured.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/Cassandra_driver-1504068385404-dashboard.json">Cassandra driver</a> :
-Exposes some dashboard for the merics collected by the Cassandra driver, like request counts, and percentiles.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/DeletedMessagesVault-1563771591074-dashboard.json">Deleted Message Vault</a> :
-Exposes metrics for the deleted message vault. Note that this is relevant if this component is configured.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/JAMES_DNS_dashboard-1491268903944-dashboard.json">DNS</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_DNS_Dashboard.json">DNS</a> :
 Latencies and query counts for DNS resolution.</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/IMAP_board-1488774825351-dashboard.json">IMAP</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_IMAP_Board.json">IMAP</a> :
 Latencies for the IMAP protocol</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/IMAP_count_board-1488774815587-dashboard.json">IMAP counts</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_IMAP_CountBoard.json">IMAP counts</a> :
 Request counts for the IMAP protocol</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/James_JVM-1504068360629-dashboard.json">JVM</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_JMAP_Board.json">JMAP</a> :
+Latencies for the JMAP protocol</p>
+</li>
+<li>
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_JMAP_CountBoard.json">JMAP counts</a> :
+Request counts for the JMAP protocol</p>
+</li>
+<li>
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_JVM.json">JVM</a> :
 JVM statistics (heap, gcs, etc&#8230;&#8203;)</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MAILET-1490071694187-dashboard.json">Mailets</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_MAILET.json">Mailets</a> :
 Per-mailet execution timings.</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MATCHER-1490071813409-dashboard.json">Matchers</a> :
-Per-matcher execution timings
--https://github.com/apache/james-project/blob/master/grafana-reporting/MailQueue-1490071879988-dashboard.json[MailQueue] :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_MATCHER.json">Matchers</a> :
+Per-matcher execution timings</p>
+</li>
+<li>
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_MailQueue.json">MailQueue</a> :
 MailQueue statistics</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MailboxListeners%20rate-1552903378376.json">MailboxListener rates</a> :
-Mailbox events processing rate</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MailboxListeners-1528958667486-dashboard.json">MailboxListener</a> :
-Mailbox events processing latencies</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MessageFastViewProjection-1575520507952.json">MessageFastViewProjection</a> :
-Hit ratio &amp; latencies for the JMAP Message FastView projection</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/Miscalleneous-1490072265151-dashboard.json">Miscalleneous</a> :
-Collection of various metrics not included in other boards.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/PreDeletionHooks-1553684324244-dashboard.json">PreDeletionHooks</a> :
-Latencies for PreDeletionHooks. Note that this is relevant if this component is configured.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/SMTP_board-1488774774172-dashboard.json">SMTP</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_SMTP_Board.json">SMTP</a> :
 SMTP latencies reports</p>
 </li>
 <li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/SMTP_count_board-1488774761350-dashboard.json">SMTP count</a> :
+<p><a href="https://github.com/apache/james-project/tree/master/server/grafana-reporting/prometheus-datasource/James_SMTP_CountBoard.json">SMTP count</a> :
 Request count for the SMTP protocol</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/SpamAssassin-1522226824255-dashboard.json">SpamAssassin</a> :
-Latencies for SpamAssassin Spam detection and feedback. Note that this is relevant if this component is configured.</p>
-</li>
-<li>
-<p><a href="https://github.com/apache/james-project/blob/master/grafana-reporting/Tika-1522226794419-dashboard.json">Tika</a> :
-Latencies for Tika text extraction. Note that this is relevant if this component is configured.</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_dashboard_samples"><a class="anchor" href="#_dashboard_samples"></a>Dashboard samples</h3>
 <div class="paragraph">
-<p>This is for instance how the JMAP dashboard looks like:</p>
+<p>Latencies for the JMAP protocol<br></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../_images/metrics.png" alt="metrics for the JMAP protocol request latencies">
+<img src="../../_images/JMAP_board.png" alt="JMAP">
+</div>
+</div>
+<div class="paragraph">
+<p>Latencies for the IMAP protocol<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/IMAP_board.png" alt="IMAP">
+</div>
+</div>
+<div class="paragraph">
+<p>JVM Statistics<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/JVM_board.png" alt="JVM">
+</div>
+</div>
+<div class="paragraph">
+<p>BlobStore Statistics<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/BlobStore.png" alt="BlobStore">
+</div>
+</div>
+<div class="paragraph">
+<p>webAdmin Statistics<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/webAdmin.png" alt="webAdmin">
+</div>
 </div>
 </div>
 </div>
