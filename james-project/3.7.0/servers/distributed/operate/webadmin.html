@@ -479,9 +479,6 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.7.0 SNAPSHOT</a>
         </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
-        </li>
       </ul>
     </li>
     <li class="component">
@@ -510,13 +507,6 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.7.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="webadmin.html">3.7.0 SNAPSHOT</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/webadmin.html">3.6.0 Snapshot</a>
-  </div>
-</div>
   <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
@@ -2603,6 +2593,72 @@ leave the currently reIndexed mailbox as partially indexed.</p>
 <p>Warning: While we have been trying to reduce the inconsistency window to
 a maximum (by keeping track of ongoing events), concurrent changes done
 during the reIndexing might be ignored.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_counting_emails"><a class="anchor" href="#_counting_emails"></a>Counting emails</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users/{usernameToBeUsed}/mailboxes/{mailboxName}/messageCount</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will return the total count of messages within the mailbox of that user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The number of emails in a given mailbox</p>
+</li>
+<li>
+<p>400: Invalid mailbox name</p>
+</li>
+<li>
+<p>404: Invalid get on user mailboxes. The <code>usernameToBeUsed</code> or <code>mailboxName</code> does not exit'</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_counting_unseen_emails"><a class="anchor" href="#_counting_unseen_emails"></a>Counting unseen emails</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users/{usernameToBeUsed}/mailboxes/{mailboxName}/unseenMessageCount</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will return the total count of unseen messages within the mailbox of that user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The number of unseen emails in a given mailbox</p>
+</li>
+<li>
+<p>400: Invalid mailbox name</p>
+</li>
+<li>
+<p>404: Invalid get on user mailboxes. The <code>usernameToBeUsed</code> or <code>mailboxName</code> does not exit'</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
