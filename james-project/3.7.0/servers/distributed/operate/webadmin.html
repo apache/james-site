@@ -2672,6 +2672,59 @@ during the reIndexing might be ignored.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_clearing_mailbox_content"><a class="anchor" href="#_clearing_mailbox_content"></a>Clearing mailbox content</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/users/{usernameToBeUsed}/mailboxes/{mailboxName}/messages</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will schedule a task for clearing all the mails in <code>mailboxName</code> mailbox of <code>usernameToBeUsed</code>.</p>
+</div>
+<div class="paragraph">
+<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
+a task</a>.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Corresponding task id is returned.</p>
+</li>
+<li>
+<p>400: Invalid mailbox name</p>
+</li>
+<li>
+<p>404: Invalid get on user mailboxes. The <code>username</code> or <code>mailboxName</code> does not exit</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scheduled task will have the following type <code>ClearMailboxContentTask</code> and
+the following <code>additionalInformation</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+    "mailboxName": "mbx1",
+    "messagesFailCount": 9,
+    "messagesSuccessCount": 10,
+    "timestamp": "2007-12-03T10:15:30Z",
+    "type": "ClearMailboxContentTask",
+    "username": "bob@domain.tld"
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_subscribing_a_user_to_all_of_its_mailboxes"><a class="anchor" href="#_subscribing_a_user_to_all_of_its_mailboxes"></a>Subscribing a user to all of its mailboxes</h3>
 <div class="literalblock">
 <div class="content">
