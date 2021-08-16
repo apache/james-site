@@ -4114,6 +4114,55 @@ more quota for this user:</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_administrating_jmap_uploads"><a class="anchor" href="#_administrating_jmap_uploads"></a>Administrating Jmap Uploads</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_cleaning_upload_repository"><a class="anchor" href="#_cleaning_upload_repository"></a>Cleaning upload repository</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/jmap/uploads?scope=expired</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will schedule a task for clearing expired upload entries.</p>
+</div>
+<div class="paragraph">
+<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
+a task</a>.</p>
+</div>
+<div class="paragraph">
+<p>Query parameter <code>scope</code> is required and have the value <code>expired</code>.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Corresponding task id is returned.</p>
+</li>
+<li>
+<p>400: Scope invalid</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scheduled task will have the following type <code>UploadRepositoryCleanupTask</code> and
+the following <code>additionalInformation</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "scope": "expired",
+  "timestamp": "2007-12-03T10:15:30Z",
+  "type": "UploadRepositoryCleanupTask"
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_administrating_recipient_rewriting"><a class="anchor" href="#_administrating_recipient_rewriting"></a>Administrating Recipient rewriting</h2>
 <div class="sectionbody">
 <div class="sect2">
