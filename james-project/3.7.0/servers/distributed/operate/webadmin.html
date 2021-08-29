@@ -5990,6 +5990,24 @@ short form (<code>h</code>, <code>d</code>, <code>w</code>, etc.), or in the lon
 </div>
 </div>
 <div class="sect1">
+<h2 id="_sending_email_over_webadmin"><a class="anchor" href="#_sending_email_over_webadmin"></a>Sending email over webAdmin</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST /mail-transfer-service
+
+{MIME message}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will send the following email to the recipients specified in the MIME message.</p>
+</div>
+<div class="paragraph">
+<p>The <code>{MIME message}</code> payload must match <code>message/rfc822</code> format.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_event_dead_letter"><a class="anchor" href="#_event_dead_letter"></a>Event Dead Letter</h2>
 <div class="sectionbody">
 <div class="paragraph">
