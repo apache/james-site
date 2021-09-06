@@ -479,6 +479,9 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.7.0 SNAPSHOT</a>
         </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
       </ul>
     </li>
     <li class="component">
@@ -507,6 +510,13 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.7.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="webadmin.html">3.7.0 SNAPSHOT</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/operate/webadmin.html">3.6.0 Snapshot</a>
+  </div>
+</div>
   <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
@@ -4159,6 +4169,77 @@ the following <code>additionalInformation</code>:</p>
 }</pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_blob_garbage_collection"><a class="anchor" href="#_running_blob_garbage_collection"></a>Running blob garbage collection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When deduplication is enabled one needs to explicitly run a garbage collection in order to delete no longer referenced
+blobs.</p>
+</div>
+<div class="paragraph">
+<p>To do so:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http:ip:port/blobs?scope=unreferenced</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#_endpoints_returning_a_task">More details about endpoints returning a task</a>.</p>
+</div>
+<div class="paragraph">
+<p>Additional parameters include Bloom filter tuning parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>associatedProbability</strong>: Allow to define the targeted false positive rate. Note that subsequent runs do not have the
+same false-positives.</p>
+</li>
+<li>
+<p><strong>expectedBlobCount</strong>: Expected count of blobs used to size the bloom filters.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The created task has the following additional information:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "referenceSourceCount": 3456,
+  "blobCount": 5678,
+  "gcedBlobCount": 1234,
+  "bloomFilterExpectedBlobCount": 10000,
+  "bloomFilterAssociatedProbability": 0.01
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>bloomFilterExpectedBlobCount</strong> correspond to the supplied <strong>expectedBlobCount</strong> query parameter.</p>
+</li>
+<li>
+<p><strong>bloomFilterAssociatedProbability</strong> correspond to the supplied <strong>associatedProbability</strong> query parameter.</p>
+</li>
+<li>
+<p><strong>referenceSourceCount</strong> is the count of distinct blob references encountered while populating the bloom filter.</p>
+</li>
+<li>
+<p><strong>blobCount</strong> is the count of blobs tried against the bloom filter. This value can be used to better size the bloom
+filter in later runs.</p>
+</li>
+<li>
+<p><strong>gcedBlobCount</strong> is the count of blobs that were garbage collected.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
