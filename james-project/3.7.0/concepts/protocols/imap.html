@@ -697,7 +697,7 @@ delivered to the IMAP Server via SMTP.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can connect manually to James using the IMAP protocol by opening a
-telnet session.</p>
+openssl session.</p>
 </div>
 <div class="paragraph">
 <p>Requirements:</p>
@@ -708,7 +708,7 @@ telnet session.</p>
 <p>Run the long demo (without stopping)</p>
 </li>
 <li>
-<p>Telnet</p>
+<p>openssl s_client</p>
 </li>
 </ul>
 </div>
@@ -724,7 +724,7 @@ telnet session.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-telnet hljs" data-lang="telnet">$ telnet 127.0.0.1 143
+<pre class="highlightjs highlight"><code class="language-telnet hljs" data-lang="telnet">$ openssl s_client -connect 127.0.0.1:993
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.

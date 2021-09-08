@@ -556,8 +556,9 @@ for TLS 1.0 which, as a result, is sometimes referred to as SSL 3.1.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;tls socketTLS="false" startTLS="false"&gt;
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
   &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;PKCS12&lt;/keystoreType&gt;
   &lt;secret&gt;yoursecret&lt;/secret&gt;
   &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
 &lt;/tls&gt;</pre>
@@ -604,6 +605,19 @@ use of SSL or TLS for the service.</p>
 <div class="paragraph">
 <p>You will now need to create your certificate store and place it in the james/conf/ folder with the name you defined in the keystore tag.</p>
 </div>
+<div class="paragraph">
+<p>Please note <code>JKS</code> keystore format is also supported (default value if no keystore type is specified):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;JKS&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+  &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -618,8 +632,8 @@ use of SSL or TLS for the service.</p>
 <p>(Adapted from the Tomcat 4.1 documentation)</p>
 </div>
 <div class="paragraph">
-<p>James currently operates only on JKS format keystores. This is Java&#8217;s standard "Java KeyStore" format, and is the format
-created by the keytool command-line utility. This tool is included in the JDK.</p>
+<p>James currently operates only on JKS or PKCS12 format keystores. This is Java&#8217;s standard "Java KeyStore" format, and is
+the format created by the keytool command-line utility. This tool is included in the JDK.</p>
 </div>
 <div class="paragraph">
 <p>To import an existing certificate into a JKS keystore, please read the documentation (in your JDK documentation package)
@@ -631,7 +645,7 @@ command line:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>keytool -genkey -alias james -keyalg RSA -keystore your_keystore_filename</pre>
+<pre>keytool -genkey -alias james -keyalg RSA -storetype PKCS12 -keystore your_keystore_filename</pre>
 </div>
 </div>
 <div class="paragraph">
