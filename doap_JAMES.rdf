@@ -17,44 +17,32 @@
     <created>2006-03-14</created>
     <license rdf:resource="http://usefulinc.com/doap/licenses/asl20" />
     <name>Apache JAMES</name>
-    <homepage rdf:resource="http://james.apache.org" />
-    <asfext:pmc rdf:resource="http://james.apache.org" />
-    <shortdesc>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure Java SMTP and POP3 Mail server and NNTP News server. We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols. </shortdesc>
-    <description>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure Java SMTP and POP3 Mail server and NNTP News server. We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols.
+    <homepage rdf:resource="https://james.apache.org" />
+    <asfext:pmc rdf:resource="https://james.apache.org" />
+    <shortdesc>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure Java SMTP, IMAP, JMAP and POP3 Mail server. We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols. </shortdesc>
+    <description>The Apache Java Enterprise Mail Server (a.k.a. Apache James) is a 100% pure Java SMTP, IMAP, JMAP and POP3 Mail server. We have designed James to be a complete and portable enterprise mail engine solution based on currently available open protocols.
 
 James is also a mail application platform. We have developed a Java API to let you write Java code to process emails that we call the mailet API. A mailet can generate an automatic reply, update a database, prevent spam, build a message archive, or whatever you can imagine. A matcher determines whether your mailet should process an email in the server. The James project hosts the Mailet API, and James provides an implementation of this mail application platform API.
+
+Furthermore, we focus on delivering email storage backends easy to administer at scale based on latest available NoSQL technologies.
 </description>
-    <bug-database rdf:resource="http://issues.apache.org/jira/browse/JAMES" />
-    <mailing-list rdf:resource="http://james.apache.org/mail.html" />
-    <download-page rdf:resource="http://james.apache.org/download.cgi" />
-    <programming-language>Java</programming-language>
-    <category rdf:resource="http://projects.apache.org/category/mail" />
-    <category rdf:resource="http://projects.apache.org/category/network-server" />
+    <bug-database rdf:resource="https://issues.apache.org/jira/browse/JAMES" />
+    <mailing-list rdf:resource="https://james.apache.org/mail.html" />
+    <download-page rdf:resource="https://james.apache.org/download.cgi" />
+    <programming-language>Java, Scala</programming-language>
+    <category rdf:resource="https://projects.apache.org/category/mail" />
+    <category rdf:resource="https://projects.apache.org/category/network-server" />
     <release>
       <Version>
         <name>Latest Stable Release</name>
-        <created>2009-08-10</created>
-        <revision>2.3.2</revision>
-      </Version>
-    </release>
-    <release>
-      <Version>
-        <name>Latest Test Build</name>
-        <created>2012-03-02</created>
-        <revision>3.0.beta4</revision>
-      </Version>
-    </release>
-    <release>
-      <Version>
-        <name>Automated Nightly Build</name>
-        <created>nightly</created>
-        <revision>svn trunk</revision>
+        <created>2021-03-16</created>
+        <revision>3.6.0</revision>
       </Version>
     </release>
     <repository>
       <SVNRepository>
-        <location rdf:resource="http://svn.apache.org/repos/asf/james/server/trunk"/>
-        <browse rdf:resource="http://svn.apache.org/viewcvs.cgi/james/server/trunk/"/>
+        <location rdf:resource="https://github.com/apache/james-project/"/>
+        <browse rdf:resource="https://github.com/apache/james-project/"/>
       </SVNRepository>
     </repository>
     <maintainer>
@@ -82,10 +70,10 @@ James is also a mail application platform. We have developed a Java API to let y
       <asfext:url rdf:resource="http://www.ietf.org/rfc/rfc1939.txt"/>
     </asfext:Standard></asfext:implements>
     <asfext:implements><asfext:Standard>
-      <asfext:title>NNTP Protocol </asfext:title>
+      <asfext:title>JMAP protocol for emails</asfext:title>
       <asfext:body>IETF</asfext:body>
-      <asfext:id>RFC 977</asfext:id>
-      <asfext:url rdf:resource="http://www.ietf.org/rfc/rfc977.txt"/>
+      <asfext:id>RFC 8621</asfext:id>
+      <asfext:url rdf:resource="https://datatracker.ietf.org/doc/html/rfc8621"/>
     </asfext:Standard></asfext:implements>
   </Project>
 </rdf:RDF>
