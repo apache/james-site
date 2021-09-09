@@ -579,20 +579,29 @@ This means that a majority of replica are needed for read and write operations t
 <div class="sect3">
 <h4 id="_about_multi_data_center_setups"><a class="anchor" href="#_about_multi_data_center_setups"></a>About multi data-center setups</h4>
 <div class="paragraph">
-<p>As strong consistency is required for some operations, and as lightweight transactions are
-slow across data centers, running James with a
+<p>As strong consistency is required for some operation, especially regarding IMAP monotic UID and MODSEQ generation,
+and as lightweight transactions are slow across data centers, running James with a
 <a href="https://docs.datastax.com/en/ddac/doc/datastax_enterprise/production/DDACmultiDCperWorkloadType.html">multi data-center</a>
 Cassandra setup is discouraged.</p>
 </div>
 <div class="paragraph">
-<p>However <a href="../configure/cassandra.html" class="page">this page</a> enables setting alternative read level,
+<p>However, <a href="../configure/cassandra.html" class="page">this page</a> enables setting alternative read level,
 which could be acceptable regarding limited requirements. <code>LOCAL_QUORUM</code> coupled with <code>LOCAL_SERIAL</code>
-is likely the only scalable setup.</p>
+is likely the only scalable setup. Some options were added to turn off SERIAL consistency usage for message
+and mailbox management. However, the use of Lightweight Transaction cannot be disabled for UIDs and ModSeqs.</p>
 </div>
 <div class="paragraph">
 <p>Running the Distributed Server IMAP server in a multi datacenter setup will likely result either in data loss,
 or very slow operations - as we rely on monotic UID generation, without strong consistency, UIDs could be allocated
-several times. Other protocols, like JMAP, suffer less from such limitations.</p>
+several times.</p>
+</div>
+<div class="paragraph">
+<p>We did wire a multi-DC friendly distributed, POP3 only server that leverages acceptable performance while staying
+consistent. This is achieved by having a reduced feature set - supporting only the POP3 server and using messageIds as
+identifiers (generated without synchronisation using TimeUUIDs). You can find this application
+<a href="https://github.com/apache/james-project/tree/master/server/apps/distributed-pop3-app">on GitHub</a>. In the future,
+JMAP support could be added, but requires followup developments as some components critically depends on UIDs
+(for instance the search).</p>
 </div>
 </div>
 </div>
