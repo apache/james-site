@@ -555,6 +555,29 @@ for TLS 1.0 which, as a result, is sometimes referred to as SSL 3.1.</p>
 </div>
 </div>
 <div class="paragraph">
+<p>Alternatively TLS keys can be supplied via PEM files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An optional secret might be specified for the private key:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Each of these block has an optional boolean configuration element &lt;b&gt;socketTLS&lt;/b&gt; and &lt;b&gt;startTLS&lt;/b&gt; which is used to toggle
 use of SSL or TLS for the service.</p>
 </div>
@@ -611,10 +634,45 @@ use of SSL or TLS for the service.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_creating_your_own_pem_keys"><a class="anchor" href="#_creating_your_own_pem_keys"></a>Creating your own PEM keys</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following commands can be used to create self signed PEM keys:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Generating your private key
+openssl genrsa -des3 -out private.key 2048
+
+# Creating your certificates
+openssl req -new -key private.key -out certs.csr
+
+# Signing the certificate yourself
+openssl x509 -req -days 365 -in certs.csr -signkey private.key -out certs.self-signed.csr
+
+# Removing the password from the private key
+# Not necessary if you supply the secret in the configuration
+openssl rsa -in private.key -out private.nopass.key</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may then supply this TLS configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.nopass.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_certificate_keystores"><a class="anchor" href="#_certificate_keystores"></a>Certificate Keystores</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To use TLS/SSL inside James you will need a certificate keystore.</p>
+<p>This section gives more indication for users relying on keystores.</p>
 </div>
 <div class="sect2">
 <h3 id="_creating_your_own_certificate_keystore"><a class="anchor" href="#_creating_your_own_certificate_keystore"></a>Creating your own Certificate Keystore</h3>
