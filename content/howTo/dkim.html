@@ -111,143 +111,151 @@
 
     <!-- Introduction -->
     <section id="intro" class="main special">
-        <div class="">
-            <div class="content align-left">
-                <header class="major">
-                    <h1><b>Setting up SPF</b></h1>
-                </header>
+      <div class="">
+        <div class="content align-left">
+            <header class="major">
+                <h1><b>What is a DKIM Record?</b></h1>
+            </header>
 
-                <p>
-                    You just finished installing a <a href="imap-server.html">James IMAP server</a> and wonder how to
-                    gain trust for it?
-                </p>
+            <p>
+              DKIM (DomainKeys Identified Mail) is an email security standard designed to make sure messages aren’t altered in transit between the sending and recipient servers.                   
+            </p>
 
-                <p>
-                    The Sender Policy Framework (SPF) is an open standard specifying a technical method to prevent
-                    sender address forgery. It might help you to do this.
-                </p>
+            <p>
+              It uses public-key cryptography to sign email with a private key as it leaves a sending server. 
+              Recipient servers then use a public key published to a domain’s DNS to verify the source of the message, and that the body of the message hasn’t changed during transit. 
+            </p>
 
-                <p>
-                    More precisely, SPF protects the envelope sender address, which is used for the delivery of messages.
-                    It allows the owner of a domain to specify their mail sending policy, e.g. which mail servers they
-                    use to send emails from their domain.
-                </p>
+            <p>
+              Once the signature is verified with the public key by the recipient server, the message passes the DKIM check and is considered authentic.
+            </p>
 
-                <p>
-                    To correctly configure SPF for your domain, you need to answer the following questions:
-                </p>
+            <p>
+              The process of setting up DKIM can be split into the following steps:
+            </p>
 
-                <ul>
-                    <li><b>From what server or servers will email from my domain originate?</b> In our case, we only
-                        want our James Server to be able to send emails from our domain.</li>
-                    <li><b>How do you want illegitimate email to be handled?</b> <code>-all</code> is an SPF fail and
-                        usually means dropping such emails, whereas <code>~all</code> is an SPF softfail and traditionally
-                        means accepting but marking them.</li>
-                </ul>
+            <ul>
+                <li>Choose a DKIM selector.</li>
+                <li>Generate a public-private key pair.</li>
+                <li>Publish the selector and public key by creating a DKIM TXT record.</li>
+                <li>Attach the token to each outgoing email.</li>
+            </ul>
 
-                <p>
-                    Therefore, we add the following DNS records to our DNS zone file:
-                </p>
-
-                <pre><code>@ IN TXT “v=spf1 +a:james.test-domain.com -all”
-@ IN SPF “v=spf1 +a:james.test-domain.com -all”</code></pre>
-
-                <p>That way other mail servers know only <i>james.test-domain.com</i> can send mails for <i>test-domain.com</i>.</p>
+            <p>
+              Before we begin, you might wonder what is a DKIM selector?
+            </p>
+            <p>
+              In short, a selector is specified as an attribute for a DKIM signature and is recorded in the DKIM-Signature header field. 
+              A selector can be anything you want, such as a word, number, or a string of letters and numbers.
+          </p>
+          <p>
+            For example, if you choose <code>james3</code> for your selector, the DKIM record name would become <code>james3._domainkey</code>
+          </p>
 
 
-                <header class="major">
-                    <h1><b>Verifying SPF for incoming emails</b></h1>
-                </header>
+            <header class="major">
+                <h1><b>Generate RSA Key Pair for DKIM</b></h1>
+            </header>
 
-                <p>
-                    Now we will see how to verify SPF records of incoming emails. For this we can customize mail processing,
-                    and specify actions upon SPF record validity. For introducing these components, James relies on the
-                    <a href="https://james.apache.org/jspf/">JSPF</a> library.
-                </p>
+            <p>
+              You can use tools such as <code>openssl</code> or <code>ssh-keygen</code> to generate RSA keys.
+            </p>
+            <p>
+             Please note that 1024 bit DKIM is still the standard. If you want to feel safer with 2048-bit RSA, check with your DNS provider and see what length of DKIM key is supported because they need to match.
+            </p>
+            <p>Generate a 1024 bit RSA Key:</p>    
+            <code>$ openssl genrsa -out private.pem 1024</code>
 
-                <p>We just need to edit the <code>mailetcontainer.xml</code> configuration file as follow:</p>
+            <p>Export the RSA Public Key to a file:</p>
+            <code>$ openssl rsa -in private.pem -outform PEM -pubout -out public.pem</code>
+            <p>Both generated files are base64-encoded encryption keys in plain text format:</p>
 
-                <p>We are going to create a new processor called <b>SPFProcessor</b>. It will handle emails after
-                    the <b>root</b> processor but before the <b>transport</b> processor. Moreover, we do not need to
-                    perform a SPF check or take a decision if the sender is authenticated or is a local user, because
-                    we already trust him.
+            <pre><code>-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQCxMwUfjQbppE2EK4T2IDuiLRvZ4opSwJwxani/5Ii5VbqMQRfo
+edUMuczK5qKJuIupTnh9AhJfaAsGUSruCVlGYXq6bqfak3XGHGu4s0rAXRM6Y3us
+gy8RyxfWQqtYbEZPIwkLGPbPeIh2t8s3mL9fD9+tpO5H1Kc+9MBTMm7qnQIDAQAB
+AoGATyl52nSIaAyMzMUca1BPE86PKLG6FeoSXUkxlJimNBYGdu4Fnkf/U+YVhXev
+mVMmoYZ68W3hg1nZwwKz6Q+oH7iBk+AJRQlDQmdNuqBS5epKQpIk77w6J+Nd2HCa
+wLXnt5wtDcusIV+HvznKi/yEt+oq29BbyY2CjAUYtR57wEECQQDhs71D4M8su6hv
+bBbif1V/4m62ChkSZRnD7T2rCxzqLoe3Qe6W9hwysDjYMAtq3pA7mjMYyTqrx8sJ
+RWcVSaf5AkEAyPx63vEKS38QPYyiesuJqqrnTeVlnPInedEmJmI6Rz5cWISosvNz
+/QjHzTqOT1fXfskbhutg1/mDarsHnH/oxQJBAJjH/cdUB4nlYehCx978iRjvYzgQ
+79XW4DETiBofhKw1YSM5G1PPN1lMlr4pD6GBFStzf0E4/mFH9nXJKDVtzakCQQCG
+OQ75ijHc31uCL0RnCzzB7GaSf+tPV+yDDukSYzEWWRAk0Vs0Px+r0UxVw5A8bqZs
+dnPas6C2O1zHT2Yy3r0dAkBECZDJaFhADFPSex8UrUrIidJaz8NLdyDiuwXKjc/c
+AmlLQXKntU4M5EIE6jz0Gf1ivw06pvTDOCDWlDxJRvf8
+-----END RSA PRIVATE KEY-----</code></pre>
+            <pre><code>
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCxMwUfjQbppE2EK4T2IDuiLRvZ
+4opSwJwxani/5Ii5VbqMQRfoedUMuczK5qKJuIupTnh9AhJfaAsGUSruCVlGYXq6
+bqfak3XGHGu4s0rAXRM6Y3usgy8RyxfWQqtYbEZPIwkLGPbPeIh2t8s3mL9fD9+t
+pO5H1Kc+9MBTMm7qnQIDAQAB
+-----END PUBLIC KEY-----
+           </code></pre>
 
-                    In all other cases, we add a SPF header using the <b>SPF</b> mailet. Then we need to take a decision
-                    about incoming emails. We use the <b>HasMailAttributeWithValue</b> matcher which has seven possible
-                    values to handle in the case of SPF: <b>permerror</b>, <b>temperror</b>, <b>none</b>, <b>pass</b>,
-                    <b>neutral</b>, <b>fail</b> and <b>softfail</b>. What action you choose for each of these values
-                    depends on what you want to do. In our case, we redirect SPF errors and fails to the <b>error</b>
-                    processor, whereas all other cases lead directly to the <b>transport</b> processor for further
-                    normal processing. We are rather tolerant since we authorize <b>softfails</b>.</p>
+           <p>Beside above steps, online tools such as <a href="https://www.sparkpost.com/resources/tools/dkim-wizard/">DKIM Wizard</a> can help you easily create a public and private key pair to be used for DomainKeys and DKIM signing. </p>
 
-                <p>For example:</p>
+           
+           <header class="major">
+            <h1><b>Create DKIM TXT record</b></h1>
+          </header>
+            <p>Log in your Domain Control Panel and create a TXT Record:</p>
 
-                <pre><code>[...]
+        <pre><code>Record Type: TXT Record
+Host Name: james3._domainkey
+Text: v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNAD[...Your Public Key...]
+</code></pre>
 
+<h1><b>Configure DKIMSign mailet</b></h1>
+
+<p>Lastly, you need to add a maillet to the <code>mailetcontainer.xml</code> in the /conf file of Apache James.</p>
+
+
+
+<pre><code>[...]
 &lt;processors>
-&lt;processor state="root" enableJmx="true">
-&lt;mailet match="All" class="PostmasterAlias"/>
-&lt;mailet match="RelayLimit=30" class="Null"/>
-&lt;mailet match="All" class="ToProcessor"&gt;
-  &lt;processor&gt;SPFProcessor&lt;/processor>
-&lt;/mailet&gt;
-&lt;/processor>
-
-&lt;processor state="error" enableJmx="true">
-[...]
-&lt;/processor>
-
-&lt;processor state="SPFProcessor">
-&lt;mailet match="SenderIsLocal" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="SMTPAuthSuccessful" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="All" class="SPF"&gt;
-  &lt;addHeader&gt;true&lt;/addHeader&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, permerror" class="ToProcessor"&gt;
-  &lt;processor&gt;error&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, temperror" class="ToProcessor"&gt;
-  &lt;processor&gt;error&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, none" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, pass" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, neutral" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, fail" class="ToProcessor"&gt;
-  &lt;processor&gt;error&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="HasMailAttributeWithValue=org.apache.james.transport.mailets.spf.result, softfail" class="ToProcessor"&gt;
-  &lt;processor&gt;transport&lt;/processor&gt;
-&lt;/mailet&gt;
-&lt;mailet match="All" class="LogMessage"&gt;
-  &lt;headers&gt;true&lt;/headers&gt;
-  &lt;body&gt;false&lt;/body&gt;
-  &lt;comment&gt;Unknown SPF result&lt;/comment&gt;
-&lt;/mailet&gt;
+  &lt;processor state="relay" enableJmx="true">
+    &lt;mailet match="All" class="org.apache.james.jdkim.mailets.DKIMSign"&gt;
+      &lt;signatureTemplate>v=1; s=james3; d=domain.example.com ; h=from : reply-to : subject : date : to : cc : resent-date : resent-from : resent-sender : resent-to : resent-cc : in-reply-to : references : list-id : list-help : list-unsubscribe : list-subscribe : list-post : list-owner : list-archive; a=rsa-sha256; bh=; b=;&lt;/signatureTemplate&gt;
+      &lt;privateKey>
+      -----BEGIN RSA PRIVATE KEY-----
+      [Your Private Key]
+      -----END RSA PRIVATE KEY-----
+      &lt;/privateKey&gt;
+    &lt;mailet&gt;
+  &lt;/processor&gt;
 &lt;/processor&gt;
-
 [...]</code></pre>
-<p>
-  Finished configuring SPF ? Go check our guide for  <a href="dkim.html">configuring DKIM Record</a>.
-</p>
-            </div>
-            <footer class="major">
-                <ul class="actions align-center">
-                    <li><a href="index.html" class="button">go back to other how-adasdasdetos</a></li>
-                </ul>
-            </footer>
-        </div>
+
+<h1><b>Verifying DKIM Record</b></h1>
+<p>To query the DKIM key, you will have to know the DKIM selector:</p>
+
+<pre><code>$ dig txt james3._domainkey.domain.example.com
+; <<>> DiG 9.16.1-Ubuntu <<>> txt james3._domainkey.domain.example.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39673
+;; flags: qr rd ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;james3._domainkey.domain.example.com IN TXT
+
+;; ANSWER SECTION:
+james3._domainkey.domain.example.com. 0 IN TXT "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNAD[...Your Public Key...]"
+[...]</code></pre>
+</div>
 
 
+
+</div>
+<footer class="major">
+<ul class="actions align-center">
+    <li><a href="index.html" class="button">go back to other how-tos</a></li>
+</ul>
+</footer>
+</section>
 </div>
 
 
