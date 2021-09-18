@@ -402,7 +402,13 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/logging.html">Logging in Apache James</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -2883,6 +2889,38 @@ transform it a in plain text message with the first text part found.</p>
 </li>
 <li>
 <p>text/* as is.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_manage_sieve_scripts_via_a_mailet"><a class="anchor" href="#_manage_sieve_scripts_via_a_mailet"></a>Manage Sieve scripts via a mailet</h3>
+<div class="paragraph">
+<p>Each user can manage his SIEVE scripts through the <code>ManageSieveMailet</code> mailet.</p>
+</div>
+<div class="paragraph">
+<p>To use the manage SIEVE mailet :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need to create the user sievemanager@DOMAIN ( if you don&#8217;t, the SMTP server will check the domain, recognize it, and look for an absent local user, and will generate an error ).</p>
+</li>
+<li>
+<p>You can send Manage Sieve commands by mail to sievemanager@DOMAIN. Your subject must contain the command. Scripts need to be added as attachments and need the ".sieve" extension.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To activate a script for a user, you need the following combination :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>PUTSCRIPT scriptname</p>
+</li>
+<li>
+<p>SETACTIVE scriptname</p>
 </li>
 </ul>
 </div>
