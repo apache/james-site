@@ -24,9 +24,37 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Sep 2021 10:04:13 +0700</pubDate>
-    <lastBuildDate>Tue, 21 Sep 2021 10:04:13 +0700</lastBuildDate>
+    <pubDate>Sun, 26 Sep 2021 20:56:00 +0700</pubDate>
+    <lastBuildDate>Sun, 26 Sep 2021 20:56:00 +0700</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Apache James Mime4J 0.8.6</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce Apache James Mime4J 0.8.6&lt;/p&gt;
+
+&lt;p&gt;This release mostly enhances performances:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;MIME4J-306 MimeUtil::unfold should group char appends (#52)&lt;/li&gt;
+  &lt;li&gt;MIME4J-305 ContentUtil::decode can avoid using StringBuilder (#51)&lt;/li&gt;
+  &lt;li&gt;MIME4J-304 DecoderUtil::decodeEncodedWords without REGEXP (#50)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/MIME4J&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The changelog for this release can be seen &lt;a href=&quot;https://github.com/apache/james-mime4j/blob/master/CHANGELOG.md&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 26 Sep 2021 18:16:30 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2021/09/26/mime4j-0.8.6.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2021/09/26/mime4j-0.8.6.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Getting Apache James to serve 1M+ digital mailboxes of all Estonian residents </title>
@@ -524,70 +552,6 @@ Antoine&lt;/p&gt;
         <pubDate>Fri, 30 Aug 2019 15:09:47 +0700</pubDate>
         <link>http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James Server 3.3.0</title>
-        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.3.0 release.&lt;/p&gt;
-
-&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
-
-&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Metrics for BlobStore&lt;/li&gt;
-  &lt;li&gt;New Guice product using Cassandra RabbitMQ ElasticSearch, OpenStack Swift and optional LDAP dependency (experimental)&lt;/li&gt;
-  &lt;li&gt;JPA SMTP dockerFile contributed by &lt;a href=&quot;https://github.com/matzepan&quot;&gt;matzepan&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Listing healthchecks, thanks to &lt;a href=&quot;https://github.com/kratostaine&quot;&gt;Madhu Bhat&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Configuring the ElasticSearch clusterName&lt;/li&gt;
-  &lt;li&gt;Logging and Metrics now supports Elasticsearch 6 (previously only Elasticsearch 2 was supported)&lt;/li&gt;
-  &lt;li&gt;Implementation of the RabbitMQ EventBus&lt;/li&gt;
-  &lt;li&gt;DeadLetter APIs and memory implementation for storing events that failed delivery&lt;/li&gt;
-  &lt;li&gt;RecipientRewriteTable Aliases and associated WebAdmin routes&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;fixed&quot;&gt;Fixed&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;MAILBOX-350 Potential invalid UID &amp;lt;-&amp;gt; MSN mapping upon IMAP COPY&lt;/li&gt;
-  &lt;li&gt;Possibility to better zoom in Grafana boards&lt;/li&gt;
-  &lt;li&gt;default ElasticSearch shards &amp;amp; replica configured values&lt;/li&gt;
-  &lt;li&gt;Move &amp;amp; copy batch sizes are now loaded from configuration&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;WebAdmin ReIndexing API had been reworked&lt;/li&gt;
-  &lt;li&gt;MailboxListener and mailbox event system were reworked. Custom listeners will need to be adapted. Please see Upgrade instuctions.&lt;/li&gt;
-  &lt;li&gt;Docker images are now using a JRE instead of a JDK&lt;/li&gt;
-  &lt;li&gt;Replacement of the old mailbox event system with the EventBus&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Drop HBase and JCR components (mailbox and server/data).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;third-party-softwares&quot;&gt;Third party softwares&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Tika prior 1.20 is subject to multiple CVEs. We recommend the upgrade&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 26 Mar 2019 15:09:47 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2019/03/26/james-3.3.0.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2019/03/26/james-3.3.0.html</guid>
         
         
         <category>james</category>
