@@ -474,9 +474,12 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../../../index.html">Apache James Server</a>
+      <a class="title" href="../../../../3.7.0/index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
           <a href="../../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -507,7 +510,14 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+    <a class="version is-current" href="webadmin.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -1882,49 +1892,6 @@ still be indexed).</p>
      "mailboxId": "1",
       "uids": [1, 36]
    }]
-}</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_create_missing_parent_mailboxes"><a class="anchor" href="#_create_missing_parent_mailboxes"></a>Create missing parent mailboxes</h5>
-<div class="paragraph">
-<p>Will schedule a task for creating all the missing parent mailboxes in a hierarchical mailbox tree, which is the result
-of a partially failed rename operation of a child mailbox.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST http://ip:port/mailboxes?task=createMissingParents</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type <code>createMissingParents</code> and the following <code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "type":"createMissingParents"
-  "created": ["1", "2" ],
-  "totalCreated": 2,
-  "failures": [],
-  "totalFailure": 0
 }</pre>
 </div>
 </div>
