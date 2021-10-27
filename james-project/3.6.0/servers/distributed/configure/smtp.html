@@ -473,10 +473,21 @@
     <span class="version">3.6.0 Snapshot</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <a class="title" href="../../../index.html">Apache James Server</a>
+    <li class="component">
+      <a class="title" href="../../../../../james-distributed-app/3.7.0/index.html">Apache James Distributed Server</a>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.7.0/index.html">3.7.0 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../../../../3.7.0/index.html">Apache James Server</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
           <a href="../../../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -508,7 +519,14 @@
     <li><a href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/smtp.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
+    <a class="version is-current" href="smtp.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/configure/smtp.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -747,57 +765,6 @@ to get some examples and hints.</p>
 </div>
 <div class="paragraph">
 <p>By default, it is deactivated. You can activate it alongside SMTP and bind for example on port 24.</p>
-</div>
-<div class="paragraph">
-<p>The default LMTP server stores directly emails in user mailboxes, without further treatment.</p>
-</div>
-<div class="paragraph">
-<p>However we do ship an alternative handler chain allowing to execute the mailet container, thus achieving a behaviour similar
-to the default SMTP protocol. Here is how to achieve this:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;lmtpservers&gt;
-    &lt;lmtpserver enabled="true"&gt;
-        &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
-        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
-        &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
-        &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
-        &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
-        &lt;connectionLimitPerIP&gt;0&lt;/connectionLimitPerIP&gt;
-        &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
-        &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
-            &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
-        &lt;/handlerchain&gt;
-    &lt;/lmtpserver&gt;
-&lt;/lmtpservers&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that by default the mailet container is executed with all recipients at once and do not allow per recipient
-error reporting. An option &lt;code&gt;splitExecution&lt;/code&gt; allow to execute the mailet container for each recipient separately and mitigate this
-limitation at the cost of performance.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;lmtpservers&gt;
-    &lt;lmtpserver enabled="true"&gt;
-        &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
-        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
-        &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
-        &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
-        &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
-        &lt;connectionLimitPerIP&gt;0&lt;/connectionLimitPerIP&gt;
-        &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
-        &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
-            &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
-            &lt;handler class="org.apache.james.lmtpserver.MailetContainerHandler"&gt;
-                &lt;splitExecution&gt;true&lt;/splitExecution&gt;
-            &lt;/handler&gt;
-        &lt;/handlerchain&gt;
-    &lt;/lmtpserver&gt;
-&lt;/lmtpservers&gt;</pre>
-</div>
 </div>
 </div>
 </div>
