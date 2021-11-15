@@ -1159,6 +1159,35 @@ If you want to update a user&#8217;s password, please have a look at <strong>Upd
 </div>
 </div>
 <div class="sect2">
+<h3 id="_verifying_a_user_password"><a class="anchor" href="#_verifying_a_user_password"></a>Verifying a user password</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/users/usernameToBeUsed/verify \
+  -d '{"password":"passwordToBeVerified"}' \
+  -H "Content-Type: application/json"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: The user&#8217;s password was correct</p>
+</li>
+<li>
+<p>401: Wrong password or user does not exist</p>
+</li>
+<li>
+<p>400: The user name or the payload is invalid</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This intentionally treats non-existing users as unauthenticated, to prevent a username oracle attack.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_testing_a_user_existence"><a class="anchor" href="#_testing_a_user_existence"></a>Testing a user existence</h3>
 <div class="literalblock">
 <div class="content">

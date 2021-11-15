@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; usersrepository.xml :: Apache James</title>
+    <title>Distributed James Server &mdash; jvm.properties :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -209,7 +209,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="4">
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
   </li>
 </ul>
@@ -343,123 +343,26 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Apache James Distributed Server</a></li>
-    <li><a href="../index.html">Distributed James Application</a></li>
-    <li><a href="index.html">Configuration</a></li>
-    <li>Core components</li>
-    <li><a href="usersrepository.html">usersrepository.xml</a></li>
+    <li><a href="jvm.html">Distributed James Server &mdash; jvm.properties</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/usersrepository.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/jvm.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; usersrepository.xml</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">Distributed James Server &mdash; jvm.properties</h1>
 <div class="paragraph">
-<p>User repositories are required to store James user information and authentication data.</p>
+<p>This file may contain any additional system properties for tweaking JVM execution. When you normally would add a command line option <code>-Dmy.property=whatever</code>, you can put it in this file as <code>my.property=whatever</code> instead. These properties will be added as system properties on server start.</p>
 </div>
 <div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/usersrepository.xml">example</a>
-to get some examples and hints.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_the_user_data_model"><a class="anchor" href="#_the_user_data_model"></a>The user data model</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>A user has two attributes: username and password.</p>
+<p>Note that in some rare cases this might not work,
+when a property affects very early JVM start behaviour.</p>
 </div>
 <div class="paragraph">
-<p>A valid user should satisfy these criteria:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>username and password cannot be null or empty</p>
-</li>
-<li>
-<p>username should not be longer than 255 characters</p>
-</li>
-<li>
-<p>username can not contain '/'</p>
-</li>
-<li>
-<p>username can not contain multiple domain delimiter('@')</p>
-</li>
-<li>
-<p>A username can have only a local part when virtualHosting is disabled. E.g.'myUser'</p>
-</li>
-<li>
-<p>When virtualHosting is enabled, a username should have a domain part, and the domain part should be concatenated
-after a domain delimiter('@'). E.g. '<a href="mailto:myuser@james.org">myuser@james.org</a>'</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>A user is always considered as lower cased, so 'myUser' and 'myuser' are the same user, and can be used as well as
-recipient local part than as login for different protocols.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. usersrepository.xml content</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enableVirtualHosting</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false. Add domain support for users (default: false, except for Cassandra Users Repository)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">administratorId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">user&#8217;s name. Allow a user to access to the <a href="https://tools.ietf.org/html/rfc4616#section-2">impersonation command</a>,
-acting on the behalf of any user.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">verifyFailureDelay</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Delay after a failed authentication attempt with an invalid user name or password. Duration string defaulting to seconds, e.g. <code>2</code>, <code>2s</code>, <code>2000ms</code>. Default <code>0s</code> (disabled).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_a_ldap"><a class="anchor" href="#_configuring_a_ldap"></a>Configuring a LDAP</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Alternatively you can authenticate your users against a LDAP server. You need to configure
-the properties for accessing your LDAP server in this file.</p>
-</div>
-<div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/usersrepository.xml">example</a>
-to get some examples and hints.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;repository name="LocalUsers" class="org.apache.james.user.ldap.ReadOnlyUsersLDAPRepository" ldapHost="ldap://myldapserver:389"
-    principal="uid=ldapUser,ou=system" credentials="password" userBase="ou=People,o=myorg.com,ou=system" userIdAttribute="uid"/&gt;;</pre>
-</div>
-</div>
-</div>
+<p>For testing purposes, you may specify a different file path via the command line option <code>-Dextra.props=/some/other/jvm.properties</code>.</p>
 </div>
 </article>
   </div>
