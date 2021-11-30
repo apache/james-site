@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; SMTP Hooks :: Apache James</title>
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script>var uiRootPath = '../../../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.7.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#mail/messages/index.adoc">mail/messages/index.adoc</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/imf.adoc">mail/messages/imf.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/mime.adoc">mail/messages/mime.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="elasticsearch.html">elasticsearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/logging.html">Logging in Apache James</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.7.0 SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../../../index.html">Apache James Server</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.7.0 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../../james-site/latest/index.html">Apache James Site</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../../distributed.html">Distributed</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Protocols</li>
+    <li><a href="smtp-hooks.html">Packaged SMTP hooks</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/smtp-hooks.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; SMTP Hooks</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This documentation page lists and documents SMTP hooks that can be used within the
+Distributed Server SMTP protocol stack in order to customize the way your SMTP server
+behaves with out of the box components.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dnsrblhandler"><a class="anchor" href="#_dnsrblhandler"></a>DNSRBLHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This command handler check against <a href="https://www.wikiwand.com/en/Domain_Name_System-based_Blackhole_List">RBL-Lists</a>
+(Real-time Blackhole List).</p>
+</div>
+<div class="paragraph">
+<p>If getDetail is set to true it try to retrieve information from TXT Record
+why the ip was blocked. Default to false.</p>
+</div>
+<div class="paragraph">
+<p>before you enable out the DNS RBL handler documented as an example below,
+please take a moment to review each block in the list.
+We have included some that various JAMES committers use,
+but you must decide which, if any, are appropriate
+for your environment.</p>
+</div>
+<div class="paragraph">
+<p>The mail servers hosting
+@apache.org mailing lists, for example, use a
+slightly different list than we have included below.
+And it is likely that most JAMES committers also have
+slightly different sets of lists.</p>
+</div>
+<div class="paragraph">
+<p>The SpamAssassin user&#8217;s list would be one good place to discuss the
+measured quality of various block lists.</p>
+</div>
+<div class="paragraph">
+<p>NOTA BENE: the domain names, below, are terminated
+with '.' to ensure that they are absolute names in
+DNS lookups.  Under some circumstances, names that
+are not explicitly absolute could be treated as
+relative names, leading to incorrect results.  This
+has been observed on *nix and MS-Windows platforms
+by users of multiple mail servers, and is not JAMES
+specific.  If you are unsure what this means for you,
+please speak with your local system/network admins.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.DNSRBLHandler"&gt;
+        &lt;getDetail&gt;false&lt;/getDetail&gt;
+        &lt;rblservers&gt;
+            &lt;whitelist&gt;query.bondedsender.org.&lt;/whitelist&gt;
+            &lt;blacklist&gt;sbl-xbl.spamhaus.org.&lt;/blacklist&gt;
+            &lt;blacklist&gt;dul.dnsbl.sorbs.net.&lt;/blacklist&gt;
+            &lt;blacklist&gt;list.dsbl.org.&lt;/blacklist&gt;
+        &lt;/rblservers&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dsn_hooks"><a class="anchor" href="#_dsn_hooks"></a>DSN hooks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Distributed server has optional support for DSN (<a href="https://tools.ietf.org/html/rfc3461">RFC-3461</a>)</p>
+</div>
+<div class="paragraph">
+<p>Please read carefully <a href="dsn.html" class="page">this page</a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;smtpserver enabled="true"&gt;
+    &lt;...&gt; &lt;!-- The rest of your SMTP configuration, unchanged --&gt;
+    &lt;handlerchain&gt;
+        &lt;handler class="org.apache.james.smtpserver.dsn.DSNEhloHook"/&gt;
+        &lt;handler class="org.apache.james.smtpserver.dsn.DSNMailParameterHook"/&gt;
+        &lt;handler class="org.apache.james.smtpserver.dsn.DSNRcptParameterHook"/&gt;
+        &lt;handler class="org.apache.james.smtpserver.dsn.DSNMessageHook"/&gt;
+        &lt;...&gt; &lt;!-- other handlers, like: --&gt;
+        &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt; &lt;!-- for instance --&gt;
+    &lt;/handlerchain&gt;
+&lt;/smtpserver&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that a specific configuration of <a href="mailetcontainer.html" class="page">mailetcontainer.xml</a> is
+required as well to be spec compliant.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mailpriorityhandler"><a class="anchor" href="#_mailpriorityhandler"></a>MailPriorityHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This handler can add a hint to the mail which tells the MailQueue which email should get processed first.</p>
+</div>
+<div class="paragraph">
+<p>Normally the MailQueue will just handles Mails in FIFO manner.</p>
+</div>
+<div class="paragraph">
+<p>Valid priority values are 1,5,9 where 9 is the highest.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.MailPriorityHandler"&gt;
+        &lt;priorityEntries&gt;
+            &lt;priorityEntry&gt;
+               &lt;domain&gt;yourdomain1&lt;/domain&gt;
+               &lt;priority&gt;1&lt;/priority&gt;
+            &lt;/priorityEntry&gt;
+            &lt;priorityEntry&gt;
+               &lt;domain&gt;yourdomain2&lt;/domain&gt;
+               &lt;priority&gt;9&lt;/priority&gt;
+            &lt;/priorityEntry&gt;
+        &lt;priorityEntries&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_maxrcpthandler"><a class="anchor" href="#_maxrcpthandler"></a>MaxRcptHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If activated you can limit the maximal recipients.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.MaxRcptHandler"&gt;
+        &lt;maxRcpt&gt;10&lt;/maxRcpt&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pop3beforesmtphandler"><a class="anchor" href="#_pop3beforesmtphandler"></a>POP3BeforeSMTPHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This connect handler can be used to enable POP3 before SMTP support.</p>
+</div>
+<div class="paragraph">
+<p>Please note that only the ip get stored to identify an authenticated client.</p>
+</div>
+<div class="paragraph">
+<p>The expireTime is the time after which an ipAddress is handled as expired.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered as unsupported.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.POP3BeforeSMTPHandler"&gt;
+        &lt;expireTime&gt;1 hour&lt;/expireTime&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resolvableehlohelohandler"><a class="anchor" href="#_resolvableehlohelohandler"></a>ResolvableEhloHeloHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Checks for resolvable HELO/EHLO before accept the HELO/EHLO.</p>
+</div>
+<div class="paragraph">
+<p>If checkAuthNetworks is set to true sender domain will be checked also for clients that
+are allowed to relay. Default is false.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.ResolvableEhloHeloHandler"/&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reverseequalsehlohelohandler"><a class="anchor" href="#_reverseequalsehlohelohandler"></a>ReverseEqualsEhloHeloHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Checks HELO/EHLO is equal the reverse of the connecting client before accept it
+If checkAuthNetworks is set to true sender domain will be checked also for clients that
+are allowed to relay. Default is false.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.ReverseEqualsEhloHeloHandler"/&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setmimeheaderhandler"><a class="anchor" href="#_setmimeheaderhandler"></a>SetMimeHeaderHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This handler allows you to add mime headers to the processed mails.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.SetMimeHeaderHandler"&gt;
+        &lt;headername&gt;SPF-test&lt;/headername&gt;
+        &lt;headervalue&gt;passed&lt;/headervalue&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spamassassinhandler"><a class="anchor" href="#_spamassassinhandler"></a>SpamAssassinHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This MessageHandler could be used to check message against spamd before
+accept the email. So its possible to reject a message on smtplevel if a
+configured hits amount is reached.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.SpamAssassinHandler"&gt;
+        &lt;spamdHost&gt;127.0.0.1&lt;/spamdHost&gt;
+        &lt;spamdPort&gt;783&lt;/spamdPort&gt;
+        &lt;spamdRejectionHits&gt;10&lt;/spamdRejectionHits&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spfhandler"><a class="anchor" href="#_spfhandler"></a>SPFHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This command handler can be used to reject emails with not match the SPF record of the sender domain.</p>
+</div>
+<div class="paragraph">
+<p>If checkAuthNetworks is set to true sender domain will be checked also for clients that
+are allowed to relay. Default is false.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.SPFHandler"&gt;
+        &lt;blockSoftFail&gt;false&lt;/blockSoftFail&gt;
+        &lt;blockPermError&gt;true&lt;/blockPermError&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_urirblhandler"><a class="anchor" href="#_urirblhandler"></a>URIRBLHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This MessageHandler could be used to extract domain out of the message and check
+this domains against uriRbllists. See <a href="http://www.surbl.org" class="bare">http://www.surbl.org</a> for more information.
+The message get rejected if a domain matched.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered experimental.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.URIRBLHandler"&gt;
+        &lt;action&gt;reject&lt;/action&gt;
+        &lt;getDetail&gt;true&lt;/getDetail&gt;
+        &lt;uriRblServers&gt;
+            &lt;server&gt;multi.surbl.org&lt;/server&gt;
+        &lt;/uriRblServers&gt;
+    &lt;/handler&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_validrcpthandler"><a class="anchor" href="#_validrcpthandler"></a>ValidRcptHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With ValidRcptHandler, all email will get rejected which has no valid user.</p>
+</div>
+<div class="paragraph">
+<p>You need to add the recipient to the validRecipient list if you want
+to accept email for a recipient which not exist on the server.</p>
+</div>
+<div class="paragraph">
+<p>If you want James to act as a spamtrap or honeypot, you may comment ValidRcptHandler
+and implement the needed processors in spoolmanager.xml.</p>
+</div>
+<div class="paragraph">
+<p>This handler should be considered stable.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.ValidRcptHandler"/&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_validsenderdomainhandler"><a class="anchor" href="#_validsenderdomainhandler"></a>ValidSenderDomainHandler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If activated mail is only accepted if the sender contains
+a resolvable domain having a valid MX Record or A Record associated!</p>
+</div>
+<div class="paragraph">
+<p>If checkAuthNetworks is set to true sender domain will be checked also for clients that
+are allowed to relay. Default is false.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.fastfail.ValidSenderDomainHandler"/&gt;
+&lt;/handlerchain&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

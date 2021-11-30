@@ -473,21 +473,10 @@
     <span class="version">3.6.0 Snapshot</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <a class="title" href="../../../james-distributed-app/3.7.0/index.html">Apache James Distributed Server</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../james-distributed-app/3.7.0/index.html">3.7.0 SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <a class="title" href="../../3.7.0/index.html">Apache James Server</a>
+      <a class="title" href="../index.html">Apache James Server</a>
       <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../3.7.0/index.html">3.7.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
@@ -516,14 +505,7 @@
     <li><a href="release.html">Creating an official Apache James release</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
-  <div class="version-menu">
-    <a class="version" href="../../3.7.0/community/release.html">3.7.0 SNAPSHOT</a>
-    <a class="version is-current" href="release.html">3.6.0 Snapshot</a>
-  </div>
-</div>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/community/pages/release.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/release.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -531,6 +513,8 @@
 </aside>
 <article class="doc">
 <h1 class="page">Creating an official Apache James release</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>Read details about <a href="http://www.apache.org/dev/publishing-maven-artifacts.html">Publishing Maven releases to Maven Central Repository</a></p>
 </div>
@@ -566,6 +550,302 @@
 <div class="content">
 <pre>$ ssh people.apache.org
 $ cd /www/www.apache.org/dist/james</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_release_cheat_sheet"><a class="anchor" href="#_release_cheat_sheet"></a>Release cheat sheet</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First, discuss your intention to perform a release on server-dev mailing list, to ensure a consensus would be reached
+before starting this time-consuming process.</p>
+</div>
+<div class="paragraph">
+<p>Then you can prepare the release materials:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure the <code>CHANGELOG.md</code> and <code>upgrade-instructions.md</code> files are up to date.</p>
+</li>
+<li>
+<p>Freeze your version in it and initiate a new iteration.</p>
+</li>
+<li>
+<p>Write a blog post within <code>/src/homepage/_post</code> about your release.</p>
+</li>
+<li>
+<p>Update the documentation website <code>/docs</code>, <code>src/site</code>, and <code>README.md</code> to point to your new release.</p>
+</li>
+<li>
+<p>Update the <code>/dockerfiles</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Open a pull request to validate the changes.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_a_maven_release"><a class="anchor" href="#_running_a_maven_release"></a>Running a maven release</h3>
+<div class="paragraph">
+<p>Once merged, it is time for the maven release.</p>
+</div>
+<div class="paragraph">
+<p>Set up your maven configuration in <code>~/.m2/settings.xml</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&lt;settings&gt;
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;apache.snapshots.https&lt;/id&gt;
+      &lt;username&gt;apacheId&lt;/username&gt;
+      &lt;password&gt;xxxxxx&lt;/password&gt;
+    &lt;/server&gt;
+    &lt;!-- To stage a release of some part of Maven --&gt;
+    &lt;server&gt;
+      &lt;id&gt;apache.releases.https&lt;/id&gt;
+      &lt;username&gt;apacheId&lt;/username&gt;
+      &lt;password&gt;xxxxxxxx&lt;/password&gt;
+    &lt;/server&gt;
+    &lt;server&gt;
+      &lt;id&gt;svn.apache.org&lt;/id&gt;
+      &lt;username&gt;apacheId&lt;/username&gt;
+      &lt;password&gt;xxxxxx&lt;/password&gt;
+    &lt;/server&gt;
+
+  &lt;/servers&gt;
+&lt;/settings&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ensure that released branch HEAD have a clean green build on the CI.</p>
+</div>
+<div class="paragraph">
+<p>Run these commands to perform a release, from the master branch:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn clean install -DskipTests -Djib.skip -Dmaven.javadoc.skip=true -T 4
+
+mvn deploy -DskipTests -Dskip.jib -Dmaven.javadoc.skip=true -T 8
+
+mvn release:clean
+
+mvn release:prepare -Darguments="-Dmaven.javadoc.skip=true -DskipTests -Dskip.jib" -DautoVersionSubmodules=true
+
+mvn release:perform -Darguments="-Dmaven.javadoc.skip=true -DskipTests -Dskip.jib" -DautoVersionSubmodules=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Failure to react when being prompted for git or GPG credentials might abort the release. GPG agent with a reasonable session time can be used to unlock the key before hand and reduce this risk.</p>
+</div>
+<div class="paragraph">
+<p>Then visit <a href="https://repository.apache.org/#stagingRepositories">Apache maven repository</a>, go in staging repository, close
+the corresponding artifact before performing the vote.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_voting_procedure"><a class="anchor" href="#_voting_procedure"></a>Voting procedure</h3>
+<div class="paragraph">
+<p>Send the following voting template on the server-dev mailing list to call the vote:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Subject: Call for vote: Apache James x.x.x
+
+Hi,
+
+I would like to propose a new vote for x.x.x release of the Apache James server.
+
+You can find:
+
+ - The maven release staged in repository.apache.org as the
+artifact #xxx:
+https://repository.apache.org/content/repositories/orgapachejames-xxx/
+ - The changelog for
+x.x.x:
+https://github.com/apache/james-project/blob/master/CHANGELOG.md
+ - The compatibility instructions/upgrade
+recommendation:
+https://github.com/apache/james-project/blob/master/upgrade-instructions.md#360-version
+
+[You can comment on major changes ]
+
+Voting rules:
+ - This is a majority approval: this release may not be vetoed.
+ - A quorum of 3 binding votes is required
+ - The vote starts at XXXXXX xxxth of xxxxx xxxx, xxxx UTC+x
+ - The vote ends at XXXXXX xxxth of xxxxx xxxx, xxxx UTC+x
+
+You can answer to it just with +1 and -1. Down-votes may be motivated.
+
+3 binding votes are expected move forward on this release.
+
+Cheers,
+
+PMC member name</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After the voting period, do the voting aftermaths. Reply in the voting thread:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Hi all,
+
+I am happy to announce you the vote for the x.x.x release did succeed.
+
+The release received X positive votes, X of them being binding.
+
+Thanks to all contributors, developers and committers who made this
+possible!
+
+In the coming hours, I will finalize the release process, namely:
+
+- Publish the maven artifacts
+- Upgrade the download page and the (old) website
+- Announce the release
+
+Cheers,
+
+PMC member name</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_convenience_downloads_for_your_release"><a class="anchor" href="#_convenience_downloads_for_your_release"></a>Convenience downloads for your release</h3>
+<div class="paragraph">
+<p>Clone this SVN repository: <code><a href="https://dist.apache.org/repos/dist/release/james" class="bare">https://dist.apache.org/repos/dist/release/james</a></code></p>
+</div>
+<div class="paragraph">
+<p>Create a folder for your release:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>mkdir server/3.x.x
+cd server/3.x.x
+svn add .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Move the release zipped data in this folder:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The convenience ZIPs needs to be downloaded from there staged repository. This includes server/app.</p>
+</li>
+<li>
+<p>sources can be obtained from GitHub tag</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I use the following script to set up the uploads:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>% cat /usr/local/bin/auto_sig
+#/bin/bash
+
+# This quick bash scipt intend to help commiters
+# preparing artifacts for SVN upload.
+#
+# Performs:
+#  - Hashing (sha1 + sha512)
+#  - Signing (main)
+#  - Position SVN properties
+#
+# $1: file to prepare
+# $2: Key footprint to use for signing
+
+sha512sum $1 &gt; $1.sha512
+gpg -u $2 --output $1.asc --detach-sig $1
+svn add $1
+svn propset svn:mime-type application/octet-stream $1
+svn add $1.sha512
+svn add $1.asc
+svn propset svn:mime-type application/octet-stream $1.asc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once done it is time to commit! <code>svn commit -m "Upload convenience artifacts for James release 3.x.x"</code></p>
+</div>
+<div class="paragraph">
+<p>The convenience binaries will then be available. Check that the links of the download page works.</p>
+</div>
+<div class="paragraph">
+<p>Cleanup: Only supported release lines should be maintained. Archive the previous release by deleting them from <code>repos/dist/release</code> - the INFRA will automatically move them to archive:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>svn rm 3.5.0
+svn commit -m "Archive James release 3.5.0"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_push_docker_containers"><a class="anchor" href="#_push_docker_containers"></a>Push docker containers</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Docker images are not considered as an official Apache release materials yet the Apache JAMES PMC members decided
+to offer their community with a set of maintained docker images, for convenience.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Docker images includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>apache/james:memory-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/memory" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/memory</a></p>
+</li>
+<li>
+<p>apache/james:jpa-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpa" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/jpa</a></p>
+</li>
+<li>
+<p>apache/james:demo-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/provisioned" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/provisioned</a></p>
+</li>
+<li>
+<p>apache/james:cassandra-3.x.x build from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra</a></p>
+</li>
+<li>
+<p>apache/james:distributed-3.x.x built from <a href="https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq" class="bare">https://github.com/apache/james-project/tree/master/dockerfiles/run/guice/cassandra-rabbitmq</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As a committer contact the INFRA and hand them your docker-hub account to get the permission.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_steps"><a class="anchor" href="#_other_steps"></a>Other steps</h3>
+<div class="paragraph">
+<p>Once done:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy website changes</p>
+</li>
+<li>
+<p>Send an announce on server-user</p>
+</li>
+<li>
+<p>Send an Apache foundation wide announce</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </article>
