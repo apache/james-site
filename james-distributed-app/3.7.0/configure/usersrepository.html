@@ -437,7 +437,9 @@ acting on the behalf of any user.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">algorithm</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">use a specific hash algorithm to compute passwords, with optional mode <code>plain</code> (default) or <code>salted</code>; e.g. <code>SHA-512</code> (default),  <code>SHA-512/plain</code>, <code>SHA-512/salted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">use a specific hash algorithm to compute passwords, with optional mode <code>plain</code> (default) or <code>salted</code>; e.g. <code>SHA-512</code>,  <code>SHA-512/plain</code>, <code>SHA-512/salted</code>, <code>PBKDF2</code> (default).
+Note: When using <code>PBKDF2</code> one can specify the iteration count and the key size in bytes. You can specify it as part of the algorithm. EG: <code>PBKDF2-2000-512</code> will use
+2000 iterations with a key size of 512 bytes.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hashingMode</p></td>
