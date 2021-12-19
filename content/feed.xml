@@ -24,9 +24,75 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Nov 2021 15:25:03 +0700</pubDate>
-    <lastBuildDate>Fri, 12 Nov 2021 15:25:03 +0700</lastBuildDate>
+    <pubDate>Sun, 19 Dec 2021 10:22:54 +0700</pubDate>
+    <lastBuildDate>Sun, 19 Dec 2021 10:22:54 +0700</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Apache James Server 3.6.1</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.6.1 release.&lt;/p&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Serverc&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;announcements&quot;&gt;Announcements&lt;/h2&gt;
+
+&lt;p&gt;[More announcements to follow this release]&lt;/p&gt;
+
+&lt;h2 id=&quot;release-changelog&quot;&gt;Release changelog&lt;/h2&gt;
+
+&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
+&lt;h3 id=&quot;fixed&quot;&gt;Fixed&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;JAMES-3676 Avoid S3 connection leaks&lt;/li&gt;
+  &lt;li&gt;JAMES-3477 Mail::duplicate did lead to file leak in various places&lt;/li&gt;
+  &lt;li&gt;JAMES-3646 Sanitize some File based components
+    &lt;ul&gt;
+      &lt;li&gt;Prevent directory traversal on top of maildir mailbox (#659)&lt;/li&gt;
+      &lt;li&gt;FileMailRepository shoud reject URL outside of James root&lt;/li&gt;
+      &lt;li&gt;SieveFileRepository should validate underlying files belong to its root&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;JAMES-1862 Generalize STARTTLS sanitizing fix&lt;/li&gt;
+  &lt;li&gt;JAMES-1862 Prevent Session fixation via STARTTLS&lt;/li&gt;
+  &lt;li&gt;JAMES-3634 + JAMES-3635 Apply fuzzing to Apache James
+    &lt;ul&gt;
+      &lt;li&gt;Upgrade PrefixedRegex to RE2J&lt;/li&gt;
+      &lt;li&gt;Fuzzed input throws String out of bound exception for FETCH&lt;/li&gt;
+      &lt;li&gt;Prevent String OutOfBoundException for IMAP APPEND&lt;/li&gt;
+      &lt;li&gt;Prevent infinite loop for IMAP STATUS command parser&lt;/li&gt;
+      &lt;li&gt;Prevent infinite loop for IMAP APPEND command parser&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;JAMES-3571 MimeMessageWrapper getSize was incorrect for empty messages&lt;/li&gt;
+  &lt;li&gt;JAMES-3525 verifyIdentity should not fail on null sender&lt;/li&gt;
+  &lt;li&gt;JAMES-3556 Fix JMAP eventUrl s/closeAfter/closeafter/&lt;/li&gt;
+  &lt;li&gt;JAMES-3432 JMAP Uploads could alter the underlying byte source&lt;/li&gt;
+  &lt;li&gt;JAMES-3537 (Email/set create should allow to attach mails)&lt;/li&gt;
+  &lt;li&gt;JAMES-3558 JMAP Email/changes: When created + updated return both&lt;/li&gt;
+  &lt;li&gt;JAMES-3558 JMAP Email/changes: moves should be considered as updates&lt;/li&gt;
+  &lt;li&gt;JAMES-3557 Changes collectors should be ordered&lt;/li&gt;
+  &lt;li&gt;JAMES-3277 Distinct uids before calling toRanges&lt;/li&gt;
+  &lt;li&gt;JAMES-3434 Refactoring: EmailSubmissionSetMethod should not rely on nested clases&lt;/li&gt;
+  &lt;li&gt;JAMES-3557 JMAP */changes: Increase default maxChanges 5 -&amp;gt; 256&lt;/li&gt;
+  &lt;li&gt;JAMES-3557 */changes: Fail explicitly when too much entries on a single change&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;improvements&quot;&gt;Improvements&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;JAMES-3261 ZIP packaging for Guice Apps&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Thu, 02 Dec 2021 06:16:30 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2021/12/02/james-3.6.1.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2021/12/02/james-3.6.1.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Mime4J 0.8.6</title>
@@ -524,34 +590,6 @@ repository. This avoids exposing messages via webAdmin. Messages previously stor
         <pubDate>Thu, 05 Sep 2019 20:16:30 +0700</pubDate>
         <link>http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</link>
         <guid isPermaLink="true">http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James `latest` Docker images changes</title>
-        <description>&lt;p&gt;We have decided to change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latest&lt;/code&gt; Docker images behaviour.&lt;/p&gt;
-
-&lt;p&gt;Until nowadays, such images were built on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; branch for each products (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linagora/james-memory&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linagora/james-cassandra-rabbitmq-ldap-project&lt;/code&gt;, …).&lt;br /&gt;
-This is not the way &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latest&lt;/code&gt; docker image should be, this &lt;a href=&quot;https://blog.container-solutions.com/docker-latest-confusion&quot;&gt;blog post&lt;/a&gt; is explaining this kind of misunderstood.&lt;/p&gt;
-
-&lt;p&gt;So we decided to follow the global Docker users behaviour which is to clone the &lt;em&gt;latest stable release&lt;/em&gt; as the Docker &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latest&lt;/code&gt; images.&lt;/p&gt;
-
-&lt;p&gt;For those of you who are willing to use a Docker image on top of the master branch, you can use the newly created &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch-master&lt;/code&gt; tag,&lt;br /&gt;
-which is published on each merge on the master branch.&lt;/p&gt;
-
-&lt;p&gt;NB: you should not use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latest&lt;/code&gt; image in a production deployment, otherwise you are at risk of jumping from one major release to another unexpectedly.&lt;/p&gt;
-
-&lt;p&gt;Thanks for reading,
-Antoine&lt;/p&gt;
-</description>
-        <pubDate>Fri, 30 Aug 2019 15:09:47 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2019/08/30/latest-image-changes.html</guid>
         
         
         <category>james</category>
