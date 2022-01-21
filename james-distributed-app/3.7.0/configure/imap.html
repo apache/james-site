@@ -360,6 +360,8 @@
 </aside>
 <article class="doc">
 <h1 class="page">Distributed James Server &mdash; imapserver.xml</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/imapserver.xml">example</a>
 to get some examples and hints.</p>
@@ -435,6 +437,22 @@ Whether to enable Authentication PLAIN if the connection is not encrypted via SS
 <td class="tableblock halign-left valign-top"><p class="tableblock">true or false. Defaults to <code>true</code>. Whether to require SSL to authenticate. If this is required, the IMAP server will disable authentication on unencrypted channels.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.oidcConfigurationURL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provide OIDC url address for information to user. Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.jwksURL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provide url to get OIDC&#8217;s JSON Web Key Set to validate user token. Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.claim</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Claim string uses to identify user. E.g: "email_address". Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.scope</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth scope that is valid to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">timeout</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default to 30 minutes. After this time, inactive channels that have not performed read, write, or both operation for a while
 will be closed. Negative value disable this behaviour.</p></td>
@@ -489,6 +507,19 @@ will use the specified value.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oidc_setup"><a class="anchor" href="#_oidc_setup"></a>OIDC setup</h3>
+<div class="paragraph">
+<p>James IMAP support XOAUTH2 authentication mechanism which allow authenticating against a OIDC providers.
+Please configure <code>auth.oidc</code> part to use this.</p>
+</div>
+<div class="paragraph">
+<p>We do supply an <a href="https://github.com/apache/james-project/tree/master/examples/oidc">example</a> of such a setup.
+It uses the Keycloak OIDC provider, but usage of similar technologies is definitely doable.</p>
+</div>
+</div>
 </article>
   </div>
 </main>
