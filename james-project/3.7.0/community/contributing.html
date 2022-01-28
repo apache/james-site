@@ -388,14 +388,11 @@
 <li>
 <p><a href="https://issues.apache.org/jira/browse/JDKIM">jDKIM</a></p>
 </li>
-<li>
-<p><a href="https://issues.apache.org/jira/browse/HUPA">Hupa</a></p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Once you are logged on the appropriate JIRA page, click on the red Create button, then complete the different fields
-as accurately as possible, so that any user can reproduce the reported bug. Also note that all your information must be
+as accurately as possible, so that any user can reproduce the reported bug. Also, note that all your information must be
 readable (use markdown).</p>
 </div>
 <div class="paragraph">
@@ -441,8 +438,46 @@ which will be automatically published via gitpubsub to <a href="http://james.apa
 </div>
 </div>
 <div class="sect1">
+<h2 id="_idea_or_design_proposals"><a class="anchor" href="#_idea_or_design_proposals"></a>Idea or design proposals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>People can submit ideas, features or design changes proposals by discussing it through the
+<a href="mailing-lists.html" class="page">mailing lists</a>.</p>
+</div>
+<div class="paragraph">
+<p>Structuring design changes are tracked by <a href="https://github.com/joelparkerhenderson/architecture-decision-record">ADRs</a>
+(Architecture Decision Records). A discussion on the mailing list getting a consensus of the community can be the object
+of the writing of an ADR to confirm the change agreed upon. The Project Member Committee will take care of maintaining such
+records but anyone should feel free to help on such a task by proposing ADRs related to his work.</p>
+</div>
+<div class="paragraph">
+<p>ADRs <strong>MUST</strong> be submitted under the folder <code>src/adr</code> via a pull request. The standards used for writing an ADR are
+described in the <a href="https://github.com/apache/james-project/blob/master/src/adr/0001-record-architecture-decisions.md">first ADR</a>
+written for the Apache James project.</p>
+</div>
+<div class="paragraph">
+<p>The number of the ADR should be incremental. If another ADR gets merged concurrently, the committer is responsible for
+updating its number accordingly.</p>
+</div>
+<div class="paragraph">
+<p>When the ADR reaches a consensus within the community and is accepted, it can be merged and goes into effect.</p>
+</div>
+<div class="paragraph">
+<p>An ADR can&#8217;t be removed after being accepted and merged. However, a new ADR can supersede a previous one. This is so
+we are able to keep track on all the decisions being made regarding the project.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_how_to_contribute_some_code"><a class="anchor" href="#_how_to_contribute_some_code"></a>How to contribute some code?</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>We encourage discussions prior code contributions on the <a href="mailing-lists.html" class="page">mailing lists</a>. For significant design
+changes the writing of <a href="#_idea_or_design_proposals">ADRs</a> is encouraged.</p>
+</div>
+<div class="paragraph">
+<p>Your code contribution <strong>must</strong> be backed by a <a href="#_reporting_bugs">JIRA ticket</a>.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -453,12 +488,15 @@ which will be automatically published via gitpubsub to <a href="http://james.apa
 <p>Create your branch and name it with the JIRA ticket number.</p>
 </li>
 <li>
-<p>Create a Pull Request with your branch name and prefix its different commits with the same name.</p>
+<p>Create a Pull Request on Github with your branch name and prefix its different commits with the same name.</p>
+</li>
+<li>
+<p>A build will be started for your work on the <a href="https://ci-builds.apache.org/job/james/job/ApacheJames/">Apache CI</a>.</p>
+</li>
+<li>
+<p>Active contributors will review your work, and merge it.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>Alternatively you can create a patch as <a href="#_code_patches">outlined below</a>, and attach it to the JIRA ticket.</p>
 </div>
 <div class="paragraph">
 <p>A valid commit comment might be:</p>
@@ -469,6 +507,9 @@ which will be automatically published via gitpubsub to <a href="http://james.apa
 
 Here is some more details about what my commit does, and the rationals of the choice I took.</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Alternatively you can create a patch as <a href="#_code_patches">outlined below</a>, and attach it to the JIRA ticket.</p>
 </div>
 <div class="sect2">
 <h3 id="_licenses"><a class="anchor" href="#_licenses"></a>Licenses</h3>
@@ -505,35 +546,15 @@ Here is some more details about what my commit does, and the rationals of the ch
 than none, please consider these guidelines to help us to assimilate your contribution.</p>
 </div>
 <div class="paragraph">
-<p>Submissions to the James project must follow the coding conventions outlined in this document. James developers are
-asked to follow coding conventions already present in the code. (For example, if the existing code has the bracket on
-the same line as the if statement, then all subsequent code should also follow that convention.) Anything not explicitly
-mentioned in this document should adhere to the official
-<a href="https://www.oracle.com/java/technologies/javase/codeconventions-contents.html">Java Coding Conventions</a>.</p>
+<p>Submissions to the James project must follow the coding conventions outlined in the
+<a href="https://github.com/apache/james-project/blob/master/checkstyle.xml">checkstyle document</a>, which runs
+upon <code>mvn compile</code> and all phases which depend on <code>compile</code>. Not respecting it will halt the build, and means
+your contribution would not be
+acceptable.</p>
 </div>
 <div class="paragraph">
 <p><strong>Developers who commit code that does not follow the coding conventions outlined in this document will be responsible
-for fixing their own code.</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Your code should pass our <a href="https://github.com/apache/james-project/blob/master/checkstyle.xml">checkstyle</a> which runs
-upon <code>mvn compile</code> and all phases which depend on <code>compile</code>.</p>
-</li>
-<li>
-<p>Extra spaces between parentheses are not allowed:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>  if (foo) &gt; Good
-
-  or
-
-  if ( foo ) &gt; Bad</code></pre>
-</div>
+for fixing their own code.</strong> `.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -560,8 +581,8 @@ GREATLY appreciated as this will help to improve the James project.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Define your dependency versions in james-project pom.xml. This structurally ensures all projects get the same v
-ersion, and that there is no version clashes.</p>
+<p>Define your dependency versions in james-project pom.xml. This structurally ensures all projects get the same version,
+and that there is no version clashes.</p>
 </li>
 <li>
 <p>Don&#8217;t use <em>org.apache.james</em> groupId for internal dependencies. Use <em>${james.groupId}</em>. If not, you break the policies
@@ -601,6 +622,11 @@ sometimes remove whitespaces which may not be desirable.</p>
 <div class="sect2">
 <h3 id="_code_patches"><a class="anchor" href="#_code_patches"></a>Code patches</h3>
 <div class="paragraph">
+<p>While we definitely prefer receiving contributions under the form of <a href="#_how_to_contribute_some_code">Github pull requests</a>,
+in order to still be vendor neutral on the contribution process, we do accept submission of patches, in a process described
+below.</p>
+</div>
+<div class="paragraph">
 <p>Patches should be attached to the corresponding JIRA issue.</p>
 </div>
 <div class="paragraph">
@@ -622,33 +648,6 @@ will solve the problem. Note any bug numbers your patch addresses.</p>
 responsibility to manage the code and review submissions, if you make it easy for them to see what you are doing your
 patch is more likely to be committed quickly.</p>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_idea_or_design_proposals"><a class="anchor" href="#_idea_or_design_proposals"></a>Idea or design proposals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>People can submit ideas, features or design changes proposals by discussing it through the
-<a href="mailing-lists.html" class="page">mailing lists</a> and/or submitting an ADR (Architecture Decision Record). A discussion
-on the mailing list getting a consensus of the community can be the object of the writing of an ADR to confirm the
-change agreed upon.</p>
-</div>
-<div class="paragraph">
-<p>ADRs <strong>MUST</strong> be submitted under the folder <code>src/adr</code> via a pull request. The standards used for writing an ADR are
-described in the <a href="https://github.com/apache/james-project/blob/master/src/adr/0001-record-architecture-decisions.md">first ADR</a>
-written for the Apache James project.</p>
-</div>
-<div class="paragraph">
-<p>The number of the ADR should be incremental. If an other ADR gets merged concurrently, the committer is responsible for
-updating its number accordingly.</p>
-</div>
-<div class="paragraph">
-<p>When the ADR reaches a consensus within the community and is accepted, it can be merged and goes into effect.</p>
-</div>
-<div class="paragraph">
-<p>An ADR can&#8217;t be removed after being accepted and merged. However, a new ADR can supersede a previous one. This is so
-we are able to keep track on all the decisions being made regarding the project.</p>
 </div>
 </div>
 </div>
