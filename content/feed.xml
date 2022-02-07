@@ -24,9 +24,41 @@
 </description>
     <link>http://james.apache.org/</link>
     <atom:link href="http://james.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 05 Jan 2022 14:31:56 +0700</pubDate>
-    <lastBuildDate>Wed, 05 Jan 2022 14:31:56 +0700</lastBuildDate>
+    <pubDate>Mon, 07 Feb 2022 11:13:26 +0700</pubDate>
+    <lastBuildDate>Mon, 07 Feb 2022 11:13:26 +0700</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Apache James Server 3.6.2</title>
+        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.6.2 release.&lt;/p&gt;
+
+&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;announcements&quot;&gt;Announcements&lt;/h2&gt;
+
+&lt;p&gt;[More announcements to follow this release]&lt;/p&gt;
+
+&lt;h2 id=&quot;release-changelog&quot;&gt;Release changelog&lt;/h2&gt;
+
+&lt;p&gt;This is a maintenance release addressing the following issues:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;JAMES-3646 Rely on strong typing for file paths operations&lt;/li&gt;
+  &lt;li&gt;Upgrade Log4J to 2.17.1 (CVE-2021-44832 + CVE-2021-45105)&lt;/li&gt;
+  &lt;li&gt;Upgrade Logback to 1.2.9 (CVE-2021-42550)&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 26 Jan 2022 06:16:30 +0700</pubDate>
+        <link>http://james.apache.org/james/update/2022/01/26/james-3.6.2.html</link>
+        <guid isPermaLink="true">http://james.apache.org/james/update/2022/01/26/james-3.6.2.html</guid>
+        
+        
+        <category>james</category>
+        
+        <category>update</category>
+        
+      </item>
     
       <item>
         <title>Apache James Server 3.6.1</title>
@@ -36,7 +68,16 @@
 
 &lt;h2 id=&quot;announcements&quot;&gt;Announcements&lt;/h2&gt;
 
-&lt;p&gt;[More announcements to follow this release]&lt;/p&gt;
+&lt;p&gt;This release fixes the following vulnerability issues, that are present prior to 3.6.1:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;CVE-2021-38542&lt;/em&gt;: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;CVE-2021-40110&lt;/em&gt;: Apache James IMAP vulnerable to a ReDoS&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;CVE-2021-40111&lt;/em&gt;: Apache James IMAP parsing Denial Of Service&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;CVE-2021-40525&lt;/em&gt;: Apache James: Sieve file storage vulnerable to path traversal attacks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We recommend users to upgrade to this version.&lt;/p&gt;
 
 &lt;h2 id=&quot;release-changelog&quot;&gt;Release changelog&lt;/h2&gt;
 
@@ -547,54 +588,6 @@ More details about the property is at &lt;a href=&quot;https://javaee.github.io/
         <category>james</category>
         
         <category>apachecon</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache James Server 3.4.0</title>
-        <description>&lt;p&gt;The Apache James developers are pleased to announce James server 3.4.0 release.&lt;/p&gt;
-
-&lt;p&gt;Here are some points we worked on:&lt;/p&gt;
-
-&lt;h3 id=&quot;added&quot;&gt;Added&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Add in-memory docker image&lt;/li&gt;
-  &lt;li&gt;Support of AWS S3 as blobstore&lt;/li&gt;
-  &lt;li&gt;WebAdmin routes for mapping management (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddAddressMapping&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddRegexMapping&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ListMappings&lt;/code&gt;), previously only manageable by CLI&lt;/li&gt;
-  &lt;li&gt;Metrics for Deleted Message Vault&lt;/li&gt;
-  &lt;li&gt;More metrics for BlobStore (new delete &amp;amp; deleteBucket configuration)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;changed&quot;&gt;Changed&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;(experimental) New implementation of the deleted message vault on top of an object store, not relying anymore on a 
-repository. This avoids exposing messages via webAdmin. Messages previously stored in the vault will be lost.&lt;/li&gt;
-  &lt;li&gt;Migration to ElasticSearch 6.3&lt;/li&gt;
-  &lt;li&gt;Blob export to LinShare&lt;/li&gt;
-  &lt;li&gt;Native DKIM support for outgoing mails. The mailets from james-jdkim have been included in main James project.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;deprecated&quot;&gt;Deprecated&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Zookeeper component. This will be removed after 3.4 release. If you have development skills, and are willing to maintain this component, please reach us.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;removed&quot;&gt;Removed&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Karaf OSGi implementation. It was not compiled nor tested for a year. We didn’t get any feedback about that and we don’t have the resources nor the skills to maintain it any more.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Early adopters can &lt;a href=&quot;http://james.apache.org/download.cgi#Apache_James_Server&quot;&gt;download it&lt;/a&gt;, any issue can be reported on our issue &lt;a href=&quot;https://issues.apache.org/jira/browse/JAMES&quot;&gt;tracker&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 05 Sep 2019 20:16:30 +0700</pubDate>
-        <link>http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</link>
-        <guid isPermaLink="true">http://james.apache.org/james/update/2019/09/05/james-3.4.0.html</guid>
-        
-        
-        <category>james</category>
-        
-        <category>update</category>
         
       </item>
     

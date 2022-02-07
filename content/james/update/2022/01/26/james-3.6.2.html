@@ -69,71 +69,28 @@
       <!-- Content -->
         <section id="content" class="main">
 
-          <h1><span class="icon fa-file-text-o"></span> Apache James Server 3.6.1</h1>
-          <h2><span class="icon fa-clock-o"></span><b> December 02, 2021</b></h2>
+          <h1><span class="icon fa-file-text-o"></span> Apache James Server 3.6.2</h1>
+          <h2><span class="icon fa-clock-o"></span><b> January 26, 2022</b></h2>
 
           <br/>
 
           <div>
-            <p>The Apache James developers are pleased to announce James server 3.6.1 release.</p>
+            <p>The Apache James developers are pleased to announce James server 3.6.2 release.</p>
 
-<p>Early adopters can <a href="http://james.apache.org/download.cgi#Apache_James_Serverc">download it</a>, any issue can be reported on our issue <a href="https://issues.apache.org/jira/browse/JAMES">tracker</a>.</p>
+<p>Early adopters can <a href="http://james.apache.org/download.cgi#Apache_James_Server">download it</a>, any issue can be reported on our issue <a href="https://issues.apache.org/jira/browse/JAMES">tracker</a>.</p>
 
 <h2 id="announcements">Announcements</h2>
 
-<p>This release fixes the following vulnerability issues, that are present prior to 3.6.1:</p>
-
-<ul>
-  <li><em>CVE-2021-38542</em>: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)</li>
-  <li><em>CVE-2021-40110</em>: Apache James IMAP vulnerable to a ReDoS</li>
-  <li><em>CVE-2021-40111</em>: Apache James IMAP parsing Denial Of Service</li>
-  <li><em>CVE-2021-40525</em>: Apache James: Sieve file storage vulnerable to path traversal attacks</li>
-</ul>
-
-<p>We recommend users to upgrade to this version.</p>
+<p>[More announcements to follow this release]</p>
 
 <h2 id="release-changelog">Release changelog</h2>
 
-<p>Here are some points we worked on:</p>
-<h3 id="fixed">Fixed</h3>
-<ul>
-  <li>JAMES-3676 Avoid S3 connection leaks</li>
-  <li>JAMES-3477 Mail::duplicate did lead to file leak in various places</li>
-  <li>JAMES-3646 Sanitize some File based components
-    <ul>
-      <li>Prevent directory traversal on top of maildir mailbox (#659)</li>
-      <li>FileMailRepository shoud reject URL outside of James root</li>
-      <li>SieveFileRepository should validate underlying files belong to its root</li>
-    </ul>
-  </li>
-  <li>JAMES-1862 Generalize STARTTLS sanitizing fix</li>
-  <li>JAMES-1862 Prevent Session fixation via STARTTLS</li>
-  <li>JAMES-3634 + JAMES-3635 Apply fuzzing to Apache James
-    <ul>
-      <li>Upgrade PrefixedRegex to RE2J</li>
-      <li>Fuzzed input throws String out of bound exception for FETCH</li>
-      <li>Prevent String OutOfBoundException for IMAP APPEND</li>
-      <li>Prevent infinite loop for IMAP STATUS command parser</li>
-      <li>Prevent infinite loop for IMAP APPEND command parser</li>
-    </ul>
-  </li>
-  <li>JAMES-3571 MimeMessageWrapper getSize was incorrect for empty messages</li>
-  <li>JAMES-3525 verifyIdentity should not fail on null sender</li>
-  <li>JAMES-3556 Fix JMAP eventUrl s/closeAfter/closeafter/</li>
-  <li>JAMES-3432 JMAP Uploads could alter the underlying byte source</li>
-  <li>JAMES-3537 (Email/set create should allow to attach mails)</li>
-  <li>JAMES-3558 JMAP Email/changes: When created + updated return both</li>
-  <li>JAMES-3558 JMAP Email/changes: moves should be considered as updates</li>
-  <li>JAMES-3557 Changes collectors should be ordered</li>
-  <li>JAMES-3277 Distinct uids before calling toRanges</li>
-  <li>JAMES-3434 Refactoring: EmailSubmissionSetMethod should not rely on nested clases</li>
-  <li>JAMES-3557 JMAP */changes: Increase default maxChanges 5 -&gt; 256</li>
-  <li>JAMES-3557 */changes: Fail explicitly when too much entries on a single change</li>
-</ul>
+<p>This is a maintenance release addressing the following issues:</p>
 
-<h3 id="improvements">Improvements</h3>
 <ul>
-  <li>JAMES-3261 ZIP packaging for Guice Apps</li>
+  <li>JAMES-3646 Rely on strong typing for file paths operations</li>
+  <li>Upgrade Log4J to 2.17.1 (CVE-2021-44832 + CVE-2021-45105)</li>
+  <li>Upgrade Logback to 1.2.9 (CVE-2021-42550)</li>
 </ul>
 
 
