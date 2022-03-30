@@ -274,6 +274,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/db-benchmark.html">Database benchmarks</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -654,6 +657,10 @@ If disabled, Lightweight transactions will no longer be used upon messages opera
 As message flags updates relies so far on a read-before-write model, it exposes yourself to data races leading to
 potentially update loss. Better performance are expected
 by turning it off. Reads performed as part of write transaction are also performed with a relaxed consistency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mailrepository.strong.consistency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Boolean, defaults to true. Allows not to use lightweight transactions in CassandraMailRepository.</p></td>
 </tr>
 </tbody>
 </table>
