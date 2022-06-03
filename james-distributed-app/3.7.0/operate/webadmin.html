@@ -1315,6 +1315,116 @@ should match the criteria at <a href="../configure/usersrepository.html" class="
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_add_a_delegated_user_of_a_base_user"><a class="anchor" href="#_add_a_delegated_user_of_a_base_user"></a>Add a delegated user of a base user</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/users/baseUser/authorizedUsers/delegatedUser</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: Addition of the delegated user succeeded</p>
+</li>
+<li>
+<p>404: The base user does not exist</p>
+</li>
+<li>
+<p>400: The delegated user does not exist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note: Delegation is only available on top of Cassandra products and not implemented yet on top of JPA backends.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_remove_a_delegated_user_of_a_base_user"><a class="anchor" href="#_remove_a_delegated_user_of_a_base_user"></a>Remove a delegated user of a base user</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/users/baseUser/authorizedUsers/delegatedUser</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: Removal of the delegated user succeeded</p>
+</li>
+<li>
+<p>404: The base user does not exist</p>
+</li>
+<li>
+<p>400: The delegated user does not exist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note: Delegation is only available on top of Cassandra products and not implemented yet on top of JPA backends.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_retrieving_the_list_of_delegated_users_of_a_base_user"><a class="anchor" href="#_retrieving_the_list_of_delegated_users_of_a_base_user"></a>Retrieving the list of delegated users of a base user</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users/baseUser/authorizedUsers</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The answer looks like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>["alice@domain.tld","bob@domain.tld"]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The list was successfully retrieved</p>
+</li>
+<li>
+<p>404: The base user does not exist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note: Delegation is only available on top of Cassandra products and not implemented yet on top of JPA backends.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_remove_all_delegated_users_of_a_base_user"><a class="anchor" href="#_remove_all_delegated_users_of_a_base_user"></a>Remove all delegated users of a base user</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/users/baseUser/authorizedUsers</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: Removal of the delegated users succeeded</p>
+</li>
+<li>
+<p>404: The base user does not exist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note: Delegation is only available on top of Cassandra products and not implemented yet on top of JPA backends.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
