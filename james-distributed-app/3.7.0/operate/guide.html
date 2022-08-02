@@ -451,6 +451,11 @@ all mails in a mail repository</a> or
 a single mail in a mail repository</a>.</p>
 </div>
 <div class="paragraph">
+<p>In order to prevent unbounded processing that could consume unbounded resources. We can provide a CRON with <code>limit</code> parameter.
+Ex: 10 reprocessed per minute
+Note that it only support the reprocessing all mails.</p>
+</div>
+<div class="paragraph">
 <p>Also, one can decide to
 <a href="webadmin.html#_removing_all_mails_from_a_mail_repository" class="page">delete
 all the mails of a mail repository</a> or
@@ -539,6 +544,10 @@ you to check if those contain registered events in each by
 <a href="webadmin.html#_redeliver_all_events" class="page">redeliver all events</a>
 task. It will start reprocessing all the failed events registered in
 event dead letters.</p>
+</div>
+<div class="paragraph">
+<p>In order to prevent unbounded processing that could consume unbounded resources. We can provide a CRON with <code>limit</code> parameter.
+Ex: 10 redelivery per minute</p>
 </div>
 <div class="paragraph">
 <p>If for some other reason you don’t need to redeliver all events, you

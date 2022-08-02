@@ -5798,10 +5798,14 @@ processing in. Defaults to the <code>state</code> field of each processed email.
 this value to <code>false</code> allows non destructive reprocessing as you keep a copy of the email in the mail repository and can be valuable
 when debugging.</p>
 </li>
+<li>
+<p><code>limit</code> (integer value. Optional, default is empty). It enables to limit the count of elements reprocessed.
+If unspecified the count of the processed elements is unbounded</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>For instance:</p>
+<p>redeliver_group_events</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -6421,6 +6425,25 @@ with the dead letter API:</p>
 </div>
 </div>
 <div class="paragraph">
+<p>Additional query parameters are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>limit</code> (integer value. Optional, default is empty). It enables to limit the count of elements redelivered.
+If unspecified the count of the processed elements is unbounded</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/events/deadLetter?action=redeliver&amp;limit=10</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Will create a task that will attempt to redeliver all events stored in
 <code>Event Dead Letter''. If successful, redelivered events will then be
 removed from </code>Dead Letter''.</p>
@@ -6447,13 +6470,32 @@ a task</a>.</p>
 <h3 id="_redeliver_group_events"><a class="anchor" href="#_redeliver_group_events"></a>Redeliver group events</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -XPOST http://ip:port/events/deadLetter/groups/org.apache.james.mailbox.events.EventBusTestFixture$GroupA</pre>
+<pre>curl -XPOST http://ip:port/events/deadLetter/groups/org.apache.james.mailbox.events.EventBusTestFixture$GroupA?action=redeliver</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Will create a task that will attempt to redeliver all events of a
 particular group stored in <code>Event Dead Letter''. If successful,
 redelivered events will then be removed from </code>Dead Letter''.</p>
+</div>
+<div class="paragraph">
+<p>Additional query parameters are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>limit</code> (integer value. Optional, default is empty). It enables to limit the count of elements redelivered.
+If unspecified the count of the processed elements is unbounded</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/events/deadLetter/groups/org.apache.james.mailbox.events.EventBusTestFixture$GroupA?action=redeliver&amp;limit=10</pre>
+</div>
 </div>
 <div class="paragraph">
 <p><a href="#_endpoints_returning_a_task">More details about endpoints returning
