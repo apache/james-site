@@ -633,6 +633,12 @@ Maximum size of stored objects expressed in bytes.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.connection.timeout</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional: HTTP connection timeout. duration, default value being second. Leaving it empty relies on S3 driver defaults.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.in.read.limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional: Object read in memory will be rejected if they exceed the size limit exposed here. Size, exemple <code>100M</code>.
+Supported units: K, M, G, defaults to B if no unit is specified. If unspecified, big object won&#8217;t be prevented
+from being loaded in memory. This settings complements protocol limits.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
