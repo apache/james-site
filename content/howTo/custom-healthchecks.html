@@ -1,0 +1,240 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Apache James</title>
+
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie8.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie9.css">
+        <link rel="shortcut icon" href="/images/james-logo.png">
+    </head>
+<body>
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<div id="wrapper">
+    <div class="apache_ref">
+        <a href="https://www.apache.org" alt="apache foundation link"><img src="https://www.apache.org/foundation/press/kit/asf_logo.svg" title="apache foundation logo"/></a>
+    </div>
+    <div class="apache_ref_mobile">
+        <a href="https://www.apache.org" alt="apache foundation link">The Apache Software Foundation</a>
+    </div>
+    <div class="apache_ref_left">
+        <a href="https://www.apache.org/events/current-event.html" alt="apache foundation event"><img src="https://www.apache.org/events/current-event-234x60.png" title="apache foundation event logo"/></a>
+    </div>
+    <div class="apache_ref_left_mobile">
+        <a href="https://www.apache.org/events/current-event.html" alt="apache foundation event"><img src="https://www.apache.org/events/current-event-234x60.png" title="apache foundation event logo"/></a>
+    </div>
+
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<header id="header" class="alt">
+    <div class="logo"><a href="/index.html" alt="Apache James"><img src="/images/james.svg" alt="james logo"/></a></div>
+    <h1 class="hidden">James Enterprise Mail Server</h1>
+    <h2>Emails at the heart of your business logic</h2>
+</header>
+
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<!-- Main -->
+<div id="main">
+
+    <!-- Introduction -->
+    <section id="intro" class="main special">
+        <div class="">
+            <div class="content align-left">
+                <header class="major">
+                    <h1><b>Configure Custom Healthchecks</b></h1>
+                </header>
+
+                <p>
+                    The current project demonstrates how to write custom healthchecks for Apache James.
+                    This enables writing new custom healthcheck that fits your monitoring need.
+                </p>
+
+                <p>
+                    Find this example on <a href="https://github.com/apache/james-project/tree/master/examples/custom-healthcheck">GitHub</a>.
+                </p>
+
+                <p>
+                    Start by importing the dependencies:
+                </p>
+
+                <pre><code>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;james-core&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.projectreactor&lt;/groupId&gt;
+    &lt;artifactId&gt;reactor-core&lt;/artifactId&gt;
+&lt;/dependency&gt;
+                </code></pre>
+
+                <p>You can then start writing your first HealthCheck by implementing HealthCheck interface.</p>
+
+                <p>You can compile this example project:</p>
+
+                <pre><code>mvn clean install</code></pre>
+
+                <p>Then embed your healthcheck into a James server. First configure your custom healthcheck into <code>healthcheck.properties</code>:</p>
+
+                <pre><code># List of fully qualified HealthCheck class names in addition to James' default healthchecks.
+# Healthchecks need to be located within the classpath or in the ./extensions-jars folder.
+additional.healthchecks=org.apache.james.examples.HealthCheckA</code></pre>
+
+                <p>Create a keystore (default password being <code>james72laBalle</code>):</p>
+
+                <pre><code>keytool -genkey -alias james -keyalg RSA -keystore keystore</code></pre>
+
+                <p>Then start a James server with your JAR and the configuration:</p>
+
+                <pre><code>docker run -d \
+   -v $PWD/healthcheck.properties:/root/conf/healthcheck.properties \
+   -v $PWD/healthcheck-extension.jar:/root/extensions-jars \
+   -v $PWD/keystore:/root/conf/keystore \
+   -p 25:25 \
+   apache/james:memory-latest</code></pre>
+
+                <p>You can use <code>curl</code> command to get your healthcheck status:</p>
+
+                <pre><code>$ curl -XGET http://172.17.0.2:8000/healthcheck</code></pre>
+            </div>
+            <footer class="major">
+                <ul class="actions align-center">
+                    <li><a href="index.html" class="button">go back to other how-tos</a></li>
+                </ul>
+            </footer>
+        </div>
+    </section>
+
+</div>
+
+
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<footer id="footer" class="major">
+    <section>
+        <h2>James</h2>
+        <ul class="no-padding">
+            <li class="no-padding"><a href="https://james.apache.org/#intro" class="active">About</a></li>
+            <li class="no-padding"><a href="https://james.apache.org/#first">Get Started</a></li>
+            <li class="no-padding"><a href="https://james.apache.org/#posts">Last Posts</a></li>
+            <li class="no-padding"><a href="https://james.apache.org/#second">Community</a></li>
+            <li class="no-padding"><a href="https://james.apache.org/#third">Contribute</a></li>
+            <li class="no-padding"><a href="https://james.apache.org/"><span class="fa fa-external-link"></span> Documentation</a></li>
+        </ul>
+    </section>
+    <section>
+        <h2>Connect</h2>
+        <ul class="icons">
+            <li><a href="https://james.apache.org/mail.html" class="icon fa-envelope-o alt"><span class="label">Mailing-list</span></a></li>
+            <li><a href="https://gitter.im/apache/james-project" class="icon fa-wechat alt"><span class="label">Gitter</span></a></li>
+            <li><a href="https://github.com/apache/james-project" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
+            <li><a href="https://twitter.com/ApacheJames" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
+            <li><a href="https://james.apache.org/support.html" class="icon fa-briefcase alt"><span class="label">Support</span></a></li>
+            <li><a href="http://www.apache.org/events/current-event" class="icon fa-calendar alt"><span class="label">Apache Foundation events</span></a></li>
+        </ul>
+    </section>
+    <section class="legal-section">
+        <h2>Copyright</h2>
+        Apache James and related projects are trademarks of the Apache Software Foundation.<br/>
+        <a href="https://www.apache.org/">Copyright 2006-2021 The Apache Software Foundation. All Rights Reserved.</a><br/>
+        <a href="https://www.apache.org/licenses/">License</a><br/>
+        <a href="https://www.apache.org/foundation/sponsorship.html">Donate</a> to support the Apache Foundation<br/>
+        <a href="https://www.apache.org/foundation/thanks.html">Thanks</a><br/>
+        Design: <a href="https://html5up.net">HTML5 UP</a><br/>
+        Thanks to <a href="http://www.neoma-interactive.com/">Neoma by Linagora</a> for the website design
+    </section>
+</footer>
+</div>
+
+</body>
+</html>
