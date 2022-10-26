@@ -808,7 +808,8 @@ above is returned</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Will return a list of Execution reports that are currently in progress.</p>
+<p>Will return a list of Execution reports that are currently in progress. This list is sorted by
+reverse submitted date (recent tasks goes first).</p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -820,6 +821,26 @@ above is returned</p>
 </li>
 <li>
 <p>400: Invalid status value</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Additional optional task parameters are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>status</code> one of <code>waiting</code>, <code>inProgress</code>, <code>canceledRequested</code>, <code>completed</code>, <code>canceled</code>, <code>failed</code>. Only
+tasks with the given status are returned.</p>
+</li>
+<li>
+<p><code>type</code>: only tasks with the given type are returned.</p>
+</li>
+<li>
+<p><code>offset</code>: Integer, number of tasks to skip in the response. Useful for paging.</p>
+</li>
+<li>
+<p><code>limit</code>: Integer, maximum number of tasks to return in one call</p>
 </li>
 </ul>
 </div>
