@@ -100,6 +100,7 @@ pipeline {
 
         Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]</a>"
         """,
+                            to: "server-dev@james.apache.org",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                     )
                 } else {
@@ -136,6 +137,7 @@ pipeline {
 
     Is back to normal.
     """,
+                                to: "server-dev@james.apache.org",
                                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                         )
                     }
