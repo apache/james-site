@@ -1,7 +1,4 @@
 = Work with the Handlebars Templates
-// Settings:
-:idprefix:
-:idseparator: -
 
 Antora combines the Handlebars templates with the converted AsciiDoc content and other UI model data to make the pages in the site.
 These "`logic-less`" templates are mostly HTML with some special mustache tags sprinkled in where content should be inserted.
@@ -30,7 +27,7 @@ Variable names and purposes may change.
 Here's an overview of the available UI model:
 
 .Variables available to the Handlebars templates (top-level variables in bold)
-[#template-variables-table,cols="1m,2"]
+[#template-variables-ref,cols="1m,2"]
 |===
 | Name | Description
 
@@ -39,15 +36,20 @@ s| [[site]]site
 
 | site.url
 | The base URL of the site, if specified in the playbook.
+If a site start page is defined, the visitor will be redirected from this location to the start page.
 
 | site.path
 | The pathname (i.e., subpath) of the site.url under which the site is hosted (e.g., /docs).
 This value is empty if site.url is not defined, has no path segment, or matches /.
-Can be removed from the site.url value using a helper (e.g., `deleteSuffix site.url site.path`)
+Can be dropped from the site.url value using a helper (e.g., `deleteSuffix site.url site.path`)
+Can be prepended to `page.url` to create a root-relative URL for a page (e.g., `+{{{site.path}}}{{{page.url}}}+`).
 (since Antora 2.1)
 
 | site.title
 | The title of the site.
+
+| site.homeUrl
+| The URL that points directly to the start (aka home) page of the site.
 
 | site.components
 | A map of all the components in the site, keyed by component name.
@@ -82,6 +84,9 @@ For example, the value of the document attribute named `page-support-phone` can 
 Page attributes can be defined per page in the AsciiDoc document header (e.g., `:page-support-phone: +1 212-555-1234`) or globally in the playbook under the key `asciidoc.attributes`.
 The `page-` prefix is used to isolate page-related attributes from the numerous other document attributes in AsciiDoc.
 
+| page.author
+| The first author of the document, if one or more authors are specified in the AsciiDoc header.
+
 | page.description
 | The text of the description attribute in the AsciiDoc header, if specified.
 
@@ -99,6 +104,9 @@ Properties include name (since 2.3), version, displayVersion, prerelease (if set
 | page.module
 | The name of the module for the current page.
 
+| page.relativeSrcPath
+| The path of the current page relative to the pages directory in the current module (since 2.3).
+
 | page.version
 | The name of the version for the current page.
 
@@ -108,6 +116,11 @@ Properties include name (since 2.3), version, displayVersion, prerelease (if set
 | page.versions
 | All versions of the current page, including the current page.
 Each entry has the properties url, string, and missing.
+
+| page.latest
+| The entry from `page.versions` that corresponds to the latest version available of this page.
+The latest page may not come from the latest version of the component (if the page is missing in that version).
+This property is not set if this page is in a versionless component.
 
 | page.breadcrumbs
 | An array of breadcrumb items that represent the current selection in the navigation tree.
@@ -124,8 +137,8 @@ It's often used as the base URL to generate relative URLs from this page.
 
 | page.canonicalUrl
 | The canonical URL for the current page.
-The canonicalUrl is only set if site.url is set.
-If there are multiple versions of the component, the canonical URL is the qualified URL of the most recent version of the page (excluding any prerelease versions).
+The canonicalUrl is only set if site.url is set to an absolute URL and the page's component has at least one non-prerelease version.
+If there are multiple versions of the component, the canonical URL is the qualified URL of the most recent, non-prerelease version of the page.
 If there's only a single version of the component, the canonical URL is the qualified URL of the current page.
 
 | page.editUrl
@@ -133,17 +146,27 @@ If there's only a single version of the component, the canonical URL is the qual
 This value is derived automatically for the hosts github.com, gitlab.com, pagure.io, and bitbucket.org, even if the repository is private.
 If the host is not recognized, or you want to customize the value, you can use the `edit_url` key on the content source in the playbook.
 
-The default UI shows an "Edit this Page" link that points to this URL unless the repository is private (i.e., `page.origin.private` is true).
-You can force the link to be shown by setting the environment variable `FORCE_SHOW_EDIT_PAGE_LINK` or by customizing the UI template.
+The default UI shows an "Edit this Page" link that points to this URL unless the repository is private (i.e., `page.origin.private` is truthy) or `page.fileUri` is set.
+You can force this link to be shown by setting the environment variable `FORCE_SHOW_EDIT_PAGE_LINK` (e.g., `FORCE_SHOW_EDIT_PAGE_LINK=true`) or by customizing the logic in the UI template.
+
+| page.fileUri
+| The local file:// URI to edit the current page if the page originates from the local filesystem (i.e., the worktree).
+
+If this property is set, the default UI shows an "Edit this Page" link that points to this URI (instead of the `page.editUrl` value) unless the `CI` environment variable is set (e.g., `CI=true`).
+When the `CI` environment variable is set, the default UI ignores this property (since linking to a local file:// URI in a published site doesn't make any sense).
+
+| page.origin
+| Information about the content source from which the current page was taken.
+Properties include url, reftype (since 3.1), refname, branch, tag, refhash (since 2.3), startPath, worktree, webUrl, fileUriPattern, editUrlPattern, private.
 
 | page.origin.private
-| This value will be true if the repository requires authentication or the repository URL embeds credentials.
-In the default UI, if this value is `true`, the "Edit this Page" link is disabled.
-A quick way to force this property to be `true` (even if the repository is public) is to begin the content source URL in the playbook with empty credentials, as in `\https://@`.
+| This value will be `auth-required` if the git server requests authentication credentials, otherwise `auth-embedded` if credentials are embedded in the content source URL in the playbook, otherwise unset.
+In the default UI, if this value is truthy, the "Edit this Page" link is not shown.
+A quick way to force this property to be truthy (even if the repository is public) is to begin the content source URL in the playbook with empty credentials, as in `\https://@`.
 Then, the "Edit the Page" link will not appear.
 
 | page.home
-| Indicates whether the current page is the home page of the site.
+| Indicates whether the current page is the start (aka home) page of the site.
 
 | page.layout
 | The page layout for the current page.
@@ -162,9 +185,13 @@ s| env
 
 s| siteRootPath
 | The relative path to the root of the published site.
+If a site start page is defined, the visitor will be redirected from this location to the start page.
+Can be used as a fallback when a site URL is not set.
+This value is _root-relative_ in the 404 page template, which is required for the 404 page to work correctly when served by the web server. 
 
 s| uiRootPath
 | The relative path to the root directory of the UI.
+This value is _root-relative_ in the 404 page template, which is required for the 404 page to work correctly when served by the web server. 
 
 s| antoraVersion
 | The version of Antora used to build the site (specifically the version of the @antora/page-composer package).
@@ -185,6 +212,6 @@ Next, open the file [.path]_templates/partials/head.hbs_ and add your tag.
 ----
 
 Each template file has access to the template model, which exposes information about the current page through variable names.
-The variables currently available are listed in <<template-variables-table>>.
+The variables currently available are listed in <<template-variables-ref>>.
 
 Save the file, commit it to git, push the branch, and allow the approval workflow to play out.

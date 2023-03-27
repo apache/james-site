@@ -35,11 +35,18 @@
 .toc.sidebar .toc-menu ul {
   max-height: var(--toc-height);
   overflow-y: auto;
-  scrollbar-width: none;
+  overscroll-behavior: none;
+}
+
+@supports (scrollbar-width: none) {
+  .toc.sidebar .toc-menu ul {
+    scrollbar-width: none;
+  }
 }
 
 .toc .toc-menu ul::-webkit-scrollbar {
   width: 0;
+  height: 0;
 }
 
 @media screen and (min-width: 1024px) {
