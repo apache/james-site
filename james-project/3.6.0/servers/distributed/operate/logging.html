@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; Logging :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.2">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script>var uiRootPath = '../../../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.6.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#mail/messages/index.adoc">mail/messages/index.adoc</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/imf.adoc">mail/messages/imf.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/mime.adoc">mail/messages/mime.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/elasticsearch.html">elasticsearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.6.0 Snapshot</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../../../../james-distributed-app/3.7.3/index.html">Apache James Distributed Server</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.7.3/index.html">3.7.3 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="../../../../3.7.3/index.html">Apache James Server</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../3.7.3/index.html">3.7.3 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
+          <a href="../../../index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../../../james-site/latest/index.html">Apache James Site</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../../distributed.html">Distributed</a></li>
+    <li><a href="index.html">Operate</a></li>
+    <li><a href="logging.html">Logging</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../../../3.7.3/index.html">3.7.3 SNAPSHOT</a>
+    <a class="version is-current" href="logging.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/operate/logging.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; Logging</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>We recommend to closely monitoring <strong>ERROR</strong> and <strong>WARNING</strong> logs. Those
+logs should be considered not normal.</p>
+</div>
+<div class="paragraph">
+<p>If you encounter some suspicious logs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you have any doubt about the log being caused by a bug in James
+source code, please reach us via the bug tracker, the user mailing list or our Gitter channel (see our
+<a href="http://james.apache.org/#second">community page</a>)</p>
+</li>
+<li>
+<p>They can be due to insufficient performance from tier applications (eg
+Cassandra timeouts). In such case we advise you to conduct a close
+review of performances at the tier level.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Leveraging filters in Kibana discover view can help to filter out
+''already known'' frequently occurring logs.</p>
+</div>
+<div class="paragraph">
+<p>When reporting ERROR or WARNING logs, consider adding the full logs, and
+related data (eg the raw content of a mail triggering an issue) to the
+bug report in order to ease resolution.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logging_configuration"><a class="anchor" href="#_logging_configuration"></a>Logging configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Distributed James uses <a href="http://logback.qos.ch/">logback</a> as a logging library
+and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p>
+</div>
+<div class="paragraph">
+<p>Information about logback configuration can be found
+<a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pushing_logs_to_elasticsearch"><a class="anchor" href="#_pushing_logs_to_elasticsearch"></a>Pushing logs to ElasticSearch</h3>
+<div class="paragraph">
+<p>Distributed Server leverages the use of MDC in order to achieve structured logging,
+and better add context to the logged information. We furthermore ship
+<a href="https://github.com/linagora/logback-elasticsearch-appender">Logback Elasticsearch Appender</a>
+on the classpath to easily allow direct log indexation in
+<a href="https://www.elastic.co/elasticsearch">ElasticSearch</a>.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample <code>conf/logback.xml</code> configuration file for logback with the following
+pre-requisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Logging both in an unstructured fashion on the console and in a structured fashion in ElasticSearch</p>
+</li>
+<li>
+<p>Logging ElasticSearch Log appender logs in the console</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Configuration for pushing log direct to ElasticSearch</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Logging ElasticSearch Log appender logs in the console</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration scan="true" scanPeriod="30 seconds"&gt;
+
+        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
+                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
+        &lt;/contextListener&gt;
+
+        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
+                &lt;encoder&gt;
+                        &lt;pattern&gt;%d{yyyy.MM.dd HH:mm:ss.SSS} %highlight([%-5level]) %logger{15} - %msg%n%rEx&lt;/pattern&gt;
+                        &lt;immediateFlush&gt;false&lt;/immediateFlush&gt;
+                &lt;/encoder&gt;
+        &lt;/appender&gt;
+
+        &lt;appender name="ELASTIC" class="com.linagora.logback.elasticsearch.ElasticsearchAppender"&gt;
+            &lt;url&gt;http://elasticsearch:9200/_bulk&lt;/url&gt;
+            &lt;index&gt;logs-james-%date{yyyy.MM.dd}&lt;/index&gt;
+            &lt;type&gt;tester&lt;/type&gt;
+            &lt;includeMdc&gt;true&lt;/includeMdc&gt;
+            &lt;excludedMdcKeys&gt;host&lt;/excludedMdcKeys&gt;
+            &lt;errorLoggerName&gt;es-error-logger&lt;/errorLoggerName&gt;
+            &lt;properties&gt;
+                &lt;property&gt;
+                    &lt;name&gt;host&lt;/name&gt;
+                    &lt;value&gt;${HOSTNAME}&lt;/value&gt;
+                    &lt;allowEmpty&gt;false&lt;/allowEmpty&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;severity&lt;/name&gt;
+                    &lt;value&gt;%level&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;thread&lt;/name&gt;
+                    &lt;value&gt;%thread&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;stacktrace&lt;/name&gt;
+                    &lt;value&gt;%ex&lt;/value&gt;
+                &lt;/property&gt;
+                &lt;property&gt;
+                    &lt;name&gt;logger&lt;/name&gt;
+                    &lt;value&gt;%logger&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/properties&gt;
+            &lt;headers&gt;
+                &lt;header&gt;
+                    &lt;name&gt;Content-Type&lt;/name&gt;
+                    &lt;value&gt;application/json&lt;/value&gt;
+                &lt;/header&gt;
+            &lt;/headers&gt;
+        &lt;/appender&gt;
+
+        &lt;root level="WARN"&gt;
+                &lt;appender-ref ref="ELASTIC" /&gt;
+        &lt;/root&gt;
+
+        &lt;logger name="es-error-logger" level="DEBUG" additivity="false"&gt;
+            &lt;appender-ref ref="CONSOLE" /&gt;
+        &lt;/logger&gt;
+
+        &lt;logger name="org.apache.james" level="INFO" /&gt;
+
+&lt;/configuration&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_fluentbit_as_a_log_forwarder"><a class="anchor" href="#_using_fluentbit_as_a_log_forwarder"></a>Using FluentBit as a log forwarder</h3>
+<div class="sect3">
+<h4 id="_using_docker"><a class="anchor" href="#_using_docker"></a>Using Docker</h4>
+<div class="paragraph">
+<p>Distributed Server leverages the use of MDC in order to achieve structured logging, and better add context to the logged information. We furthermore ship json logs to file with RollingFileAppender on the classpath to easily allow FluentBit to directly tail the log file.
+Here is a sample conf/logback.xml configuration file for logback with the following pre-requisites:</p>
+</div>
+<div class="paragraph">
+<p>Logging in a structured json fashion and write to file for centralizing logging.
+Centralize logging third party like FluentBit can tail from logging’s file then filter/process and put in to ElastichSearch</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+
+        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
+                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
+        &lt;/contextListener&gt;
+
+        &lt;appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
+                &lt;rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"&gt;
+                        &lt;fileNamePattern&gt;logs/james.%d{yyyy-MM-dd}.%i.log&lt;/fileNamePattern&gt;
+                        &lt;maxHistory&gt;1&lt;/maxHistory&gt;
+                        &lt;totalSizeCap&gt;200MB&lt;/totalSizeCap&gt;
+                        &lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
+                &lt;/rollingPolicy&gt;
+
+                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
+                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
+                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
+                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
+
+                        &lt;!-- Importance for handling multiple lines log --&gt;
+                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
+
+                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
+                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
+                        &lt;/jsonFormatter&gt;
+                    &lt;/layout&gt;
+                &lt;/encoder&gt;
+        &lt;/appender&gt;
+
+        &lt;root level="INFO"&gt;
+            &lt;appender-ref ref="LOG_FILE" /&gt;
+        &lt;/root&gt;
+
+&lt;/configuration&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First you need to create a <code>logs</code> folder, then mount it to James container and to FluentBit.</p>
+</div>
+<div class="paragraph">
+<p>docker-compose:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>version: "3"
+
+services:
+  james:
+    depends_on:
+      - elasticsearch
+      - cassandra
+      - rabbitmq
+      - s3
+    entrypoint: bash -c "java -cp 'james-server.jar:extension-jars/*:james-server-memory-guice.lib/*' -Dworking.directory=/root/ -Dlogback.configurationFile=/root/conf/logback.xml org.apache.james.CassandraRabbitMQJamesServerMain"
+    image: linagora/james-rabbitmq-project:branch-master
+    container_name: james
+    hostname: james.local
+    volumes:
+      - ./extension-jars:/root/extension-jars
+      - ./conf/logback.xml:/root/conf/logback.xml
+      - ./logs:/root/logs
+    ports:
+      - "80:80"
+      - "25:25"
+      - "110:110"
+      - "143:143"
+      - "465:465"
+      - "587:587"
+      - "993:993"
+      - "8080:8000"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+
+  cassandra:
+    image: cassandra:3.11.10
+    ports:
+      - "9042:9042"
+
+  rabbitmq:
+    image: rabbitmq:3.8.1-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  s3:
+    image: zenko/cloudserver:8.2.6
+    container_name: s3.docker.test
+    environment:
+      - SCALITY_ACCESS_KEY_ID=accessKey1
+      - SCALITY_SECRET_ACCESS_KEY=secretKey1
+      - S3BACKEND=mem
+      - LOG_LEVEL=trace
+      - REMOTE_MANAGEMENT_DISABLE=1
+
+  fluent-bit:
+    image: fluent/fluent-bit:1.5.7
+    volumes:
+      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
+      - ./logs:/fluent-bit/log
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>FluentBit config as:
+the <code>Host elasticsearch</code> pointing to <code>elasticsearch</code> service in docker-compose file.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[SERVICE]
+    Parsers_File    /fluent-bit/etc/parsers.conf
+
+[INPUT]
+    name                    tail
+    path                    /fluent-bit/log/*.log
+    Parser                  docker
+    docker_mode             on
+    buffer_chunk_size       1MB
+    buffer_max_size         1MB
+    mem_buf_limit           64MB
+    Refresh_Interval        30
+
+[OUTPUT]
+    Name  stdout
+    Match *
+
+
+[OUTPUT]
+    Name  es
+    Match *
+    Host elasticsearch
+    Port 9200
+    Index fluentbit
+    Logstash_Format On
+    Logstash_Prefix fluentbit-james
+    Type docker</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>FluentBit Parser config:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[PARSER]
+  Name         docker
+  Format       json
+  Time_Key     timestamp
+  Time_Format  %Y-%m-%dT%H:%M:%S.%LZ
+  Time_Keep    On
+  Decode_Field_As   escaped_utf8    log    do_next
+  Decode_Field_As   escaped         log    do_next
+  Decode_Field_As   json            log</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_kubernetes"><a class="anchor" href="#_using_kubernetes"></a>Using Kubernetes</h4>
+<div class="paragraph">
+<p>If using James in a Kubernetes environment, you can just append the logs to the console in a JSON formatted way
+using Jackson to easily allow FluentBit to directly tail them.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample conf/logback.xml configuration file for achieving this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+
+        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
+                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
+        &lt;/contextListener&gt;
+
+        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
+                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
+                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
+                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
+                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
+
+                        &lt;!-- Importance for handling multiple lines log --&gt;
+                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
+
+                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
+                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
+                        &lt;/jsonFormatter&gt;
+                    &lt;/layout&gt;
+                &lt;/encoder&gt;
+        &lt;/appender&gt;
+
+        &lt;root level="INFO"&gt;
+                &lt;appender-ref ref="CONSOLE" /&gt;
+        &lt;/root&gt;
+
+&lt;/configuration&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Regarding FluentBit on Kubernetes, you need to install it as a DaemonSet. Some official template exist
+with FluentBit outputting logs to ElasticSearch. For more information on how to install it,
+with your cluster, you can look at this <a href="https://docs.fluentbit.io/manual/installation/kubernetes">documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>As stated by the <a href="https://docs.fluentbit.io/manual/installation/kubernetes#details">detail</a> of the
+official documentation, FluentBit is configured to consume out of the box logs from containers
+on the same running node. So it should scrap your James logs without extra configuration.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
