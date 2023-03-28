@@ -5,14 +5,14 @@
 
   var navContainer = document.querySelector('.nav-container')
   var navToggle = document.querySelector('.nav-toggle')
+  var nav = navContainer.querySelector('.nav')
 
   navToggle.addEventListener('click', showNav)
-  // NOTE don't let click events propagate outside of nav container
-  navContainer.addEventListener('click', concealEvent)
+  navContainer.addEventListener('click', trapEvent)
 
   var menuPanel = navContainer.querySelector('[data-panel=menu]')
   if (!menuPanel) return
-  var nav = navContainer.querySelector('.nav')
+  var explorePanel = navContainer.querySelector('[data-panel=explore]')
 
   var currentPageItem = menuPanel.querySelector('.is-current-page')
   var originalPageItem = currentPageItem
@@ -33,12 +33,14 @@
     }
   })
 
-  nav.querySelector('.context').addEventListener('click', function () {
-    var currentPanel = nav.querySelector('.is-active[data-panel]')
-    var activatePanel = currentPanel.dataset.panel === 'menu' ? 'explore' : 'menu'
-    currentPanel.classList.toggle('is-active')
-    nav.querySelector('[data-panel=' + activatePanel + ']').classList.toggle('is-active')
-  })
+  if (explorePanel) {
+    explorePanel.querySelector('.context').addEventListener('click', function () {
+      // NOTE logic assumes there are only two panels
+      find(nav, '[data-panel]').forEach(function (panel) {
+        panel.classList.toggle('is-active')
+      })
+    })
+  }
 
   // NOTE prevent text from being selected by double click
   menuPanel.addEventListener('mousedown', function (e) {
@@ -59,7 +61,7 @@
           while ((current = current.parentNode) && current !== ceiling) {
             var id = current.id
             // NOTE: look for section heading
-            if (!id && (id = current.className.match(SECT_CLASS_RX))) id = (current.firstElementChild || {}).id
+            if (!id && (id = SECT_CLASS_RX.test(current.className))) id = (current.firstElementChild || {}).id
             if (id && (navLink = menuPanel.querySelector('.nav-link[href="#' + id + '"]'))) break
           }
         }
@@ -101,30 +103,38 @@
   }
 
   function toggleActive () {
-    this.classList.toggle('is-active')
+    if (this.classList.toggle('is-active')) {
+      var padding = parseFloat(window.getComputedStyle(this).marginTop)
+      var rect = this.getBoundingClientRect()
+      var menuPanelRect = menuPanel.getBoundingClientRect()
+      var overflowY = (rect.bottom - menuPanelRect.top - menuPanelRect.height + padding).toFixed()
+      if (overflowY > 0) menuPanel.scrollTop += Math.min((rect.top - menuPanelRect.top - padding).toFixed(), overflowY)
+    }
   }
 
   function showNav (e) {
     if (navToggle.classList.contains('is-active')) return hideNav(e)
+    trapEvent(e)
     var html = document.documentElement
     html.classList.add('is-clipped--nav')
     navToggle.classList.add('is-active')
     navContainer.classList.add('is-active')
+    var bounds = nav.getBoundingClientRect()
+    var expectedHeight = window.innerHeight - Math.round(bounds.top)
+    if (Math.round(bounds.height) !== expectedHeight) nav.style.height = expectedHeight + 'px'
     html.addEventListener('click', hideNav)
-    concealEvent(e)
   }
 
   function hideNav (e) {
+    trapEvent(e)
     var html = document.documentElement
     html.classList.remove('is-clipped--nav')
     navToggle.classList.remove('is-active')
     navContainer.classList.remove('is-active')
     html.removeEventListener('click', hideNav)
-    concealEvent(e)
   }
 
-  // NOTE don't let event get picked up by window click listener
-  function concealEvent (e) {
+  function trapEvent (e) {
     e.stopPropagation()
   }
 
@@ -142,7 +152,6 @@
 
   function findNextElement (from, selector) {
     var el = from.nextElementSibling
-    if (!el) return
-    return selector ? el[el.matches ? 'matches' : 'msMatchesSelector'](selector) && el : el
+    return el && selector ? el[el.matches ? 'matches' : 'msMatchesSelector'](selector) && el : el
   }
 })()
