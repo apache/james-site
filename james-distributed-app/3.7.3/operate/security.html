@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Security checklist :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
   </head>
@@ -435,13 +435,13 @@ server with requests, creating a denial-of-service attack and masking the attack
 <div class="ulist">
 <ul>
 <li>
-<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="page">open relay</a>. This should be the
+<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="xref page">open relay</a>. This should be the
 case with the default configuration.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Be sure in <a href="../configure/smtp.html" class="page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
+<p>Be sure in <a href="../configure/smtp.html" class="xref page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
 </div>
 <div class="paragraph">
 <p>We then recommend to manually test your installation in order to ensure that:</p>
@@ -471,16 +471,16 @@ for SMTP port 25.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
+<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="xref page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
 </li>
 <li>
-<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="page">LDAP</a>. If you are
+<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="xref page">LDAP</a>. If you are
 forced to store users in James be sure to choose <code>PBKDF2</code> as a hashing algorithm. Also, delays on authentication failures
 are supported via the <code>verifyFailureDelay</code> property. Note that IMAP / SMTP connections are closed after 3 authentication
 failures.</p>
 </li>
 <li>
-<p>5. Ensure that <a href="../configure/webadmin.html" class="page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
+<p>5. Ensure that <a href="../configure/webadmin.html" class="xref page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
 exposes yourself. You can either disable it, activate JWT security, or restrict it to listen only on localhost.</p>
 </li>
 <li>
@@ -493,12 +493,12 @@ for your outgoing emails to be trusted.</p>
 <li>
 <p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
 (<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
-or <a href="../configure/jmx.html" class="page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
+or <a href="../configure/jmx.html" class="xref page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
 features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
 </li>
 <li>
 <p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be
-<a href="../configure/jmap.html" class="page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
+<a href="../configure/jmap.html" class="xref page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
 forbidding push to private addresses.</p>
 </li>
 </ul>
@@ -510,18 +510,18 @@ forbidding push to private addresses.</p>
 <ul>
 <li>
 <p>1. Avoid advertising login/authenticate capabilities in clear channels. This might prevent some clients to attempt login
-on clear channels, and can be configured for both <a href="../configure/smtp.html" class="page">SMTP</a> and <a href="../configure/imap.html" class="page">IMAP</a>
+on clear channels, and can be configured for both <a href="../configure/smtp.html" class="xref page">SMTP</a> and <a href="../configure/imap.html" class="xref page">IMAP</a>
 using <code>auth.plainAuthEnabled=false</code>.</p>
 </li>
 <li>
-<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="page">DKIM</a> for your incoming emails.</p>
+<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="xref page">DKIM</a> for your incoming emails.</p>
 </li>
 <li>
-<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="page">storage quota</a> for your users.</p>
+<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="xref page">storage quota</a> for your users.</p>
 </li>
 <li>
-<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="page">Rspams and SpamAssassin</a>
-integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="page">ClamAV</a> tooling exists.
+<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="xref page">Rspams and SpamAssassin</a>
+integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="xref page">ClamAV</a> tooling exists.
 Filtering with third party systems upstream is also possible.</p>
 </li>
 <li>
@@ -539,11 +539,11 @@ POP3, ManagedSieve, etc&#8230;&#8203; Be conservative on what you expose.</p>
 <p>1. Set up <a href="https://openid.net/connect/">OIDC</a> for IMAP, SMTP and JMAP. Disable login/plain/basic authentication.</p>
 </li>
 <li>
-<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="page">Client authentication via certificates</a>.</p>
+<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="xref page">Client authentication via certificates</a>.</p>
 </li>
 <li>
-<p>3. You can <a href="../configure/mailets.html#_smimesign" class="page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="page">verify</a>
-and <a href="../configure/mailets.html#_smimedecrypt" class="page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
+<p>3. You can <a href="../configure/mailets.html#_smimesign" class="xref page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="xref page">verify</a>
+and <a href="../configure/mailets.html#_smimedecrypt" class="xref page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
 </li>
 </ul>
 </div>
