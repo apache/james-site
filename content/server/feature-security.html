@@ -277,6 +277,22 @@
             We follow the standard procedures within the ASF regarding
             <a class="externalLink" href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a>.
         </section>
+
+        <section>
+<h3><a name="CVE-2023-26269:_Privilege_escalation_through_unauthenticated_JMX"></a>CVE-2023-26269: Privilege escalation through unauthenticated JMX</h3>
+            
+<p> Apache James distribution prior to release 3.7.4 allows privilege escalation through the use of JMX.</p>
+
+            
+<p><b>Severity</b>: Moderate</p>
+
+            
+<p><b>Mitigation</b>:We recommend turning on authentication on. If the CLI is unused we recommend turning JMX off.<br />
+
+                Release 3.7.4 set up implicitly JMX authentication for Guice based products and addresses the underlying JMX exploits.<br />
+
+                Upgrading to Apache James 3.7.4 is thus advised.</p>
+        </section>
         <section>
 <h3><a name="CVE-2022-45935:_Temporary_File_Information_Disclosure_in_Apache_JAMES"></a>CVE-2022-45935: Temporary File Information Disclosure in Apache JAMES</h3>
             
