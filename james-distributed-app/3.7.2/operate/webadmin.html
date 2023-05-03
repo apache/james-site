@@ -62,7 +62,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-distributed-app" data-version="3.7.3">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.7.2">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -298,9 +298,6 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
   </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
@@ -325,22 +322,22 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.7.3 SNAPSHOT</span>
+    <span class="version">3.7.2 SNAPSHOT</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Apache James Distributed Server</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">3.7.3 SNAPSHOT</a>
+          <a href="../index.html">3.7.2 SNAPSHOT</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../james-project/3.7.3/index.html">Apache James Server</a>
+      <a class="title" href="../../../james-project/3.7.2/index.html">Apache James Server</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../james-project/3.7.3/index.html">3.7.3 SNAPSHOT</a>
+          <a href="../../../james-project/3.7.2/index.html">3.7.2 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -1447,168 +1444,6 @@ should match the criteria at <a href="../configure/usersrepository.html" class="
 </div>
 <div class="paragraph">
 <p>Note: Delegation is only available on top of Cassandra products and not implemented yet on top of JPA backends.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_change_a_username"><a class="anchor" href="#_change_a_username"></a>Change a username</h3>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST http://ip:port/users/oldUser/rename/newUser?action=rename</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Would migrate account data from <code>oldUser</code> to <code>newUser</code>.</p>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>Implemented migration steps are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>ForwardUsernameChangeTaskStep</code>: creates forward from old user to new user and migrates existing forwards</p>
-</li>
-<li>
-<p><code>FilterUsernameChangeTaskStep</code>: migrates users filtering rules</p>
-</li>
-<li>
-<p><code>DelegationUsernameChangeTaskStep</code>: migrates delegations where the impacted user is either delegatee or delegator</p>
-</li>
-<li>
-<p><code>MailboxUsernameChangeTaskStep</code>: migrates mailboxes belonging to the old user to the account of the new user. It also
-migrates user&#8217;s mailbox subscriptions.</p>
-</li>
-<li>
-<p><code>ACLUsernameChangeTaskStep</code>: migrates ACLs on mailboxes the migrated user has access to and updates subscriptions accordingly.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The <code>fromStep</code> query parameter allows skipping previous steps, allowing to resume the username change from a failed step.</p>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type <code>UsernameChangeTask</code> and the following <code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-        "type": "UsernameChangeTask",
-        "oldUser": "jessy.jones@domain.tld",
-        "newUser": "jessy.smith@domain.tld",
-        "status": {
-            "A": "DONE",
-            "B": "FAILED",
-            "C": "ABORTED"
-        },
-        "fromStep": null,
-        "timestamp": "2023-02-17T02:54:01.246477Z"
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Valid status includes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>SKIPPED</code>: bypassed via <code>fromStep</code> setting</p>
-</li>
-<li>
-<p><code>WAITING</code>: Awaits execution</p>
-</li>
-<li>
-<p><code>IN_PROGRESS</code>: Currently executed</p>
-</li>
-<li>
-<p><code>FAILED</code>: Error encountered while executing this step. Check the logs.</p>
-</li>
-<li>
-<p><code>ABORTED</code>: Won&#8217;t be executed because of previous step failures.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_retrieving_the_user_identities"><a class="anchor" href="#_retrieving_the_user_identities"></a>Retrieving the user identities</h3>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XGET http://ip:port/users/{baseUser}/identities?default=true</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>API to get the list of identities of a user</p>
-</div>
-<div class="paragraph">
-<p>The response will look like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>[
-   {
-      "name":"identity name 1",
-      "email":"bob@domain.tld",
-      "id":"4c039533-75b9-45db-becc-01fb0e747aa8",
-      "mayDelete":true,
-      "textSignature":"textSignature 1",
-      "htmlSignature":"htmlSignature 1",
-      "sortOrder":1,
-      "bcc":[
-         {
-            "emailerName":"bcc name 1",
-            "mailAddress":"bcc1@domain.org"
-         }
-      ],
-      "replyTo":[
-         {
-            "emailerName":"reply name 1",
-            "mailAddress":"reply1@domain.org"
-         }
-      ]
-   }
-]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Query parameters:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>default: (Optional) allows getting the default identity of a user. In order to do that: <code>default=true</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>200: The list was successfully retrieved</p>
-</li>
-<li>
-<p>400: The user is invalid</p>
-</li>
-<li>
-<p>404: The user is unknown or the default identity can not be found.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -5986,11 +5821,7 @@ when debugging.</p>
 </li>
 <li>
 <p><code>limit</code> (integer value. Optional, default is empty). It enables to limit the count of elements reprocessed.
-If unspecified the count of the processed elements is unbounded.</p>
-</li>
-<li>
-<p><code>maxRetries</code> Optional integer, defaults to no max retries limit. Only processed emails that had been retried less
-than this value. Ignored by default.</p>
+If unspecified the count of the processed elements is unbounded</p>
 </li>
 </ul>
 </div>

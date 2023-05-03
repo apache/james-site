@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Security checklist :: Apache James</title>
+    <title>Distributed James Server &mdash; Command Line Interface :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -62,7 +62,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-distributed-app" data-version="3.7.3">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.7.2">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -271,13 +271,13 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="migrating.html">Migrating existing data</a>
   </li>
-  <li class="nav-item" data-depth="3">
+  <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="cli.html">Command Line Interface</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="security.html">Security checklist</a>
   </li>
 </ul>
@@ -297,9 +297,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
   </li>
 </ul>
   </li>
@@ -325,22 +322,22 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.7.3 SNAPSHOT</span>
+    <span class="version">3.7.2 SNAPSHOT</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Apache James Distributed Server</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">3.7.3 SNAPSHOT</a>
+          <a href="../index.html">3.7.2 SNAPSHOT</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../james-project/3.7.3/index.html">Apache James Server</a>
+      <a class="title" href="../../../james-project/3.7.2/index.html">Apache James Server</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../james-project/3.7.3/index.html">3.7.3 SNAPSHOT</a>
+          <a href="../../../james-project/3.7.2/index.html">3.7.2 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -369,339 +366,501 @@
     <li><a href="../index.html">Apache James Distributed Server</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
     <li><a href="index.html">Operate</a></li>
-    <li><a href="security.html">Security checklist</a></li>
+    <li><a href="cli.html">Command Line Interface</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/security.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/cli.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Security checklist</h1>
+<h1 class="page">Distributed James Server &mdash; Command Line Interface</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This document aims as summarizing threats, security best practices as well as recommendations.</p>
+<p>The distributed server is packed with a command line client.</p>
+</div>
+<div class="paragraph">
+<p>To run this command line client simply execute:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>java -jar /root/james-cli.jar -h 127.0.0.1 -p 9999 COMMAND</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following document will explain you which are the available options
+for <strong>COMMAND</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Note: the above command line before <strong>COMMAND</strong> will be documented as <em>{cli}</em>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_threats"><a class="anchor" href="#_threats"></a>Threats</h2>
+<h2 id="_manage_domains"><a class="anchor" href="#_manage_domains"></a>Manage Domains</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Operating an email server exposes you to the following threats:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Spammers might attempt to use your servers to send their spam messages on their behalf. We speak of
-<strong>open relay</strong>. In addition to the resources consumed being an open relay will affect the trust other mail
-installations have in you, and thus will cause legitimate traffic to be rejected.</p>
-</li>
-<li>
-<p>Emails mostly consist of private data, which shall only be accessed by their legitimate user. Failure
-to do so might result in <strong>information disclosure</strong>.</p>
-</li>
-<li>
-<p><strong>Email forgery</strong>. An attacker might craft an email on the behalf of legitimate users.</p>
-</li>
-<li>
-<p>Email protocols allow user to authenticate and thus can be used as <strong>oracles</strong> to guess user passwords.</p>
-</li>
-<li>
-<p><strong>Spam</strong>. Non legitimate traffic can be a real burden to your users.</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A small request may result in a very large response and require considerable work on the server&#8230;&#8203;</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A malicious JMAP client may use the JMAP push subscription to attempt to flood a third party
-server with requests, creating a denial-of-service attack and masking the attacker’s true identity.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_best_practices"><a class="anchor" href="#_best_practices"></a>Best practices</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The following sections ranks best practices.</p>
-</div>
-<div class="sect2">
-<h3 id="_best_practices_must"><a class="anchor" href="#_best_practices_must"></a>Best practices: Must</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="page">open relay</a>. This should be the
-case with the default configuration.</p>
-</li>
-</ul>
+<p>Domains represent the domain names handled by your server.</p>
 </div>
 <div class="paragraph">
-<p>Be sure in <a href="../configure/smtp.html" class="page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
+<p>You can add a domain:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddDomain domain.tld</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>We then recommend to manually test your installation in order to ensure that:</p>
+<p>You can remove a domain:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Unauthenticated SMTP users cannot send mails to external email addresses (they are not relayed)</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users can send mails to internal email addresses</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users cannot use local addresses in their mail from, and send emails both locally and to distant targets.</p>
-</li>
-<li>
-<p>2. Avoid <strong>STARTTLS</strong> usage and favor SSL. Upgrade from a non encrypted channel into an encrypted channel is an opportunity
-for additional vulnerabilities. This is easily prevented by requiring SSL connection upfront. <a href="https://nostarttls.secvuln.info/">Read more&#8230;&#8203;</a></p>
-</li>
-</ul>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} RemoveDomain domain.tld</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Please note that STARTTLS is still beneficial in the context of email relaying, which happens on SMTP port 25 unencrypted,
-and enable opportunistic encryption upgrades that would not overwise be possible. We recommend keeping STARTTLS activated
-for SMTP port 25.</p>
+<p>(Note: associated users are not removed automatically)</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
-</li>
-<li>
-<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="page">LDAP</a>. If you are
-forced to store users in James be sure to choose <code>PBKDF2</code> as a hashing algorithm. Also, delays on authentication failures
-are supported via the <code>verifyFailureDelay</code> property. Note that IMAP / SMTP connections are closed after 3 authentication
-failures.</p>
-</li>
-<li>
-<p>5. Ensure that <a href="../configure/webadmin.html" class="page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
-exposes yourself. You can either disable it, activate JWT security, or restrict it to listen only on localhost.</p>
-</li>
-<li>
-<p>6. Set up <code>HTTPS</code> for http based protocols, namely <strong>JMAP</strong> and <strong>WebAdmin</strong>. We recommend the use of a reverse proxy like Nginx.</p>
-</li>
-<li>
-<p>7. Set up <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="https://james.apache.org/howTo/dkim.html">DKIM</a>
-for your outgoing emails to be trusted.</p>
-</li>
-<li>
-<p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
-(<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
-or <a href="../configure/jmx.html" class="page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
-features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
-</li>
-<li>
-<p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be
-<a href="../configure/jmap.html" class="page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
-forbidding push to private addresses.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Check if a domain is handled:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ContainsDomain domain.tld</pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_best_practice_should"><a class="anchor" href="#_best_practice_should"></a>Best practice: Should</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Avoid advertising login/authenticate capabilities in clear channels. This might prevent some clients to attempt login
-on clear channels, and can be configured for both <a href="../configure/smtp.html" class="page">SMTP</a> and <a href="../configure/imap.html" class="page">IMAP</a>
-using <code>auth.plainAuthEnabled=false</code>.</p>
-</li>
-<li>
-<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="page">DKIM</a> for your incoming emails.</p>
-</li>
-<li>
-<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="page">storage quota</a> for your users.</p>
-</li>
-<li>
-<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="page">Rspams and SpamAssassin</a>
-integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="page">ClamAV</a> tooling exists.
-Filtering with third party systems upstream is also possible.</p>
-</li>
-<li>
-<p>5. In order to limit your attack surface, disable protocols you or your users do not use. This includes the JMAP protocol,
-POP3, ManagedSieve, etc&#8230;&#8203; Be conservative on what you expose.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>And list your domains:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_best_practice_could"><a class="anchor" href="#_best_practice_could"></a>Best practice: Could</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Set up <a href="https://openid.net/connect/">OIDC</a> for IMAP, SMTP and JMAP. Disable login/plain/basic authentication.</p>
-</li>
-<li>
-<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="page">Client authentication via certificates</a>.</p>
-</li>
-<li>
-<p>3. You can <a href="../configure/mailets.html#_smimesign" class="page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="page">verify</a>
-and <a href="../configure/mailets.html#_smimedecrypt" class="page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
-</li>
-</ul>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListDomains</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_known_vulnerabilities"><a class="anchor" href="#_known_vulnerabilities"></a>Known vulnerabilities</h2>
+<h2 id="_managing_users"><a class="anchor" href="#_managing_users"></a>Managing users</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Several vulnerabilities have had been reported for previous releases of Apache James server.</p>
+<p>Note: the following commands are explained with virtual hosting turned
+on.</p>
 </div>
 <div class="paragraph">
-<p>Be sure not to run those! We highly recommend running the latest release, which we put great effort in not to use
-outdated dependencies.</p>
-</div>
-<div class="sect2">
-<h3 id="_reporting_vulnerabilities"><a class="anchor" href="#_reporting_vulnerabilities"></a>Reporting vulnerabilities</h3>
-<div class="paragraph">
-<p>We follow the standard procedures within the ASF regarding <a href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"><a class="anchor" href="#_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"></a>CVE-2022-45935: Temporary File Information Disclosure in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.3 is vulnerable to a temporary File Information Disclosure.</p>
+<p>Users are accounts on the mail server. James can maintain mailboxes for
+them.</p>
 </div>
 <div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
+<p>You can add a user:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddUser user@domain.tld password</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.3 or higher, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_44228_starttls_command_injection_in_apache_james"><a class="anchor" href="#_cve_2021_44228_starttls_command_injection_in_apache_james"></a>CVE-2021-44228: STARTTLS command injection in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command.</p>
+<p>Note: the domain used should have been previously created.</p>
 </div>
 <div class="paragraph">
-<p>Fix of CVE-2021-38542, which solved similar problem from Apache James 3.6.1, is subject to a parser differential and do not take into account concurrent requests.</p>
+<p>You can delete a user:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} RemoveUser user@domain.tld</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
+<p>(Note: associated mailboxes are not removed automatically)</p>
 </div>
 <div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.1 or higher, which fixes this vulnerability.</p>
+<p>And change a user password:</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} SetPassword user@domain.tld password</pre>
 </div>
-<div class="sect2">
-<h3 id="_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"><a class="anchor" href="#_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"></a>CVE-2021-38542: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)</h3>
-<div class="paragraph">
-<p>Apache James prior to release 3.6.1 is vulnerable to a buffering attack relying on the use of the STARTTLS
-command. This can result in Man-in -the-middle command injection attacks, leading potentially to leakage
-of sensible information.</p>
 </div>
 <div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
+<p>Note: All these write operations can not be performed on LDAP backend,
+as the implementation is read-only.</p>
 </div>
 <div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-1862">JAMES-1862</a></p>
+<p>Finally, you can list users:</p>
 </div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-<div class="paragraph">
-<p>Furthermore, we recommend, if possible to dis-activate STARTTLS and rely solely on explicit TLS for mail protocols, including SMTP, IMAP and POP3.</p>
-</div>
-<div class="paragraph">
-<p>Read more <a href="https://nostarttls.secvuln.info/">about STARTTLS security here</a>.</p>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListUsers</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"><a class="anchor" href="#_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"></a>CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS</h3>
+<h3 id="_virtual_hosting"><a class="anchor" href="#_virtual_hosting"></a>Virtual hosting</h3>
 <div class="paragraph">
-<p>Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST commands to orchestrate a Denial
-Of Service using a vulnerable Regular expression. This affected Apache James prior to 3.6.1</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3635">JAMES-3635</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which enforce the use of RE2J regular
-expression engine to execute regex in linear time without back-tracking.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40111_apache_james_imap_parsing_denial_of_service"><a class="anchor" href="#_cve_2021_40111_apache_james_imap_parsing_denial_of_service"></a>CVE-2021-40111: Apache James IMAP parsing Denial Of Service</h3>
-<div class="paragraph">
-<p>While fuzzing with Jazzer the IMAP parsing stack we discover that crafted APPEND and STATUS IMAP command
-could be used to trigger infinite loops resulting in expensive CPU computations and OutOfMemory exceptions.
-This can be used for a Denial Of Service attack. The IMAP user needs to be authenticated to exploit this
-vulnerability. This affected Apache James prior to version 3.6.1.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3634">JAMES-3634</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"><a class="anchor" href="#_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"></a>CVE-2021-40525: Apache James: Sieve file storage vulnerable to path traversal attacks</h3>
-<div class="paragraph">
-<p>Apache James ManagedSieve implementation alongside with the file storage for sieve scripts is vulnerable
-to path traversal, allowing reading and writing any file.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3646">JAMES-3646</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>:This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.</p>
-</div>
-<div class="paragraph">
-<p>This could also be mitigated by ensuring manageSieve is disabled, which is the case by default.</p>
-</div>
-<div class="paragraph">
-<p>Distributed and Cassandra based products are also not impacted.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2017_12628_privilege_escalation_using_jmx"><a class="anchor" href="#_cve_2017_12628_privilege_escalation_using_jmx"></a>CVE-2017-12628 Privilege escalation using JMX</h3>
-<div class="paragraph">
-<p>The Apache James Server prior version 3.0.1 is vulnerable to Java deserialization issues.
-One can use this for privilege escalation.
-This issue can be mitigated by:</p>
+<p>James supports virtualhosting.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Upgrading to James 3.0.1 onward</p>
-</li>
-<li>
-<p>Using a recent JRE (Exploit could not be reproduced on OpenJdk 8 u141)</p>
-</li>
-<li>
-<p>Exposing JMX socket only to localhost (default behaviour)</p>
-</li>
-<li>
-<p>Possibly running James in a container</p>
-</li>
-<li>
-<p>Disabling JMX all-together (Guice only)</p>
+<p>If set to true in the configuration, then the username is the full
+mail address.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Read more <a href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
+<p>The domains then become a part of the user.</p>
 </div>
+<div class="paragraph">
+<p><em>usera@domaina.com and</em> <em>usera@domainb.com</em> on a mail server with
+<em>domaina.com</em> and <em>domainb.com</em> configured are mail addresses that
+belongs to different users.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If set to false in the configurations, then the username is the mail
+address local part.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It means that a user is automatically created for all the domains
+configured on your server.</p>
+</div>
+<div class="paragraph">
+<p><em>usera@domaina.com and</em> <em>usera@domainb.com</em> on a mail server with
+<em>domaina.com</em> and <em>domainb.com</em> configured are mail addresses that
+belongs to the same users.</p>
+</div>
+<div class="paragraph">
+<p>Here are some sample commands for managing users when virtual hosting is
+turned off:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddUser user password
+{cli} RemoveUser user
+{cli} SetPassword user password</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_managing_mailboxes"><a class="anchor" href="#_managing_mailboxes"></a>Managing mailboxes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An administrator can perform some basic operation on user mailboxes.</p>
+</div>
+<div class="paragraph">
+<p>Note on mailbox formatting: mailboxes are composed of three parts.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The namespace, indicating what kind of mailbox it is. (Shared or
+not?). The value for users mailboxes is #private . Note that for now no
+other values are supported as James do not support shared mailboxes.</p>
+</li>
+<li>
+<p>The username as stated above, depending on the virtual hosting value.</p>
+</li>
+<li>
+<p>And finally mailbox name. Be aware that `.' serves as mailbox
+hierarchy delimiter.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An administrator can delete all of the mailboxes of a user, which is not
+done automatically when removing a user (to avoid data loss):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} DeleteUserMailboxes user@domain.tld</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>He can delete a specific mailbox:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} DeleteMailbox #private user@domain.tld INBOX.toBeDeleted</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>He can list the mailboxes of a specific user:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListUserMailboxes user@domain.tld</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And finally can create a specific mailbox:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} CreateMailbox #private user@domain.tld INBOX.newFolder</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_a_message_in_a_mailbox"><a class="anchor" href="#_adding_a_message_in_a_mailbox"></a>Adding a message in a mailbox</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The administrator can use the CLI to add a message in a mailbox. this
+can be done using:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ImportEml #private user@domain.tld INBOX.newFolder /full/path/to/file.eml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will add a message having the content specified in file.eml
+(that needs to be at the EML format). It will get added in the
+INBOX.subFolder mailbox belonging to user <a href="mailto:user@domain.tld">user@domain.tld</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_managing_mappings"><a class="anchor" href="#_managing_mappings"></a>Managing mappings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A mapping is a recipient rewriting rule. There is several kind of
+rewriting rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>address mapping: rewrite a given mail address into an other one.</p>
+</li>
+<li>
+<p>regex mapping.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can manage address mapping like (redirects email from
+<a href="mailto:fromUser@fromDomain.tld">fromUser@fromDomain.tld</a> to <a href="mailto:redirected@domain.new">redirected@domain.new</a>, then deletes the
+mapping):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddAddressMapping fromUser fromDomain.tld redirected@domain.new
+{cli} RemoveAddressMapping fromUser fromDomain.tld redirected@domain.new</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can manage regex mapping like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddRegexMapping redirected domain.new .*@domain.tld
+{cli} RemoveRegexMapping redirected domain.new .*@domain.tld</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can view mapping for a mail address:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListUserDomainMappings user domain.tld</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And all mappings defined on the server:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListMappings</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manage_quotas"><a class="anchor" href="#_manage_quotas"></a>Manage quotas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quotas are limitations on a group of mailboxes. They can limit the
+<strong>size</strong> or the <strong>messages count</strong> in a group of mailboxes.</p>
+</div>
+<div class="paragraph">
+<p>James groups by defaults mailboxes by user (but it can be overridden),
+and labels each group with a quotaroot.</p>
+</div>
+<div class="paragraph">
+<p>To get the quotaroot a given mailbox belongs to:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetQuotaroot #private user@domain.tld INBOX</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you can get the specific quotaroot limitations.</p>
+</div>
+<div class="paragraph">
+<p>For the number of messages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetMessageCountQuota quotaroot</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for the storage space available:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetStorageQuota quotaroot</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You see the maximum allowed for these values:</p>
+</div>
+<div class="paragraph">
+<p>For the number of messages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetMaxMessageCountQuota quotaroot</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for the storage space available:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetMaxStorageQuota quotaroot</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also specify maximum for these values.</p>
+</div>
+<div class="paragraph">
+<p>For the number of messages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} SetMaxMessageCountQuota quotaroot value</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for the storage space available:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} SetMaxStorageQuota quotaroot value</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With value being an integer. Please note the use of units for storage
+(K, M, G). For instance:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} SetMaxStorageQuota someone@apache.org 4G</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, James allows to specify global maximum values, at the server
+level. Note: syntax is similar to what was exposed previously.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} SetGlobalMaxMessageCountQuota value
+{cli} GetGlobalMaxMessageCountQuota
+{cli} SetGlobalMaxStorageQuota value
+{cli} GetGlobalMaxStorageQuota</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_re_indexing"><a class="anchor" href="#_re_indexing"></a>Re-indexing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>James allow you to index your emails in a search engine, for making
+search faster.</p>
+</div>
+<div class="paragraph">
+<p>For some reasons, you might want to re-index your mails (inconsistencies
+across datastore, migrations).</p>
+</div>
+<div class="paragraph">
+<p>To re-index all mails of all mailboxes of all users, type:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ReindexAll</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for a specific mailbox:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} Reindex #private user@domain.tld INBOX</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sieve_scripts_quota"><a class="anchor" href="#_sieve_scripts_quota"></a>Sieve scripts quota</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>James implements Sieve (RFC-5228). Your users can then write scripts
+and upload them to the server. Thus they can define the desired behavior
+upon email reception. James defines a Sieve mailet for this, and stores
+Sieve scripts. You can update them via the ManageSieve protocol, or via
+the ManageSieveMailet.</p>
+</div>
+<div class="paragraph">
+<p>You can define quota for the total size of Sieve scripts, per user.</p>
+</div>
+<div class="paragraph">
+<p>Syntax is similar to what was exposed for quotas. For defaults values:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetSieveQuota
+{cli} SetSieveQuota value
+{cli} RemoveSieveQuota</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for specific user quotas:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetSieveUserQuota user@domain.tld
+{cli} SetSieveQuota user@domain.tld value
+{cli} RemoveSieveUserQuota user@domain.tld</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_switching_of_mailbox_implementation"><a class="anchor" href="#_switching_of_mailbox_implementation"></a>Switching of mailbox implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Migration is experimental for now. You would need to customize <strong>Spring</strong>
+configuration to add a new mailbox manager with a different bean name.</p>
+</div>
+<div class="paragraph">
+<p>You can then copy data across mailbox managers using:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} CopyMailbox srcBean dstBean</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will then need to reconfigure James to use the new mailbox manager.</p>
 </div>
 </div>
 </div>

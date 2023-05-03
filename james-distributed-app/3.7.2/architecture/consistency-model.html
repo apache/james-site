@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Security checklist :: Apache James</title>
+    <title>Distributed James Server &mdash; Consistency Model :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -62,7 +62,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-distributed-app" data-version="3.7.3">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.7.2">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -80,16 +80,16 @@
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+    <a class="nav-link" href="index.html">Architecture</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+    <a class="nav-link" href="implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="consistency-model.html">Consistency Model</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+    <a class="nav-link" href="specialized-instances.html">Specialized instances</a>
   </li>
 </ul>
   </li>
@@ -254,31 +254,31 @@
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Operate</a>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="guide.html">Operator guide</a>
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="logging.html">Logging</a>
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="webadmin.html">WebAdmin REST administration API</a>
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="metrics.html">Metrics</a>
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="migrating.html">Migrating existing data</a>
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cli.html">Command Line Interface</a>
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
-    <a class="nav-link" href="security.html">Security checklist</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
 </ul>
   </li>
@@ -297,9 +297,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
   </li>
 </ul>
   </li>
@@ -325,22 +322,22 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.7.3 SNAPSHOT</span>
+    <span class="version">3.7.2 SNAPSHOT</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Apache James Distributed Server</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">3.7.3 SNAPSHOT</a>
+          <a href="../index.html">3.7.2 SNAPSHOT</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../james-project/3.7.3/index.html">Apache James Server</a>
+      <a class="title" href="../../../james-project/3.7.2/index.html">Apache James Server</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../james-project/3.7.3/index.html">3.7.3 SNAPSHOT</a>
+          <a href="../../../james-project/3.7.2/index.html">3.7.2 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -368,339 +365,206 @@
   <ul>
     <li><a href="../index.html">Apache James Distributed Server</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
-    <li><a href="index.html">Operate</a></li>
-    <li><a href="security.html">Security checklist</a></li>
+    <li><a href="index.html">Architecture</a></li>
+    <li><a href="consistency-model.html">Consistency Model</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/security.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/architecture/consistency-model.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Security checklist</h1>
+<h1 class="page">Distributed James Server &mdash; Consistency Model</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This document aims as summarizing threats, security best practices as well as recommendations.</p>
+<p>This page presents the consistency model used by the Distributed Server and
+points to the tools built around it.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_threats"><a class="anchor" href="#_threats"></a>Threats</h2>
+<h2 id="_data_replication"><a class="anchor" href="#_data_replication"></a>Data Replication</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Operating an email server exposes you to the following threats:</p>
+<p>The Distributed Server relies on different storage technologies, all having their own
+consistency models.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Spammers might attempt to use your servers to send their spam messages on their behalf. We speak of
-<strong>open relay</strong>. In addition to the resources consumed being an open relay will affect the trust other mail
-installations have in you, and thus will cause legitimate traffic to be rejected.</p>
-</li>
-<li>
-<p>Emails mostly consist of private data, which shall only be accessed by their legitimate user. Failure
-to do so might result in <strong>information disclosure</strong>.</p>
-</li>
-<li>
-<p><strong>Email forgery</strong>. An attacker might craft an email on the behalf of legitimate users.</p>
-</li>
-<li>
-<p>Email protocols allow user to authenticate and thus can be used as <strong>oracles</strong> to guess user passwords.</p>
-</li>
-<li>
-<p><strong>Spam</strong>. Non legitimate traffic can be a real burden to your users.</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A small request may result in a very large response and require considerable work on the server&#8230;&#8203;</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A malicious JMAP client may use the JMAP push subscription to attempt to flood a third party
-server with requests, creating a denial-of-service attack and masking the attacker’s true identity.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_best_practices"><a class="anchor" href="#_best_practices"></a>Best practices</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The following sections ranks best practices.</p>
+<p>These data stores replicate data in order to enforce some level of availability. We call
+this process replication. By consistency, we mean the ability for all replica to hold the
+same data. By availability, we mean the ability for a replica to answer a request.</p>
+</div>
+<div class="paragraph">
+<p>In distributed systems, <a href="https://en.wikipedia.org/wiki/CAP_theorem">according to the CAP theorem</a>,
+as we will necessarily encounter network partitions, then trade-offs need to be made between
+consistency and availability.</p>
+</div>
+<div class="paragraph">
+<p>This section details this trade-off for data stores used by the Distributed Server.</p>
 </div>
 <div class="sect2">
-<h3 id="_best_practices_must"><a class="anchor" href="#_best_practices_must"></a>Best practices: Must</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="page">open relay</a>. This should be the
-case with the default configuration.</p>
-</li>
-</ul>
+<h3 id="_cassandra_consistency_model"><a class="anchor" href="#_cassandra_consistency_model"></a>Cassandra consistency model</h3>
+<div class="paragraph">
+<p><a href="https://cassandra.apache.org/">Cassandra</a> is an
+<a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventually consistent</a> data store.
+This means that replica can hold diverging data, but are guaranteed to converge over time.</p>
 </div>
 <div class="paragraph">
-<p>Be sure in <a href="../configure/smtp.html" class="page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
+<p>Several mechanisms are built in Cassandra to enforce this convergence, and need to be
+leveraged by <strong>Distributed Server Administrator</strong>. Namely
+<a href="https://docs.datastax.com/en/dse/5.1/dse-admin/datastax_enterprise/tools/nodetool/toolsRepair.html">nodetool repair</a>,
+<a href="https://cassandra.apache.org/doc/latest/operating/hints.html">Hinted hand-off</a> and
+<a href="https://cassandra.apache.org/doc/latest/operating/read_repair.html">Read repair</a>.</p>
 </div>
 <div class="paragraph">
-<p>We then recommend to manually test your installation in order to ensure that:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Unauthenticated SMTP users cannot send mails to external email addresses (they are not relayed)</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users can send mails to internal email addresses</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users cannot use local addresses in their mail from, and send emails both locally and to distant targets.</p>
-</li>
-<li>
-<p>2. Avoid <strong>STARTTLS</strong> usage and favor SSL. Upgrade from a non encrypted channel into an encrypted channel is an opportunity
-for additional vulnerabilities. This is easily prevented by requiring SSL connection upfront. <a href="https://nostarttls.secvuln.info/">Read more&#8230;&#8203;</a></p>
-</li>
-</ul>
+<p>The Distributed Server tries to mitigate inconsistencies by relying on
+<a href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/dml/dmlConfigConsistency.html">QUORUM</a> read and write levels.
+This means that a majority of replica are needed for read and write operations to be performed.</p>
 </div>
 <div class="paragraph">
-<p>Please note that STARTTLS is still beneficial in the context of email relaying, which happens on SMTP port 25 unencrypted,
-and enable opportunistic encryption upgrades that would not overwise be possible. We recommend keeping STARTTLS activated
-for SMTP port 25.</p>
+<p>Critical business operations, like UID allocation, rely on strong consistency mechanisms brought by
+<a href="https://www.datastax.com/blog/2013/07/lightweight-transactions-cassandra-20">lightweight transaction</a>.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
-</li>
-<li>
-<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="page">LDAP</a>. If you are
-forced to store users in James be sure to choose <code>PBKDF2</code> as a hashing algorithm. Also, delays on authentication failures
-are supported via the <code>verifyFailureDelay</code> property. Note that IMAP / SMTP connections are closed after 3 authentication
-failures.</p>
-</li>
-<li>
-<p>5. Ensure that <a href="../configure/webadmin.html" class="page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
-exposes yourself. You can either disable it, activate JWT security, or restrict it to listen only on localhost.</p>
-</li>
-<li>
-<p>6. Set up <code>HTTPS</code> for http based protocols, namely <strong>JMAP</strong> and <strong>WebAdmin</strong>. We recommend the use of a reverse proxy like Nginx.</p>
-</li>
-<li>
-<p>7. Set up <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="https://james.apache.org/howTo/dkim.html">DKIM</a>
-for your outgoing emails to be trusted.</p>
-</li>
-<li>
-<p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
-(<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
-or <a href="../configure/jmx.html" class="page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
-features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
-</li>
-<li>
-<p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be
-<a href="../configure/jmap.html" class="page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
-forbidding push to private addresses.</p>
-</li>
-</ul>
+<div class="sect3">
+<h4 id="_about_multi_data_center_setups"><a class="anchor" href="#_about_multi_data_center_setups"></a>About multi data-center setups</h4>
+<div class="paragraph">
+<p>As strong consistency is required for some operation, especially regarding IMAP monotic UID and MODSEQ generation,
+and as lightweight transactions are slow across data centers, running James with a
+<a href="https://docs.datastax.com/en/ddac/doc/datastax_enterprise/production/DDACmultiDCperWorkloadType.html">multi data-center</a>
+Cassandra setup is discouraged.</p>
+</div>
+<div class="paragraph">
+<p>However, <a href="../configure/cassandra.html" class="page">this page</a> enables setting alternative read level,
+which could be acceptable regarding limited requirements. <code>LOCAL_QUORUM</code> coupled with <code>LOCAL_SERIAL</code>
+is likely the only scalable setup. Some options were added to turn off SERIAL consistency usage for message
+and mailbox management. However, the use of Lightweight Transaction cannot be disabled for UIDs and ModSeqs.</p>
+</div>
+<div class="paragraph">
+<p>Running the Distributed Server IMAP server in a multi datacenter setup will likely result either in data loss,
+or very slow operations - as we rely on monotic UID generation, without strong consistency, UIDs could be allocated
+several times.</p>
+</div>
+<div class="paragraph">
+<p>We did wire a multi-DC friendly distributed, POP3 only server that leverages acceptable performance while staying
+consistent. This is achieved by having a reduced feature set - supporting only the POP3 server and using messageIds as
+identifiers (generated without synchronisation using TimeUUIDs). You can find this application
+<a href="https://github.com/apache/james-project/tree/master/server/apps/distributed-pop3-app">on GitHub</a>. In the future,
+JMAP support could be added, but requires followup developments as some components critically depends on UIDs
+(for instance the search).</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_best_practice_should"><a class="anchor" href="#_best_practice_should"></a>Best practice: Should</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Avoid advertising login/authenticate capabilities in clear channels. This might prevent some clients to attempt login
-on clear channels, and can be configured for both <a href="../configure/smtp.html" class="page">SMTP</a> and <a href="../configure/imap.html" class="page">IMAP</a>
-using <code>auth.plainAuthEnabled=false</code>.</p>
-</li>
-<li>
-<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="page">DKIM</a> for your incoming emails.</p>
-</li>
-<li>
-<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="page">storage quota</a> for your users.</p>
-</li>
-<li>
-<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="page">Rspams and SpamAssassin</a>
-integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="page">ClamAV</a> tooling exists.
-Filtering with third party systems upstream is also possible.</p>
-</li>
-<li>
-<p>5. In order to limit your attack surface, disable protocols you or your users do not use. This includes the JMAP protocol,
-POP3, ManagedSieve, etc&#8230;&#8203; Be conservative on what you expose.</p>
-</li>
-</ul>
+<h3 id="_opensearch_consistency_model"><a class="anchor" href="#_opensearch_consistency_model"></a>OpenSearch consistency model</h3>
+<div class="paragraph">
+<p>OpenSearch relies on <a href="https://www.elastic.co/blog/a-new-era-for-cluster-coordination-in-elasticsearch">strong consistency</a>
+with home grown algorithm.</p>
+</div>
+<div class="paragraph">
+<p>The 6.x release line, that the distributed server is using is known to be slow to recover from failures.</p>
+</div>
+<div class="paragraph">
+<p>Be aware that data is asynchronously indexed in OpenSearch, changes will be eventually visible.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_best_practice_could"><a class="anchor" href="#_best_practice_could"></a>Best practice: Could</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Set up <a href="https://openid.net/connect/">OIDC</a> for IMAP, SMTP and JMAP. Disable login/plain/basic authentication.</p>
-</li>
-<li>
-<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="page">Client authentication via certificates</a>.</p>
-</li>
-<li>
-<p>3. You can <a href="../configure/mailets.html#_smimesign" class="page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="page">verify</a>
-and <a href="../configure/mailets.html#_smimedecrypt" class="page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
-</li>
-</ul>
+<h3 id="_rabbitmq_consistency_model"><a class="anchor" href="#_rabbitmq_consistency_model"></a>RabbitMQ consistency model</h3>
+<div class="paragraph">
+<p>The Distributed Server relies out of the box on a single RabbitMQ server, thus consistency concerns
+are not (yet) applicable. Availability concerns are applicable.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_known_vulnerabilities"><a class="anchor" href="#_known_vulnerabilities"></a>Known vulnerabilities</h2>
+<h2 id="_denormalization"><a class="anchor" href="#_denormalization"></a>Denormalization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Several vulnerabilities have had been reported for previous releases of Apache James server.</p>
+<p>In Cassandra, data needs to be structured to match the read patterns. To support several conflicting
+read patterns, the data needs to be duplicated into different structures. This process is called
+denormalization.</p>
 </div>
 <div class="paragraph">
-<p>Be sure not to run those! We highly recommend running the latest release, which we put great effort in not to use
-outdated dependencies.</p>
-</div>
-<div class="sect2">
-<h3 id="_reporting_vulnerabilities"><a class="anchor" href="#_reporting_vulnerabilities"></a>Reporting vulnerabilities</h3>
-<div class="paragraph">
-<p>We follow the standard procedures within the ASF regarding <a href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"><a class="anchor" href="#_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"></a>CVE-2022-45935: Temporary File Information Disclosure in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.3 is vulnerable to a temporary File Information Disclosure.</p>
+<p>While data can be consistent at the table level, some inconsistencies can sneak in at the applicative
+level across denormalization tables.</p>
 </div>
 <div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
+<p>We write to a "table of truth" first, then duplicate the data to denormalization tables.</p>
 </div>
 <div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.3 or higher, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_44228_starttls_command_injection_in_apache_james"><a class="anchor" href="#_cve_2021_44228_starttls_command_injection_in_apache_james"></a>CVE-2021-44228: STARTTLS command injection in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command.</p>
-</div>
-<div class="paragraph">
-<p>Fix of CVE-2021-38542, which solved similar problem from Apache James 3.6.1, is subject to a parser differential and do not take into account concurrent requests.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.1 or higher, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"><a class="anchor" href="#_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"></a>CVE-2021-38542: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)</h3>
-<div class="paragraph">
-<p>Apache James prior to release 3.6.1 is vulnerable to a buffering attack relying on the use of the STARTTLS
-command. This can result in Man-in -the-middle command injection attacks, leading potentially to leakage
-of sensible information.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-1862">JAMES-1862</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-<div class="paragraph">
-<p>Furthermore, we recommend, if possible to dis-activate STARTTLS and rely solely on explicit TLS for mail protocols, including SMTP, IMAP and POP3.</p>
-</div>
-<div class="paragraph">
-<p>Read more <a href="https://nostarttls.secvuln.info/">about STARTTLS security here</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"><a class="anchor" href="#_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"></a>CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS</h3>
-<div class="paragraph">
-<p>Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST commands to orchestrate a Denial
-Of Service using a vulnerable Regular expression. This affected Apache James prior to 3.6.1</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3635">JAMES-3635</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which enforce the use of RE2J regular
-expression engine to execute regex in linear time without back-tracking.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40111_apache_james_imap_parsing_denial_of_service"><a class="anchor" href="#_cve_2021_40111_apache_james_imap_parsing_denial_of_service"></a>CVE-2021-40111: Apache James IMAP parsing Denial Of Service</h3>
-<div class="paragraph">
-<p>While fuzzing with Jazzer the IMAP parsing stack we discover that crafted APPEND and STATUS IMAP command
-could be used to trigger infinite loops resulting in expensive CPU computations and OutOfMemory exceptions.
-This can be used for a Denial Of Service attack. The IMAP user needs to be authenticated to exploit this
-vulnerability. This affected Apache James prior to version 3.6.1.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3634">JAMES-3634</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"><a class="anchor" href="#_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"></a>CVE-2021-40525: Apache James: Sieve file storage vulnerable to path traversal attacks</h3>
-<div class="paragraph">
-<p>Apache James ManagedSieve implementation alongside with the file storage for sieve scripts is vulnerable
-to path traversal, allowing reading and writing any file.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3646">JAMES-3646</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>:This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.</p>
-</div>
-<div class="paragraph">
-<p>This could also be mitigated by ensuring manageSieve is disabled, which is the case by default.</p>
-</div>
-<div class="paragraph">
-<p>Distributed and Cassandra based products are also not impacted.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2017_12628_privilege_escalation_using_jmx"><a class="anchor" href="#_cve_2017_12628_privilege_escalation_using_jmx"></a>CVE-2017-12628 Privilege escalation using JMX</h3>
-<div class="paragraph">
-<p>The Apache James Server prior version 3.0.1 is vulnerable to Java deserialization issues.
-One can use this for privilege escalation.
-This issue can be mitigated by:</p>
+<p>The Distributed server offers several mechanisms to mitigate these inconsistencies:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Upgrading to James 3.0.1 onward</p>
+<p>Writes to denormalization tables are retried.</p>
 </li>
 <li>
-<p>Using a recent JRE (Exploit could not be reproduced on OpenJdk 8 u141)</p>
+<p>Some <a href="../operate/guide.html#_solving_cassandra_inconsistencies" class="page">SolveInconsistencies tasks</a> are exposed and are able to heal a given denormalization table.
+They reset the "deduplication tables" content to the "table of truth" content.</p>
 </li>
 <li>
-<p>Exposing JMX socket only to localhost (default behaviour)</p>
+<p><a href="https://github.com/apache/james-project/blob/master/src/adr/0042-applicative-read-repairs.md">Read repairs</a>,
+when implemented for a given denormalization, enables auto-healing. When an inconsistency is detected, They reset the
+"deduplication tables" entry to the "table of truth" entry.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_consistency_across_data_stores"><a class="anchor" href="#_consistency_across_data_stores"></a>Consistency across data stores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Distributed Server leverages several data stores:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Cassandra is used for metadata storage</p>
 </li>
 <li>
-<p>Possibly running James in a container</p>
+<p>OpenSearch for search</p>
 </li>
 <li>
-<p>Disabling JMX all-together (Guice only)</p>
+<p>Object Storage for large object storage</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Read more <a href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
+<p>Thus the Distributed Server also offers mechanisms to enforce consistency across data stores.</p>
+</div>
+<div class="sect2">
+<h3 id="_write_path_organisation"><a class="anchor" href="#_write_path_organisation"></a>Write path organisation</h3>
+<div class="paragraph">
+<p>The primary data stores are composed of Cassandra for metadata and Object storage for binary data.</p>
+</div>
+<div class="paragraph">
+<p>To ensure the data referenced in Cassandra is pointing to a valid object in the object store, we write
+the object store payload first, then write the corresponding metadata in Cassandra.</p>
+</div>
+<div class="paragraph">
+<p>Such a procedure avoids metadata pointing to unexisting blobs, however might lead to some unreferenced
+blobs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cassandra_opensearch"><a class="anchor" href="#_cassandra_opensearch"></a>Cassandra &lt;&#8658; OpenSearch</h3>
+<div class="paragraph">
+<p>After being written to the primary stores (namely Cassandra &amp; Object Storage), email content is
+asynchronously indexed into OpenSearch.</p>
+</div>
+<div class="paragraph">
+<p>This process, called the EventBus, which retries temporary errors, and stores transient errors for
+later admin-triggered retries is described further <a href="../operate/guide.html#_mailbox_event_bus" class="page">here</a>.
+His role is to spread load and limit inconsistencies.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, some <a href="../operate/guide.html#_usual_troubleshooting_procedures" class="page">re-indexing tasks</a>
+enables to re-synchronise OpenSearch content with the primary data stores</p>
 </div>
 </div>
 </div>

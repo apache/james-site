@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Security checklist :: Apache James</title>
+    <title>Distributed James Server &mdash; Cassandra migration :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -62,7 +62,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-distributed-app" data-version="3.7.3">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.7.2">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -274,10 +274,10 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="cli.html">Command Line Interface</a>
   </li>
-  <li class="nav-item" data-depth="3">
+  <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="security.html">Security checklist</a>
   </li>
 </ul>
@@ -297,9 +297,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
   </li>
 </ul>
   </li>
@@ -325,22 +322,22 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.7.3 SNAPSHOT</span>
+    <span class="version">3.7.2 SNAPSHOT</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="../index.html">Apache James Distributed Server</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">3.7.3 SNAPSHOT</a>
+          <a href="../index.html">3.7.2 SNAPSHOT</a>
         </li>
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../james-project/3.7.3/index.html">Apache James Server</a>
+      <a class="title" href="../../../james-project/3.7.2/index.html">Apache James Server</a>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../james-project/3.7.3/index.html">3.7.3 SNAPSHOT</a>
+          <a href="../../../james-project/3.7.2/index.html">3.7.2 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -369,341 +366,52 @@
     <li><a href="../index.html">Apache James Distributed Server</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
     <li><a href="index.html">Operate</a></li>
-    <li><a href="security.html">Security checklist</a></li>
+    <li><a href="cassandra-migration.html">Cassandra migration</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/security.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/cassandra-migration.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Security checklist</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">Distributed James Server &mdash; Cassandra migration</h1>
 <div class="paragraph">
-<p>This document aims as summarizing threats, security best practices as well as recommendations.</p>
+<p>Cassandra upgrades implies the creation of a new table. Thus restarting James is needed, as new tables are created on restart.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_threats"><a class="anchor" href="#_threats"></a>Threats</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Operating an email server exposes you to the following threats:</p>
+<p>Once done, we ship code that tries to read from new tables, and if not possible backs up to old tables. You can thus safely run
+without running additional migrations.</p>
+</div>
+<div class="paragraph">
+<p>On the fly migration can be enabled. However, one might want to force the migration in a controlled fashion, and update
+automatically current schema version used (assess in the database old versions is no more used, as the corresponding tables are empty).
+Note that this process is safe: we ensure the service is not running concurrently on this James instance, that it does not bump
+version upon partial failures, that race condition in version upgrades will be idempotent, etc&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>These schema updates can be triggered by <a href="webadmin.html#_cassandra_schema_upgrades" class="page">webadmin</a>.</p>
+</div>
+<div class="paragraph">
+<p>Note that currently the progress can be tracked by logs.</p>
+</div>
+<div class="paragraph">
+<p>Here are the implemented migrations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Spammers might attempt to use your servers to send their spam messages on their behalf. We speak of
-<strong>open relay</strong>. In addition to the resources consumed being an open relay will affect the trust other mail
-installations have in you, and thus will cause legitimate traffic to be rejected.</p>
+<p><strong>From V8 to V9</strong> : Adopt a more compact representation for message properties.</p>
 </li>
 <li>
-<p>Emails mostly consist of private data, which shall only be accessed by their legitimate user. Failure
-to do so might result in <strong>information disclosure</strong>.</p>
-</li>
-<li>
-<p><strong>Email forgery</strong>. An attacker might craft an email on the behalf of legitimate users.</p>
-</li>
-<li>
-<p>Email protocols allow user to authenticate and thus can be used as <strong>oracles</strong> to guess user passwords.</p>
-</li>
-<li>
-<p><strong>Spam</strong>. Non legitimate traffic can be a real burden to your users.</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A small request may result in a very large response and require considerable work on the server&#8230;&#8203;</p>
-</li>
-<li>
-<p><strong>Denial of service</strong>: A malicious JMAP client may use the JMAP push subscription to attempt to flood a third party
-server with requests, creating a denial-of-service attack and masking the attacker’s true identity.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_best_practices"><a class="anchor" href="#_best_practices"></a>Best practices</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The following sections ranks best practices.</p>
-</div>
-<div class="sect2">
-<h3 id="_best_practices_must"><a class="anchor" href="#_best_practices_must"></a>Best practices: Must</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="page">open relay</a>. This should be the
-case with the default configuration.</p>
+<p><strong>From V9 to V10</strong> : Handles Mailbox ACL transactionality with event-sourcing. We got read of SERIAL consistency upon
+reads thus unlocking a major performance enhancement.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Be sure in <a href="../configure/smtp.html" class="page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
-</div>
-<div class="paragraph">
-<p>We then recommend to manually test your installation in order to ensure that:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Unauthenticated SMTP users cannot send mails to external email addresses (they are not relayed)</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users can send mails to internal email addresses</p>
-</li>
-<li>
-<p>Unauthenticated SMTP users cannot use local addresses in their mail from, and send emails both locally and to distant targets.</p>
-</li>
-<li>
-<p>2. Avoid <strong>STARTTLS</strong> usage and favor SSL. Upgrade from a non encrypted channel into an encrypted channel is an opportunity
-for additional vulnerabilities. This is easily prevented by requiring SSL connection upfront. <a href="https://nostarttls.secvuln.info/">Read more&#8230;&#8203;</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Please note that STARTTLS is still beneficial in the context of email relaying, which happens on SMTP port 25 unencrypted,
-and enable opportunistic encryption upgrades that would not overwise be possible. We recommend keeping STARTTLS activated
-for SMTP port 25.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
-</li>
-<li>
-<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="page">LDAP</a>. If you are
-forced to store users in James be sure to choose <code>PBKDF2</code> as a hashing algorithm. Also, delays on authentication failures
-are supported via the <code>verifyFailureDelay</code> property. Note that IMAP / SMTP connections are closed after 3 authentication
-failures.</p>
-</li>
-<li>
-<p>5. Ensure that <a href="../configure/webadmin.html" class="page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
-exposes yourself. You can either disable it, activate JWT security, or restrict it to listen only on localhost.</p>
-</li>
-<li>
-<p>6. Set up <code>HTTPS</code> for http based protocols, namely <strong>JMAP</strong> and <strong>WebAdmin</strong>. We recommend the use of a reverse proxy like Nginx.</p>
-</li>
-<li>
-<p>7. Set up <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="https://james.apache.org/howTo/dkim.html">DKIM</a>
-for your outgoing emails to be trusted.</p>
-</li>
-<li>
-<p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
-(<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
-or <a href="../configure/jmx.html" class="page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
-features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
-</li>
-<li>
-<p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be
-<a href="../configure/jmap.html" class="page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
-forbidding push to private addresses.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_best_practice_should"><a class="anchor" href="#_best_practice_should"></a>Best practice: Should</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Avoid advertising login/authenticate capabilities in clear channels. This might prevent some clients to attempt login
-on clear channels, and can be configured for both <a href="../configure/smtp.html" class="page">SMTP</a> and <a href="../configure/imap.html" class="page">IMAP</a>
-using <code>auth.plainAuthEnabled=false</code>.</p>
-</li>
-<li>
-<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="page">DKIM</a> for your incoming emails.</p>
-</li>
-<li>
-<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="page">storage quota</a> for your users.</p>
-</li>
-<li>
-<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="page">Rspams and SpamAssassin</a>
-integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="page">ClamAV</a> tooling exists.
-Filtering with third party systems upstream is also possible.</p>
-</li>
-<li>
-<p>5. In order to limit your attack surface, disable protocols you or your users do not use. This includes the JMAP protocol,
-POP3, ManagedSieve, etc&#8230;&#8203; Be conservative on what you expose.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_best_practice_could"><a class="anchor" href="#_best_practice_could"></a>Best practice: Could</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>1. Set up <a href="https://openid.net/connect/">OIDC</a> for IMAP, SMTP and JMAP. Disable login/plain/basic authentication.</p>
-</li>
-<li>
-<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="page">Client authentication via certificates</a>.</p>
-</li>
-<li>
-<p>3. You can <a href="../configure/mailets.html#_smimesign" class="page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="page">verify</a>
-and <a href="../configure/mailets.html#_smimedecrypt" class="page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_known_vulnerabilities"><a class="anchor" href="#_known_vulnerabilities"></a>Known vulnerabilities</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Several vulnerabilities have had been reported for previous releases of Apache James server.</p>
-</div>
-<div class="paragraph">
-<p>Be sure not to run those! We highly recommend running the latest release, which we put great effort in not to use
-outdated dependencies.</p>
-</div>
-<div class="sect2">
-<h3 id="_reporting_vulnerabilities"><a class="anchor" href="#_reporting_vulnerabilities"></a>Reporting vulnerabilities</h3>
-<div class="paragraph">
-<p>We follow the standard procedures within the ASF regarding <a href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"><a class="anchor" href="#_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"></a>CVE-2022-45935: Temporary File Information Disclosure in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.3 is vulnerable to a temporary File Information Disclosure.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.3 or higher, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_44228_starttls_command_injection_in_apache_james"><a class="anchor" href="#_cve_2021_44228_starttls_command_injection_in_apache_james"></a>CVE-2021-44228: STARTTLS command injection in Apache JAMES</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command.</p>
-</div>
-<div class="paragraph">
-<p>Fix of CVE-2021-38542, which solved similar problem from Apache James 3.6.1, is subject to a parser differential and do not take into account concurrent requests.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.1 or higher, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"><a class="anchor" href="#_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"></a>CVE-2021-38542: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)</h3>
-<div class="paragraph">
-<p>Apache James prior to release 3.6.1 is vulnerable to a buffering attack relying on the use of the STARTTLS
-command. This can result in Man-in -the-middle command injection attacks, leading potentially to leakage
-of sensible information.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-1862">JAMES-1862</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-<div class="paragraph">
-<p>Furthermore, we recommend, if possible to dis-activate STARTTLS and rely solely on explicit TLS for mail protocols, including SMTP, IMAP and POP3.</p>
-</div>
-<div class="paragraph">
-<p>Read more <a href="https://nostarttls.secvuln.info/">about STARTTLS security here</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"><a class="anchor" href="#_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"></a>CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS</h3>
-<div class="paragraph">
-<p>Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST commands to orchestrate a Denial
-Of Service using a vulnerable Regular expression. This affected Apache James prior to 3.6.1</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3635">JAMES-3635</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which enforce the use of RE2J regular
-expression engine to execute regex in linear time without back-tracking.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40111_apache_james_imap_parsing_denial_of_service"><a class="anchor" href="#_cve_2021_40111_apache_james_imap_parsing_denial_of_service"></a>CVE-2021-40111: Apache James IMAP parsing Denial Of Service</h3>
-<div class="paragraph">
-<p>While fuzzing with Jazzer the IMAP parsing stack we discover that crafted APPEND and STATUS IMAP command
-could be used to trigger infinite loops resulting in expensive CPU computations and OutOfMemory exceptions.
-This can be used for a Denial Of Service attack. The IMAP user needs to be authenticated to exploit this
-vulnerability. This affected Apache James prior to version 3.6.1.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3634">JAMES-3634</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"><a class="anchor" href="#_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"></a>CVE-2021-40525: Apache James: Sieve file storage vulnerable to path traversal attacks</h3>
-<div class="paragraph">
-<p>Apache James ManagedSieve implementation alongside with the file storage for sieve scripts is vulnerable
-to path traversal, allowing reading and writing any file.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3646">JAMES-3646</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>:This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.</p>
-</div>
-<div class="paragraph">
-<p>This could also be mitigated by ensuring manageSieve is disabled, which is the case by default.</p>
-</div>
-<div class="paragraph">
-<p>Distributed and Cassandra based products are also not impacted.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2017_12628_privilege_escalation_using_jmx"><a class="anchor" href="#_cve_2017_12628_privilege_escalation_using_jmx"></a>CVE-2017-12628 Privilege escalation using JMX</h3>
-<div class="paragraph">
-<p>The Apache James Server prior version 3.0.1 is vulnerable to Java deserialization issues.
-One can use this for privilege escalation.
-This issue can be mitigated by:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Upgrading to James 3.0.1 onward</p>
-</li>
-<li>
-<p>Using a recent JRE (Exploit could not be reproduced on OpenJdk 8 u141)</p>
-</li>
-<li>
-<p>Exposing JMX socket only to localhost (default behaviour)</p>
-</li>
-<li>
-<p>Possibly running James in a container</p>
-</li>
-<li>
-<p>Disabling JMX all-together (Guice only)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Read more <a href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
-</div>
-</div>
-</div>
+<p>The <a href="guide.html#_updating_cassandra_schema_version" class="page">Operator guide</a> further details the migration process.</p>
 </div>
 </article>
   </div>
