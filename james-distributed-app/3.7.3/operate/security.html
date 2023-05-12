@@ -494,7 +494,7 @@ for your outgoing emails to be trusted.</p>
 <p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
 (<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
 or <a href="../configure/jmx.html" class="page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
-features.</p>
+features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
 </li>
 <li>
 <p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be

@@ -508,23 +508,12 @@ Follow the 'Useful commands' section for more information about James CLI.</p>
 <p>You can find more explanation on the need of Tika in this <a href="../configure/tika.html" class="xref page">page</a>.</p>
 </div>
 <div class="paragraph">
-<p>We need to provide the key we will use for TLS. For obvious reasons, this is not provided in this git.</p>
-</div>
-<div class="paragraph">
-<p>Copy your TLS keys to the current folder or generate it using the following command. The password must be <code>james72laBalle</code> to match default configuration.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$ keytool -genkey -alias james -keyalg RSA -keystore keystore</pre>
-</div>
-</div>
-<div class="paragraph">
 <p>To run this container :</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>$ docker run --network james --hostname HOSTNAME -p "25:25" -p 80:80 -p "110:110" -p "143:143" -p "465:465" -p "587:587" -p "993:993" -p "127.0.0.1:8000:8000" --name james_run
-    -v $PWD/keystore:/root/conf/keystore -t apache/james:distributed-3.7.4</pre>
+    -v $PWD/keystore:/root/conf/keystore -t apache/james:distributed-3.7.4 --generate-keystore</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -551,6 +540,18 @@ Note that the above example assumes <code>127.0.0.1</code> is your loopback inte
 </div>
 <div class="paragraph">
 <p>To have log file accessible on a volume, add <strong>-v  $PWD/logs:/logs</strong> option to the above command line, where <strong>$PWD/logs</strong> is your local directory to put files in.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_specific_keystore"><a class="anchor" href="#_specific_keystore"></a>Specific keystore</h3>
+<div class="paragraph">
+<p>Alternatively, you can also generate a keystore in your conf folder with the
+following command, and drop <code>--generate-keystore</code> option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">

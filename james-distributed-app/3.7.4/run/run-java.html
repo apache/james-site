@@ -464,15 +464,6 @@ configuration from
 You might need to adapt it to your needs.</p>
 </div>
 <div class="paragraph">
-<p>You also need to generate a keystore in your conf folder with the
-following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore</code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>You need to have a Cassandra, OpenSearch, S3 and RabbitMQ instance
 running. You can either install the servers or launch them via docker:</p>
 </div>
@@ -489,7 +480,16 @@ $ docker run -d --env 'REMOTE_MANAGEMENT_DISABLE=1' --env 'SCALITY_ACCESS_KEY_ID
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-distributed-app.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -Dworking.directory=. -jar target/james-server-distributed-app.jar --generate-keystore</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can also generate a keystore in your conf folder with the
+following command, and drop <code>--generate-keystore</code> option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore</code></pre>
 </div>
 </div>
 <div class="sect3">

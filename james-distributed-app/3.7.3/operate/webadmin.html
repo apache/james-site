@@ -1472,7 +1472,17 @@ a task</a>.</p>
 <p><code>ForwardUsernameChangeTaskStep</code>: creates forward from old user to new user and migrates existing forwards</p>
 </li>
 <li>
+<p><code>FilterUsernameChangeTaskStep</code>: migrates users filtering rules</p>
+</li>
+<li>
 <p><code>DelegationUsernameChangeTaskStep</code>: migrates delegations where the impacted user is either delegatee or delegator</p>
+</li>
+<li>
+<p><code>MailboxUsernameChangeTaskStep</code>: migrates mailboxes belonging to the old user to the account of the new user. It also
+migrates user&#8217;s mailbox subscriptions.</p>
+</li>
+<li>
+<p><code>ACLUsernameChangeTaskStep</code>: migrates ACLs on mailboxes the migrated user has access to and updates subscriptions accordingly.</p>
 </li>
 </ul>
 </div>
@@ -1530,6 +1540,73 @@ a task</a>.</p>
 </li>
 <li>
 <p><code>ABORTED</code>: Won&#8217;t be executed because of previous step failures.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_retrieving_the_user_identities"><a class="anchor" href="#_retrieving_the_user_identities"></a>Retrieving the user identities</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users/{baseUser}/identities?default=true</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>API to get the list of identities of a user</p>
+</div>
+<div class="paragraph">
+<p>The response will look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>[
+   {
+      "name":"identity name 1",
+      "email":"bob@domain.tld",
+      "id":"4c039533-75b9-45db-becc-01fb0e747aa8",
+      "mayDelete":true,
+      "textSignature":"textSignature 1",
+      "htmlSignature":"htmlSignature 1",
+      "sortOrder":1,
+      "bcc":[
+         {
+            "emailerName":"bcc name 1",
+            "mailAddress":"bcc1@domain.org"
+         }
+      ],
+      "replyTo":[
+         {
+            "emailerName":"reply name 1",
+            "mailAddress":"reply1@domain.org"
+         }
+      ]
+   }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Query parameters:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>default: (Optional) allows getting the default identity of a user. In order to do that: <code>default=true</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The list was successfully retrieved</p>
+</li>
+<li>
+<p>400: The user is invalid</p>
+</li>
+<li>
+<p>404: The user is unknown or the default identity can not be found.</p>
 </li>
 </ul>
 </div>
