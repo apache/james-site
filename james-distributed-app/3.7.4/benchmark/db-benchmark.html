@@ -260,6 +260,9 @@
     <a class="nav-link" href="../operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../operate/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -586,50 +589,55 @@ queries:
 </div>
 </div>
 <div class="sect2">
-<h3 id="_benchmark_elasticsearch"><a class="anchor" href="#_benchmark_elasticsearch"></a>Benchmark Elasticsearch</h3>
+<h3 id="_benchmark_opensearch"><a class="anchor" href="#_benchmark_opensearch"></a>Benchmark OpenSearch</h3>
 <div class="sect3">
 <h4 id="_benchmark_methodology_2"><a class="anchor" href="#_benchmark_methodology_2"></a>Benchmark methodology</h4>
 <div class="sect4">
 <h5 id="_benchmark_tool_2"><a class="anchor" href="#_benchmark_tool_2"></a>Benchmark tool</h5>
 <div class="paragraph">
-<p>We use <a href="https://github.com/elastic/rally">EsRally</a> - an official Elasticsearch benchmarking tool. EsRally provides the following features:</p>
+<p>We use <a href="https://github.com/opensearch-project/opensearch-benchmark">opensearch-benchmark</a> - an official OpenSearch benchmarking tool.
+It provides the following features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Automatically create Elasticsearch clusters, stress tests them, and delete them.</p>
+<p>Automatically create OpenSearch clusters, stress tests them, and delete them.</p>
 </li>
 <li>
-<p>Manage stress testing data and solutions by Elasticsearch version.</p>
+<p>Manage stress testing data and solutions by OpenSearch version.</p>
 </li>
 <li>
-<p>Present stress testing data in a comprehensive way, allowing you to compare and analyze the data of different stress tests and store the data on a particular Elasticsearch instance for secondary analysis.</p>
+<p>Present stress testing data in a comprehensive way, allowing you to compare and analyze the data of different stress tests and store the data on a particular OpenSearch instance for secondary analysis.</p>
 </li>
 <li>
 <p>Collect Java Virtual Machine (JVM) details, such as memory and garbage collection (GC) data, to locate performance problems.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>You can have a look at <a href="https://elasticsearch-benchmarks.elastic.co/" class="bare">https://elasticsearch-benchmarks.elastic.co/</a>  where Elasticsearch also officially uses esrally to test its performance and publishes the results in real-time.</p>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_how_to_benchmark_2"><a class="anchor" href="#_how_to_benchmark_2"></a>How to benchmark</h5>
 <div class="paragraph">
-<p>Please follow <a href="https://esrally.readthedocs.io/en/latest/quickstart.html?spm=a2c65.11461447.0.0.e26a498c3KJZNe">Esrally quickstart documentation</a>
-to set up it first.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s see which tracks (simulation profiles) that EsRally provides: <code><code>esrally list tracks</code></code>.
-For our James use case, we are interested in <code><code>pmc</code></code> track: <code><code>Full-text benchmark with academic papers from PMC</code></code>.</p>
-</div>
-<div class="paragraph">
-<p>Run the below script to benchmark against your Elasticsearch cluster:</p>
+<p>To install the <code>opensearch-benchmark</code> tool, you need Python 3.8+ including pip3 first, then run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">esrally race --pipeline=benchmark-only --track=[track-name] --target-host=[ip_node1:port_node1],[ip_node2:port_node2],[ip_node3:port_node3] --client-options="use_ssl:false,verify_certs:false,basic_auth_user:'[user]',basic_auth_password:'[password]'"</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">python3 -m pip install opensearch-benchmark</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you have any trouble or need more detailed instructions, please look in the <a href="https://github.com/opensearch-project/OpenSearch-Benchmark/blob/main/DEVELOPER_GUIDE.md">detailed installation guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see which workloads (simulation profiles) that <code>opensearch-benchmark</code> provides: <code><code>opensearch-benchmark list worloads</code></code>.
+For our James use case, we are interested in <code><code>pmc</code></code> workload: <code><code>Full-text benchmark with academic papers from PMC</code></code>.</p>
+</div>
+<div class="paragraph">
+<p>Run the below script to benchmark against your OpenSearch cluster:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">opensearch-benchmark execute_test --pipeline=benchmark-only --workload=[workload-name] --target-host=[ip_node1:port_node1],[ip_node2:port_node2],[ip_node3:port_node3] --client-options="use_ssl:false,verify_certs:false,basic_auth_user:'[user]',basic_auth_password:'[password]'"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -641,13 +649,13 @@ For our James use case, we are interested in <code><code>pmc</code></code> track
 <p>--pipeline=benchmark-only: benchmark against a running cluster</p>
 </li>
 <li>
-<p>track-name: track you want to benchmark</p>
+<p>workload-name: the workload you want to benchmark</p>
 </li>
 <li>
-<p>ip:port: Elasticsearch Node' socket</p>
+<p>ip:port: OpenSearch Node' socket</p>
 </li>
 <li>
-<p>--client-options: change to your Elasticsearch authentication credentials</p>
+<p>user/password: OpenSearch authentication credentials</p>
 </li>
 </ul>
 </div>
@@ -656,7 +664,7 @@ For our James use case, we are interested in <code><code>pmc</code></code> track
 <div class="sect3">
 <h4 id="_sample_benchmark_result_2"><a class="anchor" href="#_sample_benchmark_result_2"></a>Sample benchmark result</h4>
 <div class="sect4">
-<h5 id="_pmc_track"><a class="anchor" href="#_pmc_track"></a>PMC track</h5>
+<h5 id="_pmc_worload"><a class="anchor" href="#_pmc_worload"></a>PMC worload</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">|                                                         Metric |                          Task |       Value |    Unit |
@@ -721,9 +729,9 @@ For our James use case, we are interested in <code><code>pmc</code></code> track
 </div>
 </div>
 <div class="sect4">
-<h5 id="_pmc_custom_track"><a class="anchor" href="#_pmc_custom_track"></a>PMC custom track</h5>
+<h5 id="_pmc_custom_workload"><a class="anchor" href="#_pmc_custom_workload"></a>PMC custom workload</h5>
 <div class="paragraph">
-<p>We customized the PMC track by increasing search throughput target to figure out our Elasticsearch cluster limit.</p>
+<p>We customized the PMC workload by increasing search throughput target to figure out our OpenSearch cluster limit.</p>
 </div>
 <div class="paragraph">
 <p>The result is that with 25-30 request/s we have a 99th percentile latency of 1s.</p>
@@ -733,13 +741,21 @@ For our James use case, we are interested in <code><code>pmc</code></code> track
 <div class="sect3">
 <h4 id="_references_2"><a class="anchor" href="#_references_2"></a>References</h4>
 <div class="paragraph">
+<p>The <code>opensearch-benchmark</code> tool seems to be a fork of the official benchmark tool <a href="https://github.com/elastic/rally">EsRally</a> of Elasticsearch.
+The <code>opensearch-benchmark</code> tool is not adopted widely yet, so we believe some EsRally references could help as well:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p><a href="https://www.alibabacloud.com/blog/esrally-official-stress-testing-tool-for-elasticsearch_597102">esrally: Official Stress Testing Tool for Elasticsearch</a></p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p><a href="https://esrally.readthedocs.io/en/latest/adding_tracks.html">Create a custom EsRally track</a></p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p><a href="https://discuss.elastic.co/t/why-the-percentile-latency-is-several-times-more-than-service-time/69630">Why the percentile latency is several times more than service time</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>

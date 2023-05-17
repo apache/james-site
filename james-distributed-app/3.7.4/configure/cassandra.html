@@ -260,6 +260,9 @@
     <a class="nav-link" href="../operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../operate/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -581,7 +584,14 @@ by turning it off. Reads performed as part of write transaction are also perform
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mailrepository.strong.consistency</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Boolean, defaults to true. Allows not to use lightweight transactions in CassandraMailRepository.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Boolean, defaults to true. Allows not to use lightweight transactions in CassandraMailRepository.
+ If disabled we implement an idempotent behaviour (duplicates are overridden, missing entries upon deletes are ignored).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">acl.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Boolean, defaults to true. Allows disabling ACLs: if set to false, delegation will fail and users will only
+have access to the mailboxes they own. ACLs can represent a high volume of requests. If you do not propose mailbox sharing
+features to your users, you can consider disabling them in order to improve performance.</p></td>
 </tr>
 </tbody>
 </table>
