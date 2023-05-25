@@ -1168,6 +1168,51 @@ syntax</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_delete_all_users_data_of_a_domain"><a class="anchor" href="#_delete_all_users_data_of_a_domain"></a>Delete all users data of a domain</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/domains/{domainToBeUsed}?action=deleteData</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Would create a task that deletes data of all users of the domain.</p>
+</div>
+<div class="paragraph">
+<p>[More details about endpoints returning a task](#_endpoints_returning_a_task).</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Corresponding task id is returned.</p>
+</li>
+<li>
+<p>400: Error in the request. Details can be found in the reported error.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scheduled task will have the following type <code>DeleteUsersDataOfDomainTask</code> and the following <code>additionalInformation</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+        "type": "DeleteUsersDataOfDomainTask",
+        "domain": "domain.tld",
+        "successfulUsersCount": 2,
+        "failedUsersCount": 1,
+        "failedUsers": ["faileduser@domain.tld"],
+        "timestamp": "2023-05-22T08:52:47.076261Z"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notes: <code>failedUsers</code> only lists maximum 100 failed users.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
