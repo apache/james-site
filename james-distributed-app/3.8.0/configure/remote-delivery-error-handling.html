@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; About RemoteDelivery error handling :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.2">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.8.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Apache James Distributed Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Distributed James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run/run-docker.html">Run with Docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../run/run-kubernetes.html">Run with Kubernetes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/k8s-checklist.html">Deployment Checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/k8s-logsMetrics.html">Logs &amp; Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/k8s-values.html">values.yaml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/k8s-secrets.html">secrets.yaml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../benchmark/index.html">Performance benchmark</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Distributed Server</span>
+    <span class="version">3.8.0 SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Apache James Distributed Server</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.8.0 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../james-project/3.8.0/index.html">Apache James Server</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../james-project/3.8.0/index.html">3.8.0 SNAPSHOT</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../james-site/latest/index.html">Apache James Site</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Apache James Distributed Server</a></li>
+    <li><a href="../index.html">Distributed James Application</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Extensions</li>
+    <li><a href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/remote-delivery-error-handling.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; About RemoteDelivery error handling</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The advanced server mailQueue implemented by combining RabbitMQ for messaging and Cassandra for administrative operation
+does not support delays.</p>
+</div>
+<div class="paragraph">
+<p>Delays are an important feature for Mail Exchange servers, allowing to defer in time the retries, potentially letting the
+time for the remote server to recover. Furthermore, they enable implementation of advanced features like throttling and
+rate limiting of emails sent to a given domain.</p>
+</div>
+<div class="paragraph">
+<p>As such, the use of the distributed server as a Mail Exchange server is currently discouraged.</p>
+</div>
+<div class="paragraph">
+<p>However, for operators willing to inter-operate with a limited set of well-identified, trusted remote mail servers, such
+limitation can be reconsidered. The main concern then become error handling for remote mail server failures. The following
+document will present a well tested strategy for Remote Delivery error handling leveraging standards Mail Processing components
+and mechanisms.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expectations"><a class="anchor" href="#_expectations"></a>Expectations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Such a solution should:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Attempt delivery a single time</p>
+</li>
+<li>
+<p>Store transient and permanent failure in different mail repositories</p>
+</li>
+<li>
+<p>After a given number of tries, transient failures should be considered permanent</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design"><a class="anchor" href="#_design"></a>Design</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/remote-delivery-error-handling.png" alt="Schema detailing the proposed solution">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Remote Delivery is configured for performing a single retry.</p>
+</li>
+<li>
+<p>Remote Delivery attaches the error code and if the failure is permanent/temporary when transferring failed emails to the
+bounce processor.</p>
+</li>
+<li>
+<p>The specified bounce processor will categorise the failure, and store temporary and permanent failures in different
+mail repositories.</p>
+</li>
+<li>
+<p>A reprocessing of the temporary delivery errors mailRepository needs to be scheduled in a recurring basis. For
+instance via a CRON job calling the right webadmin endpoint.</p>
+</li>
+<li>
+<p>A counter ensures that a configured number of delivery tries is not exceeded.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_limitation"><a class="anchor" href="#_limitation"></a>Limitation</h3>
+<div class="paragraph">
+<p>MailRepositories are not meant for transient data storage, and thus are prone to tombstone issues.</p>
+</div>
+<div class="paragraph">
+<p>This might be acceptable if you need to send mail to well-known peers. For instance handling your mail gateway failures.
+However a Mail Exchange server doing relay on the internet would quickly hit this limitation.</p>
+</div>
+<div class="paragraph">
+<p>Also note that external triggering of the retry process is needed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_operation"><a class="anchor" href="#_operation"></a>Operation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here is an example of configuration achieving the proposed solution:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>        &lt;processor state="relay" enableJmx="true"&gt;
+            &lt;!-- Perform at most 5 RemoteDelivery attemps --&gt;
+            &lt;mailet match="AtMost=5" class="RemoteDelivery"&gt;
+                &lt;outgoingQueue&gt;outgoing&lt;/outgoingQueue&gt;
+                &lt;maxRetries&gt;0&lt;/maxRetries&gt;
+                &lt;maxDnsProblemRetries&gt;0&lt;/maxDnsProblemRetries&gt;
+                &lt;deliveryThreads&gt;10&lt;/deliveryThreads&gt;
+                &lt;sendpartial&gt;true&lt;/sendpartial&gt;
+                &lt;!-- Use a custom processor for error handling --&gt;
+                &lt;bounceProcessor&gt;remote-delivery-error&lt;/bounceProcessor&gt;
+            &lt;/mailet&gt;
+            &lt;!-- When retries are exceeded, consider the mail as a permanent failure --&gt;
+            &lt;mailet match="All" class="ToRepository"&gt;
+                &lt;repositoryPath&gt;cassandra://var/mail/error/remote-delivery/permanent/&lt;/repositoryPath&gt;
+            &lt;/mailet&gt;
+        &lt;/processor&gt;
+
+        &lt;processor state="remote-delivery-error" enableJmx="true"&gt;
+            &lt;!-- Store temporary failures separately for later retries --&gt;
+            &lt;mailet match="IsRemoteDeliveryTemporaryError" class="ToRepository"&gt;
+                &lt;repositoryPath&gt;cassandra://var/mail/error/remote-delivery/temporary/&lt;/repositoryPath&gt;
+            &lt;/mailet&gt;
+            &lt;!-- Store permanent failures for audit --&gt;
+            &lt;mailet match="IsRemoteDeliveryPermanentError" class="ToRepository"&gt;
+                &lt;repositoryPath&gt;cassandra://var/mail/error/remote-delivery/permanent/&lt;/repositoryPath&gt;
+            &lt;/mailet&gt;
+            &lt;!-- Mail getting that far were not processed by remote delivery.
+             Likely a configuration error. --&gt;
+            &lt;mailet match="All" class="ToRepository"&gt;
+                &lt;repositoryPath&gt;cassandra://var/mail/error/&lt;/repositoryPath&gt;
+            &lt;/mailet&gt;
+        &lt;/processor&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <strong>relay</strong> processor holds a RemoteDelivery mailet configured to do a single try, at most 5 times (see the AtMost matcher).
+Mails exceeding the AtMost condition are considered as permanent delivery errors. Delivery errors are sent to the
+<strong>remote-delivery-error</strong> processor.</p>
+</li>
+<li>
+<p>The <strong>remote-delivery-error</strong> stores temporary and permanent errors.</p>
+</li>
+<li>
+<p>Permanent relay errors are stored in <code>cassandra://var/mail/error/remote-delivery/permanent/</code>.</p>
+</li>
+<li>
+<p>Temporary relay errors are stored in <code>cassandra://var/mail/error/remote-delivery/temporary/</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to retry the relay of temporary failed emails, operators will have to configure a cron job for reprocessing
+emails from <strong>cassandra://var/mail/error/remote-delivery/temporary/</strong> mailRepository into the <strong>relay</strong> processor.</p>
+</div>
+<div class="paragraph">
+<p>This can be achieved via the following webAdmin call :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPATCH 'http://ip:8000/mailRepositories/cassandra%3A%2F%2Fvar%2Fmail%2Ferror%2Fremote-delivery%2Ftemporary%2F/mails?action=reprocess&amp;processor=relay'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="../operate/webadmin.html#_reprocessing_mails_from_a_mail_repository" class="xref page">the documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Administrators need to keep a close eye on permanent errors (that might require audit, and potentially contacting the remote
+service supplier).</p>
+</div>
+<div class="paragraph">
+<p>To do so, one should regularly audit the content of <strong>cassandra://var/mail/error/remote-delivery/permanent/</strong>. This can be done
+via webAdmin calls:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET 'http://ip:8000/mailRepositories/cassandra%3A%2F%2Fvar%2Fmail%2Ferror%2Fremote-delivery%2Ftemporary%2F/mails'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="../operate/webadmin.html#_listing_mails_contained_in_a_mail_repository" class="xref page">the documentation</a>.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
