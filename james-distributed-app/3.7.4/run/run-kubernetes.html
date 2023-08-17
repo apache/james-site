@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; Run with Kubernetes :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.2">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-distributed-app" data-version="3.7.4">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Apache James Distributed Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Distributed James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="run-docker.html">Run with Docker</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="run-kubernetes.html">Run with Kubernetes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="k8s-checklist.html">Deployment Checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="k8s-logsMetrics.html">Logs &amp; Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="k8s-values.html">values.yaml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="k8s-secrets.html">secrets.yaml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../benchmark/index.html">Performance benchmark</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Distributed Server</span>
+    <span class="version">3.7.4 SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Apache James Distributed Server</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.7.4 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../james-project/3.7.4/index.html">Apache James Server</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../james-project/3.7.4/index.html">3.7.4 SNAPSHOT</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../james-site/latest/index.html">Apache James Site</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Apache James Distributed Server</a></li>
+    <li><a href="../index.html">Distributed James Application</a></li>
+    <li><a href="index.html">Run</a></li>
+    <li><a href="run-kubernetes.html">Run with Kubernetes</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/run/run-kubernetes.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; Run with Kubernetes</h1>
+<div class="sect1">
+<h2 id="_deploy_apache_james_on_kubernetes_with_helm_chart"><a class="anchor" href="#_deploy_apache_james_on_kubernetes_with_helm_chart"></a>Deploy Apache James on Kubernetes with Helm chart.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chart bootstraps a James mail server on a <a href="http://kubernetes.io">Kubernetes</a>
+cluster using the <a href="https://helm.sh">Helm</a> package manager.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_before_starting"><a class="anchor" href="#_before_starting"></a>Before Starting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before running the Helm chart, James should have particularly accessed to the following external products:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Apache Cassandra</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>You can deploy Cassandra on Kubernetes with a <a href="https://github.com/bitnami/charts/tree/master/bitnami/cassandra">Cassandra chart</a> for testing purpose. However we would recommend running Cassandra on VirtualMachine for better stablilty.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">OpenSearch</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>OpenSearch community maintains <a href="https://github.com/opensearch-project/helm-charts">Helm charts</a></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">RabbitMQ</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/rabbitmq/cluster-operator">RabbitMQ Cluster Operator</a> is a custom Kubernetes resource designed for the lifecycle (creation, upgrade, graceful shutdown) of a RabbitMQ cluster. Using Quickstart setup is enough for James deployment.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_helm_configuration"><a class="anchor" href="#_helm_configuration"></a>Helm Configuration</h3>
+<div class="paragraph">
+<p>The James helm package take parameters that will configure and determine the behavior of James.
+There are 2 configuration files:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One contains global, non-confidential, configuration: <code>values.yaml</code></p>
+</li>
+<li>
+<p>The other one contains secrets: <code>secrets.yaml</code>. Values are encrypted with a key stored generated by <a href="https://github.com/mozilla/sops">sops</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You need to pass these 2 files as parameters to the James Helm package.
+To verify the coherence and avoid errors, the packages can validate the input.</p>
+</div>
+<div class="paragraph">
+<p>This package contains a default <code>values.yaml</code> file, but that you should override with proper configuration for your deployment (<code>conf.yaml</code>).
+The file <code>secrets.sample.yaml</code> will show you the possible values of the secrets file. To generate the <code>secrets.yaml</code> file,
+you will need a plugin for Helm called <a href="https://github.com/jkroepke/helm-secrets)">helm-scecrets</a>.</p>
+</div>
+<div class="paragraph">
+<p>Usually, you will save those configurations in different repositories, per deployment.</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <code>values.md</code> and <code>secrets.md</code> in our Chart <a href="https://github.com/apache/james-project/tree/master/server/apps/distributed-app/helm-chart/james/doc/">documents</a> to have more information on the configuration James is using.</p>
+</div>
+<div class="paragraph">
+<p>You can find our Helm chart for James in <a href="https://github.com/apache/james-project/tree/master/server/apps/distributed-app/helm-chart">here</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_james_configuration"><a class="anchor" href="#_james_configuration"></a>James Configuration</h3>
+<div class="paragraph">
+<p>The configuration files proper to James are stored in the Chart <code>james/configs</code> folder. They are being stored in a <code>ConfigMap</code> and then being mounted in the James pod at /root/conf path.</p>
+</div>
+<div class="paragraph">
+<p>If you need to change a conf in James, this is where you need to look at.</p>
+</div>
+<div class="paragraph">
+<p>For now all configuration files are the same for every deployment, except for <code>mailetcontainer.xml</code> that has been excluded (see section below).</p>
+</div>
+<div class="paragraph">
+<p>You can get the template <code>mailetcontainer.xml</code> in our <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/">sample-configuration</a> folder.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>mailetcontainer.xml</code> is the configuration file in James responsible of mail processing and delivery. It can differ greatly from one deployment to another. For that reason, we have excluded it from <code>james/configs</code> folder for the moment. You need to draft your own version of <code>mailetcontainer.xml</code> and add it to <code>james/configs</code> before start deploying Helm chart, as we can&#8217;t actually mount a separate file into the same mounting point as the one sued by the <code>ConfigMap</code> on <code>/root/conf</code> path.</p>
+</div>
+<div class="paragraph">
+<p>However, the next release of Helm should allow to do something about that (hopefully). The helm package will be updated then.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deploy_james_helm_chart"><a class="anchor" href="#_deploy_james_helm_chart"></a>Deploy James Helm chart</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_verify_the_configuration"><a class="anchor" href="#_verify_the_configuration"></a>Verify the configuration</h3>
+<div class="paragraph">
+<p>We recommend to verify the configuration against the James Helm packages before deploying it. Usually it is best to have to position yourself in the repository having your deployment&#8217;s values and secrets, and linking this helm package to it, like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm lint -f james/conf.yaml -f james/secrets.yaml /path/to/helm/james</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also generate the whole templates with values (can be useful for debugging sometimes), by typing:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm secrets templates -f james/conf.yaml -f james/secrets.yaml james /path/to/helm/james</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From there, you should be able to interact with the Kubernetes cluster with <code>kubectl</code> command.</p>
+</div>
+<div class="paragraph">
+<p>A few useful commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>kubectl get namespace # show namespaces on your cluster
+
+kubectl get pod -n mail-server # list pods running in mail-server namespace
+
+kubectl config set-context --current --namespace=mail-server # set the namespace mail-server as default one for next commands
+
+kubectl get configmaps # list configmaps depoyed on the namespace
+
+kubectl get secrets # list secrets deployed on the namespace
+
+kubectl get service # list services deployed in the namespace
+
+kubectl get nodes -o wide # list nodes related to the namespace
+
+kubectl describe pod my-pod # get a detailed description of my-pod (similar for other objects)
+
+kubectl scale --replicas=4 deployment james # scale up (or down) james to 4 pods
+
+kubectl rollout restart deployment james # force a rollout restart of your pods related to james
+
+kubectl logs my-pod -f --tail 100 # show and follow logs of a pod from the last 100 lines
+
+kubectl logs -f -l app=james --tail 100 # show and follow the combined logs of all james pods from the last 100 lines
+
+kubectl port-forward pod/my-pod 3000:3000 # allow you to access and interact with internal port 3000 of my-pod from localhost</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usually you have a namespace per deployment. Always target your deployments on the corresponding namespace, by either adding the flag -n mail-server on your kubectl and helm commands, or by setting your namespace by default (see in the above commands).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_james_chart"><a class="anchor" href="#_deploy_james_chart"></a>Deploy James Chart</h3>
+<div class="paragraph">
+<p>Before doing a real deployment, you need to check that you have at least all necessary values for James to start and run smoothly on your environment. You can check the <code>checklist.md</code> in our document folder for this.</p>
+</div>
+<div class="paragraph">
+<p>Run the command when you think you are good to go:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm secrets install james james/ -f james/values.yaml -f james/secrets.yaml</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/apache-james-lens.png" alt="Distributed Apache James in Kubernetes">
+</div>
+</div>
+<div class="paragraph">
+<p>You can also wait for the deployment to be complete by adding a --wait flag, that is based on the readiness probe located inside the James pod.</p>
+</div>
+<div class="paragraph">
+<p>However sometimes things might not always go well at the start of James. Usually it is good to look at the logs. If it goes without issues until you start to see some successful health check logs, then you are likely good.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_chart_version"><a class="anchor" href="#_upgrade_chart_version"></a>Upgrade Chart version</h3>
+<div class="paragraph">
+<p>If you want to deploy a new version of a installed package, use helm secrets upgrade:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm secrets upgrade -f james/conf.yaml -f james/secrets.yaml james /path/to/helm/james</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What Helm does is that it compares all the generated YAML files with those on the server.
+And it updates only those that changed. There are however some limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>pods in errors are not recreated during an upgrade. It allows to check the logs first. However, if you delete the pod by hand, it will be recreated from the last definition.</p>
+</li>
+<li>
+<p>Some artifacts, such as jobs and stateful sets, have immutable properties. So, some upgrades may fail. Deleting by hand the element is sometimes a solution before doing the upgrade.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Install <a href="https://github.com/databus23/helm-diff">helm-diff</a> plugin to display the changed configurations before run upgrade.
+</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm secrets diff upgrade -f james/conf.yaml -f james/secrets.yaml james /path/to/helm/james</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rollback_to_previous_chart_version"><a class="anchor" href="#_rollback_to_previous_chart_version"></a>Rollback to previous Chart version</h3>
+<div class="paragraph">
+<p>Show chart revision history:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$  helm history james -n &lt;name space&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rollback to a previous version:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$  helm rollbaack james &lt;revision&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_uninstalling"><a class="anchor" href="#_uninstalling"></a>Uninstalling</h3>
+<div class="paragraph">
+<p>To uninstall the helm package:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ helm uninstall james -n &lt;name space&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="#_references"></a>References</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A summary of different resources that could be interesting to have in hand.</p>
+</div>
+<div class="sect2">
+<h3 id="_this_package"><a class="anchor" href="#_this_package"></a>This package</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="k8s-values.html" class="xref page">Values</a></p>
+</li>
+<li>
+<p><a href="k8s-secrets.html" class="xref page">Secrets</a></p>
+</li>
+<li>
+<p><a href="k8s-checklist.html" class="xref page">Check List</a></p>
+</li>
+<li>
+<p><a href="k8s-logsMetrics.html" class="xref page">Logs and Metrics</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_james_documentation"><a class="anchor" href="#_james_documentation"></a>James documentation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://james.apache.org/">James Official Website</a></p>
+</li>
+<li>
+<p><a href="https://github.com/apache/james-project">James GitHub Project</a></p>
+</li>
+<li>
+<p><a href="../operate/webadmin.html" class="xref page">WebAdmin</a></p>
+</li>
+<li>
+<p><a href="../operate/cli.html" class="xref page">James CLI</a></p>
+</li>
+<li>
+<p><a href="https://james.apache.org/server/manage-guice-distributed-james.html">Manage Guice Distributed James</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kubernetes"><a class="anchor" href="#_kubernetes"></a>Kubernetes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/overview/components/">Kubernetes Components Overview</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/workloads/pods/">Pods</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/service/">Services</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/configuration/configmap/">Configmaps</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/configuration/secret/">Secrets</a></p>
+</li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_helm"><a class="anchor" href="#_helm"></a>Helm</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://helm.sh/docs/topics/architecture/">Helm Architecture</a></p>
+</li>
+<li>
+<p><a href="https://helm.sh/docs/topics/charts/">Charts</a></p>
+</li>
+<li>
+<p><a href="https://helm.sh/docs/intro/using_helm/">Using Helm</a></p>
+</li>
+<li>
+<p><a href="https://helm.sh/docs/chart_template_guide/getting_started/">Helm templates</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
