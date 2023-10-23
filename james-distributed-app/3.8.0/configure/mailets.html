@@ -1181,6 +1181,12 @@ implementations for mappings of forwards and aliases.</p>
  &lt;/mailet&gt;</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The <strong>rewriteSenderUponForward</strong> option (default to true) can be used to prevent senders to be rewritten upon forwards in the transport envelope
+(JAMES 3.8.0 default behaviour). <strong>WARNING</strong>: Please note that not rewriting the sender will cause issues forwarding emails
+from external senders to external addresses as the DKIM and SPF records will not be matching the ones of the sending
+domain.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_recipienttolowercase"><a class="anchor" href="#_recipienttolowercase"></a>RecipientToLowerCase</h3>

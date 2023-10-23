@@ -520,6 +520,12 @@ The target of the alias is the index name configured above.</p></td>
 Header indexing is expensive as each header currently need to be stored as a nested document but
 turning off headers indexing result in non-strict compliance with the IMAP / JMAP standards.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">opensearch.message.index.optimize.move</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set to true, James will attempt to reindex from the indexed message when moved.
+If the message is not found, it will fall back to the old behavior (The message will be indexed from the blobStore source)
+Default to false.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
