@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Creating an official Apache James release :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
   <body class="article">
@@ -66,6 +66,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all"></button>
     <h3 class="title"><a href="../index.html">Apache James Server</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -283,22 +284,11 @@
     <span class="version">3.8.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <a class="title" href="../../../james-distributed-app/3.8.0/index.html">Apache James Distributed Server</a>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../james-distributed-app/3.8.0/index.html">3.8.0 SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
       <a class="title" href="../index.html">Apache James Server</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.8.0 SNAPSHOT</a>
-        </li>
-        <li class="version">
-          <a href="../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -326,13 +316,6 @@
     <li><a href="release.html">Creating an official Apache James release</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.8.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="release.html">3.8.0 SNAPSHOT</a>
-    <a class="version" href="../../3.6.0/community/release.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/release.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -481,7 +464,7 @@ the corresponding artifact before performing the vote.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">Subject: Call for vote: Apache James x.x.x
+<pre class="highlightjs highlight"><code>Subject: Call for vote: Apache James x.x.x
 
 Hi,
 
@@ -521,7 +504,7 @@ PMC member name</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">Hi all,
+<pre class="highlightjs highlight"><code>Hi all,
 
 I am happy to announce you the vote for the x.x.x release did succeed.
 
@@ -552,7 +535,7 @@ PMC member name</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">mkdir server/3.x.x
+<pre class="highlightjs highlight"><code>mkdir server/3.x.x
 cd server/3.x.x
 svn add .</code></pre>
 </div>
@@ -575,7 +558,7 @@ svn add .</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">% cat /usr/local/bin/auto_sig
+<pre class="highlightjs highlight"><code>% cat /usr/local/bin/auto_sig
 #/bin/bash
 
 # This quick bash scipt intend to help commiters
@@ -609,7 +592,7 @@ svn propset svn:mime-type application/octet-stream $1.asc</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">svn rm 3.5.0
+<pre class="highlightjs highlight"><code>svn rm 3.5.0
 svn commit -m "Archive James release 3.5.0"</code></pre>
 </div>
 </div>
