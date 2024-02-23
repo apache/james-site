@@ -235,27 +235,27 @@
                         
 <li>
                             <b>
-                                init(
+                                <code>init(
                                     <a href="apidocs/org/apache/mailet/MailetConfig.html">MailetConfig</a>
                                     config)
-                                
+                                </code>
                             </b>
                             passes environmental information. Any setup necessary should be performed now.
                         </li>
                         
 <li>During processing,
                             <b>
-                                service(
+                                <code>service(
                                     <a href="apidocs/org/apache/mailet/Mail.html">Mail</a>
                                     mail)
-                                
+                                </code>
                             </b>
                             is called repeatedly. Note that this method may be called concurrently.
                         </li>
                         
 <li>
                             <b>
-                                destroy()
+                                <code>destroy()</code>
                             </b>
                             is called when the mailet is taken out of service.
                         </li>
@@ -267,7 +267,7 @@
 <p>
                         <a href="apidocs/org/apache/mailet/MailetConfig.html">MailetConfig</a>
                         gives access to simple parametrization.
-                        getInitParameter
+                        <code>getInitParameter</code>
                         allows configuration parameters to be passed from the mailet container.
                         How these parameters are set by the user of the mailet is the responsibility of the container.
                         More sophisticated configuration and assembly (for example, allowing access to services) is also
@@ -307,9 +307,9 @@
                 
 <p>
                     The build uses <a class="externalLink" href="http://ant.apache.org">Ant</a>.
-                    ant -projecthelp
+                    <code>ant -projecthelp</code>
                     describes appropriate targets.
-                    ant
+                    <code>ant</code>
                     runs the default target.
                 </p>
             </section>
