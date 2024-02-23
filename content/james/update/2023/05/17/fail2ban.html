@@ -1,0 +1,456 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Apache James</title>
+
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie8.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/ie9.css">
+        <link rel="shortcut icon" href="/images/james-logo.png">
+    </head>
+<body>
+    <!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<link href="/assets/css/lightbox.css" rel="stylesheet">
+<div id="wrapper" class="post-page">
+  <div class="apache_ref">
+    <a href="https://www.apache.org" alt="apache foundation link"><img src="https://www.apache.org/foundation/press/kit/asf_logo.svg" title="apache foundation logo"/></a>
+  </div>
+  <div class="apache_ref_mobile">
+    <a href="https://www.apache.org" alt="apache foundation link">The Apache Software Foundation</a>
+  </div>
+
+  <header id="header" class="alt">
+    <div class="logo"><a href="/index.html" alt="Apache James"><img src="/images/james.svg" alt="james logo"/></a></div>
+    <h1 class="hidden">James Enterprise Mail Server</h1>
+    <h2>Emails at the heart of your business logic</h2>
+  </header>
+
+  <!-- Main -->
+    <div id="main">
+
+      <!-- Content -->
+        <section id="content" class="main">
+
+          <h1><span class="icon fa-file-text-o"></span> Guest post: James and fail2ban</h1>
+          <h2><span class="icon fa-clock-o"></span><b> May 17, 2023</b></h2>
+
+          <br/>
+
+          <div>
+            <p>Credits: Paul Gunter</p>
+
+<p><a href="https://www.fentool.de/daten/aYg_h2p-hpw/JamesAttacks_v0.1.pdf">Original</a> version.</p>
+
+<h1 id="repel-brute-force-attacks-with-linux-firewall-iptables-and-fail2ban">Repel brute force attacks with Linux firewall (iptables) and fail2ban</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Servers on the Internet are constantly under attack. Mail servers are also attacked to gain control of
+a server that can be used to send bulk spam emails. This often leads to these servers ending up on
+various black lists and can no longer be used as mail servers. A safe basic configuration of James is
+required at this point.</p>
+
+<p>Nevertheless, attacks can mean that the server can practically no longer be operated. These are often
+DoS or DDoS attacks (Denial-of-Service or Distributed Denial-of-Service), which smaller servers
+in particular are difficult to defend against. However, basic protection via the firewall is relatively
+easy to reach.</p>
+
+<p>But even after that, attacks can be seen, especially those that try to spy out access data. These
+attacks can be detected by monitoring the log files. So the attack patterns are known and can be
+repelled with fail2ban.</p>
+
+<p>All examples refer to a Linux operating system, Windows is not covered. The examples are shown
+using Ubuntu and can be transferred to other Linux variants. “iptables” is used as the firewall front
+end.</p>
+
+<h2 id="setting">Setting</h2>
+
+<p>The following assumes a small mail server on which only an SSH service can be accessed from
+outside in addition to Apache James. In the example, the SSH service uses the standard port 22,
+James uses the standard ports 25 (smtp), 110 (pop3) and/or 143 (imap).</p>
+
+<p>The examples refer to Apache James 3.8.0 (Spring App).</p>
+
+<p>The operating system is Ubuntu 22.04.</p>
+
+<p>The configuration should be carried out beforehand on a test system and not during operation. One
+thing to note about James is that changes to log4j2’s configuration usually take effect immediately.</p>
+
+<h2 id="ddos---attacks">(D)DoS - Attacks</h2>
+
+<p>An attempt is made to load the server with so many requests that it no longer works. In the case of
+DDos, this is carried out in parallel by a large number of servers, which also means a corresponding
+amount of effort. A firewall can at least be used to ward off simple attacks.</p>
+
+<p>Rules are defined for the open ports and ping, which minimize the number of accesses. It must be
+ensured that the number of accesses is not restricted to such an extent that regular accesses are also
+affected.</p>
+
+<p>A normal check per ping usually has one access per second, so that 60 accesses per minute and IP
+address are normal.</p>
+
+<p>The firewall rule can be (increase hitcount by one access so that there is no
+crash during regular operation):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo iptables -A INPUT -p icmp -m recent --set --name DDOS-PING
+sudo iptables -A INPUT -p icmp -m recent --update --seconds 5 --hitcount 6 --name DDOS-PING -j DROP
+</code></pre></div></div>
+
+<p>A permanent ping query with one server is possible, if the same server tries to work in parallel, it is
+over after a total of 5 attempts.</p>
+
+<p>Similarly, this can be set for other open ports:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name DDOS-SSH
+sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 6 --name DDOS-SSH -j DROP
+sudo iptables -A INPUT -p tcp --dport 25 -m state --state NEW -m recent --set --name DDOS-SMTP
+sudo iptables -A INPUT -p tcp --dport 25 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 --name DDOS-SMTP -j DROP
+sudo iptables -A INPUT -p tcp --dport 110 -m state --state NEW -m recent --set --name DDOS-POP
+sudo iptables -A INPUT -p tcp --dport 110 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 --name DDOS-POP -j DROP
+sudo iptables -A INPUT -p tcp --dport 143 -m state --state NEW -m recent --set --name DDOS-IMAP
+sudo iptables -A INPUT -p tcp --dport 143 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 --name DDOS-IMAP -j DROP
+</code></pre></div></div>
+<p>There are many examples on the Internet how a firewall can be set up for a small server. It is
+definitely worth looking into this further and setting up a suitable firewall.</p>
+
+<h2 id="fail2ban">Fail2Ban</h2>
+
+<p>Fail2ban analyzes log files and can trigger actions via rules. If an attack is detected, the firewall can
+be expanded so that the attacker is blocked for a certain period of time.</p>
+
+<p>A typical example is an attacker trying to guess a password. Unfortunately, the firewall from above
+does not work here. The reason is that the attacker first connects to the mail server via the SMTP
+port. Within this connection he is now constantly trying to log in with his name and password. Since
+the connection is not closed, the rules above do not apply. The failed login attempts are noted in
+James log file and look something like this:</p>
+
+<p><code class="language-plaintext highlighter-rouge">org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler.reject:61</code></p>
+
+<ul>
+  <li>Rejected message. Unknown user: dar…@domaine.de</li>
+</ul>
+
+<p>Here, an e-mail is rejected in the name of an unknown sender. “domaine.de” is your own domain,
+which is being attacked. Unfortunately, the log line does not show which IP address the attack came
+from, more on that later.</p>
+
+<p>Another example:</p>
+
+<p><code class="language-plaintext highlighter-rouge">org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler.doAuthTest:397 - AUTH method LOGIN failed from Username{localPart=root, domainPart=Optional[Domain :domaine.de]}@45.133.235.202</code></p>
+
+<p>An attempt is made to log in as root user, the password is incorrect and the login is rejected. At least
+the attacker’s IP address is visible here at the end of the line.</p>
+
+<p>The following shows how these two attacks can be repelled with fail2ban. This can serve as a
+template for similar attack attempts.</p>
+
+<h2 id="installing-fail2ban">Installing fail2ban</h2>
+
+<p>Information about fail2ban is available here: https://www.fail2ban.org/. There are many instructions
+and good examples on the Internet. Therefore, here is only a brief explanation of how the
+installation and initial setup works with Ubuntu. Other Linux distributions may vary.</p>
+
+<p>Fail2ban is set up with the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>supo apt update
+sudo apt install fail2ban
+sudo systemctl start fail2ban
+sudo systemctl enable fail2ban
+</code></pre></div></div>
+
+<p>Ubuntu installs the software. After start fail2ban manually. Finally the service is set to start
+automatically after boot. The status of the service can be checked as follows:</p>
+
+<p><code class="language-plaintext highlighter-rouge">service fail2ban status</code></p>
+
+<p>Depending on the Linux variant, the setup may differ.</p>
+
+<p>The configuration files are located in “/etc/fail2ban/”. Changes should not be made to the original
+files, as these will be overwritten during an update. Therefore, the “jail.conf” and “fail2ban.conf”
+files should be copied to “jail.local” and “fail2ban.local”. (We will not make any adjustments to
+these files here, so there is no need to copy them.)</p>
+
+<h2 id="how-fail2ban-works">How fail2ban works</h2>
+
+<p>As already written, fail2ban is based on the evaluation of log files. We will later adapt James
+accordingly, we will use Log4j2.</p>
+
+<p>The log file contains a timestamp at the beginning of the line. As a rule, fail2ban recognizes the
+format automatically, as it did in our case. The attacker’s IP address must also be in the line. Regular
+expressions will be used to recognize these and also to filter the relevant lines. We will not go into
+more detail here, for our own adaptations we refer to tutorials and examples from the Internet.
+Filters are used to evaluate the log files. These are stored in the “./filter.d/” folder. Examples for
+many services are already predefined there.</p>
+
+<p>Additional configurations are stored in the “./jail.d/” folder. With Ubuntu, the file “defaultsdebian.conf” is available there. Only the SSH service is activated there by default. All other services
+are therefore not in operation and must be activated if necessary. With SSH, the standard values can
+generally be accepted.</p>
+
+<p>The status of the evaluation of ssh can be tested as follows:</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo fail2ban-client status sshd</code></p>
+
+<p>For computers on the Internet, blocked IP addresses can be displayed here after a short time.</p>
+
+<p>For our purposes, we will set up the following files:</p>
+
+<ul>
+  <li>A James log file</li>
+  <li>A filter file „./filter.d/james.conf“</li>
+  <li>A jail file „../jail.d/james.conf“</li>
+</ul>
+
+<h2 id="adaptation-to-sshd">Adaptation to SSHD</h2>
+
+<p>To get started, we’ll briefly deal with the customization for SSH access. It is best not to use ssh to
+access our server with a password, but only with an SSH key. This makes incorrect passwords
+rather unlikely. This means that the attacker can be blocked after just a few failed attempts. The
+time after which access from a blocked IP address is allowed again can be set quite high here.</p>
+
+<p>The specifications come from the file “/etc/fail2ban/jail.conf” or from “/etc/fail2ban/jail.local”.</p>
+
+<p>These values are as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># "bantime" is the number of seconds that a host is banned.
+bantime = 10m
+# A host is banned if it has generated "maxretry" during the last "findtime"
+# seconds.
+findtime = 10m
+# "maxretry" is the number of failures before a host get banned.
+maxretry = 5
+</code></pre></div></div>
+
+<p>In our case we change the values only for the SSHD service in the „/etc/fail2ban/jail.d/defaultsdebian.conf“ file. After the file looks like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[sshd]
+enabled = true
+bantime = 120m
+findtime = 60m
+maxretry = 2
+</code></pre></div></div>
+
+<p>If there are 2 failed attempts within 1 hour from an IP address, we block the address for 2 hours.</p>
+
+<p>After changes to configuration files, fail2ban must be restarted:</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo systemctl restart fail2ban</code></p>
+
+<h2 id="setup-apache-james">Setup Apache James</h2>
+
+<p>The following explains how James can be secured via fail2ban. Since there is no standard here, we
+have to build the filter ourselves. Before that we will set up a log file.</p>
+
+<h3 id="generating-a-log-file">Generating a log file</h3>
+
+<p>The log files for James are in the installation logs folder. In the following we assume that this is the
+folder: “/opt/james/log/”. In the Spring version of James there are quite a few log files. In our case,
+we assume that there is only the “wrapper.log” file and that all relevant log outputs are logged there.
+James Spring variant uses apache-log4j2 to log events. The “./conf/log4j2.xml” file is used as the
+configuration file for this.</p>
+
+<p>We build a layout that outputs the following information:</p>
+
+<ul>
+  <li>The timestamp (%d)</li>
+  <li>The Java class from which the entry is generated (%C)</li>
+  <li>The attacker’s IP address (%X)</li>
+  <li>The log message (%msg)</li>
+  <li>A line break (%n)</li>
+</ul>
+
+<p>The IP address is a variable that James provides himself. This is very useful as there are log entries
+that do not report this IP address (see above). In order to be able to evaluate this better, the entry is
+as follows: “[ip=%X{ip}]”. Unfortunately, this variable is not always filled. This is the case in our
+other example, fortunately we can see the IP address from the log entry there.</p>
+
+<p>So that the wrapper.conf file is also filled further, there is also the console layout, which adopts
+Tomcat layout.</p>
+
+<p>Our log file gets the name “james.log”, we use the “RollingFile” format.</p>
+
+<p>We only post log messages of classes whose packages start with “org.apache.james.protocols.smtp”.</p>
+
+<p>The complete configuration looks like this (/opt/james/conf/log4j2.xml):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Configuration status="INFO" monitorInterval="30" &gt;
+ &lt;Properties&gt;
+ &lt;Property name="logDir"&gt;../log&lt;/Property&gt;
+ &lt;Property name="logLayoutTomcat"&gt;%d{dd-MMM-yyyy HH:mm:ss.SSS} %level
+[%t] %C.%M:%L - %msg%n&lt;/Property&gt;
+ &lt;Property name="logLayoutJames"&gt;%d{yyyy-MM-dd HH:mm:ss.SSS Z} - %C [ip=
+%X{ip}] - %msg%n&lt;/Property&gt;
+ &lt;/Properties&gt;
+ &lt;Appenders&gt;
+ &lt;Console name="Console" target="SYSTEM_OUT"&gt;
+ &lt;PatternLayout pattern="${logLayoutTomcat}" /&gt;
+ &lt;/Console&gt;
+ &lt;RollingFile name="James" fileName="${logDir}/james.log" filePattern="$
+{logDir}/james.%d{yyyy-MM-dd}-%i.log.gz" ignoreExceptions="false"&gt;
+ &lt;PatternLayout pattern="${logLayoutJames}" charset="UTF-8" /&gt;
+ &lt;Policies&gt;
+ &lt;SizeBasedTriggeringPolicy size="10 MB" /&gt;
+ &lt;/Policies&gt;
+ &lt;DefaultRolloverStrategy min="1" max="9" /&gt;
+ &lt;/RollingFile&gt;
+ &lt;/Appenders&gt;
+ &lt;Loggers&gt;
+ &lt;Logger name="org.apache.james.protocols.smtp" level="info" &gt;
+ &lt;AppenderRef ref="James" level="info" /&gt;
+ &lt;/Logger&gt;
+ &lt;Root level="info" &gt;
+ &lt;AppenderRef ref="Console" level="info" /&gt;
+ &lt;/Root&gt;
+ &lt;/Loggers&gt;
+&lt;/Configuration&gt;
+</code></pre></div></div>
+
+<p>To test the log output, we first fill the file (/opt/james/log/james.log) with the following content:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2023-06-17 11:11:50.206 +0200 - org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler [ip=45.129.14.30] - Rejected message. Unknown user: dar...@domaine.de
+2023-06-17 11:11:51.206 +0200 - org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler [ip=45.129.14.31] - Rejected message. Unknown user: dar...@domaine.de
+2023-06-17 11:11:50.206 +0200 - org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler [ip=] - AUTH method LOGIN failed from Username{localPart=monitor, domainPart=Optional[Domain :domaine.de]}@45.129.14.40
+2023-06-17 11:11:50.206 +0200 - org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler [ip=] - AUTH method LOGIN failed from Username{localPart=monitor, domainPart=Optional[Domain :domaine.de]}@45.129.14.41
+2023-06-17 11:11:52.206 +0200 - org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler [ip=45.129.14.30] - Rejected message. Unknown user: dar...@domaine.de
+2023-06-17 11:11:53.206 +0200 - org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler [ip=45.129.14.31] - Rejected message. Unknown user: dar...@domaine.de
+2023-06-17 11:11:50.206 +0200 - org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler [ip=] - AUTH method LOGIN failed from Username{localPart=monitor, domainPart=Optional[Domain :domaine.de]}@45.129.14.40
+2023-06-17 11:11:50.206 +0200 - org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler [ip=] - AUTH method LOGIN failed from Username{localPart=monitor, domainPart=Optional[Domain :domaine.de]}@45.129.14.41
+</code></pre></div></div>
+
+<h2 id="setting-up-filters">Setting up filters</h2>
+
+<p>We create the file “/etc/fail2ban/filter.d/james.conf” with the following content:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Definition]
+failregex =
+^.-.org.apache.james.protocols.smtp.core.fastfail.AbstractValidRcptHandler.\
+[ip=&lt;HOST&gt;\].-.Rejected message. Unknown user.*$
+ ^.-.org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler.\[ip=\].-.AUTH
+method LOGIN failed from Username.*\@&lt;HOST&gt;$
+ignoreregex =
+</code></pre></div></div>
+<p>We see 2 regular expressions there. The first looks at the „AbstractValidRcptHandler“ class. The IP
+address is filled via the James variable. The IP address is recognized with the placeholder <HOST>.</HOST></p>
+
+<p>The second looks at the “AuthCmdHandler” class, the IP address is at the end of the line.</p>
+
+<h2 id="setup-jail">Setup Jail</h2>
+
+<p>We create the file “/etc/fail2ban/jail.d/james.conf” with the following content:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[james]
+enabled = true
+filter = james
+logpath = /opt/james/log/james.log
+bantime = 120m
+findtime = 20m
+maxretry = 2
+</code></pre></div></div>
+
+<p>This completes the setup. The service must be restarted for the changes to take effect:</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo systemctl restart fail2ban</code></p>
+
+<h2 id="testing-the-settings">Testing the settings</h2>
+
+<p>The “fail2ban-regex” program can be used for testing. It is called with the information about the log
+and filter files:</p>
+
+<p><code class="language-plaintext highlighter-rouge">fail2ban-regex /opt/james/log/james.log /etc/fail2ban/filter.d/james.conf</code></p>
+
+<p>All lines should be recognized and evaluated, the result should look like this at the end:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Lines: 8 lines, 0 ignored, 8 matched, 0 missed</code></p>
+
+<p>Lines that are not evaluated are displayed. In this case check your filter file.
+At the end restart James with the new log configuration, after restart fail2ban. If you use your own
+firewall script, this should be started beforehand. James condition can be checked as follows:</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo fail2ban-client status james</code></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Fail2ban is a very powerful program and can help keep James running more safely. But it is only
+one element of security. A coordinated firewall and constant monitoring of the server must continue
+to be guaranteed.</p>
+
+
+
+          </div>
+          <footer class="major special">
+            <hr>
+            <center>
+              <ul class="actions">
+                <li><a href="/index.html" class="button">Back to homepage</a></li>
+                <li><a href="/posts.html" class="button">Read More Posts</a></li>
+              </ul>
+            </center>
+          </footer>
+        </section>
+    </div>
+    <footer id="footer" class="major">
+      <section>
+        <h2>James</h2>
+        <ul class="no-padding">
+          <li class="no-padding"><a href="../#intro" class="active">About</a></li>
+          <li class="no-padding"><a href="../#first">Get Started</a></li>
+          <li class="no-padding"><a href="../#posts">Last Posts</a></li>
+          <li class="no-padding"><a href="../#second">Community</a></li>
+          <li class="no-padding"><a href="https://james.apache.org/"><span class="fa fa-external-link"></span> Documentation</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Connect</h2>
+        <ul class="icons">
+          <li><a href="http://twitter.com/ApacheJames" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
+          <li><a href="https://github.com/apache/james-project" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
+          <li><a href="http://james.apache.org/mail.html" class="icon fa-envelope-o alt"><span class="label">Mailing-list</span></a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Copyright</h2>
+        <a href="http://www.apache.org/">Apache Licence Copyright</a><br/>
+        &copy;Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>
+      </section>
+    </footer>
+</div>
+
+</body>
+</html>

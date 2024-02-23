@@ -218,7 +218,7 @@
                     Before deleting a mail in James, PreDeletionHooks will be triggered to execute all declared hooks. If all hook executions success, then James will process to delete that mail.
                     There is already a DeletedMessageVaultHook in James, its job is to store deleted mails into Deleted Messages Vault. Thus, you need to configure this hook in listeners.xml configuration file.
                 </p>
-                <p><b>NOTE:</b> From James 3.8.0 onward the DeletedMessageVaultHook should no longer be specified for Cassandra based products.</p>
+                <p><b>NOTE:</b> From James 3.8.1 onward the DeletedMessageVaultHook should no longer be specified for Cassandra based products.</p>
 
                 <p>
                     Sample DeletedMessageVaultHook configuration:
@@ -317,7 +317,7 @@ retentionPeriod=1y
                     </li>
                     <li>
                         <b>linshare</b>: Instead of exporting blobs to the local file system, using
-                        <a href="https://www.linshare.org/en/index.html">LinShare</a> helps you upload your blobs and people
+                        <a href="https://www.linshare.org">LinShare</a> helps you upload your blobs and people
                         you have been sharing to can access those blobs by accessing the LinShare server and download them.
                     </li>
                 </ul>
@@ -357,12 +357,12 @@ $ cp -rf james-project/server/apps/distributed-app/sample-configuration conf
 $ keytool -genkey -alias james -keyalg RSA -keystore conf/keystore
                 </code></pre>
 
-                <p>Second, modify deletedMessageVault.properties configuration file like in the previous example</p>
+                <p>Second, modify <code>deletedMessageVault.properties</code> configuration file like in the previous example</p>
 
-                <p>Third, modify listeners.xml to configure DeletedMessageVaultHook by adding preDeletionHook section at previous paragraph</p>
+                <p>Third, modify <code>listeners.xml</code> to configure DeletedMessageVaultHook by adding preDeletionHook section at previous paragraph</p>
 
                 <p>
-                    Fourth, modify blob.properties file to configure the BlobStore that will be used and the file exporting mechanism, like
+                    Fourth, modify <code>blob.properties</code> file to configure the BlobStore that will be used and the file exporting mechanism, like
                     we saw previously as well.
                 </p>
 
