@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Simple Mail Transfer Protocol (SMTP) :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.2">
     <link rel="stylesheet" href="../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -284,11 +284,22 @@
     <span class="version">3.8.1 SNAPSHOT</span>
   </div>
   <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../james-distributed-app/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
     <li class="component is-current">
       <div class="title"><a href="../../index.html">Apache James Server</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../../index.html">3.8.1 SNAPSHOT</a>
+        </li>
+        <li class="version">
+          <a href="../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -317,6 +328,13 @@
     <li><a href="smtp.html">SMTP</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="smtp.html">3.8.1 SNAPSHOT</a>
+    <a class="version" href="../../../3.6.0/concepts/protocols/smtp.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/concepts/pages/protocols/smtp.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -331,7 +349,7 @@
 <div class="paragraph">
 <p>When the original specification for Simple Mail Transfer Protocol, or SMTP,
 was published almost 40 years ago together with
-<a href="../messages/imf.html" class="page">IMF</a>, email as we know it today was born.</p>
+<a href="../messages/imf.html" class="xref page">IMF</a>, email as we know it today was born.</p>
 </div>
 </div>
 </div>
@@ -362,8 +380,8 @@ protocol for Internet electronic mail transport". If you are interested in all
 the gory details, we recommend that you read this document.</p>
 </div>
 <div class="paragraph">
-<p>This specification has many dependencies with <a href="../messages/imf.html" class="page">IMF</a>,
-<a href="../messages/mime.html" class="page">MIME</a>, and other technical concepts, which can quickly
+<p>This specification has many dependencies with <a href="../messages/imf.html" class="xref page">IMF</a>,
+<a href="../messages/mime.html" class="xref page">MIME</a>, and other technical concepts, which can quickly
 become utterly confusing.
 Here, we provide a very short and simplified description of those portions of the
 specification that we felt were interesting enough to repeat here.</p>
@@ -397,11 +415,11 @@ have failed.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong><a href="../messages/index.html" class="page">Email messages</a></strong>, in that the SMTP protocol exists to transfer
+<p><strong><a href="../messages/index.html" class="xref page">Email messages</a></strong>, in that the SMTP protocol exists to transfer
 messages from one host to another</p>
 </li>
 <li>
-<p><strong><a href="../glossary.html#mta" class="page">MTA</a></strong>, in that the very nature of SMTP is about specifying how a message
+<p><strong><a href="../glossary.html#mta" class="xref page">MTA</a></strong>, in that the very nature of SMTP is about specifying how a message
 gets transferred from one MTA to another</p>
 </li>
 </ul>
@@ -487,11 +505,11 @@ quit <i class="conum" data-value="9"></i><b>(9)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Indicate that you want to send a mail from user02@james.local.</td>
+<td>Indicate that you want to send a mail from <a href="mailto:user02@james.local">user02@james.local</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Indicate that the mail should be sent to user01@james.local.</td>
+<td>Indicate that the mail should be sent to <a href="mailto:user01@james.local">user01@james.local</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -517,7 +535,7 @@ quit <i class="conum" data-value="9"></i><b>(9)</b></code></pre>
 </div>
 <div class="paragraph">
 <p>If you set up Thunderbird to connect to the server, you can confirm that the mail
-has indeed arrived in the mailbox of user01@james.local.</p>
+has indeed arrived in the mailbox of <a href="mailto:user01@james.local">user01@james.local</a>.</p>
 </div>
 <div class="paragraph">
 <p>Pretty cool! Good thing we have James so we don&#8217;t have to always send emails manually.</p>
