@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; Operator guide :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.6.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#mail/messages/index.adoc">mail/messages/index.adoc</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/imf.adoc">mail/messages/imf.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#mail/messages/mime.adoc">mail/messages/mime.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed.html">Distributed</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../run-docker.html">Run with docker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/elasticsearch.html">elasticsearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.6.0 Snapshot</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1 SNAPSHOT</a>
+        </li>
+        <li class="version is-current">
+          <a href="../../../index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../../distributed.html">Distributed</a></li>
+    <li><a href="index.html">Operate</a></li>
+    <li><a href="guide.html">Operator guide</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.6.0 Snapshot</button>
+  <div class="version-menu">
+    <a class="version" href="../../../../3.8.1/servers/distributed/operate/guide.html">3.8.1 SNAPSHOT</a>
+    <a class="version is-current" href="guide.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/james-project-3.6.0/docs/modules/servers/pages/distributed/operate/guide.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; Operator guide</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide aims to be an entry-point to the James documentation for user
+managing a distributed Guice James server.</p>
+</div>
+<div class="paragraph">
+<p>It includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Simple architecture explanations</p>
+</li>
+<li>
+<p>Propose some diagnostics for some common issues</p>
+</li>
+<li>
+<p>Present procedures that can be set up to address these issues</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to not duplicate information, existing documentation will be
+linked.</p>
+</div>
+<div class="paragraph">
+<p>Please note that this product is under active development, should be
+considered experimental and thus targets advanced users.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_basic_monitoring"><a class="anchor" href="#_basic_monitoring"></a>Basic Monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A toolbox is available to help an administrator diagnose issues:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="logging.html" class="xref page">Structured logging into Kibana</a></p>
+</li>
+<li>
+<p><a href="metrics.html" class="xref page">Metrics graphs into Grafana</a></p>
+</li>
+<li>
+<p><a href="webadmin.html#_healthcheck" class="xref page">WebAdmin HealthChecks</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mail_processing"><a class="anchor" href="#_mail_processing"></a>Mail processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, an administrator can monitor mail processing failure through <code>ERROR</code> log
+review. We also recommend watching in Kibana INFO logs using the
+<code>org.apache.james.transport.mailets.ToProcessor</code> value as their <code>logger</code>. Metrics about
+mail repository size, and the corresponding Grafana boards are yet to be contributed.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, given the default mailet container configuration, we recommend monitoring
+<code>cassandra://var/mail/error/</code> to be empty.</p>
+</div>
+<div class="paragraph">
+<p>WebAdmin exposes all utilities for
+<a href="webadmin.html#_reprocessing_mails_from_a_mail_repository" class="xref page">reprocessing
+all mails in a mail repository</a> or
+<a href="webadmin.html#_reprocessing_a_specific_mail_from_a_mail_repository" class="xref page">reprocessing
+a single mail in a mail repository</a>.</p>
+</div>
+<div class="paragraph">
+<p>Also, one can decide to
+<a href="webadmin.html#_removing_all_mails_from_a_mail_repository" class="xref page">delete
+all the mails of a mail repository</a> or
+<a href="webadmin.html#_removing_a_mail_from_a_mail_repository" class="xref page">delete
+a single mail of a mail repository</a>.</p>
+</div>
+<div class="paragraph">
+<p>Performance of mail processing can be monitored via the
+<a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MAILET-1490071694187-dashboard.json">mailet
+grafana board</a> and
+<a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MATCHER-1490071813409-dashboard.json">matcher
+grafana board</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_recipient_rewriting"><a class="anchor" href="#_recipient_rewriting"></a>Recipient rewriting</h3>
+<div class="paragraph">
+<p>Given the default configuration, errors (like loops) uopn recipient rewritting will lead
+to emails being stored in <code>cassandra://var/mail/rrt-error/</code>.</p>
+</div>
+<div class="paragraph">
+<p>We recommend monitoring the content of this mail repository to be empty.</p>
+</div>
+<div class="paragraph">
+<p>If it is not empty, we recommend
+verifying user mappings via <a href="webadmin.html#_user_mappings" class="xref page">User Mappings webadmin API</a> then once identified break the loop by removing
+some Recipient Rewrite Table entry via the
+<a href="webadmin.html#_removing_an_alias_of_an_user" class="xref page">Delete Alias</a>,
+<a href="webadmin.html#_removing_a_group_member" class="xref page">Delete Group member</a>,
+<a href="webadmin.html#_removing_a_destination_of_a_forward" class="xref page">Delete forward</a>,
+<a href="webadmin.html#_remove_an_address_mapping" class="xref page">Delete Address mapping</a>,
+<a href="webadmin.html#_removing_a_domain_mapping" class="xref page">Delete Domain mapping</a>
+or <a href="webadmin.html#_removing_a_regex_mapping" class="xref page">Delete Regex mapping</a>
+APIs (as needed).</p>
+</div>
+<div class="paragraph">
+<p>The <code>Mail.error</code> field can help diagnose the issue as well. Then once
+the root cause has been addressed, the mail can be reprocessed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mailbox_event_bus"><a class="anchor" href="#_mailbox_event_bus"></a>Mailbox Event Bus</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is possible for the administrator of James to define the mailbox
+listeners he wants to use, by adding them in the
+<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/listeners.xml">listeners.xml</a>
+configuration file. It’s possible also to add your own custom mailbox
+listeners. This enables to enhance capabilities of James as a Mail
+Delivery Agent. You can get more information about those
+<a href="config-listeners.html">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Currently, an administrator can monitor listeners failures through
+<code>ERROR</code> log review. Metrics regarding mailbox listeners can be monitored
+via
+<a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MailboxListeners-1528958667486-dashboard.json">mailbox_listeners
+grafana board</a> and
+<a href="https://github.com/apache/james-project/blob/master/grafana-reporting/MailboxListeners%20rate-1552903378376.json">mailbox_listeners_rate
+grafana board</a>.</p>
+</div>
+<div class="paragraph">
+<p>Upon exceptions, a bounded number of retries are performed (with
+exponential backoff delays). If after those retries the listener is
+still failing to perform its operation, then the event will be stored in
+the <a href="webadmin.html#_event_dead_letter" class="xref page">Event Dead Letter</a>. This
+API allows diagnosing issues, as well as redelivering the events.</p>
+</div>
+<div class="paragraph">
+<p>To check that you have undelivered events in your system, you can first
+run the associated with
+<a href="webadmin.html#_healthcheck" class="xref page">event dead letter health check</a> .
+You can explore Event DeadLetter content through WebAdmin. For
+this, <a href="webadmin.html#_listing_mailbox_listener_groups" class="xref page">list mailbox listener groups</a>
+you will get a list of groups back, allowing
+you to check if those contain registered events in each by
+<a href="webadmin.html#_listing_failed_events" class="xref page">listing their failed events</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you get failed events IDs back, you can as well
+<a href="webadmin.html#_getting_event_details" class="xref page">check their details</a>.</p>
+</div>
+<div class="paragraph">
+<p>An easy way to solve this is just to trigger then the
+<a href="webadmin.html#_redeliver_all_events" class="xref page">redeliver all events</a>
+task. It will start reprocessing all the failed events registered in
+event dead letters.</p>
+</div>
+<div class="paragraph">
+<p>If for some other reason you don’t need to redeliver all events, you
+have more fine-grained operations allowing you to
+<a href="webadmin.html#_redeliver_group_events" class="xref page">redeliver group events</a>
+or even just
+<a href="webadmin.html#_redeliver_a_single_event" class="xref page">redeliver a single event</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_elasticsearch_indexing"><a class="anchor" href="#_elasticsearch_indexing"></a>ElasticSearch Indexing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A projection of messages is maintained in ElasticSearch via a listener
+plugged into the mailbox event bus in order to enable search features.</p>
+</div>
+<div class="paragraph">
+<p>You can find more information about ElasticSearch configuration
+<a href="config-elasticsearch.html">here</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_usual_troubleshooting_procedures"><a class="anchor" href="#_usual_troubleshooting_procedures"></a>Usual troubleshooting procedures</h3>
+<div class="paragraph">
+<p>As explained in the <a href="#_mailbox_event_bus">Mailbox Event Bus</a> section,
+processing those events can fail sometimes.</p>
+</div>
+<div class="paragraph">
+<p>Currently, an administrator can monitor indexation failures through
+<code>ERROR</code> log review. You can as well
+<a href="webadmin.html#_listing_failed_events" class="xref page">list failed events</a> by
+looking with the group called
+<code>org.apache.james.mailbox.elasticsearch.v7.events.ElasticSearchListeningMessageSearchIndex$ElasticSearchListeningMessageSearchIndexGroup</code>.
+A first on-the-fly solution could be to just
+<a href="#_mailbox_event_bus">redeliver those group events with event dead letter</a>.</p>
+</div>
+<div class="paragraph">
+<p>If the event storage in dead-letters fails (for instance in the face of
+Cassandra storage exceptions), then you might need to use our WebAdmin
+reIndexing tasks.</p>
+</div>
+<div class="paragraph">
+<p>From there, you have multiple choices. You can
+<a href="webadmin.html#_reindexing_all_mails" class="xref page">reIndex all mails</a>,
+<a href="webadmin.html#_reindexing_a_mailbox_mails" class="xref page">reIndex mails from a mailbox</a> or even just
+<a href="webadmin.html#_reindexing_a_single_mail_by_messageid" class="xref page">reIndex a single mail</a>.</p>
+</div>
+<div class="paragraph">
+<p>When checking the result of a reIndexing task, you might have failed
+reprocessed mails. You can still use the task ID to
+<a href="webadmin.html#_fixing_previously_failed_reindexing" class="xref page">reprocess previously failed reIndexing mails</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_on_the_fly_elasticsearch_index_setting_update"><a class="anchor" href="#_on_the_fly_elasticsearch_index_setting_update"></a>On the fly ElasticSearch Index setting update</h3>
+<div class="paragraph">
+<p>Sometimes you might need to update index settings. Cases when an
+administrator might want to update index settings include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Scaling out: increasing the shard count might be needed.</p>
+</li>
+<li>
+<p>Changing string analysers, for instance to target another language</p>
+</li>
+<li>
+<p>etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to achieve such a procedure, you need to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-create-index.html">Create
+the new index</a> with the right settings and mapping</p>
+</li>
+<li>
+<p>James uses two aliases on the mailbox index: one for reading
+(<code>mailboxReadAlias</code>) and one for writing (<code>mailboxWriteAlias</code>). First
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-aliases.html">add
+an alias</a> <code>mailboxWriteAlias</code> to that new index, so that now James
+writes on the old and new indexes, while only keeping reading on the
+first one</p>
+</li>
+<li>
+<p>Now trigger a
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docs-reindex.html">reindex</a>
+from the old index to the new one (this actively relies on <code>_source</code>
+field being present)</p>
+</li>
+<li>
+<p>When this is done, add the <code>mailboxReadAlias</code> alias to the new index</p>
+</li>
+<li>
+<p>Now that the migration to the new index is done, you can
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-delete-index.html">drop
+the old index</a></p>
+</li>
+<li>
+<p>You might want as well modify the James configuration file
+<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/elasticsearch.properties">elasticsearch.properties</a>
+by setting the parameter <code>elasticsearch.index.mailbox.name</code> to the name
+of your new index. This is to avoid that James re-creates index upon
+restart</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>Note</em>: keep in mind that reindexing can be a very long operation
+depending on the volume of mails you have stored.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_solving_cassandra_inconsistencies"><a class="anchor" href="#_solving_cassandra_inconsistencies"></a>Solving cassandra inconsistencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cassandra backend uses data duplication to workaround Cassandra query
+limitations. However, Cassandra is not doing transaction when writing in
+several tables, this can lead to consistency issues for a given piece of
+data. The consequence could be that the data is in a transient state
+(that should never appear outside of the system).</p>
+</div>
+<div class="paragraph">
+<p>Because of the lack of transactions, it’s hard to prevent these kind of
+issues. We had developed some features to fix some existing cassandra
+inconsistency issues that had been reported to James.</p>
+</div>
+<div class="sect2">
+<h3 id="_jmap_message_fast_view_projections"><a class="anchor" href="#_jmap_message_fast_view_projections"></a>Jmap message fast view projections</h3>
+<div class="paragraph">
+<p>When you read a Jmap message, some calculated properties are expected to
+be fast to retrieve, like <code>preview</code>, <code>hasAttachment</code>. James achieves it
+by pre-calculating and storing them into a caching table
+(<code>message_fast_view_projection</code>). Missing caches are populated on
+message reads and will temporary decrease the performance.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_outdated_projections"><a class="anchor" href="#_how_to_detect_the_outdated_projections"></a>How to detect the outdated projections</h4>
+<div class="paragraph">
+<p>You can watch the <code>MessageFastViewProjection</code> health check at
+<a href="webadmin.html#_check_all_components" class="xref page">webadmin documentation</a>.
+It provides a check based on the ratio of missed projection reads.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve"><a class="anchor" href="#_how_to_solve"></a>How to solve</h4>
+<div class="paragraph">
+<p>Since the MessageFastViewProjection is self healing, you should be
+concerned only if the health check still returns <code>degraded</code> for a while,
+there’s a possible thing you can do is looking at James logs for more
+clues.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mailboxes"><a class="anchor" href="#_mailboxes"></a>Mailboxes</h3>
+<div class="paragraph">
+<p><code>mailboxPath</code> and <code>mailbox</code> tables share common fields like <code>mailboxId</code>
+and mailbox <code>name</code>. A successful operation of creating/renaming/delete
+mailboxes has to succeed at updating <code>mailboxPath</code> and <code>mailbox</code> table.
+Any failure on creating/updating/delete records in <code>mailboxPath</code> or
+<code>mailbox</code> can produce inconsistencies.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_inconsistencies"><a class="anchor" href="#_how_to_detect_the_inconsistencies"></a>How to detect the inconsistencies</h4>
+<div class="paragraph">
+<p>If you found the suspicious <code>MailboxNotFoundException</code> in your logs.
+Currently, there’s no dedicated tool for that, we recommend scheduling
+the SolveInconsistencies task below for the mailbox object on a regular
+basis, avoiding peak traffic in order to address both inconsistencies
+diagnostic and fixes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve_2"><a class="anchor" href="#_how_to_solve_2"></a>How to solve</h4>
+<div class="paragraph">
+<p>An admin can run offline webadmin
+<a href="webadmin.html#_fixing_mailboxes_inconsistencies" class="xref page">solve Cassandra mailbox object inconsistencies task</a>
+in order to sanitize his
+mailbox denormalization.</p>
+</div>
+<div class="paragraph">
+<p>In order to ensure being offline, stop the traffic on SMTP, JMAP and
+IMAP ports, for example via re-configuration or firewall rules.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mailboxes_counters"><a class="anchor" href="#_mailboxes_counters"></a>Mailboxes Counters</h3>
+<div class="paragraph">
+<p>James maintains a per mailbox projection for message count and unseen
+message count. Failures during the denormalization process will lead to
+incorrect results being returned.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_inconsistencies_2"><a class="anchor" href="#_how_to_detect_the_inconsistencies_2"></a>How to detect the inconsistencies</h4>
+<div class="paragraph">
+<p>Incorrect message count/message unseen count could be seen in the
+<code>Mail User Agent</code> (IMAP or JMAP). Invalid values are reported in the
+logs as warning with the following class
+<code>org.apache.james.mailbox.model.MailboxCounters</code> and the following
+message prefix: <code>Invalid mailbox counters</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve_3"><a class="anchor" href="#_how_to_solve_3"></a>How to solve</h4>
+<div class="paragraph">
+<p>Execute the
+<a href="webadmin.html#_recomputing_mailbox_counters" class="xref page">recompute Mailbox counters task</a>.
+This task is not concurrent-safe. Concurrent
+increments &amp; decrements will be ignored during a single mailbox
+processing. Re-running this task may eventually return the correct
+result.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_messages"><a class="anchor" href="#_messages"></a>Messages</h3>
+<div class="paragraph">
+<p>Messages are denormalized and stored in both <code>imapUidTable</code> (source of
+truth) and <code>messageIdTable</code>. Failure in the denormalization process will
+cause inconsistencies between the two tables.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_inconsistencies_3"><a class="anchor" href="#_how_to_detect_the_inconsistencies_3"></a>How to detect the inconsistencies</h4>
+<div class="paragraph">
+<p>User can see a message in JMAP but not in IMAP, or mark a message as
+`SEEN' in JMAP but the message flag is still unchanged in IMAP.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve_4"><a class="anchor" href="#_how_to_solve_4"></a>How to solve</h4>
+<div class="paragraph">
+<p>Execute the
+<a href="webadmin.html#_fixing_message_inconsistencies" class="xref page">solve Cassandra message inconsistencies task</a>. This task is not
+concurrent-safe. User actions concurrent to the inconsistency fixing
+task could result in new inconsistencies being created. However the
+source of truth <code>imapUidTable</code> will not be affected and thus re-running
+this task may eventually fix all issues.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quotas"><a class="anchor" href="#_quotas"></a>Quotas</h3>
+<div class="paragraph">
+<p>User can monitor the amount of space and message count he is allowed to
+use, and that he is effectively using. James relies on an event bus and
+Cassandra to track the quota of an user. Upon Cassandra failure, this
+value can be incorrect.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_inconsistencies_4"><a class="anchor" href="#_how_to_detect_the_inconsistencies_4"></a>How to detect the inconsistencies</h4>
+<div class="paragraph">
+<p>Incorrect quotas could be seen in the <code>Mail User Agent</code> (IMAP or JMAP).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve_5"><a class="anchor" href="#_how_to_solve_5"></a>How to solve</h4>
+<div class="paragraph">
+<p>Execute the
+<a href="webadmin.html#_recomputing_current_quotas_for_users" class="xref page">recompute Quotas counters task</a>. This task is not concurrent-safe. Concurrent
+operations will result in an invalid quota to be persisted. Re-running
+this task may eventually return the correct result.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rrt_recipientrewritetable_mapping_sources"><a class="anchor" href="#_rrt_recipientrewritetable_mapping_sources"></a>RRT (RecipientRewriteTable) mapping sources</h3>
+<div class="paragraph">
+<p><code>rrt</code> and <code>mappings_sources</code> tables store information about address
+mappings. The source of truth is <code>rrt</code> and <code>mappings_sources</code> is the
+projection table containing all mapping sources.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_detect_the_inconsistencies_5"><a class="anchor" href="#_how_to_detect_the_inconsistencies_5"></a>How to detect the inconsistencies</h4>
+<div class="paragraph">
+<p>Right now there’s no tool for detecting that, we’re proposing a
+<a href="https://issues.apache.org/jira/browse/JAMES-3069">development plan</a>. By
+the mean time, the recommendation is to execute the
+<code>SolveInconsistencies</code> task below in a regular basis.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_solve_6"><a class="anchor" href="#_how_to_solve_6"></a>How to solve</h4>
+<div class="paragraph">
+<p>Execute the Cassandra mapping <code>SolveInconsistencies</code> task described in
+<a href="webadmin.html#_operations_on_mappings_sources" class="xref page">webadmin documentation</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setting_cassandra_user_permissions"><a class="anchor" href="#_setting_cassandra_user_permissions"></a>Setting Cassandra user permissions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a Cassandra cluster is serving more than a James cluster, the
+keyspaces need isolation. It can be achieved by configuring James server
+with credentials preventing access or modification of other keyspaces.</p>
+</div>
+<div class="paragraph">
+<p>We recommend you to not use the initial admin user of Cassandra and
+provide a different one with a subset of permissions for each
+application.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="paragraph">
+<p>We’re gonna use the Cassandra super users to create roles and grant
+permissions for them. To do that, Cassandra requires you to login via
+username/password authentication and enable granting in cassandra
+configuration file.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>echo -e "\nauthenticator: PasswordAuthenticator" &gt;&gt; /etc/cassandra/cassandra.yaml
+echo -e "\nauthorizer: org.apache.cassandra.auth.CassandraAuthorizer" &gt;&gt; /etc/cassandra/cassandra.yaml</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prepare_cassandra_roles_keyspaces_for_james"><a class="anchor" href="#_prepare_cassandra_roles_keyspaces_for_james"></a>Prepare Cassandra roles &amp; keyspaces for James</h3>
+<div class="sect3">
+<h4 id="_create_a_role"><a class="anchor" href="#_create_a_role"></a>Create a role</h4>
+<div class="paragraph">
+<p>Have a look at
+<a href="http://cassandra.apache.org/doc/3.11.11/cql/security.html">cassandra documentation</a> section <code>CREATE ROLE</code> for more information</p>
+</div>
+<div class="paragraph">
+<p>E.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CREATE ROLE james_one WITH PASSWORD = 'james_one' AND LOGIN = true;</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_create_a_keyspace"><a class="anchor" href="#_create_a_keyspace"></a>Create a keyspace</h4>
+<div class="paragraph">
+<p>Have a look at
+<a href="http://cassandra.apache.org/doc/3.11.11/cql/ddl.html">cassandra documentation</a> section <code>CREATE KEYSPACE</code> for more information</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_grant_permissions_on_created_keyspace_to_the_role"><a class="anchor" href="#_grant_permissions_on_created_keyspace_to_the_role"></a>Grant permissions on created keyspace to the role</h4>
+<div class="paragraph">
+<p>The role to be used by James needs to have full rights on the keyspace
+that James is using. Assuming the keyspace name is <code>james_one_keyspace</code>
+and the role be <code>james_one</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GRANT CREATE ON KEYSPACE james_one_keyspace TO james_one; // Permission to create tables on the appointed keyspace
+GRANT SELECT ON KEYSPACE james_one_keyspace TO james_one; // Permission to select from tables on the appointed keyspace
+GRANT MODIFY ON KEYSPACE james_one_keyspace TO james_one; // Permission to update data in tables on the appointed keyspace</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Warning</strong>: The granted role doesn’t have the right to create keyspaces,
+thus, if you haven’t created the keyspace, James server will fail to
+start is expected.</p>
+</div>
+<div class="paragraph">
+<p><strong>Tips</strong></p>
+</div>
+<div class="paragraph">
+<p>Since all of Cassandra roles used by different James are supposed to
+have a same set of permissions, you can reduce the works by creating a
+base role set like <code>typical_james_role</code> with all of necessary
+permissions. After that, with each James, create a new role and grant
+the <code>typical_james_role</code> to the newly created one. Note that, once a
+base role set is updated ( granting or revoking rights) all granted
+roles are automatically updated.</p>
+</div>
+<div class="paragraph">
+<p>E.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CREATE ROLE james1 WITH PASSWORD = 'james1' AND LOGIN = true;
+GRANT typical_james_role TO james1;
+
+CREATE ROLE james2 WITH PASSWORD = 'james2' AND LOGIN = true;
+GRANT typical_james_role TO james2;</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_revoke_harmful_permissions_from_the_created_role"><a class="anchor" href="#_revoke_harmful_permissions_from_the_created_role"></a>Revoke harmful permissions from the created role</h4>
+<div class="paragraph">
+<p>We want a specific role that cannot describe or query the information of
+other keyspaces or tables used by another application. By default,
+Cassandra allows every role created to have the right to describe any
+keyspace and table. There’s no configuration that can make effect on
+that topic. Consequently, you have to accept that your data models are
+still being exposed to anyone having credentials to Cassandra.</p>
+</div>
+<div class="paragraph">
+<p>For more information, have a look at
+<a href="http://cassandra.apache.org/doc/3.11.11/cql/security.html">cassandra documentation</a> section <code>REVOKE PERMISSION</code>.</p>
+</div>
+<div class="paragraph">
+<p>Except for the case above, the permissions are not auto available for a
+specific role unless they are granted by <code>GRANT</code> command. Therefore, if
+you didn’t provide more permissions than
+<a href="#Grant_permissions_on_created_keyspace_to_the_role">granting
+section</a>, there’s no need to revoke.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cassandra_table_level_configuration"><a class="anchor" href="#_cassandra_table_level_configuration"></a>Cassandra table level configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While <em>Distributed James</em> is shipped with default table configuration
+options, these settings should be refined depending of your usage.</p>
+</div>
+<div class="paragraph">
+<p>These options are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="https://cassandra.apache.org/doc/latest/operating/compaction.html">compaction algorithms</a></p>
+</li>
+<li>
+<p>The <a href="https://cassandra.apache.org/doc/latest/operating/bloom_filters.html">bloom filter sizing</a></p>
+</li>
+<li>
+<p>The <a href="https://cassandra.apache.org/doc/latest/operating/compression.html?highlight=chunk%20size">chunk size</a></p>
+</li>
+<li>
+<p>Thehttps://www.datastax.com/blog/2011/04/maximizing-cache-benefit-cassandra[cachingoptions]</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The compaction algorithms allow a tradeoff between background IO upon
+writes and reads. We recommend:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using <strong>Leveled Compaction Strategy</strong> on
+read intensive tables subject to updates. This limits the count of
+SStables being read at the cost of more background IO. High garbage
+collections can be caused by an inappropriate use of Leveled Compaction
+Strategy.</p>
+</li>
+<li>
+<p>Otherwise use the default <strong>Size Tiered Compaction Strategy</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bloom filters help avoiding unnecessary reads on SSTables. This
+probabilistic data structure can tell an entry absence from a SSTable,
+as well as the presence of an entry with an associated probability. If a
+lot of false positives are noticed, the size of the bloom filters can be
+increased.</p>
+</div>
+<div class="paragraph">
+<p>As explained in
+<a href="https://thelastpickle.com/blog/2018/08/08/compression_performance.html">this post</a>,
+chunk size used upon compression allows a tradeoff between reads
+and writes. A smaller size will mean decreasing compression, thus it
+increases data being stored on disk, but allow lower chunks to be read
+to access data, and will favor reads. A bigger size will mean better
+compression, thus writing less, but it might imply reading bigger
+chunks.</p>
+</div>
+<div class="paragraph">
+<p>Cassandra enables a key cache and a row cache. Key cache enables to skip
+reading the partition index upon reads, thus performing 1 read to the
+disk instead of 2. Enabling this cache is globally advised. Row cache
+stores the entire row in memory. It can be seen as an optimization, but
+it might actually use memory no longer available for instance for file
+system cache. We recommend turning it off on modern SSD hardware.</p>
+</div>
+<div class="paragraph">
+<p>A review of your usage can be conducted using
+<a href="https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html">nodetool</a>
+utility. For example <code>nodetool tablestats {keyspace}</code> allows reviewing
+the number of SSTables, the read/write ratios, bloom filter efficiency.
+<code>nodetool tablehistograms {keyspace}.{table}</code> might give insight about
+read/write performance.</p>
+</div>
+<div class="paragraph">
+<p>Table level options can be changed using <strong>ALTER TABLE</strong> for example with
+the <a href="https://cassandra.apache.org/doc/latest/tools/cqlsh.html">cqlsh</a>
+utility. A full compaction might be needed in order for the changes to
+be taken into account.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mail_queue"><a class="anchor" href="#_mail_queue"></a>Mail Queue</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_fine_tune_configuration_for_rabbitmq"><a class="anchor" href="#_fine_tune_configuration_for_rabbitmq"></a>Fine tune configuration for RabbitMQ</h3>
+<div class="paragraph">
+<p>In order to adapt mail queue settings to the actual traffic load, an
+administrator needs to perform fine configuration tunning as explained
+in
+<a href="https://github.com/apache/james-project/blob/master/src/site/xdoc/server/config-rabbitmq.xml">rabbitmq.properties</a>.</p>
+</div>
+<div class="paragraph">
+<p>Be aware that <code>MailQueue::getSize</code> is currently performing a browse and
+thus is expensive. Size recurring metric reporting thus introduces
+performance issues. As such, we advise setting
+<code>mailqueue.size.metricsEnabled=false</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_email_queues"><a class="anchor" href="#_managing_email_queues"></a>Managing email queues</h3>
+<div class="paragraph">
+<p>Managing an email queue is an easy task if you follow this procedure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, <a href="webadmin.html#_listing_mail_queues" class="xref page">List mail queues</a>
+and <a href="webadmin.html#_getting_a_mail_queue_details" class="xref page">get a mail queue details</a>.</p>
+</li>
+<li>
+<p>And then
+<a href="webadmin.html#_listing_the_mails_of_a_mail_queue" class="xref page">List the mails of a mail queue</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In case, you need to clear an email queue because there are only spam or
+trash emails in the email queue you have this procedure to follow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All mails from the given mail queue will be deleted with
+<a href="webadmin.html#_clearing_a_mail_queue" class="xref page">Clearing a mail queue</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_updating_cassandra_schema_version"><a class="anchor" href="#_updating_cassandra_schema_version"></a>Updating Cassandra schema version</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A schema version indicates you which schema your James server is relying
+on. The schema version number tracks if a migration is required. For
+instance, when the latest schema version is 2, and the current schema
+version is 1, you might think that you still have data in the deprecated
+Message table in the database. Hence, you need to migrate these messages
+into the MessageV2 table. Once done, you can safely bump the current
+schema version to 2.</p>
+</div>
+<div class="paragraph">
+<p>Relying on outdated schema version prevents you to benefit from the
+newest performance and safety improvements. Otherwise, there’s something
+very unexpected in the way we manage cassandra schema: we create new
+tables without asking the admin about it. That means your James version
+is always using the last tables but may also take into account the old
+ones if the migration is not done yet.</p>
+</div>
+<div class="sect2">
+<h3 id="_how_to_detect_when_we_should_update_cassandra_schema_version"><a class="anchor" href="#_how_to_detect_when_we_should_update_cassandra_schema_version"></a>How to detect when we should update Cassandra schema version</h3>
+<div class="paragraph">
+<p>When you see in James logs
+<code>org.apache.james.modules.mailbox.CassandraSchemaVersionStartUpCheck</code>
+showing a warning like <code>Recommended version is versionX</code>, you should
+perform an update of the Cassandra schema version.</p>
+</div>
+<div class="paragraph">
+<p>Also, we keep track of changes needed when upgrading to a newer version.
+You can read this
+<a href="https://github.com/apache/james-project/blob/master/upgrade-instructions.md">upgrade
+instructions</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_update_cassandra_schema_version"><a class="anchor" href="#_how_to_update_cassandra_schema_version"></a>How to update Cassandra schema version</h3>
+<div class="paragraph">
+<p>These schema updates can be triggered by webadmin using the Cassandra
+backend. Following steps are for updating Cassandra schema version:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>At the very first step, you need to
+<a href="webadmin.html#_retrieving_current_cassandra_schema_version" class="xref page">retrieve
+current Cassandra schema version</a></p>
+</li>
+<li>
+<p>And then, you
+<a href="webadmin.html#_retrieving_latest_available_cassandra_schema_version" class="xref page">retrieve
+latest available Cassandra schema version</a> to make sure there is a
+latest available version</p>
+</li>
+<li>
+<p>Eventually, you can update the current schema version to the one you
+got with
+<a href="webadmin.html#_upgrading_to_the_latest_version" class="xref page">upgrading to
+the latest version</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Otherwise, if you need to run the migrations to a specific version, you
+can use
+<a href="webadmin.html#_upgrading_to_a_specific_version" class="xref page">Upgrading to a
+specific version</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deleted_message_vault"><a class="anchor" href="#_deleted_message_vault"></a>Deleted Message Vault</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We recommend the administrator to
+<a href="#_cleaning_expired_deleted_messages">run it</a> in cron job to save
+storage volume.</p>
+</div>
+<div class="sect2">
+<h3 id="_how_to_configure_deleted_messages_vault"><a class="anchor" href="#_how_to_configure_deleted_messages_vault"></a>How to configure deleted messages vault</h3>
+<div class="paragraph">
+<p>To setup James with Deleted Messages Vault, you need to follow those
+steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Enable Deleted Messages Vault by configuring Pre Deletion Hooks.</p>
+</li>
+<li>
+<p>Configuring the retention time for the Deleted Messages Vault.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_enable_deleted_messages_vault_by_configuring_pre_deletion_hooks"><a class="anchor" href="#_enable_deleted_messages_vault_by_configuring_pre_deletion_hooks"></a>Enable Deleted Messages Vault by configuring Pre Deletion Hooks</h4>
+<div class="paragraph">
+<p>You need to configure this hook in
+<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra-rabbitmq/destination/conf/listeners.xml">listeners.xml</a>
+configuration file. More details about configuration &amp; example can be
+found at <a href="http://james.apache.org/server/config-listeners.html">Pre
+Deletion Hook Configuration</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuring_the_retention_time_for_the_deleted_messages_vault"><a class="anchor" href="#_configuring_the_retention_time_for_the_deleted_messages_vault"></a>Configuring the retention time for the Deleted Messages Vault</h4>
+<div class="paragraph">
+<p>In order to configure the retention time for the Deleted Messages Vault,
+an administrator needs to perform fine configuration tunning as
+explained in
+<a href="https://github.com/apache/james-project/blob/master/dockerfiles/run/guice/cassandra/destination/conf/deletedMessageVault.properties">deletedMessageVault.properties</a>.
+Mails are not retained forever as you have to configure a retention
+period (by <code>retentionPeriod</code>) before using it (with one-year retention
+by default if not defined).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restore_deleted_messages_after_deletion"><a class="anchor" href="#_restore_deleted_messages_after_deletion"></a>Restore deleted messages after deletion</h3>
+<div class="paragraph">
+<p>After users deleted their mails and emptied the trash, the admin can use
+<a href="webadmin.html#_restore_deleted_messagest" class="xref page">Restore Deleted Messages</a>
+to restore all the deleted mails.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cleaning_expired_deleted_messages"><a class="anchor" href="#_cleaning_expired_deleted_messages"></a>Cleaning expired deleted messages</h3>
+<div class="paragraph">
+<p>You can delete all deleted messages older than the configured
+<code>retentionPeriod</code> by using
+<a href="webadmin.html#_deleted_messages_vault" class="xref page">Purge Deleted Messages</a>.
+We recommend calling this API in CRON job on 1st day each
+month.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
