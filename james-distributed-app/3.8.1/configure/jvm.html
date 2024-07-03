@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; jvm.properties :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/jvm.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -379,7 +386,15 @@
     <li><a href="jvm.html">Distributed James Server &mdash; jvm.properties</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/jvm.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="jvm.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/jvm.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/jvm.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -476,92 +491,6 @@ is attempted for each incoming connection, which can be costly. Remote IP is alw
 </div>
 <div class="paragraph">
 <p>Optional. Boolean. Defaults to true.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_change_the_encoding_type_used_for_the_blobid"><a class="anchor" href="#_change_the_encoding_type_used_for_the_blobid"></a>Change the encoding type used for the blobId</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By default, the blobId is encoded in base64 url. The property <code>james.blob.id.hash.encoding</code> allows to change the encoding type.
-The support value are: base16, hex, base32, base32Hex, base64, base64Url.</p>
-</div>
-<div class="paragraph">
-<p>Ex in <code>jvm.properties</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>james.blob.id.hash.encoding=base16</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Optional. String. Defaults to base64Url.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_jmap_quota_draft_compatibility"><a class="anchor" href="#_jmap_quota_draft_compatibility"></a>JMAP Quota draft compatibility</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Some JMAP clients depend on the JMAP Quota draft specifications. The property <code>james.jmap.quota.draft.compatibility</code> allows
-to enable JMAP Quota draft compatibility for those clients and allow them a time window to adapt to the RFC-9245 JMAP Quota.</p>
-</div>
-<div class="paragraph">
-<p>Optional. Boolean. Default to false.</p>
-</div>
-<div class="paragraph">
-<p>Ex in <code>jvm.properties</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>james.jmap.quota.draft.compatibility=true</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To enable the compatibility.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_enable_s3_metrics"><a class="anchor" href="#_enable_s3_metrics"></a>Enable S3 metrics</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>James supports extracting some S3 client-level metrics e.g. number of connections being used, time to acquire an S3 connection, total time to finish a S3 request&#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>The property <code>james.s3.metrics.enabled</code> allows to enable S3 metrics collection. Please pay attention that enable this
-would impact a bit on S3 performance.</p>
-</div>
-<div class="paragraph">
-<p>Optional. Boolean. Default to true.</p>
-</div>
-<div class="paragraph">
-<p>Ex in <code>jvm.properties</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>james.s3.metrics.enabled=false</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To disable the S3 metrics.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_reactor_stream_prefetch"><a class="anchor" href="#_reactor_stream_prefetch"></a>Reactor Stream Prefetch</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Prefetch to use in Reactor to stream convertions (S3 &#8658; InputStream). Default to 1.
-Higher values will tend to block less often at the price of higher memory consumptions.</p>
-</div>
-<div class="paragraph">
-<p>Ex in <code>jvm.properties</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># james.reactor.inputstream.prefetch=4</pre>
-</div>
 </div>
 </div>
 </div>

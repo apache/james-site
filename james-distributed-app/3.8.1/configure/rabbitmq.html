@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; rabbitmq.properties :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/rabbitmq.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -382,7 +389,15 @@
     <li><a href="rabbitmq.html">rabbitmq.properties</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/rabbitmq.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="rabbitmq.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/rabbitmq.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/rabbitmq.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -462,10 +477,6 @@ Optional integer, defaults to 30 seconds.</p></td>
 Optional integer, defaults to 3</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">driver.network.recovery.interval</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, non-negative integer, default to 100ms. The interval (in ms) that RabbitMQ driver will automatic recovery wait before attempting to reconnect. See <a href="https://www.rabbitmq.com/client-libraries/java-api-guide#connection-recovery" class="bare">https://www.rabbitmq.com/client-libraries/java-api-guide#connection-recovery</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ssl.enabled</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Is using ssl enabled
 Optional boolean, defaults to false</p></td>
@@ -507,18 +518,13 @@ Optional string, defaults to empty string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">quorum.queues.enable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean. Whether to activate Quorum queue usage for all queues.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean. Whether to activate Quorum queue usage for use cases that benefits from it (work queue).
 Quorum queues enables high availability.
 False (default value) results in the usage of classic queues.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">quorum.queues.replication.factor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Strictly positive integer. The replication factor to use when creating quorum queues.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">quorum.queues.delivery.limit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Strictly positive integer. Value for x-delivery-limit queue parameter, default to none. Setting a delivery limit can
-prevent RabbitMQ outage if message processing fails. Read <a href="https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling" class="bare">https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hosts</p></td>
@@ -539,47 +545,12 @@ A coma separated list of hosts, example: hosts=ip1:5672,ip2:5672</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether or not the queue backing notifications should be durable. Optional boolean, defaults to true.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">event.bus.propagate.dispatch.error</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to propagate errors back to the callers when eventbus fails to dispatch group events to RabbitMQ (then store the failed events in the event dead letters).
-Optional boolean, defaults to true.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">vhost</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. This parameter is only a workaround to support invalid URIs containing character like '_'.
 You still need to specify the vhost in the uri parameter.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tuning_rabbitmq_for_quorum_queue_use"><a class="anchor" href="#_tuning_rabbitmq_for_quorum_queue_use"></a>Tuning RabbitMQ for quorum queue use</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>While quorum queues are great at preserving your data and enabling High Availability, they demand more resources and
-a greater care than regular RabbitMQ queues.</p>
-</div>
-<div class="paragraph">
-<p>See <a href="https://www.rabbitmq.com/docs/quorum-queues#performance-tuning">this section of RabbitMQ documentation regarding RabbitMQ quroum queue performance tunning</a>.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Provide decent amount of RAM memory to RabbitMQ. 4GB is a good start.</p>
-</li>
-<li>
-<p>Setting a delivery limit is advised as looping messages can cause extreme memory consumptions onto quorum queues.</p>
-</li>
-<li>
-<p>Set up Raft for small messages:</p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>raft.segment_max_entries = 32768</pre>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">

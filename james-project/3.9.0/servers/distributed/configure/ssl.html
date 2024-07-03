@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distributed James Server &mdash; SSL &amp; TLS configuration :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.9.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/messages/index.html">Messages</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../concepts/messages/imf.html">IMF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../concepts/messages/mime.html">MIME</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../basic/index.html">Basic</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/context.html">Context</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../basic/help.html">Help</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Distributed James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/run-docker.html">Run with Docker</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../run/run-kubernetes.html">Run with Kubernetes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../run/k8s-checklist.html">Deployment Checklist</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../run/k8s-logsMetrics.html">Logs &amp; Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../run/k8s-values.html">values.yaml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../run/k8s-secrets.html">secrets.yaml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../benchmark/index.html">Performance benchmark</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/logging.html">Logging in Apache James</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../community/index.html">Community</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/download.html">Download releases</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../community/support.html">Professional support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Apache Software Foundation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/">ASF</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.9.0 SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../index.html">Distributed James Application</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Protocols</li>
+    <li><a href="ssl.html">SSL &amp; TLS</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="ssl.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/ssl.html">3.6.0 Snapshot</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/ssl.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Distributed James Server &mdash; SSL &amp; TLS configuration</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document explains how to enable James 3.0 servers to use Transport Layer Security (TLS)
+for encrypted client-server communication.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_a_server_to_use_ssltls"><a class="anchor" href="#_configure_a_server_to_use_ssltls"></a>Configure a Server to Use SSL/TLS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each of the servers <a href="smtp.html" class="xref page">SMTP - LMTP</a>,
+<a href="pop3.html" class="xref page">POP3</a> and <a href="imap.html" class="xref page">IMAP</a>
+supports use of SSL/TLS.</p>
+</div>
+<div class="paragraph">
+<p>TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are protocols that provide
+data encryption and authentication between applications in scenarios where that data is
+being sent across an insecure network, such as checking your email
+(How does the Secure Socket Layer work?). The terms SSL and TLS are often used
+interchangeably or in conjunction with each other (TLS/SSL),
+but one is in fact the predecessor of the other — SSL 3.0 served as the basis
+for TLS 1.0 which, as a result, is sometimes referred to as SSL 3.1.</p>
+</div>
+<div class="paragraph">
+<p>You need to add a block in the corresponding configuration file (smtpserver.xml, pop3server.xml, imapserver.xml,..)</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;PKCS12&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+  &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively TLS keys can be supplied via PEM files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An optional secret might be specified for the private key:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Optionally, TLS protocols and/or cipher suites can be specified explicitly (smtpserver.xml, pop3server.xml, imapserver.xml,..).
+Otherwise, the default protocols and cipher suites of the used JDK will be used:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;supportedProtocols&gt;
+    &lt;protocol&gt;TLSv1.2&lt;/protocol&gt;
+    &lt;protocol&gt;TLSv1.1&lt;/protocol&gt;
+    &lt;protocol&gt;TLSv1&lt;/protocol&gt;
+    &lt;protocol&gt;SSLv3&lt;/protocol&gt;
+  &lt;/supportedProtocols&gt;
+  &lt;supportedCipherSuites&gt;
+    &lt;cipherSuite&gt;TLS_AES_256_GCM_SHA384&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256&lt;/cipherSuite&gt;
+  &lt;/supportedCipherSuites&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each of these block has an optional boolean configuration element &lt;b&gt;socketTLS&lt;/b&gt; and &lt;b&gt;startTLS&lt;/b&gt; which is used to toggle
+use of SSL or TLS for the service.</p>
+</div>
+<div class="paragraph">
+<p>With socketTLS (SSL/TLS in Thunderbird), all the communication is encrypted.</p>
+</div>
+<div class="paragraph">
+<p>With startTLS (STARTTLS in Thunderbird), the preamble is readable, but the rest is encrypted.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>* OK JAMES IMAP4rev1 Server  Server 192.168.1.4 is ready.
+* CAPABILITY IMAP4rev1 LITERAL+ CHILDREN WITHIN STARTTLS IDLE NAMESPACE UIDPLUS UNSELECT AUTH=PLAIN
+1 OK CAPABILITY completed.
+2 OK STARTTLS Begin TLS negotiation now.
+... rest is encrypted...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can only enable one of the both at the same time for a service.</p>
+</div>
+<div class="paragraph">
+<p>It is also recommended to change the port number on which the service will listen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>POP3 - port 110, Secure POP3 - port 995</p>
+</li>
+<li>
+<p>IMAP - port 143, Secure IMAP4 - port 993</p>
+</li>
+<li>
+<p>SMTP - port 25, Secure SMTP - port 465</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will now need to create your certificate store and place it in the james/conf/ folder with the name you defined in the keystore tag.</p>
+</div>
+<div class="paragraph">
+<p>Please note <code>JKS</code> keystore format is also supported (default value if no keystore type is specified):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;JKS&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+  &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_client_authentication_via_certificates"><a class="anchor" href="#_client_authentication_via_certificates"></a>Client authentication via certificates</h3>
+<div class="paragraph">
+<p>When you enable TLS, you may also configure the server to require a client certificate for authentication:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;JKS&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+
+  &lt;clientAuth&gt;
+    &lt;truststore&gt;file://conf/truststore&lt;/truststore&gt;
+    &lt;truststoreType&gt;JKS&lt;/truststoreType&gt;
+    &lt;truststoreSecret&gt;yoursecret&lt;/truststoreSecret&gt;
+    &lt;enableOCSPCRLChecks&gt;false&lt;/enableOCSPCRLChecks&gt;
+  &lt;/clientAuth&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>James verifies client certificates against the provided truststore. You can fill it with trusted peer certificates directly, or an issuer certificate (CA) if you trust all certificates created by it. If you omit the truststore configuration, James will use the Java default truststore instead, effectively trusting any known CA.</p>
+</div>
+<div class="paragraph">
+<p>James can optionally enable OCSP verifications for client certificates against Certificate Revocation List referenced
+in the certificate itself.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_your_own_pem_keys"><a class="anchor" href="#_creating_your_own_pem_keys"></a>Creating your own PEM keys</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following commands can be used to create self signed PEM keys:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Generating your private key
+openssl genrsa -des3 -out private.key 2048
+
+# Creating your certificates
+openssl req -new -key private.key -out certs.csr
+
+# Signing the certificate yourself
+openssl x509 -req -days 365 -in certs.csr -signkey private.key -out certs.self-signed.csr
+
+# Removing the password from the private key
+# Not necessary if you supply the secret in the configuration
+openssl rsa -in private.key -out private.nopass.key</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may then supply this TLS configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.nopass.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_certificate_keystores"><a class="anchor" href="#_certificate_keystores"></a>Certificate Keystores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section gives more indication for users relying on keystores.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_your_own_certificate_keystore"><a class="anchor" href="#_creating_your_own_certificate_keystore"></a>Creating your own Certificate Keystore</h3>
+<div class="paragraph">
+<p>(Adapted from the Tomcat 4.1 documentation)</p>
+</div>
+<div class="paragraph">
+<p>James currently operates only on JKS or PKCS12 format keystores. This is Java&#8217;s standard "Java KeyStore" format, and is
+the format created by the keytool command-line utility. This tool is included in the JDK.</p>
+</div>
+<div class="paragraph">
+<p>To import an existing certificate into a JKS keystore, please read the documentation (in your JDK documentation package)
+about keytool.</p>
+</div>
+<div class="paragraph">
+<p>To create a new keystore from scratch, containing a single self-signed Certificate, execute the following from a terminal
+command line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>keytool -genkey -alias james -keyalg RSA -storetype PKCS12 -keystore your_keystore_filename</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(The RSA algorithm should be preferred as a secure algorithm, and this also ensures general compatibility with other
+servers and components.)</p>
+</div>
+<div class="paragraph">
+<p>As a suggested standard, create the keystore in the james/conf directory, with a name like james.keystore.</p>
+</div>
+<div class="paragraph">
+<p>After executing this command, you will first be prompted for the keystore password.</p>
+</div>
+<div class="paragraph">
+<p>Next, you will be prompted for general information about this Certificate, such as company, contact name, and so on.
+This information may be displayed to users when importing into the certificate store of the client, so make sure that
+the information provided here matches what they will expect.</p>
+</div>
+<div class="paragraph">
+<p>Important: in the "distinguished name", set the "common name" (CN) to the DNS name of your James server, the one
+you will use to access it from your mail client (like "mail.xyz.com").</p>
+</div>
+<div class="paragraph">
+<p>Finally, you will be prompted for the key password, which is the password specifically for this Certificate
+(as opposed to any other Certificates stored in the same keystore file).</p>
+</div>
+<div class="paragraph">
+<p>If everything was successful, you now have a keystore file with a Certificate that can be used by your server.</p>
+</div>
+<div class="paragraph">
+<p>You MUST have only one certificate in the keystore file used by James.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installing_a_certificate_provided_by_a_certificate_authority"><a class="anchor" href="#_installing_a_certificate_provided_by_a_certificate_authority"></a>Installing a Certificate provided by a Certificate Authority</h3>
+<div class="paragraph">
+<p>(Adapted from the Tomcat 4.1 documentation</p>
+</div>
+<div class="paragraph">
+<p>To obtain and install a Certificate from a Certificate Authority (like verisign.com, thawte.com or trustcenter.de)
+you should have read the previous section and then follow these instructions:</p>
+</div>
+<div class="sect3">
+<h4 id="_create_a_local_certificate_signing_request_csr"><a class="anchor" href="#_create_a_local_certificate_signing_request_csr"></a>Create a local Certificate Signing Request (CSR)</h4>
+<div class="paragraph">
+<p>In order to obtain a Certificate from the Certificate Authority of your choice you have to create a so called
+Certificate Signing Request (CSR). That CSR will be used by the Certificate Authority to create a Certificate
+that will identify your James server as "secure". To create a CSR follow these steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a local Certificate as described in the previous section.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The CSR is then created with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  keytool -certreq -keyalg RSA -alias james -file certreq.csr -keystore your_keystore_filename</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you have a file called certreq.csr. The file is encoded in PEM format. You can submit it to the Certificate Authority
+(look at the documentation of the Certificate Authority website on how to do this). In return you get a Certificate.</p>
+</div>
+<div class="paragraph">
+<p>Now that you have your Certificate you can import it into you local keystore. First of all you may have to import a so
+called Chain Certificate or Root Certificate into your keystore (the major Certificate Authorities are already in place,
+so it&#8217;s unlikely that you will need to perform this step). After that you can procede with importing your Certificate.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optionally_importing_a_so_called_chain_certificate_or_root_certificate"><a class="anchor" href="#_optionally_importing_a_so_called_chain_certificate_or_root_certificate"></a>Optionally Importing a so called Chain Certificate or Root Certificate</h4>
+<div class="paragraph">
+<p>Download a Chain Certificate from the Certificate Authority you obtained the Certificate from.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Verisign.com go to: <a href="http://www.verisign.com/support/install/intermediate.html" class="bare">http://www.verisign.com/support/install/intermediate.html</a></p>
+</li>
+<li>
+<p>For Trustcenter.de go to: <a href="http://www.trustcenter.de/certservices/cacerts/en/en.htm#server" class="bare">http://www.trustcenter.de/certservices/cacerts/en/en.htm#server</a></p>
+</li>
+<li>
+<p>For Thawte.com go to: <a href="http://www.thawte.com/certs/trustmap.html" class="bare">http://www.thawte.com/certs/trustmap.html</a> (seems no longer valid)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_import_the_chain_certificate_into_you_keystore"><a class="anchor" href="#_import_the_chain_certificate_into_you_keystore"></a>Import the Chain Certificate into you keystore</h4>
+<div class="literalblock">
+<div class="content">
+<pre>keytool -import -alias root -keystore your_keystore_filename -trustcacerts -file filename_of_the_chain_certificate</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And finally import your new Certificate (It must be in X509 format):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>keytool -import -alias james -keystore your_keystore_filename -trustcacerts -file your_certificate_filename</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See also <a href="http://www.agentbob.info/agentbob/79.html">this page</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

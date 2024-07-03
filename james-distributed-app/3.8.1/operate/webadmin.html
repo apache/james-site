@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; WebAdmin REST administration API :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/operate/webadmin.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../configure/search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -381,7 +388,15 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/webadmin.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="webadmin.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/operate/webadmin.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/operate/webadmin.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -1174,51 +1189,6 @@ syntax</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_delete_all_users_data_of_a_domain"><a class="anchor" href="#_delete_all_users_data_of_a_domain"></a>Delete all users data of a domain</h3>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST http://ip:port/domains/{domainToBeUsed}?action=deleteData</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Would create a task that deletes data of all users of the domain.</p>
-</div>
-<div class="paragraph">
-<p>[More details about endpoints returning a task](#_endpoints_returning_a_task).</p>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type <code>DeleteUsersDataOfDomainTask</code> and the following <code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-        "type": "DeleteUsersDataOfDomainTask",
-        "domain": "domain.tld",
-        "successfulUsersCount": 2,
-        "failedUsersCount": 1,
-        "failedUsers": ["faileduser@domain.tld"],
-        "timestamp": "2023-05-22T08:52:47.076261Z"
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Notes: <code>failedUsers</code> only lists maximum 100 failed users.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1579,7 +1549,7 @@ migrates user&#8217;s mailbox subscriptions.</p>
 <p>201: Success. Corresponding task id is returned.</p>
 </li>
 <li>
-<p>400: Error in the request. Details can be found in the reported error. If you encounter the error "'oldUser' parameter should be an existing user," please note that this validation can be bypassed by specifying the <code>force</code> query parameter.</p>
+<p>400: Error in the request. Details can be found in the reported error.</p>
 </li>
 </ul>
 </div>
@@ -1595,104 +1565,6 @@ migrates user&#8217;s mailbox subscriptions.</p>
         "type": "UsernameChangeTask",
         "oldUser": "jessy.jones@domain.tld",
         "newUser": "jessy.smith@domain.tld",
-        "status": {
-            "A": "DONE",
-            "B": "FAILED",
-            "C": "ABORTED"
-        },
-        "fromStep": null,
-        "timestamp": "2023-02-17T02:54:01.246477Z"
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Valid status includes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>SKIPPED</code>: bypassed via <code>fromStep</code> setting</p>
-</li>
-<li>
-<p><code>WAITING</code>: Awaits execution</p>
-</li>
-<li>
-<p><code>IN_PROGRESS</code>: Currently executed</p>
-</li>
-<li>
-<p><code>FAILED</code>: Error encountered while executing this step. Check the logs.</p>
-</li>
-<li>
-<p><code>ABORTED</code>: Won&#8217;t be executed because of previous step failures.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_delete_data_of_a_user"><a class="anchor" href="#_delete_data_of_a_user"></a>Delete data of a user</h3>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST http://ip:port/users/usernameToBeUsed?action=deleteData</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Would create a task that deletes data of the user.</p>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>Implemented deletion steps are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>RecipientRewriteTableUserDeletionTaskStep</code>: deletes all rewriting rules related to this user.</p>
-</li>
-<li>
-<p><code>FilterUserDeletionTaskStep</code>: deletes all filters belonging to the user.</p>
-</li>
-<li>
-<p><code>DelegationUserDeletionTaskStep</code>: deletes all delegations from / to the user.</p>
-</li>
-<li>
-<p><code>MailboxUserDeletionTaskStep</code>: deletes mailboxes of this user, all ACLs of this user, as well as his subscriptions.</p>
-</li>
-<li>
-<p><code>WebPushUserDeletionTaskStep</code>: deletes push data registered for this user.</p>
-</li>
-<li>
-<p><code>IdentityUserDeletionTaskStep</code>: deletes identities registered for this user.</p>
-</li>
-<li>
-<p><code>VacationUserDeletionTaskStep</code>: deletes vacations registered for this user.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The <code>fromStep</code> query parameter allows skipping previous steps, allowing to resume the user data deletion from a failed step.</p>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type <code>DeleteUserDataTask</code> and the following <code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-        "type": "DeleteUserDataTask",
-        "username": "jessy.jones@domain.tld",
         "status": {
             "A": "DONE",
             "B": "FAILED",
@@ -4092,24 +3964,11 @@ second. Defaults to 1.</p>
 and be passed as query parameters.</p>
 </div>
 <div class="paragraph">
-<p>An admin can select which quota component he wants to recompute:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>quotaComponent</code> component whose quota need to be reprocessed. It could be one of values: MAILBOX, SIEVE, JMAP_UPLOADS.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The admin could select several quota components. If he does not select, quotas of all components would be recomputed.</p>
-</div>
-<div class="paragraph">
 <p>Example:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -XPOST /quota/users?task=RecomputeCurrentQuotas&amp;usersPerSecond=20&amp;quotaComponent=MAILBOX&amp;quotaComponent=JMAP_UPLOADS</pre>
+<pre>curl -XPOST /quota/users?task=RecomputeCurrentQuotas&amp;usersPerSecond=20</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4120,18 +3979,8 @@ and be passed as query parameters.</p>
 <div class="content">
 <pre>{
   "type":"recompute-current-quotas",
-  "recomputeSingleQuotaComponentResults": [
-    {
-      "quotaComponent": "MAILBOX",
-      "processedIdentifierCount": 3,
-      "failedIdentifiers": ["#private&amp;bob@localhost"]
-    },
-    {
-      "quotaComponent": "JMAP_UPLOADS",
-      "processedIdentifierCount": 3,
-      "failedIdentifiers": ["bob@localhost"]
-    }
-  ],
+  "processedQuotaRoots": 3,
+  "failedQuotaRoots": ["#private&amp;bob@localhost"],
   "runningOptions": {
     "usersPerSecond":20
   }
@@ -4907,248 +4756,6 @@ more quota for this user:</p>
 <ul>
 <li>
 <p>204: Operation succeeded</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_administrating_droplists"><a class="anchor" href="#_administrating_droplists"></a>Administrating DropLists</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The DropList, also known as the mail blacklist, is a collection of
-domains and email addresses that are denied from sending emails within the system.</p>
-</div>
-<div class="paragraph">
-<p>Owner scopes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>global</strong>: contains entries that are blocked across all domains and addresses within the system.
-Entries in the global owner scope apply universally and affect all users and domains.</p>
-</li>
-<li>
-<p><strong>domain</strong>: each domain can have its own droplist, which contains entries specific to that domain.</p>
-</li>
-<li>
-<p><strong>user</strong>: allow to customize personalized droplist of blocked domains and email addresses.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The <code>deniedEntityType</code> query parameter is optional and can take the values <code>domain</code> or <code>address</code>.</p>
-</div>
-<div class="sect2">
-<h3 id="_getting_the_droplist"><a class="anchor" href="#_getting_the_droplist"></a>Getting the DropList</h3>
-<div class="sect3">
-<h4 id="_global_droplist"><a class="anchor" href="#_global_droplist"></a>Global DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XGET http://ip:port/droplist/global?deniedEntityType=null|domain|address</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_domain_droplist"><a class="anchor" href="#_domain_droplist"></a>Domain DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XGET http://ip:port/droplist/domain/target.com?deniedEntityType=null|domain|address</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_user_droplist"><a class="anchor" href="#_user_droplist"></a>User DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XGET http://ip:port/droplist/user/tagret@target.com?deniedEntityType=null|domain|address</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The answer looks like:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[ "evil.com", "devil.com", "bad_guy@crime.com", "hacker@murder.org" ]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>200: The drop list was successfully retrieved</p>
-</li>
-<li>
-<p>400: Invalid <code>owner scope</code> or <code>deniedEntityType</code></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_testing_a_denied_entity_existence"><a class="anchor" href="#_testing_a_denied_entity_existence"></a>Testing a denied entity existence</h3>
-<div class="sect3">
-<h4 id="_global_droplist_2"><a class="anchor" href="#_global_droplist_2"></a>Global DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/global/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/global/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_domain_droplist_2"><a class="anchor" href="#_domain_droplist_2"></a>Domain DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/domain/target.com/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_user_droplist_2"><a class="anchor" href="#_user_droplist_2"></a>User DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XHEAD http://ip:port/droplist/user/target@target.com/evil.com</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>200: The denied entity exists</p>
-</li>
-<li>
-<p>404: The denied entity does not exist</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_add_entry_to_the_droplist"><a class="anchor" href="#_add_entry_to_the_droplist"></a>Add Entry to the DropList</h3>
-<div class="paragraph">
-<p>The denied entity must be a valid email address or <a href="#_create_a_domain">domain</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="_global_droplist_3"><a class="anchor" href="#_global_droplist_3"></a>Global DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/global/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/global/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_domain_droplist_3"><a class="anchor" href="#_domain_droplist_3"></a>Domain DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/domain/target.com/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_user_droplist_3"><a class="anchor" href="#_user_droplist_3"></a>User DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPUT http://ip:port/droplist/user/target@target.com/evil.com</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>204: The denied entity was successfully added</p>
-</li>
-<li>
-<p>400: The denied entity is invalid</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_remove_entry_from_the_droplist"><a class="anchor" href="#_remove_entry_from_the_droplist"></a>Remove Entry from the DropList</h3>
-<div class="sect3">
-<h4 id="_global_droplist_4"><a class="anchor" href="#_global_droplist_4"></a>Global DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/global/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/global/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_domain_droplist_4"><a class="anchor" href="#_domain_droplist_4"></a>Domain DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/domain/target.com/evil.com</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_user_droplist_4"><a class="anchor" href="#_user_droplist_4"></a>User DropList</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XDELETE http://ip:port/droplist/user/target@target.com/evil.com</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>204: Entry deleted successfully.</p>
 </li>
 </ul>
 </div>
@@ -8023,22 +7630,6 @@ criterion list to represent <code>matching all deleted messages</code>:</p>
 <div class="content">
 <pre>{
   "combinator": "and",
-  "criteria": []
-}</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>For limiting the number of restored messages, you can use the <code>limit</code> query property:</p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "combinator": "and",
-  "limit": 99
   "criteria": []
 }</pre>
 </div>

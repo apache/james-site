@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; jmap.properties :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/jmap.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -382,7 +389,15 @@
     <li><a href="jmap.html">jmap.properties</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/jmap.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="jmap.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/jmap.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/jmap.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -447,7 +462,7 @@ Defaults to an empty list.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">email.send.max.size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configuration max size for message created in RFC-8621.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configuration max size for message created in both JMAP Draft amd RFC-8621.
 Default value: None. Supported units are B (bytes) K (KB) M (MB) G (GB).</p></td>
 </tr>
 <tr>
@@ -460,13 +475,8 @@ Default value: None. Supported units are B (bytes) K (KB) M (MB) G (GB).</p></td
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">upload.max.size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configuration max size for each upload file in new JMAP-RFC-8621.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configuration max size Upload in new JMAP-RFC-8621.
 Default value: 30M. Supported units are B (bytes) K (KB) M (MB) G (GB).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">upload.quota.limit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Configure JMAP upload quota for total existing uploads' size per user. User exceeding the upload quota would result in old uploads being cleaned up.
-Default value: 200M. Supported units are B (bytes) K (KB) M (MB) G (GB).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">view.email.query.enabled</p></td>
@@ -478,6 +488,13 @@ This enables a higher resilience, but the projection needs to be correctly popul
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to true. Governs whether authenticated users that do not exist locally should be created in the users repository.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authentication.strategy.draft</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional List[String] with delimiter <code>,</code> . Specify which authentication strategies system admin want to use for JMAP draft server.
+The implicit package name is <code>org.apache.james.jmap.http</code>. If you have a custom authentication strategy outside this package, you have to specify its FQDN.
+If no authentication strategy is specified, JMAP draft server will fallback to default strategies:
+<code>AccessTokenAuthenticationStrategy</code>, <code>JWTAuthenticationStrategy</code>, <code>QueryParameterAccessTokenAuthenticationStrategy</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">authentication.strategy.rfc8621</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional List[String] with delimiter <code>,</code> . Specify which authentication strategies system admin want to use for JMAP RFC-8621 server.
 The implicit package name is <code>org.apache.james.jmap.http</code>. If you have a custom authentication strategy outside this package, you have to specify its FQDN.
@@ -486,8 +503,10 @@ If no authentication strategy is specified, JMAP RFC-8621 server will fallback t
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">jmap.version.default</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Defaults to <code>rfc-8621</code>. Allowed values: rfc-8621
-Which version of the JMAP protocol should be served when none supplied in the Accept header.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Defaults to draft. Allowed values: draft, rfc-8621.
+Which version of the JMAP protocol should be served when none supplied in the Accept header.
+Defaults to draft for legacy reasons (avoid breaking changes) but setting the value to
+rfc-8621 allow compatibility with other third party apps.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dynamic.jmap.prefix.resolution.enabled</p></td>
@@ -506,27 +525,6 @@ then <code>capabilities."urn:ietf:params:jmap:websocket".url</code> in response 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false. Casandra backends only. Whether to use or not the Cassandra projection
 for JMAP filters. This projection optimizes reads, but needs to be correctly populated. Turning it on on
 systems with filters already defined would result in those filters to be not read.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">delay.sends.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false. Whether to support or not the delay send with JMAP protocol.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">disabled.capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, defaults to empty. Coma separated list of JMAP capabilities to reject.
-This allows to prevent users from using some specific JMAP extensions.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email.get.full.max.size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, default value is 5. The max number of items for EmailGet full reads.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">get.max.size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, default value is 500. The max number of items for /get methods.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">set.max.size</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, default value is 500. The max number of items for /set methods.</p></td>
 </tr>
 </tbody>
 </table>
@@ -624,6 +622,10 @@ client applications only uses supported operations.</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>[OpenPaaS](<a href="https://open-paas.org/" class="bare">https://open-paas.org/</a>) is actively using the draft version of the JMAP implementation. Migration to
+RFC-8621 is planned.</p>
+</li>
 <li>
 <p>Experiments had been run on top of [LTT.RS](<a href="https://github.com/iNPUTmice/lttrs-android" class="bare">https://github.com/iNPUTmice/lttrs-android</a>). Version in the Accept
 headers needs to be explicitly set to <code>rfc-8621</code>. [Read more](<a href="https://github.com/linagora/james-project/pull/4089" class="bare">https://github.com/linagora/james-project/pull/4089</a>).</p>

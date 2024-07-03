@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; usersrepository.xml :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/usersrepository.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -382,7 +389,15 @@
     <li><a href="usersrepository.html">usersrepository.xml</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/usersrepository.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="usersrepository.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/usersrepository.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/usersrepository.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -533,47 +548,6 @@ to get some examples and hints.</p>
     &lt;/domains&gt;
 &lt;/usersrepository&gt;</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>You can connect to multiple LDAP servers for better availability by using <code>ldapHosts</code> option (fallback to <code>ldapHost</code> is supported) to specify the list of LDAP Server URL with the comma <code>,</code> delimiter. We do support different schemas for LDAP servers.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;usersrepository name="LocalUsers" class="org.apache.james.user.ldap.ReadOnlyUsersLDAPRepository" ldapHosts="ldap://ldapServer1:389,ldaps://ldapServer2:636"
-    principal="uid=ldapUser,ou=system" credentials="password" userBase="ou=People,o=myorg.com,ou=system" userIdAttribute="uid" trustAllCerts="true"&gt;
-    &lt;enableVirtualHosting&gt;true&lt;/enableVirtualHosting&gt;
-&lt;/usersrepository&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When VirtualHosting is on, you can enable local part as login username by configure the <code>resolveLocalPartAttribute</code>.
-This is the LDAP attribute that allows to retrieve the local part of users. Optional, default to empty, which disables login with local part as username.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;usersrepository name="LocalUsers" class="org.apache.james.user.ldap.ReadOnlyUsersLDAPRepository" ldapHosts="ldap://ldapServer1:389,ldaps://ldapServer2:636"
-    principal="uid=ldapUser,ou=system" credentials="password" userBase="ou=People,o=myorg.com,ou=system" resolveLocalPartAttribute="uid" userIdAttribute="mail" trustAllCerts="true"&gt;
-    &lt;enableVirtualHosting&gt;true&lt;/enableVirtualHosting&gt;
-&lt;/usersrepository&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The "userListBase" configuration option is used to differentiate users that can login from those that are listed
- as regular users. This is useful for dis-activating users, for instance.</p>
-</div>
-<div class="paragraph">
-<p>A different values from &quot;userBase&quot; can be used for setting up virtual logins,
-for instance in conjunction with "resolveLocalPartAttribute". This can also be used to manage
-disactivated users (in "userListBase" but not in "userBase").</p>
-</div>
-<div class="paragraph">
-<p>Note that "userListBase" can not be specified on a per-domain-basis.</p>
 </div>
 </div>
 </div>

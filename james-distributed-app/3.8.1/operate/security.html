@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Security checklist :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/operate/security.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../configure/search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -381,7 +388,15 @@
     <li><a href="security.html">Security checklist</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/operate/security.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="security.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/operate/security.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/operate/security.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -423,21 +438,11 @@ to do so might result in <strong>information disclosure</strong>.</p>
 <p><strong>Spam</strong>. Non legitimate traffic can be a real burden to your users.</p>
 </li>
 <li>
-<p><strong>Phishing</strong>: Crafted emails that tricks the user into doing unintended actions.</p>
-</li>
-<li>
-<p><strong>Viruses</strong>: An attacker sends an attachment that contains an exploit that could run if a user opens it.</p>
-</li>
-<li>
 <p><strong>Denial of service</strong>: A small request may result in a very large response and require considerable work on the server&#8230;&#8203;</p>
 </li>
 <li>
 <p><strong>Denial of service</strong>: A malicious JMAP client may use the JMAP push subscription to attempt to flood a third party
 server with requests, creating a denial-of-service attack and masking the attacker’s true identity.</p>
-</li>
-<li>
-<p><strong>Dictionary Harvest Attacks</strong>: An attacker can rely on SMTP command reply code to know if a user exists or not. This
-can be used to obtain the list of local users and later use those address as targets for other attacks.</p>
 </li>
 </ul>
 </div>
@@ -539,9 +544,8 @@ using <code>auth.plainAuthEnabled=false</code>.</p>
 <p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="xref page">storage quota</a> for your users.</p>
 </li>
 <li>
-<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="xref page">Rspamd and SpamAssassin</a>
-integration, and some <a href="../configure/mailets.html#_clamavscan" class="xref page">ClamAV</a> tooling exists.
-Rspamd supports anti-phishing modules.
+<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="xref page">Rspams and SpamAssassin</a>
+integration, and some experimental, insufficiently tested <a href="../configure/mailets.html#_clamavscan" class="xref page">ClamAV</a> tooling exists.
 Filtering with third party systems upstream is also possible.</p>
 </li>
 <li>
@@ -588,56 +592,6 @@ outdated dependencies.</p>
 <h3 id="_reporting_vulnerabilities"><a class="anchor" href="#_reporting_vulnerabilities"></a>Reporting vulnerabilities</h3>
 <div class="paragraph">
 <p>We follow the standard procedures within the ASF regarding <a href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2024_21742_mime4j_dom_header_injection"><a class="anchor" href="#_cve_2024_21742_mime4j_dom_header_injection"></a>CVE-2024-21742: Mime4J DOM header injection</h3>
-<div class="paragraph">
-<p>Apache JAMES MIME4J prior to version 0.8.10 allow attackers able to specify the value of a header field to craft other header fields.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: Release 0.8.10 rejects the use of LF inside a header field thus preventing the issue.</p>
-</div>
-<div class="paragraph">
-<p>Upgrading to Apache James MIME4J 0.8.10 is thus advised.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2023_51747_smtp_smuggling_in_apache_james"><a class="anchor" href="#_cve_2023_51747_smtp_smuggling_in_apache_james"></a>CVE-2023-51747: SMTP smuggling in Apache James</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.5 and release 3.8.1 is subject to SMTP smuggling, when used in combination
-of antother vulnerable server and can result in SPF bypass, leading to email forgery.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: High</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>: Release 3.7.5 and 3.8.1 interpret strictly the CRLF delimiter and thus prevent the issue.</p>
-</div>
-<div class="paragraph">
-<p>Upgrading to Apache James 3.7.5 or 3.8.1 is thus advised.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cve_2023_51518_privilege_escalation_via_jmx_pre_authentication_deserialisation"><a class="anchor" href="#_cve_2023_51518_privilege_escalation_via_jmx_pre_authentication_deserialisation"></a>CVE-2023-51518: Privilege escalation via JMX pre-authentication deserialisation</h3>
-<div class="paragraph">
-<p>Apache James distribution prior to release 3.7.5 and 3.8.1 allow privilege escalation via JMX pre-authentication deserialisation.
-An attacker would need to identify a deserialization glitch before triggering an exploit.</p>
-</div>
-<div class="paragraph">
-<p><strong>Severity</strong>: Moderate</p>
-</div>
-<div class="paragraph">
-<p><strong>Mitigation</strong>:We recommend turning off JMX whenever possible.</p>
-</div>
-<div class="paragraph">
-<p>Release 3.7.5 and 3.8.1 disable deserialization on unauthencited channels.</p>
-</div>
-<div class="paragraph">
-<p>Upgrading to Apache James 3.7.5 on 3.8.1 is thus advised.</p>
 </div>
 </div>
 <div class="sect2">

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Configuration :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/index.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -380,7 +387,15 @@
     <li><a href="index.html">Configuration</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/index.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="index.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/index.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -473,7 +488,7 @@ or rely on reasonable defaults.</p>
 <p><a href="rabbitmq.html" class="xref page"><strong>rabbitmq.properties</strong></a> allows configuration for the RabbitMQ driver <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/rabbitmq.properties">example</a></p>
 </li>
 <li>
-<p><a href="redis.html" class="xref page"><strong>redis.properties</strong></a> allows configuration for the Redis driver <a href="https://github.com/apache/james-project/blob/fabfdf4874da3aebb04e6fe4a7277322a395536a/server/mailet/rate-limiter-redis/redis.properties">example</a>, that is used by optional
+<p><a href="redis.html" class="xref page"><strong>redis.properties</strong></a> allows configuration for the Redis driver <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/redis.properties">example</a>, that is used by optional
 distributed rate limiting component.</p>
 </li>
 <li>
@@ -521,13 +536,6 @@ distributed rate limiting component.</p>
 </li>
 <li>
 <p><a href="recipientrewritetable.html" class="xref page"><strong>recipientrewritetable.xml</strong></a> enables advanced configuration for the Recipient Rewrite Table component <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/recipientrewritetable.xml">example</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="matchers.html" class="xref page">This page</a> allows choosing the indexing technology.</p>
-</li>
-</ul>
-</div>
 </li>
 <li>
 <p><a href="usersrepository.html" class="xref page"><strong>usersrepository.xml</strong></a> allows configuration of user storage <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/usersrepository.xml">example</a></p>
@@ -570,9 +578,6 @@ distributed rate limiting component.</p>
 </li>
 <li>
 <p><a href="dsn.html" class="xref page">this page</a> specified how to support SMTP Delivery Submission Notification (<a href="https://tools.ietf.org/html/rfc3461">RFC-3461</a>)</p>
-</li>
-<li>
-<p><a href="droplists.html" class="xref page">This page</a> allows configuring drop lists.</p>
 </li>
 </ul>
 </div>

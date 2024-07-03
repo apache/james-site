@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; blobstore.properties :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/blobstore.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -382,7 +389,15 @@
     <li><a href="blobstore.html">blobstore.properties</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/blobstore.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="blobstore.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/blobstore.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/blobstore.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -422,10 +437,6 @@ in GIT to get some examples and hints.</p>
 </li>
 <li>
 <p>objectstorage: use Swift/AWS S3 based BlobStore</p>
-</li>
-<li>
-<p>file: (experimental) use directly the file system. Useful for legacy architecture based on shared ISCI SANs and/or
-distributed file system with no object store available.</p>
 </li>
 </ul>
 </div>
@@ -555,24 +566,6 @@ openssl rand -base64 64
 generate salt with : openssl rand -hex 16</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>AES blob store supports the following system properties that could be configured in <code>jvm.properties</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre># Threshold from which we should buffer the blob to a file upon encrypting
-# Unit supported: K, M, G, default to no unit
-james.blob.aes.file.threshold.encrypt=100K
-
-# Threshold from which we should buffer the blob to a file upon decrypting
-# Unit supported: K, M, G, default to no unit
-james.blob.aes.file.threshold.decrypt=256K
-
-# Maximum size of a blob. Larger blobs will be rejected.
-# Unit supported: K, M, G, default to no unit
-james.blob.aes.blob.max.size=100M</pre>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_cassandra_blobstore_cache"><a class="anchor" href="#_cassandra_blobstore_cache"></a>Cassandra BlobStore Cache</h3>
@@ -667,11 +660,6 @@ Maximum size of stored objects expressed in bytes.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional: Use this specific trust store algorithm; default SunX509</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.trustall</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">optional: boolean. Defaults to false. Cannot be set to true with other trustore options. Wether James should validate
-S3 endpoint SSL certificates.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.read.timeout</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional: HTTP read timeout. duration, default value being second. Leaving it empty relies on S3 driver defaults.</p></td>
 </tr>
@@ -688,17 +676,6 @@ S3 endpoint SSL certificates.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">optional: Object read in memory will be rejected if they exceed the size limit exposed here. Size, exemple <code>100M</code>.
 Supported units: K, M, G, defaults to B if no unit is specified. If unspecified, big object won&#8217;t be prevented
 from being loaded in memory. This settings complements protocol limits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.upload.retry.maxAttempts</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">optional: Integer. Default is zero. This property specifies the maximum number of retry attempts allowed for failed upload operations.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">objectstorage.s3.upload.retry.backoffDurationMillis</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">optional: Long (Milliseconds). Default is 10 (miliseconds).
-Only takes effect when the "objectstorage.s3.upload.retry.maxAttempts" property is declared.
-This property determines the duration (in milliseconds) to wait between retry attempts for failed upload operations.
-This delay is known as backoff. The jitter factor is 0.5</p></td>
 </tr>
 </tbody>
 </table>
@@ -788,7 +765,7 @@ Default: <a href="file://var/blobExporting" class="bare">file://var/blobExportin
 <div class="sect2">
 <h3 id="_linshare_blob_export_configuration"><a class="anchor" href="#_linshare_blob_export_configuration"></a>LinShare Blob Export Configuration</h3>
 <div class="paragraph">
-<p>Instead of exporting blobs in local file system, using <a href="https://www.linshare.org">LinShare</a>
+<p>Instead of exporting blobs in local file system, using <a href="https://www.linshare.org/en/index.html">LinShare</a>
 helps you upload your blobs and people you have been shared to can access those blobs by accessing to
 LinShare server and download them.</p>
 </div>

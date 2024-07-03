@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Mailets :: Apache James</title>
+    <link rel="canonical" href="https://james.apache.org/james-distributed-app/3.8.1/configure/mailets.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -198,9 +199,6 @@
     <a class="nav-link" href="domainlist.html">domainlist.xml</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -217,9 +215,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
@@ -334,22 +329,34 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Distributed Server</span>
-    <span class="version">3.8.1 SNAPSHOT</span>
+    <span class="version">3.8.1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <div class="title"><a href="../index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-current is-latest">
-          <a href="../index.html">3.8.1 SNAPSHOT</a>
+          <a href="../index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
     <li class="component">
       <div class="title"><a href="../../../james-project/3.8.1/index.html">Apache James Server</a></div>
       <ul class="versions">
+        <li class="version">
+          <a href="../../../james-project/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
         <li class="version is-latest">
-          <a href="../../../james-project/3.8.1/index.html">3.8.1 SNAPSHOT</a>
+          <a href="../../../james-project/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-project/3.7.5/index.html">3.7.5</a>
         </li>
         <li class="version">
           <a href="../../../james-project/3.6.0/index.html">3.6.0 Snapshot</a>
@@ -382,7 +389,15 @@
     <li><a href="mailets.html">Packaged Mailets</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/docs/modules/ROOT/pages/configure/mailets.adoc">Edit this Page</a></div>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1</button>
+  <div class="version-menu">
+    <a class="version is-missing" href="../../3.9.0/index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-current" href="mailets.html">3.8.1</a>
+    <a class="version" href="../../3.7.5/configure/mailets.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/3.8.x/server/apps/distributed-app/docs/modules/ROOT/pages/configure/mailets.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -1188,16 +1203,6 @@ implementations for mappings of forwards and aliases.</p>
  &lt;/mailet&gt;</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <strong>rewriteSenderUponForward</strong> option (default to true) can be used to prevent senders to be rewritten upon forwards in the transport envelope
-(JAMES 3.8.0 default behaviour). <strong>WARNING</strong>: Please note that not rewriting the sender will cause issues forwarding emails
-from external senders to external addresses as the DKIM and SPF records will not be matching the ones of the sending
-domain.</p>
-</div>
-<div class="paragraph">
-<p>The <strong>forwardAutoSubmittedEmails</strong> option (default to false) can be used to prevent forwarding bounces as such a scenario
-can lead to an infinite loop if the forward recipient bounces the email.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_recipienttolowercase"><a class="anchor" href="#_recipienttolowercase"></a>RecipientToLowerCase</h3>
@@ -1573,7 +1578,7 @@ which is typically <strong>localhost</strong>.</p>
 </li>
 <li>
 <p><strong>mail.</strong>* (optional) - Any property beginning with <strong>mail.</strong> described in the Javadoc for package
-&lt;a href="https://eclipse-ee4j.github.io/angus-mail/docs/api/org.eclipse.angus.mail/org/eclipse/angus/mail/smtp/package-summary.html"&gt;*org.eclipse.angus.mail.smtp*&lt;/a&gt;
+&lt;a href="https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html"&gt;*com.sun.mail.smtp*&lt;/a&gt;
 can be set with a parameter of the corresponding name. For example the parameter
 <strong>&lt;mail.smtp.ssl.enable&gt;true&lt;/mail.smtp.ssl.enable&gt;</strong> is equivalent to the Java code
 <strong>props.put("mail.smtp.ssl.enable", "true");</strong>. Properties set by this facility override settings made
@@ -1608,7 +1613,7 @@ You can also use other javax properties for StartTLS, but their property prefix 
 or use the <strong>mail.smtps.ssl.checkserveridentity</strong> and <strong>mail.smtp.ssl.checkserveridentity</strong> javax properties for fine control.</p>
 </div>
 <div class="paragraph">
-<p>Read <a href="https://eclipse-ee4j.github.io/angus-mail/docs/api/org.eclipse.angus.mail/org/eclipse/angus/mail/smtp/package-summary.html"><strong>org.eclipse.angus.mail.smtp</strong></a>
+<p>Read <a href="https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html"><strong>com.sun.mail.smtp</strong></a>
 for full information.</p>
 </div>
 </div>
@@ -2467,19 +2472,7 @@ sends back a vacation notice to the sender if needed.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>targetFolderNames: the folders to append the email in. Defaults to none (INBOX). Coma separated list of folder names. Fallback to targetFolderName.</p>
-</li>
-<li>
-<p>targetFolderName: the folder to append the email in. Defaults to none (INBOX).</p>
-</li>
-<li>
-<p>seen: boolean, whether the message should be automatically marked as seen. Defaults to false.</p>
-</li>
-<li>
-<p>important: boolean, whether the message should be automatically marked as important. Defaults to false.</p>
-</li>
-<li>
-<p>keywords: set of string, encoded as a string (value are coma separated). IMAP user flags to set for the message. Defaults to none</p>
+<p>targetFolderName: the folder to append the email in. (compulsory)</p>
 </li>
 </ul>
 </div>
@@ -2489,23 +2482,7 @@ sends back a vacation notice to the sender if needed.</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;mailet match="IsMarkedAsSpam" class="WithStorageDirective"&gt;
-    &lt;targetFolderName&gt;Spam&lt;/targetFolderName&gt;
-    &lt;seen&gt;true&lt;/seen&gt;
-    &lt;important&gt;true&lt;/important&gt;
-    &lt;keywords&gt;keyword1,keyword2&lt;/keywords&gt;
-&lt;/mailet&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Alternatively, several target folders can be specified:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;mailet match="IsMarkedAsSpam" class="WithStorageDirective"&gt;
-  &lt;targetFolderNames&gt;Important, INBOX&lt;/targetFolderNames&gt;
-  &lt;seen&gt;true&lt;/seen&gt;
-  &lt;important&gt;true&lt;/important&gt;
-  &lt;keywords&gt;keyword1,keyword2&lt;/keywords&gt;
+  &lt;targetFolderName&gt;Spam&lt;/targetFolderName&gt;
 &lt;/mailet&gt;</pre>
 </div>
 </div>
