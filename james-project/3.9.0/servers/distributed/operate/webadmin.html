@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; WebAdmin REST administration API :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -539,11 +539,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -573,6 +596,15 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="webadmin.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/operate/webadmin.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -1427,7 +1459,7 @@ syntax</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -1514,7 +1546,7 @@ If you want to update a user&#8217;s password, please have a look at <strong>Upd
 </div>
 <div class="paragraph">
 <p>Resource name ``usernameToBeUsed'' represents a valid user, hence it
-should match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+should match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -1933,7 +1965,7 @@ migrates user&#8217;s mailbox subscriptions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>[
+<pre class="highlightjs highlight"><code class="language-none hljs">[
    {
       "name":"identity name 1",
       "email":"bob@domain.tld",
@@ -2099,7 +2131,7 @@ Resource name </code>identityId'' represents a exist user identity</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>The response will look like this:</p>
@@ -3173,7 +3205,7 @@ consistency.</p>
 <h3 id="_deleting_old_messages_of_all_users"><a class="anchor" href="#_deleting_old_messages_of_all_users"></a>Deleting old messages of all users</h3>
 <div class="paragraph">
 <p><strong>Note:</strong>
-Consider enabling the <a href="../configure/vault.html" class="page">Deleted Messages Vault</a>
+Consider enabling the <a href="../configure/vault.html" class="xref page">Deleted Messages Vault</a>
 if you use this feature.</p>
 </div>
 <div class="paragraph">
@@ -3247,7 +3279,7 @@ messages where the expiration date from this header lies in the past:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In this case you should also add the <a href="../configure/mailets.html" class="page">mailet</a>
+<p>In this case you should also add the <a href="../configure/mailets.html" class="xref page">mailet</a>
 <code>Expires</code> to your mailet container, which can sanitize expiration date headers.</p>
 </div>
 </div>
@@ -5247,7 +5279,7 @@ member will receive it.</p>
 an existing user.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5395,7 +5427,7 @@ mail. Otherwise he is omitted.</p>
 ``groups''.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5540,7 +5572,7 @@ address of the alias will receive it.</p>
 <p>Aliases can be defined for existing users.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5692,7 +5724,7 @@ sent to <code>admin@james.apache.org</code>, then it will be routed to
 <code>admin@james.org</code> and <code>admin@apache-james.org</code></p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5854,7 +5886,7 @@ a recipient matched with the mapping source, then that mail will be
 re-routed to a new recipient address which is re written by the regex.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 API</a> to be configured.</p>
@@ -5974,7 +6006,7 @@ mapping source <code>mappingSource</code> to RecipientRewriteTable.</p>
 destination addresses will receive it.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6068,7 +6100,7 @@ Address</p>
 </div>
 <div class="paragraph">
 <p>Get all mappings from the
-<a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>.</p>
+<a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>.</p>
 </div>
 <div class="paragraph">
 <p>Response body:</p>
