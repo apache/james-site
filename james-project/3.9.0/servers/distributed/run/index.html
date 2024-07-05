@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Run :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -186,9 +186,6 @@
     <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../extendable.html">Extendable</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -411,25 +408,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../extending.html">Extending behaviour</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -455,7 +434,25 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../../../customization/index.html">Customization</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -539,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -595,15 +569,6 @@
     <li><a href="index.html">Run</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="index.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/run/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -623,7 +588,7 @@
 <h2 id="_run_with_java"><a class="anchor" href="#_run_with_java"></a>Run with Java</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Build your own Apache James Distributed artifacts and start <a href="run-java.html" class="xref page">Running it directly on a Java Virtual Machine</a>.</p>
+<p>Build your own Apache James Distributed artifacts and start <a href="run-java.html" class="page">Running it directly on a Java Virtual Machine</a>.</p>
 </div>
 </div>
 </div>
@@ -634,7 +599,7 @@
 <p>We have prepared a docker-compose for Apache James to run with Cassandra &amp; OpenSearch.</p>
 </div>
 <div class="paragraph">
-<p>You can start <a href="run-docker.html" class="xref page">Running James with few simple Docker commands</a>.</p>
+<p>You can start <a href="run-docker.html" class="page">Running James with few simple Docker commands</a>.</p>
 </div>
 </div>
 </div>
@@ -645,7 +610,7 @@
 <p>A more complete - production ready deployment type.</p>
 </div>
 <div class="paragraph">
-<p>We have packed <a href="run-kubernetes.html" class="xref page">Apache James in a Helm chart</a>, parameterized most of the application resources. With it you can easily deploy and test different set of configuration on a Kubernetes Cluster.</p>
+<p>We have packed <a href="run-kubernetes.html" class="page">Apache James in a Helm chart</a>, parameterized most of the application resources. With it you can easily deploy and test different set of configuration on a Kubernetes Cluster.</p>
 </div>
 </div>
 </div>
