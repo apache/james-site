@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Operator guide :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -548,6 +548,9 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
       </ul>
     </li>
     <li class="component">
@@ -576,6 +579,13 @@
     <li><a href="guide.html">Operator guide</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="guide.html">3.8.1 SNAPSHOT</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/operate/guide.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/guide.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -625,13 +635,13 @@ considered experimental and thus targets advanced users.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="logging.html" class="page">Structured logging into Kibana</a></p>
+<p><a href="logging.html" class="xref page">Structured logging into Kibana</a></p>
 </li>
 <li>
-<p><a href="metrics.html" class="page">Metrics graphs into Grafana</a></p>
+<p><a href="metrics.html" class="xref page">Metrics graphs into Grafana</a></p>
 </li>
 <li>
-<p><a href="webadmin.html#_healthcheck" class="page">WebAdmin HealthChecks</a></p>
+<p><a href="webadmin.html#_healthcheck" class="xref page">WebAdmin HealthChecks</a></p>
 </li>
 </ul>
 </div>
@@ -652,9 +662,9 @@ mail repository size, and the corresponding Grafana boards are yet to be contrib
 </div>
 <div class="paragraph">
 <p>WebAdmin exposes all utilities for
-<a href="webadmin.html#_reprocessing_mails_from_a_mail_repository" class="page">reprocessing
+<a href="webadmin.html#_reprocessing_mails_from_a_mail_repository" class="xref page">reprocessing
 all mails in a mail repository</a> or
-<a href="webadmin.html#_reprocessing_a_specific_mail_from_a_mail_repository" class="page">reprocessing
+<a href="webadmin.html#_reprocessing_a_specific_mail_from_a_mail_repository" class="xref page">reprocessing
 a single mail in a mail repository</a>.</p>
 </div>
 <div class="paragraph">
@@ -664,9 +674,9 @@ Note that it only support the reprocessing all mails.</p>
 </div>
 <div class="paragraph">
 <p>Also, one can decide to
-<a href="webadmin.html#_removing_all_mails_from_a_mail_repository" class="page">delete
+<a href="webadmin.html#_removing_all_mails_from_a_mail_repository" class="xref page">delete
 all the mails of a mail repository</a> or
-<a href="webadmin.html#_removing_a_mail_from_a_mail_repository" class="page">delete
+<a href="webadmin.html#_removing_a_mail_from_a_mail_repository" class="xref page">delete
 a single mail of a mail repository</a>.</p>
 </div>
 <div class="paragraph">
@@ -687,14 +697,14 @@ to emails being stored in <code>cassandra://var/mail/rrt-error/</code>.</p>
 </div>
 <div class="paragraph">
 <p>If it is not empty, we recommend
-verifying user mappings via <a href="webadmin.html#<em>listing_user_mappings</em>" class="page">User Mappings webadmin API</a> then once identified break the loop by removing
+verifying user mappings via <a href="webadmin.html#<em>listing_user_mappings</em>" class="xref page">User Mappings webadmin API</a> then once identified break the loop by removing
 some Recipient Rewrite Table entry via the
-<a href="webadmin.html#_removing_an_alias_of_an_user" class="page">Delete Alias</a>,
-<a href="webadmin.html#_removing_a_group_member" class="page">Delete Group member</a>,
-<a href="webadmin.html#_removing_a_destination_of_a_forward" class="page">Delete forward</a>,
-<a href="webadmin.html#_remove_an_address_mapping" class="page">Delete Address mapping</a>,
-<a href="webadmin.html#_removing_a_domain_mapping" class="page">Delete Domain mapping</a>
-or <a href="webadmin.html#_removing_a_regex_mapping" class="page">Delete Regex mapping</a>
+<a href="webadmin.html#_removing_an_alias_of_an_user" class="xref page">Delete Alias</a>,
+<a href="webadmin.html#_removing_a_group_member" class="xref page">Delete Group member</a>,
+<a href="webadmin.html#_removing_a_destination_of_a_forward" class="xref page">Delete forward</a>,
+<a href="webadmin.html#_remove_an_address_mapping" class="xref page">Delete Address mapping</a>,
+<a href="webadmin.html#_removing_a_domain_mapping" class="xref page">Delete Domain mapping</a>
+or <a href="webadmin.html#_removing_a_regex_mapping" class="xref page">Delete Regex mapping</a>
 APIs (as needed).</p>
 </div>
 <div class="paragraph">
@@ -729,26 +739,26 @@ grafana board</a>.</p>
 <p>Upon exceptions, a bounded number of retries are performed (with
 exponential backoff delays). If after those retries the listener is
 still failing to perform its operation, then the event will be stored in
-the <a href="webadmin.html#_event_dead_letter" class="page">Event Dead Letter</a>. This
+the <a href="webadmin.html#_event_dead_letter" class="xref page">Event Dead Letter</a>. This
 API allows diagnosing issues, as well as redelivering the events.</p>
 </div>
 <div class="paragraph">
 <p>To check that you have undelivered events in your system, you can first
 run the associated with
-<a href="webadmin.html#_healthcheck" class="page">event dead letter health check</a> .
+<a href="webadmin.html#_healthcheck" class="xref page">event dead letter health check</a> .
 You can explore Event DeadLetter content through WebAdmin. For
-this, <a href="webadmin.html#_listing_mailbox_listener_groups" class="page">list mailbox listener groups</a>
+this, <a href="webadmin.html#_listing_mailbox_listener_groups" class="xref page">list mailbox listener groups</a>
 you will get a list of groups back, allowing
 you to check if those contain registered events in each by
-<a href="webadmin.html#_listing_failed_events" class="page">listing their failed events</a>.</p>
+<a href="webadmin.html#_listing_failed_events" class="xref page">listing their failed events</a>.</p>
 </div>
 <div class="paragraph">
 <p>If you get failed events IDs back, you can as well
-<a href="webadmin.html#_getting_event_details" class="page">check their details</a>.</p>
+<a href="webadmin.html#_getting_event_details" class="xref page">check their details</a>.</p>
 </div>
 <div class="paragraph">
 <p>An easy way to solve this is just to trigger then the
-<a href="webadmin.html#_redeliver_all_events" class="page">redeliver all events</a>
+<a href="webadmin.html#_redeliver_all_events" class="xref page">redeliver all events</a>
 task. It will start reprocessing all the failed events registered in
 event dead letters.</p>
 </div>
@@ -759,9 +769,9 @@ Ex: 10 redelivery per minute</p>
 <div class="paragraph">
 <p>If for some other reason you don’t need to redeliver all events, you
 have more fine-grained operations allowing you to
-<a href="webadmin.html#_redeliver_group_events" class="page">redeliver group events</a>
+<a href="webadmin.html#_redeliver_group_events" class="xref page">redeliver group events</a>
 or even just
-<a href="webadmin.html#_redeliver_a_single_event" class="page">redeliver a single event</a>.</p>
+<a href="webadmin.html#_redeliver_a_single_event" class="xref page">redeliver a single event</a>.</p>
 </div>
 </div>
 </div>
@@ -785,7 +795,7 @@ processing those events can fail sometimes.</p>
 <div class="paragraph">
 <p>Currently, an administrator can monitor indexation failures through
 <code>ERROR</code> log review. You can as well
-<a href="webadmin.html#_listing_failed_events" class="page">list failed events</a> by
+<a href="webadmin.html#_listing_failed_events" class="xref page">list failed events</a> by
 looking with the group called
 <code>org.apache.james.mailbox.opensearch.events.OpenSearchListeningMessageSearchIndex$OpenSearchListeningMessageSearchIndexGroup</code>.
 A first on-the-fly solution could be to just
@@ -798,14 +808,14 @@ reIndexing tasks.</p>
 </div>
 <div class="paragraph">
 <p>From there, you have multiple choices. You can
-<a href="webadmin.html#_reindexing_all_mails" class="page">reIndex all mails</a>,
-<a href="webadmin.html#_reindexing_a_mailbox_mails" class="page">reIndex mails from a mailbox</a> or even just
-<a href="webadmin.html#_reindexing_a_single_mail_by_messageid" class="page">reIndex a single mail</a>.</p>
+<a href="webadmin.html#_reindexing_all_mails" class="xref page">reIndex all mails</a>,
+<a href="webadmin.html#_reindexing_a_mailbox_mails" class="xref page">reIndex mails from a mailbox</a> or even just
+<a href="webadmin.html#_reindexing_a_single_mail_by_messageid" class="xref page">reIndex a single mail</a>.</p>
 </div>
 <div class="paragraph">
 <p>When checking the result of a reIndexing task, you might have failed
 reprocessed mails. You can still use the task ID to
-<a href="webadmin.html#_fixing_previously_failed_reindexing" class="page">reprocess previously failed reIndexing mails</a>.</p>
+<a href="webadmin.html#_fixing_previously_failed_reindexing" class="xref page">reprocess previously failed reIndexing mails</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -902,7 +912,7 @@ message reads and will temporarily decrease the performance.</p>
 <h4 id="_how_to_detect_the_outdated_projections"><a class="anchor" href="#_how_to_detect_the_outdated_projections"></a>How to detect the outdated projections</h4>
 <div class="paragraph">
 <p>You can watch the <code>MessageFastViewProjection</code> health check at
-<a href="webadmin.html#_check_all_components" class="page">webadmin documentation</a>.
+<a href="webadmin.html#_check_all_components" class="xref page">webadmin documentation</a>.
 It provides a check based on the ratio of missed projection reads.</p>
 </div>
 </div>
@@ -939,7 +949,7 @@ diagnostic and fixes.</p>
 <h4 id="_how_to_solve_2"><a class="anchor" href="#_how_to_solve_2"></a>How to solve</h4>
 <div class="paragraph">
 <p>An admin can run offline webadmin
-<a href="webadmin.html#_fixing_mailboxes_inconsistencies" class="page">solve Cassandra mailbox object inconsistencies task</a>
+<a href="webadmin.html#_fixing_mailboxes_inconsistencies" class="xref page">solve Cassandra mailbox object inconsistencies task</a>
 in order to sanitize his
 mailbox denormalization.</p>
 </div>
@@ -970,7 +980,7 @@ message prefix: <code>Invalid mailbox counters</code>.</p>
 <h4 id="_how_to_solve_3"><a class="anchor" href="#_how_to_solve_3"></a>How to solve</h4>
 <div class="paragraph">
 <p>Execute the
-<a href="webadmin.html#_recomputing_mailbox_counters" class="page">recompute Mailbox counters task</a>.
+<a href="webadmin.html#_recomputing_mailbox_counters" class="xref page">recompute Mailbox counters task</a>.
 This task is not concurrent-safe. Concurrent
 increments &amp; decrements will be ignored during a single mailbox
 processing. Re-running this task may eventually return the correct
@@ -996,7 +1006,7 @@ cause inconsistencies between the two tables.</p>
 <h4 id="_how_to_solve_4"><a class="anchor" href="#_how_to_solve_4"></a>How to solve</h4>
 <div class="paragraph">
 <p>Execute the
-<a href="webadmin.html#_fixing_message_inconsistencies" class="page">solve Cassandra message inconsistencies task</a>. This task is not
+<a href="webadmin.html#_fixing_message_inconsistencies" class="xref page">solve Cassandra message inconsistencies task</a>. This task is not
 concurrent-safe. User actions concurrent to the inconsistency fixing
 task could result in new inconsistencies being created. However the
 source of truth <code>imapUidTable</code> will not be affected and thus re-running
@@ -1022,7 +1032,7 @@ value can be incorrect.</p>
 <h4 id="_how_to_solve_5"><a class="anchor" href="#_how_to_solve_5"></a>How to solve</h4>
 <div class="paragraph">
 <p>Execute the
-<a href="webadmin.html#_recomputing_current_quotas_for_users" class="page">recompute Quotas counters task</a>. This task is not concurrent-safe. Concurrent
+<a href="webadmin.html#_recomputing_current_quotas_for_users" class="xref page">recompute Quotas counters task</a>. This task is not concurrent-safe. Concurrent
 operations will result in an invalid quota to be persisted. Re-running
 this task may eventually return the correct result.</p>
 </div>
@@ -1048,7 +1058,7 @@ the mean time, the recommendation is to execute the
 <h4 id="_how_to_solve_6"><a class="anchor" href="#_how_to_solve_6"></a>How to solve</h4>
 <div class="paragraph">
 <p>Execute the Cassandra mapping <code>SolveInconsistencies</code> task described in
-<a href="webadmin.html#_operations_on_mappings_sources" class="page">webadmin documentation</a></p>
+<a href="webadmin.html#_operations_on_mappings_sources" class="xref page">webadmin documentation</a></p>
 </div>
 </div>
 </div>
@@ -1289,12 +1299,12 @@ performance issues. As such, we advise setting
 <div class="ulist">
 <ul>
 <li>
-<p>First, <a href="webadmin.html#_listing_mail_queues" class="page">List mail queues</a>
-and <a href="webadmin.html#_getting_a_mail_queue_details" class="page">get a mail queue details</a>.</p>
+<p>First, <a href="webadmin.html#_listing_mail_queues" class="xref page">List mail queues</a>
+and <a href="webadmin.html#_getting_a_mail_queue_details" class="xref page">get a mail queue details</a>.</p>
 </li>
 <li>
 <p>And then
-<a href="webadmin.html#_listing_the_mails_of_a_mail_queue" class="page">List the mails of a mail queue</a>.</p>
+<a href="webadmin.html#_listing_the_mails_of_a_mail_queue" class="xref page">List the mails of a mail queue</a>.</p>
 </li>
 </ul>
 </div>
@@ -1306,7 +1316,7 @@ trash emails in the email queue you have this procedure to follow:</p>
 <ul>
 <li>
 <p>All mails from the given mail queue will be deleted with
-<a href="webadmin.html#_clearing_a_mail_queue" class="page">Clearing a mail queue</a>.</p>
+<a href="webadmin.html#_clearing_a_mail_queue" class="xref page">Clearing a mail queue</a>.</p>
 </li>
 </ul>
 </div>
@@ -1358,19 +1368,19 @@ backend. Following steps are for updating Cassandra schema version:</p>
 <ul>
 <li>
 <p>At the very first step, you need to
-<a href="webadmin.html#_retrieving_current_cassandra_schema_version" class="page">retrieve
+<a href="webadmin.html#_retrieving_current_cassandra_schema_version" class="xref page">retrieve
 current Cassandra schema version</a></p>
 </li>
 <li>
 <p>And then, you
-<a href="webadmin.html#_retrieving_latest_available_cassandra_schema_version" class="page">retrieve
+<a href="webadmin.html#_retrieving_latest_available_cassandra_schema_version" class="xref page">retrieve
 latest available Cassandra schema version</a> to make sure there is a
 latest available version</p>
 </li>
 <li>
 <p>Eventually, you can update the current schema version to the one you
 got with
-<a href="webadmin.html#_upgrading_to_the_latest_version" class="page">upgrading to
+<a href="webadmin.html#_upgrading_to_the_latest_version" class="xref page">upgrading to
 the latest version</a></p>
 </li>
 </ul>
@@ -1378,7 +1388,7 @@ the latest version</a></p>
 <div class="paragraph">
 <p>Otherwise, if you need to run the migrations to a specific version, you
 can use
-<a href="webadmin.html#_upgrading_to_a_specific_version" class="page">Upgrading to a
+<a href="webadmin.html#_upgrading_to_a_specific_version" class="xref page">Upgrading to a
 specific version</a></p>
 </div>
 </div>
@@ -1435,7 +1445,7 @@ by default if not defined).</p>
 <h3 id="_restore_deleted_messages_after_deletion"><a class="anchor" href="#_restore_deleted_messages_after_deletion"></a>Restore deleted messages after deletion</h3>
 <div class="paragraph">
 <p>After users deleted their mails and emptied the trash, the admin can use
-<a href="webadmin.html#_restore_deleted_messages" class="page">Restore Deleted Messages</a>
+<a href="webadmin.html#_restore_deleted_messages" class="xref page">Restore Deleted Messages</a>
 to restore all the deleted mails.</p>
 </div>
 </div>
@@ -1444,7 +1454,7 @@ to restore all the deleted mails.</p>
 <div class="paragraph">
 <p>You can delete all deleted messages older than the configured
 <code>retentionPeriod</code> by using
-<a href="webadmin.html#_deleted_messages_vault" class="page">Purge Deleted Messages</a>.
+<a href="webadmin.html#_deleted_messages_vault" class="xref page">Purge Deleted Messages</a>.
 We recommend calling this API in CRON job on 1st day each
 month.</p>
 </div>
