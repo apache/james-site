@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; redis.properties :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -594,15 +571,6 @@
     <li><a href="redis.html">redis.properties</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="redis.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/redis.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -661,6 +629,32 @@ to get some examples and hints.</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_enabling_multithreading_in_redis"><a class="anchor" href="#_enabling_multithreading_in_redis"></a>Enabling Multithreading in Redis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Redis 6 and later versions support multithreading, but by default, Redis operates as a single-threaded process.</p>
+</div>
+<div class="paragraph">
+<p>On a virtual machine with multiple CPU cores, you can enhance Redis performance by enabling multithreading. This can significantly improve I/O operations, particularly for workloads with high concurrency or large data volumes.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/config-file/">THREADED I/O section</a>.</p>
+</div>
+<div class="paragraph">
+<p>Example if you have a 4 cores CPU, you can enable the following lines in the <code>redis.conf</code> file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>io-threads 3
+io-threads-do-reads yes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, if your machine has only 1 CPU core or your Redis usage is not intensive, you will not benefit from this.</p>
+</div>
 </div>
 </div>
 </article>
