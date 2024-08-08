@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Metrics :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -548,9 +548,6 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
-        </li>
       </ul>
     </li>
     <li class="component">
@@ -579,13 +576,6 @@
     <li><a href="metrics.html">Metrics</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="metrics.html">3.8.1 SNAPSHOT</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/metrics.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/metrics.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -627,7 +617,7 @@ mbean plugins.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">extensions.routes=org.apache.james.webadmin.dropwizard.MetricsRoutes</code></pre>
+<pre class="highlightjs highlight"><code>extensions.routes=org.apache.james.webadmin.dropwizard.MetricsRoutes</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -674,7 +664,7 @@ The following <code>docker-compose.yaml</code> will help you install a simple Pr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">version: '3'
+<pre class="highlightjs highlight"><code>version: '3'
 #Metric monitoring
   grafana:
     image: grafana/grafana:latest
