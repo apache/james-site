@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; Logging :: Apache James</title>
+    <title>Security checklist :: Apache James</title>
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -61,7 +61,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-project" data-version="3.9.0">
+<div class="nav-container" data-component="james-project" data-version="3.8.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -186,6 +186,9 @@
     <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -313,9 +316,12 @@
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
   </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
+<ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
   </li>
@@ -384,7 +390,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="performanceChecklist.html">Performance checklist</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="4">
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -402,13 +408,31 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
   </li>
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="security.html">Security checklist</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -434,25 +458,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
   </li>
 </ul>
   </li>
@@ -533,34 +539,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Server</span>
-    <span class="version">3.9.0 SNAPSHOT</span>
+    <span class="version">3.8.1 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
-          <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
@@ -590,315 +576,428 @@
     <li><a href="../../index.html">Servers</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
     <li><a href="index.html">Operate</a></li>
-    <li><a href="logging.html">Logging</a></li>
+    <li><a href="security.html">Security checklist</a></li>
   </ul>
 </nav>
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
   <div class="version-menu">
-    <a class="version is-current" href="logging.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/logging.html">3.6.0 Snapshot</a>
+    <a class="version is-current" href="security.html">3.8.1 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
   </div>
 </div>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/logging.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/security.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; Logging</h1>
+<h1 class="page">Security checklist</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>We recommend to closely monitoring <strong>ERROR</strong> and <strong>WARNING</strong> logs. Those
-logs should be considered not normal.</p>
+<p>This document aims as summarizing threats, security best practices as well as recommendations.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_threats"><a class="anchor" href="#_threats"></a>Threats</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>If you encounter some suspicious logs:</p>
+<p>Operating an email server exposes you to the following threats:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If you have any doubt about the log being caused by a bug in James
-source code, please reach us via the bug tracker, the user mailing list or our Gitter channel (see our
-<a href="http://james.apache.org/#second">community page</a>)</p>
+<p>Spammers might attempt to use your servers to send their spam messages on their behalf. We speak of
+<strong>open relay</strong>. In addition to the resources consumed being an open relay will affect the trust other mail
+installations have in you, and thus will cause legitimate traffic to be rejected.</p>
 </li>
 <li>
-<p>They can be due to insufficient performance from tier applications (eg
-Cassandra timeouts). In such case we advise you to conduct a close
-review of performances at the tier level.</p>
+<p>Emails mostly consist of private data, which shall only be accessed by their legitimate user. Failure
+to do so might result in <strong>information disclosure</strong>.</p>
+</li>
+<li>
+<p><strong>Email forgery</strong>. An attacker might craft an email on the behalf of legitimate users.</p>
+</li>
+<li>
+<p>Email protocols allow user to authenticate and thus can be used as <strong>oracles</strong> to guess user passwords.</p>
+</li>
+<li>
+<p><strong>Spam</strong>. Non legitimate traffic can be a real burden to your users.</p>
+</li>
+<li>
+<p><strong>Phishing</strong>: Crafted emails that tricks the user into doing unintended actions.</p>
+</li>
+<li>
+<p><strong>Viruses</strong>: An attacker sends an attachment that contains an exploit that could run if a user opens it.</p>
+</li>
+<li>
+<p><strong>Denial of service</strong>: A small request may result in a very large response and require considerable work on the server&#8230;&#8203;</p>
+</li>
+<li>
+<p><strong>Denial of service</strong>: A malicious JMAP client may use the JMAP push subscription to attempt to flood a third party
+server with requests, creating a denial-of-service attack and masking the attacker’s true identity.</p>
+</li>
+<li>
+<p><strong>Dictionary Harvest Attacks</strong>: An attacker can rely on SMTP command reply code to know if a user exists or not. This
+can be used to obtain the list of local users and later use those address as targets for other attacks.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_best_practices"><a class="anchor" href="#_best_practices"></a>Best practices</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following sections ranks best practices.</p>
+</div>
+<div class="sect2">
+<h3 id="_best_practices_must"><a class="anchor" href="#_best_practices_must"></a>Best practices: Must</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>1. Configure James in order not to be an <a href="../configure/smtp.html#_about_open_relays" class="xref page">open relay</a>. This should be the
+case with the default configuration.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Leveraging filters in Kibana discover view can help to filter out
-''already known'' frequently occurring logs.</p>
+<p>Be sure in <a href="../configure/smtp.html" class="xref page">smtpserver.xml</a> to activate the following options: <code>verifyIdentity</code>.</p>
 </div>
 <div class="paragraph">
-<p>When reporting ERROR or WARNING logs, consider adding the full logs, and
-related data (eg the raw content of a mail triggering an issue) to the
-bug report in order to ease resolution.</p>
+<p>We then recommend to manually test your installation in order to ensure that:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Unauthenticated SMTP users cannot send mails to external email addresses (they are not relayed)</p>
+</li>
+<li>
+<p>Unauthenticated SMTP users can send mails to internal email addresses</p>
+</li>
+<li>
+<p>Unauthenticated SMTP users cannot use local addresses in their mail from, and send emails both locally and to distant targets.</p>
+</li>
+<li>
+<p>2. Avoid <strong>STARTTLS</strong> usage and favor SSL. Upgrade from a non encrypted channel into an encrypted channel is an opportunity
+for additional vulnerabilities. This is easily prevented by requiring SSL connection upfront. <a href="https://nostarttls.secvuln.info/">Read more&#8230;&#8203;</a></p>
+</li>
+</ul>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_logging_configuration"><a class="anchor" href="#_logging_configuration"></a>Logging configuration</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Distributed James uses <a href="http://logback.qos.ch/">logback</a> as a logging library
-and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p>
+<p>Please note that STARTTLS is still beneficial in the context of email relaying, which happens on SMTP port 25 unencrypted,
+and enable opportunistic encryption upgrades that would not overwise be possible. We recommend keeping STARTTLS activated
+for SMTP port 25.</p>
 </div>
-<div class="paragraph">
-<p>Information about logback configuration can be found
-<a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3. Use SSL for <a href="../configure/mailets.html#_remotedelivery" class="xref page">remote delivery</a> whenever you are using a gateway relaying SMTP server.</p>
+</li>
+<li>
+<p>4. Rely on an external identity service, dedicated to user credential storage. James supports <a href="../configure/usersrepository.html#_configuring_a_ldap" class="xref page">LDAP</a>. If you are
+forced to store users in James be sure to choose <code>PBKDF2</code> as a hashing algorithm. Also, delays on authentication failures
+are supported via the <code>verifyFailureDelay</code> property. Note that IMAP / SMTP connections are closed after 3 authentication
+failures.</p>
+</li>
+<li>
+<p>5. Ensure that <a href="../configure/webadmin.html" class="xref page">WebAdmin</a> is not exposed unencrypted to the outer world. Doing so trivially
+exposes yourself. You can either disable it, activate JWT security, or restrict it to listen only on localhost.</p>
+</li>
+<li>
+<p>6. Set up <code>HTTPS</code> for http based protocols, namely <strong>JMAP</strong> and <strong>WebAdmin</strong>. We recommend the use of a reverse proxy like Nginx.</p>
+</li>
+<li>
+<p>7. Set up <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="https://james.apache.org/howTo/dkim.html">DKIM</a>
+for your outgoing emails to be trusted.</p>
+</li>
+<li>
+<p>8. Prevent access to JMX. This can be achieved through a strict firewalling policy
+(<a href="https://nickbloor.co.uk/2017/10/22/analysis-of-cve-2017-12628/">blocking port 9999 is not enough</a>)
+or <a href="../configure/jmx.html" class="xref page">disabling JMX</a>. JMX is needed to use the existing CLI application but webadmin do offer similar
+features. Set the <code>jmx.remote.x.mlet.allow.getMBeansFromURL</code> to <code>false</code> to disable JMX remote code execution feature.</p>
+</li>
+<li>
+<p>9. If JMAP is enabled, be sure that JMAP PUSH cannot be used for server side request forgery. This can be
+<a href="../configure/jmap.html" class="xref page">configured</a> using the <code>push.prevent.server.side.request.forgery=true</code> property,
+forbidding push to private addresses.</p>
+</li>
+</ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_using_fluentbit_as_a_log_forwarder"><a class="anchor" href="#_using_fluentbit_as_a_log_forwarder"></a>Using FluentBit as a log forwarder</h3>
-<div class="sect3">
-<h4 id="_using_docker"><a class="anchor" href="#_using_docker"></a>Using Docker</h4>
+<h3 id="_best_practice_should"><a class="anchor" href="#_best_practice_should"></a>Best practice: Should</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>1. Avoid advertising login/authenticate capabilities in clear channels. This might prevent some clients to attempt login
+on clear channels, and can be configured for both <a href="../configure/smtp.html" class="xref page">SMTP</a> and <a href="../configure/imap.html" class="xref page">IMAP</a>
+using <code>auth.plainAuthEnabled=false</code>.</p>
+</li>
+<li>
+<p>2. Verify <a href="https://james.apache.org/howTo/spf.html">SPF</a> and <a href="../configure/mailets.html#_dkimverify" class="xref page">DKIM</a> for your incoming emails.</p>
+</li>
+<li>
+<p>3. Set up reasonable <a href="webadmin.html#_administrating_quotas" class="xref page">storage quota</a> for your users.</p>
+</li>
+<li>
+<p>4. We recommend setting up anti-spam and anti-virus solutions. James comes with some <a href="../configure/spam.html" class="xref page">Rspamd and SpamAssassin</a>
+integration, and some <a href="../configure/mailets.html#_clamavscan" class="xref page">ClamAV</a> tooling exists.
+Rspamd supports anti-phishing modules.
+Filtering with third party systems upstream is also possible.</p>
+</li>
+<li>
+<p>5. In order to limit your attack surface, disable protocols you or your users do not use. This includes the JMAP protocol,
+POP3, ManagedSieve, etc&#8230;&#8203; Be conservative on what you expose.</p>
+</li>
+<li>
+<p>6. If operating behind a load-balancer, set up the <a href="https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt">PROXY protocol</a> for
+TCP based protocols (IMAP and SMTP <code>proxyRequired</code> option)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_best_practice_could"><a class="anchor" href="#_best_practice_could"></a>Best practice: Could</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>1. Set up <a href="https://openid.net/connect/">OIDC</a> for IMAP, SMTP and JMAP. Disable login/plain/basic authentication.</p>
+</li>
+<li>
+<p>2. You can configure <a href="../configure/ssl.html#_client_authentication_via_certificates" class="xref page">Client authentication via certificates</a>.</p>
+</li>
+<li>
+<p>3. You can <a href="../configure/mailets.html#_smimesign" class="xref page">sign</a>, <a href="../configure/mailets.html#_smimechecksignature" class="xref page">verify</a>
+and <a href="../configure/mailets.html#_smimedecrypt" class="xref page">decrypt</a> your email traffic using <a href="https://datatracker.ietf.org/doc/html/rfc5751">SMIME</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_known_vulnerabilities"><a class="anchor" href="#_known_vulnerabilities"></a>Known vulnerabilities</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Distributed Server leverages the use of MDC in order to achieve structured logging, and better add context to the logged information. We furthermore ship json logs to file with RollingFileAppender on the classpath to easily allow FluentBit to directly tail the log file.
-Here is a sample conf/logback.xml configuration file for logback with the following pre-requisites:</p>
-</div>
-<div class="paragraph">
-<p>Logging in a structured json fashion and write to file for centralizing logging.
-Centralize logging third party like FluentBit can tail from logging’s file then filter/process and put in to OpenSearch</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-                &lt;rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"&gt;
-                        &lt;fileNamePattern&gt;logs/james.%d{yyyy-MM-dd}.%i.log&lt;/fileNamePattern&gt;
-                        &lt;maxHistory&gt;1&lt;/maxHistory&gt;
-                        &lt;totalSizeCap&gt;200MB&lt;/totalSizeCap&gt;
-                        &lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
-                &lt;/rollingPolicy&gt;
-
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-            &lt;appender-ref ref="LOG_FILE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>First you need to create a <code>logs</code> folder, then mount it to James container and to FluentBit.</p>
-</div>
-<div class="paragraph">
-<p>docker-compose:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>version: "3"
-
-services:
-  james:
-    depends_on:
-      - opensearch
-      - cassandra
-      - rabbitmq
-      - s3
-    entrypoint: bash -c "java -cp 'james-server.jar:extension-jars/*:james-server-memory-guice.lib/*' -Dworking.directory=/root/ -Dlogback.configurationFile=/root/conf/logback.xml org.apache.james.CassandraRabbitMQJamesServerMain"
-    image: linagora/james-rabbitmq-project:branch-master
-    container_name: james
-    hostname: james.local
-    volumes:
-      - ./extension-jars:/root/extension-jars
-      - ./conf/logback.xml:/root/conf/logback.xml
-      - ./logs:/root/logs
-    ports:
-      - "80:80"
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "465:465"
-      - "587:587"
-      - "993:993"
-      - "8080:8000"
-
-  opensearch:
-    image: opensearchproject/opensearch:2.14.0
-    ports:
-      - "9200:9200"
-    environment:
-      - discovery.type=single-node
-
-  cassandra:
-    image: cassandra:4.1.5
-    ports:
-      - "9042:9042"
-
-  rabbitmq:
-    image: rabbitmq:3.13.3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  s3:
-    image: registry.scality.com/cloudserver/cloudserver:8.7.25
-    container_name: s3.docker.test
-    environment:
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=secretKey1
-      - S3BACKEND=mem
-      - LOG_LEVEL=trace
-      - REMOTE_MANAGEMENT_DISABLE=1
-
-  fluent-bit:
-    image: fluent/fluent-bit:1.5.7
-    volumes:
-      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
-      - ./logs:/fluent-bit/log
-    ports:
-      - "24224:24224"
-      - "24224:24224/udp"
-    depends_on:
-      - opensearch
-
-  opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:2.16.0
-    environment:
-      OPENSEARCH_HOSTS: http://opensearch:9200
-    ports:
-      - "5601:5601"
-    depends_on:
-      - opensearch</pre>
-</div>
+<p>Several vulnerabilities have had been reported for previous releases of Apache James server.</p>
 </div>
 <div class="paragraph">
-<p>FluentBit config as:
-the <code>Host opensearch</code> pointing to <code>opensearch</code> service in docker-compose file.</p>
+<p>Be sure not to run those! We highly recommend running the latest release, which we put great effort in not to use
+outdated dependencies.</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>[SERVICE]
-    Parsers_File    /fluent-bit/etc/parsers.conf
-
-[INPUT]
-    name                    tail
-    path                    /fluent-bit/log/*.log
-    Parser                  docker
-    docker_mode             on
-    buffer_chunk_size       1MB
-    buffer_max_size         1MB
-    mem_buf_limit           64MB
-    Refresh_Interval        30
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-
-[OUTPUT]
-    Name  es
-    Match *
-    Host opensearch
-    Port 9200
-    Index fluentbit
-    Logstash_Format On
-    Logstash_Prefix fluentbit-james
-    Type docker</pre>
+<div class="sect2">
+<h3 id="_reporting_vulnerabilities"><a class="anchor" href="#_reporting_vulnerabilities"></a>Reporting vulnerabilities</h3>
+<div class="paragraph">
+<p>We follow the standard procedures within the ASF regarding <a href="https://apache.org/security/committers.html#vulnerability-handling">vulnerability handling</a></p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2024_21742_mime4j_dom_header_injection"><a class="anchor" href="#_cve_2024_21742_mime4j_dom_header_injection"></a>CVE-2024-21742: Mime4J DOM header injection</h3>
+<div class="paragraph">
+<p>Apache JAMES MIME4J prior to version 0.8.10 allow attackers able to specify the value of a header field to craft other header fields.</p>
 </div>
 <div class="paragraph">
-<p>FluentBit Parser config:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[PARSER]
-  Name         docker
-  Format       json
-  Time_Key     timestamp
-  Time_Format  %Y-%m-%dT%H:%M:%S.%LZ
-  Time_Keep    On
-  Decode_Field_As   escaped_utf8    log    do_next
-  Decode_Field_As   escaped         log    do_next
-  Decode_Field_As   json            log</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_kubernetes"><a class="anchor" href="#_using_kubernetes"></a>Using Kubernetes</h4>
-<div class="paragraph">
-<p>If using James in a Kubernetes environment, you can just append the logs to the console in a JSON formatted way
-using Jackson to easily allow FluentBit to directly tail them.</p>
+<p><strong>Severity</strong>: Moderate</p>
 </div>
 <div class="paragraph">
-<p>Here is a sample conf/logback.xml configuration file for achieving this:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-                &lt;appender-ref ref="CONSOLE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
+<p><strong>Mitigation</strong>: Release 0.8.10 rejects the use of LF inside a header field thus preventing the issue.</p>
 </div>
 <div class="paragraph">
-<p>Regarding FluentBit on Kubernetes, you need to install it as a DaemonSet. Some official template exist
-with FluentBit outputting logs to OpenSearch. For more information on how to install it,
-with your cluster, you can look at this <a href="https://docs.fluentbit.io/manual/installation/kubernetes">documentation</a>.</p>
+<p>Upgrading to Apache James MIME4J 0.8.10 is thus advised.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2023_51747_smtp_smuggling_in_apache_james"><a class="anchor" href="#_cve_2023_51747_smtp_smuggling_in_apache_james"></a>CVE-2023-51747: SMTP smuggling in Apache James</h3>
+<div class="paragraph">
+<p>Apache James distribution prior to release 3.7.5 and release 3.8.1 is subject to SMTP smuggling, when used in combination
+of antother vulnerable server and can result in SPF bypass, leading to email forgery.</p>
 </div>
 <div class="paragraph">
-<p>As stated by the <a href="https://docs.fluentbit.io/manual/installation/kubernetes#details">detail</a> of the
-official documentation, FluentBit is configured to consume out of the box logs from containers
-on the same running node. So it should scrap your James logs without extra configuration.</p>
+<p><strong>Severity</strong>: High</p>
 </div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: Release 3.7.5 and 3.8.1 interpret strictly the CRLF delimiter and thus prevent the issue.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading to Apache James 3.7.5 or 3.8.1 is thus advised.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2023_51518_privilege_escalation_via_jmx_pre_authentication_deserialisation"><a class="anchor" href="#_cve_2023_51518_privilege_escalation_via_jmx_pre_authentication_deserialisation"></a>CVE-2023-51518: Privilege escalation via JMX pre-authentication deserialisation</h3>
+<div class="paragraph">
+<p>Apache James distribution prior to release 3.7.5 and 3.8.1 allow privilege escalation via JMX pre-authentication deserialisation.
+An attacker would need to identify a deserialization glitch before triggering an exploit.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>:We recommend turning off JMX whenever possible.</p>
+</div>
+<div class="paragraph">
+<p>Release 3.7.5 and 3.8.1 disable deserialization on unauthencited channels.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading to Apache James 3.7.5 on 3.8.1 is thus advised.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2023_26269_privilege_escalation_through_unauthenticated_jmx"><a class="anchor" href="#_cve_2023_26269_privilege_escalation_through_unauthenticated_jmx"></a>CVE-2023-26269: Privilege escalation through unauthenticated JMX</h3>
+<div class="paragraph">
+<p>Apache James distribution prior to release 3.7.4 allows privilege escalation through the use of JMX.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend turning on authentication on. If the CLI is unused we recommend turning JMX off.</p>
+</div>
+<div class="paragraph">
+<p>Release 3.7.4 set up implicitly JMX authentication for Guice based products and addresses the underlying JMX exploits.</p>
+</div>
+<div class="paragraph">
+<p>Upgrading to Apache James 3.7.4 is thus advised.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"><a class="anchor" href="#_cve_2022_45935_temporary_file_information_disclosure_in_apache_james"></a>CVE-2022-45935: Temporary File Information Disclosure in Apache JAMES</h3>
+<div class="paragraph">
+<p>Apache James distribution prior to release 3.7.3 is vulnerable to a temporary File Information Disclosure.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.3 or higher, which fixes this vulnerability.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2021_44228_starttls_command_injection_in_apache_james"><a class="anchor" href="#_cve_2021_44228_starttls_command_injection_in_apache_james"></a>CVE-2021-44228: STARTTLS command injection in Apache JAMES</h3>
+<div class="paragraph">
+<p>Apache James distribution prior to release 3.7.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command.</p>
+</div>
+<div class="paragraph">
+<p>Fix of CVE-2021-38542, which solved similar problem from Apache James 3.6.1, is subject to a parser differential and do not take into account concurrent requests.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend to upgrade to Apache James 3.7.1 or higher, which fixes this vulnerability.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"><a class="anchor" href="#_cve_2021_38542_apache_james_vulnerable_to_starttls_command_injection_imap_and_pop3"></a>CVE-2021-38542: Apache James vulnerable to STARTTLS command injection (IMAP and POP3)</h3>
+<div class="paragraph">
+<p>Apache James prior to release 3.6.1 is vulnerable to a buffering attack relying on the use of the STARTTLS
+command. This can result in Man-in -the-middle command injection attacks, leading potentially to leakage
+of sensible information.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-1862">JAMES-1862</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, we recommend, if possible to dis-activate STARTTLS and rely solely on explicit TLS for mail protocols, including SMTP, IMAP and POP3.</p>
+</div>
+<div class="paragraph">
+<p>Read more <a href="https://nostarttls.secvuln.info/">about STARTTLS security here</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"><a class="anchor" href="#_cve_2021_40110_apache_james_imap_vulnerable_to_a_redos"></a>CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS</h3>
+<div class="paragraph">
+<p>Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST commands to orchestrate a Denial
+Of Service using a vulnerable Regular expression. This affected Apache James prior to 3.6.1</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3635">JAMES-3635</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which enforce the use of RE2J regular
+expression engine to execute regex in linear time without back-tracking.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2021_40111_apache_james_imap_parsing_denial_of_service"><a class="anchor" href="#_cve_2021_40111_apache_james_imap_parsing_denial_of_service"></a>CVE-2021-40111: Apache James IMAP parsing Denial Of Service</h3>
+<div class="paragraph">
+<p>While fuzzing with Jazzer the IMAP parsing stack we discover that crafted APPEND and STATUS IMAP command
+could be used to trigger infinite loops resulting in expensive CPU computations and OutOfMemory exceptions.
+This can be used for a Denial Of Service attack. The IMAP user needs to be authenticated to exploit this
+vulnerability. This affected Apache James prior to version 3.6.1.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3634">JAMES-3634</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>: We recommend upgrading to Apache James 3.6.1, which fixes this vulnerability.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"><a class="anchor" href="#_cve_2021_40525_apache_james_sieve_file_storage_vulnerable_to_path_traversal_attacks"></a>CVE-2021-40525: Apache James: Sieve file storage vulnerable to path traversal attacks</h3>
+<div class="paragraph">
+<p>Apache James ManagedSieve implementation alongside with the file storage for sieve scripts is vulnerable
+to path traversal, allowing reading and writing any file.</p>
+</div>
+<div class="paragraph">
+<p><strong>Severity</strong>: Moderate</p>
+</div>
+<div class="paragraph">
+<p>This issue is being tracked as <a href="https://issues.apache.org/jira/browse/JAMES-3646">JAMES-3646</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Mitigation</strong>:This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.</p>
+</div>
+<div class="paragraph">
+<p>This could also be mitigated by ensuring manageSieve is disabled, which is the case by default.</p>
+</div>
+<div class="paragraph">
+<p>Distributed and Cassandra based products are also not impacted.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2017_12628_privilege_escalation_using_jmx"><a class="anchor" href="#_cve_2017_12628_privilege_escalation_using_jmx"></a>CVE-2017-12628 Privilege escalation using JMX</h3>
+<div class="paragraph">
+<p>The Apache James Server prior version 3.0.1 is vulnerable to Java deserialization issues.
+One can use this for privilege escalation.
+This issue can be mitigated by:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrading to James 3.0.1 onward</p>
+</li>
+<li>
+<p>Using a recent JRE (Exploit could not be reproduced on OpenJdk 8 u141)</p>
+</li>
+<li>
+<p>Exposing JMX socket only to localhost (default behaviour)</p>
+</li>
+<li>
+<p>Possibly running James in a container</p>
+</li>
+<li>
+<p>Disabling JMX all-together (Guice only)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Read more <a href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
 </div>
 </div>
 </div>

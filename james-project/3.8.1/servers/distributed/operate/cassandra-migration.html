@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; Logging :: Apache James</title>
+    <title>Distributed James Server &mdash; Cassandra migration :: Apache James</title>
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -61,7 +61,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-project" data-version="3.9.0">
+<div class="nav-container" data-component="james-project" data-version="3.8.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -186,6 +186,9 @@
     <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -313,9 +316,12 @@
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
   </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
+</ul>
   </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
+<ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
   </li>
@@ -384,7 +390,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="performanceChecklist.html">Performance checklist</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="4">
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -399,7 +405,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="cli.html">Command Line Interface</a>
   </li>
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -408,7 +414,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -434,25 +458,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
   </li>
 </ul>
   </li>
@@ -533,34 +539,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Server</span>
-    <span class="version">3.9.0 SNAPSHOT</span>
+    <span class="version">3.8.1 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
-          <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
@@ -590,318 +576,59 @@
     <li><a href="../../index.html">Servers</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
     <li><a href="index.html">Operate</a></li>
-    <li><a href="logging.html">Logging</a></li>
+    <li><a href="cassandra-migration.html">Cassandra migration</a></li>
   </ul>
 </nav>
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
   <div class="version-menu">
-    <a class="version is-current" href="logging.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/logging.html">3.6.0 Snapshot</a>
+    <a class="version is-current" href="cassandra-migration.html">3.8.1 SNAPSHOT</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/operate/cassandra-migration.html">3.6.0 Snapshot</a>
   </div>
 </div>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/logging.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/cassandra-migration.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; Logging</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">Distributed James Server &mdash; Cassandra migration</h1>
 <div class="paragraph">
-<p>We recommend to closely monitoring <strong>ERROR</strong> and <strong>WARNING</strong> logs. Those
-logs should be considered not normal.</p>
+<p>Cassandra upgrades implies the creation of a new table. Thus restarting James is needed, as new tables are created on restart.</p>
 </div>
 <div class="paragraph">
-<p>If you encounter some suspicious logs:</p>
+<p>Once done, we ship code that tries to read from new tables, and if not possible backs up to old tables. You can thus safely run
+without running additional migrations.</p>
+</div>
+<div class="paragraph">
+<p>On the fly migration can be enabled. However, one might want to force the migration in a controlled fashion, and update
+automatically current schema version used (assess in the database old versions is no more used, as the corresponding tables are empty).
+Note that this process is safe: we ensure the service is not running concurrently on this James instance, that it does not bump
+version upon partial failures, that race condition in version upgrades will be idempotent, etc&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>These schema updates can be triggered by <a href="webadmin.html#_cassandra_schema_upgrades" class="xref page">webadmin</a>.</p>
+</div>
+<div class="paragraph">
+<p>Note that currently the progress can be tracked by logs.</p>
+</div>
+<div class="paragraph">
+<p>Here are the implemented migrations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If you have any doubt about the log being caused by a bug in James
-source code, please reach us via the bug tracker, the user mailing list or our Gitter channel (see our
-<a href="http://james.apache.org/#second">community page</a>)</p>
+<p><strong>From V8 to V9</strong> : Adopt a more compact representation for message properties.</p>
 </li>
 <li>
-<p>They can be due to insufficient performance from tier applications (eg
-Cassandra timeouts). In such case we advise you to conduct a close
-review of performances at the tier level.</p>
+<p><strong>From V9 to V10</strong> : Handles Mailbox ACL transactionality with event-sourcing. We got read of SERIAL consistency upon
+reads thus unlocking a major performance enhancement.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Leveraging filters in Kibana discover view can help to filter out
-''already known'' frequently occurring logs.</p>
-</div>
-<div class="paragraph">
-<p>When reporting ERROR or WARNING logs, consider adding the full logs, and
-related data (eg the raw content of a mail triggering an issue) to the
-bug report in order to ease resolution.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_logging_configuration"><a class="anchor" href="#_logging_configuration"></a>Logging configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Distributed James uses <a href="http://logback.qos.ch/">logback</a> as a logging library
-and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p>
-</div>
-<div class="paragraph">
-<p>Information about logback configuration can be found
-<a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_using_fluentbit_as_a_log_forwarder"><a class="anchor" href="#_using_fluentbit_as_a_log_forwarder"></a>Using FluentBit as a log forwarder</h3>
-<div class="sect3">
-<h4 id="_using_docker"><a class="anchor" href="#_using_docker"></a>Using Docker</h4>
-<div class="paragraph">
-<p>Distributed Server leverages the use of MDC in order to achieve structured logging, and better add context to the logged information. We furthermore ship json logs to file with RollingFileAppender on the classpath to easily allow FluentBit to directly tail the log file.
-Here is a sample conf/logback.xml configuration file for logback with the following pre-requisites:</p>
-</div>
-<div class="paragraph">
-<p>Logging in a structured json fashion and write to file for centralizing logging.
-Centralize logging third party like FluentBit can tail from logging’s file then filter/process and put in to OpenSearch</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-                &lt;rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"&gt;
-                        &lt;fileNamePattern&gt;logs/james.%d{yyyy-MM-dd}.%i.log&lt;/fileNamePattern&gt;
-                        &lt;maxHistory&gt;1&lt;/maxHistory&gt;
-                        &lt;totalSizeCap&gt;200MB&lt;/totalSizeCap&gt;
-                        &lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
-                &lt;/rollingPolicy&gt;
-
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-            &lt;appender-ref ref="LOG_FILE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>First you need to create a <code>logs</code> folder, then mount it to James container and to FluentBit.</p>
-</div>
-<div class="paragraph">
-<p>docker-compose:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>version: "3"
-
-services:
-  james:
-    depends_on:
-      - opensearch
-      - cassandra
-      - rabbitmq
-      - s3
-    entrypoint: bash -c "java -cp 'james-server.jar:extension-jars/*:james-server-memory-guice.lib/*' -Dworking.directory=/root/ -Dlogback.configurationFile=/root/conf/logback.xml org.apache.james.CassandraRabbitMQJamesServerMain"
-    image: linagora/james-rabbitmq-project:branch-master
-    container_name: james
-    hostname: james.local
-    volumes:
-      - ./extension-jars:/root/extension-jars
-      - ./conf/logback.xml:/root/conf/logback.xml
-      - ./logs:/root/logs
-    ports:
-      - "80:80"
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "465:465"
-      - "587:587"
-      - "993:993"
-      - "8080:8000"
-
-  opensearch:
-    image: opensearchproject/opensearch:2.14.0
-    ports:
-      - "9200:9200"
-    environment:
-      - discovery.type=single-node
-
-  cassandra:
-    image: cassandra:4.1.5
-    ports:
-      - "9042:9042"
-
-  rabbitmq:
-    image: rabbitmq:3.13.3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  s3:
-    image: registry.scality.com/cloudserver/cloudserver:8.7.25
-    container_name: s3.docker.test
-    environment:
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=secretKey1
-      - S3BACKEND=mem
-      - LOG_LEVEL=trace
-      - REMOTE_MANAGEMENT_DISABLE=1
-
-  fluent-bit:
-    image: fluent/fluent-bit:1.5.7
-    volumes:
-      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
-      - ./logs:/fluent-bit/log
-    ports:
-      - "24224:24224"
-      - "24224:24224/udp"
-    depends_on:
-      - opensearch
-
-  opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:2.16.0
-    environment:
-      OPENSEARCH_HOSTS: http://opensearch:9200
-    ports:
-      - "5601:5601"
-    depends_on:
-      - opensearch</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>FluentBit config as:
-the <code>Host opensearch</code> pointing to <code>opensearch</code> service in docker-compose file.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[SERVICE]
-    Parsers_File    /fluent-bit/etc/parsers.conf
-
-[INPUT]
-    name                    tail
-    path                    /fluent-bit/log/*.log
-    Parser                  docker
-    docker_mode             on
-    buffer_chunk_size       1MB
-    buffer_max_size         1MB
-    mem_buf_limit           64MB
-    Refresh_Interval        30
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-
-[OUTPUT]
-    Name  es
-    Match *
-    Host opensearch
-    Port 9200
-    Index fluentbit
-    Logstash_Format On
-    Logstash_Prefix fluentbit-james
-    Type docker</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>FluentBit Parser config:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[PARSER]
-  Name         docker
-  Format       json
-  Time_Key     timestamp
-  Time_Format  %Y-%m-%dT%H:%M:%S.%LZ
-  Time_Keep    On
-  Decode_Field_As   escaped_utf8    log    do_next
-  Decode_Field_As   escaped         log    do_next
-  Decode_Field_As   json            log</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_kubernetes"><a class="anchor" href="#_using_kubernetes"></a>Using Kubernetes</h4>
-<div class="paragraph">
-<p>If using James in a Kubernetes environment, you can just append the logs to the console in a JSON formatted way
-using Jackson to easily allow FluentBit to directly tail them.</p>
-</div>
-<div class="paragraph">
-<p>Here is a sample conf/logback.xml configuration file for achieving this:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-                &lt;appender-ref ref="CONSOLE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Regarding FluentBit on Kubernetes, you need to install it as a DaemonSet. Some official template exist
-with FluentBit outputting logs to OpenSearch. For more information on how to install it,
-with your cluster, you can look at this <a href="https://docs.fluentbit.io/manual/installation/kubernetes">documentation</a>.</p>
-</div>
-<div class="paragraph">
-<p>As stated by the <a href="https://docs.fluentbit.io/manual/installation/kubernetes#details">detail</a> of the
-official documentation, FluentBit is configured to consume out of the box logs from containers
-on the same running node. So it should scrap your James logs without extra configuration.</p>
-</div>
-</div>
-</div>
-</div>
+<p>The <a href="guide.html#_updating_cassandra_schema_version" class="xref page">Operator guide</a> further details the migration process.</p>
 </div>
 </article>
   </div>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; Logging :: Apache James</title>
+    <title>Distributed James Server &mdash; SSL &amp; TLS configuration :: Apache James</title>
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -61,7 +61,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="james-project" data-version="3.9.0">
+<div class="nav-container" data-component="james-project" data-version="3.8.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -188,6 +188,9 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../extendable.html">Extendable</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../index.html">Distributed James Application</a>
 <ul class="nav-list">
@@ -241,38 +244,38 @@
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../configure/index.html">Configuration</a>
+    <a class="nav-link" href="index.html">Configuration</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/jmap.html">jmap.properties</a>
+    <a class="nav-link" href="jmap.html">jmap.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/jmx.html">jmx.properties</a>
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/smtp-hooks.html">Packaged SMTP hooks</a>
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/pop3.html">pop3server.xml</a>
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/webadmin.html">webadmin.properties</a>
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/ssl.html">SSL &amp; TLS</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/sieve.html">Sieve &amp; ManageSieve</a>
+    <a class="nav-link" href="sieve.html">Sieve &amp; ManageSieve</a>
   </li>
 </ul>
   </li>
@@ -281,22 +284,22 @@
     <span class="nav-text">Storage dependencies</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
+    <a class="nav-link" href="blobstore.html">blobstore.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
+    <a class="nav-link" href="cassandra.html">cassandra.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/opensearch.html">opensearch.properties</a>
+    <a class="nav-link" href="opensearch.html">opensearch.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/rabbitmq.html">rabbitmq.properties</a>
+    <a class="nav-link" href="rabbitmq.html">rabbitmq.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/redis.html">redis.properties</a>
+    <a class="nav-link" href="redis.html">redis.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/tika.html">tika.properties</a>
+    <a class="nav-link" href="tika.html">tika.properties</a>
   </li>
 </ul>
   </li>
@@ -305,40 +308,43 @@
     <span class="nav-text">Core components</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/batchsizes.html">batchsizes.properties</a>
+    <a class="nav-link" href="batchsizes.html">batchsizes.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/dns.html">dnsservice.xml</a>
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/domainlist.html">domainlist.xml</a>
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="droplists.html">DropLists</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/droplists.html">DropLists</a>
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/healthcheck.html">healthcheck.properties</a>
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/mailetcontainer.html">mailetcontainer.xml</a>
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/mailets.html">Packaged Mailets</a>
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/matchers.html">Packaged Matchers</a>
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+    <a class="nav-link" href="search.html">search.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/search.html">search.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/usersrepository.html">usersrepository.xml</a>
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
   </li>
 </ul>
   </li>
@@ -347,28 +353,28 @@
     <span class="nav-text">Extensions</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
+    <a class="nav-link" href="vault.html">deletedMessageVault.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
   </li>
 </ul>
   </li>
@@ -376,39 +382,57 @@
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Operate</a>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="guide.html">Operator guide</a>
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="performanceChecklist.html">Performance checklist</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="logging.html">Logging</a>
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="webadmin.html">WebAdmin REST administration API</a>
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="metrics.html">Metrics</a>
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="migrating.html">Migrating existing data</a>
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="cli.html">Command Line Interface</a>
+    <a class="nav-link" href="../operate/migrating.html">Migrating existing data</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="cassandra-migration.html">Cassandra migration</a>
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="security.html">Security checklist</a>
+    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extending/index.html">Extending server behavior</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../extending/imap.html">Custom IMAP processing</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -434,25 +458,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
-  </li>
-</ul>
+    <a class="nav-link" href="../../../customization/index.html">Customization</a>
   </li>
 </ul>
   </li>
@@ -533,34 +539,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Apache James Server</span>
-    <span class="version">3.9.0 SNAPSHOT</span>
+    <span class="version">3.8.1 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
-          <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
         <li class="version">
           <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
@@ -589,315 +575,362 @@
     <li><a href="../../../index.html">Apache James Server</a></li>
     <li><a href="../../index.html">Servers</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
-    <li><a href="index.html">Operate</a></li>
-    <li><a href="logging.html">Logging</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Protocols</li>
+    <li><a href="ssl.html">SSL &amp; TLS</a></li>
   </ul>
 </nav>
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
   <div class="version-menu">
-    <a class="version is-current" href="logging.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/logging.html">3.6.0 Snapshot</a>
+    <a class="version is-current" href="ssl.html">3.8.1 SNAPSHOT</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/ssl.html">3.6.0 Snapshot</a>
   </div>
 </div>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/logging.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/ssl.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; Logging</h1>
+<h1 class="page">Distributed James Server &mdash; SSL &amp; TLS configuration</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>We recommend to closely monitoring <strong>ERROR</strong> and <strong>WARNING</strong> logs. Those
-logs should be considered not normal.</p>
+<p>This document explains how to enable James 3.0 servers to use Transport Layer Security (TLS)
+for encrypted client-server communication.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configure_a_server_to_use_ssltls"><a class="anchor" href="#_configure_a_server_to_use_ssltls"></a>Configure a Server to Use SSL/TLS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each of the servers <a href="smtp.html" class="xref page">SMTP - LMTP</a>,
+<a href="pop3.html" class="xref page">POP3</a> and <a href="imap.html" class="xref page">IMAP</a>
+supports use of SSL/TLS.</p>
 </div>
 <div class="paragraph">
-<p>If you encounter some suspicious logs:</p>
+<p>TLS (Transport Layer Security) and SSL (Secure Sockets Layer) are protocols that provide
+data encryption and authentication between applications in scenarios where that data is
+being sent across an insecure network, such as checking your email
+(How does the Secure Socket Layer work?). The terms SSL and TLS are often used
+interchangeably or in conjunction with each other (TLS/SSL),
+but one is in fact the predecessor of the other — SSL 3.0 served as the basis
+for TLS 1.0 which, as a result, is sometimes referred to as SSL 3.1.</p>
+</div>
+<div class="paragraph">
+<p>You need to add a block in the corresponding configuration file (smtpserver.xml, pop3server.xml, imapserver.xml,..)</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;PKCS12&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+  &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively TLS keys can be supplied via PEM files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An optional secret might be specified for the private key:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Optionally, TLS protocols and/or cipher suites can be specified explicitly (smtpserver.xml, pop3server.xml, imapserver.xml,..).
+Otherwise, the default protocols and cipher suites of the used JDK will be used:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;supportedProtocols&gt;
+    &lt;protocol&gt;TLSv1.2&lt;/protocol&gt;
+    &lt;protocol&gt;TLSv1.1&lt;/protocol&gt;
+    &lt;protocol&gt;TLSv1&lt;/protocol&gt;
+    &lt;protocol&gt;SSLv3&lt;/protocol&gt;
+  &lt;/supportedProtocols&gt;
+  &lt;supportedCipherSuites&gt;
+    &lt;cipherSuite&gt;TLS_AES_256_GCM_SHA384&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256&lt;/cipherSuite&gt;
+  &lt;/supportedCipherSuites&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each of these block has an optional boolean configuration element &lt;b&gt;socketTLS&lt;/b&gt; and &lt;b&gt;startTLS&lt;/b&gt; which is used to toggle
+use of SSL or TLS for the service.</p>
+</div>
+<div class="paragraph">
+<p>With socketTLS (SSL/TLS in Thunderbird), all the communication is encrypted.</p>
+</div>
+<div class="paragraph">
+<p>With startTLS (STARTTLS in Thunderbird), the preamble is readable, but the rest is encrypted.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>* OK JAMES IMAP4rev1 Server  Server 192.168.1.4 is ready.
+* CAPABILITY IMAP4rev1 LITERAL+ CHILDREN WITHIN STARTTLS IDLE NAMESPACE UIDPLUS UNSELECT AUTH=PLAIN
+1 OK CAPABILITY completed.
+2 OK STARTTLS Begin TLS negotiation now.
+... rest is encrypted...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can only enable one of the both at the same time for a service.</p>
+</div>
+<div class="paragraph">
+<p>It is also recommended to change the port number on which the service will listen:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If you have any doubt about the log being caused by a bug in James
-source code, please reach us via the bug tracker, the user mailing list or our Gitter channel (see our
-<a href="http://james.apache.org/#second">community page</a>)</p>
+<p>POP3 - port 110, Secure POP3 - port 995</p>
 </li>
 <li>
-<p>They can be due to insufficient performance from tier applications (eg
-Cassandra timeouts). In such case we advise you to conduct a close
-review of performances at the tier level.</p>
+<p>IMAP - port 143, Secure IMAP4 - port 993</p>
+</li>
+<li>
+<p>SMTP - port 25, Secure SMTP - port 465</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Leveraging filters in Kibana discover view can help to filter out
-''already known'' frequently occurring logs.</p>
+<p>You will now need to create your certificate store and place it in the james/conf/ folder with the name you defined in the keystore tag.</p>
 </div>
 <div class="paragraph">
-<p>When reporting ERROR or WARNING logs, consider adding the full logs, and
-related data (eg the raw content of a mail triggering an issue) to the
-bug report in order to ease resolution.</p>
+<p>Please note <code>JKS</code> keystore format is also supported (default value if no keystore type is specified):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;JKS&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+  &lt;provider&gt;org.bouncycastle.jce.provider.BouncyCastleProvider&lt;/provider&gt;
+&lt;/tls&gt;</pre>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_logging_configuration"><a class="anchor" href="#_logging_configuration"></a>Logging configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Distributed James uses <a href="http://logback.qos.ch/">logback</a> as a logging library
-and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p>
-</div>
-<div class="paragraph">
-<p>Information about logback configuration can be found
-<a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_using_fluentbit_as_a_log_forwarder"><a class="anchor" href="#_using_fluentbit_as_a_log_forwarder"></a>Using FluentBit as a log forwarder</h3>
+<h3 id="_client_authentication_via_certificates"><a class="anchor" href="#_client_authentication_via_certificates"></a>Client authentication via certificates</h3>
+<div class="paragraph">
+<p>When you enable TLS, you may also configure the server to require a client certificate for authentication:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="false" startTLS="true"&gt;
+  &lt;keystore&gt;file://conf/keystore&lt;/keystore&gt;
+  &lt;keystoreType&gt;JKS&lt;/keystoreType&gt;
+  &lt;secret&gt;yoursecret&lt;/secret&gt;
+
+  &lt;clientAuth&gt;
+    &lt;truststore&gt;file://conf/truststore&lt;/truststore&gt;
+    &lt;truststoreType&gt;JKS&lt;/truststoreType&gt;
+    &lt;truststoreSecret&gt;yoursecret&lt;/truststoreSecret&gt;
+    &lt;enableOCSPCRLChecks&gt;false&lt;/enableOCSPCRLChecks&gt;
+  &lt;/clientAuth&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>James verifies client certificates against the provided truststore. You can fill it with trusted peer certificates directly, or an issuer certificate (CA) if you trust all certificates created by it. If you omit the truststore configuration, James will use the Java default truststore instead, effectively trusting any known CA.</p>
+</div>
+<div class="paragraph">
+<p>James can optionally enable OCSP verifications for client certificates against Certificate Revocation List referenced
+in the certificate itself.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_your_own_pem_keys"><a class="anchor" href="#_creating_your_own_pem_keys"></a>Creating your own PEM keys</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following commands can be used to create self signed PEM keys:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Generating your private key
+openssl genrsa -des3 -out private.key 2048
+
+# Creating your certificates
+openssl req -new -key private.key -out certs.csr
+
+# Signing the certificate yourself
+openssl x509 -req -days 365 -in certs.csr -signkey private.key -out certs.self-signed.csr
+
+# Removing the password from the private key
+# Not necessary if you supply the secret in the configuration
+openssl rsa -in private.key -out private.nopass.key</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may then supply this TLS configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://conf/private.nopass.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://conf/certs.self-signed.csr&lt;/certificates&gt;
+&lt;/tls&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_certificate_keystores"><a class="anchor" href="#_certificate_keystores"></a>Certificate Keystores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section gives more indication for users relying on keystores.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_your_own_certificate_keystore"><a class="anchor" href="#_creating_your_own_certificate_keystore"></a>Creating your own Certificate Keystore</h3>
+<div class="paragraph">
+<p>(Adapted from the Tomcat 4.1 documentation)</p>
+</div>
+<div class="paragraph">
+<p>James currently operates only on JKS or PKCS12 format keystores. This is Java&#8217;s standard "Java KeyStore" format, and is
+the format created by the keytool command-line utility. This tool is included in the JDK.</p>
+</div>
+<div class="paragraph">
+<p>To import an existing certificate into a JKS keystore, please read the documentation (in your JDK documentation package)
+about keytool.</p>
+</div>
+<div class="paragraph">
+<p>To create a new keystore from scratch, containing a single self-signed Certificate, execute the following from a terminal
+command line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>keytool -genkey -alias james -keyalg RSA -storetype PKCS12 -keystore your_keystore_filename</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(The RSA algorithm should be preferred as a secure algorithm, and this also ensures general compatibility with other
+servers and components.)</p>
+</div>
+<div class="paragraph">
+<p>As a suggested standard, create the keystore in the james/conf directory, with a name like james.keystore.</p>
+</div>
+<div class="paragraph">
+<p>After executing this command, you will first be prompted for the keystore password.</p>
+</div>
+<div class="paragraph">
+<p>Next, you will be prompted for general information about this Certificate, such as company, contact name, and so on.
+This information may be displayed to users when importing into the certificate store of the client, so make sure that
+the information provided here matches what they will expect.</p>
+</div>
+<div class="paragraph">
+<p>Important: in the "distinguished name", set the "common name" (CN) to the DNS name of your James server, the one
+you will use to access it from your mail client (like "mail.xyz.com").</p>
+</div>
+<div class="paragraph">
+<p>Finally, you will be prompted for the key password, which is the password specifically for this Certificate
+(as opposed to any other Certificates stored in the same keystore file).</p>
+</div>
+<div class="paragraph">
+<p>If everything was successful, you now have a keystore file with a Certificate that can be used by your server.</p>
+</div>
+<div class="paragraph">
+<p>You MUST have only one certificate in the keystore file used by James.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installing_a_certificate_provided_by_a_certificate_authority"><a class="anchor" href="#_installing_a_certificate_provided_by_a_certificate_authority"></a>Installing a Certificate provided by a Certificate Authority</h3>
+<div class="paragraph">
+<p>(Adapted from the Tomcat 4.1 documentation</p>
+</div>
+<div class="paragraph">
+<p>To obtain and install a Certificate from a Certificate Authority (like verisign.com, thawte.com or trustcenter.de)
+you should have read the previous section and then follow these instructions:</p>
+</div>
 <div class="sect3">
-<h4 id="_using_docker"><a class="anchor" href="#_using_docker"></a>Using Docker</h4>
+<h4 id="_create_a_local_certificate_signing_request_csr"><a class="anchor" href="#_create_a_local_certificate_signing_request_csr"></a>Create a local Certificate Signing Request (CSR)</h4>
 <div class="paragraph">
-<p>Distributed Server leverages the use of MDC in order to achieve structured logging, and better add context to the logged information. We furthermore ship json logs to file with RollingFileAppender on the classpath to easily allow FluentBit to directly tail the log file.
-Here is a sample conf/logback.xml configuration file for logback with the following pre-requisites:</p>
+<p>In order to obtain a Certificate from the Certificate Authority of your choice you have to create a so called
+Certificate Signing Request (CSR). That CSR will be used by the Certificate Authority to create a Certificate
+that will identify your James server as "secure". To create a CSR follow these steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a local Certificate as described in the previous section.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Logging in a structured json fashion and write to file for centralizing logging.
-Centralize logging third party like FluentBit can tail from logging’s file then filter/process and put in to OpenSearch</p>
+<p>The CSR is then created with:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-                &lt;rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"&gt;
-                        &lt;fileNamePattern&gt;logs/james.%d{yyyy-MM-dd}.%i.log&lt;/fileNamePattern&gt;
-                        &lt;maxHistory&gt;1&lt;/maxHistory&gt;
-                        &lt;totalSizeCap&gt;200MB&lt;/totalSizeCap&gt;
-                        &lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
-                &lt;/rollingPolicy&gt;
-
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-            &lt;appender-ref ref="LOG_FILE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
+<pre>  keytool -certreq -keyalg RSA -alias james -file certreq.csr -keystore your_keystore_filename</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>First you need to create a <code>logs</code> folder, then mount it to James container and to FluentBit.</p>
+<p>Now you have a file called certreq.csr. The file is encoded in PEM format. You can submit it to the Certificate Authority
+(look at the documentation of the Certificate Authority website on how to do this). In return you get a Certificate.</p>
 </div>
 <div class="paragraph">
-<p>docker-compose:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>version: "3"
-
-services:
-  james:
-    depends_on:
-      - opensearch
-      - cassandra
-      - rabbitmq
-      - s3
-    entrypoint: bash -c "java -cp 'james-server.jar:extension-jars/*:james-server-memory-guice.lib/*' -Dworking.directory=/root/ -Dlogback.configurationFile=/root/conf/logback.xml org.apache.james.CassandraRabbitMQJamesServerMain"
-    image: linagora/james-rabbitmq-project:branch-master
-    container_name: james
-    hostname: james.local
-    volumes:
-      - ./extension-jars:/root/extension-jars
-      - ./conf/logback.xml:/root/conf/logback.xml
-      - ./logs:/root/logs
-    ports:
-      - "80:80"
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "465:465"
-      - "587:587"
-      - "993:993"
-      - "8080:8000"
-
-  opensearch:
-    image: opensearchproject/opensearch:2.14.0
-    ports:
-      - "9200:9200"
-    environment:
-      - discovery.type=single-node
-
-  cassandra:
-    image: cassandra:4.1.5
-    ports:
-      - "9042:9042"
-
-  rabbitmq:
-    image: rabbitmq:3.13.3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  s3:
-    image: registry.scality.com/cloudserver/cloudserver:8.7.25
-    container_name: s3.docker.test
-    environment:
-      - SCALITY_ACCESS_KEY_ID=accessKey1
-      - SCALITY_SECRET_ACCESS_KEY=secretKey1
-      - S3BACKEND=mem
-      - LOG_LEVEL=trace
-      - REMOTE_MANAGEMENT_DISABLE=1
-
-  fluent-bit:
-    image: fluent/fluent-bit:1.5.7
-    volumes:
-      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
-      - ./logs:/fluent-bit/log
-    ports:
-      - "24224:24224"
-      - "24224:24224/udp"
-    depends_on:
-      - opensearch
-
-  opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:2.16.0
-    environment:
-      OPENSEARCH_HOSTS: http://opensearch:9200
-    ports:
-      - "5601:5601"
-    depends_on:
-      - opensearch</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>FluentBit config as:
-the <code>Host opensearch</code> pointing to <code>opensearch</code> service in docker-compose file.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[SERVICE]
-    Parsers_File    /fluent-bit/etc/parsers.conf
-
-[INPUT]
-    name                    tail
-    path                    /fluent-bit/log/*.log
-    Parser                  docker
-    docker_mode             on
-    buffer_chunk_size       1MB
-    buffer_max_size         1MB
-    mem_buf_limit           64MB
-    Refresh_Interval        30
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-
-[OUTPUT]
-    Name  es
-    Match *
-    Host opensearch
-    Port 9200
-    Index fluentbit
-    Logstash_Format On
-    Logstash_Prefix fluentbit-james
-    Type docker</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>FluentBit Parser config:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[PARSER]
-  Name         docker
-  Format       json
-  Time_Key     timestamp
-  Time_Format  %Y-%m-%dT%H:%M:%S.%LZ
-  Time_Keep    On
-  Decode_Field_As   escaped_utf8    log    do_next
-  Decode_Field_As   escaped         log    do_next
-  Decode_Field_As   json            log</pre>
-</div>
+<p>Now that you have your Certificate you can import it into you local keystore. First of all you may have to import a so
+called Chain Certificate or Root Certificate into your keystore (the major Certificate Authorities are already in place,
+so it&#8217;s unlikely that you will need to perform this step). After that you can procede with importing your Certificate.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_kubernetes"><a class="anchor" href="#_using_kubernetes"></a>Using Kubernetes</h4>
+<h4 id="_optionally_importing_a_so_called_chain_certificate_or_root_certificate"><a class="anchor" href="#_optionally_importing_a_so_called_chain_certificate_or_root_certificate"></a>Optionally Importing a so called Chain Certificate or Root Certificate</h4>
 <div class="paragraph">
-<p>If using James in a Kubernetes environment, you can just append the logs to the console in a JSON formatted way
-using Jackson to easily allow FluentBit to directly tail them.</p>
+<p>Download a Chain Certificate from the Certificate Authority you obtained the Certificate from.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Verisign.com go to: <a href="http://www.verisign.com/support/install/intermediate.html" class="bare">http://www.verisign.com/support/install/intermediate.html</a></p>
+</li>
+<li>
+<p>For Trustcenter.de go to: <a href="http://www.trustcenter.de/certservices/cacerts/en/en.htm#server" class="bare">http://www.trustcenter.de/certservices/cacerts/en/en.htm#server</a></p>
+</li>
+<li>
+<p>For Thawte.com go to: <a href="http://www.thawte.com/certs/trustmap.html" class="bare">http://www.thawte.com/certs/trustmap.html</a> (seems no longer valid)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_import_the_chain_certificate_into_you_keystore"><a class="anchor" href="#_import_the_chain_certificate_into_you_keystore"></a>Import the Chain Certificate into you keystore</h4>
+<div class="literalblock">
+<div class="content">
+<pre>keytool -import -alias root -keystore your_keystore_filename -trustcacerts -file filename_of_the_chain_certificate</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Here is a sample conf/logback.xml configuration file for achieving this:</p>
+<p>And finally import your new Certificate (It must be in X509 format):</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-                &lt;appender-ref ref="CONSOLE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
+<pre>keytool -import -alias james -keystore your_keystore_filename -trustcacerts -file your_certificate_filename</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Regarding FluentBit on Kubernetes, you need to install it as a DaemonSet. Some official template exist
-with FluentBit outputting logs to OpenSearch. For more information on how to install it,
-with your cluster, you can look at this <a href="https://docs.fluentbit.io/manual/installation/kubernetes">documentation</a>.</p>
-</div>
-<div class="paragraph">
-<p>As stated by the <a href="https://docs.fluentbit.io/manual/installation/kubernetes#details">detail</a> of the
-official documentation, FluentBit is configured to consume out of the box logs from containers
-on the same running node. So it should scrap your James logs without extra configuration.</p>
+<p>See also <a href="http://www.agentbob.info/agentbob/79.html">this page</a></p>
 </div>
 </div>
 </div>
