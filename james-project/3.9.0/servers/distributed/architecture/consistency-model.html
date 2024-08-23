@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Consistency Model :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -593,15 +570,6 @@
     <li><a href="consistency-model.html">Consistency Model</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="consistency-model.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/architecture/consistency-model.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/architecture/consistency-model.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -676,7 +644,7 @@ and as lightweight transactions are slow across data centers, running James with
 Cassandra setup is discouraged.</p>
 </div>
 <div class="paragraph">
-<p>However, <a href="../configure/cassandra.html" class="xref page">this page</a> enables setting alternative read level,
+<p>However, <a href="../configure/cassandra.html" class="page">this page</a> enables setting alternative read level,
 which could be acceptable regarding limited requirements. <code>LOCAL_QUORUM</code> coupled with <code>LOCAL_SERIAL</code>
 is likely the only scalable setup. Some options were added to turn off SERIAL consistency usage for message
 and mailbox management. However, the use of Lightweight Transaction cannot be disabled for UIDs and ModSeqs.</p>
@@ -743,7 +711,7 @@ level across denormalization tables.</p>
 <p>Writes to denormalization tables are retried.</p>
 </li>
 <li>
-<p>Some <a href="../operate/guide.html#_solving_cassandra_inconsistencies" class="xref page">SolveInconsistencies tasks</a> are exposed and are able to heal a given denormalization table.
+<p>Some <a href="../operate/guide.html#_solving_cassandra_inconsistencies" class="page">SolveInconsistencies tasks</a> are exposed and are able to heal a given denormalization table.
 They reset the "deduplication tables" content to the "table of truth" content.</p>
 </li>
 <li>
@@ -802,11 +770,11 @@ asynchronously indexed into OpenSearch.</p>
 </div>
 <div class="paragraph">
 <p>This process, called the EventBus, which retries temporary errors, and stores transient errors for
-later admin-triggered retries is described further <a href="../operate/guide.html#_mailbox_event_bus" class="xref page">here</a>.
+later admin-triggered retries is described further <a href="../operate/guide.html#_mailbox_event_bus" class="page">here</a>.
 His role is to spread load and limit inconsistencies.</p>
 </div>
 <div class="paragraph">
-<p>Furthermore, some <a href="../operate/guide.html#_usual_troubleshooting_procedures" class="xref page">re-indexing tasks</a>
+<p>Furthermore, some <a href="../operate/guide.html#_usual_troubleshooting_procedures" class="page">re-indexing tasks</a>
 enables to re-synchronise OpenSearch content with the primary data stores</p>
 </div>
 </div>
