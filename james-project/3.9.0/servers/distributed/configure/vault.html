@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; deletedMessageVault.properties :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="vault.html">deletedMessageVault.properties</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="vault.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/vault.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/vault.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -585,8 +617,8 @@
 <p>Deleted Messages Vault is the component in charge of retaining messages before they are going to be deleted.
 Messages stored in the Deleted Messages Vault could be deleted after exceeding their retentionPeriod (explained below).
 It also supports to restore or export messages matching with defined criteria in
-<a href="../operate/webadmin.html#_deleted_messages_vault" class="page">WebAdmin deleted messages vault document</a> by using
-<a href="../operate/webadmin.html#_deleted_messages_vault" class="page">WebAdmin endpoints</a>.</p>
+<a href="../operate/webadmin.html#_deleted_messages_vault" class="xref page">WebAdmin deleted messages vault document</a> by using
+<a href="../operate/webadmin.html#_deleted_messages_vault" class="xref page">WebAdmin endpoints</a>.</p>
 </div>
 </div>
 </div>
@@ -599,7 +631,7 @@ It also supports to restore or export messages matching with defined criteria in
 <div class="paragraph">
 <p>The Deleted Messages Vault also stores and manages deleted messages into a BlobStore. The BlobStore can be either
 based on an object storage or on Cassandra. For configuring the BlobStore the vault will use, you can look at
-<a href="blobstore.html" class="page"><strong>blobstore.properties</strong></a> BlobStore Configuration section.</p>
+<a href="blobstore.html" class="xref page"><strong>blobstore.properties</strong></a> BlobStore Configuration section.</p>
 </div>
 </div>
 </div>
@@ -623,6 +655,14 @@ to get some examples and hints.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows to enable or disable usage of the Deleted Message Vault. Default to false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">workQueueEnabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable work queue to be used with deleted message vault. Default to false.</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">retentionPeriod</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Deleted messages stored in the Deleted Messages Vault are expired after this period (default: 1 year). It can be expressed in <strong>y</strong> years, <strong>d</strong> days, <strong>h</strong> hours, &#8230;&#8203;</p></td>

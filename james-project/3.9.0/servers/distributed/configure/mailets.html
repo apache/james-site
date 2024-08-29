@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Mailets :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="mailets.html">Packaged Mailets</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="mailets.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/mailets.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/mailets.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -2461,66 +2493,7 @@ Example:</pre>
 <div class="content">
 <pre>== Experimental mailets
 
-=== AddHabeasWarrantMark
-
-This matcher adds the Hebeas Warrant Mark to a message.
-
-For details see: http://www.hebeas.com&lt;/p&gt;
-
-Usage:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&lt;mailet match="All" class="AddHabeasWarrantMark" /&gt;;</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>NOTE: Although this mailet is covered by the Apache Software License,
-the Habeas Warrant Mark is copyright.  A separate license from Habeas
-is required in order to legally attach the Habeas Warrant Mark to
-e-mail messages.  Each James Administrator is responsible for
-ensuring that James is configured to attach the Habeas Warrant Mark
-only to e-mail covered by a suitable license received from Habeas.
-
-Because the Habeas Warrant Mark is copyright material, I have asked
-for and received the following explicit statement from Habeas:</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>From: Lindsey Pettit [mailto:support@habeas.com]
-Sent: Sunday, September 29, 2002 5:51
-To: Noel J. Bergman
-Subject: RE: Habeas and Apache James
-*
-Dear Noel,
-*
-&gt; FURTHERMORE, if James is to be capable of sending Habeas SWE, I need
-&gt; to write a Mailet that attaches the headers.  As with any MTA, it
-&gt; would be up to the administrator to properly configure James and make
-&gt; sure that licenses are acquired.  Since the Habeas Warrant Mark is
-&gt; copyright, I believe that I require authorization from you for that
-&gt; Mailet, especially since it attaches the Habeas Warrant Mark.  For my
-&gt; own protection, please show me why such authorization is unnecessary,
-&gt; send me a digitally signed e-mail, or FAX a signed authorization
-*
-You do not yourself need the authorization to build the functionality
-into the [mailet];  what one needs authorization, in the form of a
-license, for, is to use the mark *in headers*, in outgoing email.
-However, please let me know if you would like something more
-formal, and I can try to have something faxed to you.
-*
-&gt; The Mailet docs would reference the Habeas website, and inform
-&gt; administrators that in order to USE the mailet, they need to ensure
-&gt; that they have whatever licenses are required from you as appropriate
-&gt; to your licensing terms.
-*
-That's absolutely perfect!</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>=== ClamAVScan
+=== ClamAVScan
 
 Does an antivirus scan check using a ClamAV daemon (CLAMD)
 

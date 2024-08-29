@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Matchers :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="matchers.html">Packaged Matchers</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="matchers.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/matchers.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/matchers.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -663,7 +695,7 @@ with attribute name <strong>AT_MOST_EXECUTIONS</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Rules can be administered via <a href="../operate/webadmin.html#_administrating_dlp_configuration" class="page">webAdmin</a>.</p>
+<p>Rules can be administered via <a href="../operate/webadmin.html#_administrating_dlp_configuration" class="xref page">webAdmin</a>.</p>
 </div>
 <div class="paragraph">
 <p>Only available on top of Memory and Cassandra storages.</p>
@@ -1447,54 +1479,6 @@ another set of operators is: <strong>LT, LE, EQ, GE, GT</strong>.</p>
 <h3 id="_fileregexmatcher"><a class="anchor" href="#_fileregexmatcher"></a>FileRegexMatcher</h3>
 <div class="paragraph">
 <p>Initializes RegexMatcher with regular expressions from a file.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hashabeaswarrantmark"><a class="anchor" href="#_hashabeaswarrantmark"></a>HasHabeasWarrantMark</h3>
-<div class="paragraph">
-<p>This matcher tests for the Hebeas Warrant Mark.
-For details see: <a href="http://www.hebeas.com" class="bare">http://www.hebeas.com</a></p>
-</div>
-<div class="paragraph">
-<p>Usage: Place this matcher</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;mailet match="HasHabeasWarrantMark" class="ToProcessor"&gt;
-    &lt;processor&gt; transport &lt;/processor&gt;
-&lt;/mailet&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>in the root processes before the DNSRBL block lists (the InSpammerBlacklist matcher).</p>
-</div>
-<div class="paragraph">
-<p>Because the Habeas Warrant Mark is copyright material, I have asked for and
-received the following explicit statement from Habeas:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>-----------------------------------
-From: Lindsey Pettit [mailto:support@habeas.com]
-Sent: Sunday, September 29, 2002 5:51
-To: Noel J. Bergman
-Subject: RE: Habeas and Apache James
-
-Dear Noel,
-
-&gt; I guess that since your Warrant Mark is copyright, I should ask for
-&gt; something from you to explicitly authorize that Hebeas will permit
-&gt; this code to be included and distributed as part of Apache James
-&gt; under the Apache Software License.  As we have established, the use
-&gt; of the Habeas Warrant Mark for filtering is not restricted, but I
-&gt; would like something to confirm that, so that Apache will be happy.
-
-I can hereby confirm to you that there is no license necessary in
-order to use the Habeas mark for filtering.  That said, however, we
-do insist that it not ever be used as a basis for rejecting email which
-bears the Habeas mark.
------------------------------------</pre>
-</div>
 </div>
 </div>
 <div class="sect2">
