@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; WebAdmin REST administration API :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -593,15 +570,6 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="webadmin.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/operate/webadmin.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/webadmin.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -1571,7 +1539,7 @@ syntax</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -1658,7 +1626,7 @@ If you want to update a user&#8217;s password, please have a look at <strong>Upd
 </div>
 <div class="paragraph">
 <p>Resource name ``usernameToBeUsed'' represents a valid user, hence it
-should match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
+should match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -2077,7 +2045,7 @@ migrates user&#8217;s mailbox subscriptions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">[
+<pre class="highlightjs highlight"><code>[
    {
       "name":"identity name 1",
       "email":"bob@domain.tld",
@@ -2243,7 +2211,7 @@ Resource name </code>identityId'' represents a exist user identity</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>The response will look like this:</p>
@@ -2961,303 +2929,9 @@ leave the currently reIndexed mailbox as partially indexed.</p>
 a maximum (by keeping track of ongoing events), concurrent changes done
 during the reIndexing might be ignored.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_fixing_mailboxes_inconsistencies"><a class="anchor" href="#_fixing_mailboxes_inconsistencies"></a>Fixing mailboxes inconsistencies</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /mailboxes?task=SolveInconsistencies</pre>
-</div>
-</div>
 <div class="paragraph">
-<p>Will schedule a task for fixing inconsistencies for the mailbox
-deduplicated object stored in Cassandra.</p>
+<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:distributed/operate/webadmin/admin-mailboxes-extend.adoc[]</p>
 </div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>I-KNOW-WHAT-I-M-DOING</code> header is mandatory (you can read more
-information about it in the warning section below).</p>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type
-<code>solve-mailbox-inconsistencies</code> and the following
-<code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "type":"solve-mailbox-inconsistencies",
-  "processedMailboxEntries": 3,
-  "processedMailboxPathEntries": 3,
-  "fixedInconsistencies": 2,
-  "errors": 1,
-  "conflictingEntries":[{
-    "mailboxDaoEntry":{
-      "mailboxPath":"#private:user:mailboxName",
-      "mailboxId":"464765a0-e4e7-11e4-aba4-710c1de3782b"
-    }," +
-    "mailboxPathDaoEntry":{
-      "mailboxPath":"#private:user:mailboxName2",
-      "mailboxId":"464765a0-e4e7-11e4-aba4-710c1de3782b"
-    }
-  }]
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that conflicting entry inconsistencies will not be fixed and will
-require to explicitly use <a href="#_correcting_ghost_mailbox">ghost mailbox</a>
-endpoint in order to merge the conflicting mailboxes and prevent any
-message loss.</p>
-</div>
-<div class="paragraph">
-<p><strong>WARNING</strong>: this task can cancel concurrently running legitimate user
-operations upon dirty read. As such this task should be run offline.</p>
-</div>
-<div class="paragraph">
-<p>A dirty read is when data is read between the two writes of the
-denormalization operations (no isolation).</p>
-</div>
-<div class="paragraph">
-<p>In order to ensure being offline, stop the traffic on SMTP, JMAP and
-IMAP ports, for example via re-configuration or firewall rules.</p>
-</div>
-<div class="paragraph">
-<p>Due to all of those risks, a <code>I-KNOW-WHAT-I-M-DOING</code> header should be
-positioned to <code>ALL-SERVICES-ARE-OFFLINE</code> in order to prevent accidental
-calls.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_recomputing_mailbox_counters"><a class="anchor" href="#_recomputing_mailbox_counters"></a>Recomputing mailbox counters</h4>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /mailboxes?task=RecomputeMailboxCounters</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Will recompute counters (unseen &amp; total count) for the mailbox object
-stored in Cassandra.</p>
-</div>
-<div class="paragraph">
-<p>Cassandra maintains a per mailbox projection for message count and
-unseen message count. As with any projection, it can go out of sync,
-leading to inconsistent results being returned to the client.</p>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type
-<code>recompute-mailbox-counters</code> and the following <code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "type":"recompute-mailbox-counters",
-  "processedMailboxes": 3,
-  "failedMailboxes": ["464765a0-e4e7-11e4-aba4-710c1de3782b"]
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that conflicting inconsistencies entries will not be fixed and will
-require to explicitly use <a href="#_correcting_ghost_mailbox">ghost mailbox</a>
-endpoint in order to merge the conflicting mailboxes and prevent any
-message loss.</p>
-</div>
-<div class="paragraph">
-<p><strong>WARNING</strong>: this task do not take into account concurrent modifications
-upon a single mailbox counter recomputation. Rerunning the task will
-<em>eventually</em> provide the consistent result. As such we advise to run
-this task offline.</p>
-</div>
-<div class="paragraph">
-<p>In order to ensure being offline, stop the traffic on SMTP, JMAP and
-IMAP ports, for example via re-configuration or firewall rules.</p>
-</div>
-<div class="paragraph">
-<p><code>trustMessageProjection</code> query parameter can be set to <code>true</code>. Content
-of <code>messageIdTable</code> (listing messages by their mailbox context) table
-will be trusted and not compared against content of <code>imapUidTable</code> table
-(listing messages by their messageId mailbox independent identifier).
-This will result in a better performance running the task at the cost of
-safety in the face of message denormalization inconsistencies.</p>
-</div>
-<div class="paragraph">
-<p>Defaults to false, which generates additional checks. You can read
-<a href="https://github.com/apache/james-project/blob/master/src/adr/0022-cassandra-message-inconsistency.md">this
-ADR</a> to better understand the message projection and how it can become
-inconsistent.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_fixing_message_inconsistencies"><a class="anchor" href="#_fixing_message_inconsistencies"></a>Fixing message inconsistencies</h3>
-<div class="paragraph">
-<p>This task is only available on top of Guice Cassandra products.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /messages?task=SolveInconsistencies</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Will schedule a task for fixing message inconsistencies created by the
-message denormalization process.</p>
-</div>
-<div class="paragraph">
-<p>Messages are denormalized and stored in separated data tables in
-Cassandra, so they can be accessed by their unique identifier or mailbox
-identifier &amp; local mailbox identifier through different protocols.</p>
-</div>
-<div class="paragraph">
-<p>Failure in the denormalization process will lead to inconsistencies, for
-example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>BOB receives a message
-The denormalization process fails
-BOB can read the message via JMAP
-BOB cannot read the message via IMAP
-
-BOB marks a message as SEEN
-The denormalization process fails
-The message is SEEN via JMAP
-The message is UNSEEN via IMAP</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>An admin can specify the concurrency that should be used when running
-the task:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>messagesPerSecond</code> rate of messages to be processed per second.
-Default is 100.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This optional parameter must have a strictly positive integer as a value
-and be passed as query parameter.</p>
-</div>
-<div class="paragraph">
-<p>An admin can also specify the reindexing mode it wants to use when
-running the task:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>mode</code> the reindexing mode used. There are 2 modes for the moment:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>rebuildAll</code> allows to rebuild all indexes. This is the default mode.</p>
-</li>
-<li>
-<p><code>fixOutdated</code> will check for outdated indexed document and reindex
-only those.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This optional parameter must be passed as query parameter.</p>
-</div>
-<div class="paragraph">
-<p>It’s good to note as well that there is a limitation with the
-<code>fixOutdated</code> mode. As we first collect metadata of stored messages to
-compare them with the ones in the index, a failed <code>expunged</code> operation
-might not be well corrected (as the message might not exist anymore but
-still be indexed).</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /messages?task=SolveInconsistencies&amp;messagesPerSecond=200&amp;mode=rebuildAll</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type
-<code>solve-message-inconsistencies</code> and the following
-<code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "type":"solve-message-inconsistencies",
-  "timestamp":"2007-12-03T10:15:30Z",
-  "processedImapUidEntries": 2,
-  "processedMessageIdEntries": 1,
-  "addedMessageIdEntries": 1,
-  "updatedMessageIdEntries": 0,
-  "removedMessageIdEntries": 1,
-  "runningOptions":{
-    "messagesPerSecond": 200,
-    "mode":"REBUILD_ALL"
-  },
-  "fixedInconsistencies": [
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "d2bee791-7e63-11ea-883c-95b84008f979",
-      "uid": 1
-    },
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "d2bee792-7e63-11ea-883c-95b84008f979",
-      "uid": 2
-    }
-  ],
-  "errors": [
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "ffffffff-7e63-11ea-883c-95b84008f979",
-      "uid": 3
-    }
-  ]
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>User actions concurrent to the inconsistency fixing task could result in
-concurrency issues. New inconsistencies could be created.</p>
-</div>
-<div class="paragraph">
-<p>However the source of truth will not be impacted, hence rerunning the
-task will eventually fix all issues.</p>
-</div>
-<div class="paragraph">
-<p>This task could be run safely online and can be scheduled on a recurring
-basis outside of peak traffic by an admin to ensure Cassandra message
-consistency.</p>
 </div>
 </div>
 </div>
@@ -3317,7 +2991,7 @@ be altered.</p>
 <h3 id="_deleting_old_messages_of_all_users"><a class="anchor" href="#_deleting_old_messages_of_all_users"></a>Deleting old messages of all users</h3>
 <div class="paragraph">
 <p><strong>Note:</strong>
-Consider enabling the <a href="../configure/vault.html" class="xref page">Deleted Messages Vault</a>
+Consider enabling the <a href="../configure/vault.html" class="page">Deleted Messages Vault</a>
 if you use this feature.</p>
 </div>
 <div class="paragraph">
@@ -3391,172 +3065,11 @@ messages where the expiration date from this header lies in the past:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In this case you should also add the <a href="../configure/mailets.html" class="xref page">mailet</a>
+<p>In this case you should also add the <a href="../configure/mailets.html" class="page">mailet</a>
 <code>Expires</code> to your mailet container, which can sanitize expiration date headers.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_fixing_message_inconsistencies_2"><a class="anchor" href="#_fixing_message_inconsistencies_2"></a>Fixing message inconsistencies</h3>
 <div class="paragraph">
-<p>This task is only available on top of Guice Cassandra products.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /messages?task=SolveInconsistencies</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Will schedule a task for fixing message inconsistencies created by the
-message denormalization process.</p>
-</div>
-<div class="paragraph">
-<p>Messages are denormalized and stored in separated data tables in
-Cassandra, so they can be accessed by their unique identifier or mailbox
-identifier &amp; local mailbox identifier through different protocols.</p>
-</div>
-<div class="paragraph">
-<p>Failure in the denormalization process will lead to inconsistencies, for
-example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>BOB receives a message
-The denormalization process fails
-BOB can read the message via JMAP
-BOB cannot read the message via IMAP
-
-BOB marks a message as SEEN
-The denormalization process fails
-The message is SEEN via JMAP
-The message is UNSEEN via IMAP</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>An admin can specify the concurrency that should be used when running
-the task:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>messagesPerSecond</code> rate of messages to be processed per second.
-Default is 100.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This optional parameter must have a strictly positive integer as a value
-and be passed as query parameter.</p>
-</div>
-<div class="paragraph">
-<p>An admin can also specify the reindexing mode it wants to use when
-running the task:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>mode</code> the reindexing mode used. There are 2 modes for the moment:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>rebuildAll</code> allows to rebuild all indexes. This is the default mode.</p>
-</li>
-<li>
-<p><code>fixOutdated</code> will check for outdated indexed document and reindex
-only those.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This optional parameter must be passed as query parameter.</p>
-</div>
-<div class="paragraph">
-<p>It’s good to note as well that there is a limitation with the
-<code>fixOutdated</code> mode. As we first collect metadata of stored messages to
-compare them with the ones in the index, a failed <code>expunged</code> operation
-might not be well corrected (as the message might not exist anymore but
-still be indexed).</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST /messages?task=SolveInconsistencies&amp;messagesPerSecond=200&amp;mode=rebuildAll</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Response codes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>201: Success. Corresponding task id is returned.</p>
-</li>
-<li>
-<p>400: Error in the request. Details can be found in the reported error.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The scheduled task will have the following type
-<code>solve-message-inconsistencies</code> and the following
-<code>additionalInformation</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>{
-  "type":"solve-message-inconsistencies",
-  "timestamp":"2007-12-03T10:15:30Z",
-  "processedImapUidEntries": 2,
-  "processedMessageIdEntries": 1,
-  "addedMessageIdEntries": 1,
-  "updatedMessageIdEntries": 0,
-  "removedMessageIdEntries": 1,
-  "runningOptions":{
-    "messagesPerSecond": 200,
-    "mode":"REBUILD_ALL"
-  },
-  "fixedInconsistencies": [
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "d2bee791-7e63-11ea-883c-95b84008f979",
-      "uid": 1
-    },
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "d2bee792-7e63-11ea-883c-95b84008f979",
-      "uid": 2
-    }
-  ],
-  "errors": [
-    {
-      "mailboxId": "551f0580-82fb-11ea-970e-f9c83d4cf8c2",
-      "messageId": "ffffffff-7e63-11ea-883c-95b84008f979",
-      "uid": 3
-    }
-  ]
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>User actions concurrent to the inconsistency fixing task could result in
-concurrency issues. New inconsistencies could be created.</p>
-</div>
-<div class="paragraph">
-<p>However the source of truth will not be impacted, hence rerunning the
-task will eventually fix all issues.</p>
-</div>
-<div class="paragraph">
-<p>This task could be run safely online and can be scheduled on a recurring
-basis outside of peak traffic by an admin to ensure Cassandra message
-consistency.</p>
+<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:distributed/operate/webadmin/admin-messages-extend.adoc[]</p>
 </div>
 </div>
 </div>
@@ -5555,7 +5068,7 @@ member will receive it.</p>
 an existing user.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5703,7 +5216,7 @@ mail. Otherwise he is omitted.</p>
 ``groups''.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5848,7 +5361,7 @@ address of the alias will receive it.</p>
 <p>Aliases can be defined for existing users.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6000,7 +5513,7 @@ sent to <code>admin@james.apache.org</code>, then it will be routed to
 <code>admin@james.org</code> and <code>admin@apache-james.org</code></p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6162,7 +5675,7 @@ a recipient matched with the mapping source, then that mail will be
 re-routed to a new recipient address which is re written by the regex.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 API</a> to be configured.</p>
@@ -6282,7 +5795,7 @@ mapping source <code>mappingSource</code> to RecipientRewriteTable.</p>
 destination addresses will receive it.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6376,7 +5889,7 @@ Address</p>
 </div>
 <div class="paragraph">
 <p>Get all mappings from the
-<a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>.</p>
+<a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>.</p>
 </div>
 <div class="paragraph">
 <p>Response body:</p>
@@ -7390,25 +6903,8 @@ short form (<code>h</code>, <code>d</code>, <code>w</code>, etc.), or in the lon
 <p>The response body contains the id of the republishing task.
 <code>{      "taskId": "a650a66a-5984-431e-bdad-f1baad885856"  }</code></p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_cassandra_view_of_the_rabbitmq_mailqueue_browse_start_update"><a class="anchor" href="#_cassandra_view_of_the_rabbitmq_mailqueue_browse_start_update"></a>Cassandra view of the RabbitMQ mailQueue: browse start update</h3>
-<div class="literalblock">
-<div class="content">
-<pre>curl -XPOST 'http://ip:port/mailQueues/{mailQueueName}?action=updateBrowseStart</pre>
-</div>
-</div>
 <div class="paragraph">
-<p>Will return a task that updates the browse start of the aforementioned mailQueue, regardless of the configuration.</p>
-</div>
-<div class="paragraph">
-<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
-a task</a>.</p>
-</div>
-<div class="paragraph">
-<p>This is an advanced, potentially expensive operation which requires a good understanding of the RabbitMQMailQueue design
-(<a href="https://github.com/apache/james-project/blob/master/src/adr/0031-distributed-mail-queue.md" class="bare">https://github.com/apache/james-project/blob/master/src/adr/0031-distributed-mail-queue.md</a>). Especially, care needs to
-be taken to call this at most once per slice (not doing so might be expensive).</p>
+<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:distributed/operate/webadmin/admin-mail-queues-extend.adoc[]</p>
 </div>
 </div>
 </div>
