@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Extending server behavior :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -548,6 +548,9 @@
         <li class="version is-current is-latest">
           <a href="../../../index.html">3.8.1 SNAPSHOT</a>
         </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+        </li>
       </ul>
     </li>
     <li class="component">
@@ -575,6 +578,13 @@
     <li><a href="index.html">Extending server behavior</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.8.1 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="index.html">3.8.1 SNAPSHOT</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/extending/index.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/extending/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -597,24 +607,24 @@ order to extend the Distributed Server behavior.</p>
 </div>
 <div class="paragraph">
 <p>Writing <strong>Mailets</strong> and <strong>Matchers</strong> allows one to supply custom components for the
-<a href="mail-processing.html" class="page">Mail Processing</a> and
+<a href="mail-processing.html" class="xref page">Mail Processing</a> and
 enables to take decisions, and implement your business logic at the transport level.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="mailbox-listeners.html" class="page">Mailbox listeners</a> enables to
+<p>Writing <a href="mailbox-listeners.html" class="xref page">Mailbox listeners</a> enables to
 react to your user interaction with their mailbox. This powerful tool allows build advanced features
 for mail delivery servers.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="smtp-hooks.html" class="page">SMTP hookd</a> enables to
+<p>Writing <a href="smtp-hooks.html" class="xref page">SMTP hookd</a> enables to
 add features to your SMTP server.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="webadmin-routes.html" class="page">WebAdmin routes</a> enables to
+<p>Writing <a href="webadmin-routes.html" class="xref page">WebAdmin routes</a> enables to
 add features to the WebAdmin REST API.</p>
 </div>
 <div class="paragraph">
-<p>Writing <a href="imap.html" class="page">IMAP extensions</a>.</p>
+<p>Writing <a href="imap.html" class="xref page">IMAP extensions</a>.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/apache/james-project/tree/master/examples">examples</a> are also a good reference.</p>
@@ -740,7 +750,7 @@ folder (potentially different jars).</p>
 <div class="ulist">
 <ul>
 <li>
-<p>4. <strong>MyServiceModule</strong> needs to be registered in <a href="../configure/extensions.html" class="page"><strong>extensions.properties</strong></a></p>
+<p>4. <strong>MyServiceModule</strong> needs to be registered in <a href="../configure/extensions.html" class="xref page"><strong>extensions.properties</strong></a></p>
 </li>
 <li>
 <p>5. <strong>MyService</strong> can then be used as part of your extensions</p>
@@ -775,7 +785,7 @@ folder (potentially different jars).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>public class MyStartable implements UserDefinedStartable {
+<pre class="highlightjs highlight"><code class="language-none hljs">public class MyStartable implements UserDefinedStartable {
     @Override
     public void start() {
         // Will be called
@@ -788,7 +798,7 @@ folder (potentially different jars).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>guice.extension.startable=com.company.MyStartable</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">guice.extension.startable=com.company.MyStartable</code></pre>
 </div>
 </div>
 </div>
