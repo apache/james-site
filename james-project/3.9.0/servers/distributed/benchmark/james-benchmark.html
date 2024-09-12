@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server benchmark :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -570,6 +593,15 @@
     <li><a href="james-benchmark.html">James benchmarks</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="james-benchmark.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/benchmark/james-benchmark.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -581,8 +613,8 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This document provides benchmark methodology and basic performance of Distributed James as a basis for a James administrator who
-can test and evaluate if his Distributed James is performing well.</p>
+<p>This document provides benchmark methodology and basic performance of Distributed James Server as a basis for a James administrator who
+can test and evaluate if his Distributed James Server is performing well.</p>
 </div>
 <div class="paragraph">
 <p>It includes:</p>
@@ -590,7 +622,7 @@ can test and evaluate if his Distributed James is performing well.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>A sample Distributed James deployment topology</p>
+<p>A sample Distributed James Server deployment topology</p>
 </li>
 <li>
 <p>Propose benchmark methodology</p>
@@ -609,15 +641,12 @@ can test and evaluate if his Distributed James is performing well.</p>
 <h2 id="_sample_deployment_topology"><a class="anchor" href="#_sample_deployment_topology"></a>Sample deployment topology</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We deploy a sample topology of Distributed James with these following components:</p>
+<p>We deploy a sample topology of Distributed James Server with these following components:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Distributed James: 3 Kubernetes pods, each pod has 2 OVH vCore CPU and 4 GB memory limit.</p>
-</li>
-<li>
-<p>Apache Cassandra 4 as main database: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
+<p>Distributed James Server: 3 Kubernetes pods, each pod has 2 OVH vCore CPU and 4 GB memory limit.</p>
 </li>
 <li>
 <p>OpenDistro 1.13.1 as search engine: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
@@ -627,6 +656,9 @@ can test and evaluate if his Distributed James is performing well.</p>
 </li>
 <li>
 <p>OVH Swift S3 as an object storage</p>
+</li>
+<li>
+<p>Apache Cassandra 4 as main database: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
 </li>
 </ul>
 </div>
@@ -638,7 +670,7 @@ can test and evaluate if his Distributed James is performing well.</p>
 <div class="sect2">
 <h3 id="_provision_testing_data"><a class="anchor" href="#_provision_testing_data"></a>Provision testing data</h3>
 <div class="paragraph">
-<p>Before doing the performance test, you should make sure you have a Distributed James up and running with some provisioned testing
+<p>Before doing the performance test, you should make sure you have a Distributed James Server up and running with some provisioned testing
 data so that it is representative of reality.</p>
 </div>
 <div class="paragraph">
@@ -657,7 +689,7 @@ provisioned emails.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;mailet match="All" class="RandomStoring"/&gt;</pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;mailet match="All" class="RandomStoring"/&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -727,7 +759,7 @@ for performance testing against IMAP/JMAP servers. Other testing method is welco
 <p>Setup James Gatling with <code>sbt</code> build tool</p>
 </li>
 <li>
-<p>Configure the <code>Configuration.scala</code> to point to your Distributed James IMAP/JMAP server(s). For more configuration details, please read
+<p>Configure the <code>Configuration.scala</code> to point to your Distributed James Server IMAP/JMAP server(s). For more configuration details, please read
 <a href="https://github.com/linagora/james-gatling#readme">James Gatling Readme</a>.</p>
 </li>
 <li>
@@ -769,7 +801,7 @@ for performance testing against IMAP/JMAP servers. Other testing method is welco
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../_images/james-imap-base-performance.png" alt="james imap base performance">
+<img src="../../_images/james-imap-base-performance-distributed.png" alt="james imap base performance distributed">
 </div>
 </div>
 <div class="paragraph">

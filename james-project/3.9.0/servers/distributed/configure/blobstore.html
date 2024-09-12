@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; blobstore.properties :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="blobstore.html">blobstore.properties</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="blobstore.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/blobstore.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/blobstore.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -669,7 +701,7 @@ If you are upgrading from James 3.5 or older, the deduplication was enabled.
 <div class="paragraph">
 <p>Deduplication requires a garbage collector mechanism to effectively drop blobs. A first implementation
 based on bloom filters can be used and triggered using the WebAdmin REST API. See
-<a href="../operate/webadmin.html#_running_blob_garbage_collection" class="page">Running blob garbage collection</a>.</p>
+<a href="../operate/webadmin.html#_running_blob_garbage_collection" class="xref page">Running blob garbage collection</a>.</p>
 </div>
 <div class="paragraph">
 <p>In order to avoid concurrency issues upon garbage collection, we slice the blobs in generation, the two more recent
@@ -683,6 +715,45 @@ but deleted blobs will live longer. Duration, defaults on 30 days, the default u
 <p><strong>deduplication.gc.generation.family</strong>: Every time the duration is changed, this integer counter must be incremented to avoid
 conflicts. Defaults to 1.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_cassandra_blobstore_cache"><a class="anchor" href="#_cassandra_blobstore_cache"></a>Cassandra BlobStore Cache</h3>
+<div class="paragraph">
+<p>A Cassandra cache can be enabled to reduce latency when reading small blobs frequently.
+A dedicated keyspace with a replication factor of one is then used.
+Cache eviction policy is TTL based.
+Only blobs below a given threshold will be stored.
+To be noted that blobs are stored within a single Cassandra row, hence a low threshold should be used.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. blobstore.properties cache related content</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.enable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: false, optional, must be a boolean. Whether the cache should be enabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.cassandra.ttl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: 7 days, optional, must be a duration. Cache eviction policy is TTL based.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cache.sizeThresholdInBytes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: 8192, optional, must be a positive integer. Unit: bytes.
+Supported units: bytes, Kib, MiB, GiB, TiB
+Maximum size of stored objects expressed in bytes.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_encryption_choice"><a class="anchor" href="#_encryption_choice"></a>Encryption choice</h3>
@@ -762,45 +833,6 @@ james.blob.aes.file.threshold.decrypt=256K
 james.blob.aes.blob.max.size=100M</pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_cassandra_blobstore_cache"><a class="anchor" href="#_cassandra_blobstore_cache"></a>Cassandra BlobStore Cache</h3>
-<div class="paragraph">
-<p>A Cassandra cache can be enabled to reduce latency when reading small blobs frequently.
-A dedicated keyspace with a replication factor of one is then used.
-Cache eviction policy is TTL based.
-Only blobs below a given threshold will be stored.
-To be noted that blobs are stored within a single Cassandra row, hence a low threshold should be used.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. blobstore.properties cache related content</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cache.enable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: false, optional, must be a boolean. Whether the cache should be enabled.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cache.cassandra.ttl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: 7 days, optional, must be a duration. Cache eviction policy is TTL based.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">cache.sizeThresholdInBytes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT: 8192, optional, must be a positive integer. Unit: bytes.
-Supported units: bytes, Kib, MiB, GiB, TiB
-Maximum size of stored objects expressed in bytes.</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_object_storage_configuration"><a class="anchor" href="#_object_storage_configuration"></a>Object storage configuration</h3>

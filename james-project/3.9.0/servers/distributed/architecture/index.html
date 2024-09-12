@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Architecture :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -569,6 +592,15 @@
     <li><a href="index.html">Architecture</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="index.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/architecture/index.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/architecture/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -580,7 +612,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This sections presents the Distributed Server architecture.</p>
+<p>This sections presents the Distributed James Server architecture.</p>
 </div>
 </div>
 </div>
@@ -588,27 +620,26 @@
 <h2 id="_storage"><a class="anchor" href="#_storage"></a>Storage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order to deliver its promises, the Distributed Server leverages the following storage strategies:</p>
+<p>In order to deliver its promises, the Distributed James Server leverages the following storage strategies:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../../_images/storage.png" alt="Storage responsibilities for the Distributed Server">
+<img src="../../_images/storage_james_distributed.png" alt="Storage responsibilities for the Distributed James Server">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Cassandra</strong> is used for metadata storage. Cassandra is efficient for a very high workload of small queries following
-a known pattern.</p>
+<p>Cassandra is used for metadata storage. Cassandra is efficient for a very high workload of small queries following a known pattern.</p>
 </li>
 <li>
-<p>The <strong>blob store</strong> storage interface is responsible of storing potentially large binary data. For instance
- email bodies, headers or attachments. Different technologies can be used: <strong>Cassandra</strong>, or S3 compatible <strong>Object Storage</strong>
+<p>The <strong>blob store</strong> storage interface is responsible for storing potentially large binary data. For instance
+ email bodies, headers or attachments. Different technologies can be used: <strong>cassandra</strong>, or S3 compatible <strong>Object Storage</strong>
 (S3 or Swift).</p>
 </li>
 <li>
 <p><strong>OpenSearch</strong> component empowers full text search on emails. It also enables querying data with unplanned access
-patterns. OpenSearch throughput do not however match the one of Cassandra thus its use is avoided upon regular workloads.</p>
+patterns. OpenSearch throughput do not however match the one of cassandra thus its use is avoided upon regular workloads.</p>
 </li>
 <li>
 <p><strong>RabbitMQ</strong> enables James nodes of a same cluster to collaborate together. It is used to implement connected protocols,
@@ -623,7 +654,7 @@ notification patterns as well as distributed resilient work queues and mail queu
 </ul>
 </div>
 <div class="paragraph">
-<p><a href="consistency-model.html" class="page">This page</a> further details Distributed James consistency model.</p>
+<p><a href="consistency-model.html" class="xref page">This page</a> further details Distributed James Server consistency model.</p>
 </div>
 </div>
 </div>
@@ -631,7 +662,7 @@ notification patterns as well as distributed resilient work queues and mail queu
 <h2 id="_protocols"><a class="anchor" href="#_protocols"></a>Protocols</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following protocols are supported and can be used to interact with the Distributed Server:</p>
+<p>The following protocols are supported and can be used to interact with the Distributed James Server:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -642,7 +673,7 @@ notification patterns as well as distributed resilient work queues and mail queu
 <p><strong>IMAP</strong></p>
 </li>
 <li>
-<p><a href="../operate/webadmin.html" class="page">WebAdmin</a> REST Administration API</p>
+<p><a href="../operate/webadmin.html" class="xref page">WebAdmin</a> REST Administration API</p>
 </li>
 <li>
 <p><strong>LMTP</strong></p>
@@ -666,7 +697,7 @@ notification patterns as well as distributed resilient work queues and mail queu
 </ul>
 </div>
 <div class="paragraph">
-<p>Read more on <a href="implemented-standards.html" class="page">implemented standards</a>.</p>
+<p>Read more on <a href="implemented-standards.html" class="xref page">implemented standards</a>.</p>
 </div>
 </div>
 </div>
@@ -676,7 +707,7 @@ notification patterns as well as distributed resilient work queues and mail queu
 <div class="paragraph">
 <p>While it is perfectly possible to deploy homogeneous James instances, with the same configuration and thus the same
 protocols and the same responsibilities one might want to investigate in
-<a href="specialized-instances.html" class="page">'Specialized instances'</a>.</p>
+<a href="specialized-instances.html" class="xref page">'Specialized instances'</a>.</p>
 </div>
 </div>
 </div>
@@ -684,7 +715,7 @@ protocols and the same responsibilities one might want to investigate in
 <h2 id="_components"><a class="anchor" href="#_components"></a>Components</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section presents the various components of the Distributed server, providing context about
+<p>This section presents the various components of the Distributed James Server, providing context about
 their interactions, and about their implementations.</p>
 </div>
 <div class="sect2">
@@ -835,26 +866,26 @@ of your IP address.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_why_combining_cassandra_rabbitmq_and_object_storage_for_mailqueue"><a class="anchor" href="#_why_combining_cassandra_rabbitmq_and_object_storage_for_mailqueue"></a>Why combining Cassandra, RabbitMQ and Object storage for MailQueue</h4>
+<h4 id="_why_combining_rabbitmq_object_storage_cassandra_for_mailqueue"><a class="anchor" href="#_why_combining_rabbitmq_object_storage_cassandra_for_mailqueue"></a>Why combining RabbitMQ, Object storage , Cassandra for MailQueue</h4>
 <div class="ulist">
 <ul>
 <li>
 <p>RabbitMQ ensures the messaging function, and avoids polling.</p>
 </li>
 <li>
+<p>Object Storage stores potentially large binary payload.</p>
+</li>
+<li>
 <p>Cassandra enables administrative operations such as browsing, deleting
 using a time series which might require fine performance tuning (see
 <a href="http://cassandra.apache.org/doc/latest/operating/index.html">Operating
-Casandra documentation</a>).</p>
-</li>
-<li>
-<p>Object Storage stores potentially large binary payload.</p>
+Cassandra documentation</a>).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>However the current design do not implement delays. Delays allow to
-define the time a mail have to be living in the mailqueue before being
+<p>However, the current design do not implement delays. Delays allow to
+define the time a mail have to be living in the mail queue before being
 dequeued and is used for example for exponential wait delays upon remote
 delivery retries, or</p>
 </div>
@@ -866,7 +897,7 @@ delivery retries, or</p>
 <p>Storage for emails belonging for users.</p>
 </div>
 <div class="paragraph">
-<p>Metadata are stored in Cassandra while headers, bodies and attachments are stored
+<p>Metadata are stored in cassandra while headers, bodies and attachments are stored
 within the <a href="#_blobstore">BlobStore</a>.</p>
 </div>
 <div class="sect3">
@@ -885,14 +916,14 @@ indexing.</p>
 <div class="sect3">
 <h4 id="_quotas"><a class="anchor" href="#_quotas"></a>Quotas</h4>
 <div class="paragraph">
-<p>Current Quotas of users are hold in a Cassandra projection. Limitations can be defined via
+<p>Current Quotas of users are hold in a cassandra projection. Limitations can be defined via
 user, domain or globally.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_event_bus"><a class="anchor" href="#_event_bus"></a>Event Bus</h4>
 <div class="paragraph">
-<p>Distributed James relies on an event bus system to enrich mailbox capabilities. Each
+<p>Distributed James Server relies on an event bus system to enrich mailbox capabilities. Each
 operation performed on the mailbox will trigger related events, that can
 be processed asynchronously by potentially any James node on a
 distributed system.</p>
@@ -936,8 +967,7 @@ operation, such as:</p>
 <p><code>FlagsUpdated</code>: messages had their flags updated</p>
 </li>
 <li>
-<p><code>MessageMoveEvent</code>: messages have been moved from a mailbox to an
-other</p>
+<p><code>MessageMoveEvent</code>: messages have been moved from a mailbox to another</p>
 </li>
 </ul>
 </div>
@@ -997,7 +1027,7 @@ and by that we mean when they try to definitely delete them by emptying
 the trash, James will retain these mails into the Deleted Messages
 Vault, before an email or a mailbox is going to be deleted. And only
 administrators can interact with this component via
-wref:webadmin.adoc#_deleted-messages-vault[WebAdmin] REST APIs].</p>
+<a href="../operate/webadmin.html#_deleted_messages_vault" class="xref page">WebAdmin</a> REST APIs.</p>
 </div>
 <div class="paragraph">
 <p>However, mails are not retained forever as you have to configure a
@@ -1012,16 +1042,16 @@ not defined). It’s also possible to permanently delete a mail if needed.</p>
 <p>Storage for domains and users.</p>
 </div>
 <div class="paragraph">
-<p>Domains are persisted in Cassandra.</p>
+<p>Domains are persisted in cassandra.</p>
 </div>
 <div class="paragraph">
-<p>Users can be managed in Cassandra, or via a LDAP (read only).</p>
+<p>Users can be managed in cassandra, or via a LDAP (read only).</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_recipient_rewrite_tables"><a class="anchor" href="#_recipient_rewrite_tables"></a>Recipient rewrite tables</h3>
 <div class="paragraph">
-<p>Storage of Recipients Rewriting rules, in Cassandra.</p>
+<p>Storage of Recipients Rewriting rules, in cassandra.</p>
 </div>
 <div class="sect3">
 <h4 id="_mapping_types"><a class="anchor" href="#_mapping_types"></a>Mapping types</h4>
@@ -1033,44 +1063,44 @@ not defined). It’s also possible to permanently delete a mail if needed.</p>
 <li>
 <p><strong>Domain mapping</strong>: Rewrites the domain of mail addresses. Use it for technical purposes, user will not
 be allowed to use the source in their FROM address headers. Domain mappings can be managed via the CLI and
-added via <a href="../operate/webadmin.html#_domain_mappings" class="page">WebAdmin</a></p>
+added via <a href="../operate/webadmin.html#_domain_mappings" class="xref page">WebAdmin</a></p>
 </li>
 <li>
 <p><strong>Domain aliases</strong>: Rewrites the domain of mail addresses. Express the idea that both domains can be used
 inter-changeably. User will be allowed to use the source in their FROM address headers. Domain aliases can
-be managed via <a href="../operate/webadmin.html#_get_the_list_of_aliases_for_a_domain" class="page">WebAdmin</a></p>
+be managed via <a href="../operate/webadmin.html#_get_the_list_of_aliases_for_a_domain" class="xref page">WebAdmin</a></p>
 </li>
 <li>
 <p><strong>Forwards</strong>: Replaces the source address by another one. Vehicles the intent of forwarding incoming mails
 to other users. Listing the forward source in the forward destinations keeps a local copy. User will not be
 allowed to use the source in their FROM address headers. Forward can
-be managed via <a href="../operate/webadmin.html#_address_forwards" class="page">WebAdmin</a></p>
+be managed via <a href="../operate/webadmin.html#_address_forwards" class="xref page">WebAdmin</a></p>
 </li>
 <li>
 <p><strong>Groups</strong>: Replaces the source address by another one. Vehicles the intent of a group registration: group
 address will be swapped by group member addresses (Feature poor mailing list). User will not be
 allowed to use the source in their FROM address headers. Groups can
-be managed via <a href="../operate/webadmin.html#_address_group" class="page">WebAdmin</a></p>
+be managed via <a href="../operate/webadmin.html#_address_group" class="xref page">WebAdmin</a></p>
 </li>
 <li>
 <p><strong>Aliases</strong>: Replaces the source address by another one. Represents user owned mail address, with which
 he can interact as if it was his main mail address. User will be allowed to use the source in their FROM
-address headers. Aliases can be managed via <a href="../operate/webadmin.html#_address_aliases" class="page">WebAdmin</a></p>
+address headers. Aliases can be managed via <a href="../operate/webadmin.html#_address_aliases" class="xref page">WebAdmin</a></p>
 </li>
 <li>
-<p><strong>Address mappings</strong>: Replaces the source address by another one. Use for technical purposes, this mapping type do
-not hold specific intent. Prefer using one of the above mapping types&#8230;&#8203; User will not be allowed to use the source
-in their FROM address headers. Address mappings can be managed via the CLI or via
-<a href="../operate/webadmin.html#_address_mappings" class="page">WebAdmin</a></p>
+<p><strong>Address mappings</strong>: Replaces the source address by another one.Use for technical purposes, this mapping type do
+not hold specific intent.Prefer using one of the above mapping types&#8230;&#8203; User will not be allowed to use the source
+in their FROM address headers.Address mappings can be managed via the CLI or via
+<a href="../operate/webadmin.html#_address_mappings" class="xref page">WebAdmin</a></p>
 </li>
 <li>
-<p><strong>Regex mappings</strong>: Applies the regex on the supplied address. User will not be allowed to use the source
-in their FROM address headers. Regex mappings can be managed via the CLI or via
-<a href="../operate/webadmin.html#_regex_mapping" class="page">WebAdmin</a></p>
+<p><strong>Regex mappings</strong>: Applies the regex on the supplied address.User will not be allowed to use the source
+in their FROM address headers.Regex mappings can be managed via the CLI or via
+<a href="../operate/webadmin.html#_regex_mapping" class="xref page">WebAdmin</a></p>
 </li>
 <li>
-<p><strong>Error</strong>: Throws an error upon processing. User will not be allowed to use the source
-in their FROM address headers. Errors can be managed via the CLI</p>
+<p><strong>Error</strong>: Throws an error upon processing.User will not be allowed to use the source
+in their FROM address headers.Errors can be managed via the CLI</p>
 </li>
 </ul>
 </div>
@@ -1108,14 +1138,14 @@ components. Among other it enables scheduling, progress monitoring,
 cancellation of long running tasks.</p>
 </div>
 <div class="paragraph">
-<p>Distributed James leverage a task manager using Event Sourcing and RabbitMQ for messaging.</p>
+<p>Distributed James Server leverage a task manager using Event Sourcing and RabbitMQ for messaging.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_event_sourcing"><a class="anchor" href="#_event_sourcing"></a>Event sourcing</h3>
 <div class="paragraph">
 <p><a href="https://martinfowler.com/eaaDev/EventSourcing.html">Event sourcing</a> implementation
-for the Distributed server stores events in Cassandra. It enables components
+for the Distributed James Server stores events in cassandra. It enables components
 to rely on event sourcing technics for taking decisions.</p>
 </div>
 <div class="paragraph">

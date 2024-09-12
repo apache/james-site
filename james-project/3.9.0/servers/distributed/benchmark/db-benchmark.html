@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server&#8201;&#8212;&#8201;Database benchmarks :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -570,6 +593,15 @@
     <li><a href="db-benchmark.html">Database benchmarks</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="db-benchmark.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/benchmark/db-benchmark.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -581,8 +613,8 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This document provides basic performance of Distributed James' databases, benchmark methodologies as a basis for a James administrator who
-can test and evaluate if his Distributed James databases are performing well.</p>
+<p>This document provides basic performance of Distributed James Server databases, benchmark methodologies as a basis for a James administrator who
+can test and evaluate if his Distributed James Server databases are performing well.</p>
 </div>
 <div class="paragraph">
 <p>It includes:</p>
@@ -604,13 +636,10 @@ performance issues and compliance of their databases.</p>
 <h2 id="_sample_deployment_topology"><a class="anchor" href="#_sample_deployment_topology"></a>Sample deployment topology</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We deploy a sample topology of Distributed James with these following databases:</p>
+<p>We deploy a sample topology of Distributed James Server with these following databases:</p>
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>Apache Cassandra 4 as main database: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
-</li>
 <li>
 <p>OpenDistro 1.13.1 as search engine: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
 </li>
@@ -619,6 +648,9 @@ performance issues and compliance of their databases.</p>
 </li>
 <li>
 <p>OVH Swift S3 as an object storage</p>
+</li>
+<li>
+<p>Apache Cassandra 4 as main database: 3 nodes, each node has 8 OVH vCores CPU and 30 GB memory limit (OVH b2-30 instance).</p>
 </li>
 </ul>
 </div>
@@ -632,163 +664,17 @@ For a more details, it can handle a load throughput up to about 1000 JMAP reques
 <h2 id="_benchmark_methodologies_and_base_performances"><a class="anchor" href="#_benchmark_methodologies_and_base_performances"></a>Benchmark methodologies and base performances</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We are willing to share the benchmark methodologies and the result to you as a reference to evaluate your Distributed James' performance.
+<p>We are willing to share the benchmark methodologies and the result to you as a reference to evaluate your Distributed James Server' performance.
 Other evaluation methods are welcome, as long as your databases exhibit similar or even better performance than ours.
 It is up to your business needs. If your databases shows results that fall far from our baseline performance, there&#8217;s a good chance that
 there are problems with your system, and you need to check it out thoroughly.</p>
 </div>
 <div class="sect2">
-<h3 id="_benchmark_cassandra"><a class="anchor" href="#_benchmark_cassandra"></a>Benchmark Cassandra</h3>
+<h3 id="_benchmark_opensearch"><a class="anchor" href="#_benchmark_opensearch"></a>Benchmark OpenSearch</h3>
 <div class="sect3">
 <h4 id="_benchmark_methodology"><a class="anchor" href="#_benchmark_methodology"></a>Benchmark methodology</h4>
 <div class="sect4">
 <h5 id="_benchmark_tool"><a class="anchor" href="#_benchmark_tool"></a>Benchmark tool</h5>
-<div class="paragraph">
-<p>We use <a href="https://cassandra.apache.org/doc/latest/cassandra/tools/cassandra_stress.html">cassandra-stress tool</a> - an official
-tool of Cassandra for stress loading tests.</p>
-</div>
-<div class="paragraph">
-<p>The cassandra-stress tool is a Java-based stress testing utility for basic benchmarking and load testing a Cassandra cluster.
-Data modeling choices can greatly affect application performance. Significant load testing over several trials is the best method for discovering issues with a particular data model. The cassandra-stress tool is an effective tool for populating a cluster and stress testing CQL tables and queries. Use cassandra-stress to:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Quickly determine how a schema performs.</p>
-</li>
-<li>
-<p>Understand how your database scales.</p>
-</li>
-<li>
-<p>Optimize your data model and settings.</p>
-</li>
-<li>
-<p>Determine production capacity.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>There are several operation types:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>write-only, read-only, and mixed workloads of standard data</p>
-</li>
-<li>
-<p>write-only and read-only workloads for counter columns</p>
-</li>
-<li>
-<p>user configured workloads, running custom queries on custom schemas</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_how_to_benchmark"><a class="anchor" href="#_how_to_benchmark"></a>How to benchmark</h5>
-<div class="paragraph">
-<p>Here we are using a simple case to test and compare Cassandra performance between different setup environments.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">keyspace: stresscql
-
-keyspace_definition: |
-  CREATE KEYSPACE stresscql WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
-
-table: mixed_workload
-
-table_definition: |
-  CREATE TABLE mixed_workload (
-    key uuid PRIMARY KEY,
-    a blob,
-    b blob
-  ) WITH COMPACT STORAGE
-
-columnspec:
-  - name: a
-    size: uniform(1..10000)
-  - name: b
-    size: uniform(1..100000)
-
-insert:
-  partitions: fixed(1)
-
-queries:
-   read:
-      cql: select * from mixed_workload where key = ?
-      fields: samerow</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Create the yaml file as above and copy to a Cassandra node.</p>
-</div>
-<div class="paragraph">
-<p>Insert some sample data:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cassandra-stress user profile=mixed_workload.yml n=100000 "ops(insert=1)" cl=ONE -mode native cql3 user=&lt;user&gt; password=&lt;password&gt; -node &lt;IP&gt; -rate threads=8 -graph file=./graph_insert.xml title=Benchmark revision=insert_ONE</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Read intensive scenario:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cassandra-stress user profile=mixed_workload.yml n=100000 "ops(insert=1,read=4)" cl=ONE -mode native cql3 user=&lt;user&gt; password=&lt;password&gt; -node &lt;IP&gt; -rate threads=8 -graph file=./graph_mixed.xml title=Benchmark revision=mixed_ONE</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In there:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>n=100000: The number of insert batches, not number of individual insert operations.</p>
-</li>
-<li>
-<p>rate threads=8: The number of concurrent threads. If not specified it will start with 4 threads and increase until server reaches a limit.</p>
-</li>
-<li>
-<p>ops(insert=1,read=4): This will execute insert and read queries in the ratio 1:4.</p>
-</li>
-<li>
-<p>graph: Export results to graph in html format.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_sample_benchmark_result"><a class="anchor" href="#_sample_benchmark_result"></a>Sample benchmark result</h4>
-<div class="imageblock">
-<div class="content">
-<img src="../../_images/cassandra_stress_test_result_1.png" alt="cassandra stress test result 1">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../../_images/cassandra_stress_test_result_2.png" alt="cassandra stress test result 2">
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_references"><a class="anchor" href="#_references"></a>References</h4>
-<div class="paragraph">
-<p><a href="https://www.datastax.com/blog/improved-cassandra-21-stress-tool-benchmark-any-schema-part-1">Datastax - Cassandra stress tool</a></p>
-</div>
-<div class="paragraph">
-<p><a href="https://www.instaclustr.com/deep-diving-cassandra-stress-part-3-using-yaml-profiles/">Deep Diving cassandra-stress – Part 3 (Using YAML Profiles)</a></p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_benchmark_opensearch"><a class="anchor" href="#_benchmark_opensearch"></a>Benchmark OpenSearch</h3>
-<div class="sect3">
-<h4 id="_benchmark_methodology_2"><a class="anchor" href="#_benchmark_methodology_2"></a>Benchmark methodology</h4>
-<div class="sect4">
-<h5 id="_benchmark_tool_2"><a class="anchor" href="#_benchmark_tool_2"></a>Benchmark tool</h5>
 <div class="paragraph">
 <p>We use <a href="https://github.com/opensearch-project/opensearch-benchmark">opensearch-benchmark</a> - an official OpenSearch benchmarking tool.
 It provides the following features:</p>
@@ -811,13 +697,13 @@ It provides the following features:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_how_to_benchmark_2"><a class="anchor" href="#_how_to_benchmark_2"></a>How to benchmark</h5>
+<h5 id="_how_to_benchmark"><a class="anchor" href="#_how_to_benchmark"></a>How to benchmark</h5>
 <div class="paragraph">
 <p>To install the <code>opensearch-benchmark</code> tool, you need Python 3.8+ including pip3 first, then run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>python3 -m pip install opensearch-benchmark</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">python3 -m pip install opensearch-benchmark</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -857,12 +743,12 @@ For our James use case, we are interested in <code><code>pmc</code></code> workl
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sample_benchmark_result_2"><a class="anchor" href="#_sample_benchmark_result_2"></a>Sample benchmark result</h4>
+<h4 id="_sample_benchmark_result"><a class="anchor" href="#_sample_benchmark_result"></a>Sample benchmark result</h4>
 <div class="sect4">
 <h5 id="_pmc_worload"><a class="anchor" href="#_pmc_worload"></a>PMC worload</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>|                                                         Metric |                          Task |       Value |    Unit |
+<pre class="highlightjs highlight"><code class="language-none hljs">|                                                         Metric |                          Task |       Value |    Unit |
 |---------------------------------------------------------------:|------------------------------:|------------:|--------:|
 |                                                 Min Throughput |                  index-append |      734.63 |  docs/s |
 |                                                Mean Throughput |                  index-append |      763.16 |  docs/s |
@@ -934,7 +820,7 @@ For our James use case, we are interested in <code><code>pmc</code></code> workl
 </div>
 </div>
 <div class="sect3">
-<h4 id="_references_2"><a class="anchor" href="#_references_2"></a>References</h4>
+<h4 id="_references"><a class="anchor" href="#_references"></a>References</h4>
 <div class="paragraph">
 <p>The <code>opensearch-benchmark</code> tool seems to be a fork of the official benchmark tool <a href="https://github.com/elastic/rally">EsRally</a> of Elasticsearch.
 The <code>opensearch-benchmark</code> tool is not adopted widely yet, so we believe some EsRally references could help as well:</p>
@@ -957,15 +843,15 @@ The <code>opensearch-benchmark</code> tool is not adopted widely yet, so we beli
 <div class="sect2">
 <h3 id="_benchmark_rabbitmq"><a class="anchor" href="#_benchmark_rabbitmq"></a>Benchmark RabbitMQ</h3>
 <div class="sect3">
-<h4 id="_benchmark_methodology_3"><a class="anchor" href="#_benchmark_methodology_3"></a>Benchmark methodology</h4>
+<h4 id="_benchmark_methodology_2"><a class="anchor" href="#_benchmark_methodology_2"></a>Benchmark methodology</h4>
 <div class="sect4">
-<h5 id="_benchmark_tool_3"><a class="anchor" href="#_benchmark_tool_3"></a>Benchmark tool</h5>
+<h5 id="_benchmark_tool_2"><a class="anchor" href="#_benchmark_tool_2"></a>Benchmark tool</h5>
 <div class="paragraph">
 <p>We use <a href="https://github.com/rabbitmq/rabbitmq-perf-test">rabbitmq-perf-test</a> tool.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_how_to_benchmark_3"><a class="anchor" href="#_how_to_benchmark_3"></a>How to benchmark</h5>
+<h5 id="_how_to_benchmark_2"><a class="anchor" href="#_how_to_benchmark_2"></a>How to benchmark</h5>
 <div class="paragraph">
 <p>Using PerfTestMulti for more friendly:</p>
 </div>
@@ -1002,7 +888,7 @@ Start webserver to view graph by the command:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sample_benchmark_result_3"><a class="anchor" href="#_sample_benchmark_result_3"></a>Sample benchmark result</h4>
+<h4 id="_sample_benchmark_result_2"><a class="anchor" href="#_sample_benchmark_result_2"></a>Sample benchmark result</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1012,7 +898,7 @@ Start webserver to view graph by the command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>[{'name': 'consume', 'type': 'simple',
+<pre class="highlightjs highlight"><code class="language-none hljs">[{'name': 'consume', 'type': 'simple',
 'uri': 'amqp://james:eeN7Auquaeng@localhost:5677',
 'params':
     [{'time-limit': 30, 'producer-count': 2, 'consumer-count': 4}]}]</code></pre>
@@ -1113,15 +999,15 @@ Start webserver to view graph by the command:</p>
 <div class="sect2">
 <h3 id="_benchmark_s3_storage"><a class="anchor" href="#_benchmark_s3_storage"></a>Benchmark S3 storage</h3>
 <div class="sect3">
-<h4 id="_benchmark_methodology_4"><a class="anchor" href="#_benchmark_methodology_4"></a>Benchmark methodology</h4>
+<h4 id="_benchmark_methodology_3"><a class="anchor" href="#_benchmark_methodology_3"></a>Benchmark methodology</h4>
 <div class="sect4">
-<h5 id="_benchmark_tool_4"><a class="anchor" href="#_benchmark_tool_4"></a>Benchmark tool</h5>
+<h5 id="_benchmark_tool_3"><a class="anchor" href="#_benchmark_tool_3"></a>Benchmark tool</h5>
 <div class="paragraph">
 <p>We use <a href="https://github.com/dvassallo/s3-benchmark">s3-benchmark</a> tool.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_how_to_benchmark_4"><a class="anchor" href="#_how_to_benchmark_4"></a>How to benchmark</h5>
+<h5 id="_how_to_benchmark_3"><a class="anchor" href="#_how_to_benchmark_3"></a>How to benchmark</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1144,7 +1030,7 @@ Start webserver to view graph by the command:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sample_benchmark_result_4"><a class="anchor" href="#_sample_benchmark_result_4"></a>Sample benchmark result</h4>
+<h4 id="_sample_benchmark_result_3"><a class="anchor" href="#_sample_benchmark_result_3"></a>Sample benchmark result</h4>
 <div class="paragraph">
 <p>We did S3 performance testing with suitable email objects sizes: 4 KB, 128 KB, 1 MB, 8 MB.</p>
 </div>
@@ -1244,7 +1130,7 @@ network limitations of the client machine performing the benchmark.</p>
 <div class="sect2">
 <h3 id="_benchmark_redis"><a class="anchor" href="#_benchmark_redis"></a>Benchmark Redis</h3>
 <div class="sect3">
-<h4 id="_benchmark_methodology_5"><a class="anchor" href="#_benchmark_methodology_5"></a>Benchmark methodology</h4>
+<h4 id="_benchmark_methodology_4"><a class="anchor" href="#_benchmark_methodology_4"></a>Benchmark methodology</h4>
 <div class="paragraph">
 <p>We can use the built-in <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/benchmarks/">redis-benchmark utility</a>.</p>
 </div>
@@ -1256,8 +1142,154 @@ network limitations of the client machine performing the benchmark.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>redis-benchmark -n 1000000 --threads 4</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">redis-benchmark -n 1000000 --threads 4</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_benchmark_cassandra"><a class="anchor" href="#_benchmark_cassandra"></a>Benchmark Cassandra</h3>
+<div class="sect3">
+<h4 id="_benchmark_methodology_5"><a class="anchor" href="#_benchmark_methodology_5"></a>Benchmark methodology</h4>
+<div class="sect4">
+<h5 id="_benchmark_tool_4"><a class="anchor" href="#_benchmark_tool_4"></a>Benchmark tool</h5>
+<div class="paragraph">
+<p>We use <a href="https://cassandra.apache.org/doc/latest/cassandra/tools/cassandra_stress.html">cassandra-stress tool</a> - an official
+tool of Cassandra for stress loading tests.</p>
+</div>
+<div class="paragraph">
+<p>The cassandra-stress tool is a Java-based stress testing utility for basic benchmarking and load testing a Cassandra cluster.
+Data modeling choices can greatly affect application performance. Significant load testing over several trials is the best method for discovering issues with a particular data model. The cassandra-stress tool is an effective tool for populating a cluster and stress testing CQL tables and queries. Use cassandra-stress to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Quickly determine how a schema performs.</p>
+</li>
+<li>
+<p>Understand how your database scales.</p>
+</li>
+<li>
+<p>Optimize your data model and settings.</p>
+</li>
+<li>
+<p>Determine production capacity.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are several operation types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>write-only, read-only, and mixed workloads of standard data</p>
+</li>
+<li>
+<p>write-only and read-only workloads for counter columns</p>
+</li>
+<li>
+<p>user configured workloads, running custom queries on custom schemas</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_to_benchmark_4"><a class="anchor" href="#_how_to_benchmark_4"></a>How to benchmark</h5>
+<div class="paragraph">
+<p>Here we are using a simple case to test and compare Cassandra performance between different setup environments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">keyspace: stresscql
+
+keyspace_definition: |
+  CREATE KEYSPACE stresscql WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
+
+table: mixed_workload
+
+table_definition: |
+  CREATE TABLE mixed_workload (
+    key uuid PRIMARY KEY,
+    a blob,
+    b blob
+  ) WITH COMPACT STORAGE
+
+columnspec:
+  - name: a
+    size: uniform(1..10000)
+  - name: b
+    size: uniform(1..100000)
+
+insert:
+  partitions: fixed(1)
+
+queries:
+   read:
+      cql: select * from mixed_workload where key = ?
+      fields: samerow</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create the yaml file as above and copy to a Cassandra node.</p>
+</div>
+<div class="paragraph">
+<p>Insert some sample data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cassandra-stress user profile=mixed_workload.yml n=100000 "ops(insert=1)" cl=ONE -mode native cql3 user=&lt;user&gt; password=&lt;password&gt; -node &lt;IP&gt; -rate threads=8 -graph file=./graph_insert.xml title=Benchmark revision=insert_ONE</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Read intensive scenario:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cassandra-stress user profile=mixed_workload.yml n=100000 "ops(insert=1,read=4)" cl=ONE -mode native cql3 user=&lt;user&gt; password=&lt;password&gt; -node &lt;IP&gt; -rate threads=8 -graph file=./graph_mixed.xml title=Benchmark revision=mixed_ONE</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In there:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>n=100000: The number of insert batches, not number of individual insert operations.</p>
+</li>
+<li>
+<p>rate threads=8: The number of concurrent threads. If not specified it will start with 4 threads and increase until server reaches a limit.</p>
+</li>
+<li>
+<p>ops(insert=1,read=4): This will execute insert and read queries in the ratio 1:4.</p>
+</li>
+<li>
+<p>graph: Export results to graph in html format.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sample_benchmark_result_4"><a class="anchor" href="#_sample_benchmark_result_4"></a>Sample benchmark result</h4>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/cassandra_stress_test_result_1.png" alt="cassandra stress test result 1">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../_images/cassandra_stress_test_result_2.png" alt="cassandra stress test result 2">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_references_2"><a class="anchor" href="#_references_2"></a>References</h4>
+<div class="paragraph">
+<p><a href="https://www.datastax.com/blog/improved-cassandra-21-stress-tool-benchmark-any-schema-part-1">Datastax - Cassandra stress tool</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.instaclustr.com/deep-diving-cassandra-stress-part-3-using-yaml-profiles/">Deep Diving cassandra-stress – Part 3 (Using YAML Profiles)</a></p>
 </div>
 </div>
 </div>

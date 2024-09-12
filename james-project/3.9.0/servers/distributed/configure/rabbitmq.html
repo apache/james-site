@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; rabbitmq.properties :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="rabbitmq.html">rabbitmq.properties</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="rabbitmq.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/rabbitmq.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/rabbitmq.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -772,6 +804,49 @@ a greater care than regular RabbitMQ queues.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_rabbitmq_tasks_configuration"><a class="anchor" href="#_rabbitmq_tasks_configuration"></a>RabbitMQ Tasks Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tasks are WebAdmin triggered long running jobs. RabbitMQ is used to organise their execution in a work queue,
+with an exclusive consumer.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. rabbitmq.properties content</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">task.consumption.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable task consumption on this node.
+Disable with caution (this only makes sense in a distributed setup where other nodes consume tasks).
+Defaults to true.</p>
+<p class="tableblock">Limitation: Sometimes, some tasks running on James can be very heavy and take a couple of hours to complete.
+If other tasks are being triggered meanwhile on WebAdmin, they go on the TaskManagerWorkQueue and James unack them,
+telling RabbitMQ it will consume them later. If they don&#8217;t get consumed before the consumer timeout setup in
+RabbitMQ (default being 30 minutes), RabbitMQ closes the channel on an exception. It is thus advised to declare a
+longer timeout in rabbitmq.conf. More <a href="https://www.rabbitmq.com/consumers.html#acknowledgement-timeout">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">task.queue.consumer.timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Task queue consumer timeout.</p>
+<p class="tableblock">Optional. Duration (support multiple time units cf <code>DurationParser</code>), defaults to 1 day.</p>
+<p class="tableblock">Required at least RabbitMQ version 3.12 to have effect.
+This is used to avoid the task queue consumer (which could run very long tasks) being disconnected by RabbitMQ after the default acknowledgement timeout 30 minutes.
+References: <a href="https://www.rabbitmq.com/consumers.html#acknowledgement-timeout" class="bare">https://www.rabbitmq.com/consumers.html#acknowledgement-timeout</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_rabbitmq_mailqueue_configuration"><a class="anchor" href="#_rabbitmq_mailqueue_configuration"></a>RabbitMQ MailQueue Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -782,7 +857,7 @@ As RabbitMQ doesn&#8217;t offer enough features to implement efficiently all mai
 this implementation relies on Cassandra.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. rabbitmq.properties content</caption>
+<caption class="title">Table 3. rabbitmq.properties content</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -833,49 +908,6 @@ Tips for choosing metricsEnabled are explained in
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configure queue ttl (in ms). References: <a href="https://www.rabbitmq.com/ttl.html#queue-ttl" class="bare">https://www.rabbitmq.com/ttl.html#queue-ttl</a>.
 This is used only on queues used to share notification patterns, are exclusive to a node. If omitted, it will not add the TTL configure when declaring queues.
 Optional integer, defaults is 3600000.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_rabbitmq_tasks_configuration"><a class="anchor" href="#_rabbitmq_tasks_configuration"></a>RabbitMQ Tasks Configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Tasks are WebAdmin triggered long running jobs. RabbitMQ is used to organise their execution in a work queue,
-with an exclusive consumer.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. rabbitmq.properties content</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">task.consumption.enabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable task consumption on this node.
-Disable with caution (this only makes sense in a distributed setup where other nodes consume tasks).
-Defaults to true.</p>
-<p class="tableblock">Limitation: Sometimes, some tasks running on James can be very heavy and take a couple of hours to complete.
-If other tasks are being triggered meanwhile on WebAdmin, they go on the TaskManagerWorkQueue and James unack them,
-telling RabbitMQ it will consume them later. If they don&#8217;t get consumed before the consumer timeout setup in
-RabbitMQ (default being 30 minutes), RabbitMQ closes the channel on an exception. It is thus advised to declare a
-longer timeout in rabbitmq.conf. More <a href="https://www.rabbitmq.com/consumers.html#acknowledgement-timeout">here</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">task.queue.consumer.timeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Task queue consumer timeout.</p>
-<p class="tableblock">Optional. Duration (support multiple time units cf <code>DurationParser</code>), defaults to 1 day.</p>
-<p class="tableblock">Required at least RabbitMQ version 3.12 to have effect.
-This is used to avoid the task queue consumer (which could run very long tasks) being disconnected by RabbitMQ after the default acknowledgement timeout 30 minutes.
-References: <a href="https://www.rabbitmq.com/consumers.html#acknowledgement-timeout" class="bare">https://www.rabbitmq.com/consumers.html#acknowledgement-timeout</a>.</p></td>
 </tr>
 </tbody>
 </table>

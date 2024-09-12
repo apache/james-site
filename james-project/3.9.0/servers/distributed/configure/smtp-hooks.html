@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; SMTP Hooks :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -571,6 +594,15 @@
     <li><a href="smtp-hooks.html">Packaged SMTP hooks</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="smtp-hooks.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/configure/smtp-hooks.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/smtp-hooks.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -583,7 +615,7 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>This documentation page lists and documents SMTP hooks that can be used within the
-Distributed Server SMTP protocol stack in order to customize the way your SMTP server
+Distributed James Server SMTP protocol stack in order to customize the way your SMTP server
 behaves without of the box components.</p>
 </div>
 </div>
@@ -634,9 +666,9 @@ please speak with your local system/network admins.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.DNSRBLHandler"&gt;
         &lt;getDetail&gt;false&lt;/getDetail&gt;
@@ -647,7 +679,7 @@ please speak with your local system/network admins.</p>
             &lt;blacklist&gt;list.dsbl.org.&lt;/blacklist&gt;
         &lt;/rblservers&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -656,14 +688,14 @@ please speak with your local system/network admins.</p>
 <h2 id="_dsn_hooks"><a class="anchor" href="#_dsn_hooks"></a>DSN hooks</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Distributed server has optional support for DSN (<a href="https://tools.ietf.org/html/rfc3461">RFC-3461</a>)</p>
+<p>The Distributed James Server has optional support for DSN (<a href="https://tools.ietf.org/html/rfc3461">RFC-3461</a>)</p>
 </div>
 <div class="paragraph">
-<p>Please read carefully <a href="dsn.html" class="page">this page</a>.</p>
+<p>Please read carefully <a href="dsn.html" class="xref page">this page</a>.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;smtpserver enabled="true"&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
     &lt;...&gt; &lt;!-- The rest of your SMTP configuration, unchanged --&gt;
     &lt;handlerchain&gt;
         &lt;handler class="org.apache.james.smtpserver.dsn.DSNEhloHook"/&gt;
@@ -673,11 +705,11 @@ please speak with your local system/network admins.</p>
         &lt;...&gt; &lt;!-- other handlers, like: --&gt;
         &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt; &lt;!-- for instance --&gt;
     &lt;/handlerchain&gt;
-&lt;/smtpserver&gt;</pre>
+&lt;/smtpserver&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that a specific configuration of <a href="mailetcontainer.html" class="page">mailetcontainer.xml</a> is
+<p>Note that a specific configuration of <a href="mailetcontainer.html" class="xref page">mailetcontainer.xml</a> is
 required as well to be spec compliant.</p>
 </div>
 </div>
@@ -700,9 +732,9 @@ required as well to be spec compliant.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.MailPriorityHandler"&gt;
         &lt;priorityEntries&gt;
@@ -716,7 +748,7 @@ required as well to be spec compliant.</p>
             &lt;/priorityEntry&gt;
         &lt;priorityEntries&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -733,14 +765,14 @@ required as well to be spec compliant.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.MaxRcptHandler"&gt;
         &lt;maxRcpt&gt;10&lt;/maxRcpt&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -763,14 +795,14 @@ required as well to be spec compliant.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.POP3BeforeSMTPHandler"&gt;
         &lt;expireTime&gt;1 hour&lt;/expireTime&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -791,12 +823,12 @@ are allowed to relay. Default is false.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.ResolvableEhloHeloHandler"/&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -815,12 +847,12 @@ are allowed to relay. Default is false.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.ReverseEqualsEhloHeloHandler"/&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -837,15 +869,15 @@ are allowed to relay. Default is false.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.SetMimeHeaderHandler"&gt;
         &lt;headername&gt;SPF-test&lt;/headername&gt;
         &lt;headervalue&gt;passed&lt;/headervalue&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -864,16 +896,16 @@ configured hits amount is reached.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.SpamAssassinHandler"&gt;
         &lt;spamdHost&gt;127.0.0.1&lt;/spamdHost&gt;
         &lt;spamdPort&gt;783&lt;/spamdPort&gt;
         &lt;spamdRejectionHits&gt;10&lt;/spamdRejectionHits&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -894,15 +926,15 @@ are allowed to relay. Default is false.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.SPFHandler"&gt;
         &lt;blockSoftFail&gt;false&lt;/blockSoftFail&gt;
         &lt;blockPermError&gt;true&lt;/blockPermError&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -921,9 +953,9 @@ The message get rejected if a domain matched.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.URIRBLHandler"&gt;
         &lt;action&gt;reject&lt;/action&gt;
@@ -932,7 +964,7 @@ The message get rejected if a domain matched.</p>
             &lt;server&gt;multi.surbl.org&lt;/server&gt;
         &lt;/uriRblServers&gt;
     &lt;/handler&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -957,12 +989,12 @@ and implement the needed processors in spoolmanager.xml.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.ValidRcptHandler"/&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -981,12 +1013,12 @@ are allowed to relay. Default is false.</p>
 <div class="paragraph">
 <p>Example configuration:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.ValidSenderDomainHandler"/&gt;
-&lt;/handlerchain&gt;</pre>
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -995,18 +1027,18 @@ are allowed to relay. Default is false.</p>
 <h2 id="_futurerelease_hooks"><a class="anchor" href="#_futurerelease_hooks"></a>FUTURERELEASE hooks</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Distributed server has optional support for FUTURERELEASE (<a href="https://www.rfc-editor.org/rfc/rfc4865.html">RFC-4865</a>)</p>
+<p>The Distributed James Server has optional support for FUTURERELEASE (<a href="https://www.rfc-editor.org/rfc/rfc4865.html">RFC-4865</a>)</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;smtpserver enabled="true"&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
     &lt;...&gt; &lt;!-- The rest of your SMTP configuration, unchanged --&gt;
     &lt;handlerchain&gt;
         &lt;handler class="org.apache.james.smtpserver.futurerelease.FutureReleaseEHLOHook"/&gt;
         &lt;handler class="org.apache.james.smtpserver.futurerelease.FutureReleaseMailParameterHook"/&gt;
         &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
     &lt;/handlerchain&gt;
-&lt;/smtpserver&gt;</pre>
+&lt;/smtpserver&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -1069,17 +1101,17 @@ some intermediate third parties. See <a href="https://issues.apache.org/jira/bro
 <div class="paragraph">
 <p>Example handlerchain configuration for <code>smtpserver.xml</code>:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;handlerchain&gt;
-    &lt;handler class="org.apache.james.smtpserver.DKIMHook"&gt;
-        &lt;forceCLRF&gt;true&lt;/forceCLRF&gt;
-        &lt;onlyForSenderDomain&gt;apache.org&lt;/onlyForSenderDomain&gt;
-        &lt;signatureRequired&gt;true&lt;/signatureRequired&gt;
-        &lt;expectedDToken&gt;apache.org&lt;/expectedDToken&gt;
-    &lt;/handler&gt;
-&lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
-&lt;/handlerchain&gt;</pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
+	&lt;handler class="org.apache.james.smtpserver.DKIMHook"&gt;
+		&lt;forceCLRF&gt;true&lt;/forceCLRF&gt;
+		&lt;onlyForSenderDomain&gt;apache.org&lt;/onlyForSenderDomain&gt;
+		&lt;signatureRequired&gt;true&lt;/signatureRequired&gt;
+		&lt;expectedDToken&gt;apache.org&lt;/expectedDToken&gt;
+	&lt;/handler&gt;
+	&lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
+&lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
