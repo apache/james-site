@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server&#8201;&#8212;&#8201;Database benchmarks :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -570,6 +593,15 @@
     <li><a href="db-benchmark.html">Database benchmarks</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="db-benchmark.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version is-missing" href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/benchmark/db-benchmark.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -671,7 +703,7 @@ It provides the following features:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>python3 -m pip install opensearch-benchmark</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">python3 -m pip install opensearch-benchmark</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -716,7 +748,7 @@ For our James use case, we are interested in <code><code>pmc</code></code> workl
 <h5 id="_pmc_worload"><a class="anchor" href="#_pmc_worload"></a>PMC worload</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>|                                                         Metric |                          Task |       Value |    Unit |
+<pre class="highlightjs highlight"><code class="language-none hljs">|                                                         Metric |                          Task |       Value |    Unit |
 |---------------------------------------------------------------:|------------------------------:|------------:|--------:|
 |                                                 Min Throughput |                  index-append |      734.63 |  docs/s |
 |                                                Mean Throughput |                  index-append |      763.16 |  docs/s |
@@ -866,7 +898,7 @@ Start webserver to view graph by the command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>[{'name': 'consume', 'type': 'simple',
+<pre class="highlightjs highlight"><code class="language-none hljs">[{'name': 'consume', 'type': 'simple',
 'uri': 'amqp://james:eeN7Auquaeng@localhost:5677',
 'params':
     [{'time-limit': 30, 'producer-count': 2, 'consumer-count': 4}]}]</code></pre>
@@ -1110,7 +1142,7 @@ network limitations of the client machine performing the benchmark.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>redis-benchmark -n 1000000 --threads 4</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">redis-benchmark -n 1000000 --threads 4</code></pre>
 </div>
 </div>
 </div>
