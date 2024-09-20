@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Mailets :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -594,15 +571,6 @@
     <li><a href="mailets.html">Packaged Mailets</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="mailets.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/configure/mailets.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/mailets.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -683,6 +651,9 @@ It is typically generated from the StripAttachment mailet.</p>
 </li>
 <li>
 <p>exchange (mandatory): name of the AMQP exchange.</p>
+</li>
+<li>
+<p>exchange_type (optional, default to "direct"): type of the exchange. Can be "direct", "fanout", "topic", "headers".</p>
 </li>
 <li>
 <p>routing_key (optional, default to empty string): name of the routing key on this exchange.</p>
@@ -948,7 +919,7 @@ the optional <code>defaultAge</code> parameter.</p>
 <div class="paragraph">
 <p>By itself the <code>Expires</code> header is informational only. But some variants of James
 will let you delete expired messages through the
-<a href="../operate/webadmin.html#_administrating_messages" class="xref page">WebAdmin</a> interface:</p>
+<a href="../operate/webadmin.html#_administrating_messages" class="page">WebAdmin</a> interface:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1177,7 +1148,7 @@ the pipe. If false will be destroyed.  Default is true.</p>
 <p>This Metrics mailet increments a counter on every incoming emails.</p>
 </div>
 <div class="paragraph">
-<p>This counter is accessible via JMX, or grafana. Read <a href="../operate/metrics.html" class="xref page">more about metrics</a>.</p>
+<p>This counter is accessible via JMX, or grafana. Read <a href="../operate/metrics.html" class="page">more about metrics</a>.</p>
 </div>
 <div class="paragraph">
 <p>Example :</p>
@@ -3254,6 +3225,52 @@ of the message.</p>
 <h3 id="_wraptext"><a class="anchor" href="#_wraptext"></a>WrapText</h3>
 <div class="paragraph">
 <p>Convert a message to format=flowed</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_subaddressing"><a class="anchor" href="#_subaddressing"></a>SubAddressing</h3>
+<div class="paragraph">
+<p>SubAddressing positions a storage directive for the folder this email will be delivered in if the following criteria are met:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the sender has requested the storage directive by sending the mail to &lt;strong&gt; <code>recipient+folder@domain</code> &lt;/strong&gt; instead of just <code>recipient@domain</code> ;</p>
+</li>
+<li>
+<p>the folder &lt;strong&gt;exists&lt;/strong&gt; and the recipient has &lt;strong&gt;allowed&lt;/strong&gt; the sender to send a mail to that specific folder.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These directives are used by &lt;strong&gt;LocalDelivery&lt;/strong&gt; mailet when adding the email to the recipients mailboxes.</p>
+</div>
+<div class="paragraph">
+<p>The storage directive is recognized when a specific character or character sequence is present in the local part of the recipient address. &lt;strong&gt;By default, it is "+"&lt;/strong&gt;.</p>
+</div>
+<div class="paragraph">
+<p>If the sender is not allowed to send a mail to the specified folder, then the mail is delivered in the recipient&#8217;s inbox.
+Likewise, if the storage directive is empty or absent, the mail will simply be delivered in the recipient&#8217;s inbox.</p>
+</div>
+<div class="paragraph">
+<p>Thus,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a mail sent to <code>recipient+folder@domain</code> will be delivered to recipient&#8217;s folder <code>folder</code> if allowed ;</p>
+</li>
+<li>
+<p>a mail sent to <code>recipient+my-super-folder@domain</code> will be delivered to recipient&#8217;s folder <code>my-super-folder</code> if allowed ;</p>
+</li>
+<li>
+<p>a mail sent to <code>recipient@domain</code> or <code>recipient+@domain</code> will be delivered to recipient&#8217;s inbox.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Any user can position rights for other users and for its different folders. They may create whitelists or blacklists, for one or several folders.
+In the case where the sender is unknown, the mail will be delivered in the specified folder only if the recipient has allowed everyone for that folder.</p>
 </div>
 </div>
 </div>
