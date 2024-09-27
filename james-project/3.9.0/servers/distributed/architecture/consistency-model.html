@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Consistency Model :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,34 +536,11 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -593,15 +570,6 @@
     <li><a href="consistency-model.html">Consistency Model</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="consistency-model.html">3.9.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-    <a class="version" href="../../../../3.6.0/servers/distributed/architecture/consistency-model.html">3.6.0 Snapshot</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/architecture/consistency-model.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -662,59 +630,8 @@ with home-grown algorithm.</p>
 fashion using <a href="https://www.rabbitmq.com/docs/quorum-queues">quorum queues</a> - those are replicated queues using the <a href="https://raft.github.io/">RAFT</a> consensus protocol and thus are
 strongly consistent.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_cassandra_consistency_model"><a class="anchor" href="#_cassandra_consistency_model"></a>Cassandra consistency model</h3>
 <div class="paragraph">
-<p><a href="https://cassandra.apache.org/">Cassandra</a> is an
-<a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventually consistent</a> data store.
-This means that replica can hold diverging data, but are guaranteed to converge over time.</p>
-</div>
-<div class="paragraph">
-<p>Several mechanisms are built in Cassandra to enforce this convergence, and need to be
-leveraged by <strong>Distributed Server Administrator</strong>. Namely
-<a href="https://docs.datastax.com/en/dse/5.1/dse-admin/datastax_enterprise/tools/nodetool/toolsRepair.html">nodetool repair</a>,
-<a href="https://cassandra.apache.org/doc/latest/operating/hints.html">Hinted hand-off</a> and
-<a href="https://cassandra.apache.org/doc/latest/operating/read_repair.html">Read repair</a>.</p>
-</div>
-<div class="paragraph">
-<p>The Distributed James Server tries to mitigate inconsistencies by relying on
-<a href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/dml/dmlConfigConsistency.html">QUORUM</a> read and write levels.
-This means that a majority of replica are needed for read and write operations to be performed. This guaranty is needed
-as the Mailbox is a complex datamodel with several layers of metadata, and needs "read-your-writes" guaranties that QUORUM
-read+writes delivers.</p>
-</div>
-<div class="paragraph">
-<p>Critical business operations, like UID allocation, rely on strong consistency mechanisms brought by
-<a href="https://www.datastax.com/blog/2013/07/lightweight-transactions-cassandra-20">lightweight transaction</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="_about_multi_data_center_setups"><a class="anchor" href="#_about_multi_data_center_setups"></a>About multi data-center setups</h4>
-<div class="paragraph">
-<p>As strong consistency is required for some operation, especially regarding IMAP monotic UID and MODSEQ generation,
-and as lightweight transactions are slow across data centers, running James with a
-<a href="https://docs.datastax.com/en/ddac/doc/datastax_enterprise/production/DDACmultiDCperWorkloadType.html">multi data-center</a>
-Cassandra setup is discouraged.</p>
-</div>
-<div class="paragraph">
-<p>However, <a href="../configure/cassandra.html" class="xref page">this page</a> enables setting alternative read level,
-which could be acceptable regarding limited requirements. <code>LOCAL_QUORUM</code> coupled with <code>LOCAL_SERIAL</code>
-is likely the only scalable setup. Some options were added to turn off SERIAL consistency usage for message
-and mailbox management. However, the use of Lightweight Transaction cannot be disabled for UIDs and ModSeqs.</p>
-</div>
-<div class="paragraph">
-<p>Running the Distributed James Server IMAP server in a multi datacenter setup will likely result either in data loss,
-or very slow operations - as we rely on monotic UID generation, without strong consistency, UIDs could be allocated
-several times.</p>
-</div>
-<div class="paragraph">
-<p>We did wire a multi-DC friendly distributed, POP3 only server that leverages acceptable performance while staying
-consistent. This is achieved by having a reduced feature set - supporting only the POP3 server and using messageIds as
-identifiers (generated without synchronisation using TimeUUIDs). You can find this application
-<a href="https://github.com/apache/james-project/tree/master/server/apps/distributed-pop3-app">on GitHub</a>. In the future,
-JMAP support could be added, but requires followup developments as some components critically depends on UIDs
-(for instance the search).</p>
-</div>
+<p>Unresolved include directive in modules/servers/partials/architecture/consistency-model.adoc - include::servers:distributed/architecture/consistency_model_data_replication_extend.adoc[]</p>
 </div>
 </div>
 </div>
@@ -766,11 +683,11 @@ asynchronously indexed into OpenSearch.</p>
 </div>
 <div class="paragraph">
 <p>This process, called the EventBus, which retries temporary errors, and stores transient errors for
-later admin-triggered retries is described further <a href="../operate/guide.html#_mailbox_event_bus" class="xref page">here</a>.
+later admin-triggered retries is described further <a href="../operate/guide.html#_mailbox_event_bus" class="page">here</a>.
 His role is to spread load and limit inconsistencies.</p>
 </div>
 <div class="paragraph">
-<p>Furthermore, some <a href="../operate/guide.html#_usual_troubleshooting_procedures" class="xref page">re-indexing tasks</a>
+<p>Furthermore, some <a href="../operate/guide.html#_usual_troubleshooting_procedures" class="page">re-indexing tasks</a>
 enables to re-synchronise OpenSearch content with the primary data stores</p>
 </div>
 </div>
@@ -800,7 +717,7 @@ level across denormalization tables.</p>
 <p>Writes to denormalization tables are retried.</p>
 </li>
 <li>
-<p>Some <a href="../operate/guide.html#_solving_cassandra_inconsistencies" class="xref page">SolveInconsistencies tasks</a> are exposed and are able to heal a given denormalization table.
+<p>Some <a href="../operate/guide.html#_solving_cassandra_inconsistencies" class="page">SolveInconsistencies tasks</a> are exposed and are able to heal a given denormalization table.
 They reset the "deduplication tables" content to the "table of truth" content.</p>
 </li>
 <li>
