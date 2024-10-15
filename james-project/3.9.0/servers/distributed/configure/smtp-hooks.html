@@ -1056,7 +1056,10 @@ some intermediate third parties. See <a href="https://issues.apache.org/jira/bro
 <p><strong>forceCRLF</strong>: Should CRLF be forced when computing body hashes.</p>
 </li>
 <li>
-<p><strong>onlyForSenderDomain</strong>: If specified, the DKIM checks are applied just for the emails whose MAIL FROM specifies this domain. If unspecified, all emails are checked (default).</p>
+<p><strong>onlyForSenderDomain</strong>: If specified, the DKIM checks are applied just for the emails whose MAIL FROM or from header specifies this domain. If unspecified, all emails are checked (default).</p>
+</li>
+<li>
+<p><strong>validatedEntities</strong>: If specified, comma separated values allowing granular checks on emails whose MAIL FROM (<code>envelope</code> option) or from header (<code>headers</code> option) specifies the domain defined in <code>onlyForSenderDomain</code>. If unspecified, defaults to <code>envelope,headers</code>.</p>
 </li>
 <li>
 <p><strong>signatureRequired</strong>: If DKIM signature is checked, the absence of signature will generate failure. Defaults to false.</p>
@@ -1072,18 +1075,19 @@ some intermediate third parties. See <a href="https://issues.apache.org/jira/bro
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
-	&lt;handler class="org.apache.james.smtpserver.DKIMHook"&gt;
-		&lt;forceCLRF&gt;true&lt;/forceCLRF&gt;
-		&lt;onlyForSenderDomain&gt;apache.org&lt;/onlyForSenderDomain&gt;
-		&lt;signatureRequired&gt;true&lt;/signatureRequired&gt;
-		&lt;expectedDToken&gt;apache.org&lt;/expectedDToken&gt;
-	&lt;/handler&gt;
-	&lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
+    &lt;handler class="org.apache.james.smtpserver.DKIMHook"&gt;
+        &lt;forceCLRF&gt;true&lt;/forceCLRF&gt;
+        &lt;onlyForSenderDomain&gt;apache.org&lt;/onlyForSenderDomain&gt;
+        &lt;validatedEntities&gt;envelope,headers&lt;/validatedEntities&gt;
+        &lt;signatureRequired&gt;true&lt;/signatureRequired&gt;
+        &lt;expectedDToken&gt;apache.org&lt;/expectedDToken&gt;
+    &lt;/handler&gt;
+    &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
 &lt;/handlerchain&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Would allow emails using <code>apache.org</code> as a MAIL FROM domain if, and only if they contain a
+<p>Would allow emails using <code>apache.org</code> as a MAIL FROM or from header domain if, and only if they contain a
 valid DKIM signature for the <code>apache.org</code> domain.</p>
 </div>
 </div>
