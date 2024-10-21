@@ -5319,6 +5319,246 @@ unlimited value (-1):</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_administrating_droplists"><a class="anchor" href="#_administrating_droplists"></a>Administrating DropLists</h3>
+<div class="paragraph">
+<p>The DropList, also known as the mail blacklist, is a collection of
+domains and email addresses that are denied from sending emails within the system.</p>
+</div>
+<div class="paragraph">
+<p>Owner scopes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>global</strong>: contains entries that are blocked across all domains and addresses within the system.
+Entries in the global owner scope apply universally and affect all users and domains.</p>
+</li>
+<li>
+<p><strong>domain</strong>: each domain can have its own droplist, which contains entries specific to that domain.</p>
+</li>
+<li>
+<p><strong>user</strong>: allow to customize personalized droplist of blocked domains and email addresses.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>deniedEntityType</code> query parameter is optional and can take the values <code>domain</code> or <code>address</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_getting_the_droplist"><a class="anchor" href="#_getting_the_droplist"></a>Getting the DropList</h4>
+<div class="sect4">
+<h5 id="_global_droplist"><a class="anchor" href="#_global_droplist"></a>Global DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/droplist/global?deniedEntityType=null|domain|address</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_domain_droplist"><a class="anchor" href="#_domain_droplist"></a>Domain DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/droplist/domain/target.com?deniedEntityType=null|domain|address</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_user_droplist"><a class="anchor" href="#_user_droplist"></a>User DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/droplist/user/tagret@target.com?deniedEntityType=null|domain|address</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The answer looks like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[ "evil.com", "devil.com", "bad_guy@crime.com", "hacker@murder.org" ]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The drop list was successfully retrieved</p>
+</li>
+<li>
+<p>400: Invalid <code>owner scope</code> or <code>deniedEntityType</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_testing_a_denied_entity_existence"><a class="anchor" href="#_testing_a_denied_entity_existence"></a>Testing a denied entity existence</h4>
+<div class="sect4">
+<h5 id="_global_droplist_2"><a class="anchor" href="#_global_droplist_2"></a>Global DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/global/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/global/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_domain_droplist_2"><a class="anchor" href="#_domain_droplist_2"></a>Domain DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/domain/target.com/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_user_droplist_2"><a class="anchor" href="#_user_droplist_2"></a>User DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XHEAD http://ip:port/droplist/user/target@target.com/evil.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The denied entity exists</p>
+</li>
+<li>
+<p>404: The denied entity does not exist</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_add_entry_to_the_droplist"><a class="anchor" href="#_add_entry_to_the_droplist"></a>Add Entry to the DropList</h4>
+<div class="paragraph">
+<p>The denied entity must be a valid email address or <a href="#_create_a_domain">domain</a>.</p>
+</div>
+<div class="sect4">
+<h5 id="_global_droplist_3"><a class="anchor" href="#_global_droplist_3"></a>Global DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/global/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/global/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_domain_droplist_3"><a class="anchor" href="#_domain_droplist_3"></a>Domain DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/domain/target.com/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_user_droplist_3"><a class="anchor" href="#_user_droplist_3"></a>User DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPUT http://ip:port/droplist/user/target@target.com/evil.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: The denied entity was successfully added</p>
+</li>
+<li>
+<p>400: The denied entity is invalid</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_remove_entry_from_the_droplist"><a class="anchor" href="#_remove_entry_from_the_droplist"></a>Remove Entry from the DropList</h4>
+<div class="sect4">
+<h5 id="_global_droplist_4"><a class="anchor" href="#_global_droplist_4"></a>Global DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/global/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/global/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_domain_droplist_4"><a class="anchor" href="#_domain_droplist_4"></a>Domain DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/domain/target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/domain/target.com/evil.com</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_user_droplist_4"><a class="anchor" href="#_user_droplist_4"></a>User DropList</h5>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/user/target@target.com/attacker@evil.com</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/droplist/user/target@target.com/evil.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: Entry deleted successfully.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_administrating_sieve_quotas"><a class="anchor" href="#_administrating_sieve_quotas"></a>Administrating Sieve quotas</h3>
 <div class="paragraph">
 <p>Some limitations on space Users Sieve script can occupy can be

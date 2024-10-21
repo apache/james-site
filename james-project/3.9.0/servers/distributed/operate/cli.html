@@ -745,7 +745,7 @@ mail address.</p>
 <p>The domains then become a part of the user.</p>
 </div>
 <div class="paragraph">
-<p><em>usera@domaina.com and</em> <em>usera@domainb.com</em> on a mail server with
+<p><em>usera@domaina.com</em> and <em>usera@domainb.com</em> on a mail server with
 <em>domaina.com</em> and <em>domainb.com</em> configured are mail addresses that
 belongs to different users.</p>
 </div>
@@ -869,7 +869,10 @@ rewriting rules:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>address mapping: rewrite a given mail address into an other one.</p>
+<p>address mapping: rewrite a given mail address into another one.</p>
+</li>
+<li>
+<p>domain mapping: rewrite a given domain into an alternate one.</p>
 </li>
 <li>
 <p>regex mapping.</p>
@@ -885,6 +888,25 @@ mapping):</p>
 <div class="content">
 <pre>{cli} AddAddressMapping fromUser fromDomain.tld redirected@domain.new
 {cli} RemoveAddressMapping fromUser fromDomain.tld redirected@domain.new</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can manage domain mapping like (redirects a domain, which means
+<a href="mailto:any@domain.tld">any@domain.tld</a> will be rewritten as <a href="mailto:any@domain.new">any@domain.new</a>, then deletes the
+mapping):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddDomainMapping domain.tld domain.new
+{cli} RemoveDomainMapping domain.tld domain.new</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can view mapping for a domain:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} ListDomainMappings domain.tld</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1009,6 +1031,70 @@ level. Note: syntax is similar to what was exposed previously.</p>
 {cli} GetGlobalMaxMessageCountQuota
 {cli} SetGlobalMaxStorageQuota value
 {cli} GetGlobalMaxStorageQuota</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_manage_droplist"><a class="anchor" href="#_manage_droplist"></a>Manage DropList</h3>
+<div class="paragraph">
+<p>The DropList, also known as the mail blacklist, is a collection of
+domains and email addresses that are denied from sending emails within
+the system.</p>
+</div>
+<div class="paragraph">
+<p>Owner scopes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>global</code>: contains entries that are blocked across all domains and
+addresses within the system. Entries in the global owner scope apply
+universally and affect all users and domains.</p>
+</li>
+<li>
+<p><code>domain</code>: each domain can have its own droplist, which contains
+entries specific to that domain.</p>
+</li>
+<li>
+<p><code>user</code>: allow to customize personalized droplist of blocked domains
+and email addresses.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See example commands for <code>domain</code> owner scope, <code>owner.com</code>
+owner, <code>evil@devil.com</code> denied entity.</p>
+</div>
+<div class="paragraph">
+<p>Add Entry to the DropList</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} AddDropListEntry domain owner.com evil@devil.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remove Entry from the DropList</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} RemoveDropListEntry domain owner.com evil@devil.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Getting the DropList</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} GetDropList domain owner.com</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Testing a denied entity existence (should returns <code>allowed</code> or <code>blocked</code>)</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{cli} DropListQuery domain owner.com evil@devil.com</pre>
+</div>
 </div>
 </div>
 </div>
