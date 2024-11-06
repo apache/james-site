@@ -1688,6 +1688,33 @@ should match the criteria at <a href="../configure/usersrepository.html" class="
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Additional query parameters are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>hasNoMailboxes</code> allows you to select users who don&#8217;t have any mailboxes (also means that they have never logged in and received any emails).</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users?hasNoMailboxes</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>hasNotAllSystemMailboxes</code> allows you to select users who don&#8217;t have enough system mailboxes (also means that they have never logged in but received some emails).</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users?hasNotAllSystemMailboxes</pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_retrieving_the_list_of_allowed_from_headers_for_a_given_user"><a class="anchor" href="#_retrieving_the_list_of_allowed_from_headers_for_a_given_user"></a>Retrieving the list of allowed <code>From</code> headers for a given user</h3>
