@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; Logging :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -536,11 +536,34 @@
     <span class="version">3.9.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-distributed-app/3.8.1/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.8.1/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.9.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.6.0/index.html">3.6.0 Snapshot</a>
         </li>
       </ul>
     </li>
@@ -570,6 +593,15 @@
     <li><a href="logging.html">Logging</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.9.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="logging.html">3.9.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.8.1/index.html">3.8.1</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+    <a class="version" href="../../../../3.6.0/servers/distributed/operate/logging.html">3.6.0 Snapshot</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/operate/logging.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -623,175 +655,18 @@ and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p
 <p>Information about logback configuration can be found
 <a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_structured_logging"><a class="anchor" href="#_structured_logging"></a>Structured logging</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_using_fluentbit_as_a_log_forwarder"><a class="anchor" href="#_using_fluentbit_as_a_log_forwarder"></a>Using FluentBit as a log forwarder</h3>
-<div class="sect3">
-<h4 id="_using_docker"><a class="anchor" href="#_using_docker"></a>Using Docker</h4>
 <div class="paragraph">
-<p>Distributed James Server leverages the use of MDC in order to achieve structured logging, and better add context to the logged information. We furthermore ship json logs to file with RollingFileAppender on the classpath to easily allow FluentBit to directly tail the log file.
-Here is a sample conf/logback.xml configuration file for logback with the following pre-requisites:</p>
+<p>Note that dedicated formatters can be added to your docker containers :</p>
 </div>
-<div class="paragraph">
-<p>Logging in a structured json fashion and write to file for centralizing logging.
-Centralize logging third party like FluentBit can tail from logging’s file then filter/process and put in to OpenSearch</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-                &lt;rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"&gt;
-                        &lt;fileNamePattern&gt;logs/james.%d{yyyy-MM-dd}.%i.log&lt;/fileNamePattern&gt;
-                        &lt;maxHistory&gt;1&lt;/maxHistory&gt;
-                        &lt;totalSizeCap&gt;200MB&lt;/totalSizeCap&gt;
-                        &lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
-                &lt;/rollingPolicy&gt;
-
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-            &lt;appender-ref ref="LOG_FILE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>First you need to create a <code>logs</code> folder, then mount it to James container and to FluentBit.</p>
-</div>
-<div class="paragraph">
-<p>docker-compose:</p>
-</div>
-<div class="paragraph">
-<p>Unresolved include directive in modules/servers/partials/operate/logging.adoc - include::servers:distributed/operate/logging/docker-compose-block.adoc[]</p>
-</div>
-<div class="paragraph">
-<p>FluentBit config as:
-the <code>Host opensearch</code> pointing to <code>opensearch</code> service in docker-compose file.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[SERVICE]
-    Parsers_File    /fluent-bit/etc/parsers.conf
-
-[INPUT]
-    name                    tail
-    path                    /fluent-bit/log/*.log
-    Parser                  docker
-    docker_mode             on
-    buffer_chunk_size       1MB
-    buffer_max_size         1MB
-    mem_buf_limit           64MB
-    Refresh_Interval        30
-
-[OUTPUT]
-    Name  stdout
-    Match *
-
-
-[OUTPUT]
-    Name  es
-    Match *
-    Host opensearch
-    Port 9200
-    Index fluentbit
-    Logstash_Format On
-    Logstash_Prefix fluentbit-james
-    Type docker</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>FluentBit Parser config:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[PARSER]
-  Name         docker
-  Format       json
-  Time_Key     timestamp
-  Time_Format  %Y-%m-%dT%H:%M:%S.%LZ
-  Time_Keep    On
-  Decode_Field_As   escaped_utf8    log    do_next
-  Decode_Field_As   escaped         log    do_next
-  Decode_Field_As   json            log</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using_kubernetes"><a class="anchor" href="#_using_kubernetes"></a>Using Kubernetes</h4>
-<div class="paragraph">
-<p>If using James in a Kubernetes environment, you can just append the logs to the console in a JSON formatted way
-using Jackson to easily allow FluentBit to directly tail them.</p>
-</div>
-<div class="paragraph">
-<p>Here is a sample conf/logback.xml configuration file for achieving this:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-
-        &lt;contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"&gt;
-                &lt;resetJUL&gt;true&lt;/resetJUL&gt;
-        &lt;/contextListener&gt;
-
-        &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
-                &lt;encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"&gt;
-                    &lt;layout class="ch.qos.logback.contrib.json.classic.JsonLayout"&gt;
-                        &lt;timestampFormat&gt;yyyy-MM-dd'T'HH:mm:ss.SSSX&lt;/timestampFormat&gt;
-                        &lt;timestampFormatTimezoneId&gt;Etc/UTC&lt;/timestampFormatTimezoneId&gt;
-
-                        &lt;!-- Importance for handling multiple lines log --&gt;
-                        &lt;appendLineSeparator&gt;true&lt;/appendLineSeparator&gt;
-
-                        &lt;jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"&gt;
-                            &lt;prettyPrint&gt;false&lt;/prettyPrint&gt;
-                        &lt;/jsonFormatter&gt;
-                    &lt;/layout&gt;
-                &lt;/encoder&gt;
-        &lt;/appender&gt;
-
-        &lt;root level="INFO"&gt;
-                &lt;appender-ref ref="CONSOLE" /&gt;
-        &lt;/root&gt;
-
-&lt;/configuration&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Regarding FluentBit on Kubernetes, you need to install it as a DaemonSet. Some official template exist
-with FluentBit outputting logs to OpenSearch. For more information on how to install it,
-with your cluster, you can look at this <a href="https://docs.fluentbit.io/manual/installation/kubernetes">documentation</a>.</p>
-</div>
-<div class="paragraph">
-<p>As stated by the <a href="https://docs.fluentbit.io/manual/installation/kubernetes#details">detail</a> of the
-official documentation, FluentBit is configured to consume out of the box logs from containers
-on the same running node. So it should scrap your James logs without extra configuration.</p>
-</div>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the corresponding JAR onto the <code>/root/libs</code> folder of docker container</p>
+</li>
+<li>
+<p>Add the JAR path onto <code>/root/jib-classpath-file</code> for it to be loaded on the classpath by the JAVA runtime.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
