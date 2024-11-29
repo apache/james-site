@@ -1144,6 +1144,24 @@ the pipe. If false will be destroyed.  Default is true.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_mailtoallusers"><a class="anchor" href="#_mailtoallusers"></a>MailToAllUsers</h3>
+<div class="paragraph">
+<p>A mailet that helps to email to all users in the system.</p>
+</div>
+<div class="sect3">
+<h4 id="_sample_configuration"><a class="anchor" href="#_sample_configuration"></a>Sample configuration</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;matcher name="notify-matcher" match="org.apache.james.mailetcontainer.impl.matchers.And"&gt;
+    &lt;matcher match="SenderIs=admin@gov.org"/&gt;
+    &lt;matcher match="RecipientIs=all@gov.org"/&gt;
+&lt;/matcher&gt;
+&lt;mailet match="notify-matcher" class="MailToAllUsers"/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_metricsmailet"><a class="anchor" href="#_metricsmailet"></a>MetricsMailet</h3>
 <div class="paragraph">
 <p>This Metrics mailet increments a counter on every incoming emails.</p>
@@ -2558,6 +2576,23 @@ or storing to mail attributes.</p>
 </div>
 <div class="paragraph">
 <p>At least one of pattern, notpattern and mimeType is required.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_splitmail"><a class="anchor" href="#_splitmail"></a>SplitMail</h3>
+<div class="paragraph">
+<p>A mailet to split email with too much recipients. The first batch is sent directly, while the remaining batches are sent asynchronously.
+The batch size can be configured via the &lt;b&gt;batchSize&lt;/b&gt; parameter (optional, defaults to 100).</p>
+</div>
+<div class="sect3">
+<h4 id="_sample_configuration_2"><a class="anchor" href="#_sample_configuration_2"></a>Sample configuration</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;mailet match="notify-matcher" class="SplitMail"&gt;
+  &lt;batchSize&gt;100&lt;/batchSize&gt;
+&lt;/mailet&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
