@@ -954,6 +954,24 @@ Unless a special case like storing blobs of deleted messages.</p></td>
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="_improve_listing_support_for_minio"><a class="anchor" href="#_improve_listing_support_for_minio"></a>Improve listing support for MinIO</h4>
+<div class="paragraph">
+<p>Due to blobs being stored in folder, adding <code>/</code> in blobs name emulates folder and avoids blobs to be all stored in a
+same folder, thus improving listing.</p>
+</div>
+<div class="paragraph">
+<p>Instead of <code>1_628_36825033-d835-4490-9f5a-eef120b1e85c</code> the following blob id will be used: <code>1/628/3/6/8/2/5033-d835-4490-9f5a-eef120b1e85c</code></p>
+</div>
+<div class="paragraph">
+<p>To enable blob hierarchy compatible with MinIO add in <code>jvm.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.s3.minio.compatibility.mode=true</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
