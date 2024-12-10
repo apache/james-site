@@ -873,7 +873,21 @@ during James startup.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>To relax validating <code>*</code> and <code>%</code> characters in the mailbox name. Be careful as <code>%</code> and <code>*</code> are ambiguous for the LIST / LSUB commands that interpret those as wildcard thus returning all mailboxes matching the pattern.</p>
+<p>To relax validat ing <code>*</code> and <code>%</code> characters in the mailbox name. Be careful as <code>%</code> and <code>*</code> are ambiguous for the LIST / LSUB commands that interpret those as wildcard thus returning all mailboxes matching the pattern.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customizing_blob_deduplication_settings"><a class="anchor" href="#_customizing_blob_deduplication_settings"></a>Customizing blob deduplication settings</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre># Count of octet from which hashing shall be done out of the IO threads in deduplicating blob store
+james.deduplicating.blobstore.thread.switch.threshold=32768
+
+# Count of octet from which streams are buffered to files and not to memory
+james.deduplicating.blobstore.file.threshold=10240</pre>
+</div>
 </div>
 </div>
 </div>
