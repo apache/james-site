@@ -624,6 +624,20 @@ and <a href="https://docs.fluentbit.io/">FluentBit</a> as centralize logging.</p
 <a href="http://logback.qos.ch/manual/configuration.html">here</a>.</p>
 </div>
 <div class="paragraph">
+<p>It is possible to configure a logback appender to expose structured logging
+as JSON using logback&#8217;s  <code>JsonEncoder</code> like in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>&lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
+         &lt;encoder class="ch.qos.logback.classic.encoder.JsonEncoder"&gt;
+             &lt;withFormattedMessage&gt;true&lt;/withFormattedMessage&gt;
+         &lt;/encoder&gt;
+         &lt;immediateFlush&gt;false&lt;/immediateFlush&gt;
+&lt;/appender&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Note that dedicated formatters can be added to your docker containers :</p>
 </div>
 <div class="ulist">
