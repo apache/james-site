@@ -1703,6 +1703,78 @@ the following <code>additionalInformation</code>:</p>
     &quot;type&quot;: &quot;ClearMailboxContentTask&quot;,
     &quot;username&quot;: &quot;bob@domain.tld&quot;
 }
+</code></pre></section><section><a id="Running_a_filtering_rule_on_a_mailbox"></a>
+<h3>Running a filtering rule on a mailbox</h3>
+
+<pre><code class="nohighlight nocode">curl -XPOST http://ip:port/users/{usernameToBeUsed}/mailboxes/{mailboxName}/messages?action=triage \
+-d '{
+    &quot;id&quot;: &quot;1&quot;,
+    &quot;name&quot;: &quot;rule 1&quot;,
+    &quot;action&quot;: {
+        &quot;appendIn&quot;: {
+            &quot;mailboxIds&quot;: [&quot;23&quot;]
+        }
+    },
+    &quot;conditionGroup&quot;: {
+        &quot;conditionCombiner&quot;: &quot;OR&quot;,
+        &quot;conditions&quot;: [
+            {
+                &quot;comparator&quot;: &quot;contains&quot;,
+                &quot;field&quot;: &quot;subject&quot;,
+                &quot;value&quot;: &quot;plop&quot;
+            },
+            {
+                &quot;comparator&quot;: &quot;exactly-equals&quot;,
+                &quot;field&quot;: &quot;from&quot;,
+                &quot;value&quot;: &quot;bob@example.com&quot;
+            }
+        ]
+    }
+}'
+</code></pre>
+<p>Will schedule a task for running a filtering rule passed as payload in <code>mailboxName</code> mailbox of <code>usernameToBeUsed</code>.</p>
+<p><a href="#Endpoints_returning_a_task">More details about endpoints returning a task</a>.</p>
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user.</p>
+<p>Resource name <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.</p>
+<p>The rule json payload has some extra conditions available compared to the JMAP filtering mailet as some operations would make sense:</p>
+<ul>
+
+<li>
+<p>Flags:</p>
+<ul>
+
+<li>fields: flag</li>
+<li>comparators: isSet, isUnset</li>
+<li>values: system flag (&#x201c;$seen&#x201d;, &#x201c;$flagged&#x201d;, etc) or a custom user flag.</li>
+</ul></li>
+<li>
+<p>Dates:</p>
+<ul>
+
+<li>fields: sentDate, savedDate, internalDate</li>
+<li>comparators: isOlderThan, isNewerThan</li>
+<li>values: durations (&#x201c;2d&#x201d;, &#x201c;6h&#x201d;, &#x2026;)</li>
+</ul></li>
+</ul>
+<p>Response codes:</p>
+<ul>
+
+<li>201: Success. Corresponding task id is returned.</li>
+<li>400: Invalid mailbox name</li>
+<li>400: Invalid JSON payload</li>
+<li>404: Invalid get on user mailboxes. The <code>username</code> or <code>mailboxName</code> does not exit</li>
+</ul>
+<p>The scheduled task will have the following type <code>RunRulesOnMailboxTask</code> and
+the following <code>additionalInformation</code>:</p>
+
+<pre><code class="nohighlight nocode">{
+    &quot;mailboxName&quot;: &quot;mbx1&quot;,
+    &quot;rulesOnMessagesApplySuccessfully&quot;: 9,
+    &quot;rulesOnMessagesApplyFailed&quot;: 3,
+    &quot;timestamp&quot;: &quot;2024-12-03T10:15:30Z&quot;,
+    &quot;type&quot;: &quot;RunRulesOnMailboxTask&quot;,
+    &quot;username&quot;: &quot;bob@domain.tld&quot;
+}
 </code></pre></section><section><a id="Subscribing_a_user_to_all_of_its_mailboxes"></a>
 <h3>Subscribing a user to all of its mailboxes</h3>
 
