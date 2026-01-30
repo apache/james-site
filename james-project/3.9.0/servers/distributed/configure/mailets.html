@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -852,6 +1049,35 @@ the password as privateKeyPassword parameter.</p>
   &lt;privateKeyFilepath&gt;dkim-signing.pem&lt;/privateKeyFilepath&gt;
 &lt;/mailet&gt;</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Sample configuration with domain interpolation for multi-domain support:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;mailet match=&amp;quot;All&amp;quot; class=&amp;quot;DKIMSign&amp;quot;&gt;
+  &lt;signatureTemplate&gt;v=1; s=selector; d=%MAIL_FROM; h=from:to:received:received; a=rsa-sha256; bh=; b=;&lt;/signatureTemplate&gt;
+  &lt;privateKeyFilepath&gt;dkim-signing.pem&lt;/privateKeyFilepath&gt;
+  &lt;defaultDomain&gt;example.com&lt;/defaultDomain&gt;
+&lt;/mailet&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Domain interpolation allows dynamic DKIM signing for multiple domains using a single configuration.
+The <code>%MAIL_FROM</code> placeholder in the signatureTemplate will be replaced with:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The domain from the sender&#8217;s email address (from <code>mail.getSender()</code>), or</p>
+</li>
+<li>
+<p>The <code>defaultDomain</code> if no sender is present or the sender has no domain</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This enables DMARC alignment for multi-domain deployments with a single DKIM private key.</p>
 </div>
 <div class="paragraph">
 <p>By default the mailet assume that Javamail will convert LF to CRLF when sending
@@ -1853,7 +2079,7 @@ javax <strong>mail.smtp.starttls.enable</strong> property. Depending on how stri
 You can also use other javax properties for StartTLS, but their property prefix must be <strong>mail.smtp.ssl.</strong> in this case.</p>
 </div>
 <div class="paragraph">
-<p>James enables server identity verification by default. In certain rare edge cases you might disable it via the <strong>verifyServerIdentity</strong> parameter,
+<p>James enables server identity verification by default. In certain rare edge cases you might disable it via the <strong>verifyServerIdentity</strong> and <strong>sslTrustAllCerts</strong> parameters,
 or use the <strong>mail.smtps.ssl.checkserveridentity</strong> and <strong>mail.smtp.ssl.checkserveridentity</strong> javax properties for fine control.</p>
 </div>
 <div class="paragraph">
@@ -2243,6 +2469,23 @@ unchanged.
 </div>
 </div>
 <div class="sect2">
+<h3 id="_setmimeheader"><a class="anchor" href="#_setmimeheader"></a>SetMimeHeader</h3>
+<div class="paragraph">
+<p>Adds a specified header and value to the message.</p>
+</div>
+<div class="paragraph">
+<p>Sample configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;mailet match="All" class="SetMimeHeader"&gt;
+  &lt;name&gt;X-CUSTOM-HEADER&lt;/nam&gt;
+  &lt;value&gt;whatever&lt;/value&gt;
+&lt;/mailet&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_setmailattribute"><a class="anchor" href="#_setmailattribute"></a>SetMailAttribute</h3>
 <div class="paragraph">
 <p>This mailet sets attributes on the Mail.</p>
@@ -2260,7 +2503,7 @@ unchanged.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setmailattribute_2"><a class="anchor" href="#_setmailattribute_2"></a>SetMailAttribute</h3>
+<h3 id="_setmimeheader_2"><a class="anchor" href="#_setmimeheader_2"></a>SetMimeHeader</h3>
 <div class="paragraph">
 <p>Adds a specified header and value to the message.</p>
 </div>
@@ -2269,9 +2512,9 @@ unchanged.
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;mailet match="All" class="AddHeader"&gt;
-  &lt;name&gt;X-MailetHeader&lt;/name&gt;
-  &lt;value&gt;TheHeaderValue&lt;/value&gt;
+<pre>&lt;mailet match="All" class="SetMimeHeader"&gt;
+  &lt;name&gt;X-CUSTOM-HEADER&lt;/nam&gt;
+  &lt;value&gt;whatever&lt;/value&gt;
 &lt;/mailet&gt;</pre>
 </div>
 </div>
@@ -2722,6 +2965,15 @@ misconfiguration, this might lead to arbitrary repository creation. If false, th
 <p>This mailet uses <a href="https://jmap.io/spec-mail.html#vacation-response">JMAP VacationResponse</a> and
 sends back a vacation notice to the sender if needed.</p>
 </div>
+<div class="paragraph">
+<p>The <code>useUserAsMailFrom</code> property can be set to true to use the user as the transport sender instead of <code>MAIL FROM: &lt;&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>replyMode</code> property determine how we compute the recipient of the vacation reply:
+ - <code>replyToHeader</code> (default mode) we lookup the <code>Reply-To</code> field of the incoming email
+ - <code>envelope</code> (legacy, here to enable backward behavioural compatibility) use the MAIL FROM of the original mail, which could
+not be faked but suffers in case of redirections, forwards and sender address rewrites.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_withpriority"><a class="anchor" href="#_withpriority"></a>WithPriority</h3>
@@ -2845,9 +3097,14 @@ If the value is <strong>0</strong> no startup test will be done.
 The default is <strong>6</strong>.</p>
 </li>
 <li>
-<p><strong>&lt;pingIntervalMilli&gt;</strong>: the interval (in milliseconds)
+<p><strong>&lt;pingIntervalMilli&gt;</strong>: the duration e.g. <code>30s</code>, <code>30000ms</code> (default in the millisecond unit if the unit is not specified)
 between each connection retry during startup.
 The default is <strong>30000</strong> (30 seconds).</p>
+</li>
+<li>
+<p><strong>&lt;socketTimeout&gt;</strong>: the duration e.g. <code>5s</code>, <code>5000ms</code> (default in the millisecond unit if the unit is not specified)
+for the socket timeout when scanning a message.
+The default is <strong>5000</strong> (5 seconds).</p>
 </li>
 <li>
 <p><strong>&lt;streamBufferSize&gt;</strong>: the BufferedOutputStream buffer size to use
@@ -3340,6 +3597,59 @@ Likewise, if the storage directive is empty or absent, the mail will simply be d
 <p>Any user can position rights for other users and for its different folders. They may create whitelists or blacklists, for one or several folders.
 In the case where the sender is unknown, the mail will be delivered in the specified folder only if the recipient has allowed everyone for that folder.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_sanitizemimemessageid_mailet"><a class="anchor" href="#_sanitizemimemessageid_mailet"></a>SanitizeMimeMessageId Mailet</h3>
+<div class="paragraph">
+<p>Some email clients, such as Outlook for Android, may send emails <strong>without a <code>Message-ID</code> header</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_is_this_needed"><a class="anchor" href="#_why_is_this_needed"></a>Why is this needed?</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>The absence of the `Message-ID` header can cause emails to be rejected by downstream mail servers,
+as required by RFC 5322 specifications. For example, Gmail rejects messages without this header with
+an error like the following:
+550-5.7.1 [IP] Messages missing a valid Message-ID header are not
+550-5.7.1 accepted. For more information, go to
+550-5.7.1 https://support.google.com/mail/?p=RfcMessageNonCompliant and review
+550 5.7.1 RFC 5322 specifications.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To mitigate this, the <code>SanitizeMimeMessageId</code> mailet will automatically add a <code>Message-ID</code> to emails <strong>that lack one</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can configure it simply by adding the following in your <code>mailetcontainer.xml</code> file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;mailet match="All" class="SanitizeMimeMessageId"/&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_behavior"><a class="anchor" href="#_behavior"></a>Behavior</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>If a <code>Message-ID</code> header already exists: nothing is done.</p>
+</li>
+<li>
+<p>If the header is missing: a new one is generated and added.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

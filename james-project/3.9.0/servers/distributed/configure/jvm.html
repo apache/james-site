@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -774,6 +971,28 @@ same folder, thus improving listing.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_disable_s3_checksum_backward_compatibility"><a class="anchor" href="#_disable_s3_checksum_backward_compatibility"></a>Disable S3 checksum backward compatibility</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default, James enables backward compatibility for S3 SDK checksum mechanisms to support S3 compatible object storages which rely on MD5 checksum. This can be disabled for native AWS S3 that does not need to rely on the MD5 checksum.</p>
+</div>
+<div class="paragraph">
+<p>Optional. Boolean. Defaults to true.</p>
+</div>
+<div class="paragraph">
+<p>Ex in <code>jvm.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.s3.sdk.checksum.backward.compatibility=false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To disable S3 checksum backward compatibility.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_jmap_quota_draft_compatibility"><a class="anchor" href="#_jmap_quota_draft_compatibility"></a>JMAP Quota draft compatibility</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -830,6 +1049,25 @@ to enable JMAP Quota draft compatibility for those clients and allow them a time
 <div class="listingblock">
 <div class="content">
 <pre>james.jmap.email.set.range.threshold=3</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jmap_mdc_configure_value_for_original_ip_header"><a class="anchor" href="#_jmap_mdc_configure_value_for_original_ip_header"></a>JMAP MDC: configure value for original IP header</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Configure the header to get the original JMAP client&#8217;s IP address. This is useful when James is behind a reverse proxy.</p>
+</div>
+<div class="paragraph">
+<p>Defaults to the <code>x-forwarded-for</code> header.</p>
+</div>
+<div class="paragraph">
+<p>Ex in <code>jvm.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.jmap.mdc.original.ip.header=x-real-ip</pre>
 </div>
 </div>
 </div>
@@ -942,6 +1180,34 @@ james.deduplicating.blobstore.file.threshold=10240</pre>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_configuring_distributed_task_manager"><a class="anchor" href="#_configuring_distributed_task_manager"></a>Configuring Distributed Task Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Turning Distributed Task Manager single active consumer off allows for all
+James nodes to share the task execution.</p>
+</div>
+<div class="paragraph">
+<p>Defaults to <code>true</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.task.rabbitmq.singleActive.enabled=false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Distributed task manager also supports setting the QOS (concurrent number of tasks handled):</p>
+</div>
+<div class="paragraph">
+<p>Defaults to <code>1</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.task.rabbitmq.qos=4</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_allow_users_to_have_rights_for_shares_of_different_domain"><a class="anchor" href="#_allow_users_to_have_rights_for_shares_of_different_domain"></a>Allow users to have rights for shares of different domain</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -959,6 +1225,51 @@ residing under the @university.edu domain with their @student.university.edu add
 <div class="content">
 <pre>james.rights.crossdomain.allow=false</pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_drop_imap_recent_handling"><a class="anchor" href="#_drop_imap_recent_handling"></a>Drop IMAP Recent handling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This allows for dropping the legacy IMAP flag support, considering all emails as recent. This has no impact on modern
+IMAP application as this flag is concidered innacurate.</p>
+</div>
+<div class="paragraph">
+<p>Note that this flag is removed in IMAP4Rev2.</p>
+</div>
+<div class="paragraph">
+<p>Ex in  <code>jvm.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.mailbox.handleRecent=false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Defaults to true (no breaking changes)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_disable_opensearchlisteningmessagesearchindex_fetch_full_message_content"><a class="anchor" href="#_disable_opensearchlisteningmessagesearchindex_fetch_full_message_content"></a>Disable OpenSearchListeningMessageSearchIndex fetch full message content</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Whether to fetch full message content when indexing messages in OpenSearch. This is useful when you want to avoid fetch full message content while indexing only headers for example.</p>
+</div>
+<div class="paragraph">
+<p>Be careful whether the custom <code>OpenSearchListeningMessageSearchIndex.Indexer</code> (s) need full message content or not.</p>
+</div>
+<div class="paragraph">
+<p>Ex in <code>jvm.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>opensearch.index.listener.fetch.full.content=false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Optional. Boolean. Defaults to true.</p>
 </div>
 </div>
 </div>

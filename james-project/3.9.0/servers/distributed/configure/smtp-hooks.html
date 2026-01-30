@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -1093,6 +1290,29 @@ are allowed to relay. Default is false.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_maxconnectionlifespanhandler"><a class="anchor" href="#_maxconnectionlifespanhandler"></a>MaxConnectionLifespanHandler</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
+ &lt;handlerchain&gt;
+        &lt;handler class="org.apache.james.smtpserver.netty.MaxConnectionLifespanHandler"&gt;
+            &lt;duration&gt;5m&lt;/duration&gt;
+        &lt;/handler&gt;
+        &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
+    &lt;/handlerchain&gt;
+&lt;/smtpserver&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will close SMTP connections after 5 minutes.</p>
+</div>
+<div class="paragraph">
+<p>This is useful for instance to force re-authentication and enforce password changes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_dkim_checks_hooks"><a class="anchor" href="#_dkim_checks_hooks"></a>DKIM checks hooks</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -1146,6 +1366,126 @@ some intermediate third parties. See <a href="https://issues.apache.org/jira/bro
 <div class="paragraph">
 <p>Would allow emails using <code>apache.org</code> as a MAIL FROM or from header domain if, and only if they contain a
 valid DKIM signature for the <code>apache.org</code> domain.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setmailattributemessagehook"><a class="anchor" href="#_setmailattributemessagehook"></a>SetMailAttributeMessageHook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This class implements an SMTP hook to add attributes on incoming mails.</p>
+</div>
+<div class="paragraph">
+<p>It allows marking mails from a given SMTP port. Eg if I set up technical accounts for local apps on port 26
+then I can disable rate limiting for this traffic.</p>
+</div>
+<div class="paragraph">
+<p>Example XML configuration:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;handler class="org.apache.james.smtpserver.SetMailAttributeMessageHook"&gt;
+    &lt;name&gt;technicaluser&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+&lt;/handler&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enforceheaderlimitationsmessagehook"><a class="anchor" href="#_enforceheaderlimitationsmessagehook"></a>EnforceHeaderLimitationsMessageHook</h3>
+<div class="paragraph">
+<p>The <code>EnforceHeaderLimitationsMessageHook</code> is used to enforce limitations on the headers of incoming emails. It ensures that emails comply with configurable restrictions on the number of header lines and the total size of headers.</p>
+</div>
+<div class="paragraph">
+<p>To configure this hook, add it to the <code>&lt;handlerchain&gt;</code> section of your SMTP server configuration:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>maxLines</code>: The maximum number of header lines allowed (default: 500).</p>
+</li>
+<li>
+<p><code>maxSize</code>: The maximum total size of headers in kilobytes (default: 64 KB).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the number of header lines exceeds the <code>maxLines</code> limit, the email is rejected with the SMTP error code <code>552 Too many header lines</code>.</p>
+</li>
+<li>
+<p>If the total size of headers exceeds the <code>maxSize</code> limit, the email is rejected with the SMTP error code <code>552 Header size too large</code>.</p>
+</li>
+<li>
+<p>If both limits are respected, the hook declines further processing, allowing the email to proceed.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_example"><a class="anchor" href="#_example"></a>Example</h4>
+<div class="paragraph">
+<p>Here is an example of a SetUp using this hook:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
+    &lt;handlerchain&gt;
+        &lt;handler class="org.apache.james.smtpserver.EnforceHeaderLimitationsMessageHook"&gt;
+            &lt;maxLines&gt;500&lt;/maxLines&gt;
+            &lt;maxSize&gt;64&lt;/maxSize&gt;
+        &lt;/handler&gt;
+        &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
+    &lt;/handlerchain&gt;
+    &lt;gracefulShutdown&gt;false&lt;/gracefulShutdown&gt;
+&lt;/smtpserver&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configurationauthhook"><a class="anchor" href="#_configurationauthhook"></a>ConfigurationAuthHook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Declarative authentication.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to open and configure on a dedicated port (eg port 26) to accept application traffic in parallel of user
+traffic. Authentication is then done on the supplied configuration.</p>
+</div>
+<div class="paragraph">
+<p>Convenient as it allows instantiating James as part of a complex application network with only only declarative configuration
+and no post-deployment actions.</p>
+</div>
+<div class="paragraph">
+<p>This is helpful for things like service accounts, used by other applications (and it is not desirable to create
+user accounts for those applications)</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    &lt;handlerchain coreHandlersPackage="org.apache.james.smtpserver.NoAuthCmdHandlerLoader" enableJmx="false"&gt;
+        &lt;handler class="org.apache.james.protocols.smtp.core.esmtp.AuthCmdHandler" /&gt;
+        &lt;handler class="org.apache.james.smtpserver.ConfigurationAuthHook" &gt;
+            &lt;accounts&gt;
+                &lt;account&gt;
+                    &lt;username&gt;noreply-tdrive@domain.tld&lt;/username&gt;
+                    &lt;passwords&gt;
+                        &lt;password&gt;secret123456&lt;/password&gt;
+                        &lt;password&gt;here_to_ease_secret_rotation&lt;/password&gt;
+                        &lt;password&gt;here_to_give_different_creds_to_each_app&lt;/password&gt;
+                    &lt;/passwords&gt;
+                &lt;/account&gt;
+                &lt;account&gt;
+                    &lt;username&gt;noreply-tchat@domain.tld&lt;/username&gt;
+                    &lt;passwords&gt;
+                        &lt;password&gt;secret234567&lt;/password&gt;
+                    &lt;/passwords&gt;
+                &lt;/account&gt;
+            &lt;/accounts&gt;
+        &lt;/handler&gt;
+    &lt;/handlerchain&gt;</pre>
+</div>
 </div>
 </div>
 </div>

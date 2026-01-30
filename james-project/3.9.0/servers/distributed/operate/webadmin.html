@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -1218,6 +1415,17 @@ tasks with the given status are returned.</p>
 </div>
 <div class="paragraph">
 <p>Example of date format: <code>2023-04-15T07:23:27.541254+07:00</code> and <code>2023-04-15T07%3A23%3A27.541254%2B07%3A00</code> once URL encoded.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cleaning_up_old_tasks"><a class="anchor" href="#_cleaning_up_old_tasks"></a>Cleaning up old tasks</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/tasks?olderThan=30day</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will start a task which will cleanup old tasks still referenced in the TaskManager.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3498,6 +3706,11 @@ per second. You may speed it up via <code>usersPerSecond=10</code> for example. 
 in mind that a high rate might overwhelm your database or blob store.</p>
 </div>
 <div class="paragraph">
+<p>The following options are also supported:
+ - <code>user</code> query parameter: target a specific user and not all users
+ - <code>useSavedDate</code> query parameter: list all the mails of the mailbox and uses saved date (see RFC-8514) instead of internal date.</p>
+</div>
+<div class="paragraph">
 <p><strong>Scanning search only:</strong> (unsupported for Lucene and OpenSearch search implementations)<br>
 Some mail clients can add an <code>Expires</code> header (RFC 4021) to their messages.
 Instead of specifying an absolute age, you may choose to delete only such
@@ -3675,6 +3888,89 @@ task will eventually fix all issues.</p>
 <p>This task could be run safely online and can be scheduled on a recurring
 basis outside of peak traffic by an admin to ensure Cassandra message
 consistency.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_a_filtering_rule_on_a_specific_mailbox_for_all_users"><a class="anchor" href="#_running_a_filtering_rule_on_a_specific_mailbox_for_all_users"></a>Running a filtering rule on a specific mailbox for all users</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/messages?action=triage&amp;mailboxName={mailboxName} \
+-d '{
+  "id": "1",
+  "name": "rule 1",
+  "action": {
+    "moveTo": {
+      "mailboxName": "Trash"
+    }
+  },
+  "conditionGroup": {
+    "conditionCombiner": "OR",
+    "conditions": [
+      {
+        "comparator": "contains",
+        "field": "subject",
+        "value": "plop"
+      },
+      {
+        "comparator": "exactly-equals",
+        "field": "from",
+        "value": "bob@example.com"
+      }
+    ]
+  }
+}'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will schedule a task for each user running a filtering rule passed as query parameter in <code>mailboxName</code> mailbox.</p>
+</div>
+<div class="paragraph">
+<p>Query parameter <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.
+If a user does not have a mailbox with that name, it will skip that user.</p>
+</div>
+<div class="paragraph">
+<p>The action of the rule should be <code>moveTo</code> with a mailbox name defined. If mailbox ids are defined in <code>appendIn</code> action,
+it will fail, as it makes no sense cluster scoped.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Map[Username, TaskId] is returned.</p>
+</li>
+<li>
+<p>400: Invalid mailbox name</p>
+</li>
+<li>
+<p>400: Invalid JSON payload (including mailbox ids defined in the action)</p>
+</li>
+<li>
+<p>400: mailboxName query parameter is missing</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The response is a map of task id per user:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[
+  {
+    "username": "alice@example.org", "taskId": "5641376-02ed-47bd-bcc7-76ff6262d92a"
+  },
+  {
+    "username": "bob@example.org", "taskId": "5641376-02ed-47bd-bcc7-42cc1313f47b"
+  },
+
+  [...]
+
+]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#_running_a_filtering_rule_on_a_mailbox">More details about details returned by running a filtering rule on a mailbox</a>.</p>
 </div>
 </div>
 </div>
@@ -4100,7 +4396,7 @@ the following <code>additionalInformation</code>:</p>
 <div class="literalblock">
 <div class="content">
 <pre>{
-    "mailboxName": "mbx1",
+    "mailboxPath": "#private:bob@domain.tld:mbx1",
     "messagesFailCount": 9,
     "messagesSuccessCount": 10,
     "timestamp": "2007-12-03T10:15:30Z",
@@ -4108,6 +4404,131 @@ the following <code>additionalInformation</code>:</p>
     "username": "bob@domain.tld"
 }</pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_a_filtering_rule_on_a_mailbox"><a class="anchor" href="#_running_a_filtering_rule_on_a_mailbox"></a>Running a filtering rule on a mailbox</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/users/{usernameToBeUsed}/mailboxes/{mailboxName}/messages?action=triage \
+-d '{
+  "id": "1",
+  "name": "rule 1",
+  "action": {
+    "appendIn": {
+      "mailboxIds": ["23"]
+    }
+  },
+  "conditionGroup": {
+    "conditionCombiner": "OR",
+    "conditions": [
+      {
+        "comparator": "contains",
+        "field": "subject",
+        "value": "plop"
+      },
+      {
+        "comparator": "exactly-equals",
+        "field": "from",
+        "value": "bob@example.com"
+      }
+    ]
+  }
+}'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will schedule a task for running a filtering rule passed as payload in <code>mailboxName</code> mailbox of <code>usernameToBeUsed</code>.</p>
+</div>
+<div class="paragraph">
+<p><a href="#_endpoints_returning_a_task">More details about endpoints returning
+a task</a>.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user.</p>
+</div>
+<div class="paragraph">
+<p>Resource name <code>mailboxName</code> should not be empty, nor contain <code>% *</code> characters, nor starting with <code>#</code>.</p>
+</div>
+<div class="paragraph">
+<p>The rule json payload has some extra conditions available compared to the JMAP filtering mailet as some operations would make sense:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Flags:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>field: flag</p>
+</li>
+<li>
+<p>comparators: isSet, isUnset</p>
+</li>
+<li>
+<p>value: system flag ("$seen", "$flagged", etc) or a custom user flag.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dates:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>fields: sentDate, savedDate, internalDate</p>
+</li>
+<li>
+<p>comparators: isOlderThan, isNewerThan</p>
+</li>
+<li>
+<p>values: durations ("2d", "6h", &#8230;&#8203;)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Corresponding task id is returned.</p>
+</li>
+<li>
+<p>400: Invalid mailbox name</p>
+</li>
+<li>
+<p>400: Invalid JSON payload</p>
+</li>
+<li>
+<p>404: Invalid get on user mailboxes. The <code>username</code> or <code>mailboxName</code> does not exit</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scheduled task will have the following type <code>RunRulesOnMailboxTask</code> and
+the following <code>additionalInformation</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+    "mailboxPath": "#private:bob@domain.tld:mbx1",
+    "processedMessagesCount": 15,
+    "rulesOnMessagesApplySuccessfully": 9,
+    "rulesOnMessagesApplyFailed": 3,
+    "maximumAppliedActionExceeded": false,
+    "timestamp": "2024-12-03T10:15:30Z",
+    "type": "RunRulesOnMailboxTask",
+    "username": "bob@domain.tld"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: you can configure the maximum number of actions applied per mailbox by setting the JVM property <code>james.rules.triage.max.actions.per.mailbox</code>. The default value is 25000.
+This limit may help avoid the tombstone threshold issue on Cassandra backends when too many messages are moved or deleted at once.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5950,6 +6371,27 @@ addresses. For instance:</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_deleting_all_groups"><a class="anchor" href="#_deleting_all_groups"></a>Deleting all groups</h4>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/address/groups</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will delete all groups.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: Success</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_listing_members_of_a_group"><a class="anchor" href="#_listing_members_of_a_group"></a>Listing members of a group</h4>
 <div class="literalblock">
 <div class="content">
@@ -6781,7 +7223,7 @@ Address</p>
 <div class="sect2">
 <h3 id="_listing_user_mappings"><a class="anchor" href="#_listing_user_mappings"></a>Listing User Mappings</h3>
 <div class="paragraph">
-<p>This endpoint allows receiving all mappings of a corresponding user.</p>
+<p>This endpoint allows receiving all mappings originating from a corresponding user.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -6826,6 +7268,88 @@ Address</p>
 <ul>
 <li>
 <p>200: OK</p>
+</li>
+<li>
+<p>400: Invalid parameter value</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listing_sources_for_a_mapping"><a class="anchor" href="#_listing_sources_for_a_mapping"></a>Listing sources for a mapping</h3>
+<div class="paragraph">
+<p>This endpoint allows receiving all mappings pointing to a corresponding user.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/mappings/sources/{userAddress}?type={type}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Return all mappings of a user where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>userAddress</code>: is the selected user</p>
+</li>
+<li>
+<p><code>type</code>: Type of the mapping. One of <code>group</code>, <code>forward</code>, <code>address</code>, <code>alias</code>. Compulsory.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response body:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>["group1@domain.tld","group2@domain.tld"]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: OK</p>
+</li>
+<li>
+<p>400: Invalid parameter value</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deleting_sources_for_a_mapping"><a class="anchor" href="#_deleting_sources_for_a_mapping"></a>Deleting sources for a mapping</h3>
+<div class="paragraph">
+<p>This endpoint allows deleting all mappings pointing to a corresponding user.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XDELETE http://ip:port/mappings/sources/{userAddress}?type={type}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Deletes all mappings of a user where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>userAddress</code>: is the selected user</p>
+</li>
+<li>
+<p><code>type</code>: Type of the mapping. One of <code>group</code>, <code>forward</code>, <code>address</code>, <code>alias</code>. Compulsory.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: OK</p>
 </li>
 <li>
 <p>400: Invalid parameter value</p>
@@ -6987,10 +7511,19 @@ of an existing mail repository. Example:</p>
 </div>
 <div class="paragraph">
 <p>You can pass additional URL parameters to this call in order to limit
-the output: - A limit: no more elements than the specified limit will be
+the output:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>limit: no more elements than the specified limit will be
 returned. This needs to be strictly positive. If no value is specified,
-no limit will be applied. - An offset: allow to skip elements. This
-needs to be positive. Default value is zero.</p>
+no limit will be applied.</p>
+</li>
+<li>
+<p>offset: allow to skip elements. This needs to be positive. Default value is zero.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -6998,6 +7531,39 @@ needs to be positive. Default value is zero.</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -XGET 'http://ip:port/mailRepositories/var%2Fmail%2Ferror%2F/mails?limit=100&amp;offset=500'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also pass the following additional URL parameters to filter results:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>updatedBefore: filter mails by mail last updated. For example, if the value is <code>2d</code> and the current time is <code>21-12-2024 13:00:00</code>, the condition would be: last updated &lt; 19-12-2024 13:00:00 (currentTime - <code>2d</code>). Some other value samples: <code>2d</code>, <code>2 days</code>, <code>2h</code>, <code>2 hours</code>.</p>
+</li>
+<li>
+<p>updatedAfter: filter mails by mail last updated. For example, if the value is <code>2d</code> and the current time is <code>21-12-2024 13:00:00</code>, the condition would be: last updated &gt; 19-12-2024 13:00:00 (currentTime - <code>2d</code>). Some other value samples: <code>2d</code>, <code>2 days</code>, <code>2h</code>, <code>2 hours</code>.</p>
+</li>
+<li>
+<p>sender: filter mails by mail sender. If the input value is in the special format <code>*@domain.com</code>, mails are filters by domain.</p>
+</li>
+<li>
+<p>recipient: filter by recipient. If the input value is in the special format <code>*@domain.com</code>, mails are filters by domain.</p>
+</li>
+<li>
+<p>remoteAddress: filter mails by remoteAddress.</p>
+</li>
+<li>
+<p>remoteHost: filter mails by remoteHost.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET /mailRepositories/var%2Fmail%2Ferror%2F/mails?updatedBefore=2d&amp;remoteAddress=128.45.67.89</pre>
 </div>
 </div>
 <div class="paragraph">

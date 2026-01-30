@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -617,7 +814,7 @@ leveraged by <strong>Distributed Server Administrator</strong>. Namely
 <a href="https://cassandra.apache.org/doc/latest/operating/read_repair.html">Read repair</a>.</p>
 </div>
 <div class="paragraph">
-<p>The {server-name} tries to mitigate inconsistencies by relying on
+<p>The Distributed James Server tries to mitigate inconsistencies by relying on
 <a href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/dml/dmlConfigConsistency.html">QUORUM</a> read and write levels.
 This means that a majority of replica are needed for read and write operations to be performed. This guaranty is needed
 as the Mailbox is a complex datamodel with several layers of metadata, and needs "read-your-writes" guaranties that QUORUM
@@ -636,13 +833,13 @@ and as lightweight transactions are slow across data centers, running James with
 Cassandra setup is discouraged.</p>
 </div>
 <div class="paragraph">
-<p>However, <a href="#{xref-base}/configure/cassandra.adoc" class="xref unresolved">this page</a> enables setting alternative read level,
+<p>However, <a href="../configure/cassandra.html" class="xref page">this page</a> enables setting alternative read level,
 which could be acceptable regarding limited requirements. <code>LOCAL_QUORUM</code> coupled with <code>LOCAL_SERIAL</code>
 is likely the only scalable setup. Some options were added to turn off SERIAL consistency usage for message
 and mailbox management. However, the use of Lightweight Transaction cannot be disabled for UIDs and ModSeqs.</p>
 </div>
 <div class="paragraph">
-<p>Running the {server-name} IMAP server in a multi datacenter setup will likely result either in data loss,
+<p>Running the Distributed James Server IMAP server in a multi datacenter setup will likely result either in data loss,
 or very slow operations - as we rely on monotic UID generation, without strong consistency, UIDs could be allocated
 several times.</p>
 </div>

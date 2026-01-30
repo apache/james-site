@@ -180,7 +180,7 @@
     <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/conf/index.html">Configuration</a>
+    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../basic/help.html">Help</a>
@@ -206,6 +206,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -408,7 +411,25 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../extending.html">Extending behaviour</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
@@ -425,32 +446,208 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../test.html">Test</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../customization/index.html">Extending server behavior</a>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mail-processing.html">Custom mail processing components</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../customization/imap.html">Custom IMAP processing</a>
+    <a class="nav-link" href="../../test.html">Test</a>
   </li>
 </ul>
   </li>
@@ -704,6 +901,30 @@ Whether to enable Authentication PLAIN if the connection is not encrypted via SS
 <td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth scope that is valid to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.aud</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth audience to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.
+Compulsory but can be relaxed with <code>-Djames.sasl.oidc.validate.aud=false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An OAuth introspection token URL will be called to validate the token (RF: RFC7662).
+Note that James always verifies the signature of the token even whether this configuration is provided or not.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.auth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Provide Authorization in header request when introspecting token.
+Eg: <code>Basic xyz</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.userinfo.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An Userinfo URL will be called to retrieve additional user information
+(RF: OpenId.Core <a href="https://openid.net/specs/openid-connect-core-1_0.html" class="bare">https://openid.net/specs/openid-connect-core-1_0.html</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.adminUsers.adminUser</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XML list of administrators able to impersonate any IMAP users. This is typically enable on non publicly exposed IMAP servers eg port 994 for admin support or migration.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">timeout</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default to 30 minutes. After this time, inactive channels that have not performed read, write, or both operation for a while
 will be closed. Negative value disable this behaviour.</p></td>
@@ -774,6 +995,12 @@ with other proxies (e.g. traefik). If enabled, it is <strong>required</strong> t
 using HAProxy&#8217;s proxy protocol.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyFirst</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether proxy frames should be handled before SSL handshakes. This allows setting either the loadbalancer in TCP mode
+(so transparent for SSL then Proxy frames needs to be handled first) or set up SSL termination between proxy and server
+(more suited for some cloud vendors). Defaults to true (TCP transparent).</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">bossWorkerCount</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of boss threads. Boss threads are responsible for accepting incoming IMAP connections
 and initializing associated resources. Optional integer, by default, boss threads are not used and this responsibility is being dealt with
@@ -830,19 +1057,19 @@ It uses the Keycloak OIDC provider, but usage of similar technologies is definit
 <h2 id="_traffic_shaping"><a class="anchor" href="#_traffic_shaping"></a>Traffic Shaping</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>James ships optional <a href="https://netty.io/4.0/api/io/netty/handler/traffic/ChannelTrafficShapingHandler.html">Netty built in Traffic Shaping</a> that can be optionally configured.</p>
+<p>James ships an optional <a href="https://netty.io/4.0/api/io/netty/handler/traffic/ChannelTrafficShapingHandler.html">Netty built in Traffic Shaping</a> that can be optionally configured.</p>
 </div>
 <div class="paragraph">
 <p>This enables both:
  - Record per channel bandwidth consumption
- - Allows defining per channel bandwidth limit, which helps at fairness and maintaining a good quality of service.</p>
+ - Allows defining per channel bandwidth limit, which helps at fairness and maintaining a good quality of service in terms of incoming/outgoing bandwidth.</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>    &lt;imapserver&gt;
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;imapserver&gt;
         &lt;!-- ... --&gt;
         &lt;trafficShaping&gt;
             &lt;writeTrafficPerSecond&gt;0&lt;/writeTrafficPerSecond&gt;
@@ -850,7 +1077,7 @@ It uses the Keycloak OIDC provider, but usage of similar technologies is definit
             &lt;checkInterval&gt;1000&lt;/checkInterval&gt;
             &lt;maxDelays&gt;15000&lt;/maxDelays&gt;
         &lt;/trafficShaping&gt;
-    &lt;/imapserver&gt;</pre>
+    &lt;/imapserver&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -862,10 +1089,72 @@ It uses the Keycloak OIDC provider, but usage of similar technologies is definit
 </div>
 </div>
 <div class="sect1">
+<h2 id="_imap_command_throttler"><a class="anchor" href="#_imap_command_throttler"></a>IMAP command throttler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>James ships an optional IMAP command throttler aimed at slowing down lower-quality clients that generate a high
+volume of requests. It allows per command granularity and is applied at the scope of an IMAP session.</p>
+</div>
+<div class="paragraph">
+<p>The user can declare the list of commands on which throttling needs to be tracked and for each:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>thresholdCount</code>: below this number of occurrence, no throttling is applied. Integer.</p>
+</li>
+<li>
+<p><code>additionalDelayPerOperation</code>: delay to be applied when exceeding the threshold. The delay is cumulative and thus
+would always increase. Duration.</p>
+</li>
+<li>
+<p><code>observationPeriod</code>: the count of observed commands is reset after this period thus stopping delays. Duration.</p>
+</li>
+<li>
+<p><code>maxDelay</code>: maximum value the client will be delayed for.</p>
+</li>
+<li>
+<p><code>resetOn</code>: String. Optional default to none. Needs to be a command name. If specified, this command name will reset
+throttling on this specific entry.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Sample configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;imapserver&gt;
+  &lt;!-- ... --&gt;
+  &lt;perSessionCommandThrottling&gt;
+    &lt;select&gt;
+      &lt;thresholdCount&gt;25&lt;/thresholdCount&gt;
+      &lt;additionalDelayPerOperation&gt;2ms&lt;/additionalDelayPerOperation&gt;
+      &lt;observationPeriod&gt;10m&lt;/observationPeriod&gt;
+      &lt;maxDelay&gt;1s&lt;/maxDelay&gt;
+      &lt;resetOn&gt;APPEND&lt;/resetOn&gt; &lt;!-- Helps mitigate delays in Outlook upon sending email: a full refresh is needed for the operation to complete --&gt;
+    &lt;/select&gt;
+    &lt;append&gt;
+      &lt;thresholdCount&gt;5&lt;/thresholdCount&gt;
+      &lt;additionalDelayPerOperation&gt;10ms&lt;/additionalDelayPerOperation&gt;
+      &lt;observationPeriod&gt;5m&lt;/observationPeriod&gt;
+      &lt;maxDelay&gt;2s&lt;/maxDelay&gt;
+    &lt;/append&gt;
+  &lt;/perSessionCommandThrottling&gt;
+&lt;/imapserver&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that commands are delayed prior the execution and thus are not subject to the IMAP upper concurrency limit until
+they are executed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_extending_imap"><a class="anchor" href="#_extending_imap"></a>Extending IMAP</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>IMAP decoders, processors and encoder can be customized. <a href="../../../customization/imap.html" class="xref page">Read more</a>.</p>
+<p>IMAP decoders, processors and encoder can be customized. <a href="../customization/imap.html" class="xref page">Read more</a>.</p>
 </div>
 <div class="paragraph">
 <p>Check this <a href="https://github.com/apache/james-project/tree/master/examples/custom-imap">example</a>.</p>
@@ -909,6 +1198,29 @@ James extensions.</p></td>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Check this example on <a href="https://github.com/apache/james-project/tree/master/examples/imap-autoconf">Mail user agents auto-configuration</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_local_cache_for_partial_fetch"><a class="anchor" href="#_local_cache_for_partial_fetch"></a>Local cache for partial Fetch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Because some clients uses partial fetch in order to emulate retriable download of individual body parts
+we offer a way for James to cache in the IMAP session the latest partially fetched message. This is done using
+a weak reference, a total size dedicated to the cache as well as a time to leave cache cleanup, all of this
+being configurable.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;imapserver&gt;
+  &lt;partialBodyFetchCacheEnabled&gt;true&lt;/partialBodyFetchCacheEnabled&gt;
+  &lt;partialBodyFetchCacheDuration&gt;2min&lt;/partialBodyFetchCacheDuration&gt;
+  &lt;partialBodyFetchCacheSize&gt;500 MiB&lt;/partialBodyFetchCacheSize&gt;
+&lt;/imapserver&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
