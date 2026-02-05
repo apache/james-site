@@ -953,6 +953,46 @@ Maximum size of stored objects expressed in bytes.</p></td>
 </table>
 </div>
 <div class="sect2">
+<h3 id="_s3_compatible_blobstores"><a class="anchor" href="#_s3_compatible_blobstores"></a>S3 compatible BlobStores</h3>
+<div class="paragraph">
+<p>James has been tested and ensures it is API compatible with the following S3 object storages:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://us.ovhcloud.com/public-cloud/object-storage">OVH S3 service</a></p>
+</li>
+<li>
+<p><a href="https://www.min.io">MinIO (proprietary)</a></p>
+</li>
+<li>
+<p><a href="https://garagehq.deuxfleurs.fr">Garage</a></p>
+</li>
+<li>
+<p><a href="https://seaweedfs.github.io">SeaweedFS</a>: compatible but showed limitations on storing big blobs with SSEC
+(cf <a href="https://github.com/seaweedfs/seaweedfs/issues/8215" class="bare">https://github.com/seaweedfs/seaweedfs/issues/8215</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="underline">Notes</span>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MinIO encodes object names as filename and thus is subject to file system limitation.
+We advise using the MinIO compatibility layer that ensures blobs are spread out across folders by using prefix-based
+object organization to avoid performance bottlenecks from storing too many objects in a single directory.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>References</em>:
+- <a href="https://blog.min.io/prefix-vs-folder">MinIO: Prefix vs folder</a>
+- <a href="https://docs.min.io/enterprise/aistor-object-store/administration/objects-and-versioning/#object-organization-and-planning">MinIO: Object organization and planning</a></p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_encryption_choice"><a class="anchor" href="#_encryption_choice"></a>Encryption choice</h3>
 <div class="paragraph">
 <p>Data can be optionally encrypted with a symmetric key using AES before being stored in the blobStore. As many user relies
