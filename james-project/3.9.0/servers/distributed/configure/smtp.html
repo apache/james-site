@@ -928,6 +928,14 @@ channels.</p></td>
 can be used to enforce strong authentication mechanisms.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auth.required</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication is required to send emails. Adapted for submission ports.</p>
+<p class="tableblock">Note that if false (legacy value and default for backward compatibility) then unauthenticated senders are allowed but
+limited by sender verification (prevent spoofing) and relaying limits (must be authenticated to relay).</p>
+<p class="tableblock">We encourage setting this value to true on submission ports (465 + 587).</p>
+<p class="tableblock">Please note that <code>authorizedAddresses</code> are considered authenticated.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.oidcConfigurationURL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Provide OIDC url address for information to user. Only configure this when you want to authenticate SMTP server using a OIDC provider.</p></td>
 </tr>
@@ -993,7 +1001,8 @@ envelop field.</p>
  <a href="https://issues.apache.org/jira/browse/JAMES-4032">JAMES-4032</a> for detailed explanation.</p>
 <p class="tableblock">Backward compatibility is provided and thus the following values are supported:</p>
 <p class="tableblock"> - <code>true</code>: act as <code>strict</code>
- - <code>false</code>: act as <code>disabled</code></p></td>
+ - <code>false</code>: act as <code>disabled</code></p>
+<p class="tableblock">Please note that this parameter only intend to prevent spoofing, and still allow unauthenticated remote users (that do not use local identity) to send email to local users.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">maxmessagesize</p></td>
