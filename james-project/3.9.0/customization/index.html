@@ -180,7 +180,7 @@
     <a class="nav-link" href="../servers/basic/architecture.html">Architecture</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../servers/basic/configure/index.html">Configuration</a>
+    <a class="nav-link" href="../servers/basic/conf/index.html">Configuration</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../servers/basic/help.html">Help</a>
@@ -813,9 +813,9 @@ add features to the WebAdmin REST API.</p>
 <div class="paragraph">
 <p>For instance:</p>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyMailet extends GenericMailet {
+<pre>public class MyMailet extends GenericMailet {
     private final UsersRepository usersRepository;
 
     @Inject
@@ -827,7 +827,7 @@ add features to the WebAdmin REST API.</p>
     public void service(Mail mail) throws MessagingException {
         // Do something
     }
-}</code></pre>
+}</pre>
 </div>
 </div>
 </div>
@@ -839,9 +839,9 @@ add features to the WebAdmin REST API.</p>
 <div class="paragraph">
 <p>Consider the following example:</p>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyService {
+<pre>public class MyService {
 
 }
 
@@ -857,7 +857,7 @@ public class MyMailet extends GenericMailet {
     public void service(Mail mail) throws MessagingException {
         // Do something
     }
-}</code></pre>
+}</pre>
 </div>
 </div>
 </div>
@@ -876,9 +876,9 @@ public class MyMailet extends GenericMailet {
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface MyService {}</code></pre>
+<pre>public interface MyService {}</pre>
 </div>
 </div>
 <div class="ulist">
@@ -888,9 +888,9 @@ public class MyMailet extends GenericMailet {
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyServiceImpl extends MyService {}</code></pre>
+<pre>public class MyServiceImpl extends MyService {}</pre>
 </div>
 </div>
 <div class="ulist">
@@ -900,15 +900,15 @@ public class MyMailet extends GenericMailet {
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyServiceModule extends AbstractModule {
+<pre>public class MyServiceModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(MyServiceImpl.class).in(Scopes.SINGLETON);
         bind(MyService.class).to(MyServiceImpl.class);
     }
-}</code></pre>
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -918,16 +918,16 @@ folder (potentially different jars).</p>
 <div class="ulist">
 <ul>
 <li>
-<p>4. <strong>MyServiceModule</strong> needs to be registered in <a href="../servers/distributed/configure/extensions.html" class="page"><strong>extensions.properties</strong></a></p>
+<p>4. <strong>MyServiceModule</strong> needs to be registered in <a href="#distributed/configure/extensions.adoc" class="page unresolved"><strong>extensions.properties</strong></a></p>
 </li>
 <li>
 <p>5. <strong>MyService</strong> can then be used as part of your extensions</p>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyMailet extends GenericMailet {
+<pre>public class MyMailet extends GenericMailet {
     private final MyService myService;
 
     @Inject
@@ -939,7 +939,7 @@ folder (potentially different jars).</p>
     public void service(Mail mail) throws MessagingException {
         // Do something
     }
-}</code></pre>
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -949,11 +949,11 @@ folder (potentially different jars).</p>
 <div class="sect2">
 <h3 id="_starting_your_components"><a class="anchor" href="#_starting_your_components"></a>Starting your components</h3>
 <div class="paragraph">
-<p>Sometimes you wish to 'start' your extensions.This can be achieved through defining your own <code>UserDefinedStartable</code>:</p>
+<p>Sometimes you wish to 'start' your extensions. This can be achieved through defining your own <code>UserDefinedStartable</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class MyStartable implements UserDefinedStartable {
+<pre class="highlightjs highlight"><code>public class MyStartable implements UserDefinedStartable {
     @Override
     public void start() {
         // Will be called
@@ -966,7 +966,7 @@ folder (potentially different jars).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">guice.extension.startable=com.company.MyStartable</code></pre>
+<pre class="highlightjs highlight"><code>guice.extension.startable=com.company.MyStartable</code></pre>
 </div>
 </div>
 </div>
