@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Building and publishing the website :: Apache James</title>
-    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/community/website.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
   <body class="article">
@@ -734,34 +733,11 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../james-distributed-app/3.9.0/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../james-distributed-app/3.9.0/index.html">3.9.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../3.9.0/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../index.html">3.10.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../3.9.0/index.html">3.9.0</a>
-        </li>
-        <li class="version">
-          <a href="../../3.8.2/index.html">3.8.2</a>
-        </li>
-        <li class="version">
-          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -789,15 +765,6 @@
     <li><a href="website.html">Building and publishing the website</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="website.html">3.10.0 SNAPSHOT</a>
-    <a class="version" href="../../3.9.0/community/website.html">3.9.0</a>
-    <a class="version" href="../../3.8.2/community/website.html">3.8.2</a>
-    <a class="version" href="../../3.7.5/community/website.html">3.7.5</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/website.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -806,74 +773,81 @@
 </aside>
 <article class="doc">
 <h1 class="page">Building and publishing the website</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The source code of website <a href="https://james.apache.org">james.apache.org</a> is located in src/homepage.
-Here are the instructions how to publish new changes to the website.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install Apache Maven 3.0.2+ and make its binary 'mvn' available on your PATH.
-See <a href="http://maven.apache.org/download.html#Installation" class="bare">http://maven.apache.org/download.html#Installation</a>.</p>
-</li>
-<li>
-<p>run "mvn clean site"</p>
-</li>
-<li>
-<p>Test the built site in your browser from the src/homepage/target/site folder</p>
-</li>
-<li>
-<p>If everything looks OK, deploy the site using "mvn clean site-deploy".</p>
-</li>
-<li>
-<p>Wait for the changes to replicate to the Apache web server or setup 140.211.11.10:80 as
-a proxy to review the changes (described here: <a href="http://www.apache.org/dev/project-site.html" class="bare">http://www.apache.org/dev/project-site.html</a>)</p>
-</li>
-</ol>
+<p>The source code of website <a href="https://james.apache.org">james.apache.org</a> is
+located in src/homepage.</p>
 </div>
 <div class="paragraph">
-<p>To deploy the technical reports use the "-Psite-reports" profile.</p>
+<p>Here are the instructions how to publish new changes to the website.</p>
 </div>
 <div class="paragraph">
-<p>For wagon-ssh-external configuration see
-<a href="http://maven.apache.org/plugins/maven-deploy-plugin/examples/deploy-ssh-external.html" class="bare">http://maven.apache.org/plugins/maven-deploy-plugin/examples/deploy-ssh-external.html</a></p>
+<p>The website is currently composed of the output of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The homepage build</p>
+</li>
+<li>
+<p>The maven site</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title"><a href="https://issues.apache.org/jira/browse/JAMES-3187">Documentation migration</a></div>
+<div class="paragraph">
+<p>We are migrating the content of the maven site to use <a href="#_building_the_next_gen_documentation">antora documentation</a> instead.</p>
 </div>
 <div class="paragraph">
-<p>You can alternatively use a docker container to build the website :</p>
+<p>Most of the useful content has been migrated but the new documentation is not
+yet published to the main site. It can be found on the
+<a href="https://james.staged.apache.org">staging version</a> of the website.</p>
 </div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_the_homepage"><a class="anchor" href="#_building_the_homepage"></a>Building the homepage</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>You need to build the homepage by:</p>
+<p>You can use jekyll to build the website. Go into <code>src/homepage</code> and run the following command</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>$ docker build -t james/homepage src/homepage-docker
-$ docker run -v $PWD:/origin -v $PWD/site:/destination james/homepage master</pre>
+<pre>$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll build</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The resulting deployable content will be available in the <code>src/homepage/_site/</code>
+directory.</p>
 </div>
 <div class="paragraph">
 <p>In order to test the homepage, you can use this command:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>$ docker run --rm -v $PWD/site:/srv/jekyll  -p 4000:4000 -it jekyll/minimal:3.8.3 jekyll serve</pre>
+<pre>$ docker run --rm -v $PWD/site:/srv/jekyll  -p 4000:4000 -it jekyll/jekyll jekyll serve</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>the site will be available at <a href="http://localhost:4000/" class="bare">http://localhost:4000/</a></p>
+<p>The site will be available at <a href="http://localhost:4000/" class="bare">http://localhost:4000/</a></p>
 </div>
 <div class="paragraph">
-<p>Then you build the other pages by:</p>
+<p>If you need to update the current site, checkout the branch asf-site from
+Apache git:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>$ docker build -t james/site src/site-docker
-$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you need to update the current site, checkout the branch asf-site from Apache git:</p>
-</div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
 <pre>$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
 $ cd james-site
@@ -881,9 +855,10 @@ $ git checkout origin/asf-site -b asf-site</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And replace in the previous commands <code>$PWD/site</code> by <code>&lt;james-site-clone-directory&gt;/content</code>, for example:</p>
+<p>And replace in the previous commands <code>$PWD/site</code> by
+<code>&lt;james-site-clone-directory&gt;/content</code>, for example:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
 <pre>$ docker run -v $PWD:/origin -v $PWD/../james-site/content:/destination james/homepage master
 $ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD/site:/destination james/site master</pre>
@@ -892,10 +867,241 @@ $ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD
 <div class="paragraph">
 <p>Then just push the new site:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
 <pre>$ cd ../james-site
 $ git push origin asf-site</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_maven_site"><a class="anchor" href="#_maven_site"></a>Maven site</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The maven site deploy phase uses and requires locally configuring credentials to
+enable ssh access. See
+<a href="http://maven.apache.org/plugins/maven-deploy-plugin/examples/deploy-ssh-external.html">maven-deploy-plugin&#8217;s documentation</a> for more details on achieving this.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Generating the full maven site with all reports takes a long time
+(as in hours)
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_manually"><a class="anchor" href="#_manually"></a>Manually</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install Apache Maven 3.0.2+ and make its binary 'mvn' available on your PATH.
+See <a href="http://maven.apache.org/download.html#Installation" class="bare">http://maven.apache.org/download.html#Installation</a>.</p>
+</li>
+<li>
+<p>run <code>mvn clean package site -Djib.skip</code></p>
+</li>
+<li>
+<p>Test the built site in your browser from the <code>src/homepage/target/site</code> folder</p>
+</li>
+<li>
+<p>If everything looks OK, deploy the site using <code>mvn clean site-deploy</code>.</p>
+</li>
+<li>
+<p>Wait for the changes to replicate to the Apache web server or setup
+140.211.11.10:80 as a proxy to review the changes (described here:
+<a href="http://www.apache.org/dev/project-site.html" class="bare">http://www.apache.org/dev/project-site.html</a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_docker"><a class="anchor" href="#_docker"></a>Docker</h3>
+<div class="paragraph">
+<p>Can be used only to build the site locally</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Contribution welcome</div>
+<div class="paragraph">
+<p>The docker file in <code>src/site-docker</code> is currently broken:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>outdated JDK (11 instead of 21)</p>
+</li>
+<li>
+<p>"manual" download of maven from a link which doesn&#8217;t resolve anymore</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>prepare for some tinkering before building using this method.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ docker build -t james/site src/site-docker
+$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nix_development_shell"><a class="anchor" href="#_nix_development_shell"></a>Nix development shell</h3>
+<div class="paragraph">
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+development shell</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>run <code>mvn clean package site -Djib.skip</code></p>
+</li>
+<li>
+<p>Test the built site in your browser from the <code>src/homepage/target/site</code> folder</p>
+</li>
+<li>
+<p>If everything looks OK, deploy the site using <code>mvn clean site-deploy</code>.</p>
+</li>
+<li>
+<p>Wait for the changes to replicate to the Apache web server or setup
+140.211.11.10:80 as a proxy to review the changes
+(see: <a href="http://www.apache.org/dev/project-site.html" class="bare">http://www.apache.org/dev/project-site.html</a>)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technical_reports"><a class="anchor" href="#_technical_reports"></a>Technical reports</h3>
+<div class="paragraph">
+<p>To deploy the technical reports use any of the 3 ways above adding the
+<code>-Psite-reports</code> profile.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_the_next_gen_documentation"><a class="anchor" href="#_building_the_next_gen_documentation"></a>Building the next gen documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The old maven site is quite painful to maintain and doesn&#8217;t allow for
+versionning of the content per releases which motivated the
+<a href="https://issues.apache.org/jira/browse/JAMES-3187">migration effort</a>.</p>
+</div>
+<div class="paragraph">
+<p>Most of the maven site content has been migrated to asciidoc files assembled by
+antora. You can preview the content at <a href="https://james.staged.apache.org" class="bare">https://james.staged.apache.org</a>, this
+documentation is published automatically by the james CI.</p>
+</div>
+<div class="paragraph">
+<p>This new documentation root is located in the <code>docs</code> directory and includes
+these build instructions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_the_next_gen_documentation_2"><a class="anchor" href="#_building_the_next_gen_documentation_2"></a>Building the next gen documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The old maven site is quite painful to maintain and doesn&#8217;t allow for
+versionning of the content per releases which motivated the
+<a href="https://issues.apache.org/jira/browse/JAMES-3187">migration effort</a>.</p>
+</div>
+<div class="paragraph">
+<p>Most of the maven site content has been migrated to asciidoc files assembled by
+antora. You can preview the content at <a href="https://james.staged.apache.org" class="bare">https://james.staged.apache.org</a>, this
+documentation is published automatically by the james CI.</p>
+</div>
+<div class="paragraph">
+<p>This new documentation root is located in the <code>docs</code> directory and includes
+these build instructions.</p>
+</div>
+<div class="sect2">
+<h3 id="_executing_within_source_code"><a class="anchor" href="#_executing_within_source_code"></a>Executing within source code</h3>
+<div class="paragraph">
+<p>(Clone <code><a href="https://github.com/apache/james-project" class="bare">https://github.com/apache/james-project</a></code> locally, go into <code>docs</code> folder)</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://docs.antora.org/antora/latest/install-and-run-quickstart/">Install Antora</a></p>
+</li>
+<li>
+<p>Build the Antora content locally</p>
+<div class="listingblock">
+<div class="content">
+<pre> $ antora antora-playbook-local.yml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open <code>build/site/index.html</code> in your browser.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_with_dockerfile"><a class="anchor" href="#_building_with_dockerfile"></a>Building with Dockerfile</h3>
+<div class="paragraph">
+<p>To build the document from apache-james repository, you can use the Dockerfile provided in this folder.</p>
+</div>
+<div class="paragraph">
+<p>Build the Docker image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker build --build-arg JAMES_CHECKOUT=master -f Dockerfile -t james-site-antora .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then run the Docker image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run -p 80:80 james-site-antora</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Go to <code><a href="http://localhost" class="bare">http://localhost</a></code> in your browser.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_with_the_nix_enviroment"><a class="anchor" href="#_build_with_the_nix_enviroment"></a>Build with the nix enviroment</h3>
+<div class="paragraph">
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+development shell</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build the Antora content locally</p>
+<div class="listingblock">
+<div class="content">
+<pre> $ antora antora-playbook-local.yml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open <code>build/site/index.html</code> in your browser.</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </article>
