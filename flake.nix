@@ -5,7 +5,7 @@
 
   outputs = { self, nixpkgs }:
     let 
-      javaVersion = 21; # Change this value to update the whole stack
+      javaVersion = 11; # Change this value to update the whole stack
 
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       forEachSupportedSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f {
@@ -34,7 +34,7 @@
             git     # version control
             jdk     # build and run james
             jekyll  # homepage and blog
-            maven   # build james
+            nodejs_20
           ];
           MAVEN_OPTS = "-Djna.library.path="  + pkgs.lib.makeLibraryPath [pkgs.udev];
           JAVA_HOME = "${pkgs.jdk}";
