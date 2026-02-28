@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Building and publishing the website :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/community/website.html">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
   <body class="article">
@@ -733,11 +734,34 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../james-distributed-app/3.9.0/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../james-distributed-app/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -765,6 +789,15 @@
     <li><a href="website.html">Building and publishing the website</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="website.html">3.10.0 SNAPSHOT</a>
+    <a class="version" href="../../3.9.0/community/website.html">3.9.0</a>
+    <a class="version" href="../../3.8.2/community/website.html">3.8.2</a>
+    <a class="version" href="../../3.7.5/community/website.html">3.7.5</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/website.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -825,7 +858,7 @@ yet published to the main site. It can be found on the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll build</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll build</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -837,7 +870,7 @@ directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run --rm -v $PWD/site:/srv/jekyll  -p 4000:4000 -it jekyll/jekyll jekyll serve</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run --rm -v $PWD/site:/srv/jekyll  -p 4000:4000 -it jekyll/jekyll jekyll serve</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -849,9 +882,9 @@ Apache git:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
 $ cd james-site
-$ git checkout origin/asf-site -b asf-site</pre>
+$ git checkout origin/asf-site -b asf-site</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -860,8 +893,8 @@ $ git checkout origin/asf-site -b asf-site</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run -v $PWD:/origin -v $PWD/../james-site/content:/destination james/homepage master
-$ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD/site:/destination james/site master</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run -v $PWD:/origin -v $PWD/../james-site/content:/destination james/homepage master
+$ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD/site:/destination james/site master</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -869,8 +902,8 @@ $ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ cd ../james-site
-$ git push origin asf-site</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ cd ../james-site
+$ git push origin asf-site</code></pre>
 </div>
 </div>
 </div>
@@ -956,15 +989,15 @@ See <a href="http://maven.apache.org/download.html#Installation" class="bare">ht
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker build -t james/site src/site-docker
-$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker build -t james/site src/site-docker
+$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_nix_development_shell"><a class="anchor" href="#_nix_development_shell"></a>Nix development shell</h3>
 <div class="paragraph">
-<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="xref page">james experimental
 development shell</a></p>
 </div>
 <div class="olist arabic">
@@ -1045,7 +1078,7 @@ these build instructions.</p>
 <p>Build the Antora content locally</p>
 <div class="listingblock">
 <div class="content">
-<pre> $ antora antora-playbook-local.yml</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ antora antora-playbook-local.yml</code></pre>
 </div>
 </div>
 </li>
@@ -1083,7 +1116,7 @@ these build instructions.</p>
 <div class="sect2">
 <h3 id="_build_with_the_nix_enviroment"><a class="anchor" href="#_build_with_the_nix_enviroment"></a>Build with the nix enviroment</h3>
 <div class="paragraph">
-<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="xref page">james experimental
 development shell</a></p>
 </div>
 <div class="olist arabic">
@@ -1092,7 +1125,7 @@ development shell</a></p>
 <p>Build the Antora content locally</p>
 <div class="listingblock">
 <div class="content">
-<pre> $ antora antora-playbook-local.yml</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ antora antora-playbook-local.yml</code></pre>
 </div>
 </div>
 </li>
