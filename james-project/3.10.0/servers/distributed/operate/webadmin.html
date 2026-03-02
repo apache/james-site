@@ -7994,6 +7994,93 @@ the following <code>additionalInformation</code>:</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_moving_mails_from_a_mail_repository_to_another"><a class="anchor" href="#_moving_mails_from_a_mail_repository_to_another"></a>Moving mails from a mail repository to another</h3>
+<div class="paragraph">
+<p>To move all mails from one repository to another:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPATCH http://ip:port/mailRepositories/{encodedPathOfTheRepository}/mails \
+  -d '{"mailRepository": "/var/mail/error-saved"}' \
+  -H "Content-Type: application/json"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Resource name <code>encodedPathOfTheRepository</code> should be the URL-encoded path of an existing mail
+repository. The request body must contain the path of an existing target mail repository.</p>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPATCH http://ip:port/mailRepositories/var%2Fmail%2Ferror%2F/mails \
+  -d '{"mailRepository": "var/mail/error-saved"}' \
+  -H "Content-Type: application/json"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: Mails were successfully moved.</p>
+</li>
+<li>
+<p>400: The target repository does not exist, or the request body is invalid.</p>
+</li>
+<li>
+<p>404: The source repository does not exist.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_moving_a_specific_mail_to_another_repository"><a class="anchor" href="#_moving_a_specific_mail_to_another_repository"></a>Moving a specific mail to another repository</h3>
+<div class="paragraph">
+<p>To move a specific mail from one repository to another:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPATCH http://ip:port/mailRepositories/{encodedPathOfTheRepository}/mails/{mailKey} \
+  -d '{"mailRepository": "/var/mail/error-saved"}' \
+  -H "Content-Type: application/json"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Resource name <code>encodedPathOfTheRepository</code> should be the URL-encoded path of an existing mail
+repository. Resource name <code>mailKey</code> should be the key of a mail stored in that repository.
+The request body must contain the path of an existing target mail repository.</p>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPATCH http://ip:port/mailRepositories/var%2Fmail%2Ferror%2F/mails/name1 \
+  -d '{"mailRepository": "var/mail/error-saved"}' \
+  -H "Content-Type: application/json"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>204: The mail was successfully moved (or the mail key was not found, in which case nothing is done).</p>
+</li>
+<li>
+<p>400: The target repository does not exist, or the request body is invalid.</p>
+</li>
+<li>
+<p>404: The source repository does not exist.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">

@@ -903,7 +903,7 @@ However a Mail Exchange server doing relay on the internet would quickly hit thi
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">        &lt;processor state="relay" enableJmx="true"&gt;
             &lt;!-- Perform at most 5 RemoteDelivery attemps --&gt;
             &lt;mailet match="AtMost=5" class="RemoteDelivery"&gt;
-                &lt;outgoingQueue&gt;outgoing&lt;/outgoingQueue&gt;
+                &lt;outgoing&gt;outgoing&lt;/outgoingQueue&gt;
                 &lt;maxRetries&gt;0&lt;/maxRetries&gt;
                 &lt;maxDnsProblemRetries&gt;0&lt;/maxDnsProblemRetries&gt;
                 &lt;deliveryThreads&gt;10&lt;/deliveryThreads&gt;
