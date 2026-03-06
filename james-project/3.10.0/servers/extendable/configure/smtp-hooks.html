@@ -814,6 +814,91 @@ behaves without of the box components.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_allowedunauthenticatedsender"><a class="anchor" href="#_allowedunauthenticatedsender"></a>AllowedUnauthenticatedSender</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some third-party devices and applications — printers, scanners, legacy apps — cannot easily support SMTP
+authentication. A common workaround is to whitelist their IP addresses via <code>&lt;authorizedAddresses&gt;</code> so they
+can relay without credentials. The downside is that any sender address is then accepted from those IPs.</p>
+</div>
+<div class="paragraph">
+<p><code>AllowedUnauthenticatedSender</code> closes this gap: it restricts which <code>MAIL FROM</code> addresses may be used by
+unauthenticated connections that benefit from the IP whitelist. It has no effect on authenticated sessions.</p>
+</div>
+<div class="paragraph">
+<p>The hook activates only when both conditions are true:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>relaying is allowed for the remote IP (i.e. the IP is in <code>&lt;authorizedAddresses&gt;</code>)</p>
+</li>
+<li>
+<p>no user is authenticated on the session</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Configuration options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>allowNullSender</strong> (optional, default <code>false</code>): whether to accept <code>MAIL FROM: &lt;&gt;</code> (null sender, used for
+bounce messages). Set to <code>true</code> if the whitelisted devices need to send delivery status notifications.</p>
+</li>
+<li>
+<p><strong>allowedSenders</strong>: list of <code>&lt;allowedSender&gt;</code> elements.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The element value is the email address that is permitted.</p>
+</li>
+<li>
+<p>The optional <strong>fromIps</strong> attribute further restricts which source IPs may use that sender address.
+It accepts a comma-separated list of CIDR ranges (e.g. <code>192.168.1.0/24,10.0.0.5/32</code>).
+When omitted, the sender is allowed from any whitelisted IP.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
+    &lt;...&gt; &lt;!-- The rest of your SMTP configuration --&gt;
+    &lt;authorizedAddresses&gt;127.0.0.0/8,192.168.1.0/24&lt;/authorizedAddresses&gt;
+    &lt;handlerchain&gt;
+        &lt;handler class="org.apache.james.smtpserver.fastfail.AllowedUnauthenticatedSender"&gt;
+            &lt;allowNullSender&gt;false&lt;/allowNullSender&gt;
+            &lt;allowedSenders&gt;
+                &lt;!-- allowed from any whitelisted IP --&gt;
+                &lt;allowedSender&gt;printer@example.com&lt;/allowedSender&gt;
+                &lt;!-- allowed only from a specific subnet --&gt;
+                &lt;allowedSender fromIps="192.168.1.0/24"&gt;scanner@example.com&lt;/allowedSender&gt;
+                &lt;!-- allowed from several specific ranges --&gt;
+                &lt;allowedSender fromIps="172.34.56.0/24,172.34.53.123/32"&gt;app@example.com&lt;/allowedSender&gt;
+            &lt;/allowedSenders&gt;
+        &lt;/handler&gt;
+        &lt;handler class="org.apache.james.smtpserver.CoreCmdHandlerLoader"/&gt;
+    &lt;/handlerchain&gt;
+&lt;/smtpserver&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Connections from a non-whitelisted IP are not affected by this hook and follow the normal relay rules.</p>
+</div>
+<div class="paragraph">
+<p>Unauthenticated connections from a whitelisted IP that present a sender address not covered by any
+<code>&lt;allowedSender&gt;</code> entry receive a permanent <code>550</code> rejection.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_dnsrblhandler"><a class="anchor" href="#_dnsrblhandler"></a>DNSRBLHandler</h2>
 <div class="sectionbody">
 <div class="paragraph">
