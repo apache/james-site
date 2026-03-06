@@ -8146,6 +8146,114 @@ messages during a given retention time. This set of routes allow you to
 configure the DeletedMessageVault PreDeletionHook.</p>
 </div>
 <div class="sect2">
+<h3 id="_browse_deleted_messages"><a class="anchor" href="#_browse_deleted_messages"></a>Browse Deleted Messages</h3>
+<div class="paragraph">
+<p>Deleted messages of a specific user can be listed by calling the following endpoint:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/deletedMessages/users/user@domain.ext/messages
+
+{
+  "combinator": "and",
+  "criteria": [
+    {
+      "fieldName": "subject",
+      "operator": "containsIgnoreCase",
+      "value": "Apache James"
+    }
+  ]
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To retrieve a specific message by its id:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "combinator": "and",
+  "criteria": [
+    {
+      "fieldName": "messageId",
+      "operator": "equals",
+      "value": "3294a976-ce63-491e-bd52-1b6f465ed7a2"
+    }
+  ]
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The query body follows the same structure as <a href="#_restore_deleted_messages">Restore Deleted Messages</a>.
+Pass an empty criteria list to retrieve all deleted messages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "combinator": "and",
+  "criteria": []
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: List of deleted messages matching the query</p>
+</li>
+<li>
+<p>400: Bad request:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>user parameter is invalid</p>
+</li>
+<li>
+<p>can not parse the JSON body</p>
+</li>
+<li>
+<p>Json query object contains unsupported operator, fieldName</p>
+</li>
+<li>
+<p>Json query object values violate parsing rules</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>404: User not found</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Response body is a JSON array:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[
+  {
+    "messageId": "3294a976-ce63-491e-bd52-1b6f465ed7a2",
+    "originMailboxes": [
+      "02874f7c-d10e-102f-acda-0015176f7922"
+    ],
+    "owner": "user@domain.ext",
+    "deliveryDate": "2014-10-30T14:12:00Z",
+    "deletionDate": "2015-10-20T09:08:00Z",
+    "sender": "sender@apache.org",
+    "recipients": [
+      "recipient@james.org"
+    ],
+    "subject": "Apache James",
+    "hasAttachment": false,
+    "size": 1234
+  }
+]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_restore_deleted_messages"><a class="anchor" href="#_restore_deleted_messages"></a>Restore Deleted Messages</h3>
 <div class="paragraph">
 <p>Deleted messages of a specific user can be restored by calling the
@@ -8306,6 +8414,18 @@ Supports list mailbox id operators:</p>
 <li>
 <p>contains: does the tested deleted message’s originMailbox ids contain
 tested mailbox id ?</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>messageId: represents for deleted message <code>messageId</code> field matching.
+Tested value is a string serialized message id. Supports string operator:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>equals: does the tested deleted message’s messageId equal the tested
+value?</p>
 </li>
 </ul>
 </div>

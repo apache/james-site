@@ -823,9 +823,27 @@ yet published to the main site. It can be found on the
 <div class="paragraph">
 <p>You can use jekyll to build the website. Go into <code>src/homepage</code> and run the following command</p>
 </div>
+<div class="sect2">
+<h3 id="_docker"><a class="anchor" href="#_docker"></a>Docker</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The official docker image <code>jekyll/jekyll</code> is unmaintained and is not compatible with jekyll version beyond 4.2.2.
+In this documentation we suggest a replacement <code>jvconseil/jekyll-docker</code> but note that this is not an official image.
+Use at your own risks.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jekyll/jekyll:$JEKYLL_VERSION  jekyll build</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jvconseil/jekyll-docker:4 jekyll build</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -837,7 +855,7 @@ directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run --rm -v $PWD/site:/srv/jekyll  -p 4000:4000 -it jekyll/jekyll jekyll serve</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run --rm -v $PWD/site:/srv/jekyll -p 4000:4000 -it jvconseil/jekyll-docker:4 jekyll serve</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -849,19 +867,18 @@ Apache git:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
 $ cd james-site
-$ git checkout origin/asf-site -b asf-site</pre>
+$ git checkout origin/asf-site -b asf-site</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And replace in the previous commands <code>$PWD/site</code> by
-<code>&lt;james-site-clone-directory&gt;/content</code>, for example:</p>
+<p>make sure to build the site then copy the output to</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker run -v $PWD:/origin -v $PWD/../james-site/content:/destination james/homepage master
-$ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD/site:/destination james/site master</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jvconseil/jekyll-docker:4 jekyll build
+$ cp  ../james-site/content</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -869,8 +886,59 @@ $ docker run -v $PWD/.m2:/root/.m2 -v $PWD/../james-site/content:/origin -v $PWD
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ cd ../james-site
-$ git push origin asf-site</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ cd ../james-site
+$ git push origin asf-site</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_experimental_nix_environment"><a class="anchor" href="#_experimental_nix_environment"></a>Experimental nix environment</h3>
+<div class="paragraph">
+<p>From the root of the repository checkout, you can use the flake&#8217;s devshell</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ cd src/homepage
+$ nix develop</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then use jekyll directly</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ jekyll serve
+# or
+$ jekyll build</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gemset_update_for_nix"><a class="anchor" href="#_gemset_update_for_nix"></a>Gemset update for nix</h4>
+<div class="paragraph">
+<p>Updating the gemset to track the gemfile updates is a bit involved :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>ensure you are out of all nix devshell (check using <code>echo $SHLVL</code> it should be 1)</p>
+</li>
+<li>
+<p>create a temporary shell for gem manipulation <code>nix-shell -p ruby -p bundix</code></p>
+</li>
+<li>
+<p>update the gemfile then run</p>
+<div class="listingblock">
+<div class="content">
+<pre>BUNDLE_FORCE_RUBY_PLATFORM="true" bundle lock --update
+bundix -l</pre>
+</div>
+</div>
+</li>
+<li>
+<p>exit the temporary shell and enter the devShell again <code>nix develop</code></p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
@@ -922,7 +990,7 @@ See <a href="http://maven.apache.org/download.html#Installation" class="bare">ht
 </div>
 </div>
 <div class="sect2">
-<h3 id="_docker"><a class="anchor" href="#_docker"></a>Docker</h3>
+<h3 id="_docker_2"><a class="anchor" href="#_docker_2"></a>Docker</h3>
 <div class="paragraph">
 <p>Can be used only to build the site locally</p>
 </div>
@@ -956,8 +1024,8 @@ See <a href="http://maven.apache.org/download.html#Installation" class="bare">ht
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ docker build -t james/site src/site-docker
-$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ docker build -t james/site src/site-docker
+$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master</code></pre>
 </div>
 </div>
 </div>
@@ -965,7 +1033,7 @@ $ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination jam
 <h3 id="_nix_development_shell"><a class="anchor" href="#_nix_development_shell"></a>Nix development shell</h3>
 <div class="paragraph">
 <p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
-development shell</a></p>
+development shell</a> with <code>nix develop</code>.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1084,7 +1152,7 @@ these build instructions.</p>
 <h3 id="_build_with_the_nix_enviroment"><a class="anchor" href="#_build_with_the_nix_enviroment"></a>Build with the nix enviroment</h3>
 <div class="paragraph">
 <p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
-development shell</a></p>
+development shell</a> with <code>nix develop</code></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
