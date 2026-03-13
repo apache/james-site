@@ -1568,6 +1568,42 @@ configuration</a>.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_get_the_list_of_users_for_a_domain"><a class="anchor" href="#_get_the_list_of_users_for_a_domain"></a>Get the list of users for a domain</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/domains/domain.tld/users</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will return the list of users for this domain:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[
+  "btellier@domain.tld",
+  ...
+]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The domain aliases was successfully retrieved</p>
+</li>
+<li>
+<p>400: domain.tld has an invalid syntax</p>
+</li>
+<li>
+<p>404: domain.tld is not part of handled domains and does
+not have local domains as aliases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Only supported when virtualHosting is enabled.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_get_the_list_of_aliases_for_a_domain"><a class="anchor" href="#_get_the_list_of_aliases_for_a_domain"></a>Get the list of aliases for a domain</h3>
 <div class="literalblock">
 <div class="content">
