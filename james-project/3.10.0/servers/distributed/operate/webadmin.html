@@ -9246,6 +9246,9 @@ connections, including:</p>
 ]</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The same optional query parameters as <code>GET /servers/channels</code> are supported (see below).</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_listing_all_channels"><a class="anchor" href="#_listing_all_channels"></a>Listing all channels</h3>
@@ -9288,6 +9291,68 @@ connections, including:</p>
 </div>
 <div class="paragraph">
 <p>Be warned that the output can be very large if a significant count of channels is opened.</p>
+</div>
+<div class="paragraph">
+<p>The following optional query parameters are supported to sort and paginate results:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unlimited</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of results to return.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>offset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of results to skip before returning.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sortBy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none (no sort)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON path of the field to sort by. Supports top-level fields (<code>protocol</code>, <code>endpoint</code>, <code>remoteAddress</code>, <code>connectionDate</code>, <code>isActive</code>, <code>isOpen</code>, <code>isWritable</code>, <code>isEncrypted</code>, <code>username</code>) and nested keys inside <code>protocolSpecificInformation</code> using dot notation (e.g. <code>protocolSpecificInformation.cumulativeWrittenBytes</code>). Unknown paths are treated as an empty value without error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sortDirection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>asc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort direction. Accepted values: <code>asc</code>, <code>desc</code> (case-insensitive). Only applied when <code>sortBy</code> is set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sortType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alphabetical</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How to compare values. <code>alphabetical</code> uses natural string order; <code>numerical</code> parses values as long integers (non-numeric values sort as <code>0</code>). Only applied when <code>sortBy</code> is set.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example — list the 10 most data-hungry IMAP connections:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET "/servers/channels?sortBy=protocolSpecificInformation.cumulativeWrittenBytes&amp;sortType=numerical&amp;sortDirection=desc&amp;limit=10"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Return codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: the list of channels, possibly empty</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
