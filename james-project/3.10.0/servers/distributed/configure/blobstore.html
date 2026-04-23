@@ -1073,6 +1073,37 @@ james.blob.aes.blob.max.size=100M</pre>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_compression_choice"><a class="anchor" href="#_compression_choice"></a>Compression choice</h3>
+<div class="paragraph">
+<p>Data can be optionally compressed using Zstd before being stored in the blobStore. This especially benefits
+text-heavy mail contents and attachments when using S3 compatible object stores where storage costs matter.</p>
+</div>
+<div class="paragraph">
+<p><strong>compression.enabled</strong> : Optional boolean, defaults to false.</p>
+</div>
+<div class="paragraph">
+<p><strong>compression.threshold</strong> : Optional size, defaults to 16K. Compression is only attempted for blobs whose original
+size is greater than or equal to this threshold. Supported units: no suffix for bytes, or B, K, M, G.</p>
+</div>
+<div class="paragraph">
+<p><strong>compression.min-ratio</strong> : Optional float between 0 and 1, defaults to 1.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>James keeps the compressed payload only when <code>compressedSize / originalSize &#8656; compression.min-ratio</code></p>
+</li>
+<li>
+<p><code>compression.min-ratio=0</code> enables a "decompress-only" mode: James can still read previously compressed blobs but
+will not compress new writes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If both compression and AES encryption are enabled, James compresses first and encrypts afterwards.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_object_storage_configuration"><a class="anchor" href="#_object_storage_configuration"></a>Object storage configuration</h3>
 <div class="sect3">
 <h4 id="_aws_s3_configuration"><a class="anchor" href="#_aws_s3_configuration"></a>AWS S3 Configuration</h4>
