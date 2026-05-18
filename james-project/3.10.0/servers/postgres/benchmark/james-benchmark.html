@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Postgresql James server benchmark :: Apache James</title>
-    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/servers/postgres/benchmark/james-benchmark.html">
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
@@ -204,6 +203,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../../distributed/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/blobstore.html">BlobStore</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../../distributed/architecture/specialized-instances.html">Specialized instances</a>
@@ -462,6 +464,9 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/blobstore.html">BlobStore</a>
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
@@ -734,34 +739,11 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../james-distributed-app/3.9.0/index.html">Apache James Distributed Server</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../james-distributed-app/3.9.0/index.html">3.9.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
-        </li>
-        <li class="version">
-          <a href="../../../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.10.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.9.0/index.html">3.9.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.8.2/index.html">3.8.2</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -791,15 +773,6 @@
     <li><a href="james-benchmark.html">James benchmarks</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="james-benchmark.html">3.10.0 SNAPSHOT</a>
-    <a class="version" href="../../../../3.9.0/servers/postgres/benchmark/james-benchmark.html">3.9.0</a>
-    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/postgres/benchmark/james-benchmark.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -865,65 +838,8 @@ can test and evaluate if his Postgresql James server is performing well.</p>
 <div class="sect1">
 <h2 id="_benchmark_methodology_and_base_performance"><a class="anchor" href="#_benchmark_methodology_and_base_performance"></a>Benchmark methodology and base performance</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_postgresql_prepare_benchmark"><a class="anchor" href="#_postgresql_prepare_benchmark"></a>Postgresql prepare benchmark</h3>
-<div class="sect3">
-<h4 id="_install_extension_pg_stat_statements"><a class="anchor" href="#_install_extension_pg_stat_statements"></a>Install extension pg_stat_statements</h4>
 <div class="paragraph">
-<p>The <code>pg_stat_statements</code> extension provides a means for tracking execution statistics of all SQL statements executed by a server.
-The extension is useful for identifying high-traffic queries and for monitoring the performance of the server.
-For more information, see the [PostgreSQL documentation](<a href="https://www.postgresql.org/docs/current/pgstatstatements.html" class="bare">https://www.postgresql.org/docs/current/pgstatstatements.html</a>).</p>
-</div>
-<div class="paragraph">
-<p>To install the extension, connect to the database and run the following query:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">create extension if not exists pg_stat_statements;
-alter system set shared_preload_libraries='pg_stat_statements';
-
--- restart postgres
--- optional
-alter system set pg_stat_statements.max = 100000;
-alter system set pg_stat_statements.track = 'all';</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To reset statistics, use: <code>select pg_stat_statements_reset()</code>;</p>
-</div>
-<div class="paragraph">
-<p>The response fields that we are interested in are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>query</code>: Text of a representative statement</p>
-</li>
-<li>
-<p><code>calls</code>: Number of times the statement was executed</p>
-</li>
-<li>
-<p><code>total_exec_time</code>, <code>mean_exec_time</code>, <code>min_exec_time</code>, <code>max_exec_time</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To view the statistics, run the following query:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">select query, mean_exec_time, total_exec_time, calls from pg_stat_statements order by total_exec_time desc;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The result sample:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../../_images/postgres_pg_stat_statements.png" alt="Storage responsibilities for the Postgresql James server">
-</div>
-</div>
-</div>
+<p>Unresolved include directive in modules/servers/partials/benchmark/james-benchmark.adoc - include::servers:postgres/benchmark/benchmark_prepare.adoc[]</p>
 </div>
 <div class="sect2">
 <h3 id="_provision_testing_data"><a class="anchor" href="#_provision_testing_data"></a>Provision testing data</h3>

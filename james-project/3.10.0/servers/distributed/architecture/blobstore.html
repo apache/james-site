@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; Performance testing :: Apache James</title>
+    <title>Distributed James Server &mdash; BlobStore :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -196,22 +196,22 @@
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+    <a class="nav-link" href="index.html">Architecture</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+    <a class="nav-link" href="implemented-standards.html">Implemented standards</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+    <a class="nav-link" href="consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="blobstore.html">BlobStore</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/blobstore.html">BlobStore</a>
+    <a class="nav-link" href="specialized-instances.html">Specialized instances</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
+    <a class="nav-link" href="data-tiering.html">Data tiering</a>
   </li>
 </ul>
   </li>
@@ -434,15 +434,15 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Performance benchmark</a>
+    <a class="nav-link" href="../benchmark/index.html">Performance benchmark</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="db-benchmark.html">Database benchmarks</a>
+    <a class="nav-link" href="../benchmark/db-benchmark.html">Database benchmarks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="james-benchmark.html">James benchmarks</a>
+    <a class="nav-link" href="../benchmark/james-benchmark.html">James benchmarks</a>
   </li>
 </ul>
   </li>
@@ -769,27 +769,194 @@
     <li><a href="../../../index.html">Apache James Server</a></li>
     <li><a href="../../index.html">Servers</a></li>
     <li><a href="../index.html">Distributed James Application</a></li>
-    <li><a href="index.html">Performance benchmark</a></li>
+    <li><a href="index.html">Architecture</a></li>
+    <li><a href="blobstore.html">BlobStore</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/benchmark/index.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/architecture/blobstore.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; Performance testing</h1>
+<h1 class="page">Distributed James Server &mdash; BlobStore</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The following pages detail how to do performance testing for the Distributed James Server also its database.</p>
+<p>James stores large, non-indexable binary payloads in a BlobStore. Typical examples
+are message bodies, attachments, deleted messages retained by the vault, and mail
+queue payloads.</p>
 </div>
 <div class="paragraph">
-<p>Once you have a Distributed James Server up and running you then need to ensure it operates correctly and has a decent performance.
-You may need to do performance testings periodically to make sure your James performs well.</p>
+<p>Mailbox, Mail Queue, and Deleted Messages Vault components rely on it.</p>
 </div>
 <div class="paragraph">
-<p>We introduced <a href="james-benchmark.html" class="page">tools and base benchmark result for Distributed James Server</a> also <a href="db-benchmark.html" class="page">James database&#8217;s base performance and how to benchmark them</a>
-to cover this topic.</p>
+<p>Server components usually depend on the higher-level <code>BlobStore</code>. <code>BlobStoreDAO</code>
+is the lower-level virtual storage abstraction implemented by concrete storage
+connectors such as memory, file, Cassandra, Postgres, and S3 compatible object
+stores. It allows James to compose storage features such as encryption or
+compression independently of the storage connector.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_abstraction_layers"><a class="anchor" href="#_abstraction_layers"></a>Abstraction layers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most James components use <code>BlobStore</code>, which is responsible for saving content
+and returning a <code>BlobId</code>. <code>BlobStoreDAO</code> is the lower-level persistence contract:
+it stores, reads, lists, and deletes blobs for a given <code>BucketName</code> and <code>BlobId</code>.</p>
+</div>
+<div class="paragraph">
+<p>A <code>BlobStore</code> exposes a default logical bucket through <code>getDefaultBucketName()</code>.
+Callers can explicitly pass another <code>BucketName</code> when they need to store data in
+another logical bucket. More advanced organization rules inside a logical bucket
+are not part of the generic <code>BlobStore</code> contract; callers need to model them
+explicitly or provide a custom <code>BlobStore</code> implementation.</p>
+</div>
+<div class="paragraph">
+<p>Cross-cutting storage features can be composed around this DAO contract. For
+example, deduplication decides blob identifiers at the <code>BlobStore</code> level, while
+wrappers such as compression or encryption can transform payloads and metadata
+before delegating to the concrete storage connector.</p>
+</div>
+<div class="sect2">
+<h3 id="_blobstore_implementations"><a class="anchor" href="#_blobstore_implementations"></a>BlobStore implementations</h3>
+<div class="paragraph">
+<p>James composes several behaviors at the <code>BlobStore</code> level:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PassThroughBlobStore</code> is the non-deduplicating strategy. It generates a new
+<code>BlobId</code> for each save, delegates persistence to the configured
+<code>BlobStoreDAO</code>, and deletes blobs directly.</p>
+</li>
+<li>
+<p><code>DeDuplicationBlobStore</code> is the deduplicating strategy. It derives <code>BlobId</code>
+values from content hashes, so identical content can share the same stored
+blob. A single delete does not remove the underlying blob immediately; garbage
+collection is responsible for eventually removing unreferenced blobs.</p>
+</li>
+<li>
+<p><code>MetricableBlobStore</code> decorates another <code>BlobStore</code> with timing metrics.</p>
+</li>
+<li>
+<p><code>CachedBlobStore</code> decorates another <code>BlobStore</code> with a Cassandra-backed cache
+for small, frequently read blobs.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blobstoredao_implementations"><a class="anchor" href="#_blobstoredao_implementations"></a>BlobStoreDAO implementations</h3>
+<div class="paragraph">
+<p>Concrete <code>BlobStoreDAO</code> implementations persist payloads in a storage backend,
+for example memory, file, Cassandra, Postgres, or S3 compatible object storage.</p>
+</div>
+<div class="paragraph">
+<p>Some <code>BlobStoreDAO</code> implementations are wrappers rather than final storage
+connectors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AESBlobStoreDAO</code> encrypts payload bytes before delegating writes to the
+underlying DAO, and decrypts them transparently on reads. This protects blob
+content at rest, especially when James stores blobs in third-party object
+storage.</p>
+</li>
+<li>
+<p><code>ZstdBlobStoreDAO</code> can compress payload bytes before delegating writes to the
+underlying DAO. When it stores compressed bytes, it records metadata such as
+<code>content-encoding</code> and the original size. On reads, it uses this metadata to
+transparently decompress the payload. This reduces storage usage and network
+transfer for compressible blob content.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>AES and Zstd can be enabled together. In the Guice binding chain, compression
+wraps encryption: <code>ZstdBlobStoreDAO</code> delegates to <code>AESBlobStoreDAO</code>, which then
+delegates to the concrete storage DAO. Writes therefore compress first and
+encrypt afterwards; reads decrypt first and decompress afterwards. This ordering
+preserves the benefit of compression, as encrypted payloads are generally not
+compressible.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logical_buckets"><a class="anchor" href="#_logical_buckets"></a>Logical buckets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>BucketName</code> is a James logical namespace in the <code>BlobStoreDAO</code> contract. It is
+not an AWS S3 bucket name, even when the selected connector stores data in an S3
+compatible object store.</p>
+</div>
+<div class="paragraph">
+<p>Each connector maps this logical namespace to its own storage model. Depending
+on the implementation and configuration, a logical bucket can be stored as a
+directory, an object-storage bucket, a database partition, or another
+connector-specific representation. Code using <code>BlobStoreDAO</code> should only rely on
+the James <code>BucketName</code> abstraction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_metadata"><a class="anchor" href="#_metadata"></a>Metadata</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Blob metadata stores side information needed to interpret a blob payload without
+changing the payload bytes or blob identifier. One use case is object store
+compression: James uses a marker such as <code>content-encoding</code> to detect a
+compressed payload and transparently decompress it when reading.</p>
+</div>
+<div class="paragraph">
+<p>James uses a hybrid metadata model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Metadata actively interpreted by James should expose typed helpers or constants
+in the API. For example, <code>BlobMetadata.contentEncoding()</code> reads the
+<code>content-encoding</code> entry.</p>
+</li>
+<li>
+<p>Other metadata stays available through the underlying map as an extension point
+for James library users and custom storage implementations.
+Custom storage metadata could be used by James library users or storage extensions to implement other use cases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Metadata-aware storage implementations and wrappers should preserve unknown
+metadata entries.</p>
+</div>
+<div class="sect2">
+<h3 id="_metadata_names"><a class="anchor" href="#_metadata_names"></a>Metadata names</h3>
+<div class="paragraph">
+<p><code>BlobMetadataName</code> defines the portable metadata key convention:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>names are case-insensitive and are canonicalized to lowercase;</p>
+</li>
+<li>
+<p>names must be non-empty;</p>
+</li>
+<li>
+<p>names must be shorter than 128 characters;</p>
+</li>
+<li>
+<p>names can contain only ASCII letters, digits, and <code>-</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </article>
   </div>

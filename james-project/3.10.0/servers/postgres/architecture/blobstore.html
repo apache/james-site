@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Distributed James Server &mdash; Performance testing :: Apache James</title>
+    <title>Postgresql James server &mdash; BlobStore :: Apache James</title>
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
@@ -189,29 +189,287 @@
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../index.html">Distributed James Application</a>
+    <a class="nav-link" href="../../distributed/index.html">Distributed James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../distributed/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/blobstore.html">BlobStore</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/data-tiering.html">Data tiering</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/run/run-docker.html">Run with Docker</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/run/run-kubernetes.html">Run with Kubernetes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-checklist.html">Deployment Checklist</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-logsMetrics.html">Logs &amp; Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-values.html">values.yaml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-secrets.html">secrets.yaml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/migrating.html">Migrating existing data</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/benchmark/index.html">Performance benchmark</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Distributed Postgres James Application</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../objectives.html">Objectives and motivation</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+    <a class="nav-link" href="index.html">Architecture</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+    <a class="nav-link" href="implemented-standards.html">Implemented standards</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/consistency-model.html">Consistency Model</a>
+    <a class="nav-link" href="consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="blobstore.html">BlobStore</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/blobstore.html">BlobStore</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/specialized-instances.html">Specialized instances</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../architecture/data-tiering.html">Data tiering</a>
+    <a class="nav-link" href="specialized-instances.html">Specialized instances</a>
   </li>
 </ul>
   </li>
@@ -224,24 +482,6 @@
   </li>
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../run/run-docker.html">Run with Docker</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../run/run-kubernetes.html">Run with Kubernetes</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../run/k8s-checklist.html">Deployment Checklist</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../run/k8s-logsMetrics.html">Logs &amp; Metrics</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../run/k8s-values.html">values.yaml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../run/k8s-secrets.html">secrets.yaml</a>
-  </li>
-</ul>
   </li>
 </ul>
   </li>
@@ -288,9 +528,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/blobstore.html">blobstore.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/cassandra.html">cassandra.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/opensearch.html">opensearch.properties</a>
@@ -348,36 +585,6 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Extensions</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/vault.html">deletedMessageVault.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/extensions.html">extensions.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/listeners.html">listeners.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/spam.html">Anti-Spam setup</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/collecting-contacts.html">Contact collection</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/collecting-events.html">Event collection</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../configure/dsn.html">ESMTP DSN support</a>
-  </li>
-</ul>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
@@ -406,9 +613,6 @@
     <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
-  </li>
-  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
 </ul>
@@ -434,219 +638,15 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Performance benchmark</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="db-benchmark.html">Database benchmarks</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="james-benchmark.html">James benchmarks</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
-  </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+    <a class="nav-link" href="../benchmark/index.html">Performance testing the Postgresql James server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+    <a class="nav-link" href="../benchmark/db-benchmark.html">Database benchmarks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/architecture/blobstore.html">BlobStore</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Protocols</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Storage dependencies</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Core components</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
-  </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/migrating.html">Migrating existing data</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+    <a class="nav-link" href="../benchmark/james-benchmark.html">James benchmarks</a>
   </li>
 </ul>
   </li>
@@ -768,28 +768,195 @@
   <ul>
     <li><a href="../../../index.html">Apache James Server</a></li>
     <li><a href="../../index.html">Servers</a></li>
-    <li><a href="../index.html">Distributed James Application</a></li>
-    <li><a href="index.html">Performance benchmark</a></li>
+    <li><a href="../index.html">Distributed Postgres James Application</a></li>
+    <li><a href="index.html">Architecture</a></li>
+    <li><a href="blobstore.html">BlobStore</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/benchmark/index.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/postgres/architecture/blobstore.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Distributed James Server &mdash; Performance testing</h1>
+<h1 class="page">Postgresql James server &mdash; BlobStore</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The following pages detail how to do performance testing for the Distributed James Server also its database.</p>
+<p>James stores large, non-indexable binary payloads in a BlobStore. Typical examples
+are message bodies, attachments, deleted messages retained by the vault, and mail
+queue payloads.</p>
 </div>
 <div class="paragraph">
-<p>Once you have a Distributed James Server up and running you then need to ensure it operates correctly and has a decent performance.
-You may need to do performance testings periodically to make sure your James performs well.</p>
+<p>Mailbox, Mail Queue, and Deleted Messages Vault components rely on it.</p>
 </div>
 <div class="paragraph">
-<p>We introduced <a href="james-benchmark.html" class="page">tools and base benchmark result for Distributed James Server</a> also <a href="db-benchmark.html" class="page">James database&#8217;s base performance and how to benchmark them</a>
-to cover this topic.</p>
+<p>Server components usually depend on the higher-level <code>BlobStore</code>. <code>BlobStoreDAO</code>
+is the lower-level virtual storage abstraction implemented by concrete storage
+connectors such as memory, file, Cassandra, Postgres, and S3 compatible object
+stores. It allows James to compose storage features such as encryption or
+compression independently of the storage connector.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_abstraction_layers"><a class="anchor" href="#_abstraction_layers"></a>Abstraction layers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most James components use <code>BlobStore</code>, which is responsible for saving content
+and returning a <code>BlobId</code>. <code>BlobStoreDAO</code> is the lower-level persistence contract:
+it stores, reads, lists, and deletes blobs for a given <code>BucketName</code> and <code>BlobId</code>.</p>
+</div>
+<div class="paragraph">
+<p>A <code>BlobStore</code> exposes a default logical bucket through <code>getDefaultBucketName()</code>.
+Callers can explicitly pass another <code>BucketName</code> when they need to store data in
+another logical bucket. More advanced organization rules inside a logical bucket
+are not part of the generic <code>BlobStore</code> contract; callers need to model them
+explicitly or provide a custom <code>BlobStore</code> implementation.</p>
+</div>
+<div class="paragraph">
+<p>Cross-cutting storage features can be composed around this DAO contract. For
+example, deduplication decides blob identifiers at the <code>BlobStore</code> level, while
+wrappers such as compression or encryption can transform payloads and metadata
+before delegating to the concrete storage connector.</p>
+</div>
+<div class="sect2">
+<h3 id="_blobstore_implementations"><a class="anchor" href="#_blobstore_implementations"></a>BlobStore implementations</h3>
+<div class="paragraph">
+<p>James composes several behaviors at the <code>BlobStore</code> level:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PassThroughBlobStore</code> is the non-deduplicating strategy. It generates a new
+<code>BlobId</code> for each save, delegates persistence to the configured
+<code>BlobStoreDAO</code>, and deletes blobs directly.</p>
+</li>
+<li>
+<p><code>DeDuplicationBlobStore</code> is the deduplicating strategy. It derives <code>BlobId</code>
+values from content hashes, so identical content can share the same stored
+blob. A single delete does not remove the underlying blob immediately; garbage
+collection is responsible for eventually removing unreferenced blobs.</p>
+</li>
+<li>
+<p><code>MetricableBlobStore</code> decorates another <code>BlobStore</code> with timing metrics.</p>
+</li>
+<li>
+<p><code>CachedBlobStore</code> decorates another <code>BlobStore</code> with a Cassandra-backed cache
+for small, frequently read blobs.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blobstoredao_implementations"><a class="anchor" href="#_blobstoredao_implementations"></a>BlobStoreDAO implementations</h3>
+<div class="paragraph">
+<p>Concrete <code>BlobStoreDAO</code> implementations persist payloads in a storage backend,
+for example memory, file, Cassandra, Postgres, or S3 compatible object storage.</p>
+</div>
+<div class="paragraph">
+<p>Some <code>BlobStoreDAO</code> implementations are wrappers rather than final storage
+connectors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AESBlobStoreDAO</code> encrypts payload bytes before delegating writes to the
+underlying DAO, and decrypts them transparently on reads. This protects blob
+content at rest, especially when James stores blobs in third-party object
+storage.</p>
+</li>
+<li>
+<p><code>ZstdBlobStoreDAO</code> can compress payload bytes before delegating writes to the
+underlying DAO. When it stores compressed bytes, it records metadata such as
+<code>content-encoding</code> and the original size. On reads, it uses this metadata to
+transparently decompress the payload. This reduces storage usage and network
+transfer for compressible blob content.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>AES and Zstd can be enabled together. In the Guice binding chain, compression
+wraps encryption: <code>ZstdBlobStoreDAO</code> delegates to <code>AESBlobStoreDAO</code>, which then
+delegates to the concrete storage DAO. Writes therefore compress first and
+encrypt afterwards; reads decrypt first and decompress afterwards. This ordering
+preserves the benefit of compression, as encrypted payloads are generally not
+compressible.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logical_buckets"><a class="anchor" href="#_logical_buckets"></a>Logical buckets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>BucketName</code> is a James logical namespace in the <code>BlobStoreDAO</code> contract. It is
+not an AWS S3 bucket name, even when the selected connector stores data in an S3
+compatible object store.</p>
+</div>
+<div class="paragraph">
+<p>Each connector maps this logical namespace to its own storage model. Depending
+on the implementation and configuration, a logical bucket can be stored as a
+directory, an object-storage bucket, a database partition, or another
+connector-specific representation. Code using <code>BlobStoreDAO</code> should only rely on
+the James <code>BucketName</code> abstraction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_metadata"><a class="anchor" href="#_metadata"></a>Metadata</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Blob metadata stores side information needed to interpret a blob payload without
+changing the payload bytes or blob identifier. One use case is object store
+compression: James uses a marker such as <code>content-encoding</code> to detect a
+compressed payload and transparently decompress it when reading.</p>
+</div>
+<div class="paragraph">
+<p>James uses a hybrid metadata model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Metadata actively interpreted by James should expose typed helpers or constants
+in the API. For example, <code>BlobMetadata.contentEncoding()</code> reads the
+<code>content-encoding</code> entry.</p>
+</li>
+<li>
+<p>Other metadata stays available through the underlying map as an extension point
+for James library users and custom storage implementations.
+Custom storage metadata could be used by James library users or storage extensions to implement other use cases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Metadata-aware storage implementations and wrappers should preserve unknown
+metadata entries.</p>
+</div>
+<div class="sect2">
+<h3 id="_metadata_names"><a class="anchor" href="#_metadata_names"></a>Metadata names</h3>
+<div class="paragraph">
+<p><code>BlobMetadataName</code> defines the portable metadata key convention:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>names are case-insensitive and are canonicalized to lowercase;</p>
+</li>
+<li>
+<p>names must be non-empty;</p>
+</li>
+<li>
+<p>names must be shorter than 128 characters;</p>
+</li>
+<li>
+<p>names can contain only ASCII letters, digits, and <code>-</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </article>
   </div>
