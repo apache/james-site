@@ -1,15 +1,41 @@
 = Building the website
+:path: src/homepage
 
 This repository is used for storing (some) content for https://james.apache.org[Apache James] website.
 
 It's also used to build and publish the website.
 
+Here are the instructions how to publish new changes to the website.
 
-== How to build the website
+The website is currently composed of
+
+- The Antora documentation, aggregated and published from this repository
+- The homepage build
+- The maven site
+
+[WARNING]
+.https://issues.apache.org/jira/browse/JAMES-3187[Documentation migration]
+====
+We are migrating the content of the maven site to use the
+<<_building_the_antora_documentation,antora documentation>> instead.
+
+Most of the useful content has been migrated but the new documentation is not
+yet published to the main site. It can be found on the
+https://james.staged.apache.org[staging version] of the website.
+====
+
+== Building the Antora documentation
+
+The old maven site is quite painful to maintain and doesn't allow for
+versionning of the content per releases which motivated the
+https://issues.apache.org/jira/browse/JAMES-3187[migration effort].
+
+Most of the maven site content has been migrated to asciidoc files assembled by
+antora. You can preview the content at https://james.staged.apache.org, this
+documentation is published automatically by the james CI.
 
 We use https://antora.org[Antora] as a tool to manage and generate the website.
 We use https://gradle.org[Gradle] as a tool to drive / automate the tasks for generating, aggregating and publishing the website.
-
 
 === Why Antora?
 
@@ -32,8 +58,7 @@ By using this specific flow, you only need `git`, `Java` and shell access to bui
 All other dependencies are installed automatically by Gradle.
 Even Gradle is downloaded and installed using the Gradle wrapper script.
 
-
-== How to build the website
+=== Building the whole site
 
 [source,bash]
 ----
@@ -43,8 +68,62 @@ Even Gradle is downloaded and installed using the Gradle wrapper script.
     cd doc-sites/build/site
 ----
 
+=== Building a single component
 
-== How to customize the theme for the documentation
+Each James component keeps its documentation alongside its code, and can be
+previewed on its own, without aggregating the whole site.
+
+For instance the `james-project` documentation root is located in its `docs`
+directory and includes these build instructions.
+
+==== Executing within source code
+
+(Clone `https://github.com/apache/james-project` locally, go into `docs` folder)
+
+. https://docs.antora.org/antora/latest/install-and-run-quickstart/[Install Antora]
+
+. Build the Antora content locally
++
+[,shell]
+----
+ $ antora antora-playbook-local.yml
+----
++
+. Open `build/site/index.html` in your browser.
+
+==== Building with Dockerfile
+
+To build the document from apache-james repository, you can use the Dockerfile provided in this folder.
+
+Build the Docker image:
+
+----
+docker build --build-arg JAMES_CHECKOUT=master -f Dockerfile -t james-site-antora .
+----
+
+Then run the Docker image:
+
+----
+docker run -p 80:80 james-site-antora
+----
+
+Go to `http://localhost` in your browser.
+
+==== Build with the nix enviroment
+
+Enter the xref:contributing.adoc#_experimental_nix_support[james experimental
+development shell] with `nix develop`
+
+. Build the Antora content locally
++
+[,shell]
+----
+ $ antora antora-playbook-local.yml
+----
++
+. Open `build/site/index.html` in your browser.
+
+=== Customizing the theme
 
 The documentation website is based on https://antora.org[Antora].
 We have added https://gitlab.com/antora/antora-ui-default/[antora-ui-default] project as a git subtree under `antora-ui`.
@@ -55,17 +134,161 @@ All you have to do is change the css and html files and then rebuild the project
 
 The antora-ui project has a preview mode: `/.gradlew gulpPreviewTheme`
 
-
 [source,shell]
 ----
     # antora-ui-default was added like this. You should be able to pull some changes from upstream
     git subtree add --prefix antora-ui https://gitlab.com/antora/antora-ui-default.git master --squash
 ----
 
-
-=== Related links
+==== Related links
 
 * https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844[A git subtree tutorial].
 * https://docs.antora.org/antora/2.3/playbook/configure-ui/[Antora UI keys]
 
+== Building the homepage
 
+The source code of the https://james.apache.org[james.apache.org] homepage is
+located in `{path}`, in the `james-project` repository.
+
+You can use jekyll to build it. Go into `{path}` and run the following command.
+
+=== Docker
+
+[WARNING]
+====
+The official docker image `jekyll/jekyll` is unmaintained and is not compatible with jekyll version beyond 4.2.2.
+In this documentation we suggest a replacement `jvconseil/jekyll-docker` but note that this is not an official image.
+Use at your own risks.
+====
+
+[source,shell]
+----
+$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jvconseil/jekyll-docker:4 jekyll build
+----
+
+The resulting deployable content will be available in the `{path}/_site/`
+directory.
+
+In order to test the homepage, you can use this command:
+[source,shell]
+----
+$ docker run --rm -v $PWD/site:/srv/jekyll -p 4000:4000 -it jvconseil/jekyll-docker:4 jekyll serve
+----
+The site will be available at http://localhost:4000/
+
+
+If you need to update the current site, checkout the branch asf-site from
+Apache git:
+[source,shell]
+----
+$ git clone https://git-wip-us.apache.org/repos/asf/james-site.git
+$ cd james-site
+$ git checkout origin/asf-site -b asf-site
+----
+
+make sure to build the site then copy the output to
+
+[source,shell]
+----
+$ docker run --rm -v="$PWD:/srv/jekyll:Z" -it jvconseil/jekyll-docker:4 jekyll build
+$ cp  ../james-site/content
+----
+
+Then just push the new site:
+[source,shell]
+----
+$ cd ../james-site
+$ git push origin asf-site
+----
+
+=== Experimental nix environment
+
+From the root of the repository checkout, you can use the flake's devshell
+
+[source,shell]
+----
+$ cd src/homepage
+$ nix develop
+----
+
+Then use jekyll directly
+
+[source,shell]
+----
+$ jekyll serve
+# or
+$ jekyll build
+----
+
+==== Gemset update for nix
+
+Updating the gemset to track the gemfile updates is a bit involved :
+
+. ensure you are out of all nix devshell (check using `echo $SHLVL` it should be 1)
+. create a temporary shell for gem manipulation `nix-shell -p ruby -p bundix`
+. update the gemfile then run
++
+[,shell]
+----
+BUNDLE_FORCE_RUBY_PLATFORM="true" bundle lock --update
+bundix -l
+----
+. exit the temporary shell and enter the devShell again `nix develop`
+
+== Maven site (legacy website)
+
+The maven site deploy phase uses and requires locally configuring credentials to
+enable ssh access. See
+http://maven.apache.org/plugins/maven-deploy-plugin/examples/deploy-ssh-external.html[maven-deploy-plugin's documentation] for more details on achieving this.
+
+WARNING: Generating the full maven site with all reports takes a long time
+(as in hours)
+
+=== Manually
+
+1. Install Apache Maven 3.0.2+ and make its binary 'mvn' available on your PATH.
+See http://maven.apache.org/download.html#Installation.
+2. run `mvn clean package site -Djib.skip`
+3. Test the built site in your browser from the `{path}/target/site` folder
+4. If everything looks OK, deploy the site using `mvn clean site-deploy`.
+5. Wait for the changes to replicate to the Apache web server or setup
+140.211.11.10:80 as a proxy to review the changes (described here:
+http://www.apache.org/dev/project-site.html)
+
+=== Docker
+
+Can be used only to build the site locally
+
+[WARNING]
+.Contribution welcome
+====
+The docker file in `src/site-docker` is currently broken:
+
+- outdated JDK (11 instead of 21)
+- "manual" download of maven from a link which doesn't resolve anymore
+
+prepare for some tinkering before building using this method.
+====
+
+[source,shell]
+----
+$ docker build -t james/site src/site-docker
+$ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination james/site master
+----
+
+=== Nix development shell
+
+Enter the xref:contributing.adoc#_experimental_nix_support[james experimental
+development shell] with `nix develop`.
+
+1. run `mvn clean package site -Djib.skip`
+2. Test the built site in your browser from the `{path}/target/site` folder
+3. If everything looks OK, deploy the site using `mvn clean site-deploy`.
+4. Wait for the changes to replicate to the Apache web server or setup
+140.211.11.10:80 as a proxy to review the changes
+(see: http://www.apache.org/dev/project-site.html)
+
+=== Technical reports
+
+To deploy the technical reports use any of the 3 ways above adding the
+`-Psite-reports` profile.
