@@ -1,7 +1,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{{or site.url (or siteRootUrl siteRootPath)}}}"><img src="/_/img/james.svg" alt="james logo"> {{site.title}}</a>
+      <a class="navbar-item" href="{{{siteRootPath}}}/index.html"><img src="{{{uiRootPath}}}/img/james.svg" alt="james logo"> {{site.title}}</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -10,26 +10,28 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
+        <a class="navbar-item" href="{{{siteRootPath}}}/index.html">Home</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>James server</strong></div>
+            {{#with site.components.[james-project]}}<a class="navbar-item" href="{{{relativize latest.url}}}">Documentation</a>{{/with}}
             <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
             <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
             <hr class="navbar-divider">
-            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
-            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
-            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
-            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            {{#with site.components.[mime4j]}}<a class="navbar-item" href="{{{relativize latest.url}}}">Mime4J</a>{{/with}}
+            {{#with site.components.[jsieve]}}<a class="navbar-item" href="{{{relativize latest.url}}}">jSieve</a>{{/with}}
+            {{#with site.components.[jspf]}}<a class="navbar-item" href="{{{relativize latest.url}}}">jSPF</a>{{/with}}
+            {{#with site.components.[jdkim]}}<a class="navbar-item" href="{{{relativize latest.url}}}">jDKIM</a>{{/with}}
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
             <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Community</a>
+          {{#with site.components.[james-site]}}<a class="navbar-link" href="{{{relativize latest.url}}}">Community</a>{{else}}<a class="navbar-link" href="#">Community</a>{{/with}}
           <div class="navbar-dropdown">
-             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
-            <a class="navbar-item" href="/james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="{{{siteRootPath}}}/james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="{{{siteRootPath}}}/james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
             <a class="navbar-item" href="https://twitter.com/ApacheJames">
               <span class="icon">
@@ -38,7 +40,7 @@
                 </svg>
               </span> Twitter
             </a>            
-            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
           </div>
         </div>
 <!--        <div class="navbar-item">
