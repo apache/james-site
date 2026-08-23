@@ -1,71 +1,47 @@
-= Apache James website
+= Apache James Community
+:navtitle: Community
 
-This repository is used for storing (some) content for https://james.apache.org[Apache James] website.
+Apache James Project is an Open Source all-volunteer project obtaining its strength from its Community made of
+developers and users. All are welcome to the Community!
 
-It's also used to build and publish the website.
+== Join the community
 
+There are many ways for Users, Developers, Curious and Fans to join and be part of the James Community:
 
-== How to build the website
+ * https://james.apache.org/[Apache James Website]
+ * xref:mailing-lists.adoc[Mailing lists]: Subscribe to the appropriate Mailing Lists according to your interests and profile.
+ * https://gitter.im/apache/james-project[Gitter chat room]: Chat in live with the community on Gitter.
+ * https://twitter.com/ApacheJames[Twitter]: Express yourself and follow us @ApacheJames.
+ * https://github.com/apache/james-project[GitHub]: Read and contribute to the source code of the project.
+ * https://issues.apache.org/jira/projects/JAMES[JIRA]: Report issues or make suggestions for the project on our bug tracker.
+ * https://builds.apache.org/job/ApacheJames/[CI]: Check the status of James builds on our Jenkins CI.
+ * xref:download.adoc[Download releases]: Download artifacts and sources your need for the James Server and James libraries.
+ * xref:support.adoc[Professional support]: Find a list of companies which can provide you some support on James.
 
-We use https://antora.org[Antora] as a tool to manage and generate the website.
-We use https://gradle.org[Gradle] as a tool to drive / automate the tasks for generating, aggregating and publishing the website.
+== Contribute
 
+James is a project that lives from the contributions of its community. *Anyone can contribute!*
 
-=== Why Antora?
+That's right, we always want to hear from people with contributions to the code, the documentation, the website,
+and bug reports. We more than welcome non-coding contributions.
 
-Antora lets us aggregate multiple documentation sources, across multiple versions and publish them as a single website.
-Documentation for each Apache James component is kept and versioned alongside the code for it.
+You can find more information on how to contribute to the James project on the xref:contributing.adoc[contributing] section.
 
-=== Why Gradle?
+== Articles for contributors
 
-Gradle allows us to automate the tasks that we do when publishing a website.
-We write gradle tasks for building and publishing the website.
-We can run those tasks locally and inside our CI infrastructure: https://builds.apache.org[Apache Builds].
+** xref:website.adoc[]
+** xref:release.adoc[]
 
-More specifically, we use Gradle to:
+== The Apache Software Foundation
 
-* Download and install a specific version of https://nodejs.org[NodeJS] using https://github.com/node-gradle/gradle-node-plugin[Gradle Node Plugin]
-* Install a local version of Antora
-* Use a Gradle task to call build the website with Antora
+James is a project belonging to the https://www.apache.org/[Apache Software Foundation [ASF\]]. Thus, the Apache Jame project
+is governed by a number of xref:guidelines.adoc[guidelines] directly depending on the *ASF*.
 
-By using this specific flow, you only need `git`, `Java` and shell access to build the website.
-All other dependencies are installed automatically by Gradle.
-Even Gradle is downloaded and installed using the Gradle wrapper script.
+If you wish to get more involved with the *ASF* community in general, those links might interest you as well:
 
-
-== How to build the website
-
-[source,bash]
-----
-    # To build the website run
-    ./gradlew clean build
-    # The website is located here
-    cd doc-sites/build/site
-----
-
-
-== How to customize the theme for the documentation
-
-The documentation website is based on https://antora.org[Antora].
-We have added https://gitlab.com/antora/antora-ui-default/[antora-ui-default] project as a git subtree under `antora-ui`.
-
-`./gradlew :antora-ui:build` will assemble the `antora-ui/build/ui-bundle.zip` archive required for the website.
-All the steps are automated as Gradle tasks in that project.
-All you have to do is change the css and html files and then rebuild the project.
-
-The antora-ui project has a preview mode: `/.gradlew gulpPreviewTheme`
-
-
-[source,shell]
-----
-    # antora-ui-default was added like this. You should be able to pull some changes from upstream
-    git subtree add --prefix antora-ui https://gitlab.com/antora/antora-ui-default.git master --squash
-----
-
-
-=== Related links
-
-* https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844[A git subtree tutorial].
-* https://docs.antora.org/antora/2.3/playbook/configure-ui/[Antora UI keys]
-
-
+ * https://www.apache.org/foundation/getinvolved.html[Get involved with the ASF]
+ * https://www.apache.org/foundation/faq.html[Apache FAQ]
+ * https://www.apache.org/licenses/[Apache Licenses]
+ * https://www.apache.org/security/[The Apache security team]
+ * https://www.apache.org/foundation/sponsorship.html[Sponsorship program]
+ * https://www.apache.org/foundation/thanks.html[Sponsors list]
