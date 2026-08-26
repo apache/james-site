@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apache James jSieve :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../index.html"><img src="../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../../index.html">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../james-project/3.9.0/index.html">Documentation</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="index.html">jSieve</a>
+            <a class="navbar-item" href="../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="../../james-site/latest/index.html">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../james-site/latest/contributing.html">Contributing</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="jsieve" data-version="0.9-SNAPSHOT">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Apache James jSieve</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="features.html">Sieve Features</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="usage.html">Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="utils.html">jSieve Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="specifications.html">Specifications</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="release-notes.html">Release Notes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://issues.apache.org/jira/browse/JSIEVE">Issue Tracker</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/download.cgi#Apache_JSieve">Download Releases</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James jSieve</span>
+    <span class="version">0.9-SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-project/3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../james-project/3.10.0/index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../james-project/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Apache James jSieve</a></li>
+    <li><a href="index.html">Overview</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/apache/james-jsieve/blob/master/docs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Apache James jSieve</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/james-jsieve-logo.gif" alt="jSieve logo">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_jsieve"><a class="anchor" href="#_what_is_jsieve"></a>What is jSieve?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>jSieve is a Java implementation of the Sieve mail filtering language defined by
+<a href="https://tools.ietf.org/html/rfc5228">RFC 5228</a>. jSieve is implemented as a language
+processor that can be plugged into any internet mail application to add Sieve support.</p>
+</div>
+<div class="paragraph">
+<p>jSieve is a subproject of <a href="https://james.apache.org">Apache JAMES</a>. All who are interested
+in developing jSieve and JAMES will be warmly welcomed on the
+<a href="https://james.apache.org/mail.html">mailing lists</a>.</p>
+</div>
+<div class="paragraph">
+<p>jSieve consists of two products:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Apache JSieve</strong> is a Sieve library coded in Java. See <a href="getting-started.html" class="xref page">Getting Started</a>,
+<a href="usage.html" class="xref page">Usage</a> and <a href="features.html" class="xref page">Sieve Features</a>.</p>
+</li>
+<li>
+<p><a href="utils.html" class="xref page"><strong>Apache JSieve Utilities</strong></a> contains utility classes helpful when using Sieve
+but not considered sufficiently core to be included in the main library.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_what_is_sieve"><a class="anchor" href="#_what_is_sieve"></a>What is Sieve?</h3>
+<div class="paragraph">
+<p>Sieve is an extensible mail filtering language. Its limited expressiveness (no loops or
+variables, no tests with side effects) allows user created scripts to be run safely on email
+servers. Sieve is targeted at the final delivery phase (where an incoming email is transferred
+to a user&#8217;s mailbox).</p>
+</div>
+<div class="paragraph">
+<p>Sieve scripts are composed of commands. Control commands manage the execution of the script.
+Test commands define side-effect free criteria. Action commands are mail operations to be
+performed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extensions_supported"><a class="anchor" href="#_extensions_supported"></a>Extensions Supported</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_body_extension"><a class="anchor" href="#_body_extension"></a>Body Extension</h3>
+<div class="paragraph">
+<p><a href="https://tools.ietf.org/html/rfc5173">RFC 5173</a> (Sieve Email Filtering: Body Extension) describes
+an extension command that tests the body of an email for one or more strings.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sieve_in_xml"><a class="anchor" href="#_sieve_in_xml"></a>Sieve-In-Xml</h3>
+<div class="paragraph">
+<p><a href="https://tools.ietf.org/html/draft-freed-sieve-in-xml-04">Sieve-in-xml</a> is an Internet Draft.
+It describes a method for converting Sieve scripts to and from XML fragments.
+<a href="utils.html" class="xref page">JSieve Utilities</a> contains an experimental preview of a subset of this draft
+to allow early feedback. <a href="utils.html#sieve-in-xml" class="xref page">More&#8230;&#8203;</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_news"><a class="anchor" href="#_news"></a>News</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_october2022_jsieve_0_8_released"><a class="anchor" href="#_october2022_jsieve_0_8_released"></a>October/2022 - jSieve-0.8 released</h3>
+<div class="paragraph">
+<p>The Apache JAMES team is happy to announce the availability of
+<a href="https://james.apache.org/download.cgi#Apache_JSieve">Apache jSieve 0.8</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_may2010_jsieve_0_5_released"><a class="anchor" href="#_may2010_jsieve_0_5_released"></a>May/2010 - jSieve-0.5 released</h3>
+<div class="paragraph">
+<p>The Apache JAMES team is happy to announce the availability of
+<a href="https://james.apache.org/download.cgi#Apache_JSieve">Apache jSieve 0.5</a>.
+See <a href="https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=10412&amp;version=12314991&amp;styleName=Html">release notes</a>
+for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_may2010_jsieve_0_4_released"><a class="anchor" href="#_may2010_jsieve_0_4_released"></a>May/2010 - jSieve-0.4 released</h3>
+<div class="paragraph">
+<p>The Apache JAMES team is happy to announce the availability of
+<a href="https://james.apache.org/download.cgi#Apache_JSieve">Apache jSieve 0.4</a>.
+See <a href="https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=10412&amp;styleName=Html&amp;version=12313855">release notes</a>
+for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jun2008_jsieve_0_3_released"><a class="anchor" href="#_jun2008_jsieve_0_3_released"></a>Jun/2008 - jSieve-0.3 released</h3>
+<div class="paragraph">
+<p>The Apache JAMES team is happy to announce the availability of
+<a href="https://james.apache.org/download.cgi#Apache_JSieve">Apache jSieve 0.3</a>.
+This is the first modular release including a filtering
+<a href="https://james.apache.org/mailet">mailet</a> as well as many fixes and improvements.
+See the <a href="release-notes.html" class="xref page">release notes</a> for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aug2008_jsieve_0_2_released"><a class="anchor" href="#_aug2008_jsieve_0_2_released"></a>Aug/2008 - jSieve-0.2 released</h3>
+<div class="paragraph">
+<p>The Apache JAMES team is happy to announce the availability of
+<a href="https://james.apache.org/download.cgi#Apache_JSieve">Apache jSieve 0.2</a>.
+This first public release is a major milestone for JSieve.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

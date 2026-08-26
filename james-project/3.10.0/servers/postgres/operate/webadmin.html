@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Postgresql James Server &mdash; WebAdmin REST administration API :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/servers/postgres/operate/webadmin.html">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <a class="navbar-item" href="../../../../../index.html"><img src="../../../../../_/img/james.svg" alt="james logo"> Apache James</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -20,26 +21,28 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
+        <a class="navbar-item" href="../../../../../index.html">Home</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../../../3.9.0/index.html">Documentation</a>
             <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
             <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
             <hr class="navbar-divider">
-            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
-            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
-            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
-            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../../../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../../../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
             <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Community</a>
+          <a class="navbar-link" href="../../../../../james-site/latest/index.html">Community</a>
           <div class="navbar-dropdown">
-             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
-            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
             <a class="navbar-item" href="https://twitter.com/ApacheJames">
               <span class="icon">
@@ -48,7 +51,7 @@
                 </svg>
               </span> Twitter
             </a>            
-            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
           </div>
         </div>
 <!--        <div class="navbar-item">
@@ -73,82 +76,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/messages/index.html">Messages</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/imf.html">IMF</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/mime.html">MIME</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../index.html">Servers</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -160,30 +87,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../basic/index.html">Basic</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/context.html">Context</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
   </li>
@@ -253,6 +156,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../distributed/configure/imap.html">imapserver.xml</a>
   </li>
@@ -409,6 +321,9 @@
     <a class="nav-link" href="../../distributed/operate/cassandra-migration.html">Cassandra migration</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/backup.html">Backup</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../../distributed/operate/security.html">Security checklist</a>
   </li>
 </ul>
@@ -493,6 +408,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../configure/imap.html">imapserver.xml</a>
   </li>
@@ -672,64 +596,6 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../community/index.html">Community</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/download.html">Download releases</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/support.html">Professional support</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Apache Software Foundation</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/">ASF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
 </ul>
   </nav>
 </div>
@@ -739,11 +605,52 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -773,6 +680,15 @@
     <li><a href="webadmin.html">WebAdmin REST administration API</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="webadmin.html">3.10.0 SNAPSHOT</a>
+    <a class="version" href="../../../../3.9.0/servers/postgres/operate/webadmin.html">3.9.0</a>
+    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/postgres/operate/webadmin.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -1789,7 +1705,7 @@ syntax</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -1876,7 +1792,7 @@ If you want to update a user&#8217;s password, please have a look at <strong>Upd
 </div>
 <div class="paragraph">
 <p>Resource name ``usernameToBeUsed'' represents a valid user, hence it
-should match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+should match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -2322,7 +2238,7 @@ migrates user&#8217;s mailbox subscriptions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>[
+<pre class="highlightjs highlight"><code class="language-none hljs">[
    {
       "name":"identity name 1",
       "email":"bob@domain.tld",
@@ -2519,7 +2435,7 @@ Resource name </code>identityId'' represents an existing user identity</p>
 </div>
 <div class="paragraph">
 <p>Resource name usernameToBeUsed representing valid users, hence it should
-match the criteria at <a href="../configure/usersrepository.html" class="page">User Repositories documentation</a></p>
+match the criteria at <a href="../configure/usersrepository.html" class="xref page">User Repositories documentation</a></p>
 </div>
 <div class="paragraph">
 <p>The response will look like this:</p>
@@ -3237,9 +3153,6 @@ leave the currently reIndexed mailbox as partially indexed.</p>
 a maximum (by keeping track of ongoing events), concurrent changes done
 during the reIndexing might be ignored.</p>
 </div>
-<div class="paragraph">
-<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:postgres/operate/webadmin/admin-mailboxes-extend.adoc[]</p>
-</div>
 </div>
 </div>
 </div>
@@ -3299,7 +3212,7 @@ be altered.</p>
 <h3 id="_deleting_old_messages_of_all_users"><a class="anchor" href="#_deleting_old_messages_of_all_users"></a>Deleting old messages of all users</h3>
 <div class="paragraph">
 <p><strong>Note:</strong>
-Consider enabling the <a href="../configure/vault.html" class="page">Deleted Messages Vault</a>
+Consider enabling the <a href="../configure/vault.html" class="xref page">Deleted Messages Vault</a>
 if you use this feature.</p>
 </div>
 <div class="paragraph">
@@ -3378,11 +3291,8 @@ messages where the expiration date from this header lies in the past:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In this case you should also add the <a href="../configure/mailets.html" class="page">mailet</a>
+<p>In this case you should also add the <a href="../configure/mailets.html" class="xref page">mailet</a>
 <code>Expires</code> to your mailet container, which can sanitize expiration date headers.</p>
-</div>
-<div class="paragraph">
-<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:postgres/operate/webadmin/admin-messages-extend.adoc[]</p>
 </div>
 </div>
 <div class="sect2">
@@ -3626,7 +3536,7 @@ name <code>mailboxNameToBeTested</code> should not be empty</p>
 <h3 id="_exporting_user_mailboxes"><a class="anchor" href="#_exporting_user_mailboxes"></a>Exporting user mailboxes</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -XPOST http://ip:port/users/{usernameToBeUsed}/mailboxes?action=export</pre>
+<pre>curl -XPOST http://ip:port/users/{usernameToBeUsed}/mailboxes?task=export</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3658,6 +3568,51 @@ and the following <code>additionalInformation</code>:</p>
   "stage": "STARTING"
 }</pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restoring_user_mailboxes"><a class="anchor" href="#_restoring_user_mailboxes"></a>Restoring user mailboxes</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XPOST http://ip:port/users/{usernameToBeUsed}/mailboxes?task=restore --data-binary @backup.zip</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Resource name <code>usernameToBeUsed</code> should be an existing user. The request body must contain the ZIP backup data.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: Success. Corresponding task id is returned</p>
+</li>
+<li>
+<p>400: The request body is empty</p>
+</li>
+<li>
+<p>404: The user name does not exist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The scheduled task will have the following type <code>MailboxesRestoreTask</code>
+and the following <code>additionalInformation</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>{
+  "type":"MailboxesRestoreTask",
+  "timestamp":"2007-12-03T10:15:30Z",
+  "username": "user"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: The account must be empty for the restore to succeed. If the user already has mailboxes, the task will fail.
+If you wish to really force the restoration on a non-empty user, you can add the <code>?force=true</code> query parameter.
+It will delete existing data of the user before proceeding with the restoration.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5829,7 +5784,7 @@ member will receive it.</p>
 an existing user.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -5998,7 +5953,7 @@ mail. Otherwise he is omitted.</p>
 ``groups''.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6143,7 +6098,7 @@ address of the alias will receive it.</p>
 <p>Aliases can be defined for existing users.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6295,7 +6250,7 @@ sent to <code>admin@james.apache.org</code>, then it will be routed to
 <code>admin@james.org</code> and <code>admin@apache-james.org</code></p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6457,7 +6412,7 @@ a recipient matched with the mapping source, then that mail will be
 re-routed to a new recipient address which is re written by the regex.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 API</a> to be configured.</p>
@@ -6577,7 +6532,7 @@ mapping source <code>mappingSource</code> to RecipientRewriteTable.</p>
 destination addresses will receive it.</p>
 </div>
 <div class="paragraph">
-<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>
+<p>This feature uses <a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>
 and requires the
 <a href="https://github.com/apache/james-project/blob/master/server/mailet/mailets/src/main/java/org/apache/james/transport/mailets/RecipientRewriteTable.java">RecipientRewriteTable
 mailet</a> to be configured.</p>
@@ -6671,7 +6626,7 @@ Address</p>
 </div>
 <div class="paragraph">
 <p>Get all mappings from the
-<a href="../architecture/index.html#_recipient_rewrite_tables" class="page">Recipients rewrite table</a>.</p>
+<a href="../architecture/index.html#_recipient_rewrite_tables" class="xref page">Recipients rewrite table</a>.</p>
 </div>
 <div class="paragraph">
 <p>Response body:</p>
@@ -7896,9 +7851,6 @@ short form (<code>h</code>, <code>d</code>, <code>w</code>, etc.), or in the lon
 <p>The response body contains the id of the republishing task.
 <code>{      "taskId": "a650a66a-5984-431e-bdad-f1baad885856"  }</code></p>
 </div>
-<div class="paragraph">
-<p>Unresolved include directive in modules/servers/partials/operate/webadmin.adoc - include::servers:postgres/operate/webadmin/admin-mail-queues-extend.adoc[]</p>
-</div>
 </div>
 </div>
 </div>
@@ -8021,6 +7973,53 @@ with the dead letter API:</p>
 </li>
 <li>
 <p>404: No event with this <code>insertionId</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_searching_an_event_by_its_event_id"><a class="anchor" href="#_searching_an_event_by_its_event_id"></a>Searching an event by its event id</h3>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/events/deadLetter?eventId=6e0dd59d-660e-4d9b-b22f-0354479f47b4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Will look up the supplied <code>eventId</code> across all the groups holding dead
+lettered events, and return the full JSON associated with the first
+matching event. The group and the <code>insertionId</code> of the returned event are
+carried by the <code>X-Group</code> and <code>X-Insertion-Id</code> response headers, which can
+then be used to interact with the rest of this API (replay, deletion).</p>
+</div>
+<div class="paragraph">
+<p>An optional <code>group</code> query parameter narrows the search down to a single
+group, which is significantly cheaper when the group holding the event is
+known:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/events/deadLetter?eventId=6e0dd59d-660e-4d9b-b22f-0354479f47b4&amp;group=org.apache.james.mailbox.events.EventBusTestFixture$GroupA</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that this operation scans the dead letter content, thus can be slow
+when many events are dead lettered.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: Success. A JSON representing this event is returned. <code>X-Group</code> and
+<code>X-Insertion-Id</code> headers locate it.</p>
+</li>
+<li>
+<p>400: Missing or invalid <code>eventId</code>, or invalid <code>group</code></p>
+</li>
+<li>
+<p>404: No dead lettered event with this <code>eventId</code> (in this <code>group</code>, if
+supplied)</p>
 </li>
 </ul>
 </div>
@@ -9399,8 +9398,21 @@ connections, including:</p>
 </main>
 </div>
 <footer class="footer">
-  <p>This page was built using the Antora default UI.</p>
-  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+  <img src="../../../../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
 </footer>
 <script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
 <script async src="../../../../../_/js/vendor/highlight.js"></script>

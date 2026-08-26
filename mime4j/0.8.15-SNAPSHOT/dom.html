@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using the DOM API :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../index.html"><img src="../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../../index.html">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../james-project/3.9.0/index.html">Documentation</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="index.html">Mime4J</a>
+            <a class="navbar-item" href="../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="../../james-site/latest/index.html">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../james-site/latest/contributing.html">Contributing</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="mime4j" data-version="0.8.15-SNAPSHOT">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Apache James Mime4j</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="status.html">Status</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="samples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="usage.html">Usage</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="dom.html">Using the DOM API</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="development/index.html">Developer corner</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="development/build.html">Build</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/mail.html#Mime4j">Mailing list</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/mime4j/apidocs/index.html">Javadoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://issues.apache.org/jira/browse/MIME4J/">Issue tracker</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/download.cgi#Apache_Mime4J">Download releases</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Mime4j</span>
+    <span class="version">0.8.15-SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-project/3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../james-project/3.10.0/index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../james-project/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Apache James Mime4j</a></li>
+    <li><a href="dom.html">Using the DOM API</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/apache/james-mime4j/blob/master/docs/modules/ROOT/pages/dom.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Using the DOM API</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mime4J offers two ways of looking at a message. The <a href="usage.html" class="xref page">streaming API</a> hands you
+parsing events one at a time and never holds the whole message in memory. The <strong>DOM API</strong>,
+described here, turns a message into a tree of objects that you can navigate, modify and
+write back out. It is the API you want when you need random access to the parts of a
+message, or when you need to <strong>build</strong> a message rather than read one.</p>
+</div>
+<div class="paragraph">
+<p>The DOM API lives in the <code>apache-mime4j-dom</code> artifact:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-mime4j-dom&lt;/artifactId&gt;
+    &lt;version&gt;0.8.14&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>apache-mime4j-dom</code> pulls in <code>apache-mime4j-core</code> transitively. The optional
+<code>apache-mime4j-storage</code> artifact is only needed if you want body parts stored somewhere
+other than the heap; see <a href="#_choosing_where_body_parts_are_stored">Choosing where body parts are stored</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_object_model"><a class="anchor" href="#_the_object_model"></a>The object model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A parsed message is a tree of <strong>entities</strong>. An
+<a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/dom/Entity.html"><code>Entity</code></a>
+is anything with a header and a body: the message itself, and every body part inside it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Entity
+ |- Header          a list of Field (name / value)
+ |- Body            one of:
+     |- SingleBody      a leaf part
+     |   |- TextBody        text/* — readable as characters
+     |   |- BinaryBody      everything else — readable as bytes
+     |- Multipart       a container, holds a List&lt;Entity&gt;
+     |- Message         a nested message/rfc822 part</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The two concrete entity types are
+<a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/dom/Message.html"><code>Message</code></a>
+(the root, or a nested <code>message/rfc822</code> part) and
+<a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/message/BodyPart.html"><code>BodyPart</code></a>
+(a part inside a <code>Multipart</code>). Both expose <code>getHeader()</code>, <code>getBody()</code>, <code>getMimeType()</code>,
+<code>getCharset()</code>, <code>getDispositionType()</code> and <code>getFilename()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Note that a body is <strong>not</strong> an entity: a <code>Multipart</code> has no header of its own, it borrows the
+<code>Content-Type</code> of the entity that holds it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parsing_a_message"><a class="anchor" href="#_parsing_a_message"></a>Parsing a message</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The shortest way to parse is <code>Message.Builder.of(InputStream)</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of(inputStream).build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Real-world mail is frequently malformed. <code>MimeConfig.PERMISSIVE</code> relaxes the limits and
+recovery rules of the parser, which is usually what you want when parsing messages you did
+not produce yourself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of()
+        .use(MimeConfig.PERMISSIVE)
+        .parse(inputStream)
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>MimeConfig</code> also comes as <code>DEFAULT</code> (the default) and <code>STRICT</code> (rejects anything that
+violates the RFCs), and <code>MimeConfig.custom()</code> lets you tune individual limits such as
+<code>setMaxLineLen</code>, <code>setMaxHeaderCount</code> or <code>setMaxContentLen</code>. Those limits matter: they are
+what protects you from hostile messages crafted to exhaust CPU or memory.</p>
+</div>
+<div class="paragraph">
+<p>The same thing can be done with a reusable
+<a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/message/DefaultMessageBuilder.html"><code>DefaultMessageBuilder</code></a>,
+which is handy when you parse many messages with the same settings:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DefaultMessageBuilder builder = new DefaultMessageBuilder();
+builder.setMimeEntityConfig(MimeConfig.PERMISSIVE);
+
+Message message = builder.parseMessage(inputStream);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reading_headers"><a class="anchor" href="#_reading_headers"></a>Reading headers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Common fields have typed accessors that give you parsed values rather than raw strings:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String subject = message.getSubject();
+Date date = message.getDate();
+
+for (Mailbox mailbox : message.getFrom()) {
+    System.out.println(mailbox.getName() + " &lt;" + mailbox.getAddress() + "&gt;");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>getFrom()</code> returns a <code>MailboxList</code>; <code>getTo()</code>, <code>getCc()</code>, <code>getBcc()</code> and <code>getReplyTo()</code>
+return an <code>AddressList</code>, whose elements are either a <code>Mailbox</code> or a <code>Group</code> of mailboxes.</p>
+</div>
+<div class="paragraph">
+<p>Any other field is reachable through the header. A header may hold several fields with the
+same name — <code>Received</code> is the usual example — so both a single-valued and a list-valued
+accessor exist:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Field field = message.getHeader().getField("X-Spam-Score");
+if (field != null) {
+    System.out.println(field.getName() + ": " + field.getBody());
+}
+
+List&lt;Field&gt; received = message.getHeader().getFields("Received");</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reading_the_body"><a class="anchor" href="#_reading_the_body"></a>Reading the body</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For a simple <code>text/plain</code> message the body is a <code>TextBody</code>, which decodes the transfer
+encoding and the charset for you:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">if (message.getBody() instanceof TextBody) {
+    TextBody body = (TextBody) message.getBody();
+    try (Reader reader = body.getReader()) {
+        StringWriter writer = new StringWriter();
+        reader.transferTo(writer);
+        return writer.toString();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A multipart message needs to be walked. The three cases to handle are the ones from the
+object model above — a container, a nested message, and a leaf:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void walk(Entity entity, int depth) throws IOException {
+    String indent = "  ".repeat(depth);
+    System.out.println(indent + entity.getMimeType()
+            + (entity.getFilename() != null ? " (" + entity.getFilename() + ")" : ""));
+
+    Body body = entity.getBody();
+    if (body instanceof Multipart) {
+        for (Entity part : ((Multipart) body).getBodyParts()) {
+            walk(part, depth + 1);
+        }
+    } else if (body instanceof Message) {
+        walk((Message) body, depth + 1);
+    } else if (body instanceof SingleBody) {
+        System.out.println(indent + "  " + ((SingleBody) body).size() + " bytes");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On a forwarded message that prints:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>multipart/mixed
+  text/plain
+    22 bytes
+  message/rfc822
+    multipart/mixed
+      text/plain
+        33 bytes
+      application/pdf (invoice.pdf)
+        13 bytes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The same traversal is how you pull attachments out. <code>SingleBody.writeTo(OutputStream)</code>
+writes the <strong>decoded</strong> content, so you get the actual file bytes, not base64:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void extractAttachments(Entity entity, OutputStream sink) throws IOException {
+    Body body = entity.getBody();
+    if (body instanceof Multipart) {
+        for (Entity part : ((Multipart) body).getBodyParts()) {
+            extractAttachments(part, sink);
+        }
+    } else if ("attachment".equalsIgnoreCase(entity.getDispositionType())) {
+        ((SingleBody) body).writeTo(sink);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_a_message"><a class="anchor" href="#_building_a_message"></a>Building a message</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>Message.Builder</code> builds a message from scratch. Setting a header field is a method call,
+and <code>setBody</code> sets the <code>Content-Type</code> for you:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of()
+        .setFrom("John Doe &lt;jdoe@machine.example&gt;")
+        .setTo("Mary Smith &lt;mary@example.net&gt;")
+        .setSubject("Saying hello")
+        .setDate(new Date())
+        .generateMessageId("machine.example")
+        .setBody("Hello, Mary!", StandardCharsets.UTF_8)
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Date</code> and <code>From</code> are required by RFC 5322, and a <code>Message-ID</code> should be present. The
+address setters take either a <code>Mailbox</code>/<code>Address</code> object or a string, and the string forms
+throw <code>ParseException</code> if the address does not parse.</p>
+</div>
+<div class="paragraph">
+<p>A multipart message is assembled with <code>MultipartBuilder</code> and <code>BodyPartBuilder</code>, which offer
+the same header methods per part:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of()
+        .setFrom("John Doe &lt;jdoe@machine.example&gt;")
+        .setTo("Mary Smith &lt;mary@example.net&gt;")
+        .setSubject("Invoice")
+        .setDate(new Date())
+        .setBody(MultipartBuilder.create("mixed")
+                .addBodyPart(BodyPartBuilder.create()
+                        .setBody("Please find the invoice attached.", StandardCharsets.UTF_8)
+                        .setContentTransferEncoding("quoted-printable")
+                        .build())
+                .addBodyPart(BodyPartBuilder.create()
+                        .setBody(pdf, "application/pdf")
+                        .setContentTransferEncoding("base64")
+                        .setContentDisposition("attachment", "invoice.pdf")
+                        .build())
+                .build())
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>setContentDisposition("attachment", "invoice.pdf")</code> sets both the disposition type and the
+filename. Boundaries are generated for you.</p>
+</div>
+<div class="paragraph">
+<p><code>MultipartBuilder.addTextPart</code> and <code>addBinaryPart</code> are shorthands for the common cases, and
+<code>setBody(text, subtype, charset)</code> picks the text subtype:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of()
+        .setSubject("Hello")
+        .setBody(MultipartBuilder.create("alternative")
+                .addTextPart("Hello, Mary!", StandardCharsets.UTF_8)
+                .addBodyPart(BodyPartBuilder.create()
+                        .setBody("&lt;p&gt;Hello, &lt;b&gt;Mary&lt;/b&gt;!&lt;/p&gt;", "html", StandardCharsets.UTF_8)
+                        .build())
+                .build())
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a header field Mime4J has no dedicated setter for, pass a <code>Field</code>. <code>RawField</code> is the
+simplest implementation, and
+<a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/field/Fields.html"><code>Fields</code></a>
+has factory methods that build correctly encoded structured fields:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of()
+        .setField(new RawField("X-Mailer", "my-app 1.0"))
+        .setBody("Hello", StandardCharsets.UTF_8)
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nesting a whole message as a <code>message/rfc822</code> part — forwarding — is just another
+<code>setBody</code> overload:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message forwarded = Message.Builder.of()
+        .setFrom("John Doe &lt;jdoe@machine.example&gt;")
+        .setSubject("Fwd: " + original.getSubject())
+        .setBody(MultipartBuilder.create("mixed")
+                .addTextPart("See the message below.", StandardCharsets.UTF_8)
+                .addBodyPart(BodyPartBuilder.create()
+                        .setBody(original)
+                        .build())
+                .build())
+        .build();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_modifying_an_existing_message"><a class="anchor" href="#_modifying_an_existing_message"></a>Modifying an existing message</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>Message.Builder.of(Message)</code> copies an existing message into a builder. The copy can be
+modified without touching the original:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message.Builder builder = Message.Builder.of(original);
+builder.setSubject("Re: " + original.getSubject());
+builder.removeFields("Message-ID");
+builder.generateMessageId("machine.example");
+
+Message reply = builder.build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>builder.getBody()</code> gives access to the copied body, so you can cast it to <code>Multipart</code> and
+use <code>addBodyPart</code>, <code>removeBodyPart</code> or <code>replaceBodyPart</code> to restructure the message before
+building it. An entity you remove from a tree no longer has an owner — call <code>dispose()</code> on
+it, as explained below.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_writing_a_message_out"><a class="anchor" href="#_writing_a_message_out"></a>Writing a message out</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://james.apache.org/mime4j/apidocs/org/apache/james/mime4j/message/DefaultMessageWriter.html"><code>DefaultMessageWriter</code></a>
+serializes a message back to the wire format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">MessageWriter writer = new DefaultMessageWriter();
+writer.writeMessage(message, outputStream);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For small messages there is a shortcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">byte[] raw = DefaultMessageWriter.asBytes(message);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The writer also has <code>writeEntity</code>, <code>writeMultipart</code>, <code>writeHeader</code> and <code>writeBody</code> if you
+need to serialize a fragment.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choosing_where_body_parts_are_stored"><a class="anchor" href="#_choosing_where_body_parts_are_stored"></a>Choosing where body parts are stored</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default Mime4J keeps the content of every body part <strong>in memory</strong>
+(<code>BasicBodyFactory</code>). That is fine for ordinary mail and terrible for a 200 MB attachment.
+The <code>apache-mime4j-storage</code> artifact provides body factories that spill content elsewhere:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-mime4j-storage&lt;/artifactId&gt;
+    &lt;version&gt;0.8.14&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// keep the first 100 kB of each part in memory, write the remainder to a temporary file
+StorageProvider storageProvider =
+        new ThresholdStorageProvider(new TempFileStorageProvider(), 100 * 1024);
+StorageBodyFactory bodyFactory = new StorageBodyFactory(storageProvider, DecodeMonitor.SILENT);
+
+DefaultMessageBuilder builder = new DefaultMessageBuilder();
+builder.setBodyFactory(bodyFactory);
+
+Message message = builder.parseMessage(inputStream);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ThresholdStorageProvider</code> keeps the first <code>thresholdSize</code> bytes of a part in memory and
+sends only the remainder to its back-end, so small parts never touch the disk at all.</p>
+</div>
+<div class="paragraph">
+<p>Providers compose. <code>MemoryStorageProvider</code> and <code>TempFileStorageProvider</code> are the two that
+actually store content; <code>ThresholdStorageProvider</code> and <code>CipherStorageProvider</code> decorate
+another provider — the latter scrambles whatever the back-end writes, through the JCE API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">StorageProvider provider = new ThresholdStorageProvider(
+        new CipherStorageProvider(new TempFileStorageProvider()), 100 * 1024);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The same body factory can be handed to <code>MultipartBuilder.use(&#8230;&#8203;)</code> and
+<code>BodyPartBuilder.use(&#8230;&#8203;)</code> when you are building a message with large parts.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_releasing_resources"><a class="anchor" href="#_releasing_resources"></a>Releasing resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once a body part may live in a temporary file, releasing it is your responsibility.
+<code>Message</code> and <code>BodyPart</code> implement <code>Disposable</code>: calling <code>dispose()</code> on a message disposes
+of the whole tree underneath it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Message message = Message.Builder.of(inputStream).build();
+try {
+    // use the message
+} finally {
+    message.dispose();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Disposing is harmless with the default in-memory factory, so make it a habit — it is what
+lets you switch to a storage-backed factory later without leaking files. The one case that
+needs attention is an entity you detached from its tree with <code>removeBodyPart</code>: nothing will
+dispose of it for you.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_complete_examples"><a class="anchor" href="#_complete_examples"></a>Complete examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Runnable versions of all of the above live in the
+<a href="https://github.com/apache/james-mime4j/tree/master/examples/src/main/java/org/apache/james/mime4j/samples">examples</a>
+module — see <a href="samples.html" class="xref page">Examples</a> for a description of each one.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

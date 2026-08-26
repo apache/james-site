@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; smtpserver.xml :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/servers/distributed/configure/smtp.html">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <a class="navbar-item" href="../../../../../index.html"><img src="../../../../../_/img/james.svg" alt="james logo"> Apache James</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -20,26 +21,28 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
+        <a class="navbar-item" href="../../../../../index.html">Home</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../../../3.9.0/index.html">Documentation</a>
             <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
             <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
             <hr class="navbar-divider">
-            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
-            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
-            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
-            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../../../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../../../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
             <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Community</a>
+          <a class="navbar-link" href="../../../../../james-site/latest/index.html">Community</a>
           <div class="navbar-dropdown">
-             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
-            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
             <a class="navbar-item" href="https://twitter.com/ApacheJames">
               <span class="icon">
@@ -48,7 +51,7 @@
                 </svg>
               </span> Twitter
             </a>            
-            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
           </div>
         </div>
 <!--        <div class="navbar-item">
@@ -73,82 +76,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/messages/index.html">Messages</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/imf.html">IMF</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/mime.html">MIME</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../index.html">Servers</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -160,30 +87,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../basic/index.html">Basic</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/context.html">Context</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
   </li>
@@ -253,6 +156,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="imap.html">imapserver.xml</a>
   </li>
@@ -409,6 +321,9 @@
     <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/backup.html">Backup</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
 </ul>
@@ -493,6 +408,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
   </li>
@@ -672,64 +596,6 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../community/index.html">Community</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/download.html">Download releases</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/support.html">Professional support</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Apache Software Foundation</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/">ASF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
 </ul>
   </nav>
 </div>
@@ -739,11 +605,52 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -774,6 +681,15 @@
     <li><a href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="smtp.html">3.10.0 SNAPSHOT</a>
+    <a class="version" href="../../../../3.9.0/servers/distributed/configure/smtp.html">3.9.0</a>
+    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/smtp.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -782,301 +698,311 @@
 </aside>
 <article class="doc">
 <h1 class="page">Distributed James Server &mdash; smtpserver.xml</h1>
-<div class="sect1">
-<h2 id="_incoming_smtp"><a class="anchor" href="#_incoming_smtp"></a>Incoming SMTP</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/smtpserver.xml">example</a>
-to get some examples and hints.</p>
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/smtpserver.xml">example</a> for guidance on how to configure SMTP.</p>
 </div>
 <div class="paragraph">
-<p>The SMTP service is controlled by a configuration block in the smptserver.xml.
-The smtpserver tag defines the boundaries of the configuration block.  It encloses
-all the relevant configuration for the SMTP server. The behavior of the SMTP service is
-controlled by the attributes and children of this tag.</p>
+<p>The SMTP service is configured in the file <code>smtpserver.xml</code>.
+It contains one <code>smtpservers</code> element that can contain multiple <code>smtpserver</code> elements.</p>
 </div>
 <div class="paragraph">
-<p>This tag has an optional boolean attribute - <strong>enabled</strong> - that defines whether the service is active or not.  The value defaults to "true" if
-not present.</p>
-</div>
-<div class="paragraph">
-<p>The standard children of the smtpserver tag are:</p>
+<p>The <code>smtpserver</code> element can be configured using the common options described <a href="server.html" class="xref page">here</a>.
+Additional settings are described below.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. smtpserver.xml content</caption>
+<caption class="title">Table 1. <code>smtpserver</code> element</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bind</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of address:port separed by comma - This is an optional value.  If present, this value is a string describing
-the IP address to which this service should be bound.  If the tag or value is absent then the service
-will bind to all network interfaces for the machine on port 25. Port 25 is the well-known/IANA registered port for SMTP.
-Port 465 is the well-known/IANA registered port for SMTP over TLS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures user authentication.
+More details of this element are given below.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectBacklog</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address (host name) the MBean Server will bind/listen to.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authRequired</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Deprecated. If <code>auth.announce</code> is not present, this is used as fallback.
+It is an optional string that defaults to <code>false</code>.</p>
+</div>
+<div class="paragraph">
+<p>Its value is mapped to the allowed values for <code>auth.announce</code> (<code>always</code>, <code>never</code>, and <code>forUnauthorizedAddresses</code>) as described below.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>true</code> maps to <code>forUnauthorizedAddresses</code>.</p>
+</li>
+<li>
+<p><code>announce</code> maps to <code>always</code>.</p>
+</li>
+<li>
+<p>All other values (including the default <code>false</code>) map to <code>never</code>.</p>
+</li>
+</ul>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tls</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set to true to support STARTTLS or SSL for the Socket.
-To use this you need to copy sunjce_provider.jar to /path/james/lib directory. To create a new keystore execute:
-<code>keytool -genkey -alias james -keyalg RSA -storetype PKCS12 -keystore /path/to/james/conf/keystore</code>.
-The algorithm is optional and only needs to be specified when using something other
-than the Sun JCE provider - You could use IbmX509 with IBM Java runtime.
-Please note that each SMTP/LMTP server exposed on different port can specify its own keystore, independently from any other
-TLS based protocols.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizedAddresses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures IP networks that are considered trustworthy.
+Normally, clients are only authorized to relay emails after a successful SMTP AUTH command.
+If the remote IP of a connection is included in one of these networks, the client is authorized to relay without authentication.
+It is an optional list separated by <code>, </code> (note the space).</p>
+<p class="tableblock"><strong>We strongly recommend to omit this element!</strong>
+Caution is especially required if James is behind a reverse proxy.
+In that case, it is essential that PROXY protocol is used so that James sees the real client IP and not some internal IP that might be included in the <code>authorizedAddresses</code>.</p>
+<p class="tableblock">Networks may be specified as IP address or domain name, with an optional netmask.
+<code>127.*</code>, <code>127.0.0.0/8</code>, <code>127.0.0.0/255.0.0.0</code>, and <code>localhost/8</code> are equivalent values that can all be parsed.
+See <code>org.apache.james.dnsservice.library.inetnetwork</code> for more details.</p>
+<p class="tableblock">Also see the <code>RemoteAddrNotInNetwork</code> matcher in the transport processor.
+You would generally use one <strong>or</strong> the other approach.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">helloName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is a required tag with an optional body that defines the server name
-used in the initial service greeting.  The tag may have an optional attribute - <strong>autodetect</strong>.  If
-the autodetect attribute is present and true, the service will use the local hostname
-returned by the Java libraries.  If autodetect is absent or false, the body of the tag will be used.  In
-this case, if nobody is present, the value "localhost" will be used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxmessagesize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the maximum size of SMTP messages the server will accept.
+If it is set to 0, no limit will be imposed.
+Any value larger than 0 will enable the SMTP SIZE extension (RFC 1870) and enforce the limit.</p>
+<p class="tableblock">It is an optional integer which defaults to 0.
+The last character of the value may be a unit.
+Supported units are <code>B</code> for bytes, <code>K</code> for kibibyte (1,024 bytes), <code>M</code> for mebibyte (1,024 kibibytes), and <code>G</code> for gibibyte (1,024 mebibytes).
+If no unit is given, the value is interpreted as kibibytes.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionTimeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag with a non-negative integer body. Connection timeout in seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorMessages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the human readable texts of some SMTP error responses, which allows administrators to translate or
+reword the messages their users are exposed to. Return codes and DSN statuses are never customizable as remote
+servers do rely on them. All entries are optional, and default to the values shown below:</p>
+<p class="tableblock">&#8230;&#8203;.
+&lt;errorMessages&gt;
+    &lt;!-- Returned as <code>552 5.3.4 &lt;text&gt;</code> when a mail exceeds maxmessagesize -&#8594;
+    &lt;oversizedMail&gt;Message size exceeds fixed maximum message size&lt;/oversizedMail&gt;
+    &lt;!-- Returned as <code>550 5.1.1 &lt;text&gt; &lt;recipient&gt;</code> when a recipient does not exist: the rejected
+         recipient is always appended to the text. -&#8594;
+    &lt;unknownUser&gt;Unknown user:&lt;/unknownUser&gt;
+&lt;/errorMessages&gt;
+&#8230;&#8203;.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionLimit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum simultaneous incoming connections for this service.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxLineLength</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum SMTP command or SASL continuation line length in bytes.
+It is an optional integer that defaults to 8,192 and must be between 1,000 and 1,048,576.
+Increase it only when required by measured SASL token sizes, as the limit applies to every SMTP input line and larger values increase memory exposure.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionLimitPerIP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum simultaneous incoming connections per IP for this service.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heloEhloEnforcement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures whether to enforce the use of the HELO / EHLO salutation before a MAIL command is accepted.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">proxyRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables proxy support for this service for incoming connections. HAProxy&#8217;s protocol
-(<a href="https://www.haproxy.org/download/2.7/doc/proxy-protocol.txt" class="bare">https://www.haproxy.org/download/2.7/doc/proxy-protocol.txt</a>) is used and might be compatible
-with other proxies (e.g. traefik). If enabled, it is <strong>required</strong> to initiate the connection
-using HAProxy&#8217;s proxy protocol.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>smtpGreeting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the greeting which the server sends when a client connects.
+It is an optional string.
+If not configured, a greeting is constructed from the server <code>helloName</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">proxyFirst</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether proxy frames should be handled before SSL handshakes. This allows setting either the loadbalancer in TCP mode
-(so transparent for SSL then Proxy frames needs to be handled first) or set up SSL termination between proxy and server
-(more suited for some cloud vendors). Defaults to true (TCP transparent).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>addressBracketsEnforcement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enforces that addresses in the MAIL and RCPT commands are enclosed in <code>&lt;</code> and <code>&gt;</code> as required by RFC 5321.
+It is an optional boolean which defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(deprecated) use auth.announce instead.</p>
-<p class="tableblock">This is an optional tag with a boolean body.  If true, then the server will
-announce authentication after HELO command.  If this tag is absent, or the value
-is false then the client will not be prompted for authentication.  Only simple user/password authentication is
-supported at this time. Supported values:</p>
-<p class="tableblock"> * true: announced only to not authorizedAddresses</p>
-<p class="tableblock"> * false: don&#8217;t announce AUTH. If absent, <strong>authorizedAddresses</strong> are set to a wildcard to accept all remote hosts.</p>
-<p class="tableblock"> * announce: like true, but always announce AUTH capability to clients</p>
-<p class="tableblock">Please note that emails are only relayed if, and only if, the user did authenticate, or is in an authorized network,
-regardless of this option.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>verifyIdentity</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures how the identity in the MAIL command is verified for local users.</p>
+</div>
+<div class="paragraph">
+<p>This is an optional string with the following possible values.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>strict</code>: If the email used in the MAIL command has a local domain, authentication is required. Verification succeeds if the authenticated user&#8217;s email address or one of its aliases matches the sender address in the MAIL command. It prevents spoofing local email addresses on this server. Spoofing of external email addresses when sending to local users can not be prevented. For backward compatibility, <code>true</code> has the same effect as <code>strict</code>.</p>
+</li>
+<li>
+<p><code>disabled</code>: The sender address is not verified. However, authentication is still required for relaying. This allows spoofing local email addresses on this server. External users can send emails to local users as any local user. Authenticated local users can send emails to local and external users as any local user. For backward compatibility, <code>false</code> has the same effect as <code>disabled</code>.</p>
+</li>
+<li>
+<p><code>relaxed</code>: If the user is authenticated, this acts like <code>strict</code>. If the sender is local and not authenticated, a simple heuristic decides whether the sender is accepted. The heuristic categorizes a client that uses a valid domain in its EHLO command as a MX and as a MUA otherwise. Authentication is only required for MUAs, not for MXs. Note that this heuristic <strong>can easily be circumvented</strong>. See <a href="https://issues.apache.org/jira/browse/JAMES-4032">JAMES-4032</a> for the reasoning behind this option.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default value is <code>strict</code>.
+<strong>Changing it always decreases the security</strong> and should only be done if absolutely necessary.</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.announce</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag.  Possible values are:</p>
-<p class="tableblock">* never: Don&#8217;t announce auth.</p>
-<p class="tableblock">* always: always announce AUTH capability to clients.</p>
-<p class="tableblock">* forUnauthorizedAddresses: announced only to not authorizedAddresses</p>
-<p class="tableblock">Please note that emails are only relayed if, and only if, the user did authenticate, or is in an authorized network,
-regardless of this option.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handlerchain</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures the behavior of the server using handlers.
+The <code>handlerchain</code> element has the following optional attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>coreHandlersPackage</code> is a string specifying a handler loader. All handlers of this loader are added to the end of the handlerchain. The default is <code>org.apache.james.smtpserver.CoreCmdHandlerLoader</code>.</p>
+</li>
+<li>
+<p><code>enableJmx</code> enables the JMX for this server. It is a boolean which is <code>true</code> by default.</p>
+</li>
+<li>
+<p><code>jmxHandlersPackage</code> is a string specifying a handler loader for JMX. All handlers of this loader are added to the handlerchain after the core handlers. The default is <code>org.apache.james.smtpserver.jmx.JMXHandlersLoader</code>. It only has an effect if <code>enableJmx</code> is <code>true</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>handlerchain</code> element may contain an arbitrary number of <code>handler</code> elements.
+Every <code>handler</code> element must have the string attribute <code>class</code>.
+They are inserted in order at the beginning of the handlerchain.
+The handlers of the <code>coreHandlersPackage</code> or <code>jmxHandlersPackage</code> do not need their own <code>handler</code> elements.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="smtp-hooks.html" class="xref page">this page</a> for a list of handlers that are included in James.</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.requireSSL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag, defaults to true. If true, authentication is not advertised via capabilities on unencrypted
-channels.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.plainAuthEnabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag, defaults to true. If false, AUTH PLAIN and AUTH LOGIN will not be exposed. This setting
-can be used to enforce strong authentication mechanisms.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.required</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication is required to send emails. Adapted for submission ports.</p>
-<p class="tableblock">Note that if false (legacy value and default for backward compatibility) then unauthenticated senders are allowed but
-limited by sender verification (prevent spoofing) and relaying limits (must be authenticated to relay).</p>
-<p class="tableblock">We encourage setting this value to true on submission ports (465 + 587). MUST be set to false on port 25 or for any port with MX external mail receival role.</p>
-<p class="tableblock">Please note that <code>authorizedAddresses</code> are considered authenticated.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.oidcConfigurationURL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provide OIDC url address for information to user. Only configure this when you want to authenticate SMTP server using a OIDC provider.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.jwksURL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provide url to get OIDC&#8217;s JSON Web Key Set to validate user token. Only configure this when you want to authenticate SMTP server using a OIDC provider.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.claim</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Claim string uses to identify user. E.g: "email_address". Only configure this when you want to authenticate SMTP server using a OIDC provider.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.scope</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth scope that is valid to access the service (RF: RFC7628). Only configure this when you want to authenticate SMTP server using a OIDC provider.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.aud</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth audience to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.
-Compulsory but can be relaxed with <code>-Djames.sasl.oidc.validate.aud=false</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.url</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An OAuth introspection token URL will be called to validate the token (RF: RFC7662).
-Note that James always verifies the signature of the token even whether this configuration is provided or not.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.auth</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Provide Authorization in header request when introspecting token.
-Eg: <code>Basic xyz</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.userinfo.url</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An Userinfo URL will be called to retrieve additional user information
-(RF: OpenId.Core <a href="https://openid.net/specs/openid-connect-core-1_0.html" class="bare">https://openid.net/specs/openid-connect-core-1_0.html</a>).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">authorizedAddresses</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authorize specific addresses/networks.</p>
-<p class="tableblock">If you use SMTP AUTH, addresses that match those specified here will
-be permitted to relay without SMTP AUTH.  If you do not use SMTP
-AUTH, and you specify addresses here, then only addresses that match
-those specified will be permitted to relay.</p>
-<p class="tableblock">Addresses may be specified as a IP address or domain name, with an
-optional netmask, e.g.,</p>
-<p class="tableblock">127.*, 127.0.0.0/8, 127.0.0.0/255.0.0.0, and localhost/8 are all the same</p>
-<p class="tableblock">See also the RemoteAddrNotInNetwork matcher in the transport processor.
-You would generally use one OR the other approach.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">verifyIdentity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag. This options governs MAIL FROM verifications, and prevents spoofing of the MAIL FROM
-envelop field.</p>
-<p class="tableblock">The following values are supported:</p>
-<p class="tableblock"> - <code>strict</code>: use of a local domain in MAIL FROM requires the SMTP client to be authenticated with a matching user or one
- of its aliases. It will verify that the sender address matches the address of the user or one of its alias (from user or domain aliases).
- This prevents a user of your mail server from acting as someone else
- - <code>disabled</code>: no check is performed and third party are free to send emails as local users. Note that relaying emails will
- need third party to be authenticated thus preventing open relays.
- - <code>relaxed</code>: Based on a simple heuristic to determine if the SMTP client is a MUA or a MX (use of a valid domain in EHLO),
- we do act as <code>strict</code> for MUAs thus prompting them early for the need of authentication, but accept use of local MAIL FROM for
- MX. Authentication can then be delayed to later, eg after DATA transaction with the DKIMHook which might allow email looping through
- third party domains via mail redirection, effectively enforcing that the mail originates from our servers. See
- <a href="https://issues.apache.org/jira/browse/JAMES-4032">JAMES-4032</a> for detailed explanation.</p>
-<p class="tableblock">Backward compatibility is provided and thus the following values are supported:</p>
-<p class="tableblock"> - <code>true</code>: act as <code>strict</code>
- - <code>false</code>: act as <code>disabled</code></p>
-<p class="tableblock">Please note that this parameter only intend to prevent spoofing, and still allow unauthenticated remote users (that do not use local identity) to send email to local users.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maxmessagesize</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is an optional tag with a non-negative integer body.  It specifies the maximum
-size, in kbytes, of any message that will be transmitted by this SMTP server.  It is a service-wide, as opposed to
-a per user, limit.  If the value is zero then there is no limit.  If the tag isn&#8217;t specified, the service will
-default to an unlimited message size. Must be a positive integer, optionally with a unit: B, K, M, G.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">heloEhloEnforcement</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This sets whether to enforce the use of HELO/EHLO salutation before a
-MAIL command is accepted. If unspecified, the value defaults to true.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">smtpGreeting</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This sets the SMTPGreeting which will be used when connect to the smtpserver
-If none is specified a default is generated</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">handlerchain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration handler chain. See <a href="smtp-hooks.html" class="page">this page</a> for configuring out-of the
-box extra SMTP handlers and hooks.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bossWorkerCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of boss threads. Boss threads are responsible for accepting incoming SMTP connections
-and initializing associated resources. Optional integer, by default, boss threads are not used and this responsibility is being dealt with
-by IO threads.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ioWorkerCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of IO threads. IO threads are responsible for receiving incoming SMTP messages and framing them
-(split line by line). IO threads also take care of compression and SSL encryption. Their tasks are short-lived and non-blocking.
-Optional integer, defaults to 2 times the count of CPUs.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maxExecutorCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of worker threads. Worker threads takes care of potentially blocking tasks like executing SMTP commands.
-Optional integer, defaults to 16.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">useEpoll</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - If true uses native EPOLL implementation for Netty otherwise uses NIO. Defaults to false.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">gracefulShutdown</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - If true attempts a graceful shutdown, which is safer but can take time. Defaults to true.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">disabledFeatures</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Extended SMTP features to hide in EHLO responses.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>disabledFeatures</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes features from the feature announcement sent to clients after their EHLO.
+The element may be omitted or appear multiple times.
+Every occurrence must contain exactly one feature.
+By default, no features are omitted.</p>
+<p class="tableblock">Note that this only removes the features from the announcement, it does not disable the features!
+It prevents standard-conformant clients from using commands that only work with the disabled features but <strong>it is not a security feature</strong>.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="_oidc_setup"><a class="anchor" href="#_oidc_setup"></a>OIDC setup</h3>
-<div class="paragraph">
-<p>James SMTP support XOAUTH2 authentication mechanism which allow authenticating against a OIDC providers.
-Please configure <code>auth.oidc</code> part to use this.</p>
-</div>
-<div class="paragraph">
-<p>We do supply an <a href="https://github.com/apache/james-project/tree/master/examples/oidc">example</a> of such a setup.
-It uses the Keycloak OIDC provider, but usage of similar technologies is definitely doable.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_about_open_relays"><a class="anchor" href="#_about_open_relays"></a>About open relays</h2>
+<h2 id="_authentication"><a class="anchor" href="#_authentication"></a>Authentication</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Authenticated SMTP is a method of securing your SMTP server.  With SMTP AUTH enabled senders who wish to
-relay mail through the SMTP server (that is, send mail that is eventually to be delivered to another SMTP
-server) must authenticate themselves to Apache James Server before sending their message.  Mail that is to be delivered
-locally does not require authentication.  This method ensures that spammers cannot use your SMTP server
-to send unauthorized mail, while still enabling users who may not have fixed IP addresses to send their
-messages.</p>
+<p>The <code>auth</code> element mentioned above has the following options.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. <code>auth</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.announce</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures when to announce authentication to the client.
+This is an optional string with the following possible values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>never</code>: Do not announce authentication capabilities.</p>
+</li>
+<li>
+<p><code>always</code>: Always announce authentication capabilities.</p>
+</li>
+<li>
+<p><code>forUnauthorizedAddresses</code>: Announce authentication capabilities only to clients which are not in <code>authorizedAddresses</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Mail servers that allow spammers to send unauthorized email are known as open relays.  So SMTP AUTH
-is a mechanism for ensuring that your server is not an open relay.</p>
+<p>If not configured, it uses the value of <code>authRequired</code> (of which the default maps to <code>never</code>) as fallback.</p>
 </div>
 <div class="paragraph">
-<p>It is extremely important that your server not be configured as an open relay.  Aside from potential
-costs associated with usage by spammers, connections from servers that are determined to be open relays
-are routinely rejected by SMTP servers.  This can severely impede the ability of your mail server to
-send mail.</p>
+<p>Note that this configures only the <strong>announcement</strong> of authentication capabilities.
+<code>auth.requireSSL</code> also has an influence on whether authentication capabilities are announced.</p>
 </div>
 <div class="paragraph">
-<p>At this time Apache James Server only supports simple user name / password authentication.</p>
+<p>Even if authentication capabilities are not announced, clients can still use the SMTP AUTH command.
+However, if authentication capabilities are not announced, only the mechanisms <code>PLAIN</code> and <code>LOGIN</code> are available.
+<code>XOAUTH2</code> and <code>OAUTHBEARER</code> are disabled if authentication capabilities are not announced.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.requireSSL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures whether announcing authentication capabilities requires a secure connection (TLS or STARTTLS).
+If this value is <code>true</code> and the connection is not secure, authentication capabilities are not announced.
+This always holds, even if <code>auth.announce</code> is set to <code>always</code>.
+The optional <code>GSSAPI</code> mechanism also uses this value to reject authentication attempts over an insecure connection.</p>
+<p class="tableblock">It is an optional boolean that defaults to <code>true</code>.</p>
+<p class="tableblock">For the built-in mechanisms, this configures only the <strong>announcement</strong> of authentication capabilities.
+Even if authentication capabilities are not announced, clients can still use the SMTP AUTH command with <code>PLAIN</code> and <code>LOGIN</code>.
+However, as the mechanisms <code>XOAUTH2</code> and <code>OAUTHBEARER</code> are only available if authentication mechanisms are announced, those mechanisms can only be used in secure connections if <code>auth.requireSSL</code> is set to <code>true</code>.
+When <code>GSSAPI</code> is configured and <code>auth.requireSSL</code> is <code>true</code>, it is both unannounced and unavailable on insecure connections.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.plainAuthEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the authentication mechanisms <code>PLAIN</code> and <code>LOGIN</code>.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.saslMechanisms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional comma-separated list of SASL mechanism factory class names.
+When present, this list replaces the default mechanisms.
+Built-in factories can be named by their simple class name; extension factories must use their fully qualified class name.
+See <a href="kerberos.html" class="xref page">Kerberos GSSAPI authentication</a> for an extension example.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.oidc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures authentication via OIDC.
+The configuration is described in more detail <a href="oidc.html" class="xref page">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.gssapi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures optional Kerberos authentication through the <code>GSSAPI</code> SASL mechanism.
+The configuration is described in more detail <a href="kerberos.html" class="xref page">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires authentication for submitting an email to the SMTP server.
+This configuration is intended for submission-only SMTP servers (e.g, port 587).
+It should never be set to <code>true</code> on SMTP servers that receive emails from external servers as external users have no account and can not authenticate.
+Therefore, it must be <code>false</code> for SMTP servers on port 25 and 465.</p>
+<p class="tableblock">It is an optional boolean that defaults to <code>false</code>.</p>
+<p class="tableblock">Note that <code>authorizedAddresses</code> are considered authenticated.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_security"><a class="anchor" href="#_security"></a>Security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>James supports authentication with username / password (<code>PLAIN</code> and <code>LOGIN</code>), OIDC (<code>XOAUTH2</code> and <code>OAUTHBEARER</code>), and optional Kerberos (<code>GSSAPI</code>).
+SMTP authentication is essential to prevent sender address spoofing and open relays.</p>
 </div>
 <div class="paragraph">
-<p>As mentioned above, SMTP AUTH requires that Apache James Server be able to distinguish between mail intended
-for local delivery and mail intended for remote delivery. Apache James Server makes this determination by matching the
-domain to which the mail was sent against the <strong>DomainList</strong> component, configured by
-<a href="domainlist.html" class="page"><strong>domainlist.xml</strong></a>.</p>
+<p>For the concepts explained below, the distinction between local and external users is important.
+James makes this distinction by matching the domain of an email address against the list of domains handled by it.
+This list can be configured in <a href="domainlist.html" class="xref page"><strong>domainlist.xml</strong></a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_open_relays"><a class="anchor" href="#_open_relays"></a>Open Relays</h3>
+<div class="paragraph">
+<p>The process of sending an email from one email server to another is called relaying.
+An open relay is an email server that allows any user to send emails to other email servers.
+Open relays are used by spammers to send spam emails with spoofed sender addresses.
+Open relays can be prevented using the SMTP AUTH extension.</p>
 </div>
 <div class="paragraph">
-<p>The Distributed James Server is configured out of the box so as to not serve as an open relay for spammers.  This is done
-by relayed emails originate from a trusted source. This includes:</p>
+<p>By default, James is not an open relay.
+James relays emails if, and only if, they originate from one of the trusted sources below.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1084,44 +1010,57 @@ by relayed emails originate from a trusted source. This includes:</p>
 <p>Authenticated SMTP/JMAP users</p>
 </li>
 <li>
-<p>Mails generated by the server (eg: bounces)</p>
+<p>Emails generated by the server (e.g., bounces)</p>
 </li>
 <li>
-<p>Mails originating from a trusted network as configured in <strong>smtpserver.xml</strong></p>
+<p>Emails originating from a trusted network (see <code>authorizedAddresses</code>)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>If you wish to ensure that authenticated users can only send email from their own account, you may
-optionally set the verifyIdentity element of the smtpserver configuration block to "true".</p>
+<p>This means that emails are only relayed for local users as external users have no way of authenticating.
+External users can still send emails to local users because those emails do not need to be relayed and therefore do not require authentication.</p>
 </div>
-<div class="sect2">
-<h3 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h3>
 <div class="paragraph">
-<p>Verify that you have not inadvertently configured your server as an open relay. This is most easily
-accomplished by using the service provided at <a href="https://mxtoolbox.com/diagnostic.aspx">mxtoolbox.com</a>. mxtoolbox.com will
-check your mail server and inform you if it is an open relay. This tool further more verifies additional properties like:</p>
+<p>It is extremely important to prevent your server from being an open relay.
+Aside from potential costs associated with usage by spammers,
+open relays are identified as such relatively quickly because of the spam originating from them.
+Hence, other SMTP servers routinely reject emails coming from open relays which severely impedes the ability of them to send emails to external users.</p>
+</div>
+<div class="sect3">
+<h4 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h4>
+<div class="paragraph">
+<p>To verify that you have not inadvertently configured your server as an open relay, you can use a service such as <a href="https://mxtoolbox.com/diagnostic.aspx">mxtoolbox.com</a>.
+This checks among other things:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your DNS configuration, especially that you mail server IP has a valid reverse DNS entry</p>
+<p>Whether your email server is an open relay.</p>
 </li>
 <li>
-<p>That your SMTP connection is secured</p>
+<p>Your DNS configuration, especially whether your email server has a valid record for reverse DNS.</p>
 </li>
 <li>
-<p>That you are not an OpenRelay</p>
-</li>
-<li>
-<p>This website also allow a quick lookup to ensure your mail server is not in public blacklists.</p>
+<p>Support for secure connections with STARTTLS.</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spoofing"><a class="anchor" href="#_spoofing"></a>Spoofing</h3>
 <div class="paragraph">
-<p>Of course it is also necessary to confirm that users and log in and send
-mail through your server.  This can be accomplished using any standard mail client (i.e. Thunderbird, Outlook,
-Eudora, Evolution).</p>
+<p>In addition to preventing open relays, SMTP authentication can also be used to prevent spoofing.
+Spoofing is the assumption of the identity of another person without authorization to do so.</p>
+</div>
+<div class="paragraph">
+<p>For emails from local addresses, spoofing can be prevented by requiring authentication for a user with authorization for the sender address.
+This can be configured with <code>verifyIdentity</code> as described above.</p>
+</div>
+<div class="paragraph">
+<p>Sender verification does not work for emails sent by an external address.
+As external users can not authenticate, James has to trust the sender address.</p>
 </div>
 </div>
 </div>
@@ -1130,58 +1069,106 @@ Eudora, Evolution).</p>
 <h2 id="_lmtp_configuration"><a class="anchor" href="#_lmtp_configuration"></a>LMTP Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/lmtpserver.xml">example</a>
-to get some examples and hints.</p>
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/lmtpserver.xml">example</a> for guidance on how to configure LMTP.</p>
 </div>
 <div class="paragraph">
-<p>The configuration is the same of for SMTP.</p>
+<p>The LMTP service is configured in the file <code>lmtpserver.xml</code>.
+It contains one <code>lmtpservers</code> element that can contain multiple <code>lmtpserver</code> elements.</p>
 </div>
 <div class="paragraph">
-<p>By default, it is deactivated. You can activate it alongside SMTP and bind for example on port 24.</p>
+<p>The <code>lmtpserver</code> element can be configured using the common options described <a href="server.html" class="xref page">here</a>.
+Additional settings are described below.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. <code>lmtpserver</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxmessagesize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the maximum size of LMTP messages the server will accept.
+If it is set to 0, no limit will be imposed.
+Any value larger than 0 will enable the SMTP SIZE extension (RFC 1870) and enforce the limit.</p>
+<p class="tableblock">It is an optional integer which defaults to 0.
+The last character of the value may be a unit.
+Supported units are <code>B</code> for bytes, <code>K</code> for kibibyte (1,024 bytes), <code>M</code> for mebibyte (1,024 kibibytes), and <code>G</code> for gibibyte (1,024 mebibytes).
+If no unit is given, the value is interpreted as kibibytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorMessages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the human readable texts of some error responses. It supports the same entries as the
+<code>errorMessages</code> element of <code>smtpserver</code>, documented above.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lmtpGreeting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the greeting which the server sends when a client connects.
+It is an optional string.
+If not configured, a greeting is constructed from the server <code>helloName</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handlerchain</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures the behavior of the server using handlers.
+The <code>handlerchain</code> element has the following optional attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>coreHandlersPackage</code> is a string specifying a handler loader. All handlers of this loader are added to the end of the handlerchain. The default is <code>org.apache.james.lmtpserver.CoreCmdHandlerLoader</code>.</p>
+</li>
+<li>
+<p><code>enableJmx</code> enables the JMX for this server. It is a boolean which is <code>true</code> by default.</p>
+</li>
+<li>
+<p><code>jmxHandlersPackage</code> is a string specifying a handler loader for JMX. All handlers of this loader are added to the handlerchain after the core handlers. The default is <code>org.apache.james.lmtpserver.jmx.JMXHandlersLoader</code>. It only has an effect if <code>enableJmx</code> is <code>true</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The default LMTP server stores directly emails in user mailboxes, without further treatment.</p>
-</div>
+<p>The <code>handlerchain</code> element may contain an arbitrary number of <code>handler</code> elements.
+Every <code>handler</code> element must have the string attribute <code>class</code>.
+They are inserted in order at the beginning of the handlerchain.
+The handlers of the <code>coreHandlersPackage</code> or <code>jmxHandlersPackage</code> do not need their own <code>handler</code> elements.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_lmtp_examples"><a class="anchor" href="#_lmtp_examples"></a>LMTP Examples</h3>
 <div class="paragraph">
-<p>However we do ship an alternative handler chain allowing to execute the mailet container, thus achieving a behaviour similar
-to the default SMTP protocol. Here is how to achieve this:</p>
+<p>The default LMTP server stores emails without further treatment in user mailboxes.
+However, we do ship an alternative handlerchain allowing to execute a mailetcontainer, thus achieving a behavior similar to SMTP.
+You can enable the mailetcontainer with the following configuration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;lmtpservers&gt;
     &lt;lmtpserver enabled="true"&gt;
-        &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
-        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
-        &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
-        &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
-        &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
-        &lt;connectionLimitPerIP&gt;0&lt;/connectionLimitPerIP&gt;
-        &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
+        &lt;!-- ... --&gt;
         &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
-            &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
         &lt;/handlerchain&gt;
     &lt;/lmtpserver&gt;
 &lt;/lmtpservers&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that by default the mailet container is executed with all recipients at once and do not allow per recipient
-error reporting. An option &lt;code&gt;splitExecution&lt;/code&gt; allow to execute the mailet container for each recipient separately and mitigate this
-limitation at the cost of performance.</p>
+<p>Note that by default the mailetcontainer is executed with all recipients at once and does not allow per recipient error reporting.
+The option <code>splitExecution</code> allows to execute the mailetcontainer for each recipient separately and mitigate this limitation at the cost of performance.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;lmtpservers&gt;
     &lt;lmtpserver enabled="true"&gt;
-        &lt;jmxName&gt;lmtpserver&lt;/jmxName&gt;
-        &lt;bind&gt;0.0.0.0:24&lt;/bind&gt;
-        &lt;connectionBacklog&gt;200&lt;/connectionBacklog&gt;
-        &lt;connectiontimeout&gt;1200&lt;/connectiontimeout&gt;
-        &lt;connectionLimit&gt;0&lt;/connectionLimit&gt;
-        &lt;connectionLimitPerIP&gt;0&lt;/connectionLimitPerIP&gt;
-        &lt;maxmessagesize&gt;0&lt;/maxmessagesize&gt;
+        &lt;!-- ... --&gt;
         &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
-            &lt;handler class="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"/&gt;
             &lt;handler class="org.apache.james.lmtpserver.MailetContainerHandler"&gt;
                 &lt;splitExecution&gt;true&lt;/splitExecution&gt;
             &lt;/handler&gt;
@@ -1192,13 +1179,27 @@ limitation at the cost of performance.</p>
 </div>
 </div>
 </div>
+</div>
 </article>
   </div>
 </main>
 </div>
 <footer class="footer">
-  <p>This page was built using the Antora default UI.</p>
-  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+  <img src="../../../../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
 </footer>
 <script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
 <script async src="../../../../../_/js/vendor/highlight.js"></script>

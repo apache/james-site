@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Distributed James Server &mdash; imapserver.xml :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/servers/distributed/configure/imap.html">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
+      <a class="navbar-item" href="../../../../../index.html"><img src="../../../../../_/img/james.svg" alt="james logo"> Apache James</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -20,26 +21,28 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
+        <a class="navbar-item" href="../../../../../index.html">Home</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../../../3.9.0/index.html">Documentation</a>
             <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
             <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
             <hr class="navbar-divider">
-            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
-            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
-            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
-            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
+            <a class="navbar-item" href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../../../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../../../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
             <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Community</a>
+          <a class="navbar-link" href="../../../../../james-site/latest/index.html">Community</a>
           <div class="navbar-dropdown">
-             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
-            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
             <a class="navbar-item" href="https://twitter.com/ApacheJames">
               <span class="icon">
@@ -48,7 +51,7 @@
                 </svg>
               </span> Twitter
             </a>            
-            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
           </div>
         </div>
 <!--        <div class="navbar-item">
@@ -73,82 +76,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/index.html">Concepts</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/user/index.html">User Model</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/mail/index.html">Emails</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/messages/index.html">Messages</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/imf.html">IMF</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../../../concepts/messages/mime.html">MIME</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/protocols/index.html">Protocols</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/smtp.html">SMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/pop.html">POP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/imap.html">IMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/jmap.html">JMAP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/esmtp.html">ESMTP</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/protocols/lmtp.html">LMTP</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../concepts/storage/index.html">Storage</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/mailbox.html">Mailboxes</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../concepts/storage/users.html">Users</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/processing/index.html">Processing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/configuration.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../concepts/glossary.html">Glossary</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../index.html">Servers</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -160,30 +87,6 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../basic/index.html">Basic</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/context.html">Context</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/objectives.html">Objectives</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/concepts.html">Concepts</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/architecture.html">Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/configure/index.html">Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../basic/help.html">Help</a>
   </li>
 </ul>
   </li>
@@ -253,6 +156,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="5">
     <a class="nav-link" href="imap.html">imapserver.xml</a>
   </li>
@@ -409,6 +321,9 @@
     <a class="nav-link" href="../operate/cassandra-migration.html">Cassandra migration</a>
   </li>
   <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/backup.html">Backup</a>
+  </li>
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="../operate/security.html">Security checklist</a>
   </li>
 </ul>
@@ -493,6 +408,15 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocols</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
   </li>
@@ -672,64 +596,6 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../community/index.html">Community</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/mailing-lists.html">Mailing lists</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/contributing.html">Contributing</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/guidelines.html">Guidelines</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/download.html">Download releases</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/website.html">Building and publishing the website</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/release.html">Creating an official Apache James release</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../../community/support.html">Professional support</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Apache Software Foundation</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/">ASF</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/getinvolved.html">Get involved</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/faq.html">FAQ</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/licenses/">Licenses</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/security/">Security</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
 </ul>
   </nav>
 </div>
@@ -739,11 +605,52 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../../../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -774,6 +681,15 @@
     <li><a href="imap.html">imapserver.xml</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="imap.html">3.10.0 SNAPSHOT</a>
+    <a class="version" href="../../../../3.9.0/servers/distributed/configure/imap.html">3.9.0</a>
+    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/distributed/configure/imap.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -785,311 +701,266 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/imapserver.xml">example</a>
-to get some examples and hints.</p>
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/distributed-app/sample-configuration/imapserver.xml">example</a> for guidance on how to configure IMAP.</p>
 </div>
 <div class="paragraph">
-<p>The IMAP4 service is controlled by a configuration block in the imap4server.xml.
-The imap4server tag defines the boundaries of the configuration block.  It encloses
-all the relevant configuration for the IMAP4 server.  The behavior of the IMAP4 service is
-controlled by the attributes and children of this tag.</p>
+<p>The IMAP service is configured in the file <code>imapserver.xml</code>.
+It contains one <code>imapservers</code> element that can contain multiple <code>imapserver</code> elements.</p>
 </div>
 <div class="paragraph">
-<p>This tag has an optional boolean attribute - <strong>enabled</strong> - that defines whether the service is active or not.
-The value defaults to "true" if not present.</p>
-</div>
-<div class="paragraph">
-<p>The standard children of the imapserver tag are:</p>
+<p>The <code>imapserver</code> element can be configured using the common options described <a href="server.html" class="xref page">here</a>.
+Additional settings are described below.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. imapserver.xml content</caption>
+<caption class="title">Table 1. <code>imapserver</code> element</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bind</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configure this to bind to a specific inetaddress. This is an optional integer value.  This value is the port on which this IMAP4 server is configured
-to listen. If the tag or value is absent then the service
-will bind to all network interfaces for the machine If the tag or value is omitted, the value will default to the standard IMAP4 port
-port 143 is the well-known/IANA registered port for IMAP
-port 993 is the well-known/IANA registered port for IMAPS  ie over SSL/TLS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>compress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables / Disables the IMAP COMPRESS extension
+It is an optional boolean that defaults to <code>false</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionBacklog</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of connection backlog of the server (maximum number of queued connection requests)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxLineLength</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximal allowed line-length.
+If a request is too long, a BAD response is returned to the client.
+This should be set with caution as larger values make the server more susceptible for denial of service attacks.
+If OIDC is used, it must be relative large as the encoded access tokens can become quite large.
+It is an optional integer with a generous default of 65536.
+The default should be enough for all applications, even when using OIDC.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">compress</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - Use or don&#8217;t use COMPRESS extension. Defaults to false.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inMemorySizeLimit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets a memory limit for incoming IMAP messages.
+If a message is too large, it is streamed to a temporary file.
+It is an optional value with a default of <code>10M</code> (10 mebibytes).
+The last character of the value may be a unit.
+Supported units are <code>B</code> for bytes, <code>K</code> for kibibyte (1,024 bytes), <code>M</code> for mebibyte (1,024 kibibytes), and <code>G</code> for gibibyte (1,024 mebibytes).
+If no unit is given, the value is interpreted as bytes.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maxLineLength</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximal allowed line-length before a BAD response will get returned to the client
-This should be set with caution as a to high value can make the server a target for DOS (Denial of Service)!</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>literalSizeLimit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets a hard size limit for IMAP literals and incoming IMAP messages.
+If exceeded, an exception is thrown.
+This value is communicated to the client via the IMAP APPENDLIMIT extension.
+It is optional and defaults to 0 (unlimited).
+Unit parsing is the same as with <code>inMemorySizeLimit</code> above.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">inMemorySizeLimit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Size limit before we will start to stream to a temporary file.
-Defaults to 10MB. Must be a positive integer, optionally with a unit: B, K, M, G.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets a timeout for connections.
+If no read or write operations have been performed in this time, the connection is closed.
+Optional integer in seconds that defaults to 1,800 (30 minutes).
+The timeout can not be shorter than 30 minutes.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">literalSizeLimit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Maximum size of a literal (IMAP APPEND).
-Defaults to 0 (unlimited). Must be a positive integer, optionally with a unit: B, K, M, G.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures user authentication.
+More details of this element are given below.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">plainAuthDisallowed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated. Should use <code>auth.plainAuthEnabled</code>, <code>auth.requireSSL</code> instead.
-Whether to enable Authentication PLAIN if the connection is not encrypted via SSL or STARTTLS. Defaults to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>plainAuthDisallowed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated. If <code>auth.requireSSL</code> is not present, this is used as fallback.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.plainAuthEnabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable Authentication PLAIN/ LOGIN command. Defaults to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ignoreIDLEUponProcessing</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disables sending heartbeats to the client while processing its request.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.requireSSL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false. Defaults to <code>true</code>. Whether to require SSL to authenticate. If this is required, the IMAP server will disable authentication on unencrypted channels.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>disabledCaps</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes capabilities from the response of the IMAP CAPABILITY command.
+This is an optional, pipe-separated list of strings.
+By default, no capabilities are omitted.
+Note that this only removes the capabilities from the response, it does not disable the capabilities!
+It prevents standard-conformant clients from using commands that only work with the disabled capabilities but <strong>it is not a security feature</strong>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.oidcConfigurationURL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provide OIDC url address for information to user. Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enableIdle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows the client to request live updates via the IMAP IDLE command.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.jwksURL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provide url to get OIDC&#8217;s JSON Web Key Set to validate user token. Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>idleTimeInterval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the interval in which the server sends heartbeats after the client issued an IDLE command.
+If <code>enableIdle</code> is <code>false</code>, this has no effect.
+It is an optinal integer that defaults to 120.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.claim</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Claim string uses to identify user. E.g: "email_address". Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>idleTimeIntervalUnit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the unit of <code>idleTimeInterval</code>.
+If <code>enableIdle</code> is <code>false</code>, this has no effect.
+It is an optional value which must be a parseable <code>TimeUnit</code> and defaults to <code>SECONDS</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.scope</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth scope that is valid to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxQueueSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets an upper bound for the IMAP throttler queue.
+Requests that can not be queued are rejected and not executed.
+It is an optional integer that defaults to 4,096.
+A value of 0 disables the queue.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.aud</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An OAuth audience to access the service (RF: RFC7628). Only configure this when you want to authenticate IMAP server using a OIDC provider.
-Compulsory but can be relaxed with <code>-Djames.sasl.oidc.validate.aud=false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>concurrentRequests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum number of IMAP requests that are executed simultaneously.
+All requests past that limit are queued.
+It is an optional Integer that defaults to 20.
+A negative value deactivates this feature and leads to unbounded concurrency.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.url</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An OAuth introspection token URL will be called to validate the token (RF: RFC7662).
-Note that James always verifies the signature of the token even whether this configuration is provided or not.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>provisionDefaultMailboxes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the provision of additional mailboxes.
+By default, only <code>INBOX</code> is created.
+If <code>true</code>, James additionally creates the mailboxes <code>Outbox</code>, <code>Sent</code>, <code>Trash</code>, <code>Drafts</code>, <code>Archive</code>, and <code>Spam</code> on first login of a user.
+It is an optional boolean which defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.introspection.auth</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Provide Authorization in header request when introspecting token.
-Eg: <code>Basic xyz</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.oidc.userinfo.url</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. An Userinfo URL will be called to retrieve additional user information
-(RF: OpenId.Core <a href="https://openid.net/specs/openid-connect-core-1_0.html" class="bare">https://openid.net/specs/openid-connect-core-1_0.html</a>).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">auth.adminUsers.adminUser</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XML list of administrators able to impersonate any IMAP users. This is typically enable on non publicly exposed IMAP servers eg port 994 for admin support or migration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">timeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default to 30 minutes. After this time, inactive channels that have not performed read, write, or both operation for a while
-will be closed. Negative value disable this behaviour.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enableIdle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default to true. If enabled IDLE commands will generate a server heartbeat on a regular period.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">idleTimeInterval</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Defaults to 120. Needs to be a strictly positive integer.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">idleTimeIntervalUnit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default to SECONDS. Needs to be a parseable TimeUnit.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">disabledCaps</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implemented server capabilities NOT to advertise to the client. Coma separated list. Defaults to no disabled capabilities.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jmxName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name given to the configuration</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tls</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set to true to support STARTTLS or SSL for the Socket.
-To use this you need to copy sunjce_provider.jar to /path/james/lib directory. To create a new keystore execute:
-<code>keytool -genkey -alias james -keyalg RSA -storetype PKCS12 -keystore /path/to/james/conf/keystore</code>.
-Please note that each IMAP server exposed on different port can specify its own keystore, independently from any other
-TLS based protocols.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">handler.helloName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is the name used by the server to identify itself in the IMAP4
-protocol.  If autodetect is TRUE, the server will discover its
-own host name and use that in the protocol.  If discovery fails,
-the value of 'localhost' is used.  If autodetect is FALSE, James
-will use the specified value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectiontimeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Connection timeout in seconds</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionLimit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum simultaneous incoming connections for this service</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">connectionLimitPerIP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum simultaneous incoming connections per IP for this service</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">concurrentRequests</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of IMAP requests executed simultaneously. Past that limit requests are queued. Defaults to 20.
-Negative values deactivate this feature, leading to unbounded concurrency.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maxQueueSize</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bound to the IMAP throttler queue. Upon burst, requests that cannot be queued are rejected and not executed.
-Integer, defaults to 4096, must be positive, 0 means no queue.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">proxyRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables proxy support for this service for incoming connections. HAProxy&#8217;s protocol
-(<a href="https://www.haproxy.org/download/2.7/doc/proxy-protocol.txt" class="bare">https://www.haproxy.org/download/2.7/doc/proxy-protocol.txt</a>) is used and might be compatible
-with other proxies (e.g. traefik). If enabled, it is <strong>required</strong> to initiate the connection
-using HAProxy&#8217;s proxy protocol.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">proxyFirst</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether proxy frames should be handled before SSL handshakes. This allows setting either the loadbalancer in TCP mode
-(so transparent for SSL then Proxy frames needs to be handled first) or set up SSL termination between proxy and server
-(more suited for some cloud vendors). Defaults to true (TCP transparent).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bossWorkerCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of boss threads. Boss threads are responsible for accepting incoming IMAP connections
-and initializing associated resources. Optional integer, by default, boss threads are not used and this responsibility is being dealt with
-by IO threads.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ioWorkerCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set the maximum count of IO threads. IO threads are responsible for receiving incoming IMAP messages and framing them
-(split line by line). IO threads also take care of compression and SSL encryption. Their tasks are short-lived and non-blocking.
-Optional integer, defaults to 2 times the count of CPUs.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreIDLEUponProcessing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - Allow disabling the heartbeat handler. Defaults to true.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">useEpoll</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - If true uses native EPOLL implementation for Netty otherwise uses NIO. Defaults to false.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">gracefulShutdown</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true or false - If true attempts a graceful shutdown, which is safer but can take time. Defaults to true.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">highWriteBufferWaterMark</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Netty&#8217;s write buffer high watermark configuration. Unit supported: none, K, M. Netty defaults applied.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">lowWriteBufferWaterMark</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Netty&#8217;s write buffer low watermark configuration. Unit supported: none, K, M. Netty defaults applied.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">idCommandResponse.field</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Store the fields response for ID Command, with each tag containing a name-value pair corresponding to the attribute name. Ref: rfc2971</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>idCommandResponse</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the server response to the IMAP ID command.
+It is an optional element containing up to 30 <code>field</code> elements.
+Every <code>field</code> element must have the attributes <code>name</code> and <code>value</code>.
+See RFC 2971 for more details.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_oidc_setup"><a class="anchor" href="#_oidc_setup"></a>OIDC setup</h2>
+<h2 id="_authentication"><a class="anchor" href="#_authentication"></a>Authentication</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>James IMAP support XOAUTH2 authentication mechanism which allow authenticating against a OIDC providers.
-Please configure <code>auth.oidc</code> part to use this.</p>
+<p>The <code>auth</code> element mentioned above has the following options.</p>
 </div>
-<div class="paragraph">
-<p>We do supply an <a href="https://github.com/apache/james-project/tree/master/examples/oidc">example</a> of such a setup.
-It uses the Keycloak OIDC provider, but usage of similar technologies is definitely doable.</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. <code>auth</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.plainAuthEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the authentication mechanisms <code>PLAIN</code> and <code>LOGIN</code>.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.saslMechanisms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional comma-separated list of SASL mechanism factory class names.
+When present, this list replaces the default mechanisms.
+Built-in factories can be named by their simple class name; extension factories must use their fully qualified class name.
+See <a href="kerberos.html" class="xref page">Kerberos GSSAPI authentication</a> for an extension example.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.requireSSL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures whether the authentication mechanisms <code>PLAIN</code>, <code>LOGIN</code>, and optional <code>GSSAPI</code> require a secure connection (TLS or STARTTLS).
+It has no effect on other authentication mechanisms.
+For <code>PLAIN</code> and <code>LOGIN</code>, it has no effect if <code>plainAuthEnabled</code> is <code>false</code>.
+The value is optional.
+For <code>PLAIN</code> and <code>LOGIN</code>, if not configured, it uses the value of <code>plainAuthDisallowed</code> (which defaults to <code>true</code>) as fallback.
+For <code>GSSAPI</code>, if not configured, it defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.adminUsers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures admin users that are authorized to impersonate any IMAP user.
+It is an optional element containing <code>adminUser</code> elements.
+<strong>Do not configure this for publicly exposed IMAP servers!</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.oidc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures authentication via OIDC.
+The configuration is described in more detail <a href="oidc.html" class="xref page">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.gssapi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures optional Kerberos authentication through the <code>GSSAPI</code> SASL mechanism.
+The configuration is described in more detail <a href="kerberos.html" class="xref page">here</a>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_traffic_shaping"><a class="anchor" href="#_traffic_shaping"></a>Traffic Shaping</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>James ships an optional <a href="https://netty.io/4.0/api/io/netty/handler/traffic/ChannelTrafficShapingHandler.html">Netty built in Traffic Shaping</a> that can be optionally configured.</p>
+<p>Including a <code>trafficShaping</code> element enables an optional <a href="https://netty.io/4.0/api/io/netty/handler/traffic/ChannelTrafficShapingHandler.html">Netty traffic shaping handler</a>.
+This adds the following functionality:</p>
 </div>
-<div class="paragraph">
-<p>This enables both:
- - Record per channel bandwidth consumption
- - Allows defining per channel bandwidth limit, which helps at fairness and maintaining a good quality of service in terms of incoming/outgoing bandwidth.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Recording per channel bandwidth consumption.</p>
+</li>
+<li>
+<p>Defining per channel bandwidth limit. This helps maintaining fairness and a good quality of service.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    &lt;imapserver&gt;
-        &lt;!-- ... --&gt;
-        &lt;trafficShaping&gt;
-            &lt;writeTrafficPerSecond&gt;0&lt;/writeTrafficPerSecond&gt;
-            &lt;readTrafficPerSecond&gt;0&lt;/readTrafficPerSecond&gt;
-            &lt;checkInterval&gt;1000&lt;/checkInterval&gt;
-            &lt;maxDelays&gt;15000&lt;/maxDelays&gt;
-        &lt;/trafficShaping&gt;
-    &lt;/imapserver&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;imapserver&gt;
+    &lt;!-- ... --&gt;
+    &lt;trafficShaping&gt;
+        &lt;writeTrafficPerSecond&gt;0&lt;/writeTrafficPerSecond&gt;
+        &lt;readTrafficPerSecond&gt;0&lt;/readTrafficPerSecond&gt;
+        &lt;checkInterval&gt;1000&lt;/checkInterval&gt;
+        &lt;maxDelays&gt;15000&lt;/maxDelays&gt;
+    &lt;/trafficShaping&gt;
+&lt;/imapserver&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Those tags maps to the corresponding Netty argument.</p>
-</div>
-<div class="paragraph">
-<p>If omitted no traffic handle is added to the channel pipeline.</p>
+<p>All inner elements are optional.
+The example above shows the default values.
+The values are directly used for the instantiation of <code>io.netty.handler.traffic.ChannelTrafficShapingHandler</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_imap_command_throttler"><a class="anchor" href="#_imap_command_throttler"></a>IMAP command throttler</h2>
+<h2 id="_command_throttler"><a class="anchor" href="#_command_throttler"></a>Command Throttler</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>James ships an optional IMAP command throttler aimed at slowing down lower-quality clients that generate a high
-volume of requests. It allows per command granularity and is applied at the scope of an IMAP session.</p>
+<p>James ships an optional IMAP command throttler aimed at slowing down lower-quality clients that generate a high volume of requests.
+It allows a different configuration for every command and is applied at the scope of an IMAP session.
+The throttler is enabled by including a <code>perSessionCommandThrottling</code> element in the configuration.</p>
 </div>
 <div class="paragraph">
-<p>The user can declare the list of commands on which throttling needs to be tracked and for each:</p>
+<p>For every command, the following configurations are available.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>thresholdCount</code>: below this number of occurrence, no throttling is applied. Integer.</p>
+<p><code>thresholdCount</code>: Throttling is enabled after the client issued the command <code>thresholdCount</code> number of times. It is a mandatory integer.</p>
 </li>
 <li>
-<p><code>additionalDelayPerOperation</code>: delay to be applied when exceeding the threshold. The delay is cumulative and thus
-would always increase. Duration.</p>
+<p><code>additionalDelayPerOperation</code>: After the threshold above has been reached, a delay is introduced. It is calculated as the number of previous occurrences of the command times <code>additionalDelayPerOperation</code>. This means that with a threshold of 25 and a delay of 2ms, the 26th occurrence of the command has a delay of 50ms. It is a mandatory duration with unit. The unit should be <code>ms</code> (millisecond) or <code>s</code> (second) in most cases.</p>
 </li>
 <li>
-<p><code>observationPeriod</code>: the count of observed commands is reset after this period thus stopping delays. Duration.</p>
+<p><code>observationPeriod</code>: After this time, the counter for the command is reset. This removes the delay. It is a mandatory duration with unit. The unit should be <code>s</code> (second) or <code>m</code> (minute) in most cases.</p>
 </li>
 <li>
-<p><code>maxDelay</code>: maximum value the client will be delayed for.</p>
+<p><code>maxDelay</code>: The maximum delay for the command. It is a mandatory duration with unit. The unit should be <code>ms</code> (millisecond) or <code>s</code> (second) in most cases.</p>
 </li>
 <li>
-<p><code>resetOn</code>: String. Optional default to none. Needs to be a command name. If specified, this command name will reset
-throttling on this specific entry.</p>
+<p><code>resetOn</code>: An different IMAP command that resets counter and delay for the command. It is an optional string. By default, no IMAP command triggers a reset.</p>
 </li>
 </ul>
 </div>
@@ -1106,7 +977,7 @@ throttling on this specific entry.</p>
       &lt;additionalDelayPerOperation&gt;2ms&lt;/additionalDelayPerOperation&gt;
       &lt;observationPeriod&gt;10m&lt;/observationPeriod&gt;
       &lt;maxDelay&gt;1s&lt;/maxDelay&gt;
-      &lt;resetOn&gt;APPEND&lt;/resetOn&gt; &lt;!-- Helps mitigate delays in Outlook upon sending email: a full refresh is needed for the operation to complete --&gt;
+      &lt;resetOn&gt;APPEND&lt;/resetOn&gt; &lt;!-- Allows a full refresh after sending an email. --&gt;
     &lt;/select&gt;
     &lt;append&gt;
       &lt;thresholdCount&gt;5&lt;/thresholdCount&gt;
@@ -1119,8 +990,7 @@ throttling on this specific entry.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that commands are delayed prior the execution and thus are not subject to the IMAP upper concurrency limit until
-they are executed.</p>
+<p>Note that commands are delayed prior to their execution and thus are not subject to the setting <code>concurrentRequests</code> until they are executed.</p>
 </div>
 </div>
 </div>
@@ -1128,71 +998,93 @@ they are executed.</p>
 <h2 id="_extending_imap"><a class="anchor" href="#_extending_imap"></a>Extending IMAP</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>IMAP decoders, processors and encoder can be customized. <a href="../customization/imap.html" class="page">Read more</a>.</p>
-</div>
-<div class="paragraph">
-<p>Check this <a href="https://github.com/apache/james-project/tree/master/examples/custom-imap">example</a>.</p>
+<p>IMAP decoders, processors and encoders can be customized.
+You can <a href="../customization/imap.html" class="xref page">read more here</a>.</p>
 </div>
 <div class="paragraph">
 <p>The following configuration properties are available for extensions:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. imapserver.xml content</caption>
+<caption class="title">Table 3. <code>imapserver</code> element</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Property name</th>
-<th class="tableblock halign-left valign-top">explanation</th>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">imapPackages</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configure (union) of IMAP packages. IMAP packages bundles decoders (parsing IMAP commands) processors and encoders,
-thus enable implementing new IMAP commands or replace existing IMAP processors. List of FQDNs, which can be located in
-James extensions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imapPackages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures which packages to load for IMAP.
+IMAP packages bundle decoders (IMAP command parsing), command processors, and encoders.
+The setting is optional and defaults to <code>org.apache.James.modules.protocols.DefaultImapPackage</code>.
+The element must contain a Java classpath and can appear multiple times.
+If configured, the union of all packages is used.
+Remember to include <code>DefaultImapPackage</code> if you want to use its functionality.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">additionalConnectionChecks</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configure (union) of additional connection checks. ConnectionCheck will check if the connection IP is secure or not.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additionalConnectionChecks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures an additional connection check.
+A connection check decides whether the client IP of a connection is secure.
+It must contain a Java classpath.
+This element can be used multiple times.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">customProperties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for custom extension. Each tag is a property entry, and holds a string under the form key=value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>customProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This element can be used to set an arbitrary property.
+The value must have the form <code>key=value</code>.
+This element can be used multiple times.
+Using this enables configuring custom IMAP extensions without touching the code responsible for loading the configuration.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mail_user_agents_auto_configuration"><a class="anchor" href="#_mail_user_agents_auto_configuration"></a>Mail user agents auto-configuration</h2>
+<h2 id="_auto_configuration_for_mail_user_agents"><a class="anchor" href="#_auto_configuration_for_mail_user_agents"></a>Auto-Configuration for Mail User Agents</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Check this example on <a href="https://github.com/apache/james-project/tree/master/examples/imap-autoconf">Mail user agents auto-configuration</a>.</p>
+<p>Check <a href="https://github.com/apache/james-project/tree/master/examples/imap-autoconf">this example</a> for the auto-configuration of mail user agents.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_local_cache_for_partial_fetch"><a class="anchor" href="#_local_cache_for_partial_fetch"></a>Local cache for partial Fetch</h2>
+<h2 id="_local_cache_for_partial_fetch"><a class="anchor" href="#_local_cache_for_partial_fetch"></a>Local Cache for Partial Fetch</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Because some clients uses partial fetch in order to emulate retriable download of individual body parts
-we offer a way for James to cache in the IMAP session the latest partially fetched message. This is done using
-a weak reference, a total size dedicated to the cache as well as a time to leave cache cleanup, all of this
-being configurable.</p>
+<p>Some clients use partial fetch in order to emulate retriable downloads of individual body parts.
+Therefore, we offer a way for James to cache the latest partially fetched message in the IMAP session.
+This is done using a weak reference.</p>
 </div>
 <div class="paragraph">
-<p>Example:</p>
+<p>The following configuration options are available.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>partialBodyFetchCacheEnabled</code>: Enables the cache. It is an optional boolean that defaults to <code>false</code>.</p>
+</li>
+<li>
+<p><code>partialBodyFetchCacheDuration</code>: Configures how long partial bodies are cached. It is an optional integer with an optional unit. The default value is 2 minutes and the default unit is minute. The unit should be <code>s</code> (second) or <code>m</code> (minute) in most cases.</p>
+</li>
+<li>
+<p><code>partialBodyFetchCacheSize</code>: Sets the size of the cache. It is an optional integer with an optional unit. The default value is 500 mebibyte and the default unit is byte. The unit should be <code>MiB</code> (mebibyte) or <code>GiB</code> (gibibyte) in most cases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example with the default values:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;imapserver&gt;
-  &lt;partialBodyFetchCacheEnabled&gt;true&lt;/partialBodyFetchCacheEnabled&gt;
-  &lt;partialBodyFetchCacheDuration&gt;2min&lt;/partialBodyFetchCacheDuration&gt;
-  &lt;partialBodyFetchCacheSize&gt;500 MiB&lt;/partialBodyFetchCacheSize&gt;
+  &lt;partialBodyFetchCacheEnabled&gt;false&lt;/partialBodyFetchCacheEnabled&gt;
+  &lt;partialBodyFetchCacheDuration&gt;2m&lt;/partialBodyFetchCacheDuration&gt;
+  &lt;partialBodyFetchCacheSize&gt;500MiB&lt;/partialBodyFetchCacheSize&gt;
 &lt;/imapserver&gt;</code></pre>
 </div>
 </div>
@@ -1203,8 +1095,21 @@ being configurable.</p>
 </main>
 </div>
 <footer class="footer">
-  <p>This page was built using the Antora default UI.</p>
-  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+  <img src="../../../../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
 </footer>
 <script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
 <script async src="../../../../../_/js/vendor/highlight.js"></script>

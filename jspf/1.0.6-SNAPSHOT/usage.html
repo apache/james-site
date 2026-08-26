@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How to use jSPF in your project :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../index.html"><img src="../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../../index.html">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../james-project/3.9.0/index.html">Documentation</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="index.html">jSPF</a>
+            <a class="navbar-item" href="../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="../../james-site/latest/index.html">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../james-site/latest/contributing.html">Contributing</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="jspf" data-version="1.0.6-SNAPSHOT">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Apache James jSPF</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="usage.html">How to use jSPF in your project</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="faq.html">jSPF FAQ</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="rfclist.html">Useful RFCs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="code-standards.html">Coding standards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://issues.apache.org/jira/browse/JSPF">Issue Tracker</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/download.cgi#Apache_jSPF">Download Releases</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James jSPF</span>
+    <span class="version">1.0.6-SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-project/3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../james-project/3.10.0/index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../james-project/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Apache James jSPF</a></li>
+    <li><a href="usage.html">How to use jSPF in your project</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/apache/james-jspf/blob/master/docs/modules/ROOT/pages/usage.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">How to use jSPF in your project</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>jSPF checks whether a given IP address is allowed to send mail on behalf of a
+given envelope sender, as specified by the domain&#8217;s SPF record. This page shows
+how to add the library to a project, run a check, and interpret its result.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_the_dependency"><a class="anchor" href="#_adding_the_dependency"></a>Adding the dependency</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The library lives in the <code>apache-jspf-resolver</code> artifact, published on Maven Central.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james.jspf&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-jspf-resolver&lt;/artifactId&gt;
+    &lt;version&gt;1.0.5&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With Gradle:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">implementation 'org.apache.james.jspf:apache-jspf-resolver:1.0.5'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>jSPF pulls in <code>dnsjava</code> (the DNS resolver it uses by default), <code>commons-cli</code> (used by
+the command line tool) and <code>slf4j-api</code>. Logging goes through SLF4J, so add the binding
+of your choice - for instance <code>logback-classic</code> - to actually see log output.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_a_check"><a class="anchor" href="#_running_a_check"></a>Running a check</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>SPF</code> is the entry point. <code>DefaultSPF</code> wires it with the default dnsjava based
+resolver and a synchronous executor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SPF spf = new DefaultSPF();
+
+SPFResult result = spf.checkSPF(
+    "192.0.2.25",             <i class="conum" data-value="1"></i><b>(1)</b>
+    "sender@example.com",     <i class="conum" data-value="2"></i><b>(2)</b>
+    "smtp.example.com");      <i class="conum" data-value="3"></i><b>(3)</b>
+
+System.out.println(result.getResult());</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The IP address the connection comes from.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The envelope sender, as provided in <code>MAIL FROM</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The host name provided in <code>HELO</code> / <code>EHLO</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>SPF</code> instances are meant to be created once and reused for many checks.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interpreting_the_result"><a class="anchor" href="#_interpreting_the_result"></a>Interpreting the result</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>SPFResult.getResult()</code> returns one of the seven RFC 4408 result strings. Compare it
+against the constants of <code>SPFErrorConstants</code> rather than against string literals:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Constant</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PASS_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pass</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address is authorized for that sender.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FAIL_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IP address is explicitly not authorized.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SOFTFAIL_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>softfail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not authorized, but the domain is still transitioning.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NEUTRAL_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>neutral</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain makes no assertion about this IP address.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NONE_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>none</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No SPF record was published for that domain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TEMP_ERROR_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>temperror</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A transient error, typically a DNS failure. Retry later.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PERM_ERROR_CONV</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>permerror</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SPF record could not be processed, e.g. it is malformed.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SPFResult result = spf.checkSPF(ip, mailFrom, helo);
+
+if (SPFErrorConstants.FAIL_CONV.equals(result.getResult())) {
+    // reject the mail, and tell the sender why
+    System.out.println(result.getExplanation());
+} else if (SPFErrorConstants.TEMP_ERROR_CONV.equals(result.getResult())) {
+    // ask the sender to try again later
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Beyond the raw result, <code>SPFResult</code> builds a ready to use <code>Received-SPF</code> header:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getHeaderName()</code> returns <code>Received-SPF</code>.</p>
+</li>
+<li>
+<p><code>getHeaderText()</code> returns the header value alone.</p>
+</li>
+<li>
+<p><code>getHeader()</code> returns the full header line, for instance:</p>
+<div class="listingblock">
+<div class="content">
+<pre>Received-SPF: pass (spfCheck: domain of example.com designates 192.0.2.25 as permitted
+sender) client-ip=192.0.2.25; envelope-from=sender@example.com; helo=example.com;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>getExplanation()</code> returns the explanation published by the domain through the <code>exp=</code>
+modifier, or the empty string when there is none.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_checking_asynchronously"><a class="anchor" href="#_checking_asynchronously"></a>Checking asynchronously</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>DefaultSPF.createAsync()</code> builds an <code>SPF</code> backed by an asynchronous executor, so DNS
+lookups do not block the calling thread. <code>checkSPF</code> then returns immediately, and the
+returned object is a <code>FutureSPFResult</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SPF spf = DefaultSPF.createAsync();
+
+FutureSPFResult result = (FutureSPFResult) spf.checkSPF(ip, mailFrom, helo);
+
+result.addListener(spfResult -&gt; {
+    // called once the result is available
+    System.out.println(spfResult.getResult());
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>isReady()</code> tells whether the result has been computed already. Note that every getter
+of <code>FutureSPFResult</code> blocks until the result is ready, so calling <code>getResult()</code> right
+away turns the asynchronous check back into a blocking one.</p>
+</div>
+<div class="paragraph">
+<p><code>DefaultSPF.createSync()</code> is the explicit counterpart, equivalent to <code>new DefaultSPF()</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tuning_the_checks"><a class="anchor" href="#_tuning_the_checks"></a>Tuning the checks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>SPF</code> exposes a few knobs, all of them optional:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SPF spf = new DefaultSPF();
+
+spf.setTimeOut(20);                                     <i class="conum" data-value="1"></i><b>(1)</b>
+spf.setDefaultExplanation("Blocked by SPF, see %{d}");  <i class="conum" data-value="2"></i><b>(2)</b>
+spf.setUseBestGuess(true);                              <i class="conum" data-value="3"></i><b>(3)</b>
+spf.setSPFMustEqualsTXT(true);                          <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>DNS timeout in seconds, before a <code>temperror</code> is returned. Defaults to 20.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Explanation used when the domain publishes no <code>exp=</code> modifier. Macros are expanded.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When no SPF record is found, evaluate <code>v=spf1 a/24 mx/24 ptr ?all</code> instead of
+returning <code>none</code>. Only <code>pass</code> or <code>neutral</code> can result from a best guess. Defaults to false.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Return a <code>permerror</code> when a domain publishes both an SPF-type and a TXT-type record
+and the two disagree. Defaults to false.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Two policy objects let you supply records jSPF would not otherwise see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getFallbackPolicy()</code> provides records for domains that publish none.</p>
+</li>
+<li>
+<p><code>getOverridePolicy()</code> replaces the records published by given domains.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_your_own_dns_resolver"><a class="anchor" href="#_using_your_own_dns_resolver"></a>Using your own DNS resolver</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>DefaultSPF</code> uses dnsjava with its default system resolver. To point jSPF at a specific
+DNS server, pass your own <code>Resolver</code> to <code>DNSServiceXBillImpl</code> and build the <code>SPF</code>
+instance yourself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Resolver resolver = new SimpleResolver("192.0.2.53");
+DNSService dnsService = new DNSServiceXBillImpl(resolver);
+
+SPF syncSpf = new SPF(dnsService);
+SPF asyncSpf = new SPF(dnsService, new AsynchronousSPFExecutor(dnsService));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you already have a DNS layer of your own, implement the <code>DNSService</code> interface
+instead - it is the only contract jSPF needs in order to resolve records.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_jspf_from_the_command_line"><a class="anchor" href="#_running_jspf_from_the_command_line"></a>Running jSPF from the command line</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>SPFQuery</code> class is a standalone entry point. Run it with the resolver jar and its
+dependencies on the classpath:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -cp "apache-jspf-resolver-1.0.5.jar:dnsjava.jar:commons-cli.jar:slf4j-api.jar" \
+    org.apache.james.jspf.impl.SPFQuery \
+    -i 192.0.2.25 -s sender@example.com -h smtp.example.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The three options <code>-i</code> / <code>--ip</code>, <code>-s</code> / <code>--sender</code> and <code>-h</code> / <code>--helo</code> are required;
+running the tool without them prints the full usage. Also available are
+<code>-e</code> / <code>--default-explanation</code>, <code>-b</code> / <code>--enable-best-guess</code>,
+<code>-t</code> / <code>--enable-trusted-forwarder</code>, <code>-d</code> / <code>--debug</code> and <code>-v</code> / <code>--verbose</code>.</p>
+</div>
+<div class="paragraph">
+<p>The tool prints the result and the <code>Received-SPF</code> header on standard output, and
+reports the outcome through its exit code:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Exit code</th>
+<th class="tableblock halign-left valign-top">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pass</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fail</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>softfail</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>neutral</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>temperror</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>permerror</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>none</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">255</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unknown result, or wrong command line arguments</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

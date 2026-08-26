@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using the jDKIM library :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../index.html"><img src="../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../../index.html">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../james-project/3.9.0/index.html">Documentation</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="../../james-site/latest/index.html">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../james-site/latest/contributing.html">Contributing</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="jdkim" data-version="0.6-SNAPSHOT">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="index.html">Apache James JDKIM</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="main/index.html">Library</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="usage.html">Using the library</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://issues.apache.org/jira/browse/JDKIM">Issue Tracker</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Related Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://james.apache.org/jspf/index.html">jSPF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://dkim-javamail.sourceforge.net">DKIM Javamail</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://www.badpenguin.co.uk/dkim/">JavaDKIM</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://james.apache.org/download.cgi#Apache_jDKIM">Download Releases</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James JDKIM</span>
+    <span class="version">0.6-SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Apache James JDKIM</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-project/3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version">
+          <a href="../../james-project/3.10.0/index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../james-project/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../james-project/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../james-site/latest/index.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../james-site/latest/index.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Apache James JDKIM</a></li>
+    <li><a href="usage.html">Using the library</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/apache/james-jdkim/blob/master/docs/modules/ROOT/pages/usage.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Using the jDKIM library</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page walks through signing and verifying messages with jDKIM.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_getting_the_library">Getting the library</a></li>
+<li><a href="#_signing_a_message">Signing a message</a>
+<ul class="sectlevel2">
+<li><a href="#_loading_a_private_key">Loading a private key</a></li>
+</ul>
+</li>
+<li><a href="#_verifying_a_message">Verifying a message</a>
+<ul class="sectlevel2">
+<li><a href="#_inspecting_the_outcome_of_every_signature">Inspecting the outcome of every signature</a></li>
+</ul>
+</li>
+<li><a href="#_tuning_the_verifier">Tuning the verifier</a></li>
+<li><a href="#_applying_several_signatures">Applying several signatures</a></li>
+<li><a href="#_a_complete_example">A complete example</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_the_library"><a class="anchor" href="#_getting_the_library"></a>Getting the library</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.james.jdkim&lt;/groupId&gt;
+    &lt;artifactId&gt;apache-jdkim-library&lt;/artifactId&gt;
+    &lt;version&gt;0.6-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>jDKIM requires Java 11 and a JVM providing the <code>SHA256withRSA</code> cipher suite.
+Message parsing is delegated to
+<a href="https://james.apache.org/mime4j/">Apache James Mime4J</a>, and DNS lookups to
+<a href="https://github.com/dnsjava/dnsjava">dnsjava</a>; both are pulled in transitively.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_signing_a_message"><a class="anchor" href="#_signing_a_message"></a>Signing a message</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>DKIMSigner</code> is built from a <strong>signature template</strong> and a <code>PrivateKey</code>. The
+template carries the DKIM tags you control&#8201;&#8212;&#8201;the signing domain (<code>d=</code>), the
+selector (<code>s=</code>), the algorithm (<code>a=</code>), the canonicalization (<code>c=</code>) and the list
+of headers to cover (<code>h=</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.io.InputStream;
+import java.security.PrivateKey;
+import org.apache.james.jdkim.DKIMSigner;
+
+String signatureTemplate =
+    "v=1; a=rsa-sha256; c=simple; d=example.com; h=date:from:subject; q=dns/txt; s=selector;";
+
+PrivateKey privateKey = ...;
+DKIMSigner signer = new DKIMSigner(signatureTemplate, privateKey);
+
+String signature = signer.sign(messageInputStream);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>sign</code> returns the <strong>complete header</strong>, prefix included:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">DKIM-Signature: a=rsa-sha256; q=dns/txt; b=Axa8s/gTnnJ8em45KV/AQw33hQ4uYtBK...==; c=simple; s=selector; d=example.com; v=1; bh=6pQY5V6Dw8mCYWq017gfbpv+x2X4GvOhIIZtKw6iU6g=; h=date:from:subject;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Prepend it to the message&#8201;&#8212;&#8201;signatures go at the top, per
+<a href="https://datatracker.ietf.org/doc/html/rfc6376#section-3.5">RFC 6376 section 3.5</a>.
+The <code>b=</code> and <code>bh=</code> tags are computed by the signer; you do not put them in the
+template.</p>
+</div>
+<div class="paragraph">
+<p><code>h=</code> must list <code>from</code>. A signature that does not cover the <code>From</code> field is
+rejected at verification time with "From field not signed".</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>sign(InputStream)</code> <strong>closes the stream it is given</strong>. If you also need the
+message body afterwards (to write out the signed message, for instance), buffer
+it or open a second stream over the same source.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_loading_a_private_key"><a class="anchor" href="#_loading_a_private_key"></a>Loading a private key</h3>
+<div class="paragraph">
+<p><code>DKIMSigner.getPrivateKey</code> reads a Base64-encoded PKCS#8 RSA key&#8201;&#8212;&#8201;that is the
+body of a <code>BEGIN PRIVATE KEY</code> PEM file, without the <code>-----BEGIN-----</code> /
+<code>-----END-----</code> delimiters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.security.PrivateKey;
+import org.apache.james.jdkim.DKIMSigner;
+
+String pkcs8Base64 = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAL...";
+PrivateKey privateKey = DKIMSigner.getPrivateKey(pkcs8Base64);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A PKCS#1 key (<code>BEGIN RSA PRIVATE KEY</code>) must be converted first:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">openssl pkcs8 -topk8 -nocrypt -in pkcs1.pem -out pkcs8.pem</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verifying_a_message"><a class="anchor" href="#_verifying_a_message"></a>Verifying a message</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>DKIMVerifier</code> with no argument resolves public keys over DNS:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.util.List;
+import org.apache.james.jdkim.DKIMVerifier;
+import org.apache.james.jdkim.api.SignatureRecord;
+
+DKIMVerifier verifier = new DKIMVerifier();
+List&lt;SignatureRecord&gt; verifiedSignatures = verifier.verify(messageInputStream);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The verifier checks <strong>every</strong> <code>DKIM-Signature</code> header on the message and returns
+only those that passed. Like <code>sign</code>, <code>verify(InputStream)</code> closes the stream.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>verify</code> never returns an empty list, and the two "nothing passed" cases are
+<strong>not</strong> reported the same way:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No <code>DKIM-Signature</code> header at all</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>null</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Signatures present, none of them valid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Throws <code>FailException</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">At least one valid signature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of records that passed</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>null</code> is the sharp edge&#8201;&#8212;&#8201;<code>verifier.verify(is).isEmpty()</code> throws a
+<code>NullPointerException</code> on unsigned mail. Null-check the result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;SignatureRecord&gt; verified = verifier.verify(messageInputStream);
+if (verified == null) {
+    // unsigned message: dkim=none
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The failure exceptions, all subclasses of <code>FailException</code>, are a normal outcome
+rather than a bug:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PermFailException</code>&#8201;&#8212;&#8201;permanent failure (bad signature, no key published,
+malformed record); do not retry.</p>
+</li>
+<li>
+<p><code>TempFailException</code>&#8201;&#8212;&#8201;transient failure (DNS timeout); retrying may help.</p>
+</li>
+<li>
+<p><code>CompositeFailException</code>&#8201;&#8212;&#8201;several signatures failed for different reasons.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_inspecting_the_outcome_of_every_signature"><a class="anchor" href="#_inspecting_the_outcome_of_every_signature"></a>Inspecting the outcome of every signature</h3>
+<div class="paragraph">
+<p><code>verify</code> only reports the successes. To see what happened to each signature&#8201;&#8212;&#8201;including the failures&#8201;&#8212;&#8201;read the results. They are populated even when
+<code>verify</code> throws, so collect them from the <code>catch</code> block too:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.apache.james.jdkim.api.Result;
+
+for (Result result : verifier.getResults()) {
+    result.isSuccess();          // did this signature pass?
+    result.getResultType();      // PASS, FAIL, NEUTRAL, TEMPERROR, PERMERROR, POLICY, NONE
+    result.getRecord();          // the SignatureRecord, e.g. getSelector() / getDToken()
+    result.getErrorMessage();    // why it failed, when it did
+    result.getHeaderText();      // ready-to-use Authentication-Results fragment
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result types follow
+<a href="https://datatracker.ietf.org/doc/html/rfc8601#section-2.7.1">RFC 8601 section 2.7.1</a>,
+so <code>getHeaderText()</code> can feed an <code>Authentication-Results</code> header directly.</p>
+</div>
+<div class="paragraph">
+<p>For a DMARC-style verdict&#8201;&#8212;&#8201;a message passes when at least one signature is
+valid&#8201;&#8212;&#8201;use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">boolean passes = verifier.hasAnyValidSignature();</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>getResults()</code> <strong>accumulates</strong> across calls. Reusing one <code>DKIMVerifier</code> for
+several messages requires clearing it between them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">verifier.resetResults();</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tuning_the_verifier"><a class="anchor" href="#_tuning_the_verifier"></a>Tuning the verifier</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>VerifierOptions</code> configures key lookup and clock tolerance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.time.Duration;
+import org.apache.james.jdkim.DKIMVerifier;
+import org.apache.james.jdkim.api.VerifierOptions;
+
+DKIMVerifier verifier = new DKIMVerifier(new VerifierOptions.Builder()
+    .withClockDriftTolerance(Duration.ofMinutes(5))
+    .build());</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>withClockDriftTolerance(Duration)</code></dt>
+<dd>
+<p>How far in the future a signature&#8217;s <code>t=</code> timestamp may be before it is rejected
+as <code>PermFailException</code> ("Signature date is more than &#8230;&#8203; in the future"). It
+covers clock drift between signer and verifier, as allowed by
+<a href="https://datatracker.ietf.org/doc/html/rfc6376#section-3.5">RFC 6376 section 3.5</a>.
+Defaults to 5 minutes; must not be negative. Note this tolerance applies to <code>t=</code>
+only&#8201;&#8212;&#8201;an expired <code>x=</code> is rejected against the local clock with no slack.</p>
+</dd>
+<dt class="hdlist1"><code>withDnsResolver(Resolver)</code></dt>
+<dd>
+<p>A dnsjava <code>Resolver</code> to query instead of the system default&#8201;&#8212;&#8201;useful to point
+at a specific resolver or to shorten timeouts.</p>
+</dd>
+<dt class="hdlist1"><code>withPublicKeyRecordRetriever(PublicKeyRecordRetriever)</code></dt>
+<dd>
+<p>Bypasses DNS entirely. Implement <code>PublicKeyRecordRetriever</code> to serve keys from a
+database, a cache, or a fixture in tests. <code>MultiplexingPublicKeyRecordRetriever</code>
+dispatches on the <code>q=</code> method (<code>dns/txt</code> by default).</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DKIMVerifier verifier = new DKIMVerifier(new VerifierOptions.Builder()
+    .withPublicKeyRecordRetriever(myRetriever)
+    .build());</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_applying_several_signatures"><a class="anchor" href="#_applying_several_signatures"></a>Applying several signatures</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Signing with more than one key lets you offer several algorithms on one
+selector, or roll a key over without a gap. Use one <code>DKIMSigner</code> per template
+and prepend all the resulting headers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String sig1 = new DKIMSigner(templateSha256, key).sign(streamOverMessage());
+String sig2 = new DKIMSigner(templateSha1, key).sign(streamOverMessage());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each <code>sign</code> call consumes its own stream, since the signer closes what it reads.
+On the verifying side nothing changes: <code>verify</code> walks every <code>DKIM-Signature</code>
+header it finds, and <code>getResults()</code> reports one <code>Result</code> per signature.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_complete_example"><a class="anchor" href="#_a_complete_example"></a>A complete example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>DKIMTest</code> in the test sources signs a message, feeds the signature back into
+the verifier and asserts the outcome&#8201;&#8212;&#8201;including the multiple-signature case:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/apache/james-jdkim/blob/master/main/src/test/java/org/apache/james/jdkim/DKIMTest.java">main/src/test/java/org/apache/james/jdkim/DKIMTest.java</a></p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
