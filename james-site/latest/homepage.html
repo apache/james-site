@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Apache James Project :: Apache James</title>
+    <title>Apache James :: Apache James</title>
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../_/css/site.css">
   </head>
@@ -38,8 +38,9 @@
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="index.html">Community</a>
+          <a class="navbar-link" href="../../james-site/latest/community.html">Community</a>
           <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../james-site/latest/community.html">Join the community</a>
             <a class="navbar-item" href="../../james-site/latest/mailing-lists.html">Mailing lists</a>
             <a class="navbar-item" href="../../james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
@@ -69,16 +70,16 @@
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
     <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
-    <h3 class="title"><a href="index.html">Apache James Site</a></h3>
+    <h3 class="title"><a href="homepage.html">Apache James Site</a></h3>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item is-active" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="homepage.html">Welcome to Apache James Project</a>
+    <a class="nav-link" href="homepage.html">Home</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-active" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Community</a>
+    <a class="nav-link" href="community.html">Community</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mailing-lists.html">Mailing lists</a>
@@ -167,10 +168,10 @@
       </ul>
     </li>
     <li class="component is-current">
-      <div class="title"><a href="index.html">Apache James Site</a></div>
+      <div class="title"><a href="homepage.html">Apache James Site</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">latest</a>
+          <a href="homepage.html">latest</a>
         </li>
       </ul>
     </li>
@@ -185,8 +186,8 @@
   <a href="homepage.html" class="home-link is-current"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Apache James Site</a></li>
-    <li><a href="homepage.html">Welcome to Apache James Project</a></li>
+    <li><a href="homepage.html">Apache James Site</a></li>
+    <li><a href="homepage.html">Home</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="https://github.com/apache/james-site/blob/HEAD/docs/modules/ROOT/pages/homepage.adoc">Edit this Page</a></div>
@@ -196,9 +197,175 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Welcome to Apache James Project</h1>
+<h1 class="page">Apache James</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>This is a work in progress.</p>
+<p><strong>Emails at the heart of your business logic.</strong></p>
+</div>
+<div class="paragraph">
+<p>James stands for <strong>Java Apache Mail Enterprise Server</strong>!</p>
+</div>
+<div class="paragraph">
+<p>It has a modular architecture based on a rich set of modern and efficient components which provides
+at the end complete, stable, secure and extendable Mail Servers running on the JVM.</p>
+</div>
+<div class="paragraph">
+<p>Create your own personal solution of emails treatment by assembling the components you need thanks
+to the Inversion of Control mail platform offered, and go further customizing filtering and routing
+rules using the James Mailet Container.</p>
+</div>
+<div class="paragraph">
+<p>James is a living Open Source project - all developments and implementations are based on open
+technical standards - and any function which is not already available can be developed!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_james_server"><a class="anchor" href="#_the_james_server"></a>The James server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The James server wires together the different libraries composing James to provide running services.</p>
+</div>
+<div class="paragraph">
+<p>From a technical point of view:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Complete portability: 100% pure JVM (Java &amp; Scala).</p>
+</li>
+<li>
+<p>Emailing protocols: SMTP, LMTP, POP3, IMAP, ManageSieve, JMAP.</p>
+</li>
+<li>
+<p>Mailet container: independent, extensible and pluggable email processing agents.</p>
+</li>
+<li>
+<p>Storage API: Mailbox API / Search API / User API.</p>
+</li>
+<li>
+<p>Storage implementations: Cassandra / PostgreSQL / HSQLDB / MySQL / OpenSearch&#8230;&#8203;</p>
+</li>
+<li>
+<p>Administration: JMX / REST / Command line.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your James server can also be used as a Mail Transfer Agent, by enabling only SMTP, or as an IMAP
+Mail Delivery Agent.</p>
+</div>
+<div class="paragraph">
+<p>Recent work of the Apache James project did lead to a James product that leverages a <strong>distributed
+mail server</strong>, fully horizontally scalable, using storage technologies like Cassandra, OpenSearch,
+RabbitMQ and object storage (S3/Swift).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../../james-project/3.9.0/index.html" class="xref page"><strong>Apache James Server documentation</strong></a> - installation,
+configuration, concepts, customization and development guides.</p>
+</li>
+<li>
+<p><a href="../../james-distributed-app/3.9.0/index.html" class="xref page"><strong>Distributed James Server documentation</strong></a> - running the
+horizontally scalable flavour of James.</p>
+</li>
+<li>
+<p><a href="download.html" class="xref page">Download page</a> - artifacts and sources for the James server and the James
+libraries.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_james_libraries"><a class="anchor" href="#_the_james_libraries"></a>The James libraries</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Beyond the server, the Apache James project maintains a set of subprojects: standalone libraries
+that can be plugged into any JVM mail application.</p>
+</div>
+<div class="sect2">
+<h3 id="_mime4j"><a class="anchor" href="#_mime4j"></a>Mime4J</h3>
+<div class="paragraph">
+<p>Apache James Mime4J provides a parser, <code>MimeStreamParser</code>, for e-mail message streams in plain
+RFC-822 and MIME format. The parser uses a callback mechanism to report parsing events such as the
+start of an entity header, the start of a body, etc. If you are familiar with the SAX XML parser
+interface, you should have no problem getting started with Mime4J.</p>
+</div>
+<div class="paragraph">
+<p>The parser only deals with the structure of the message stream - this is intentional, as it should
+only provide the most basic functionality needed to build more complex parsers - but Mime4J does
+include facilities to decode bodies and fields, and can build a tree representation of an e-mail
+message. It has been designed to be extremely tolerant against messages violating the standards.</p>
+</div>
+<div class="paragraph">
+<p><a href="../../mime4j/0.8.15-SNAPSHOT/index.html" class="xref page"><strong>Mime4J documentation</strong></a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jsieve"><a class="anchor" href="#_jsieve"></a>jSieve</h3>
+<div class="paragraph">
+<p>jSieve is a Java implementation of the Sieve mail filtering language defined by RFC 5228. jSieve is
+implemented as a language processor that can be plugged into any internet mail application to add
+Sieve support.</p>
+</div>
+<div class="paragraph">
+<p>Sieve is an extensible mail filtering language. Its limited expressiveness - no loops or variables,
+no tests with side effects - allows user created scripts to be run safely on email servers. Sieve is
+targeted at the final delivery phase, where an incoming email is transferred to a user&#8217;s mailbox.</p>
+</div>
+<div class="paragraph">
+<p>jSieve consists of two products: <strong>Apache jSieve</strong>, the Sieve library itself, and <strong>Apache jSieve
+Utilities</strong>, which contains utility classes helpful when using Sieve but not considered sufficiently
+core to be included in the main library.</p>
+</div>
+<div class="paragraph">
+<p><a href="../../jsieve/0.9-SNAPSHOT/index.html" class="xref page"><strong>jSieve documentation</strong></a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jspf"><a class="anchor" href="#_jspf"></a>jSPF</h3>
+<div class="paragraph">
+<p>The jSPF library is a pure Java SPF implementation, designed to match the SPF specifications. SPF,
+also known as <strong>Sender Policy Framework</strong>, was designed to detect email spoofing: this is the solution
+if you ever were tired of getting spam from yourself.</p>
+</div>
+<div class="paragraph">
+<p><a href="../../jspf/1.0.6-SNAPSHOT/index.html" class="xref page"><strong>jSPF documentation</strong></a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jdkim"><a class="anchor" href="#_jdkim"></a>jDKIM</h3>
+<div class="paragraph">
+<p>jDKIM is a DKIM - <strong>DomainKeys Identified Mail</strong> - implementation library written in Java. It provides
+both verification and signing, and also provides Mailets for the Apache James project.</p>
+</div>
+<div class="paragraph">
+<p>Its architecture is thought to handle multiple signatures with performance in mind: body hashing for
+multiple signatures is computed concurrently in a single stream run.</p>
+</div>
+<div class="paragraph">
+<p><a href="../../jdkim/0.6-SNAPSHOT/index.html" class="xref page"><strong>jDKIM documentation</strong></a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_join_the_community"><a class="anchor" href="#_join_the_community"></a>Join the community</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache James Project is an Open Source all-volunteer project obtaining its strength from its
+Community made of developers and users. All are welcome to the Community!</p>
+</div>
+<div class="paragraph">
+<p>Have a look at <a href="community.html" class="xref page">how to join the community</a>, subscribe to the
+<a href="mailing-lists.html" class="xref page">mailing lists</a>, and read the <a href="contributing.html" class="xref page">contributing guide</a> to
+submit your first patch. We also describe the <a href="persona.html" class="xref page">people we build James for</a>, and list
+the <a href="support.html" class="xref page">companies providing professional support</a>.</p>
+</div>
+</div>
 </div>
 </article>
   </div>

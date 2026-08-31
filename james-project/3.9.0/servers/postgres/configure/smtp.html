@@ -39,8 +39,9 @@
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="../../../../../james-site/latest/index.html">Community</a>
+          <a class="navbar-link" href="../../../../../james-site/latest/community.html">Community</a>
           <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../../../../james-site/latest/community.html">Join the community</a>
             <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
             <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
@@ -775,10 +776,10 @@
       </ul>
     </li>
     <li class="component">
-      <div class="title"><a href="../../../../../james-site/latest/index.html">Apache James Site</a></div>
+      <div class="title"><a href="../../../../../james-site/latest/homepage.html">Apache James Site</a></div>
       <ul class="versions">
         <li class="version is-latest">
-          <a href="../../../../../james-site/latest/index.html">latest</a>
+          <a href="../../../../../james-site/latest/homepage.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1022,6 +1023,21 @@ a per user, limit.  If the value is zero then there is no limit.  If the tag isn
 default to an unlimited message size. Must be a positive integer, optionally with a unit: B, K, M, G.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorMessages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the human readable texts of some SMTP error responses, which allows administrators to translate or
+reword the messages their users are exposed to. Return codes and DSN statuses are never customizable as remote
+servers do rely on them. All entries are optional, and default to the values shown below:</p>
+<p class="tableblock">&#8230;&#8203;.
+&lt;errorMessages&gt;
+    &lt;!-- Returned as <code>552 5.3.4 &lt;text&gt;</code> when a mail exceeds maxmessagesize -&#8594;
+    &lt;oversizedMail&gt;Message size exceeds fixed maximum message size&lt;/oversizedMail&gt;
+    &lt;!-- Returned as <code>550 5.1.1 &lt;text&gt; &lt;recipient&gt;</code> when a recipient does not exist: the rejected
+         recipient is always appended to the text. -&#8594;
+    &lt;unknownUser&gt;Unknown user:&lt;/unknownUser&gt;
+&lt;/errorMessages&gt;
+&#8230;&#8203;.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">heloEhloEnforcement</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This sets whether to enforce the use of HELO/EHLO salutation before a
 MAIL command is accepted. If unspecified, the value defaults to true.</p></td>
@@ -1177,6 +1193,10 @@ to get some examples and hints.</p>
 </div>
 <div class="paragraph">
 <p>The default LMTP server stores directly emails in user mailboxes, without further treatment.</p>
+</div>
+<div class="paragraph">
+<p>Just like for SMTP, the <code>errorMessages</code> element can be used to customize the human readable texts of some LMTP
+error responses (see above).</p>
 </div>
 <div class="paragraph">
 <p>However we do ship an alternative handler chain allowing to execute the mailet container, thus achieving a behaviour similar
