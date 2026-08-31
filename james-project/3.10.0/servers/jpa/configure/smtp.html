@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JPA James Server &mdash; smtpserver.xml :: Apache James</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../../../../index.html"><img src="../../../../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../../../../../index.html">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <div class="navbar-item"><strong>James server</strong></div>
+            <a class="navbar-item" href="../../../../3.9.0/index.html">Documentation</a>
+            <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
+            <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
+            <a class="navbar-item" href="../../../../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
+            <a class="navbar-item" href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
+            <a class="navbar-item" href="../../../../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
+            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="../../../../../james-site/latest/community.html">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="../../../../../james-site/latest/community.html">Join the community</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
+            <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
+            <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
+            <a class="navbar-item" href="https://twitter.com/ApacheJames">
+              <span class="icon">
+                <svg aria-hidden="true" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="#57aaee" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                </svg>
+              </span> Twitter
+            </a>            
+            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+          </div>
+        </div>
+<!--        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="james-project" data-version="3.10.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../../index.html">Apache James Server</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Servers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../demo.html">Demo</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../5-minute-demo.html">Short Demo</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../15-minute-demo.html">Long Demo</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/index.html">Distributed James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../distributed/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/blobstore.html">BlobStore</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/architecture/data-tiering.html">Data tiering</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/run/run-docker.html">Run with Docker</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/run/run-kubernetes.html">Run with Kubernetes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-checklist.html">Deployment Checklist</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-logsMetrics.html">Logs &amp; Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-values.html">values.yaml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/run/k8s-secrets.html">secrets.yaml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/cassandra.html">cassandra.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/vault.html">deletedMessageVault.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/dsn.html">ESMTP DSN support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/cassandra-migration.html">Cassandra migration</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/backup.html">Backup</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../distributed/benchmark/index.html">Performance benchmark</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../distributed/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/index.html">Distributed Postgres James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../postgres/objectives.html">Objectives and motivation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/consistency-model.html">Consistency Model</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/blobstore.html">BlobStore</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/architecture/specialized-instances.html">Specialized instances</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/blobstore.html">blobstore.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/opensearch.html">opensearch.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/rabbitmq.html">rabbitmq.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/redis.html">redis.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/tika.html">tika.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/batchsizes.html">batchsizes.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/search.html">search.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../postgres/benchmark/index.html">Performance testing the Postgresql James server</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/db-benchmark.html">Database benchmarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../postgres/benchmark/james-benchmark.html">James benchmarks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">JPA James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../architecture/database-schema.html">Database schema</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../run/index.html">Run</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/run-java.html">Run with Java</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../run/run-docker.html">Run with Docker</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="kerberos.html">Kerberos GSSAPI Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="webadmin.html">webadmin.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="database.html">james-database.properties</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="droplists.html">DropLists</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="healthcheck.html">healthcheck.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="usersrepository.html">usersrepository.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="extensions.html">extensions.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="listeners.html">listeners.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="jvm.html">jvm.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="spam.html">Anti-Spam setup</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="remote-delivery-error-handling.html">About RemoteDelivery error handling</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-contacts.html">Contact collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="collecting-events.html">Event collection</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="dsn.html">ESMTP DSN support</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="mta-sts.html">MTA-STS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/guide.html">Operator guide</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/performanceChecklist.html">Performance checklist</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/folders.html">Folder layout</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/webadmin.html">WebAdmin REST administration API</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../operate/security.html">Security checklist</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../customization/index.html">Extending behaviour</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/imap.html">Custom IMAP processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mail-processing.html">Custom mail processing components</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/mailbox-listeners.html">Custom Mailbox Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../customization/webadmin-routes.html">Custom WebAdmin routes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../smtp-only.html">SMTP only variant</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spring/index.html">Spring James Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spring/architecture/index.html">Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/architecture/implemented-standards.html">Implemented standards</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/architecture/database-schema.html">Database schema</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring/run.html">Run</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spring/configure/index.html">Configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocols</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/server.html">Common Server Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/oidc.html">OIDC Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/imap.html">imapserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/jmx.html">jmx.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/smtp.html">smtpserver.xml &amp; lmtpserver.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/smtp-hooks.html">Packaged SMTP hooks</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/pop3.html">pop3server.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/ssl.html">SSL &amp; TLS</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/sieve.html">Sieve &amp; ManageSieve</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Storage dependencies</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/database.html">james-database.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/mailbox.html">mailbox.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/indexer.html">indexer.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core components</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/dns.html">dnsservice.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/domainlist.html">domainlist.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/mailetcontainer.html">mailetcontainer.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/mailets.html">Packaged Mailets</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/matchers.html">Packaged Matchers</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/mailrepositorystore.html">mailrepositorystore.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/recipientrewritetable.html">recipientrewritetable.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/usersrepository.html">usersrepository.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/quota.html">quota.xml</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/fetchmail.html">fetchmail.xml</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/dsn.html">ESMTP DSN support</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../spring/configure/mta-sts.html">MTA-STS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spring/operate/index.html">Operate</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/operate/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/operate/folders.html">Folder layout</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/operate/jmx.html">Administer over JMX</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/operate/cli.html">Command Line Interface</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/operate/security.html">Security</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extending behaviour</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/customization/mail-processing.html">Custom mail processing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../spring/customization/smtp-hooks.html">Custom SMTP hooks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../test.html">Test</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../migrating.html">Migrating existing data</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../development/index.html">Developer Guide</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/source-code.html">Code base organisation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/build-from-source.html">Building from source</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/logging.html">Logging in Apache James</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../development/deployment-tests.html">Deployment tests</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Apache James Server</span>
+    <span class="version">3.10.0 SNAPSHOT</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <div class="title"><a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="../../../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <div class="title"><a href="../../../../../james-site/latest/homepage.html">Apache James Site</a></div>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../james-site/latest/homepage.html">latest</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../../../james-site/latest/homepage.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Apache James Server</a></li>
+    <li><a href="../../index.html">Servers</a></li>
+    <li><a href="../index.html">JPA James Application</a></li>
+    <li><a href="index.html">Configuration</a></li>
+    <li>Protocols</li>
+    <li><a href="smtp.html">smtpserver.xml &amp; lmtpserver.xml</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="smtp.html">3.10.0 SNAPSHOT</a>
+    <a class="version is-missing" href="../../../../3.9.0/index.html">3.9.0</a>
+    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
+    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
+  </div>
+</div>
+<div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/jpa/configure/smtp.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">JPA James Server &mdash; smtpserver.xml</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock warning deprecation-banner">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>The JPA James server is deprecated.</strong>
+It is kept for backward compatibility only, receives no new features, and may be removed in a future release. It
+is a single node application, relies on the barely maintained blocking OpenJPA stack, and lacks major James
+features (JMAP, distributed search, Deleted Messages Vault&#8230;&#8203;).</p>
+</div>
+<div class="paragraph">
+<p>New deployments should use the <a href="../../postgres/index.html" class="xref page">Postgres James server</a> instead: it targets the same SQL
+based, small to medium deployments, with a reactive and actively maintained implementation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/jpa-app/sample-configuration/smtpserver.xml">example</a> for guidance on how to configure SMTP.</p>
+</div>
+<div class="paragraph">
+<p>The SMTP service is configured in the file <code>smtpserver.xml</code>.
+It contains one <code>smtpservers</code> element that can contain multiple <code>smtpserver</code> elements.</p>
+</div>
+<div class="paragraph">
+<p>The <code>smtpserver</code> element can be configured using the common options described <a href="server.html" class="xref page">here</a>.
+Additional settings are described below.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. <code>smtpserver</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures user authentication.
+More details of this element are given below.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authRequired</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Deprecated. If <code>auth.announce</code> is not present, this is used as fallback.
+It is an optional string that defaults to <code>false</code>.</p>
+</div>
+<div class="paragraph">
+<p>Its value is mapped to the allowed values for <code>auth.announce</code> (<code>always</code>, <code>never</code>, and <code>forUnauthorizedAddresses</code>) as described below.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>true</code> maps to <code>forUnauthorizedAddresses</code>.</p>
+</li>
+<li>
+<p><code>announce</code> maps to <code>always</code>.</p>
+</li>
+<li>
+<p>All other values (including the default <code>false</code>) map to <code>never</code>.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizedAddresses</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures IP networks that are considered trustworthy.
+Normally, clients are only authorized to relay emails after a successful SMTP AUTH command.
+If the remote IP of a connection is included in one of these networks, the client is authorized to relay without authentication.
+It is an optional list separated by <code>, </code> (note the space).</p>
+<p class="tableblock"><strong>We strongly recommend to omit this element!</strong>
+Caution is especially required if James is behind a reverse proxy.
+In that case, it is essential that PROXY protocol is used so that James sees the real client IP and not some internal IP that might be included in the <code>authorizedAddresses</code>.</p>
+<p class="tableblock">Networks may be specified as IP address or domain name, with an optional netmask.
+<code>127.*</code>, <code>127.0.0.0/8</code>, <code>127.0.0.0/255.0.0.0</code>, and <code>localhost/8</code> are equivalent values that can all be parsed.
+See <code>org.apache.james.dnsservice.library.inetnetwork</code> for more details.</p>
+<p class="tableblock">Also see the <code>RemoteAddrNotInNetwork</code> matcher in the transport processor.
+You would generally use one <strong>or</strong> the other approach.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxmessagesize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the maximum size of SMTP messages the server will accept.
+If it is set to 0, no limit will be imposed.
+Any value larger than 0 will enable the SMTP SIZE extension (RFC 1870) and enforce the limit.</p>
+<p class="tableblock">It is an optional integer which defaults to 0.
+The last character of the value may be a unit.
+Supported units are <code>B</code> for bytes, <code>K</code> for kibibyte (1,024 bytes), <code>M</code> for mebibyte (1,024 kibibytes), and <code>G</code> for gibibyte (1,024 mebibytes).
+If no unit is given, the value is interpreted as kibibytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorMessages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the human readable texts of some SMTP error responses, which allows administrators to translate or
+reword the messages their users are exposed to. Return codes and DSN statuses are never customizable as remote
+servers do rely on them. All entries are optional, and default to the values shown below:</p>
+<p class="tableblock">&#8230;&#8203;.
+&lt;errorMessages&gt;
+    &lt;!-- Returned as <code>552 5.3.4 &lt;text&gt;</code> when a mail exceeds maxmessagesize -&#8594;
+    &lt;oversizedMail&gt;Message size exceeds fixed maximum message size&lt;/oversizedMail&gt;
+    &lt;!-- Returned as <code>550 5.1.1 &lt;text&gt; &lt;recipient&gt;</code> when a recipient does not exist: the rejected
+         recipient is always appended to the text. -&#8594;
+    &lt;unknownUser&gt;Unknown user:&lt;/unknownUser&gt;
+&lt;/errorMessages&gt;
+&#8230;&#8203;.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxLineLength</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the maximum SMTP command or SASL continuation line length in bytes.
+It is an optional integer that defaults to 8,192 and must be between 1,000 and 1,048,576.
+Increase it only when required by measured SASL token sizes, as the limit applies to every SMTP input line and larger values increase memory exposure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>heloEhloEnforcement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures whether to enforce the use of the HELO / EHLO salutation before a MAIL command is accepted.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>smtpGreeting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the greeting which the server sends when a client connects.
+It is an optional string.
+If not configured, a greeting is constructed from the server <code>helloName</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>addressBracketsEnforcement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enforces that addresses in the MAIL and RCPT commands are enclosed in <code>&lt;</code> and <code>&gt;</code> as required by RFC 5321.
+It is an optional boolean which defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>verifyIdentity</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures how the identity in the MAIL command is verified for local users.</p>
+</div>
+<div class="paragraph">
+<p>This is an optional string with the following possible values.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>strict</code>: If the email used in the MAIL command has a local domain, authentication is required. Verification succeeds if the authenticated user&#8217;s email address or one of its aliases matches the sender address in the MAIL command. It prevents spoofing local email addresses on this server. Spoofing of external email addresses when sending to local users can not be prevented. For backward compatibility, <code>true</code> has the same effect as <code>strict</code>.</p>
+</li>
+<li>
+<p><code>disabled</code>: The sender address is not verified. However, authentication is still required for relaying. This allows spoofing local email addresses on this server. External users can send emails to local users as any local user. Authenticated local users can send emails to local and external users as any local user. For backward compatibility, <code>false</code> has the same effect as <code>disabled</code>.</p>
+</li>
+<li>
+<p><code>relaxed</code>: If the user is authenticated, this acts like <code>strict</code>. If the sender is local and not authenticated, a simple heuristic decides whether the sender is accepted. The heuristic categorizes a client that uses a valid domain in its EHLO command as a MX and as a MUA otherwise. Authentication is only required for MUAs, not for MXs. Note that this heuristic <strong>can easily be circumvented</strong>. See <a href="https://issues.apache.org/jira/browse/JAMES-4032">JAMES-4032</a> for the reasoning behind this option.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default value is <code>strict</code>.
+<strong>Changing it always decreases the security</strong> and should only be done if absolutely necessary.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handlerchain</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures the behavior of the server using handlers.
+The <code>handlerchain</code> element has the following optional attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>coreHandlersPackage</code> is a string specifying a handler loader. All handlers of this loader are added to the end of the handlerchain. The default is <code>org.apache.james.smtpserver.CoreCmdHandlerLoader</code>.</p>
+</li>
+<li>
+<p><code>enableJmx</code> enables the JMX for this server. It is a boolean which is <code>true</code> by default.</p>
+</li>
+<li>
+<p><code>jmxHandlersPackage</code> is a string specifying a handler loader for JMX. All handlers of this loader are added to the handlerchain after the core handlers. The default is <code>org.apache.james.smtpserver.jmx.JMXHandlersLoader</code>. It only has an effect if <code>enableJmx</code> is <code>true</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>handlerchain</code> element may contain an arbitrary number of <code>handler</code> elements.
+Every <code>handler</code> element must have the string attribute <code>class</code>.
+They are inserted in order at the beginning of the handlerchain.
+The handlers of the <code>coreHandlersPackage</code> or <code>jmxHandlersPackage</code> do not need their own <code>handler</code> elements.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="smtp-hooks.html" class="xref page">this page</a> for a list of handlers that are included in James.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>disabledFeatures</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes features from the feature announcement sent to clients after their EHLO.
+The element may be omitted or appear multiple times.
+Every occurrence must contain exactly one feature.
+By default, no features are omitted.</p>
+<p class="tableblock">Note that this only removes the features from the announcement, it does not disable the features!
+It prevents standard-conformant clients from using commands that only work with the disabled features but <strong>it is not a security feature</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_authentication"><a class="anchor" href="#_authentication"></a>Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>auth</code> element mentioned above has the following options.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. <code>auth</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.announce</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures when to announce authentication to the client.
+This is an optional string with the following possible values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>never</code>: Do not announce authentication capabilities.</p>
+</li>
+<li>
+<p><code>always</code>: Always announce authentication capabilities.</p>
+</li>
+<li>
+<p><code>forUnauthorizedAddresses</code>: Announce authentication capabilities only to clients which are not in <code>authorizedAddresses</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If not configured, it uses the value of <code>authRequired</code> (of which the default maps to <code>never</code>) as fallback.</p>
+</div>
+<div class="paragraph">
+<p>Note that this configures only the <strong>announcement</strong> of authentication capabilities.
+<code>auth.requireSSL</code> also has an influence on whether authentication capabilities are announced.</p>
+</div>
+<div class="paragraph">
+<p>Even if authentication capabilities are not announced, clients can still use the SMTP AUTH command.
+However, if authentication capabilities are not announced, only the mechanisms <code>PLAIN</code> and <code>LOGIN</code> are available.
+<code>XOAUTH2</code> and <code>OAUTHBEARER</code> are disabled if authentication capabilities are not announced.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.requireSSL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures whether announcing authentication capabilities requires a secure connection (TLS or STARTTLS).
+If this value is <code>true</code> and the connection is not secure, authentication capabilities are not announced.
+This always holds, even if <code>auth.announce</code> is set to <code>always</code>.
+The optional <code>GSSAPI</code> mechanism also uses this value to reject authentication attempts over an insecure connection.</p>
+<p class="tableblock">It is an optional boolean that defaults to <code>true</code>.</p>
+<p class="tableblock">For the built-in mechanisms, this configures only the <strong>announcement</strong> of authentication capabilities.
+Even if authentication capabilities are not announced, clients can still use the SMTP AUTH command with <code>PLAIN</code> and <code>LOGIN</code>.
+However, as the mechanisms <code>XOAUTH2</code> and <code>OAUTHBEARER</code> are only available if authentication mechanisms are announced, those mechanisms can only be used in secure connections if <code>auth.requireSSL</code> is set to <code>true</code>.
+When <code>GSSAPI</code> is configured and <code>auth.requireSSL</code> is <code>true</code>, it is both unannounced and unavailable on insecure connections.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.plainAuthEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the authentication mechanisms <code>PLAIN</code> and <code>LOGIN</code>.
+It is an optional boolean that defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.saslMechanisms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional comma-separated list of SASL mechanism factory class names.
+When present, this list replaces the default mechanisms.
+Built-in factories can be named by their simple class name; extension factories must use their fully qualified class name.
+See <a href="kerberos.html" class="xref page">Kerberos GSSAPI authentication</a> for an extension example.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.oidc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures authentication via OIDC.
+The configuration is described in more detail <a href="oidc.html" class="xref page">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.gssapi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures optional Kerberos authentication through the <code>GSSAPI</code> SASL mechanism.
+The configuration is described in more detail <a href="kerberos.html" class="xref page">here</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>auth.required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires authentication for submitting an email to the SMTP server.
+This configuration is intended for submission-only SMTP servers (e.g, port 587).
+It should never be set to <code>true</code> on SMTP servers that receive emails from external servers as external users have no account and can not authenticate.
+Therefore, it must be <code>false</code> for SMTP servers on port 25 and 465.</p>
+<p class="tableblock">It is an optional boolean that defaults to <code>false</code>.</p>
+<p class="tableblock">Note that <code>authorizedAddresses</code> are considered authenticated.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_security"><a class="anchor" href="#_security"></a>Security</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>James supports authentication with username / password (<code>PLAIN</code> and <code>LOGIN</code>), OIDC (<code>XOAUTH2</code> and <code>OAUTHBEARER</code>), and optional Kerberos (<code>GSSAPI</code>).
+SMTP authentication is essential to prevent sender address spoofing and open relays.</p>
+</div>
+<div class="paragraph">
+<p>For the concepts explained below, the distinction between local and external users is important.
+James makes this distinction by matching the domain of an email address against the list of domains handled by it.
+This list can be configured in <a href="domainlist.html" class="xref page"><strong>domainlist.xml</strong></a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_open_relays"><a class="anchor" href="#_open_relays"></a>Open Relays</h3>
+<div class="paragraph">
+<p>The process of sending an email from one email server to another is called relaying.
+An open relay is an email server that allows any user to send emails to other email servers.
+Open relays are used by spammers to send spam emails with spoofed sender addresses.
+Open relays can be prevented using the SMTP AUTH extension.</p>
+</div>
+<div class="paragraph">
+<p>By default, James is not an open relay.
+James relays emails if, and only if, they originate from one of the trusted sources below.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Authenticated SMTP/JMAP users</p>
+</li>
+<li>
+<p>Emails generated by the server (e.g., bounces)</p>
+</li>
+<li>
+<p>Emails originating from a trusted network (see <code>authorizedAddresses</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This means that emails are only relayed for local users as external users have no way of authenticating.
+External users can still send emails to local users because those emails do not need to be relayed and therefore do not require authentication.</p>
+</div>
+<div class="paragraph">
+<p>It is extremely important to prevent your server from being an open relay.
+Aside from potential costs associated with usage by spammers,
+open relays are identified as such relatively quickly because of the spam originating from them.
+Hence, other SMTP servers routinely reject emails coming from open relays which severely impedes the ability of them to send emails to external users.</p>
+</div>
+<div class="sect3">
+<h4 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h4>
+<div class="paragraph">
+<p>To verify that you have not inadvertently configured your server as an open relay, you can use a service such as <a href="https://mxtoolbox.com/diagnostic.aspx">mxtoolbox.com</a>.
+This checks among other things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Whether your email server is an open relay.</p>
+</li>
+<li>
+<p>Your DNS configuration, especially whether your email server has a valid record for reverse DNS.</p>
+</li>
+<li>
+<p>Support for secure connections with STARTTLS.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spoofing"><a class="anchor" href="#_spoofing"></a>Spoofing</h3>
+<div class="paragraph">
+<p>In addition to preventing open relays, SMTP authentication can also be used to prevent spoofing.
+Spoofing is the assumption of the identity of another person without authorization to do so.</p>
+</div>
+<div class="paragraph">
+<p>For emails from local addresses, spoofing can be prevented by requiring authentication for a user with authorization for the sender address.
+This can be configured with <code>verifyIdentity</code> as described above.</p>
+</div>
+<div class="paragraph">
+<p>Sender verification does not work for emails sent by an external address.
+As external users can not authenticate, James has to trust the sender address.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lmtp_configuration"><a class="anchor" href="#_lmtp_configuration"></a>LMTP Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consult this <a href="https://github.com/apache/james-project/blob/master/server/apps/jpa-app/sample-configuration/lmtpserver.xml">example</a> for guidance on how to configure LMTP.</p>
+</div>
+<div class="paragraph">
+<p>The LMTP service is configured in the file <code>lmtpserver.xml</code>.
+It contains one <code>lmtpservers</code> element that can contain multiple <code>lmtpserver</code> elements.</p>
+</div>
+<div class="paragraph">
+<p>The <code>lmtpserver</code> element can be configured using the common options described <a href="server.html" class="xref page">here</a>.
+Additional settings are described below.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. <code>lmtpserver</code> element</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxmessagesize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures the maximum size of LMTP messages the server will accept.
+If it is set to 0, no limit will be imposed.
+Any value larger than 0 will enable the SMTP SIZE extension (RFC 1870) and enforce the limit.</p>
+<p class="tableblock">It is an optional integer which defaults to 0.
+The last character of the value may be a unit.
+Supported units are <code>B</code> for bytes, <code>K</code> for kibibyte (1,024 bytes), <code>M</code> for mebibyte (1,024 kibibytes), and <code>G</code> for gibibyte (1,024 mebibytes).
+If no unit is given, the value is interpreted as kibibytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>errorMessages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overrides the human readable texts of some error responses. It supports the same entries as the
+<code>errorMessages</code> element of <code>smtpserver</code>, documented above.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lmtpGreeting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the greeting which the server sends when a client connects.
+It is an optional string.
+If not configured, a greeting is constructed from the server <code>helloName</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handlerchain</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Configures the behavior of the server using handlers.
+The <code>handlerchain</code> element has the following optional attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>coreHandlersPackage</code> is a string specifying a handler loader. All handlers of this loader are added to the end of the handlerchain. The default is <code>org.apache.james.lmtpserver.CoreCmdHandlerLoader</code>.</p>
+</li>
+<li>
+<p><code>enableJmx</code> enables the JMX for this server. It is a boolean which is <code>true</code> by default.</p>
+</li>
+<li>
+<p><code>jmxHandlersPackage</code> is a string specifying a handler loader for JMX. All handlers of this loader are added to the handlerchain after the core handlers. The default is <code>org.apache.james.lmtpserver.jmx.JMXHandlersLoader</code>. It only has an effect if <code>enableJmx</code> is <code>true</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>handlerchain</code> element may contain an arbitrary number of <code>handler</code> elements.
+Every <code>handler</code> element must have the string attribute <code>class</code>.
+They are inserted in order at the beginning of the handlerchain.
+The handlers of the <code>coreHandlersPackage</code> or <code>jmxHandlersPackage</code> do not need their own <code>handler</code> elements.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_lmtp_examples"><a class="anchor" href="#_lmtp_examples"></a>LMTP Examples</h3>
+<div class="paragraph">
+<p>The default LMTP server stores emails without further treatment in user mailboxes.
+However, we do ship an alternative handlerchain allowing to execute a mailetcontainer, thus achieving a behavior similar to SMTP.
+You can enable the mailetcontainer with the following configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;lmtpservers&gt;
+    &lt;lmtpserver enabled="true"&gt;
+        &lt;!-- ... --&gt;
+        &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
+        &lt;/handlerchain&gt;
+    &lt;/lmtpserver&gt;
+&lt;/lmtpservers&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that by default the mailetcontainer is executed with all recipients at once and does not allow per recipient error reporting.
+The option <code>splitExecution</code> allows to execute the mailetcontainer for each recipient separately and mitigate this limitation at the cost of performance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;lmtpservers&gt;
+    &lt;lmtpserver enabled="true"&gt;
+        &lt;!-- ... --&gt;
+        &lt;handlerchain coreHandlersPackage="org.apache.james.lmtpserver.MailetContainerCmdHandlerLoader"&gt;
+            &lt;handler class="org.apache.james.lmtpserver.MailetContainerHandler"&gt;
+                &lt;splitExecution&gt;true&lt;/splitExecution&gt;
+            &lt;/handler&gt;
+        &lt;/handlerchain&gt;
+    &lt;/lmtpserver&gt;
+&lt;/lmtpservers&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../../../_/img/feather-small.png" alt="Apache Software Foundation feather"
+       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
+  <p class="asf-menu">
+    <a href="https://www.apache.org/">ASF</a> &middot;
+    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
+    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
+    <a href="https://www.apache.org/licenses/">License</a> &middot;
+    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
+    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
+    <a href="https://www.apache.org/security/">Security</a>
+  </p>
+  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
+    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+</footer>
+<script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
