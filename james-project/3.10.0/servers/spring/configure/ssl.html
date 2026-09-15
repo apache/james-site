@@ -4,17 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Spring James Server &mdash; SSL &amp; TLS configuration :: Apache James</title>
-    <meta name="generator" content="Antora 3.1.7">
+    <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
-    <link rel="icon" href="../../../../../favicon.ico" sizes="32x32">
-    <link rel="icon" href="../../../../../favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="../../../../../apple-touch-icon.png">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="../../../../../index.html"><img src="../../../../../_/img/james.svg" alt="james logo"> Apache James</a>
+      <a class="navbar-item" href="https://james.apache.org"><img src="/_/img/james.svg" alt="james logo"> Apache James</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -23,29 +20,26 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="../../../../../index.html">Home</a>
+        <a class="navbar-item" href="#">Home</a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="#">Products</a>
           <div class="navbar-dropdown">
             <div class="navbar-item"><strong>James server</strong></div>
-            <a class="navbar-item" href="../../../../3.9.0/index.html">Documentation</a>
             <a class="navbar-item" href="https://github.com/apache/james-project">Repository</a>
             <a class="navbar-item" href="https://issues.apache.org/jira/projects/JAMES/issues">Issue Tracker</a>
             <hr class="navbar-divider">
-            <a class="navbar-item" href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Mime4J</a>
-            <a class="navbar-item" href="../../../../../jsieve/0.9-SNAPSHOT/index.html">jSieve</a>
-            <a class="navbar-item" href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">jSPF</a>
-            <a class="navbar-item" href="../../../../../jdkim/0.6-SNAPSHOT/index.html">jDKIM</a>
-            <!-- HUPA has no antora component, it still lives on the old maven site -->
+            <a class="navbar-item" href="https://james.apache.org/mime4j/index.html">Mime4J</a>
+            <a class="navbar-item" href="https://james.apache.org/jsieve/index.html">jSieve</a>
+            <a class="navbar-item" href="https://james.apache.org/jspf/index.html">jSPF</a>
+            <a class="navbar-item" href="https://james.apache.org/jdkim/index.html">jDKIM</a>
             <a class="navbar-item" href="https://james.apache.org/hupa/index.html">HUPA</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="../../../../../james-site/latest/community.html">Community</a>
+          <a class="navbar-link" href="#">Community</a>
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="../../../../../james-site/latest/community.html">Join the community</a>
-            <a class="navbar-item" href="../../../../../james-site/latest/mailing-lists.html">Mailing lists</a>
-            <a class="navbar-item" href="../../../../../james-site/latest/contributing.html">Contributing</a>
+             <!-- Not ideal but dropping the version in the href requires tweaking james-projet docs module first -->
+            <a class="navbar-item" href="/james-project/3.6.0/community/mailing-lists.html">Mailing lists</a>
             <a class="navbar-item" href="https://gitter.im/apache/james-project"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" class="logo-gitter-sign" data-v-44ebcb1a=""><rect x="15" y="5" width="2" height="10"></rect> <rect x="10" y="5" width="2" height="20"></rect> <rect x="5" y="5" width="2" height="20"></rect> <rect width="2" height="15"></rect></svg> Gitter</a>
             <a class="navbar-item" href="https://twitter.com/ApacheJames">
               <span class="icon">
@@ -54,7 +48,7 @@
                 </svg>
               </span> Twitter
             </a>            
-            <a class="navbar-item" href="https://github.com/apache/james-project">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
+            <a class="navbar-item" href="#">  <svg class="octicon octicon-mark-github v-align-middle" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg> Github</a>
           </div>
         </div>
 <!--        <div class="navbar-item">
@@ -977,60 +971,11 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component">
-      <div class="title"><a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">Apache James JDKIM</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../jdkim/0.6-SNAPSHOT/index.html">0.6-SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <div class="title"><a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">Apache James jSieve</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../jsieve/0.9-SNAPSHOT/index.html">0.9-SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <div class="title"><a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">Apache James jSPF</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../jspf/1.0.6-SNAPSHOT/index.html">1.0.6-SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <div class="title"><a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">Apache James Mime4j</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../mime4j/0.8.15-SNAPSHOT/index.html">0.8.15-SNAPSHOT</a>
-        </li>
-      </ul>
-    </li>
     <li class="component is-current">
-      <div class="title"><a href="../../../../3.9.0/index.html">Apache James Server</a></div>
+      <div class="title"><a href="../../../index.html">Apache James Server</a></div>
       <ul class="versions">
-        <li class="version is-current">
+        <li class="version is-current is-latest">
           <a href="../../../index.html">3.10.0 SNAPSHOT</a>
-        </li>
-        <li class="version is-latest">
-          <a href="../../../../3.9.0/index.html">3.9.0</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.8.2/index.html">3.8.2</a>
-        </li>
-        <li class="version">
-          <a href="../../../../3.7.5/index.html">3.7.5</a>
-        </li>
-      </ul>
-    </li>
-    <li class="component">
-      <div class="title"><a href="../../../../../james-site/latest/homepage.html">Apache James Site</a></div>
-      <ul class="versions">
-        <li class="version is-latest">
-          <a href="../../../../../james-site/latest/homepage.html">latest</a>
         </li>
       </ul>
     </li>
@@ -1053,15 +998,6 @@
     <li><a href="ssl.html">SSL &amp; TLS</a></li>
   </ul>
 </nav>
-<div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
-  <div class="version-menu">
-    <a class="version is-current" href="ssl.html">3.10.0 SNAPSHOT</a>
-    <a class="version is-missing" href="../../../../3.9.0/index.html">3.9.0</a>
-    <a class="version is-missing" href="../../../../3.8.2/index.html">3.8.2</a>
-    <a class="version is-missing" href="../../../../3.7.5/index.html">3.7.5</a>
-  </div>
-</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/servers/pages/spring/configure/ssl.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -1086,10 +1022,10 @@ legacy, fully blocking Spring stack. It ships neither JMAP nor the WebAdmin admi
 administered through JMX.</p>
 </div>
 <div class="paragraph">
-<p><strong>Moving to the <a href="../../jpa/index.html" class="xref page">JPA James server</a> is strongly advised, and requires no data migration</strong>: both
+<p><strong>Moving to the <a href="../../jpa/index.html" class="page">JPA James server</a> is strongly advised, and requires no data migration</strong>: both
 applications persist their data with the very same JPA entities, in the same relational database. Point the JPA
 application at the database and the <code>var</code> folder your Spring instance was using, and your domains, users,
-rewriting rules, mailboxes and emails are there. Read <a href="../index.html#_moving_to_the_jpa_james_server" class="xref page">the
+rewriting rules, mailboxes and emails are there. Read <a href="../index.html#_moving_to_the_jpa_james_server" class="page">the
 migration section</a> for the few details that need attention.</p>
 </div>
 </td>
@@ -1098,10 +1034,10 @@ migration section</a> for the few details that need attention.</p>
 </div>
 <div class="paragraph">
 <p>The servers
-<a href="smtp.html" class="xref page">SMTP</a>,
-<a href="pop3.html" class="xref page">POP3</a>,
-<a href="imap.html" class="xref page">IMAP</a>, and
-<a href="sieve.html" class="xref page">Managesieve</a>
+<a href="smtp.html" class="page">SMTP</a>,
+<a href="pop3.html" class="page">POP3</a>,
+<a href="imap.html" class="page">IMAP</a>, and
+<a href="sieve.html" class="page">Managesieve</a>
 support TLS.
 The configuration is the same for all of them and this document explains how to do it.</p>
 </div>
@@ -1111,7 +1047,7 @@ The configuration is the same for all of them and this document explains how to 
 <h2 id="_configure_a_server_to_use_tls"><a class="anchor" href="#_configure_a_server_to_use_tls"></a>Configure a Server to Use TLS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As described in <a href="server.html" class="xref page">SMTP</a>,
+<p>As described in <a href="server.html" class="page">SMTP</a>,
 there is a <code>tls</code> element inside the XML server element.</p>
 </div>
 <div class="paragraph">
@@ -1434,6 +1370,55 @@ short-lived connections (e.g., mobile push sync).</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_native_tls_tcnative"><a class="anchor" href="#_native_tls_tcnative"></a>Native TLS (tcnative)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Offloads TLS to BoringSSL via Netty&#8217;s tcnative, which is faster than the JDK implementation.</p>
+</div>
+<div class="paragraph">
+<p>Enable it in <code>jvm.properties</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>james.tcnative.enabled=true</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It only applies to implicit TLS with PEM files: setups using a keystore, a truststore or <code>clientAuth</code>
+transparently fall back to the JDK implementation.</p>
+</div>
+<div class="paragraph">
+<p>It relies on a native library that must match your platform (OS and architecture); it is shipped and
+known to work in the official Docker images.</p>
+</div>
+<div class="paragraph">
+<p>The protocols and ciphersuites below have been qualified against a range of email clients:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;tls socketTLS="true" startTLS="false"&gt;
+  &lt;privateKey&gt;file://secrets/imap/tls.key&lt;/privateKey&gt;
+  &lt;certificates&gt;file://secrets/imap/tls.crt&lt;/certificates&gt;
+  &lt;supportedProtocols&gt;
+    &lt;protocol&gt;TLSv1.2&lt;/protocol&gt;
+    &lt;protocol&gt;TLSv1.3&lt;/protocol&gt;
+  &lt;/supportedProtocols&gt;
+  &lt;supportedCipherSuites&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_AES_256_GCM_SHA384&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_AES_128_GCM_SHA256&lt;/cipherSuite&gt;
+    &lt;cipherSuite&gt;TLS_CHACHA20_POLY1305_SHA256&lt;/cipherSuite&gt;
+  &lt;/supportedCipherSuites&gt;
+&lt;/tls&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_certificates_by_well_known_root_ca_preferred"><a class="anchor" href="#_certificates_by_well_known_root_ca_preferred"></a>Certificates by Well-Known Root CA (Preferred)</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -1457,7 +1442,7 @@ You must only be able to set up an ACME client to listen on port 80 on the domai
 <div class="listingblock">
 <div class="title">Caddyfile</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">{
+<pre class="highlightjs highlight"><code>{
 	email &lt;Email address for Let's Encrypt&gt;
 	events {
 		on cert_obtained exec cert-hook.sh {event.data.identifier} {event.data.private_key_path} {event.data.certificate_path}
@@ -1474,7 +1459,7 @@ imap.example.internal {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">certbot certonly \
+<pre class="highlightjs highlight"><code>certbot certonly \
   -c config.ini \
   --non-interactive \
   --cert-name imap \
@@ -1488,7 +1473,7 @@ imap.example.internal {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">email = &lt;Email address for Let's Encrypt&gt;
+<pre class="highlightjs highlight"><code>email = &lt;Email address for Let's Encrypt&gt;
 agree-tos = true
 authenticator = standalone
 preferred-challenges = http</code></pre>
@@ -1524,7 +1509,7 @@ The certificate will not be accepted by MUAs or other email servers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs"># Generate a private key.
+<pre class="highlightjs highlight"><code># Generate a private key.
 openssl genpkey -outform pem -out imap.key -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 
 # Create a self-signed certificate.
@@ -1561,7 +1546,7 @@ The certificate will not be accepted by MUAs or other email servers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">keytool \
+<pre class="highlightjs highlight"><code>keytool \
   -alias imap \
   -genkeypair -keyalg rsa -keysize 4096 \
   -storetype pkcs12 -keystore keystore.p12 -storepass yoursecret \
@@ -1588,21 +1573,8 @@ The certificate will not be accepted by MUAs or other email servers.</p>
 </main>
 </div>
 <footer class="footer">
-  <img src="../../../../../_/img/feather-small.png" alt="Apache Software Foundation feather"
-       width="31" height="48" style="float: left; margin: 0 1rem 0.5rem 0;">
-  <p class="asf-menu">
-    <a href="https://www.apache.org/">ASF</a> &middot;
-    <a href="https://www.apache.org/foundation/getinvolved.html">Get Involved</a> &middot;
-    <a href="https://www.apache.org/foundation/faq.html">FAQ</a> &middot;
-    <a href="https://www.apache.org/licenses/">License</a> &middot;
-    <a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a> &middot;
-    <a href="https://www.apache.org/foundation/thanks.html">Thanks</a> &middot;
-    <a href="https://www.apache.org/security/">Security</a>
-  </p>
-  <p>&copy; 2006-2026 The Apache Software Foundation under the terms of the
-    <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
-    Apache, the Apache feather logo, Apache James, James, and the Apache James logo,
-    are either registered trademarks or trademarks of The Apache Software Foundation.</p>
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
 </footer>
 <script id="site-script" src="../../../../../_/js/site.js" data-ui-root-path="../../../../../_"></script>
 <script async src="../../../../../_/js/vendor/highlight.js"></script>
