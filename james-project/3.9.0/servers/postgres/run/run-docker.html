@@ -1027,26 +1027,6 @@ following command, and drop <code>--generate-keystore</code> option:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_instrumentation"><a class="anchor" href="#_instrumentation"></a>Instrumentation</h3>
-<div class="paragraph">
-<p>You can use <a href="https://glowroot.org/">Glowroot</a> to instrumentalize James. It is packaged as part of the docker distribution to easily enable valuable performances insights.
-Disabled by default, its java agent can easily be enabled:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>--env "JAVA_TOOL_OPTIONS=-javaagent:/root/glowroot.jar" -p "4000:4000"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>By default, the Glowroot UI is accessible from every machines in the network as defined in the <em>destination/admin.json</em>.
-Which you could configure before building the image, if you want to restrict its accessibility to localhost for example.
-See the <a href="https://github.com/glowroot/glowroot/wiki/Agent-Installation-(with-Embedded-Collector)#user-content-optional-post-installation-steps">Glowroot post installation steps</a>  for more details.</p>
-</div>
-<div class="paragraph">
-<p>Or by mapping the 4000 port to the IP of the desired network interface, for example <code>-p 127.0.0.1:4000:4000</code>.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_handling_attachment_indexing"><a class="anchor" href="#_handling_attachment_indexing"></a>Handling attachment indexing</h3>
 <div class="paragraph">
 <p>You can handle attachment text extraction before indexing in OpenSearch. This makes attachments searchable. To enable this:</p>
