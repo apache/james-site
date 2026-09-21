@@ -1172,6 +1172,35 @@ systems with filters already defined would result in those filters to be not rea
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false. Whether to support or not the delay send with JMAP protocol.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send.validate.rcpt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false. Whether <code>EmailSubmission/set</code> rejects recipients James knows it cannot
+deliver to, the JMAP counterpart of the SMTP <code>ValidRcptHandler</code>. Only recipients of local domains are checked:
+they need either a local mailbox or a RecipientRewriteTable entry. When enabled the client is told synchronously
+with an <code>invalidRecipients</code> SetError rather than through an asynchronous bounce. Note that, the JMAP data model
+having no room for a partial rejection, a single invalid recipient fails the whole submission. Also note that
+this turns <code>EmailSubmission/set</code> into an oracle telling which local addresses exist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send.validate.rcpt.enableRecipientRewriteTable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to true. Whether recipients without a local mailbox can be validated through the
+RecipientRewriteTable. Only applies when <code>send.validate.rcpt</code> is enabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send.validate.rcpt.recipientRewriteTableCheck</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional. Defaults to <code>mappingExists</code>. How strict the RecipientRewriteTable validation is: <code>mappingExists</code>
+accepts any recipient having a mapping, <code>anyMappingValid</code> requires at least one target to have a local mailbox,
+<code>allMappingsValid</code> requires all of them to. Only applies when <code>send.validate.rcpt</code> is enabled. Mirrors the
+<code>smtpserver.xml</code> <code>ValidRcptHandler</code> option of the same name.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send.extra.validations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional, defaults to empty. Coma separated list of <code>EmailSubmissionSetValidation</code> implementations to run
+against every mail submitted through <code>EmailSubmission/set</code>, before it reaches the queue. Each entry is a fully
+qualified class name (the <code>org.apache.james.jmap.method</code> package can be omitted), instantiated through Guice, and
+returning a SetError turns the creation into a <code>notCreated</code> entry. Validations run until the first rejection, in
+an unspecified order.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">disabled.capabilities</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional, defaults to empty. Coma separated list of JMAP capabilities to reject.
 This allows to prevent users from using some specific JMAP extensions.</p></td>
