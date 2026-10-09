@@ -2255,6 +2255,51 @@ should match the criteria at <a href="../configure/usersrepository.html" class="
 <pre>curl -XGET http://ip:port/users?hasNotAllSystemMailboxes</pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>limit</code>, <code>anchor</code>, <code>query</code> and <code>domain</code> allow paginating and searching the user list. Users are sorted alphabetically on their
+username.</p>
+</li>
+<li>
+<p><code>limit</code>: maximum count of users returned (strictly positive integer). No limit if omitted.</p>
+</li>
+<li>
+<p><code>anchor</code>: only users whose username comes strictly after the anchor are returned. Pass the last username of the
+previous page to get the next one.</p>
+</li>
+<li>
+<p><code>query</code>: only users whose username starts (case insensitively) with this value are returned.</p>
+</li>
+<li>
+<p><code>domain</code>: only users of this domain are returned.</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -XGET http://ip:port/users?limit=50
+curl -XGET http://ip:port/users?limit=50&amp;anchor=btellier@linagora.com
+curl -XGET http://ip:port/users?query=bte&amp;limit=50&amp;anchor=btellier@linagora.com
+curl -XGET http://ip:port/users?domain=linagora.com&amp;limit=50</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These parameters can be combined with the condition parameters above.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>200: The user name list was successfully retrieved</p>
+</li>
+<li>
+<p>400: Invalid <code>limit</code>, <code>anchor</code> or <code>domain</code></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_retrieving_the_list_of_allowed_from_headers_for_a_given_user"><a class="anchor" href="#_retrieving_the_list_of_allowed_from_headers_for_a_given_user"></a>Retrieving the list of allowed <code>From</code> headers for a given user</h3>
