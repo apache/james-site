@@ -1254,6 +1254,72 @@ This issue can be mitigated by:</p>
 <p>Read more <a href="http://james.apache.org//james/update/2017/10/20/james-3.0.1.html">here</a>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_cve_2025_66621_sasl_oauthbearer_do_not_validate_aud_in_jwt_payload_if_misconfigred"><a class="anchor" href="#_cve_2025_66621_sasl_oauthbearer_do_not_validate_aud_in_jwt_payload_if_misconfigred"></a>CVE-2025-66621 SASL OAUTHBEARER do not validate aud in JWT payload if misconfigred</h3>
+<div class="paragraph">
+<p>Apache James SASL OAuthBearer/XOAUTH2 prior versions 3.9.1 fails to validate correctly AUD claim of JWT payloads when introspection is not configured.</p>
+</div>
+<div class="paragraph">
+<p>This allows an attacker with valid credentials to access the mail server even if they are not authorized to do so.</p>
+</div>
+<div class="paragraph">
+<p>We recommend users to upgrade to non vulnerable version that forces explicit configuration of aud claims and forces introspection.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2026_49939_negative_imap_acl_administer_authorization_bypass_through_jmap_protocol"><a class="anchor" href="#_cve_2026_49939_negative_imap_acl_administer_authorization_bypass_through_jmap_protocol"></a>CVE-2026-49939 Negative IMAP ACL administer authorization bypass through JMAP protocol</h3>
+<div class="paragraph">
+<p>In Apache James server prior version 3.9.1 improper Access Control List processing is exposed by the JMAP protocol which do not account for negative rules positionned by IMAP protocol.</p>
+</div>
+<div class="paragraph">
+<p>This results in users being able to administer folders in JMAP despite having being explicitly denied the right to do so in IMAP.</p>
+</div>
+<div class="paragraph">
+<p>Users are recommended to upgrade to version 3.9.1 which fixes this issue.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2026_74756_webadmin_exposed_without_authentication_on_official_docker_default"><a class="anchor" href="#_cve_2026_74756_webadmin_exposed_without_authentication_on_official_docker_default"></a>CVE-2026-74756 WebAdmin exposed without authentication on official Docker default</h3>
+<div class="paragraph">
+<p>Some docker-compose shipped by the project exposes by default Webadmin REST API publically without proper authentication setup.</p>
+</div>
+<div class="paragraph">
+<p>Version 3.9.1 onward sets a random credential by default on unprotected webadmin endpoints to prevent this while retain convenience.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2026_76168_managesieve_file_implementation_cross_user_path_traversal"><a class="anchor" href="#_cve_2026_76168_managesieve_file_implementation_cross_user_path_traversal"></a>CVE-2026-76168 ManageSieve file implementation cross-user path traversal</h3>
+<div class="paragraph">
+<p>In Apache James server prior version 3.9.1 relying on the SieveFileRepository incorect validation of file paths can result in path transversal, allowing to set arbitrary SIEVE scripts for other users.</p>
+</div>
+<div class="paragraph">
+<p>This allows a logged in attacker to set arbitrary SIEVE scripts for other users, resulting in denial of service or even traffic capture.</p>
+</div>
+<div class="paragraph">
+<p>Users are recommended to upgrade to version 3.9.1 which fixes this issue.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2026_76171_ssrf_filter_bypass_in_the_jmap_pushsubscription_web_push_client"><a class="anchor" href="#_cve_2026_76171_ssrf_filter_bypass_in_the_jmap_pushsubscription_web_push_client"></a>CVE-2026-76171 SSRF filter bypass in the JMAP PushSubscription web-push client</h3>
+<div class="paragraph">
+<p>In Apache James server prior version 3.9.1 improper validation in JMAP webPush SSRF validation did lead to the possibility to reach internal addresses.</p>
+</div>
+<div class="paragraph">
+<p>Users are recommended to upgrade to version 3.9.1 which fixes this issue.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cve_2026_85111_denial_of_service_upon_mime_parsing"><a class="anchor" href="#_cve_2026_85111_denial_of_service_upon_mime_parsing"></a>CVE-2026-85111 Denial of service upon MIME parsing</h3>
+<div class="paragraph">
+<p>Allocation of Resources Without Limits or Throttling in Apache James Mime4J library prior version 0.8.15 allows Denial of Service upon parsing Mime messages.</p>
+</div>
+<div class="paragraph">
+<p>Users are recommended to upgrade to Apache James server 3.9.1 that relies on fixed MIME4J 0.8.15 which addresses the issue.</p>
+</div>
+<div class="paragraph">
+<p>See CVE-2026-85108 in Apache James MIME4J library.</p>
+</div>
+</div>
 </div>
 </div>
 </article>
