@@ -1303,6 +1303,30 @@ to enable JMAP Quota draft compatibility for those clients and allow them a time
 </div>
 </div>
 <div class="sect1">
+<h2 id="_jmap_emailsubmission_without_identityid"><a class="anchor" href="#_jmap_emailsubmission_without_identityid"></a>JMAP EmailSubmission without identityId</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RFC 8621 requires <code>EmailSubmission/set</code> creations to carry an <code>identityId</code>. Some clients omit it, so James accepts
+those creations by default. The property <code>james.jmap.email.submission.missing.identity.compatibility</code> set to <code>false</code>
+rejects them. An <code>identityId</code> that is not one of the user&#8217;s identities is rejected either way.</p>
+</div>
+<div class="paragraph">
+<p>Optional. Boolean. Default to true.</p>
+</div>
+<div class="paragraph">
+<p>Ex in <code>jvm.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>james.jmap.email.submission.missing.identity.compatibility=false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To reject submissions without identityId.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_enable_reactor_netty_metrics_for_jmap_server"><a class="anchor" href="#_enable_reactor_netty_metrics_for_jmap_server"></a>Enable Reactor Netty metrics for JMAP server</h2>
 <div class="sectionbody">
 <div class="paragraph">

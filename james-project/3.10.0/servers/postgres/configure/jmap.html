@@ -1162,6 +1162,29 @@ WebSocket nor EventSource, which do not rely on push subscriptions.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Prevent server side request forgery by preventing calls to the private network ranges. Defaults to true, can be disabled for testing.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">webpush.vapid.public.key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Public key identifying this server to the push services (VAPID,
+<a href="https://www.rfc-editor.org/rfc/rfc8292">RFC-8292</a>): a P-256 public key in its uncompressed form (65 bytes), base64url
+encoded, as Web Push tools generate it. When set, with <code>webpush.vapid.private.key</code>, every Web Push request is
+authenticated with it, and the JMAP session advertises it as the <code>applicationServerKey</code> of the
+<code>urn:ietf:params:jmap:webpush-vapid</code> capability (<a href="https://www.rfc-editor.org/rfc/rfc9749">RFC-9749</a>), which browsers need
+to subscribe. Defaults to no VAPID: requests are not authenticated and the capability is not advertised.
+The key pair is meant to stay. After a change the session state changes, which tells clients to subscribe again
+(RFC-9749 section 5), but push services refuse the pushes of the subscriptions created with the former key until they do.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">webpush.vapid.private.key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Private key matching <code>webpush.vapid.public.key</code>: a P-256 private key (32 bytes), base64url encoded.
+Required when the public key is set. Keep it secret.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">webpush.vapid.subject</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional string. Contact of the operator of this server, sent to the push services as the <code>sub</code> claim: a <code>mailto:</code>
+or an <code>https:</code> URI. Set it whenever VAPID is configured: the push service of Apple (<code>web.push.apple.com</code>) refuses
+requests without it, and the Postgresql James server logs a warning upon start when it is missing.
+See <a href="#_generating_vapid_cryptographic_material">Generating VAPID cryptographic material</a>.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">cassandra.filter.projection.activated</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional boolean. Defaults to false. Casandra backends only. Whether to use or not the Cassandra projection
 for JMAP filters. This projection optimizes reads, but needs to be correctly populated. Turning it on on
@@ -1342,6 +1365,63 @@ using <a href="https://github.com/vandium-io/jwtgen">jwtgen</a>:</p>
 </div>
 <div class="paragraph">
 <p>The public key can be referenced as <code>jwt.publickeypem.url</code> of the <code>jmap.properties</code> configuration file.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_generating_vapid_cryptographic_material"><a class="anchor" href="#_generating_vapid_cryptographic_material"></a>Generating VAPID cryptographic material</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Browsers only subscribe to Web Push with the public key of the server, and their push services refuse the pushes that
+are not signed with the matching private key (VAPID, <a href="https://www.rfc-editor.org/rfc/rfc8292">RFC-8292</a>). The
+Postgresql James server needs one P-256 key pair for this, set in <code>jmap.properties</code>. It advertises the public key in the JMAP
+session, so that clients need no configuration (<a href="https://www.rfc-editor.org/rfc/rfc9749">RFC-9749</a>).</p>
+</div>
+<div class="paragraph">
+<p>One can use OpenSSL to generate the key pair, then print each key in the expected form, base64url without padding:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># key pair
+openssl ecparam -name prime256v1 -genkey -noout -out vapid.pem
+# webpush.vapid.private.key: the private value, 32 bytes
+openssl ec -in vapid.pem -outform DER 2&gt;/dev/null | tail -c +8 | head -c 32 | base64 | tr '+/' '-_' | tr -d '=\n'
+# webpush.vapid.public.key: the public key as an uncompressed point, 65 bytes
+openssl ec -in vapid.pem -pubout -outform DER 2&gt;/dev/null | tail -c 65 | base64 | tr '+/' '-_' | tr -d '=\n'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The keys are 43 and 87 characters long. Tools that generate VAPID keys for Web Push, as
+<code>npx web-push generate-vapid-keys</code>, print them in this same form.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>webpush.vapid.public.key=&lt;the public key&gt;
+webpush.vapid.private.key=&lt;the private key&gt;
+webpush.vapid.subject=mailto:postmaster@domain.tld</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Regarding these values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The private key is a secret: restrict the access to <code>jmap.properties</code>, and delete <code>vapid.pem</code> once the keys are
+copied. The Postgresql James server refuses to start when the two keys do not match.</p>
+</li>
+<li>
+<p>The subject tells the push services whom to contact about the pushes of this server: use an address that is read,
+as <code>mailto:postmaster@domain.tld</code>, or the <code>https:</code> URL of a contact page. It is sent to the push services only, never
+to the users.</p>
+</li>
+<li>
+<p>Use the same key pair on every node of a cluster, and keep it: subscriptions are bound to the key they were created
+with. After a change of key the session state changes, which tells clients to subscribe again (RFC-9749 section 5).
+There is no transitional period: the former key no longer signs, hence push services refuse the pushes of existing
+subscriptions until clients subscribe again, and these subscriptions are kept until they expire.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
