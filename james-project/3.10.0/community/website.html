@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Building and publishing the website :: Apache James</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <link rel="canonical" href="https://james.apache.org/james-project/3.9.0/community/website.html">
+    <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
   <body class="article">
@@ -733,11 +734,34 @@
     <span class="version">3.10.0 SNAPSHOT</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../index.html">Apache James Server</a></div>
+    <li class="component">
+      <div class="title"><a href="../../../james-distributed-app/3.9.0/index.html">Apache James Distributed Server</a></div>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-latest">
+          <a href="../../../james-distributed-app/3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-distributed-app/3.8.1/index.html">3.8.1</a>
+        </li>
+        <li class="version">
+          <a href="../../../james-distributed-app/3.7.5/index.html">3.7.5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <div class="title"><a href="../../3.9.0/index.html">Apache James Server</a></div>
+      <ul class="versions">
+        <li class="version is-current">
           <a href="../index.html">3.10.0 SNAPSHOT</a>
+        </li>
+        <li class="version is-latest">
+          <a href="../../3.9.0/index.html">3.9.0</a>
+        </li>
+        <li class="version">
+          <a href="../../3.8.2/index.html">3.8.2</a>
+        </li>
+        <li class="version">
+          <a href="../../3.7.5/index.html">3.7.5</a>
         </li>
       </ul>
     </li>
@@ -765,6 +789,15 @@
     <li><a href="website.html">Building and publishing the website</a></li>
   </ul>
 </nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.10.0 SNAPSHOT</button>
+  <div class="version-menu">
+    <a class="version is-current" href="website.html">3.10.0 SNAPSHOT</a>
+    <a class="version" href="../../3.9.0/community/website.html">3.9.0</a>
+    <a class="version" href="../../3.8.2/community/website.html">3.8.2</a>
+    <a class="version" href="../../3.7.5/community/website.html">3.7.5</a>
+  </div>
+</div>
 <div class="edit-this-page"><a href="https://github.com/apache/james-project/blob/master/docs/modules/community/pages/website.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
@@ -929,8 +962,8 @@ $ jekyll build</code></pre>
 <p>update the gemfile then run</p>
 <div class="listingblock">
 <div class="content">
-<pre>BUNDLE_FORCE_RUBY_PLATFORM="true" bundle lock --update
-bundix -l</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">BUNDLE_FORCE_RUBY_PLATFORM="true" bundle lock --update
+bundix -l</code></pre>
 </div>
 </div>
 </li>
@@ -1032,7 +1065,7 @@ $ docker run -v $PWD/.m2:/root/.m2 -v $PWD:/origin -v $PWD/site:/destination jam
 <div class="sect2">
 <h3 id="_nix_development_shell"><a class="anchor" href="#_nix_development_shell"></a>Nix development shell</h3>
 <div class="paragraph">
-<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="xref page">james experimental
 development shell</a> with <code>nix develop</code>.</p>
 </div>
 <div class="olist arabic">
@@ -1113,7 +1146,7 @@ these build instructions.</p>
 <p>Build the Antora content locally</p>
 <div class="listingblock">
 <div class="content">
-<pre> $ antora antora-playbook-local.yml</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ antora antora-playbook-local.yml</code></pre>
 </div>
 </div>
 </li>
@@ -1151,7 +1184,7 @@ these build instructions.</p>
 <div class="sect2">
 <h3 id="_build_with_the_nix_enviroment"><a class="anchor" href="#_build_with_the_nix_enviroment"></a>Build with the nix enviroment</h3>
 <div class="paragraph">
-<p>Enter the <a href="contributing.html#_experimental_nix_support" class="page">james experimental
+<p>Enter the <a href="contributing.html#_experimental_nix_support" class="xref page">james experimental
 development shell</a> with <code>nix develop</code></p>
 </div>
 <div class="olist arabic">
@@ -1160,7 +1193,7 @@ development shell</a> with <code>nix develop</code></p>
 <p>Build the Antora content locally</p>
 <div class="listingblock">
 <div class="content">
-<pre> $ antora antora-playbook-local.yml</pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"> $ antora antora-playbook-local.yml</code></pre>
 </div>
 </div>
 </li>
