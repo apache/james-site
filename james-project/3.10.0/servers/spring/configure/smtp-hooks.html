@@ -176,6 +176,9 @@
     <a class="nav-link" href="../../distributed/configure/jmap.html">jmap.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/email-submission-validations.html">Packaged EmailSubmission/set validations</a>
+  </li>
+  <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../distributed/configure/jmx.html">jmx.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
@@ -423,6 +426,9 @@
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/email-submission-validations.html">Packaged EmailSubmission/set validations</a>
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
@@ -1421,6 +1427,54 @@ are allowed to relay. Default is false.</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
     &lt;!-- ... --&gt;
     &lt;handler class="org.apache.james.smtpserver.fastfail.ReverseEqualsEhloHeloHandler"/&gt;
+&lt;/handlerchain&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_senderheaderverificationhook"><a class="anchor" href="#_senderheaderverificationhook"></a>SenderHeaderVerificationHook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Optional. For authenticated sessions, rejects messages whose <code>Sender</code> header field does not disclose the logged
+in user. <code>Sender</code> names whoever actually transmits the message (RFC 5322 section 3.6.2), so this check is
+stricter than <code>verifyIdentity</code>: aliases, group mappings and other identities the user is allowed to send from do
+not count.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each <code>Sender</code> field must hold exactly one mailbox, of a local domain, resolving to the logged in user like the
+<code>From</code> check does: the <code>+detail</code> part of the address is ignored, as is the domain when virtual hosting is disabled.
+The comparison is case insensitive.</p>
+</li>
+<li>
+<p>The logged in user is the SASL authentication identity. When a user authenticates on behalf of another one (SASL
+authorization identity), <code>Sender</code> must name the user who authenticated, while <code>MAIL FROM</code> and <code>From</code> are verified
+against the account the session acts as. With the deprecated <code>AuthHook</code> handlers, the authentication identity is
+the login as the client typed it.</p>
+</li>
+<li>
+<p>Messages without <code>Sender</code>, unauthenticated sessions and accounts allowed to use other identities
+(<code>allowUseOtherIdentity</code>, see <code>ConfigurationAuthHook</code>) are not checked.</p>
+</li>
+<li>
+<p>Rejected messages get <code>550 5.7.1 Sender header must match the authenticated user</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This hook only checks <code>Sender</code>: use it alongside <code>verifyIdentity</code> set to <code>strict</code> or <code>relaxed</code>, which checks
+<code>MAIL FROM</code> and <code>From</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;handlerchain&gt;
+    &lt;!-- ... --&gt;
+    &lt;handler class="org.apache.james.smtpserver.SenderHeaderVerificationHook"/&gt;
 &lt;/handlerchain&gt;</code></pre>
 </div>
 </div>

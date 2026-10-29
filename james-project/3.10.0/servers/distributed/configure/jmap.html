@@ -177,6 +177,9 @@
     <a class="nav-link" href="jmap.html">jmap.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="email-submission-validations.html">Packaged EmailSubmission/set validations</a>
+  </li>
+  <li class="nav-item" data-depth="5">
     <a class="nav-link" href="jmx.html">jmx.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
@@ -424,6 +427,9 @@
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/email-submission-validations.html">Packaged EmailSubmission/set validations</a>
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
@@ -1289,7 +1295,8 @@ accepts any recipient having a mapping, <code>anyMappingValid</code> requires at
 against every mail submitted through <code>EmailSubmission/set</code>, before it reaches the queue. Each entry is a fully
 qualified class name (the <code>org.apache.james.jmap.method</code> package can be omitted), instantiated through Guice, and
 returning a SetError turns the creation into a <code>notCreated</code> entry. Validations run until the first rejection, in
-an unspecified order.</p></td>
+an unspecified order. See <a href="email-submission-validations.html" class="xref page">EmailSubmission/set validations</a>
+for the validations the Distributed James Server ships.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">disabled.capabilities</p></td>

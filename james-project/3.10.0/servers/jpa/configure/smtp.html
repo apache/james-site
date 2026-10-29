@@ -176,6 +176,9 @@
     <a class="nav-link" href="../../distributed/configure/jmap.html">jmap.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../distributed/configure/email-submission-validations.html">Packaged EmailSubmission/set validations</a>
+  </li>
+  <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../distributed/configure/jmx.html">jmx.properties</a>
   </li>
   <li class="nav-item" data-depth="5">
@@ -423,6 +426,9 @@
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmap.html">jmap.properties</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../postgres/configure/email-submission-validations.html">Packaged EmailSubmission/set validations</a>
   </li>
   <li class="nav-item" data-depth="5">
     <a class="nav-link" href="../../postgres/configure/jmx.html">jmx.properties</a>
@@ -1450,7 +1456,9 @@ Spoofing is the assumption of the identity of another person without authorizati
 </div>
 <div class="paragraph">
 <p>For emails from local addresses, spoofing can be prevented by requiring authentication for a user with authorization for the sender address.
-This can be configured with <code>verifyIdentity</code> as described above.</p>
+This can be configured with <code>verifyIdentity</code> as described above.
+The optional <code>SenderHeaderVerificationHook</code> (see <a href="smtp-hooks.html" class="xref page">SMTP hooks</a>) additionally
+requires the <code>Sender</code> header, when present, to disclose the authenticated user.</p>
 </div>
 <div class="paragraph">
 <p>Sender verification does not work for emails sent by an external address.
