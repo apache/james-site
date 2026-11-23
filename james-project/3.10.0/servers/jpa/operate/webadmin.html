@@ -2101,7 +2101,7 @@ match the criteria at <a href="../configure/usersrepository.html" class="xref pa
 <p>204: The user was successfully created</p>
 </li>
 <li>
-<p>400: The user name or the payload is invalid</p>
+<p>400: The user name or the payload is invalid (an empty password is refused)</p>
 </li>
 <li>
 <p>409: The user name already exists</p>
@@ -2131,7 +2131,7 @@ If you want to update a user&#8217;s password, please have a look at <strong>Upd
 <p>204: The user&#8217;s password was successfully updated</p>
 </li>
 <li>
-<p>400: The user name or the payload is invalid</p>
+<p>400: The user name or the payload is invalid (an empty password is refused)</p>
 </li>
 </ul>
 </div>
@@ -2202,6 +2202,11 @@ should match the criteria at <a href="../configure/usersrepository.html" class="
 <div class="content">
 <pre>curl -XDELETE http://ip:port/users/{userToBeDeleted}</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>The delegations from and to the deleted user are removed as well, so that an account
+later created with the same name does not inherit them. Other user data is kept: see
+<a href="#_delete_data_of_a_user">delete data of a user</a>.</p>
 </div>
 <div class="paragraph">
 <p>Response codes:</p>
@@ -3202,6 +3207,9 @@ still be indexed).</p>
 <li>
 <p>400: Error in the request. Details can be found in the reported error.</p>
 </li>
+<li>
+<p>404: The user does not exist. Use the <code>force</code> query parameter to bypass this check.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3479,7 +3487,8 @@ resolved from the upper values.</p>
 <li>
 <p>The <code>occupation</code> entry represent the occupation of the quota for this
 user. This includes used count and size as well as occupation ratio
-(used / limit).</p>
+(used / limit). The ratio is 0 for an unlimited quota. For a limit of 0,
+the ratio is 0 when nothing is used and 1 otherwise.</p>
 </li>
 </ul>
 </div>
@@ -5523,6 +5532,9 @@ that domain</p>
 <li>
 <p>400: The destination domain specified in the body is invalid</p>
 </li>
+<li>
+<p>400: The source and destination domains are the same</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -6006,6 +6018,9 @@ of the created mail repository. Example:</p>
 <ul>
 <li>
 <p>204: The repository is created</p>
+</li>
+<li>
+<p>400: The <code>protocol</code> query parameter is missing or unsupported</p>
 </li>
 </ul>
 </div>
@@ -6499,6 +6514,12 @@ a task</a>.</p>
 <li>
 <p>404: Could not find that mail repository</p>
 </li>
+<li>
+<p>400: The target <code>queue</code> does not exist</p>
+</li>
+<li>
+<p>400: The target <code>processor</code> is not configured in the mailet container</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -6596,6 +6617,12 @@ a task</a>.</p>
 </li>
 <li>
 <p>404: Could not find that mail repository</p>
+</li>
+<li>
+<p>400: The target <code>queue</code> does not exist</p>
+</li>
+<li>
+<p>400: The target <code>processor</code> is not configured in the mailet container</p>
 </li>
 </ul>
 </div>
@@ -6984,6 +7011,19 @@ a task</a>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>{MIME message}</code> payload must match <code>message/rfc822</code> format.</p>
+</div>
+<div class="paragraph">
+<p>Response codes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>201: The email was enqueued for processing</p>
+</li>
+<li>
+<p>400: The payload is not a valid MIME message, has no valid <code>From</code> address, no recipient or an invalid recipient address</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

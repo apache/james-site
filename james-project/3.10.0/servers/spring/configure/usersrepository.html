@@ -1136,6 +1136,13 @@ to get some examples and hints.</p>
 <p>username can not contain multiple domain delimiter('@')</p>
 </li>
 <li>
+<p>when creating a user, its local part should not contain invisible (Unicode format or control) characters,
+e.g. a soft hyphen (U+00AD) or a zero width space (U+200B)</p>
+</li>
+<li>
+<p>when creating a user, its local part should not start or end with a dot ('.') nor contain two consecutive dots</p>
+</li>
+<li>
 <p>A username can have only a local part when virtualHosting is disabled. E.g.'myUser'</p>
 </li>
 <li>
