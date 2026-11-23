@@ -1116,6 +1116,18 @@ It is an optional boolean that defaults to <code>true</code>.</p></td>
 It is an optional boolean that defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxPipelinedRequests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests of a connection are executed one at a time: the requests a client pipelines wait for the request in flight.
+Once this many requests are waiting, James stops reading the connection until they are executed.
+It is an optional integer that defaults to 128.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxPipelinedRequestsBeforeClosing</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A single read can still decode many requests, especially with <code>COMPRESS</code>.
+Once this many requests are waiting, James answers <code>* BYE</code> and closes the connection.
+It is an optional integer that defaults to 4,096, and can not be lower than <code>maxPipelinedRequests</code>.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>disabledCaps</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Removes capabilities from the response of the IMAP CAPABILITY command.
 This is an optional, pipe-separated list of strings.
