@@ -3257,6 +3257,10 @@ The default is <strong>5000</strong> (5 seconds).</p>
 <p><strong>&lt;streamBufferSize&gt;</strong>: the BufferedOutputStream buffer size to use
 writing to the <strong>stream connection</strong>. The default is <strong>8192</strong>.</p>
 </li>
+<li>
+<p><strong>&lt;notScannedProcessor&gt;</strong>: the processor a mail that could not be scanned (CLAMD unreachable, or replying an error
+such as its size limit) is sent to, eg to store it in a mail repository. None by default: such a mail goes on unmarked.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3317,7 +3321,8 @@ through the <strong>stream connection</strong>;</p>
 <p>closes the <strong>stream connection</strong>;</p>
 </li>
 <li>
-<p>gets the "<strong>OK</strong>" or "<strong>&#8230;&#8203; FOUND</strong>" answer from the main connection;</p>
+<p>gets the "<strong>OK</strong>" or "<strong>&#8230;&#8203; FOUND</strong>" answer from the main connection: any other answer, or failing to reach CLAMD, is
+logged and the mail goes on unmarked, neither clean nor infected, or to <strong>&lt;notScannedProcessor&gt;</strong> when set;</p>
 </li>
 <li>
 <p>closes the main connection;</p>
@@ -3399,6 +3404,26 @@ and handling the infected messages:</p>
   &lt;mailet match="All" class="Null" /&gt;
 &lt;/processor&gt;</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>To keep the mails that could not be scanned in a mail repository rather than let them go on:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;mailet match="All" class="ClamAVScan" onMailetException="ignore"&gt;
+    &lt;notScannedProcessor&gt;not-scanned&lt;/notScannedProcessor&gt;
+&lt;/mailet&gt;
+
+&lt;processor state="not-scanned" enableJmx="true"&gt;
+    &lt;mailet match="All" class="ToRepository"&gt;
+        &lt;repositoryPath&gt;file://var/mail/not-scanned/&lt;/repositoryPath&gt;
+    &lt;/mailet&gt;
+&lt;/processor&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Such a mail carries no <strong>org.apache.james.infected</strong> attribute: sending it back to the processor holding ClamAVScan
+scans it again.</p>
 </div>
 </div>
 <div class="sect2">
