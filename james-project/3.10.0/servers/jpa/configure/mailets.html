@@ -2189,6 +2189,11 @@ You can also use other javax properties for StartTLS, but their property prefix 
 or use the <strong>mail.smtps.ssl.checkserveridentity</strong> and <strong>mail.smtp.ssl.checkserveridentity</strong> javax properties for fine control.</p>
 </div>
 <div class="paragraph">
+<p>These relaxed settings do not apply to REQUIRETLS mail (RFC 8689): it only leaves over TLS, with a certificate validated
+against the JVM trust store (or the configured <strong>mail.smtp.ssl.socketFactory.class</strong>) and matching the server name.
+Only the hosts that <strong>mail.smtp.ssl.trust</strong> names explicitly (not <code>*</code>) keep the configured trust and server identity verification.</p>
+</div>
+<div class="paragraph">
 <p>Read <a href="https://eclipse-ee4j.github.io/angus-mail/docs/api/org.eclipse.angus.mail/org/eclipse/angus/mail/smtp/package-summary.html"><strong>org.eclipse.angus.mail.smtp</strong></a>
 for full information.</p>
 </div>

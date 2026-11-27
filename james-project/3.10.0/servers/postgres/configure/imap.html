@@ -1150,6 +1150,13 @@ If <code>true</code>, James additionally creates the mailboxes <code>Outbox</cod
 It is an optional boolean which defaults to <code>true</code>.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>selectedMailboxCacheTtl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How long the mailbox selected by an IMAP session is kept in memory, sparing a read of the mailbox and of its rights
+for each FETCH, SEARCH, STORE, EXPUNGE or CLOSE. Its deletion, its renaming or a change of its rights, from any session,
+discards it at once.
+It is an optional duration, for instance <code>30s</code> (milliseconds when no unit is given). Defaults to <code>60s</code>. <code>0</code> disables this cache.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>idCommandResponse</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configures the server response to the IMAP ID command.
 It is an optional element containing up to 30 <code>field</code> elements.

@@ -1632,6 +1632,11 @@ when these hooks are configured on top of it.</p>
 <p>These hooks are designed to support the SMTP service extension, REQUIRETLS, and a TLS-Required message header field.
 (<a href="https://www.rfc-editor.org/rfc/rfc8689.html">RFC-8689</a>)</p>
 </div>
+<div class="paragraph">
+<p>RemoteDelivery relays REQUIRETLS mail only over TLS, to a server announcing REQUIRETLS, with a certificate validated
+against the JVM trust store and matching the server name: its <strong>verifyServerIdentity</strong> and <code>mail.smtp.ssl.trust=<strong></code>
+settings do not apply to such mail. Hosts that *mail.smtp.ssl.trust</strong> names explicitly keep the configured trust.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;smtpserver enabled="true"&gt;
